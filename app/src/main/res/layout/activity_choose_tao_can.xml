@@ -93,17 +93,17 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rlv_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             app:layout_constraintLeft_toLeftOf="@+id/iv_image"
             app:layout_constraintTop_toBottomOf="@+id/tv_choose_yansefenlei" />
 
 
         <View
+            android:layout_marginTop="@dimen/dp_10"
             android:id="@+id/view_line1"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginHorizontal="12dp"
-            android:layout_marginTop="19dp"
             android:background="#cccccc"
             app:layout_constraintTop_toBottomOf="@+id/rlv_list" />
 
@@ -120,6 +120,7 @@
             app:layout_constraintTop_toBottomOf="@+id/view_line1" />
 
         <TextView
+            android:textSize="15sp"
             android:id="@+id/tv_jia"
             android:layout_width="29dp"
             android:layout_height="29dp"
@@ -152,7 +153,7 @@
             android:layout_marginRight="4dp"
             android:background="#fff6f6f6"
             android:gravity="center"
-            android:text="-"
+            android:text="—"
             android:textColor="#ff969696"
             app:layout_constraintBottom_toBottomOf="@+id/tv_number"
             app:layout_constraintRight_toLeftOf="@+id/tv_number"
@@ -183,6 +184,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <RelativeLayout
+        android:visibility="gone"
         android:id="@+id/rl_guige"
         android:layout_width="match_parent"
         android:layout_height="300dp"

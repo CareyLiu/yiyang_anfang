@@ -110,7 +110,6 @@
                 android:layout_height="23dp"
                 android:layout_marginRight="15dp"
                 android:src="@mipmap/mine_icon_gouwuche"
-                android:visibility="gone"
                 app:layout_constraintRight_toLeftOf="@+id/iv_shezhi"
                 app:layout_constraintTop_toTopOf="@+id/iv_shezhi" />
 

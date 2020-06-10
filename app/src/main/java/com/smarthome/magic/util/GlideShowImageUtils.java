@@ -11,4 +11,11 @@ public class GlideShowImageUtils {
                 .error(R.mipmap.preview_banner_375);
         return requestOptions;
     }
+
+    public static RequestOptions showZhengFangXing() {
+        RequestOptions requestOptions = new RequestOptions()
+                .placeholder(R.mipmap.preview_shop_ffffff)
+                .error(R.mipmap.preview_banner_375);
+        return requestOptions;
+    }
 }

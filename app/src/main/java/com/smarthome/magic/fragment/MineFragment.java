@@ -260,11 +260,6 @@ public class MineFragment extends BaseFragment implements Observer {
                         PreferenceHelper.getInstance(getActivity()).putString(App.CUNCHUBIND_ALIPAY, response.body().data.get(0).getAlipay_number_check());
                         PreferenceHelper.getInstance(getActivity()).putString(App.CUNCHU_ZHIFUMIMA, response.body().data.get(0).getPay_pwd_check());//1 已经设置 2 未设置
 
-                        if (!StringUtils.isEmpty(dataBean.getReferral_code_url())) {
-                            PreferenceHelper.getInstance(getActivity()).putString(App.SHIFOUYOUSHANGJI, "1");//1 有上级
-                        } else {
-                            PreferenceHelper.getInstance(getActivity()).putString(App.SHIFOUYOUSHANGJI, "0");//没有上级
-                        }
 
                     }
 

@@ -28,6 +28,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,6 +39,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,6 +64,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.CarListActivity;
 import com.smarthome.magic.activity.TuanYouWebView;
 import com.smarthome.magic.activity.WebViewActivity;
+import com.smarthome.magic.activity.gouwuche.GouWuCheActivity;
 import com.smarthome.magic.activity.homepage.DaLiBaoActivity;
 import com.smarthome.magic.activity.jd_taobao_pinduoduo.TaoBao_Jd_PinDuoDuoActivity;
 import com.smarthome.magic.activity.saoma.ScanActivity;
@@ -336,11 +339,33 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
     }
 
     SmartRefreshLayout smartRefreshLayout;
+    NestedScrollView nestedScrollView;
+    RelativeLayout rl_GouWuChe;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_list, container, false);
+        nestedScrollView = view.findViewById(R.id.nsl_scollview);
+        rl_GouWuChe = view.findViewById(R.id.rl_gouwuche);
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY > 600) {
+                    rl_GouWuChe.setVisibility(View.VISIBLE);
+                } else {
+                    rl_GouWuChe.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        rl_GouWuChe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GouWuCheActivity.actionStart(getActivity());
+            }
+        });
+
         view.setClickable(true);// 防止点击穿透，底层的fragment响应上层点击触摸事件
         smartRefreshLayout = view.findViewById(R.id.smartRefreshLayout);
 
@@ -363,14 +388,14 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
             public void onClick(View v) {
 
 
-                FenLeiThirdActivity.actionStart(getActivity(), "品牌直供","2");
+                FenLeiThirdActivity.actionStart(getActivity(), "品牌直供", "2");
             }
         });
 
         ivMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FenLeiThirdActivity.actionStart(getActivity(), "品牌直供","2");
+                FenLeiThirdActivity.actionStart(getActivity(), "品牌直供", "2");
             }
         });
 
@@ -381,17 +406,16 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
         tvRemenMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FenLeiThirdActivity.actionStart(getActivity(), "热门商品","1");
+                FenLeiThirdActivity.actionStart(getActivity(), "热门商品", "1");
             }
         });
 
         ivRemenMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FenLeiThirdActivity.actionStart(getActivity(), "热门商品","1");
+                FenLeiThirdActivity.actionStart(getActivity(), "热门商品", "1");
             }
         });
-
 
 
         directRecyclerView = header.findViewById(R.id.list);//品牌制造商

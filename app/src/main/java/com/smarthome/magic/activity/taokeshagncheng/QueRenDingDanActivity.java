@@ -138,9 +138,7 @@ public class QueRenDingDanActivity extends BaseActivity implements QueRenDingDan
 
         productListBeans = new ArrayList<>();
         productListBeans.add(productListBean);
-        if (dataBean.getBannerList().size() > 0) {
-            //UIHelper.ToastMessage(QueRenDingDanActivity.this, "666");
-        }
+
         getNet();
 
 
@@ -412,6 +410,7 @@ public class QueRenDingDanActivity extends BaseActivity implements QueRenDingDan
                             strings.add(str[i]);
                             Log.i("querendingdan_data", str[i]);
                         }
+
                         visibleOrGon = NeedYanZheng.yanZheng(QueRenDingDanActivity.this, warseId, strings);
                         //测试一下
                         setShouHuoAddress();

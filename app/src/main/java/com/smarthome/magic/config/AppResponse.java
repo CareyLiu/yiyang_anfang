@@ -26,7 +26,7 @@ public class AppResponse<T> implements Serializable {
     public String available_balance;
     public String msg_code;
     public String msg;
-    public String next;
+    public String next;//0 否 1 是
     public List<T> data;
     public String wares_id_data;//商品列表
     @Override

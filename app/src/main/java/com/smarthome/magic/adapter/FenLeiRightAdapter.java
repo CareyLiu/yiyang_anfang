@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.smarthome.magic.R;
 import com.smarthome.magic.model.FenLeiContentModel;
+import com.smarthome.magic.util.GlideShowImageUtils;
 
 import java.util.List;
 
@@ -16,7 +17,6 @@ import java.util.List;
  * 作者:刘佳钊
  */
 public class FenLeiRightAdapter extends BaseSectionQuickAdapter<FenLeiContentModel, BaseViewHolder> {
-
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
      * some initialization data.
@@ -27,14 +27,11 @@ public class FenLeiRightAdapter extends BaseSectionQuickAdapter<FenLeiContentMod
      */
     public FenLeiRightAdapter(List<FenLeiContentModel> data) {
         super(R.layout.item_fenlei_content, R.layout.layout_fenlei_right_header, data);
-
     }
-
 
     @Override
     protected void convert(BaseViewHolder helper, FenLeiContentModel item) {
-
-        Glide.with(mContext).load(item.getImg_url()).into((ImageView) helper.getView(R.id.iv_image));
+        Glide.with(mContext).load(item.getImg_url()).apply(GlideShowImageUtils.showZhengFangXing()).into((ImageView) helper.getView(R.id.iv_image));
         helper.setText(R.id.tv_name, item.getItem_name());
         helper.addOnClickListener(R.id.constrain);
 

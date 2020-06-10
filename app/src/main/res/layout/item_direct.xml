@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/gay">
+    android:background="@color/gay"
+    android:descendantFocusability="blocksDescendants">
 
 
     <RelativeLayout
@@ -65,7 +66,6 @@
             android:layout_marginBottom="10dp"
             android:scaleType="centerCrop"
             tools:background="@color/oranger" />
-
 
 
     </RelativeLayout>

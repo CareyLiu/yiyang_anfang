@@ -1,6 +1,9 @@
 package com.smarthome.magic.activity.zhinengjiaju.peinet;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.DhcpInfo;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
@@ -15,6 +18,20 @@ import java.net.UnknownHostException;
 import java.util.Enumeration;
 
 public class NetUtils {
+    /**
+     * 判断是否有网络连接
+     */
+    public static boolean isNetworkConnected(Context context) {
+        if (context != null) {
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) context
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+            if (mNetworkInfo != null) {
+                return mNetworkInfo.isAvailable();
+            }
+        }
+        return false;
+    }
     public static boolean isWifiConnected(WifiManager wifiManager) {
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
         return wifiInfo != null

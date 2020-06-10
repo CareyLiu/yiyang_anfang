@@ -1,5 +1,6 @@
 package com.smarthome.magic.activity.gouwuche;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,7 +28,10 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.dingdan.DaiFuKuanDingDanActivity;
+import com.smarthome.magic.activity.saoma.ScanActivity;
 import com.smarthome.magic.activity.taokeshagncheng.QueRenDingDanActivity;
+import com.smarthome.magic.activity.zhinengjiaju.peinet.NetUtils;
 import com.smarthome.magic.adapter.GouWuCheAdapter;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
@@ -73,7 +78,7 @@ public class GouWuCheActivity extends BaseActivity {
     private GouWuCheAdapter gouWuCheAdapter;
     List<GouWuCheZhengHeModel> mDatas = new ArrayList<>();
     private int pageNumber = 0;
-    List<GouWuCheZhengHeModel> jSuanList = new ArrayList<>();
+
 
     private String quanxuan = "0";//0否1是
     private AlertDialog.Builder builder;
@@ -177,7 +182,12 @@ public class GouWuCheActivity extends BaseActivity {
         llJiesuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              // QueRenDingDanActivity.actionStart(GouWuCheActivity.this,);
+                List<GouWuCheZhengHeModel> gouWuCheZhengHeModels = getJieSuanList();
+                if (gouWuCheZhengHeModels.size() == 0) {
+                    UIHelper.ToastMessage(GouWuCheActivity.this, "请选择您要购买的商品");
+                    return;
+                }
+                GouWuCheQueRenDingDanActivity.actionStart(GouWuCheActivity.this, gouWuCheZhengHeModels);
             }
         });
 
@@ -195,12 +205,18 @@ public class GouWuCheActivity extends BaseActivity {
 
     public void getNet() {
 
+        if (!NetUtils.isNetworkConnected(GouWuCheActivity.this)) {
+            UIHelper.ToastMessage(GouWuCheActivity.this, "当前无网络,请联网后重新尝试");
+        }
+
+      //  ProgressDialog progressDialog = ProgressDialog.show(GouWuCheActivity.this, null, "正在加载，请稍候···", true, false);
 
         Map<String, String> map = new HashMap<>();
         map.put("code", "04152");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("page_number", String.valueOf(pageNumber));
+
 
         Gson gson = new Gson();
         Log.e("map_data", gson.toJson(map));
@@ -220,11 +236,28 @@ public class GouWuCheActivity extends BaseActivity {
                             zhengHeList(response);
                         }
                         gouWuCheAdapter.notifyDataSetChanged();
-//                        if (response.body().next.equals("0")) {//0否1是
-//                            srLSmart.setEnableLoadMore(false);
-//                        } else {
-//                            srLSmart.setEnableLoadMore(true);
-//                        }
+                       // progressDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<GouWuCheDataModel.DataBean>> response) {
+                        super.onError(response);
+
+                        String str = response.getException().getMessage();
+                        Log.i("cuifahuo", str);
+
+                        String[] str1 = str.split("：");
+
+                        if (str1.length == 3) {
+                            UIHelper.ToastMessage(GouWuCheActivity.this, str1[2]);
+                        }
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                       // progressDialog.dismiss();
                     }
                 });
     }
@@ -285,7 +318,7 @@ public class GouWuCheActivity extends BaseActivity {
                     //最后一个
                     gouWuCheZhengHeModel_list.setBottomYuanJiao("1");
 
-                }else {
+                } else {
                     gouWuCheZhengHeModel_list.setBottomYuanJiao("0");
                 }
                 mDatas.add(gouWuCheZhengHeModel_list);
@@ -360,6 +393,7 @@ public class GouWuCheActivity extends BaseActivity {
                     case R.id.tv_jianhao:
                         if (mDatas.get(position).getPay_count().equals("1")) {
                             UIHelper.ToastMessage(GouWuCheActivity.this, "您购买的数量不能小于1");
+                            return;
                         }
 
                         int payCountJian = Integer.parseInt(mDatas.get(position).getPay_count()) - 1;
@@ -420,6 +454,7 @@ public class GouWuCheActivity extends BaseActivity {
                     BigDecimal countBigDecimal = new BigDecimal(mDatas.get(i).getPay_count());
                     BigDecimal danShangPinBigDecimal = djBigDecimal.multiply(countBigDecimal);
                     zongJiaBigDecimal = danShangPinBigDecimal.add(zongJiaBigDecimal);
+                    zongJiaBigDecimal = zongJiaBigDecimal.add(new BigDecimal(mDatas.get(i).getWares_money_go()));
                 }
             }
         }
@@ -524,5 +559,16 @@ public class GouWuCheActivity extends BaseActivity {
                     }
                 });
         builder.create().show();
+    }
+
+    private List<GouWuCheZhengHeModel> getJieSuanList() {
+        List<GouWuCheZhengHeModel> gouWuCheZhengHeModels = new ArrayList<>();
+
+        for (int i = 0; i < mDatas.size(); i++) {
+            if (mDatas.get(i).getIsSelect().equals("1")) {
+                gouWuCheZhengHeModels.add(mDatas.get(i));
+            }
+        }
+        return gouWuCheZhengHeModels;
     }
 }

@@ -362,7 +362,8 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
         rl_GouWuChe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GouWuCheActivity.actionStart(getActivity());
+                UIHelper.ToastMessage(getActivity(),"功能开发中");
+                //GouWuCheActivity.actionStart(getActivity());
             }
         });
 
@@ -386,8 +387,6 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
         tvMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 FenLeiThirdActivity.actionStart(getActivity(), "品牌直供", "2");
             }
         });
@@ -589,10 +588,12 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
 
         mList.setLoadMoreEnabled(false);
         directRecyclerView.setLoadMoreEnabled(false);
+
         // groupRecyclerView.setLoadMoreEnabled(false);
 
         mList.setPullRefreshEnabled(false);
         directRecyclerView.setPullRefreshEnabled(false);
+
         // groupRecyclerView.setPullRefreshEnabled(false);
 
         hotLRecyclerViewAdapter.addHeaderView(header);

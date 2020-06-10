@@ -3,8 +3,10 @@ package com.smarthome.magic.activity.zijian_shangcheng;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +22,10 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.CashAccountActivity;
 import com.smarthome.magic.activity.ChooseTaoCanActivity;
 import com.smarthome.magic.activity.WebViewActivity;
+import com.smarthome.magic.activity.gouwuche.GouWuCheActivity;
 import com.smarthome.magic.adapter.ZiJianPingLunAdapter;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.BaseActivity;
@@ -32,6 +36,8 @@ import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.Constant;
 import com.smarthome.magic.config.GlideImageLoader;
 import com.smarthome.magic.config.PreferenceHelper;
+import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.GoodsDetails_f;
 import com.smarthome.magic.project_A.zijian_interface.ZijianDetailsInterface;
 import com.smarthome.magic.util.AlertUtil;
@@ -118,7 +124,9 @@ public class ZiJianShopMallDetailsActivity extends BaseActivity implements Zijia
         iv_rightTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIHelper.ToastMessage(ZiJianShopMallDetailsActivity.this, "添加到购物车");
+                //UIHelper.ToastMessage(ZiJianShopMallDetailsActivity.this, "添加到购物车");
+                UIHelper.ToastMessage(ZiJianShopMallDetailsActivity.this, "功能开发中");
+                //GouWuCheActivity.actionStart(ZiJianShopMallDetailsActivity.this);
             }
         });
 
@@ -223,7 +231,7 @@ public class ZiJianShopMallDetailsActivity extends BaseActivity implements Zijia
 
         PreferenceHelper.getInstance(ZiJianShopMallDetailsActivity.this).putString(App.KUAIDIFEI, dataBean.getWares_money_go());
 
-        tvYueXiao.setText("月销" + ":" + dataBean.getWares_sales_volume());
+        tvYueXiao.setText(dataBean.getWares_sales_volume());
         tvDiZhi.setText(dataBean.getAddr());
         //设置图片加载器
         banner.setImageLoader(new GlideImageLoader());
@@ -313,6 +321,8 @@ public class ZiJianShopMallDetailsActivity extends BaseActivity implements Zijia
             @Override
             public void onClick(View v) {
                 //加入购物车
+                dataBean = response.body().data.get(0);
+                ChooseTaoCanActivity.actionStart(ZiJianShopMallDetailsActivity.this, dataBean, "1", dataBean.getMoney_begin(), dataBean.getMoney_end(), response.body().data.get(0).getShop_product_title(), dataBean.getInst_name(), dataBean.getInst_logo_url(), response.body().data.get(0).getWares_go_type(), "0");
             }
         });
         llLijiGoumai.setOnClickListener(new View.OnClickListener() {
@@ -320,14 +330,14 @@ public class ZiJianShopMallDetailsActivity extends BaseActivity implements Zijia
             public void onClick(View v) {
                 //立即购买
                 dataBean = response.body().data.get(0);
-                ChooseTaoCanActivity.actionStart(ZiJianShopMallDetailsActivity.this, dataBean, "1", dataBean.getMoney_begin(), dataBean.getMoney_end(), response.body().data.get(0).getShop_product_title(), dataBean.getInst_name(), dataBean.getInst_logo_url(), response.body().data.get(0).getWares_go_type());
+                ChooseTaoCanActivity.actionStart(ZiJianShopMallDetailsActivity.this, dataBean, "1", dataBean.getMoney_begin(), dataBean.getMoney_end(), response.body().data.get(0).getShop_product_title(), dataBean.getInst_name(), dataBean.getInst_logo_url(), response.body().data.get(0).getWares_go_type(), "1");
             }
         });
         rlTaoCan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dataBean = response.body().data.get(0);
-                ChooseTaoCanActivity.actionStart(ZiJianShopMallDetailsActivity.this, dataBean, "1", dataBean.getMoney_begin(), dataBean.getMoney_end(), response.body().data.get(0).getShop_product_title(), dataBean.getInst_name(), dataBean.getInst_logo_url(), response.body().data.get(0).getWares_go_type());
+                ChooseTaoCanActivity.actionStart(ZiJianShopMallDetailsActivity.this, dataBean, "1", dataBean.getMoney_begin(), dataBean.getMoney_end(), response.body().data.get(0).getShop_product_title(), dataBean.getInst_name(), dataBean.getInst_logo_url(), response.body().data.get(0).getWares_go_type(), "0");
 
             }
         });
@@ -335,7 +345,7 @@ public class ZiJianShopMallDetailsActivity extends BaseActivity implements Zijia
             @Override
             public void onClick(View v) {
                 dataBean = response.body().data.get(0);
-                ChooseTaoCanActivity.actionStart(ZiJianShopMallDetailsActivity.this, dataBean, "2", dataBean.getMoney_begin(), dataBean.getMoney_end(), response.body().data.get(0).getShop_product_title(), dataBean.getInst_name(), dataBean.getInst_logo_url(), response.body().data.get(0).getWares_go_type());
+                ChooseTaoCanActivity.actionStart(ZiJianShopMallDetailsActivity.this, dataBean, "2", dataBean.getMoney_begin(), dataBean.getMoney_end(), response.body().data.get(0).getShop_product_title(), dataBean.getInst_name(), dataBean.getInst_logo_url(), response.body().data.get(0).getWares_go_type(), "0");
             }
         });
     }
@@ -352,4 +362,5 @@ public class ZiJianShopMallDetailsActivity extends BaseActivity implements Zijia
         intent.putExtra("wareId", wareId);
         context.startActivity(intent);
     }
+
 }

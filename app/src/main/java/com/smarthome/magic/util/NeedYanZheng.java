@@ -13,9 +13,11 @@ import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.Constant;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.model.GouWuCheZhengHeModel;
 import com.smarthome.magic.model.TuiGuangMaModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,5 +44,35 @@ public class NeedYanZheng {
         }
     }
 
+    public static boolean yanZheng(Context cnt, List<GouWuCheZhengHeModel> mDatas, List<String> strings) {
+
+        shiFouYanzheng = PreferenceHelper.getInstance(cnt).getString(App.SHIFOUYOUSHANGJI, "0x");
+
+        if (shiFouYanzheng.equals("1")) {
+            return false;
+        }
+
+        boolean flag = false;
+
+        for (int i = 0; i < mDatas.size(); i++) {
+            if (!mDatas.get(i).isHeader){
+                for (int j = 0; j < strings.size(); j++) {
+                    if (mDatas.get(i).getWares_id().equals(strings.get(j))) {
+                        flag = true;
+                        break;
+                    }
+                }
+            }
+
+        }
+        return flag;
+    }
+
 
 }
+
+
+
+
+
+

@@ -38,6 +38,7 @@
 
 
     <RelativeLayout
+        android:layout_marginTop="@dimen/dp_10"
         android:id="@+id/rl_yaoqingma"
         android:layout_width="match_parent"
         android:layout_height="42dp"

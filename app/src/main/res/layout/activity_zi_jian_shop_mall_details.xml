@@ -68,11 +68,11 @@
             android:layout_width="23dp"
             android:layout_height="23dp"
             android:layout_marginLeft="17dp"
-            android:src="@mipmap/shop_icon_weishoucang"
             app:layout_constraintLeft_toRightOf="@+id/iv_kefu_image"
             app:layout_constraintTop_toTopOf="@+id/iv_kefu_image" />
 
         <TextView
+            android:id="@+id/tv_shoucang"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="收藏"

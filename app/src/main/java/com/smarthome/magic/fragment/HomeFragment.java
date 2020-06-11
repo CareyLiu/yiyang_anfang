@@ -362,8 +362,8 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
         rl_GouWuChe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIHelper.ToastMessage(getActivity(),"功能开发中");
-                //GouWuCheActivity.actionStart(getActivity());
+                //UIHelper.ToastMessage(getActivity(),"功能开发中");
+                GouWuCheActivity.actionStart(getActivity());
             }
         });
 
@@ -589,6 +589,7 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
         mList.setLoadMoreEnabled(false);
         directRecyclerView.setLoadMoreEnabled(false);
 
+
         // groupRecyclerView.setLoadMoreEnabled(false);
 
         mList.setPullRefreshEnabled(false);
@@ -598,6 +599,8 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
 
         hotLRecyclerViewAdapter.addHeaderView(header);
         hotLRecyclerViewAdapter.addFooterView(footer);
+
+
 
         //设置图片加载器
         banner.setImageLoader(new GlideImageLoader());

@@ -392,15 +392,6 @@ public class ChooseTaoCanActivity extends Activity {
          *     private String liuyan = "";
          */
 
-//        gouWuCheZhengHeModel.setShop_product_title(dataBean.getShop_product_title());
-//        gouWuCheZhengHeModel.setShop_product_id(dataBean.getProductList().get(Integer.parseInt(position)).getShop_product_id());
-//        gouWuCheZhengHeModel.setWares_id(dataBean.getWares_id());
-//        gouWuCheZhengHeModel.setWares_money_go(dataBean.getWares_money_go());
-//        gouWuCheZhengHeModel.setShop_product_title(dataBean.getShop_product_title());
-//        gouWuCheZhengHeModel.setForm_product_money(dataBean.getProductList().get(Integer.parseInt(position)).getMoney_now());
-//        gouWuCheZhengHeModel.setPay_count(count);
-//        gouWuCheZhengHeModel.setWares_go_type(dataBean.getWares_go_type());
-
         list.add(gouWuCheZhengHeModel);
 
 

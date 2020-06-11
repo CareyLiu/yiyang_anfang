@@ -19,6 +19,7 @@ import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.SettingActivity;
 import com.smarthome.magic.activity.dingdan.MyOrderActivity;
+import com.smarthome.magic.activity.gouwuche.GouWuCheActivity;
 import com.smarthome.magic.activity.tuangou.KaQuanActivity;
 import com.smarthome.magic.activity.wode_page.AboutUsActivity;
 import com.smarthome.magic.activity.wode_page.MyQianBaoActivity;
@@ -306,6 +307,7 @@ public class MineFragment extends BaseFragment implements Observer {
                 startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;
             case R.id.iv_gouwuche:
+                GouWuCheActivity.actionStart(getActivity());
                 break;
             case R.id.tv_shoucangjia_number:
                 break;

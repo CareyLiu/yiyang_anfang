@@ -30,7 +30,9 @@ public class CarList1Adapter extends BaseQuickAdapter<SmartDevice_car_0364.DataB
         TextView tv_state = helper.getView(R.id.tv_state);
 
 
-        Glide.with(mContext).load(item.getCar_brand_url()).into(iv_icon);
+        if (item.getCar_brand_url()!=null){
+            Glide.with(mContext).load(item.getCar_brand_url()).into(iv_icon);
+        }
         tv_brand.setText(item.getCar_brand_name());
         tv_state.setText(item.getPlate_number());
 

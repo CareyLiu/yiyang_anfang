@@ -39,6 +39,7 @@ import com.smarthome.magic.activity.dingdan.AccessActivity;
 import com.smarthome.magic.activity.dingdan.DaiFuKuanDingDanActivity;
 import com.smarthome.magic.activity.dingdan.OrderTuiKuanDetailsActivity;
 import com.smarthome.magic.activity.dingdan.ShenQingTuiKuanActivity;
+import com.smarthome.magic.activity.gouwuche.GouWuCheActivity;
 import com.smarthome.magic.activity.taokeshagncheng.QueRenDingDanActivity;
 import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallDetailsActivity;
 import com.smarthome.magic.adapter.dingdan.OrderListAdapter;
@@ -128,6 +129,8 @@ public class OrderListFragment extends BaseFragment {
             user_pay_check = "10";
         } else if (str.equals("订单失效")) {
             user_pay_check = "11";
+        } else if (str.equals("已完成")) {
+            user_pay_check = "7";
         }
 
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
@@ -520,7 +523,6 @@ public class OrderListFragment extends BaseFragment {
                     public void onError(Response<AppResponse<Object>> response) {
                         super.onError(response);
                         //   UIHelper.ToastMessage(getActivity(), response.body().msg);
-
                         String str = response.getException().getMessage();
                         Log.i("cuifahuo", str);
 
@@ -529,7 +531,6 @@ public class OrderListFragment extends BaseFragment {
                         if (str1.length == 3) {
                             UIHelper.ToastMessage(getActivity(), str1[2]);
                         }
-
                     }
 
                     @Override
@@ -887,6 +888,14 @@ public class OrderListFragment extends BaseFragment {
                     @Override
                     public void onError(Response<AppResponse<Object>> response) {
                         super.onError(response);
+                        String str = response.getException().getMessage();
+                        Log.i("cuifahuo", str);
+
+                        String[] str1 = str.split("：");
+
+                        if (str1.length == 3) {
+                            UIHelper.ToastMessage(getActivity(), str1[2]);
+                        }
                     }
                 });
 

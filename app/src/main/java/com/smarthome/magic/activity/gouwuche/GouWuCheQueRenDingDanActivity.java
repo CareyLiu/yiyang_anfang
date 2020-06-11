@@ -108,7 +108,6 @@ public class GouWuCheQueRenDingDanActivity extends BaseActivity implements QueRe
         mDatas = (List<GouWuCheZhengHeModel>) getIntent().getSerializableExtra("mDatas");
         Log.i("mDatas", mDatas.size() + "");
 
-        tvPrice.setText("¥ " + getJieSuanJinE().toString());
 
         getNet();
         llNowPay.setOnClickListener(new View.OnClickListener() {
@@ -318,6 +317,13 @@ public class GouWuCheQueRenDingDanActivity extends BaseActivity implements QueRe
                             strings.add(str[i]);
                             Log.i("querendingdan_data", str[i]);
                         }
+                        balance = response.body().available_balance;
+
+                        if (!StringUtils.isEmpty(balance)) {
+                            tvPrice.setText("¥ " + getJieSuanJinE().subtract(new BigDecimal(balance)).toString());
+                        } else {
+                            tvPrice.setText("¥ " + getJieSuanJinE().toString());
+                        }
 
                         visibleOrGon = NeedYanZheng.yanZheng(GouWuCheQueRenDingDanActivity.this, mDatas, strings);
                         //测试一下
@@ -348,6 +354,7 @@ public class GouWuCheQueRenDingDanActivity extends BaseActivity implements QueRe
         rlvList.setLayoutManager(linearLayoutManager);
         rlvList.setAdapter(gouWuCheQueRenDingDanAdapter);
     }
+
     private TextView tvName;
     private TextView tvAddr;
     private TextView tvNone;
@@ -389,6 +396,7 @@ public class GouWuCheQueRenDingDanActivity extends BaseActivity implements QueRe
     EditText etLiuYan;
     private RelativeLayout rlYaoQingMa;
     EditText etYaoQingMa;
+    String balance;
 
     @Override
     public void setFooterView() {
@@ -402,7 +410,7 @@ public class GouWuCheQueRenDingDanActivity extends BaseActivity implements QueRe
             rlYaoQingMa.setVisibility(View.GONE);
         }
         final TextView tv_dikoujine = view.findViewById(R.id.tv_dikoujine);
-        String balance = response.body().available_balance;
+
         final ImageView ivChoose = view.findViewById(R.id.iv_choose);
         RelativeLayout rl3 = view.findViewById(R.id.rl_3);
         View viewWeiXin = view.findViewById(R.id.view_weixin);
@@ -450,12 +458,20 @@ public class GouWuCheQueRenDingDanActivity extends BaseActivity implements QueRe
                         userHongBao = "1";//不用
                         tvDanqianDikou.setVisibility(View.GONE);
                         tv_dikoujine.setVisibility(View.GONE);
+
+                        //不用红包 重新计算金额
+                        if (null != zongJiaBigDecimal) {
+                            tvPrice.setText("¥ " + getJieSuanJinE().toString());
+                        }
                     } else {
                         ivChoose.setVisibility(View.VISIBLE);
                         userHongBao = "2";//用
                         tvDanqianDikou.setVisibility(View.VISIBLE);
                         tv_dikoujine.setVisibility(View.VISIBLE);
-
+                        //使用红包 重新计算金额
+                        if (null != zongJiaBigDecimal) {
+                            tvPrice.setText("¥ " + getJieSuanJinE().subtract(new BigDecimal(balance)).toString());
+                        }
                     }
 
                 }

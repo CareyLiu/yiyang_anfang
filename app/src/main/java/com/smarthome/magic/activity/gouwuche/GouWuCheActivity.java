@@ -1,6 +1,5 @@
 package com.smarthome.magic.activity.gouwuche;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,12 +23,8 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.dingdan.DaiFuKuanDingDanActivity;
-import com.smarthome.magic.activity.saoma.ScanActivity;
-import com.smarthome.magic.activity.taokeshagncheng.QueRenDingDanActivity;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.NetUtils;
 import com.smarthome.magic.adapter.GouWuCheAdapter;
 import com.smarthome.magic.app.BaseActivity;
@@ -41,7 +35,6 @@ import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.GouWuCheDataModel;
 import com.smarthome.magic.model.GouWuCheZhengHeModel;
-import com.smarthome.magic.model.OrderListModel;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -74,6 +67,10 @@ public class GouWuCheActivity extends BaseActivity {
     TextView tvJiesuanJine;
     @BindView(R.id.tv_quanxuan)
     TextView tvQuanxuan;
+    @BindView(R.id.iv_empty)
+    ImageView ivEmpty;
+    @BindView(R.id.empty_view)
+    ConstraintLayout emptyView;
     private String guanliOrBianji = "1";//1管理 2编辑
     private GouWuCheAdapter gouWuCheAdapter;
     List<GouWuCheZhengHeModel> mDatas = new ArrayList<>();
@@ -138,7 +135,8 @@ public class GouWuCheActivity extends BaseActivity {
                     quanxuan = "0";
                     ivChooseAll.setBackgroundResource(R.mipmap.quxiaodingdan_button_nor);
                 }
-                tvJiesuanJine.setText("结算(" + getJieSuanJinE().toString() + ")");
+                tvPrice.setText("(¥" + getJieSuanJinE().toString() + ")");
+                tvJiesuanJine.setText("结算(" + String.valueOf(chooseCount) + ")");
             }
         });
         tvQuanxuan.setOnClickListener(new View.OnClickListener() {
@@ -160,7 +158,9 @@ public class GouWuCheActivity extends BaseActivity {
                     quanxuan = "0";
                     ivChooseAll.setBackgroundResource(R.mipmap.quxiaodingdan_button_nor);
                 }
-                tvJiesuanJine.setText("结算(" + getJieSuanJinE().toString() + ")");
+                tvPrice.setText("(¥" + getJieSuanJinE().toString() + ")");
+                tvJiesuanJine.setText("结算(" + String.valueOf(chooseCount) + ")");
+
             }
         });
 
@@ -209,7 +209,7 @@ public class GouWuCheActivity extends BaseActivity {
             UIHelper.ToastMessage(GouWuCheActivity.this, "当前无网络,请联网后重新尝试");
         }
 
-      //  ProgressDialog progressDialog = ProgressDialog.show(GouWuCheActivity.this, null, "正在加载，请稍候···", true, false);
+        //  ProgressDialog progressDialog = ProgressDialog.show(GouWuCheActivity.this, null, "正在加载，请稍候···", true, false);
 
         Map<String, String> map = new HashMap<>();
         map.put("code", "04152");
@@ -235,8 +235,13 @@ public class GouWuCheActivity extends BaseActivity {
                         } else {
                             zhengHeList(response);
                         }
+
                         gouWuCheAdapter.notifyDataSetChanged();
-                       // progressDialog.dismiss();
+
+                        if (mDatas.size() > 0) {
+                            emptyView.setVisibility(View.GONE);
+                        }
+                        // progressDialog.dismiss();
                     }
 
                     @Override
@@ -257,7 +262,7 @@ public class GouWuCheActivity extends BaseActivity {
                     @Override
                     public void onFinish() {
                         super.onFinish();
-                       // progressDialog.dismiss();
+                        // progressDialog.dismiss();
                     }
                 });
     }
@@ -334,7 +339,7 @@ public class GouWuCheActivity extends BaseActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(gouWuCheAdapter);
-
+        srLSmart.setEnableLoadMore(false);
         gouWuCheAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -347,7 +352,8 @@ public class GouWuCheActivity extends BaseActivity {
                             mDatas.get(position).setIsSelect("0");
                         }
                         gouWuCheAdapter.notifyDataSetChanged();
-                        tvJiesuanJine.setText("结算(" + getJieSuanJinE().toString() + ")");
+                        tvPrice.setText("(¥" + getJieSuanJinE().toString() + ")");
+                        tvJiesuanJine.setText("结算(" + String.valueOf(chooseCount) + ")");
                         if (isSelectAll()) {
                             ivChooseAll.setBackgroundResource(R.mipmap.quxiaodingdan_button_sel);
                         } else {
@@ -373,7 +379,8 @@ public class GouWuCheActivity extends BaseActivity {
                             }
                         }
 
-                        tvJiesuanJine.setText("结算(" + getJieSuanJinE().toString() + ")");
+                        tvPrice.setText("(¥" + getJieSuanJinE().toString() + ")");
+                        tvJiesuanJine.setText("结算(" + String.valueOf(chooseCount) + ")");
                         gouWuCheAdapter.notifyDataSetChanged();
                         if (isSelectAll()) {
                             ivChooseAll.setBackgroundResource(R.mipmap.quxiaodingdan_button_sel);
@@ -386,7 +393,8 @@ public class GouWuCheActivity extends BaseActivity {
                     case R.id.tv_jiahao:
                         int payCountJIa = Integer.parseInt(mDatas.get(position).getPay_count()) + 1;
                         mDatas.get(position).setPay_count(payCountJIa + "");
-                        tvJiesuanJine.setText("结算(" + getJieSuanJinE().toString() + ")");
+                        tvPrice.setText("(¥" + getJieSuanJinE().toString() + ")");
+                        tvJiesuanJine.setText("结算(" + String.valueOf(chooseCount) + ")");
                         gouWuCheAdapter.notifyDataSetChanged();
                         break;
 
@@ -398,7 +406,8 @@ public class GouWuCheActivity extends BaseActivity {
 
                         int payCountJian = Integer.parseInt(mDatas.get(position).getPay_count()) - 1;
                         mDatas.get(position).setPay_count(payCountJian + "");
-                        tvJiesuanJine.setText("结算(" + getJieSuanJinE().toString() + ")");
+                        tvPrice.setText("(¥" + getJieSuanJinE().toString() + ")");
+                        tvJiesuanJine.setText("结算(" + String.valueOf(chooseCount) + ")");
                         gouWuCheAdapter.notifyDataSetChanged();
                         break;
                 }
@@ -444,9 +453,11 @@ public class GouWuCheActivity extends BaseActivity {
     }
 
     private BigDecimal zongJiaBigDecimal;
+    private int chooseCount;
 
     private BigDecimal getJieSuanJinE() {
         zongJiaBigDecimal = new BigDecimal("0.00");
+        chooseCount = 0;
         for (int i = 0; i < mDatas.size(); i++) {
             if (mDatas.get(i).getIsSelect().equals("1")) {//选中
                 if (!mDatas.get(i).isHeader) {
@@ -455,6 +466,7 @@ public class GouWuCheActivity extends BaseActivity {
                     BigDecimal danShangPinBigDecimal = djBigDecimal.multiply(countBigDecimal);
                     zongJiaBigDecimal = danShangPinBigDecimal.add(zongJiaBigDecimal);
                     zongJiaBigDecimal = zongJiaBigDecimal.add(new BigDecimal(mDatas.get(i).getWares_money_go()));
+                    chooseCount = chooseCount + Integer.valueOf(mDatas.get(i).getPay_count());
                 }
             }
         }

@@ -320,7 +320,6 @@ public class MyApplication extends MultiDexApplication {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.P)
     public void setMqttConnect() {
 
         /**
@@ -365,7 +364,7 @@ public class MyApplication extends MultiDexApplication {
                     @Override
                     public void connectionLost(Throwable cause) {
                         Log.i("Rair", "(MainActivity.java:34)-connectionLost:-&gt;连接丢失");
-                        UIHelper.ToastMessage(context, "网络不稳定持续连接中", Toast.LENGTH_SHORT);
+                        //UIHelper.ToastMessage(context, "网络不稳定持续连接中", Toast.LENGTH_SHORT);
                     }
 
                     @Override

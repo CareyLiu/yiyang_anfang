@@ -3,28 +3,23 @@ package com.smarthome.magic.activity.zijian_shangcheng;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.CashAccountActivity;
 import com.smarthome.magic.activity.ChooseTaoCanActivity;
-import com.smarthome.magic.activity.WebViewActivity;
 import com.smarthome.magic.activity.gouwuche.GouWuCheActivity;
 import com.smarthome.magic.adapter.ZiJianPingLunAdapter;
 import com.smarthome.magic.app.App;
@@ -36,7 +31,6 @@ import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.Constant;
 import com.smarthome.magic.config.GlideImageLoader;
 import com.smarthome.magic.config.PreferenceHelper;
-import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.GoodsDetails_f;
 import com.smarthome.magic.project_A.zijian_interface.ZijianDetailsInterface;
@@ -53,7 +47,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.smarthome.magic.util.DensityUtils.getScreenWidth;
+import static com.smarthome.magic.get_net.Urls.HOME_PICTURE_HOME;
 
 public class ZiJianShopMallDetailsActivity extends BaseActivity implements ZijianDetailsInterface {
 
@@ -78,6 +72,8 @@ public class ZiJianShopMallDetailsActivity extends BaseActivity implements Zijia
     LinearLayout llJiaruGouwuche;
     @BindView(R.id.ll_liji_goumai)
     LinearLayout llLijiGoumai;
+    @BindView(R.id.tv_shoucang)
+    TextView tvShoucang;
     private Response<AppResponse<GoodsDetails_f.DataBean>> response;
     GoodsDetails_f.DataBean dataBean;
     private String productId;
@@ -125,8 +121,8 @@ public class ZiJianShopMallDetailsActivity extends BaseActivity implements Zijia
             @Override
             public void onClick(View v) {
                 //UIHelper.ToastMessage(ZiJianShopMallDetailsActivity.this, "添加到购物车");
-                UIHelper.ToastMessage(ZiJianShopMallDetailsActivity.this, "功能开发中");
-                //GouWuCheActivity.actionStart(ZiJianShopMallDetailsActivity.this);
+                // UIHelper.ToastMessage(ZiJianShopMallDetailsActivity.this, "功能开发中");
+                GouWuCheActivity.actionStart(ZiJianShopMallDetailsActivity.this);
             }
         });
 
@@ -138,11 +134,14 @@ public class ZiJianShopMallDetailsActivity extends BaseActivity implements Zijia
     }
 
 
+    private String isCollection = "0";//0 没有收藏 1 已收藏
+
     @Override
     public void getNet() {
         Map<String, String> map = new HashMap<>();
         map.put("code", "04133");
         map.put("key", Constant.KEY);
+        map.put("token", PreferenceHelper.getInstance(mContext).getString("app_token", "0"));
         map.put("shop_product_id", productId);
         map.put("wares_id", warseId);
         Gson gson = new Gson();
@@ -169,6 +168,26 @@ public class ZiJianShopMallDetailsActivity extends BaseActivity implements Zijia
                         //ziJianPingLunAdapter.notifyDataSetChanged();
                         setFooter();
                         setClick();
+                        //用户是否收藏了该商品:
+                        //1.已收藏0.未收藏
+                        if (response.body().data.get(0).getIsCollection().equals("0")) {
+                            ivShoucangIamge.setBackgroundResource(R.mipmap.shopdetails_weishoucang);
+                        } else if (response.body().data.get(0).getIsCollection().equals("1")) {
+                            ivShoucangIamge.setBackgroundResource(R.mipmap.shop_icon_weishoucang);
+                        }
+
+                        isCollection = response.body().data.get(0).getIsCollection();
+
+                        ivShoucangIamge.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (isCollection.equals("0")) {
+                                    setShouCang("04126");
+                                } else if (isCollection.equals("1")) {
+                                    setShouCang("04127");
+                                }
+                            }
+                        });
                     }
 
                     @Override
@@ -177,6 +196,58 @@ public class ZiJianShopMallDetailsActivity extends BaseActivity implements Zijia
                     }
                 });
 
+    }
+
+    private void setShouCang(String code) {
+        //收藏商品
+        /**
+         * code	请求码(04126)	6	是
+         * key	身份标识	10	是
+         * token	token	18	是
+         * collection_type	收藏类型 1.商品 2.商家		是
+         * wares_id	商品id(收藏类型为1时传)		否
+         * shop_product_id	产品id(收藏类型为1时传)		否
+         * inst_id	商家id(收藏类型为2时传)		否
+         */
+
+        Map<String, String> map = new HashMap<>();
+        map.put("code", code);
+        map.put("key", Urls.key);
+        map.put("token", PreferenceHelper.getInstance(mContext).getString("app_token", "0"));
+        map.put("collection_type", "1");
+        map.put("wares_id", warseId);
+        map.put("shop_product_id", productId);
+
+        Gson gson = new Gson();
+        OkGo.<AppResponse<Object>>post(HOME_PICTURE_HOME)
+                .tag(mContext)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<Object>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<Object>> response) {
+                        if (code.equals("04126")) {
+                            UIHelper.ToastMessage(ZiJianShopMallDetailsActivity.this, "添加成功");
+                            ivShoucangIamge.setBackgroundResource(R.mipmap.shop_icon_weishoucang);
+                            isCollection = "1";
+                        } else {
+                            UIHelper.ToastMessage(ZiJianShopMallDetailsActivity.this, "取消收藏成功");
+                            ivShoucangIamge.setBackgroundResource(R.mipmap.shopdetails_weishoucang);
+                            isCollection = "0";
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<Object>> response) {
+                        super.onError(response);
+                        String str = response.getException().getMessage();
+                        String[] str1 = str.split("：");
+
+                        if (str1.length == 3) {
+                            UIHelper.ToastMessage(ZiJianShopMallDetailsActivity.this, str1[2]);
+                        }
+                    }
+                });
     }
 
     @Override

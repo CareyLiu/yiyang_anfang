@@ -2,6 +2,7 @@ package com.smarthome.magic.activity;
 
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
@@ -27,6 +28,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -78,8 +80,10 @@ import rx.functions.Action1;
 import static com.smarthome.magic.config.MyApplication.CAR_NOTIFY;
 
 public class PlumbingHeaterActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener,
-        View.OnClickListener {
+        View.OnClickListener, View.OnLongClickListener {
 
+
+    private Context context = PlumbingHeaterActivity.this;
     private static final String TAG = "WindHeaterActivity";
     public Handler mHandler;
     public static Handler stateHandler;
@@ -102,6 +106,13 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
     //  TextView tvWd;
     // @BindView(R.id.arcProgressBar)
     // ArcProgressBar arcProgressBar;
+
+    @BindView(R.id.shuiwen1)
+    TextView shuiwen1;
+
+    @BindView(R.id.wendu2)
+    TextView wendu2;
+
     @BindView(R.id.btn_heater_close)
     ImageView btnHeaterClose;
     //   @BindView(R.id.frameLayout)
@@ -115,8 +126,11 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
     Bitmap bitmap;
     AnimationDrawable animationDrawable;
 
-    String KT_Send = "wh/hardware/11111111111111111111111";
-    String KT_Accept = "wh/app/11111111111111111111111";
+    String SN_Send = "wh/hardware/11111111111111111111111";
+    String SN_Accept = "wh/app/11111111111111111111111";
+
+    private String sn_state = "";
+    private String sn_preset_temperature1 = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,8 +165,10 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
 
         //mZhenShuinuan.setPivotX(mZhenShuinuan.getWidth() / 2);
         // mZhenShuinuan.setPivotY(mZhenShuinuan.getHeight() / 2);//支点在图片中心
-        mZhenShuinuan.setRotation(-110);
+        mZhenShuinuan.setRotation(-120);
 
+        shuiwen1.setOnLongClickListener(this);
+        wendu2.setOnLongClickListener(this);
         btnHeaterClose.setOnClickListener(this);
 
         registerKtMqtt();
@@ -193,7 +209,7 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
     private void registerKtMqtt() {
         //注册向空调发送数据的主题
         AndMqtt.getInstance().subscribe(new MqttSubscribe()
-                .setTopic(KT_Send)
+                .setTopic(SN_Send)
                 .setQos(2), new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
@@ -207,7 +223,7 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
         });
         //注册空调向app回调数据的主题
         AndMqtt.getInstance().subscribe(new MqttSubscribe()
-                .setTopic(KT_Accept)
+                .setTopic(SN_Accept)
                 .setQos(2), new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
@@ -228,7 +244,7 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
         AndMqtt.getInstance().publish(new MqttPublish()
                 .setMsg("j_s")
                 .setQos(2).setRetained(false)
-                .setTopic(KT_Accept), new IMqttActionListener() {
+                .setTopic(SN_Accept), new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
                 Log.i("Rair", "(KT_Accept)-onSuccess:-&gt;发布成功");
@@ -254,8 +270,12 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
                     Log.i("msg_kt_j_", message.content.toString());
                     String messageData = message.content.toString().substring(3, message.content.toString().length() - 1);
                     //水暖状态
-                    String sn_state = messageData.substring(0, 1);
-                    switch (sn_state) {
+                    String state = messageData.substring(0, 1);
+                    sn_state = state;
+                    //预设温度
+                    String preset_temperature = messageData.substring(39, 41);
+                    sn_preset_temperature1 = preset_temperature;
+                    switch (state) {
                         case "0":
                             //待机中
                             btnHeaterClose.setBackgroundResource(R.mipmap.car_open);
@@ -277,6 +297,7 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
                         case "3":
                             //关机中
                             btnHeaterClose.setBackgroundResource(R.mipmap.car_close);
+                            ivHeaterHost.setBackgroundResource(R.drawable.shuinuan_pic_gif_nor);
                             break;
                         case "4":
                             //循环水
@@ -285,6 +306,21 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
                             animationDrawable = (AnimationDrawable) ivHeaterHost.getBackground();
                             animationDrawable.start();
                             break;
+                    }
+                    if (!state.equals("3")) {
+                        if (Integer.parseInt(preset_temperature) <= 60) {
+                            shuiwen1.setBackgroundResource(R.mipmap.sheding_button_sel);
+                            wendu2.setBackgroundResource(R.mipmap.sheding_button_nor);
+                        } else if (Integer.parseInt(preset_temperature) > 60 && Integer.parseInt(preset_temperature) <= 80) {
+                            shuiwen1.setBackgroundResource(R.mipmap.sheding_button_nor);
+                            wendu2.setBackgroundResource(R.mipmap.sheding_button_sel);
+                        } else if (Integer.parseInt(preset_temperature) >= 80) {
+                            shuiwen1.setBackgroundResource(R.mipmap.sheding_button_nor);
+                            wendu2.setBackgroundResource(R.mipmap.sheding_button_sel);
+                        }
+                    } else {
+                        shuiwen1.setBackgroundResource(R.mipmap.sheding_button_nor);
+                        wendu2.setBackgroundResource(R.mipmap.sheding_button_nor);
                     }
                 }
             }
@@ -300,8 +336,97 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
         }
     }
 
-    private void ShuiNuanSwitch() {
+    @Override
+    public boolean onLongClick(View v) {
+        switch (v.getId()) {
+            case R.id.shuiwen1:
+                sendTemperature60();
+                break;
+            case R.id.wendu2:
+                sendTemperature80();
+                break;
+        }
+        return false;
+    }
 
+    /**
+     * 设定60度
+     */
+    private void sendTemperature60() {
+        if (sn_state.equals("3")) {
+            Toast.makeText(context, "水暖已关机，请打开水暖发送指令", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        sn_preset_temperature1 = "60";
+        String data = "j_s" + sn_state + "45666666126666666110264026500010010001" + sn_preset_temperature1 + "02310.";
+        AndMqtt.getInstance().publish(new MqttPublish()
+                .setMsg(data)
+                .setQos(2).setRetained(false)
+                .setTopic(SN_Accept), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+                Log.i("Rair", "(KT_Accept)-onSuccess:-&gt;发布成功");
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+            }
+        });
+    }
+
+    /**
+     * 设定80度
+     */
+    private void sendTemperature80() {
+        if (sn_state.equals("3")) {
+            Toast.makeText(context, "水暖已关机，请打开水暖发送指令", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        sn_preset_temperature1 = "80";
+        String data = "j_s" + sn_state + "45666666126666666110264026500010010001" + sn_preset_temperature1 + "02310.";
+        AndMqtt.getInstance().publish(new MqttPublish()
+                .setMsg(data)
+                .setQos(2).setRetained(false)
+                .setTopic(SN_Accept), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+                Log.i("Rair", "(KT_Accept)-onSuccess:-&gt;发布成功");
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+            }
+        });
+    }
+
+    /**
+     * 水暖加热器开关
+     */
+    private void ShuiNuanSwitch() {
+        int state = Integer.parseInt(sn_state);
+        if (state == 1) {
+            state = 3;
+        } else {
+            state = 1;
+        }
+
+        String data = "j_s" + state + "456666661266666661102640265000100100017002310.";
+        AndMqtt.getInstance().publish(new MqttPublish()
+                .setMsg(data)
+                .setQos(2).setRetained(false)
+                .setTopic(SN_Accept), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+                Log.i("Rair", "(KT_Accept)-onSuccess:-&gt;发布成功");
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+            }
+        });
     }
 
     @SuppressLint("HandlerLeak")

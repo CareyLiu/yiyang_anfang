@@ -450,6 +450,18 @@ public class MyApplication extends MultiDexApplication {
 
                             }
 
+                            //大水假数据
+                        } else if (message.toString().equals("j_s")) {
+                            Notice n = new Notice();
+                            n.type = ConstanceValue.MSG_SN_DATA;
+//                            n.content = message.toString();
+                            n.content = "j_s3456666661266666661102640265000100100017002310.";
+                            RxBus.getDefault().sendRx(n);
+                        } else if (message.toString().contains("j_s")) {
+                            Notice n = new Notice();
+                            n.type = ConstanceValue.MSG_SN_DATA;
+                            n.content = message.toString();
+                            RxBus.getDefault().sendRx(n);
                         } else if (message.toString().contains("_")) {
                             String messageData = message.toString().substring(2, message.toString().length() - 1);
                             String[] arr = messageData.split("_");
@@ -567,7 +579,7 @@ public class MyApplication extends MultiDexApplication {
                             n.type = ConstanceValue.MSG_CAR_FEGNYOUBI;
                             n.content = message.toString();
                             RxBus.getDefault().sendRx(n);
-                        } else if (message.toString().contains("M001.")) {
+                        } else if (message.toString().equals("M001.")) {
                             Notice n = new Notice();
                             n.type = ConstanceValue.MSG_CAR_J_G;
 //                            n.content = message.toString();

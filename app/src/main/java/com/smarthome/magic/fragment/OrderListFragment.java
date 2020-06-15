@@ -522,9 +522,9 @@ public class OrderListFragment extends BaseFragment {
                     @Override
                     public void onError(Response<AppResponse<Object>> response) {
                         super.onError(response);
-                        //   UIHelper.ToastMessage(getActivity(), response.body().msg);
+                         //  UIHelper.ToastMessage(getActivity(), response.body().msg);
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
+                    //    Log.i("cuifahuo", str);
 
                         String[] str1 = str.split("：");
 

@@ -3,9 +3,11 @@ package com.smarthome.magic.activity.tuangou;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -14,10 +16,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.roundview.RoundTextView;
+import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.WebViewActivity;
+import com.smarthome.magic.activity.homepage.DaLiBaoActivity;
+import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallDetailsActivity;
 import com.smarthome.magic.adapter.ShangJiaNearbyAdapter;
 import com.smarthome.magic.adapter.tuangou.TuanGouShangJiaDetailsAdapter;
 import com.smarthome.magic.adapter.tuangou.TuanGouShangJiaHighScoreListAdapter;
@@ -27,10 +33,13 @@ import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.Constant;
+import com.smarthome.magic.config.GlideImageLoader;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.model.TuanGouShangJiaDetailsModel;
 import com.smarthome.magic.util.AlertUtil;
+import com.smarthome.magic.util.phoneview.sample.ImageShowActivity;
 import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -122,7 +131,11 @@ public class TuanGouShangJiaDetailsActivity extends AbStracTuanGouShangJiaDetail
     public void setHeader() {
         View view = View.inflate(TuanGouShangJiaDetailsActivity.this, R.layout.layout_tuangou_shangjia_details_header, null);
 
-        ImageView banner = view.findViewById(R.id.banner);
+        Banner banner = view.findViewById(R.id.banner);
+
+        //设置图片加载器
+        banner.setImageLoader(new GlideImageLoader());
+
         TextView tvShopName = view.findViewById(R.id.tv_shop_name);
         AppCompatRatingBar ratingBar = view.findViewById(R.id.star);
         TextView tvRenJun = view.findViewById(R.id.tv_renjun);
@@ -132,19 +145,43 @@ public class TuanGouShangJiaDetailsActivity extends AbStracTuanGouShangJiaDetail
             @Override
             public void onClick(View v) {
                 if (!StringUtils.isEmpty(inst_id)) {
-                    TuanGouMaiDanActivity.actionStart(TuanGouShangJiaDetailsActivity.this, inst_id,typeID);
+                    TuanGouMaiDanActivity.actionStart(TuanGouShangJiaDetailsActivity.this, inst_id, typeID);
                 }
             }
         });
 
 
         storeListBean = response.body().data.get(0).getStoreList();
-        Glide.with(TuanGouShangJiaDetailsActivity.this).load(storeListBean.getInst_photo_url()).into(banner);
+        //Glide.with(TuanGouShangJiaDetailsActivity.this).load(storeListBean.getInst_photo_url()).into(banner);
         tvShopName.setText(storeListBean.getInst_name());
         ratingBar.setRating(Float.parseFloat(storeListBean.getInst_number()));
 
         tvRenJun.setText(storeListBean.getAverage_cost());
         tvAddr.setText(storeListBean.getAddr_all());
+
+
+
+        ArrayList<String> items = new ArrayList<>();
+        if (response.body().data != null) {
+            for (int i = 0; i < response.body().data.get(0).getLunboList().size(); i++) {
+                items.add(response.body().data.get(0).getLunboList().get(i).getImg_url());
+            }
+        }
+
+        if (banner != null) {
+            //设置图片集合
+            banner.setImages(items);
+            //banner设置方法全部调用完毕时最后调用
+            banner.start();
+            banner.setOnBannerListener(new OnBannerListener() {
+                @Override
+                public void OnBannerClick(int position) {
+
+                    ImageShowActivity.actionStart(TuanGouShangJiaDetailsActivity.this,items);
+
+                }
+            });
+        }
 
         tuanGouShangJiaDetailsAdapter.addHeaderView(view);
     }
@@ -235,7 +272,7 @@ public class TuanGouShangJiaDetailsActivity extends AbStracTuanGouShangJiaDetail
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.constrain:
-                        TuanGouShangJiaDetailsActivity.actionStart(TuanGouShangJiaDetailsActivity.this, tuanGouShangJiaListAdapter.getData().get(position).getInst_id(),typeID);
+                        TuanGouShangJiaDetailsActivity.actionStart(TuanGouShangJiaDetailsActivity.this, tuanGouShangJiaListAdapter.getData().get(position).getInst_id(), typeID);
                         break;
                 }
             }

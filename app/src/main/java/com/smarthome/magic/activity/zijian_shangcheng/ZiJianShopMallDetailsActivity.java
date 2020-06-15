@@ -372,6 +372,7 @@ public class ZiJianShopMallDetailsActivity extends BaseActivity implements Zijia
             @Override
             public void onClick(View v) {
                 //点击店铺
+                ShopDetailsActivity.actionStart(mContext, response.body().data.get(0).getInst_id());
             }
         });
         ivKefuImage.setOnClickListener(new View.OnClickListener() {

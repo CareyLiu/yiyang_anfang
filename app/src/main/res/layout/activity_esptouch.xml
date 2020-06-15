@@ -23,12 +23,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
         android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
         app:layout_constraintBaseline_toBaselineOf="@id/apSsidLabel"
         app:layout_constraintStart_toEndOf="@id/apSsidLabel"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="4dp" />
 
     <TextView
         android:id="@+id/apBssidLabel"
@@ -47,15 +47,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
         android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
         app:layout_constraintBaseline_toBaselineOf="@id/apBssidLabel"
         app:layout_constraintStart_toEndOf="@id/apBssidLabel"
-        app:layout_constraintTop_toTopOf="@id/apBssidLabel" />
+        app:layout_constraintTop_toTopOf="@id/apBssidLabel"
+        android:layout_marginLeft="4dp" />
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/apPasswordLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -63,29 +64,30 @@
         app:layout_constraintTop_toBottomOf="@id/apBssidLabel"
         app:passwordToggleEnabled="true">
 
-        <android.support.design.widget.TextInputEditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/apPasswordEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:singleLine="true" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/deviceCountLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:hint="@string/esptouch1_device_count_title"
         app:layout_constraintTop_toBottomOf="@id/apPasswordLayout">
 
-        <android.support.design.widget.TextInputEditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/deviceCountEdit"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:inputType="number"
             android:text="1" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <RadioGroup
         android:id="@+id/packageModeGroup"
@@ -107,8 +109,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:text="@string/esptouch1_package_multicast" />
+            android:text="@string/esptouch1_package_multicast"
+            android:layout_marginLeft="16dp" />
     </RadioGroup>
 
     <TextView
@@ -120,10 +122,11 @@
         app:layout_constraintTop_toBottomOf="@id/packageModeGroup"
         app:layout_goneMarginStart="4dp" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/confirmBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:theme="@style/Theme.MaterialComponents.Light"
         android:text="@string/esptouch1_confirm"
         app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

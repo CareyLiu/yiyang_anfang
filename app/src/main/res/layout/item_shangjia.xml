@@ -25,6 +25,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:includeFontPadding="false"
             android:textStyle="bold"
             android:id="@+id/tv_shop_name"
             android:layout_width="wrap_content"
@@ -38,7 +39,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatRatingBar
-
             android:id="@+id/star"
             style="@style/storeRatingBarOranger"
             android:layout_width="wrap_content"
@@ -52,10 +52,11 @@
 
 
         <TextView
+            android:includeFontPadding="false"
             android:id="@+id/tv_addr_thing_xiao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="3dp"
             android:text="平房区   蛋糕  销量:1"
             android:textColor="#ff666666"
             android:textSize="12sp"
@@ -64,12 +65,11 @@
 
 
         <TextView
+            android:includeFontPadding="false"
             android:id="@+id/tv_zhekou"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:background="@drawable/background_select"
-            android:padding="4dp"
+            android:layout_marginTop="5dp"
             android:text="享受8.5折优惠"
             android:textColor="#fffe9900"
             android:textSize="10sp"
@@ -82,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:layout_marginRight="48dp"
+            android:layout_marginRight="15dp"
             android:text="8.3KM"
             android:textColor="#ff666666"
             android:textSize="12sp"
@@ -103,12 +103,19 @@
             app:layout_constraintRight_toRightOf="@+id/tv_distance"
             app:layout_constraintTop_toBottomOf="@+id/tv_distance" />
 
+
         <View
+            android:id="@+id/view"
+            app:layout_constraintTop_toBottomOf="@+id/tv_hezuo_shangjia"
+            android:layout_width="match_parent"
+            android:layout_height="14dp"/>
+        <View
+
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="8dp"
             android:background="@color/grayline_cecece"
-            app:layout_constraintTop_toBottomOf="@+id/tv_zhekou" />
+            app:layout_constraintTop_toBottomOf="@+id/view" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

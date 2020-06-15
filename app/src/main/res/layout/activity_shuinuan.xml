@@ -69,6 +69,7 @@
 
 
             <TextView
+                android:includeFontPadding="false"
                 android:id="@+id/huashu2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

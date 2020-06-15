@@ -6,15 +6,16 @@
         android:icon="@drawable/selector_home"
         android:title="@string/home" />
 
-    <!--    <item-->
-    <!--        android:id="@+id/i_play"-->
-    <!--        android:icon="@drawable/selector_play"-->
-    <!--        android:title="@string/play" />-->
+        <item
+            android:id="@+id/i_zhinengjiaju"
+            android:icon="@drawable/selector_car_online"
+
+            android:title="智能家居" />
 
     <item
         android:id="@+id/i_car_online"
-        android:icon="@drawable/selector_car_online"
-        android:title="智控" />
+        android:icon="@drawable/selector_play"
+        android:title="车联网" />
     <item
         android:id="@+id/i_message"
         android:icon="@drawable/selector_message"

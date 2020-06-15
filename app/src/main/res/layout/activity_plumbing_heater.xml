@@ -54,18 +54,18 @@
                 android:fitsSystemWindows="true"
                 tools:context="com.smarthome.magic.activity.WindHeaterActivity">
 
-                <android.support.percent.PercentRelativeLayout
+                <androidx.percentlayout.widget.PercentRelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fitsSystemWindows="true">
 
-                    <android.support.percent.PercentRelativeLayout
+                    <androidx.percentlayout.widget.PercentRelativeLayout
                         android:id="@+id/top_layout"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         app:layout_heightPercent="35%">
 
-                        <android.support.percent.PercentRelativeLayout
+                        <androidx.percentlayout.widget.PercentRelativeLayout
                             android:id="@+id/fl_host"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -80,13 +80,13 @@
                                 android:layout_alignParentTop="false"
                                 android:background="@drawable/plumbing"/>
 
-                        </android.support.percent.PercentRelativeLayout>
+                        </androidx.percentlayout.widget.PercentRelativeLayout>
 
 
 
-                    </android.support.percent.PercentRelativeLayout>
+                    </androidx.percentlayout.widget.PercentRelativeLayout>
 
-                    <android.support.percent.PercentRelativeLayout
+                    <androidx.percentlayout.widget.PercentRelativeLayout
                         android:id="@+id/pl_temperature"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -242,7 +242,7 @@
                                 android:textColor="@color/blue_light"
                                 android:textSize="12sp" />
                         </LinearLayout>
-                    </android.support.percent.PercentRelativeLayout>
+                    </androidx.percentlayout.widget.PercentRelativeLayout>
 
 
                     <FrameLayout
@@ -281,7 +281,7 @@
                             android:layout_marginLeft="1dp"
                             android:background="@drawable/bg_heater_close_btn_off" />
                     </FrameLayout>
-                </android.support.percent.PercentRelativeLayout>
+                </androidx.percentlayout.widget.PercentRelativeLayout>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

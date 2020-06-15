@@ -3,10 +3,11 @@ package com.smarthome.magic.model;
 import java.util.List;
 
 public class TuanGouShangJiaDetailsModel {
+
     /**
      * msg_code : 0000
      * msg : ok
-     * data : [{"favourableList":[{"pay_count":"0","wares_id":"75","agio":"5.2","week":"周一至周日","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","itemtype_id":"2","shop_title":"美食三","inst_id":"263","shop_money_now":"258.00","shop_money_old":"300.00"},{"pay_count":"0","wares_id":"76","agio":"8.3","week":"周一至周日","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","itemtype_id":"2","shop_title":"美食三","inst_id":"263","shop_money_now":"248.00","shop_money_old":"300.00"},{"pay_count":"0","wares_id":"77","agio":"5.2","week":"周一至周日","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","itemtype_id":"2","shop_title":"美食五","inst_id":"263","shop_money_now":"258.00","shop_money_old":"300.00"},{"pay_count":"0","wares_id":"78","agio":"5.2","week":"周一至周日","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","itemtype_id":"2","shop_title":"美食六","inst_id":"263","shop_money_now":"258.00","shop_money_old":"300.00"},{"pay_count":"0","wares_id":"79","agio":"5.2","week":"周一至周日","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","itemtype_id":"2","shop_title":"美食七","inst_id":"263","shop_money_now":"258.00","shop_money_old":"300.00"},{"pay_count":"0","wares_id":"80","agio":"5.2","week":"周一至周日","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","itemtype_id":"2","shop_title":"美食八","inst_id":"263","shop_money_now":"258.00","shop_money_old":"300.00"},{"pay_count":"0","wares_id":"81","agio":"5.2","week":"周一至周日","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","itemtype_id":"2","shop_title":"美食九","inst_id":"263","shop_money_now":"258.00","shop_money_old":"300.00"},{"pay_count":"0","wares_id":"82","agio":"5.2","week":"周一至周日","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","itemtype_id":"2","shop_title":"美食十","inst_id":"263","shop_money_now":"258.00","shop_money_old":"300.00"},{"pay_count":"0","wares_id":"83","agio":"5.2","week":"周一至周日","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","itemtype_id":"2","shop_title":"美食一","inst_id":"263","shop_money_now":"258.00","shop_money_old":"300.00"},{"pay_count":"0","wares_id":"84","agio":"5.2","week":"周一至周日","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","itemtype_id":"2","shop_title":"美食二","inst_id":"263","shop_money_now":"258.19","shop_money_old":"300.31"}],"neighborList":[{"area_name":"北林区","pay_count":"17","wares_id":"70","agio":"5.2","distance":"","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","shop_title":"美食三","inst_id":"258","shop_money_now":"258.00","shop_money_old":"300.00","inst_name":"麦比克火锅"},{"area_name":"南岗区","pay_count":"0","wares_id":"71","agio":"5.2","distance":"","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","shop_title":"美食三","inst_id":"259","shop_money_now":"258.00","shop_money_old":"300.00","inst_name":"您作煮火锅"},{"area_name":"道外区","pay_count":"0","wares_id":"72","agio":"5.2","distance":"","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","shop_title":"美食三","inst_id":"260","shop_money_now":"258.00","shop_money_old":"300.00","inst_name":"寻味烤肉"},{"area_name":"道外区","pay_count":"0","wares_id":"73","agio":"5.2","distance":"","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","shop_title":"美食三","inst_id":"261","shop_money_now":"258.00","shop_money_old":"300.00","inst_name":"鞑子碳烤羊腿"},{"area_name":"松北区","pay_count":"0","wares_id":"74","agio":"5.2","distance":"","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","shop_title":"美食三","inst_id":"262","shop_money_now":"258.00","shop_money_old":"300.00","inst_name":"麦香村西饼屋（松北店）"}],"storeList":{"week_five":"1","week":"周一至周日","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9077","img_count":"0","meter":"","inst_number":"1.0","inst_number_name":"1.0分","week_two":"1","addr_all":"黑龙江省哈尔滨市平房区友协街道黑龙江省哈尔滨市","average_cost":"¥40/人","inst_phone":"","value_1":"1","week_four":"1","week_one":"1","week_three":"1","week_seven":"1","x":"45.595638","y":"126.63561","inst_id":"263","inst_name":"麦香村西饼屋（平房店）","time":"08:00-20:00","week_six":"1"},"highScoreList":[{"pay_count":"0","area_name":"道外区","platform_cooperation":"2","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9071","inst_text":"烤肉","meter":"","inst_number":"5.0","value_4":"6.0","inst_id":"260","inst_name":"寻味烤肉"},{"pay_count":"17","area_name":"北林区","platform_cooperation":"2","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9065","inst_text":"火锅","meter":"","inst_number":"4.0","value_4":"6.0","inst_id":"258","inst_name":"麦比克火锅"},{"pay_count":"0","area_name":"南岗区","platform_cooperation":"2","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9069","inst_text":"火锅","meter":"","inst_number":"3.0","value_4":"6.0","inst_id":"259","inst_name":"您作煮火锅"},{"pay_count":"0","area_name":"道外区","platform_cooperation":"2","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9073","inst_text":"烧烤","meter":"","inst_number":"2.0","value_4":"9.0","inst_id":"261","inst_name":"鞑子碳烤羊腿"},{"pay_count":"0","area_name":"南岗区","platform_cooperation":"2","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9067","inst_text":"火锅","meter":"","inst_number":"1.0","value_4":"7.0","inst_id":"257","inst_name":"和意堂火锅烤肉"}]}]
+     * data : [{"lunboList":[],"favourableList":[{"pay_count":"0","wares_id":"73","agio":"5.2","week":"周一至周日","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","itemtype_id":"2","shop_title":"美食三","inst_id":"261","shop_money_now":"258.00","shop_money_old":"300.00"}],"neighborList":[{"area_name":"北林区","pay_count":"17","wares_id":"70","agio":"5.2","distance":"115.6","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","shop_title":"美食三","inst_id":"258","shop_money_now":"258.00","shop_money_old":"300.00","inst_name":"麦比克火锅"},{"area_name":"南岗区","pay_count":"0","wares_id":"71","agio":"5.2","distance":"10.9","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","shop_title":"美食三","inst_id":"259","shop_money_now":"258.00","shop_money_old":"300.00","inst_name":"您作煮火锅"},{"area_name":"道外区","pay_count":"0","wares_id":"72","agio":"5.2","distance":"14.5","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","shop_title":"美食三","inst_id":"260","shop_money_now":"258.00","shop_money_old":"300.00","inst_name":"寻味烤肉"},{"area_name":"道外区","pay_count":"0","wares_id":"73","agio":"5.2","distance":"14.2","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","shop_title":"美食三","inst_id":"261","shop_money_now":"258.00","shop_money_old":"300.00","inst_name":"鞑子碳烤羊腿"},{"area_name":"松北区","pay_count":"0","wares_id":"74","agio":"5.2","distance":"16.9","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","shop_title":"美食三","inst_id":"262","shop_money_now":"258.00","shop_money_old":"300.00","inst_name":"麦香村西饼屋（松北店）"}],"storeList":{"week_five":"1","week":"周一至周日","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9073","img_count":"0","meter":"14.2km","inst_number":"2.0","inst_number_name":"2.0分","week_two":"1","addr_all":"黑龙江省哈尔滨市道外区太古街道黑龙江省哈尔滨市","average_cost":"¥67/人","inst_phone":"","value_1":"1","week_four":"1","week_one":"1","week_three":"1","week_seven":"1","x":"45.789725","y":"126.650539","inst_id":"261","inst_name":"鞑子碳烤羊腿","time":"08:00-20:00","week_six":"1"},"highScoreList":[{"pay_count":"0","area_name":"双城区","platform_cooperation":"1","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11079","inst_text":"烤肉","meter":"38.7","inst_number":"5.0","value_4":"","inst_id":"403","inst_name":"齐市烤肉"},{"pay_count":"0","area_name":"道外区","platform_cooperation":"2","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9071","inst_text":"烤肉","meter":"14.5","inst_number":"5.0","value_4":"6.0","inst_id":"260","inst_name":"寻味烤肉"},{"pay_count":"0","area_name":"双城区","platform_cooperation":"1","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11101","inst_text":"杀猪菜","meter":"38.7","inst_number":"5.0","value_4":"","inst_id":"410","inst_name":"兰棱杀猪菜（文昌总店）"},{"pay_count":"6","area_name":"双城区","platform_cooperation":"1","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11257","inst_text":"杀猪菜","meter":"39.7","inst_number":"5.0","value_4":"","inst_id":"398","inst_name":"兰棱杀猪菜（堡旭分店）"},{"pay_count":"17","area_name":"北林区","platform_cooperation":"2","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9065","inst_text":"火锅","meter":"115.6","inst_number":"4.0","value_4":"6.0","inst_id":"258","inst_name":"麦比克火锅"}]}]
      */
 
     private String msg_code;
@@ -39,16 +40,18 @@ public class TuanGouShangJiaDetailsModel {
 
     public static class DataBean {
         /**
-         * favourableList : [{"pay_count":"0","wares_id":"75","agio":"5.2","week":"周一至周日","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","itemtype_id":"2","shop_title":"美食三","inst_id":"263","shop_money_now":"258.00","shop_money_old":"300.00"},{"pay_count":"0","wares_id":"76","agio":"8.3","week":"周一至周日","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","itemtype_id":"2","shop_title":"美食三","inst_id":"263","shop_money_now":"248.00","shop_money_old":"300.00"},{"pay_count":"0","wares_id":"77","agio":"5.2","week":"周一至周日","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","itemtype_id":"2","shop_title":"美食五","inst_id":"263","shop_money_now":"258.00","shop_money_old":"300.00"},{"pay_count":"0","wares_id":"78","agio":"5.2","week":"周一至周日","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","itemtype_id":"2","shop_title":"美食六","inst_id":"263","shop_money_now":"258.00","shop_money_old":"300.00"},{"pay_count":"0","wares_id":"79","agio":"5.2","week":"周一至周日","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","itemtype_id":"2","shop_title":"美食七","inst_id":"263","shop_money_now":"258.00","shop_money_old":"300.00"},{"pay_count":"0","wares_id":"80","agio":"5.2","week":"周一至周日","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","itemtype_id":"2","shop_title":"美食八","inst_id":"263","shop_money_now":"258.00","shop_money_old":"300.00"},{"pay_count":"0","wares_id":"81","agio":"5.2","week":"周一至周日","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","itemtype_id":"2","shop_title":"美食九","inst_id":"263","shop_money_now":"258.00","shop_money_old":"300.00"},{"pay_count":"0","wares_id":"82","agio":"5.2","week":"周一至周日","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","itemtype_id":"2","shop_title":"美食十","inst_id":"263","shop_money_now":"258.00","shop_money_old":"300.00"},{"pay_count":"0","wares_id":"83","agio":"5.2","week":"周一至周日","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","itemtype_id":"2","shop_title":"美食一","inst_id":"263","shop_money_now":"258.00","shop_money_old":"300.00"},{"pay_count":"0","wares_id":"84","agio":"5.2","week":"周一至周日","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","itemtype_id":"2","shop_title":"美食二","inst_id":"263","shop_money_now":"258.19","shop_money_old":"300.31"}]
-         * neighborList : [{"area_name":"北林区","pay_count":"17","wares_id":"70","agio":"5.2","distance":"","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","shop_title":"美食三","inst_id":"258","shop_money_now":"258.00","shop_money_old":"300.00","inst_name":"麦比克火锅"},{"area_name":"南岗区","pay_count":"0","wares_id":"71","agio":"5.2","distance":"","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","shop_title":"美食三","inst_id":"259","shop_money_now":"258.00","shop_money_old":"300.00","inst_name":"您作煮火锅"},{"area_name":"道外区","pay_count":"0","wares_id":"72","agio":"5.2","distance":"","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","shop_title":"美食三","inst_id":"260","shop_money_now":"258.00","shop_money_old":"300.00","inst_name":"寻味烤肉"},{"area_name":"道外区","pay_count":"0","wares_id":"73","agio":"5.2","distance":"","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","shop_title":"美食三","inst_id":"261","shop_money_now":"258.00","shop_money_old":"300.00","inst_name":"鞑子碳烤羊腿"},{"area_name":"松北区","pay_count":"0","wares_id":"74","agio":"5.2","distance":"","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","shop_title":"美食三","inst_id":"262","shop_money_now":"258.00","shop_money_old":"300.00","inst_name":"麦香村西饼屋（松北店）"}]
-         * storeList : {"week_five":"1","week":"周一至周日","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9077","img_count":"0","meter":"","inst_number":"1.0","inst_number_name":"1.0分","week_two":"1","addr_all":"黑龙江省哈尔滨市平房区友协街道黑龙江省哈尔滨市","average_cost":"¥40/人","inst_phone":"","value_1":"1","week_four":"1","week_one":"1","week_three":"1","week_seven":"1","x":"45.595638","y":"126.63561","inst_id":"263","inst_name":"麦香村西饼屋（平房店）","time":"08:00-20:00","week_six":"1"}
-         * highScoreList : [{"pay_count":"0","area_name":"道外区","platform_cooperation":"2","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9071","inst_text":"烤肉","meter":"","inst_number":"5.0","value_4":"6.0","inst_id":"260","inst_name":"寻味烤肉"},{"pay_count":"17","area_name":"北林区","platform_cooperation":"2","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9065","inst_text":"火锅","meter":"","inst_number":"4.0","value_4":"6.0","inst_id":"258","inst_name":"麦比克火锅"},{"pay_count":"0","area_name":"南岗区","platform_cooperation":"2","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9069","inst_text":"火锅","meter":"","inst_number":"3.0","value_4":"6.0","inst_id":"259","inst_name":"您作煮火锅"},{"pay_count":"0","area_name":"道外区","platform_cooperation":"2","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9073","inst_text":"烧烤","meter":"","inst_number":"2.0","value_4":"9.0","inst_id":"261","inst_name":"鞑子碳烤羊腿"},{"pay_count":"0","area_name":"南岗区","platform_cooperation":"2","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9067","inst_text":"火锅","meter":"","inst_number":"1.0","value_4":"7.0","inst_id":"257","inst_name":"和意堂火锅烤肉"}]
+         * lunboList : []
+         * favourableList : [{"pay_count":"0","wares_id":"73","agio":"5.2","week":"周一至周日","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","itemtype_id":"2","shop_title":"美食三","inst_id":"261","shop_money_now":"258.00","shop_money_old":"300.00"}]
+         * neighborList : [{"area_name":"北林区","pay_count":"17","wares_id":"70","agio":"5.2","distance":"115.6","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","shop_title":"美食三","inst_id":"258","shop_money_now":"258.00","shop_money_old":"300.00","inst_name":"麦比克火锅"},{"area_name":"南岗区","pay_count":"0","wares_id":"71","agio":"5.2","distance":"10.9","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","shop_title":"美食三","inst_id":"259","shop_money_now":"258.00","shop_money_old":"300.00","inst_name":"您作煮火锅"},{"area_name":"道外区","pay_count":"0","wares_id":"72","agio":"5.2","distance":"14.5","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","shop_title":"美食三","inst_id":"260","shop_money_now":"258.00","shop_money_old":"300.00","inst_name":"寻味烤肉"},{"area_name":"道外区","pay_count":"0","wares_id":"73","agio":"5.2","distance":"14.2","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","shop_title":"美食三","inst_id":"261","shop_money_now":"258.00","shop_money_old":"300.00","inst_name":"鞑子碳烤羊腿"},{"area_name":"松北区","pay_count":"0","wares_id":"74","agio":"5.2","distance":"16.9","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_detail":"精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃","shop_title":"美食三","inst_id":"262","shop_money_now":"258.00","shop_money_old":"300.00","inst_name":"麦香村西饼屋（松北店）"}]
+         * storeList : {"week_five":"1","week":"周一至周日","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9073","img_count":"0","meter":"14.2km","inst_number":"2.0","inst_number_name":"2.0分","week_two":"1","addr_all":"黑龙江省哈尔滨市道外区太古街道黑龙江省哈尔滨市","average_cost":"¥67/人","inst_phone":"","value_1":"1","week_four":"1","week_one":"1","week_three":"1","week_seven":"1","x":"45.789725","y":"126.650539","inst_id":"261","inst_name":"鞑子碳烤羊腿","time":"08:00-20:00","week_six":"1"}
+         * highScoreList : [{"pay_count":"0","area_name":"双城区","platform_cooperation":"1","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11079","inst_text":"烤肉","meter":"38.7","inst_number":"5.0","value_4":"","inst_id":"403","inst_name":"齐市烤肉"},{"pay_count":"0","area_name":"道外区","platform_cooperation":"2","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9071","inst_text":"烤肉","meter":"14.5","inst_number":"5.0","value_4":"6.0","inst_id":"260","inst_name":"寻味烤肉"},{"pay_count":"0","area_name":"双城区","platform_cooperation":"1","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11101","inst_text":"杀猪菜","meter":"38.7","inst_number":"5.0","value_4":"","inst_id":"410","inst_name":"兰棱杀猪菜（文昌总店）"},{"pay_count":"6","area_name":"双城区","platform_cooperation":"1","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11257","inst_text":"杀猪菜","meter":"39.7","inst_number":"5.0","value_4":"","inst_id":"398","inst_name":"兰棱杀猪菜（堡旭分店）"},{"pay_count":"17","area_name":"北林区","platform_cooperation":"2","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9065","inst_text":"火锅","meter":"115.6","inst_number":"4.0","value_4":"6.0","inst_id":"258","inst_name":"麦比克火锅"}]
          */
 
         private StoreListBean storeList;
         private List<FavourableListBean> favourableList;
         private List<NeighborListBean> neighborList;
         private List<HighScoreListBean> highScoreList;
+        private List<LunboListBean> lunboList;
 
         public StoreListBean getStoreList() {
             return storeList;
@@ -56,6 +59,14 @@ public class TuanGouShangJiaDetailsModel {
 
         public void setStoreList(StoreListBean storeList) {
             this.storeList = storeList;
+        }
+
+        public List<LunboListBean> getLunboList() {
+            return lunboList;
+        }
+
+        public void setLunboList(List<LunboListBean> lunboList) {
+            this.lunboList = lunboList;
         }
 
         public List<FavourableListBean> getFavourableList() {
@@ -86,24 +97,24 @@ public class TuanGouShangJiaDetailsModel {
             /**
              * week_five : 1
              * week : 周一至周日
-             * inst_photo_url : https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9077
+             * inst_photo_url : https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9073
              * img_count : 0
-             * meter :
-             * inst_number : 1.0
-             * inst_number_name : 1.0分
+             * meter : 14.2km
+             * inst_number : 2.0
+             * inst_number_name : 2.0分
              * week_two : 1
-             * addr_all : 黑龙江省哈尔滨市平房区友协街道黑龙江省哈尔滨市
-             * average_cost : ¥40/人
+             * addr_all : 黑龙江省哈尔滨市道外区太古街道黑龙江省哈尔滨市
+             * average_cost : ¥67/人
              * inst_phone :
              * value_1 : 1
              * week_four : 1
              * week_one : 1
              * week_three : 1
              * week_seven : 1
-             * x : 45.595638
-             * y : 126.63561
-             * inst_id : 263
-             * inst_name : 麦香村西饼屋（平房店）
+             * x : 45.789725
+             * y : 126.650539
+             * inst_id : 261
+             * inst_name : 鞑子碳烤羊腿
              * time : 08:00-20:00
              * week_six : 1
              */
@@ -311,14 +322,14 @@ public class TuanGouShangJiaDetailsModel {
         public static class FavourableListBean {
             /**
              * pay_count : 0
-             * wares_id : 75
+             * wares_id : 73
              * agio : 5.2
              * week : 周一至周日
              * img_url : https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480
              * shop_detail : 精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃
              * itemtype_id : 2
              * shop_title : 美食三
-             * inst_id : 263
+             * inst_id : 261
              * shop_money_now : 258.00
              * shop_money_old : 300.00
              */
@@ -430,7 +441,7 @@ public class TuanGouShangJiaDetailsModel {
              * pay_count : 17
              * wares_id : 70
              * agio : 5.2
-             * distance :
+             * distance : 115.6
              * img_url : https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480
              * shop_detail : 精品肥牛，新西兰羊排，澳洲肥牛好吃很好吃
              * shop_title : 美食三
@@ -553,15 +564,15 @@ public class TuanGouShangJiaDetailsModel {
         public static class HighScoreListBean {
             /**
              * pay_count : 0
-             * area_name : 道外区
-             * platform_cooperation : 2
-             * inst_photo_url : https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9071
+             * area_name : 双城区
+             * platform_cooperation : 1
+             * inst_photo_url : https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11079
              * inst_text : 烤肉
-             * meter :
+             * meter : 38.7
              * inst_number : 5.0
-             * value_4 : 6.0
-             * inst_id : 260
-             * inst_name : 寻味烤肉
+             * value_4 :
+             * inst_id : 403
+             * inst_name : 齐市烤肉
              */
 
             private String pay_count;
@@ -654,6 +665,82 @@ public class TuanGouShangJiaDetailsModel {
             public void setInst_name(String inst_name) {
                 this.inst_name = inst_name;
             }
+        }
+    }
+
+    public static class LunboListBean {
+        /**
+         * inst_state : 1
+         * img_order : 1
+         * create_time : 2020-06-05
+         * img_url : https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11236
+         * inst_id : 410
+         * img_id : 11236
+         * inst_img_id : 88
+         */
+
+        private String inst_state;
+        private String img_order;
+        private String create_time;
+        private String img_url;
+        private String inst_id;
+        private String img_id;
+        private String inst_img_id;
+
+        public String getInst_state() {
+            return inst_state;
+        }
+
+        public void setInst_state(String inst_state) {
+            this.inst_state = inst_state;
+        }
+
+        public String getImg_order() {
+            return img_order;
+        }
+
+        public void setImg_order(String img_order) {
+            this.img_order = img_order;
+        }
+
+        public String getCreate_time() {
+            return create_time;
+        }
+
+        public void setCreate_time(String create_time) {
+            this.create_time = create_time;
+        }
+
+        public String getImg_url() {
+            return img_url;
+        }
+
+        public void setImg_url(String img_url) {
+            this.img_url = img_url;
+        }
+
+        public String getInst_id() {
+            return inst_id;
+        }
+
+        public void setInst_id(String inst_id) {
+            this.inst_id = inst_id;
+        }
+
+        public String getImg_id() {
+            return img_id;
+        }
+
+        public void setImg_id(String img_id) {
+            this.img_id = img_id;
+        }
+
+        public String getInst_img_id() {
+            return inst_img_id;
+        }
+
+        public void setInst_img_id(String inst_img_id) {
+            this.inst_img_id = inst_img_id;
         }
     }
 }

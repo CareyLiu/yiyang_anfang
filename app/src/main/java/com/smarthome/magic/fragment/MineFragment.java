@@ -6,9 +6,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
@@ -17,13 +20,18 @@ import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.SettingActivity;
 import com.smarthome.magic.activity.dingdan.MyOrderActivity;
 import com.smarthome.magic.activity.gouwuche.GouWuCheActivity;
 import com.smarthome.magic.activity.tuangou.KaQuanActivity;
 import com.smarthome.magic.activity.wode_page.AboutUsActivity;
+import com.smarthome.magic.activity.wode_page.DianPuListActivity;
 import com.smarthome.magic.activity.wode_page.MyQianBaoActivity;
+import com.smarthome.magic.activity.wode_page.ShangPinShouCangActivity;
 import com.smarthome.magic.activity.wode_page.TuiGuangMaActivity;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.ConstanceValue;
@@ -184,6 +192,11 @@ public class MineFragment extends BaseFragment implements Observer {
     ConstraintLayout constrain2;
     @BindView(R.id.constrain3)
     ConstraintLayout constrain3;
+    @BindView(R.id.srL_smart)
+    SmartRefreshLayout srLSmart;
+
+    @BindView(R.id.rl_main)
+    RelativeLayout rlMain;
 
 
     @Override
@@ -207,7 +220,17 @@ public class MineFragment extends BaseFragment implements Observer {
         AppEvent.getClassEvent().addObserver(this);
         initData();
         unbinder = ButterKnife.bind(this, rootView);
+
     }
+
+
+    @Override
+    protected boolean immersionEnabled() {
+        return true;
+    }
+
+
+
 
     public void initData() {
         getNet();
@@ -222,6 +245,8 @@ public class MineFragment extends BaseFragment implements Observer {
 
             }
         }));
+
+
     }
 
     @Override
@@ -231,7 +256,14 @@ public class MineFragment extends BaseFragment implements Observer {
 //        llKaquan.setOnClickListener(this);
 //        llShoucangjia.setOnClickListener(this);
 //        llZhanghujifen.setOnClickListener(this);
+        srLSmart.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getNet();
+            }
+        });
 
+        srLSmart.setEnableLoadMore(false);
 
     }
 
@@ -254,6 +286,7 @@ public class MineFragment extends BaseFragment implements Observer {
                     @Override
                     public void onSuccess(Response<AppResponse<MineModel.DataBean>> response) {
                         Log.i("MineFragment", "success");
+                        srLSmart.finishRefresh();
                         //  MineModel.DataBean dataBean = new MineModel.DataBean();
                         dataBean = response.body().data.get(0);
                         Glide.with(getActivity()).load(response.body().data.get(0).getUser_img_url()).into(rivImage);
@@ -302,7 +335,7 @@ public class MineFragment extends BaseFragment implements Observer {
             R.id.tv_maiche_jindu, R.id.iv_xiaofeijilu, R.id.tv_shouhou, R.id.iv_quanbu_dingdan, R.id.rlv_ershouche, R.id.tv_zhanghu_chongzhi,
             R.id.iv_zhanghu_chongzhi, R.id.iv_kapianchongzhi, R.id.tv_kapianchongzhi, R.id.iv_chongzhi_jilu, R.id.tv_chongzhi_jilu, R.id.iv_shouhou_fuwu,
             R.id.tv_xiaofeijilu, R.id.iv_xiche_erwei, R.id.rlv_xiche, R.id.iv_tuiguangma, R.id.tv_tuiguangma, R.id.iv_dailishang, R.id.iv_about_us,
-            R.id.view, R.id.rlv_about_us, R.id.ll_kaquan, R.id.tv_daifukuan, R.id.tv_daishouhuo, R.id.tv_daodian})
+            R.id.view, R.id.rlv_about_us, R.id.ll_kaquan, R.id.tv_daifukuan, R.id.tv_daishouhuo, R.id.tv_daodian, R.id.ll_shoucangjia, R.id.ll_guanzhudianpu})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.riv_image:
@@ -316,8 +349,10 @@ public class MineFragment extends BaseFragment implements Observer {
                 GouWuCheActivity.actionStart(getActivity());
                 break;
             case R.id.tv_shoucangjia_number:
+                //ShangPinShouCangActivity.actionStart(getActivity());
                 break;
             case R.id.tv_shoucangjia:
+
                 break;
             case R.id.tv_guanzhu_dianpu:
                 break;
@@ -430,15 +465,27 @@ public class MineFragment extends BaseFragment implements Observer {
                 break;
             case R.id.rlv_about_us:
                 break;
-            case R.id.ll_shoucangjia://收藏夹
-                break;
+
             case R.id.ll_guanzhudianpu://关注店铺
+                if (tvGuanzhuDianpuNum.getText().toString().equals("0")) {
+                    return;
+                }
+                DianPuListActivity.actionStart(getActivity());
                 break;
             case R.id.ll_zhanghujifen://账户积分
                 break;
             case R.id.ll_kaquan://卡券
+                if (tvKajuanNumber.getText().toString().equals("0")) {
+                    return;
+                }
                 KaQuanActivity.actionStart(getActivity());
                 //   UIHelper.ToastMessage(getActivity(), "点击了卡券");
+                break;
+            case R.id.ll_shoucangjia:
+                if (tvShoucangjiaNumber.getText().toString().equals("0")) {
+                    return;
+                }
+                ShangPinShouCangActivity.actionStart(getActivity());
                 break;
         }
     }

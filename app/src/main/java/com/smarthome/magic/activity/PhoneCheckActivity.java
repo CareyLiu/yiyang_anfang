@@ -162,6 +162,7 @@ public class PhoneCheckActivity extends BaseActivity {
                                 finish();
                                 break;
                             case "0007"://修改登录密码
+                                finish();
                                 startActivity(new Intent(PhoneCheckActivity.this, ReviseLoginActivity.class).putExtra("sms_id", smsId).putExtra("sms_code", etCode.getText().toString()));
                                 break;
                             case "0008"://修改提现账号

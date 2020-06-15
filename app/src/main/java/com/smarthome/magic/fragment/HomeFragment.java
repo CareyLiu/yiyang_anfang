@@ -1,6 +1,4 @@
 
-
-
 package com.smarthome.magic.fragment;
 
 import android.Manifest;
@@ -378,6 +376,10 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
                 getData();
             }
         });
+        smartRefreshLayout.setEnableLoadMore(false);
+
+
+
         unbinder = ButterKnife.bind(this, view);
 
         header = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home_header, (ViewGroup) Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), false);
@@ -739,7 +741,7 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
                         if (smartRefreshLayout != null) {
                             smartRefreshLayout.setEnableRefresh(true);
                             smartRefreshLayout.finishRefresh();
-                            smartRefreshLayout.setEnableLoadMore(true);
+                            smartRefreshLayout.setEnableLoadMore(false);
                         }
 
                         hotList = response.body().data.get(0).getIndexShowList();

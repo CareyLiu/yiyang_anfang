@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.SystemClock;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -28,7 +31,7 @@ import com.smarthome.magic.fragment.HomeFragment;
 import com.smarthome.magic.fragment.MessagerFragment;
 import com.smarthome.magic.fragment.MineFragment;
 import com.smarthome.magic.fragment.OnlineFragment;
-import com.smarthome.magic.fragment.PlayerFragment;
+import com.smarthome.magic.fragment.ZhiNengJiaJuFragment;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.AppToast;
 import com.smarthome.magic.view.NoScrollViewPager;
@@ -38,7 +41,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 
 
 public class HomeActivity extends BaseActivity {
@@ -153,21 +155,22 @@ public class HomeActivity extends BaseActivity {
         items = new SparseIntArray(5);
 
         HomeFragment homeFragment = new HomeFragment();
-        //    PlayerFragment playerFragment = new PlayerFragment();
+        ZhiNengJiaJuFragment zhiNengJiaJuFragment = new ZhiNengJiaJuFragment();
         OnlineFragment onlineFragment = new OnlineFragment();
         MessagerFragment messagerFragment = new MessagerFragment();
         MineFragment mineFragment = new MineFragment();
         fragments.add(homeFragment);
         //   fragments.add(playerFragment);
+        fragments.add(zhiNengJiaJuFragment);
         fragments.add(onlineFragment);
         fragments.add(messagerFragment);
         fragments.add(mineFragment);
 //
         items.put(R.id.i_home, 0);
-        //items.put(R.id.i_play, 1);
-        items.put(R.id.i_car_online, 1);
-        items.put(R.id.i_message, 2);
-        items.put(R.id.i_mine, 3);
+        items.put(R.id.i_zhinengjiaju, 1);
+        items.put(R.id.i_car_online, 2);
+        items.put(R.id.i_message, 3);
+        items.put(R.id.i_mine, 4);
 
         // set adapter
         VpAdapter adapter = new VpAdapter(getSupportFragmentManager(), fragments);
@@ -246,8 +249,6 @@ public class HomeActivity extends BaseActivity {
             return data.get(position);
         }
     }
-
-
 
 
     public static HomeActivity getInstance() {

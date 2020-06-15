@@ -28,6 +28,7 @@ import com.jaeger.library.StatusBarUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.zhinengjiaju.peinet.v1.EspTouchActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
@@ -99,6 +100,8 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
     private static final String TAG = "SettingActivity";
     @BindView(R.id.tv_cache)
     TextView tvCache;
+    @BindView(R.id.shebei_peiwang)
+    LinearLayout shebeiPeiwang;
     private BaseAnimatorSet mBasIn = new BounceBottomEnter();
     private BaseAnimatorSet mBasOut = new SlideBottomExit();
     private TakePhoto takePhoto;
@@ -122,6 +125,13 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        shebeiPeiwang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EspTouchActivity.actionStart(SettingActivity.this);
+            }
+        });
 
     }
 

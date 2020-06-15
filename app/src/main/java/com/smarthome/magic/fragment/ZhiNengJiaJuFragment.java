@@ -16,13 +16,13 @@ import java.util.Observer;
  *
  */
 
-public class PlayerFragment extends BaseFragment implements Observer {
-    private static final String TAG = "HomeFragment";
+public class ZhiNengJiaJuFragment extends BaseFragment implements Observer {
+    private static final String TAG = "ZhiNengJiaJuFragment";
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_player, container, false);
+        View view = inflater.inflate(R.layout.zhinengjiaju, container, false);
         view.setClickable(true);// 防止点击穿透，底层的fragment响应上层点击触摸事件
 
         initView(view);

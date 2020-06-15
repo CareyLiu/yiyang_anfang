@@ -63,6 +63,12 @@ public class HomeActivity extends BaseActivity {
     }
 
     @Override
+    public void initImmersion() {
+        mImmersionBar.with(this).statusBarColor(R.color.white).init();
+    }
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarUtil.setLightMode(this);
@@ -254,6 +260,7 @@ public class HomeActivity extends BaseActivity {
     public static HomeActivity getInstance() {
         return new HomeActivity();
     }
+
 
 
 }

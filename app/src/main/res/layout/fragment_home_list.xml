@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:id="@+id/rl_main"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout

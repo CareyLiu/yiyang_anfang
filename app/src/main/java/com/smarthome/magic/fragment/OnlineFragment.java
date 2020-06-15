@@ -22,6 +22,7 @@ import com.smarthome.magic.activity.PlumbingHeaterActivity;
 import com.smarthome.magic.activity.WindHeaterActivity;
 import com.smarthome.magic.adapter.CarList1Adapter;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
+import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.config.Constant;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
@@ -65,9 +66,20 @@ public class OnlineFragment extends BaseFragment implements Observer {
     CarList1Adapter carListAdapter;//车联网列表适配器
     List<SmartDevice_car_0364.DataBean> carList = new ArrayList<>();//车联网列表数据源
 
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_online_list, container, false);
+    protected void initLogic() {
+
+    }
+
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.fragment_online_list;
+    }
+
+    @Override
+    protected void initView(View view) {
+
         view.setClickable(true);// 防止点击穿透，底层的fragment响应上层点击触摸事件
         unbinder = ButterKnife.bind(this, view);
 
@@ -110,7 +122,18 @@ public class OnlineFragment extends BaseFragment implements Observer {
                  */
             }
         });
-        return view;
+
+    }
+
+    @Override
+    protected void immersionInit(ImmersionBar mImmersionBar) {
+        mImmersionBar.with(this).statusBarDarkFont(true)    .fitsSystemWindows(true).statusBarColor(R.color.white).init();
+    }
+
+
+    @Override
+    protected boolean immersionEnabled() {
+        return true;
     }
 
 

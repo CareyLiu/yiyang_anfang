@@ -6,9 +6,11 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +19,15 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
+import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
 import com.smarthome.magic.adapter.MessageListAdapter;
 import com.smarthome.magic.adapter.NewsFragmentPagerAdapter;
 import com.smarthome.magic.app.AppManager;
+import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConfigValue;
+import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
@@ -75,22 +80,10 @@ public class MessagerFragment extends BaseFragment implements Observer {
         tagList.add("未处理");
     }
 
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_message, container, false);
-        magicIndicator = (MagicIndicator) view.findViewById(R.id.magic_indicator4);
-        viewPager = view.findViewById(R.id.view_pager);
-        view.setClickable(true);// 防止点击穿透，底层的fragment响应上层点击触摸事件
+    protected void initLogic() {
 
-        initView(view);
-        initData();
-
-
-        setThisAdapter();
-        initMagicIndicator1(view, tagList);
-
-
-        return view;
     }
 
     public void initData() {
@@ -98,9 +91,29 @@ public class MessagerFragment extends BaseFragment implements Observer {
 
     }
 
-    private void initView(View view) {
+    @Override
+    protected void immersionInit(ImmersionBar mImmersionBar) {
+        mImmersionBar.with(this).statusBarDarkFont(true)    .fitsSystemWindows(true).statusBarColor(R.color.white).init();
+    }
+
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.fragment_message;
+    }
+
+    @Override
+    protected void initView(View rootView) {
+        magicIndicator = (MagicIndicator) rootView.findViewById(R.id.magic_indicator4);
+        viewPager = rootView.findViewById(R.id.view_pager);
+        rootView.setClickable(true);// 防止点击穿透，底层的fragment响应上层点击触摸事件
+        setThisAdapter();
+        initMagicIndicator1(rootView, tagList);
+    }
 
 
+    @Override
+    protected boolean immersionEnabled() {
+        return true;
     }
 
 

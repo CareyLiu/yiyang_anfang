@@ -209,10 +209,6 @@ public class MineFragment extends BaseFragment implements Observer {
         return R.layout.layout_fragment_wode;
     }
 
-    @Override
-    protected void immersionInit(ImmersionBar mImmersionBar) {
-        mImmersionBar.with(this).statusBarColor(R.color.grayfff5f5f5).init();
-    }
 
     @Override
     protected void initView(View rootView) {
@@ -223,6 +219,10 @@ public class MineFragment extends BaseFragment implements Observer {
 
     }
 
+    @Override
+    protected void immersionInit(ImmersionBar mImmersionBar) {
+        mImmersionBar.with(this) .statusBarDarkFont(true)    .fitsSystemWindows(true).statusBarColor(R.color.grayfff5f5f5).init();
+    }
 
     @Override
     protected boolean immersionEnabled() {

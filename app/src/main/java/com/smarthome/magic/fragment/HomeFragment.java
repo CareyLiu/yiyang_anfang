@@ -342,10 +342,21 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
     NestedScrollView nestedScrollView;
     RelativeLayout rl_GouWuChe;
 
+
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
-            savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home_list, container, false);
+    protected void initLogic() {
+
+    }
+
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.fragment_home_list;
+    }
+
+    @Override
+    protected void initView(View view) {
+
         nestedScrollView = view.findViewById(R.id.nsl_scollview);
         rl_GouWuChe = view.findViewById(R.id.rl_gouwuche);
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
@@ -377,7 +388,6 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
             }
         });
         smartRefreshLayout.setEnableLoadMore(false);
-
 
 
         unbinder = ButterKnife.bind(this, view);
@@ -491,7 +501,7 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
                             startActivity(new Intent(getActivity(), CarListActivity.class).putExtra("type", "wind"));
                         } else if (intellectListBean.getId().equals("3")) {
 //                            UIHelper.ToastMessage(getActivity(), "开发中,敬请期待");
-                             startActivity(new Intent(getActivity(), PlumbingHeaterActivity.class));
+                            startActivity(new Intent(getActivity(), PlumbingHeaterActivity.class));
                         } else if (intellectListBean.getId().equals("4")) {//空调
                             startActivity(new Intent(getActivity(), AirConditionerActivity.class));
                         } else if (intellectListBean.getId().equals("5")) {//神灯控车
@@ -642,23 +652,8 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
                 }
             }
         }));
-        return view;
-    }
 
-
-    @Override
-    protected void initLogic() {
-
-    }
-
-    @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_home_list;
-    }
-
-    @Override
-    protected void initView(View rootView) {
-
+       // mImmersionBar.with(this).statusBarDarkFont(true).fitsSystemWindows(true).statusBarColor(R.color.white).init();
     }
 
 
@@ -669,10 +664,7 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
 
     @Override
     protected void immersionInit(ImmersionBar mImmersionBar) {
-        mImmersionBar
-                .statusBarColor(R.color.white)
-                .statusBarDarkFont(true)
-                .init();
+        mImmersionBar.with(this).statusBarDarkFont(true).fitsSystemWindows(true).statusBarColor(R.color.white).init();
     }
 
     @Override

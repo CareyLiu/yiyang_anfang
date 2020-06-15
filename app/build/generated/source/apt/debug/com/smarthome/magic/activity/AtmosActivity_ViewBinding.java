@@ -17,7 +17,7 @@ import java.lang.Override;
 public class AtmosActivity_ViewBinding implements Unbinder {
   private AtmosActivity target;
 
-  private View view7f090352;
+  private View view7f090359;
 
   private View view7f09008a;
 
@@ -33,7 +33,7 @@ public class AtmosActivity_ViewBinding implements Unbinder {
     View view;
     view = Utils.findRequiredView(source, R.id.rl_back, "field 'mRlBack' and method 'onClick'");
     target.mRlBack = Utils.castView(view, R.id.rl_back, "field 'mRlBack'", RelativeLayout.class);
-    view7f090352 = view;
+    view7f090359 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -63,8 +63,8 @@ public class AtmosActivity_ViewBinding implements Unbinder {
     target.mEtAtmos = null;
     target.mBtSure = null;
 
-    view7f090352.setOnClickListener(null);
-    view7f090352 = null;
+    view7f090359.setOnClickListener(null);
+    view7f090359 = null;
     view7f09008a.setOnClickListener(null);
     view7f09008a = null;
   }

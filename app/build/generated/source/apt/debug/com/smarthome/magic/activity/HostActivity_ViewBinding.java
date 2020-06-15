@@ -19,7 +19,7 @@ import java.lang.Override;
 public class HostActivity_ViewBinding implements Unbinder {
   private HostActivity target;
 
-  private View view7f0901da;
+  private View view7f0901e0;
 
   private View view7f090086;
 
@@ -39,7 +39,7 @@ public class HostActivity_ViewBinding implements Unbinder {
     View view;
     view = Utils.findRequiredView(source, R.id.iv_back, "field 'mIvBack' and method 'onClick'");
     target.mIvBack = Utils.castView(view, R.id.iv_back, "field 'mIvBack'", ImageView.class);
-    view7f0901da = view;
+    view7f0901e0 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -129,8 +129,8 @@ public class HostActivity_ViewBinding implements Unbinder {
     target.mBtRecovery = null;
     target.rlTitle = null;
 
-    view7f0901da.setOnClickListener(null);
-    view7f0901da = null;
+    view7f0901e0.setOnClickListener(null);
+    view7f0901e0 = null;
     view7f090086.setOnClickListener(null);
     view7f090086 = null;
     view7f09008a.setOnClickListener(null);

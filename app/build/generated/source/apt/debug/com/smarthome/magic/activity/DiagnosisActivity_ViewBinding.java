@@ -22,9 +22,9 @@ public class DiagnosisActivity_ViewBinding implements Unbinder {
 
   private View view7f090090;
 
-  private View view7f090352;
+  private View view7f090359;
 
-  private View view7f090357;
+  private View view7f09035e;
 
   @UiThread
   public DiagnosisActivity_ViewBinding(DiagnosisActivity target) {
@@ -59,7 +59,7 @@ public class DiagnosisActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.rl_back, "field 'rlBack' and method 'onViewClicked'");
     target.rlBack = Utils.castView(view, R.id.rl_back, "field 'rlBack'", RelativeLayout.class);
-    view7f090352 = view;
+    view7f090359 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -68,7 +68,7 @@ public class DiagnosisActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.rl_consult, "field 'rlConsult' and method 'onViewClicked'");
     target.rlConsult = Utils.castView(view, R.id.rl_consult, "field 'rlConsult'", RelativeLayout.class);
-    view7f090357 = view;
+    view7f09035e = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -104,9 +104,9 @@ public class DiagnosisActivity_ViewBinding implements Unbinder {
 
     view7f090090.setOnClickListener(null);
     view7f090090 = null;
-    view7f090352.setOnClickListener(null);
-    view7f090352 = null;
-    view7f090357.setOnClickListener(null);
-    view7f090357 = null;
+    view7f090359.setOnClickListener(null);
+    view7f090359 = null;
+    view7f09035e.setOnClickListener(null);
+    view7f09035e = null;
   }
 }

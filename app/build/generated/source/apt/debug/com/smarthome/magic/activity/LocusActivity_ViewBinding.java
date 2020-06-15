@@ -21,13 +21,13 @@ import java.lang.Override;
 public class LocusActivity_ViewBinding implements Unbinder {
   private LocusActivity target;
 
-  private View view7f090352;
+  private View view7f090359;
 
-  private View view7f0901dd;
+  private View view7f0901e3;
 
-  private View view7f090543;
+  private View view7f090558;
 
-  private View view7f090221;
+  private View view7f090227;
 
   private View view7f0900a4;
 
@@ -44,7 +44,7 @@ public class LocusActivity_ViewBinding implements Unbinder {
     target.map = Utils.findRequiredViewAsType(source, R.id.map, "field 'map'", MapView.class);
     view = Utils.findRequiredView(source, R.id.rl_back, "field 'rlBack' and method 'onViewClicked'");
     target.rlBack = Utils.castView(view, R.id.rl_back, "field 'rlBack'", RelativeLayout.class);
-    view7f090352 = view;
+    view7f090359 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -53,7 +53,7 @@ public class LocusActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.iv_before, "field 'ivBefore' and method 'onViewClicked'");
     target.ivBefore = Utils.castView(view, R.id.iv_before, "field 'ivBefore'", ImageView.class);
-    view7f0901dd = view;
+    view7f0901e3 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -62,7 +62,7 @@ public class LocusActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.tv_today, "field 'tvToday' and method 'onViewClicked'");
     target.tvToday = Utils.castView(view, R.id.tv_today, "field 'tvToday'", TextView.class);
-    view7f090543 = view;
+    view7f090558 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -71,7 +71,7 @@ public class LocusActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.iv_next, "field 'ivNext' and method 'onViewClicked'");
     target.ivNext = Utils.castView(view, R.id.iv_next, "field 'ivNext'", ImageView.class);
-    view7f090221 = view;
+    view7f090227 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -109,14 +109,14 @@ public class LocusActivity_ViewBinding implements Unbinder {
     target.sbTime = null;
     target.cbSwitch = null;
 
-    view7f090352.setOnClickListener(null);
-    view7f090352 = null;
-    view7f0901dd.setOnClickListener(null);
-    view7f0901dd = null;
-    view7f090543.setOnClickListener(null);
-    view7f090543 = null;
-    view7f090221.setOnClickListener(null);
-    view7f090221 = null;
+    view7f090359.setOnClickListener(null);
+    view7f090359 = null;
+    view7f0901e3.setOnClickListener(null);
+    view7f0901e3 = null;
+    view7f090558.setOnClickListener(null);
+    view7f090558 = null;
+    view7f090227.setOnClickListener(null);
+    view7f090227 = null;
     view7f0900a4.setOnClickListener(null);
     view7f0900a4 = null;
   }

@@ -19,7 +19,7 @@ public class HandAddActivity_ViewBinding implements Unbinder {
 
   private View view7f090089;
 
-  private View view7f090352;
+  private View view7f090359;
 
   @UiThread
   public HandAddActivity_ViewBinding(HandAddActivity target) {
@@ -43,7 +43,7 @@ public class HandAddActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.rl_back, "field 'mRlBack' and method 'onClick'");
     target.mRlBack = Utils.castView(view, R.id.rl_back, "field 'mRlBack'", RelativeLayout.class);
-    view7f090352 = view;
+    view7f090359 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -65,7 +65,7 @@ public class HandAddActivity_ViewBinding implements Unbinder {
 
     view7f090089.setOnClickListener(null);
     view7f090089 = null;
-    view7f090352.setOnClickListener(null);
-    view7f090352 = null;
+    view7f090359.setOnClickListener(null);
+    view7f090359 = null;
   }
 }

@@ -132,8 +132,7 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
 
         //mZhenShuinuan.setPivotX(mZhenShuinuan.getWidth() / 2);
         // mZhenShuinuan.setPivotY(mZhenShuinuan.getHeight() / 2);//支点在图片中心
-        mZhenShuinuan.setRotation(-180);
-
+        mZhenShuinuan.setRotation(-110);
 
         OkHttpClient mOkHttpClient = new OkHttpClient();
         DataIn in = new DataIn();

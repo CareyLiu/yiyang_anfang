@@ -46,4 +46,6 @@ public interface ConstanceValue {
     int MSG_DINGDAN_PAY = 0x10032;//执行订单支付操作
 
     int MSG_PAY_SUCCESS_REFRESH_WODE = 0x10033;//支付成功刷新接口
+
+    int MSG_KT_DATA = 0x10034;//空调实时数据
 }

@@ -4,12 +4,12 @@
     android:oneshot="false">
     <item
         android:drawable="@drawable/shuinuan_pic_gif_1"
-        android:duration="100" />
+        android:duration="200" />
     <item
         android:drawable="@drawable/shuinuan_pic_gif_2"
-        android:duration="100" />
+        android:duration="200" />
     <item
         android:drawable="@drawable/shuinuan_pic_gif_3"
-        android:duration="100" />
+        android:duration="200" />
 </animation-list>
 

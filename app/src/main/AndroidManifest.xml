@@ -135,6 +135,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
+            android:name=".activity.AirConditionerActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
             android:name=".activity.LoginActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"

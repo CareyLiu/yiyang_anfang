@@ -3,8 +3,10 @@ package com.smarthome.magic.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -61,10 +63,14 @@ public class CarListActivity extends BaseActivity {
     }
 
     @Override
+    public void initImmersion() {
+        mImmersionBar.with(this).statusBarColor(R.color.black).init();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        StatusBarUtil.setDarkMode(this);
         carListAdapter = new CarList1Adapter(carList);
         mList.setLayoutManager(new LinearLayoutManager(this));
         mList.setAdapter(carListAdapter);
@@ -99,9 +105,8 @@ public class CarListActivity extends BaseActivity {
                 CAR_CTROL = "wit/cbox/hardware/" + getServer_id() + getCcid();
                 Log.i("getInformation", "CAR_CTROL     " + CAR_CTROL);
 
-                CARBOX_GETNOW=  "wit/cbox/app/" + getServer_id() + getCcid();
+                CARBOX_GETNOW = "wit/cbox/app/" + getServer_id() + getCcid();
                 Log.i("getInformation", "CAR_CTROL     " + CARBOX_GETNOW);
-
 
 
                 /**

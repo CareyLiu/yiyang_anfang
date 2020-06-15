@@ -5,8 +5,6 @@ import android.app.Activity;
 import android.app.ActivityManager;
 
 
-
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +21,7 @@ import android.media.MediaPlayer;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
@@ -94,8 +93,6 @@ import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 
 
-
-
 public class MyApplication extends MultiDexApplication {
     protected static final String TAG = "MyApplication";
     @SuppressLint("StaticFieldLeak")
@@ -156,8 +153,6 @@ public class MyApplication extends MultiDexApplication {
     public static MyApplication getApp() {
         return application;
     }
-
-
 
 
     private MutableLiveData<String> mBroadcastData;
@@ -253,27 +248,26 @@ public class MyApplication extends MultiDexApplication {
 
         setMqttConnect();
 
-        AlibcTradeSDK.asyncInit(this, new AlibcTradeInitCallback() {
-            @Override
-            public void onSuccess() {
-                // 初始化成功，设置相关的全局配置参数
-                // 设置是否使用同步淘客打点
-                AlibcTradeSDK.setSyncForTaoke(true);
-
-
-                // 设置全局淘客参数，方便开发者用同一个淘客参数，不需要在show接口重复传入
-                //   AlibcTradeSDK.setTaokeParams(taokeParams);
-                Log.i("AlibcTradeSDK", "success");
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                //初始化失败，可以根据code和msg判断失败原因，详情参见错误说明
-
-                Log.i("AlibcTradeSDK", "fail" + "code:" + code + "msg:" + msg);
-            }
-        });
-
+//        AlibcTradeSDK.asyncInit(this, new AlibcTradeInitCallback() {
+//            @Override
+//            public void onSuccess() {
+//                // 初始化成功，设置相关的全局配置参数
+//                // 设置是否使用同步淘客打点
+//                AlibcTradeSDK.setSyncForTaoke(true);
+//
+//
+//                // 设置全局淘客参数，方便开发者用同一个淘客参数，不需要在show接口重复传入
+//                //   AlibcTradeSDK.setTaokeParams(taokeParams);
+//                Log.i("AlibcTradeSDK", "success");
+//            }
+//
+//            @Override
+//            public void onFailure(int code, String msg) {
+//                //初始化失败，可以根据code和msg判断失败原因，详情参见错误说明
+//
+//                Log.i("AlibcTradeSDK", "fail" + "code:" + code + "msg:" + msg);
+//            }
+//        });
 
 
         application = this;
@@ -288,11 +282,7 @@ public class MyApplication extends MultiDexApplication {
         registerReceiver(mReceiver, filter);
 
 
-
-
-        
     }
-
 
 
     public static MyApplication getInstance() {
@@ -578,6 +568,12 @@ public class MyApplication extends MultiDexApplication {
                             n.type = ConstanceValue.MSG_CAR_FEGNYOUBI;
                             n.content = message.toString();
                             RxBus.getDefault().sendRx(n);
+                        } else if (message.toString().contains("M001.")) {
+                            Notice n = new Notice();
+                            n.type = ConstanceValue.MSG_CAR_J_G;
+//                            n.content = message.toString();
+                            n.content = "g0011108122015500026-02500041";
+                            RxBus.getDefault().sendRx(n);
                         }
                     }
 
@@ -843,7 +839,6 @@ public class MyApplication extends MultiDexApplication {
             return true;
         }
     }
-
 
 
     /**

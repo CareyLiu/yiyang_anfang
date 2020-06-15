@@ -21,13 +21,13 @@ import java.lang.Override;
 public class TuanYouList_ViewBinding implements Unbinder {
   private TuanYouList target;
 
-  private View view7f0904b1;
+  private View view7f0904c3;
 
-  private View view7f09056e;
+  private View view7f090584;
 
-  private View view7f090586;
+  private View view7f09059c;
 
-  private View view7f090427;
+  private View view7f090431;
 
   private View view7f0900c1;
 
@@ -52,7 +52,7 @@ public class TuanYouList_ViewBinding implements Unbinder {
     target.rlvList = Utils.findRequiredViewAsType(source, R.id.rlv_list, "field 'rlvList'", RecyclerView.class);
     view = Utils.findRequiredView(source, R.id.tv_km, "field 'tvKm' and method 'onViewClicked'");
     target.tvKm = Utils.castView(view, R.id.tv_km, "field 'tvKm'", TextView.class);
-    view7f0904b1 = view;
+    view7f0904c3 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -61,7 +61,7 @@ public class TuanYouList_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.tv_youhao, "field 'tvYouhao' and method 'onViewClicked'");
     target.tvYouhao = Utils.castView(view, R.id.tv_youhao, "field 'tvYouhao'", TextView.class);
-    view7f09056e = view;
+    view7f090584 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -70,7 +70,7 @@ public class TuanYouList_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.tv_zhinengpaixu, "field 'tvZhinengpaixu' and method 'onViewClicked'");
     target.tvZhinengpaixu = Utils.castView(view, R.id.tv_zhinengpaixu, "field 'tvZhinengpaixu'", TextView.class);
-    view7f090586 = view;
+    view7f09059c = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -79,7 +79,7 @@ public class TuanYouList_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.tv_all_pinpai, "field 'tvAllPinpai' and method 'onViewClicked'");
     target.tvAllPinpai = Utils.castView(view, R.id.tv_all_pinpai, "field 'tvAllPinpai'", TextView.class);
-    view7f090427 = view;
+    view7f090431 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -181,14 +181,14 @@ public class TuanYouList_ViewBinding implements Unbinder {
     target.clPinpaiErji = null;
     target.ivOrder = null;
 
-    view7f0904b1.setOnClickListener(null);
-    view7f0904b1 = null;
-    view7f09056e.setOnClickListener(null);
-    view7f09056e = null;
-    view7f090586.setOnClickListener(null);
-    view7f090586 = null;
-    view7f090427.setOnClickListener(null);
-    view7f090427 = null;
+    view7f0904c3.setOnClickListener(null);
+    view7f0904c3 = null;
+    view7f090584.setOnClickListener(null);
+    view7f090584 = null;
+    view7f09059c.setOnClickListener(null);
+    view7f09059c = null;
+    view7f090431.setOnClickListener(null);
+    view7f090431 = null;
     view7f0900c1.setOnClickListener(null);
     view7f0900c1 = null;
     view7f0900c8.setOnClickListener(null);

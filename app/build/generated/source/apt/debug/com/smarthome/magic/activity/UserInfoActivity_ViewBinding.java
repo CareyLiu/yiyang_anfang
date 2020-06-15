@@ -19,27 +19,27 @@ public class UserInfoActivity_ViewBinding implements Unbinder {
 
   private View view7f090074;
 
-  private View view7f0901ad;
-
-  private View view7f09019c;
-
   private View view7f0901b3;
+
+  private View view7f0901a2;
+
+  private View view7f0901b9;
+
+  private View view7f0901aa;
+
+  private View view7f0901af;
+
+  private View view7f0901c2;
+
+  private View view7f0901ae;
 
   private View view7f0901a4;
 
-  private View view7f0901a9;
-
-  private View view7f0901bc;
-
-  private View view7f0901a8;
-
-  private View view7f09019e;
+  private View view7f0901ac;
 
   private View view7f0901a6;
 
-  private View view7f0901a0;
-
-  private View view7f0901b6;
+  private View view7f0901bc;
 
   @UiThread
   public UserInfoActivity_ViewBinding(UserInfoActivity target) {
@@ -62,7 +62,7 @@ public class UserInfoActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.item_pic, "field 'mItemPic' and method 'onClick'");
     target.mItemPic = Utils.castView(view, R.id.item_pic, "field 'mItemPic'", LinearLayout.class);
-    view7f0901ad = view;
+    view7f0901b3 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -71,7 +71,7 @@ public class UserInfoActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.item_brand, "field 'mItemBrand' and method 'onClick'");
     target.mItemBrand = Utils.castView(view, R.id.item_brand, "field 'mItemBrand'", LinearLayout.class);
-    view7f09019c = view;
+    view7f0901a2 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -80,7 +80,7 @@ public class UserInfoActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.item_region, "field 'mItemRegion' and method 'onClick'");
     target.mItemRegion = Utils.castView(view, R.id.item_region, "field 'mItemRegion'", LinearLayout.class);
-    view7f0901b3 = view;
+    view7f0901b9 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -89,7 +89,7 @@ public class UserInfoActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.item_fuel, "field 'mItemFuel' and method 'onClick'");
     target.mItemFuel = Utils.castView(view, R.id.item_fuel, "field 'mItemFuel'", LinearLayout.class);
-    view7f0901a4 = view;
+    view7f0901aa = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -98,7 +98,7 @@ public class UserInfoActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.item_number, "field 'mItemNumber' and method 'onClick'");
     target.mItemNumber = Utils.castView(view, R.id.item_number, "field 'mItemNumber'", LinearLayout.class);
-    view7f0901a9 = view;
+    view7f0901af = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -107,7 +107,7 @@ public class UserInfoActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.item_type, "field 'mItemType' and method 'onClick'");
     target.mItemType = Utils.castView(view, R.id.item_type, "field 'mItemType'", LinearLayout.class);
-    view7f0901bc = view;
+    view7f0901c2 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -116,7 +116,7 @@ public class UserInfoActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.item_name, "field 'mItemName' and method 'onClick'");
     target.mItemName = Utils.castView(view, R.id.item_name, "field 'mItemName'", LinearLayout.class);
-    view7f0901a8 = view;
+    view7f0901ae = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -125,7 +125,7 @@ public class UserInfoActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.item_contact, "field 'mItemContact' and method 'onClick'");
     target.mItemContact = Utils.castView(view, R.id.item_contact, "field 'mItemContact'", LinearLayout.class);
-    view7f09019e = view;
+    view7f0901a4 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -134,7 +134,7 @@ public class UserInfoActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.item_insurance, "field 'mItemInsurance' and method 'onClick'");
     target.mItemInsurance = Utils.castView(view, R.id.item_insurance, "field 'mItemInsurance'", LinearLayout.class);
-    view7f0901a6 = view;
+    view7f0901ac = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -143,7 +143,7 @@ public class UserInfoActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.item_date, "field 'mItemDate' and method 'onClick'");
     target.mItemDate = Utils.castView(view, R.id.item_date, "field 'mItemDate'", LinearLayout.class);
-    view7f0901a0 = view;
+    view7f0901a6 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -152,7 +152,7 @@ public class UserInfoActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.item_service, "field 'mItemService' and method 'onClick'");
     target.mItemService = Utils.castView(view, R.id.item_service, "field 'mItemService'", LinearLayout.class);
-    view7f0901b6 = view;
+    view7f0901bc = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -203,27 +203,27 @@ public class UserInfoActivity_ViewBinding implements Unbinder {
 
     view7f090074.setOnClickListener(null);
     view7f090074 = null;
-    view7f0901ad.setOnClickListener(null);
-    view7f0901ad = null;
-    view7f09019c.setOnClickListener(null);
-    view7f09019c = null;
     view7f0901b3.setOnClickListener(null);
     view7f0901b3 = null;
+    view7f0901a2.setOnClickListener(null);
+    view7f0901a2 = null;
+    view7f0901b9.setOnClickListener(null);
+    view7f0901b9 = null;
+    view7f0901aa.setOnClickListener(null);
+    view7f0901aa = null;
+    view7f0901af.setOnClickListener(null);
+    view7f0901af = null;
+    view7f0901c2.setOnClickListener(null);
+    view7f0901c2 = null;
+    view7f0901ae.setOnClickListener(null);
+    view7f0901ae = null;
     view7f0901a4.setOnClickListener(null);
     view7f0901a4 = null;
-    view7f0901a9.setOnClickListener(null);
-    view7f0901a9 = null;
-    view7f0901bc.setOnClickListener(null);
-    view7f0901bc = null;
-    view7f0901a8.setOnClickListener(null);
-    view7f0901a8 = null;
-    view7f09019e.setOnClickListener(null);
-    view7f09019e = null;
+    view7f0901ac.setOnClickListener(null);
+    view7f0901ac = null;
     view7f0901a6.setOnClickListener(null);
     view7f0901a6 = null;
-    view7f0901a0.setOnClickListener(null);
-    view7f0901a0 = null;
-    view7f0901b6.setOnClickListener(null);
-    view7f0901b6 = null;
+    view7f0901bc.setOnClickListener(null);
+    view7f0901bc = null;
   }
 }

@@ -14,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.bumptech.glide.Glide;
 import com.flyco.roundview.RoundRelativeLayout;
 import com.google.gson.Gson;
+import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
@@ -193,6 +194,11 @@ public class MineFragment extends BaseFragment implements Observer {
     @Override
     protected int getLayoutRes() {
         return R.layout.layout_fragment_wode;
+    }
+
+    @Override
+    protected void immersionInit(ImmersionBar mImmersionBar) {
+        mImmersionBar.with(this).statusBarColor(R.color.grayfff5f5f5).init();
     }
 
     @Override

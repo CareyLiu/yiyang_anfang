@@ -17,9 +17,9 @@ import java.lang.Override;
 public class AddressActivity_ViewBinding implements Unbinder {
   private AddressActivity target;
 
-  private View view7f090352;
+  private View view7f090359;
 
-  private View view7f090423;
+  private View view7f09042c;
 
   @UiThread
   public AddressActivity_ViewBinding(AddressActivity target) {
@@ -33,7 +33,7 @@ public class AddressActivity_ViewBinding implements Unbinder {
     View view;
     view = Utils.findRequiredView(source, R.id.rl_back, "field 'rlBack' and method 'onViewClicked'");
     target.rlBack = Utils.castView(view, R.id.rl_back, "field 'rlBack'", RelativeLayout.class);
-    view7f090352 = view;
+    view7f090359 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -43,7 +43,7 @@ public class AddressActivity_ViewBinding implements Unbinder {
     target.list = Utils.findRequiredViewAsType(source, R.id.list, "field 'list'", LRecyclerView.class);
     view = Utils.findRequiredView(source, R.id.tv_address, "field 'tvAddress' and method 'onViewClicked'");
     target.tvAddress = Utils.castView(view, R.id.tv_address, "field 'tvAddress'", TextView.class);
-    view7f090423 = view;
+    view7f09042c = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -63,9 +63,9 @@ public class AddressActivity_ViewBinding implements Unbinder {
     target.list = null;
     target.tvAddress = null;
 
-    view7f090352.setOnClickListener(null);
-    view7f090352 = null;
-    view7f090423.setOnClickListener(null);
-    view7f090423 = null;
+    view7f090359.setOnClickListener(null);
+    view7f090359 = null;
+    view7f09042c.setOnClickListener(null);
+    view7f09042c = null;
   }
 }

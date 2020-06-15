@@ -19,11 +19,11 @@ import java.lang.Override;
 public class LoginActivity_ViewBinding implements Unbinder {
   private LoginActivity target;
 
-  private View view7f09052d;
+  private View view7f090541;
 
   private View view7f090087;
 
-  private View view7f090484;
+  private View view7f090495;
 
   @UiThread
   public LoginActivity_ViewBinding(LoginActivity target) {
@@ -40,7 +40,7 @@ public class LoginActivity_ViewBinding implements Unbinder {
     target.mGetCode = Utils.findRequiredViewAsType(source, R.id.get_code, "field 'mGetCode'", LinearLayout.class);
     view = Utils.findRequiredView(source, R.id.tv_switch, "field 'mTvSwitch' and method 'onClick'");
     target.mTvSwitch = Utils.castView(view, R.id.tv_switch, "field 'mTvSwitch'", TextView.class);
-    view7f09052d = view;
+    view7f090541 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -58,7 +58,7 @@ public class LoginActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.tv_get_code, "field 'mTvGetCode' and method 'onClick'");
     target.mTvGetCode = Utils.castView(view, R.id.tv_get_code, "field 'mTvGetCode'", TextView.class);
-    view7f090484 = view;
+    view7f090495 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -97,11 +97,11 @@ public class LoginActivity_ViewBinding implements Unbinder {
     target.tvYonghushiyong = null;
     target.imageView9 = null;
 
-    view7f09052d.setOnClickListener(null);
-    view7f09052d = null;
+    view7f090541.setOnClickListener(null);
+    view7f090541 = null;
     view7f090087.setOnClickListener(null);
     view7f090087 = null;
-    view7f090484.setOnClickListener(null);
-    view7f090484 = null;
+    view7f090495.setOnClickListener(null);
+    view7f090495 = null;
   }
 }

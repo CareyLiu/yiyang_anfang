@@ -18,27 +18,27 @@ public class PartsInfoActivity_ViewBinding implements Unbinder {
 
   private View view7f090074;
 
-  private View view7f0901af;
-
   private View view7f0901b5;
 
-  private View view7f0901b0;
+  private View view7f0901bb;
 
-  private View view7f0901a1;
-
-  private View view7f09019d;
-
-  private View view7f09019f;
-
-  private View view7f0901b8;
-
-  private View view7f0901b1;
+  private View view7f0901b6;
 
   private View view7f0901a7;
 
-  private View view7f0901ae;
+  private View view7f0901a3;
+
+  private View view7f0901a5;
+
+  private View view7f0901be;
+
+  private View view7f0901b7;
+
+  private View view7f0901ad;
 
   private View view7f0901b4;
+
+  private View view7f0901ba;
 
   @UiThread
   public PartsInfoActivity_ViewBinding(PartsInfoActivity target) {
@@ -61,7 +61,7 @@ public class PartsInfoActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.item_plug, "field 'mItemPlug' and method 'onClick'");
     target.mItemPlug = Utils.castView(view, R.id.item_plug, "field 'mItemPlug'", LinearLayout.class);
-    view7f0901af = view;
+    view7f0901b5 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -70,7 +70,7 @@ public class PartsInfoActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.item_sensor, "field 'mItemSensor' and method 'onClick'");
     target.mItemSensor = Utils.castView(view, R.id.item_sensor, "field 'mItemSensor'", LinearLayout.class);
-    view7f0901b5 = view;
+    view7f0901bb = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -79,7 +79,7 @@ public class PartsInfoActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.item_pump, "field 'mItemPump' and method 'onClick'");
     target.mItemPump = Utils.castView(view, R.id.item_pump, "field 'mItemPump'", LinearLayout.class);
-    view7f0901b0 = view;
+    view7f0901b6 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -88,7 +88,7 @@ public class PartsInfoActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.item_fan, "field 'mItemFan' and method 'onClick'");
     target.mItemFan = Utils.castView(view, R.id.item_fan, "field 'mItemFan'", LinearLayout.class);
-    view7f0901a1 = view;
+    view7f0901a7 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -97,7 +97,7 @@ public class PartsInfoActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.item_burner, "field 'mItemBurner' and method 'onClick'");
     target.mItemBurner = Utils.castView(view, R.id.item_burner, "field 'mItemBurner'", LinearLayout.class);
-    view7f09019d = view;
+    view7f0901a3 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -106,7 +106,7 @@ public class PartsInfoActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.item_control, "field 'mItemControl' and method 'onClick'");
     target.mItemControl = Utils.castView(view, R.id.item_control, "field 'mItemControl'", LinearLayout.class);
-    view7f09019f = view;
+    view7f0901a5 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -115,7 +115,7 @@ public class PartsInfoActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.item_switch, "field 'mItemSwitch' and method 'onClick'");
     target.mItemSwitch = Utils.castView(view, R.id.item_switch, "field 'mItemSwitch'", LinearLayout.class);
-    view7f0901b8 = view;
+    view7f0901be = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -124,7 +124,7 @@ public class PartsInfoActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.item_radiator, "field 'mItemRadiator' and method 'onClick'");
     target.mItemRadiator = Utils.castView(view, R.id.item_radiator, "field 'mItemRadiator'", LinearLayout.class);
-    view7f0901b1 = view;
+    view7f0901b7 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -133,7 +133,7 @@ public class PartsInfoActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.item_line, "field 'mItemLine' and method 'onClick'");
     target.mItemLine = Utils.castView(view, R.id.item_line, "field 'mItemLine'", LinearLayout.class);
-    view7f0901a7 = view;
+    view7f0901ad = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -142,7 +142,7 @@ public class PartsInfoActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.item_plastic, "field 'mItemPlastic' and method 'onClick'");
     target.mItemPlastic = Utils.castView(view, R.id.item_plastic, "field 'mItemPlastic'", LinearLayout.class);
-    view7f0901ae = view;
+    view7f0901b4 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -151,7 +151,7 @@ public class PartsInfoActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.item_rubber, "field 'mItemRubber' and method 'onClick'");
     target.mItemRubber = Utils.castView(view, R.id.item_rubber, "field 'mItemRubber'", LinearLayout.class);
-    view7f0901b4 = view;
+    view7f0901ba = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -204,27 +204,27 @@ public class PartsInfoActivity_ViewBinding implements Unbinder {
 
     view7f090074.setOnClickListener(null);
     view7f090074 = null;
-    view7f0901af.setOnClickListener(null);
-    view7f0901af = null;
     view7f0901b5.setOnClickListener(null);
     view7f0901b5 = null;
-    view7f0901b0.setOnClickListener(null);
-    view7f0901b0 = null;
-    view7f0901a1.setOnClickListener(null);
-    view7f0901a1 = null;
-    view7f09019d.setOnClickListener(null);
-    view7f09019d = null;
-    view7f09019f.setOnClickListener(null);
-    view7f09019f = null;
-    view7f0901b8.setOnClickListener(null);
-    view7f0901b8 = null;
-    view7f0901b1.setOnClickListener(null);
-    view7f0901b1 = null;
+    view7f0901bb.setOnClickListener(null);
+    view7f0901bb = null;
+    view7f0901b6.setOnClickListener(null);
+    view7f0901b6 = null;
     view7f0901a7.setOnClickListener(null);
     view7f0901a7 = null;
-    view7f0901ae.setOnClickListener(null);
-    view7f0901ae = null;
+    view7f0901a3.setOnClickListener(null);
+    view7f0901a3 = null;
+    view7f0901a5.setOnClickListener(null);
+    view7f0901a5 = null;
+    view7f0901be.setOnClickListener(null);
+    view7f0901be = null;
+    view7f0901b7.setOnClickListener(null);
+    view7f0901b7 = null;
+    view7f0901ad.setOnClickListener(null);
+    view7f0901ad = null;
     view7f0901b4.setOnClickListener(null);
     view7f0901b4 = null;
+    view7f0901ba.setOnClickListener(null);
+    view7f0901ba = null;
   }
 }

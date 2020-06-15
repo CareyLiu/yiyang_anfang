@@ -18,9 +18,9 @@ import java.lang.Override;
 public class PhoneCheckActivity_ViewBinding implements Unbinder {
   private PhoneCheckActivity target;
 
-  private View view7f090352;
+  private View view7f090359;
 
-  private View view7f090484;
+  private View view7f090495;
 
   private View view7f090097;
 
@@ -36,7 +36,7 @@ public class PhoneCheckActivity_ViewBinding implements Unbinder {
     View view;
     view = Utils.findRequiredView(source, R.id.rl_back, "field 'rlBack' and method 'onViewClicked'");
     target.rlBack = Utils.castView(view, R.id.rl_back, "field 'rlBack'", RelativeLayout.class);
-    view7f090352 = view;
+    view7f090359 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -47,7 +47,7 @@ public class PhoneCheckActivity_ViewBinding implements Unbinder {
     target.etCode = Utils.findRequiredViewAsType(source, R.id.et_code, "field 'etCode'", EditText.class);
     view = Utils.findRequiredView(source, R.id.tv_get_code, "field 'tvGetCode' and method 'onViewClicked'");
     target.tvGetCode = Utils.castView(view, R.id.tv_get_code, "field 'tvGetCode'", TextView.class);
-    view7f090484 = view;
+    view7f090495 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -78,10 +78,10 @@ public class PhoneCheckActivity_ViewBinding implements Unbinder {
     target.tvGetCode = null;
     target.btnSubmit = null;
 
-    view7f090352.setOnClickListener(null);
-    view7f090352 = null;
-    view7f090484.setOnClickListener(null);
-    view7f090484 = null;
+    view7f090359.setOnClickListener(null);
+    view7f090359 = null;
+    view7f090495.setOnClickListener(null);
+    view7f090495 = null;
     view7f090097.setOnClickListener(null);
     view7f090097 = null;
   }

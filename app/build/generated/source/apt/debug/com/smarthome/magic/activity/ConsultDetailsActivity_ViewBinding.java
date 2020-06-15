@@ -18,9 +18,9 @@ import java.lang.Override;
 public class ConsultDetailsActivity_ViewBinding implements Unbinder {
   private ConsultDetailsActivity target;
 
-  private View view7f090259;
+  private View view7f09025f;
 
-  private View view7f09047b;
+  private View view7f09048c;
 
   @UiThread
   public ConsultDetailsActivity_ViewBinding(ConsultDetailsActivity target) {
@@ -34,7 +34,7 @@ public class ConsultDetailsActivity_ViewBinding implements Unbinder {
     View view;
     view = Utils.findRequiredView(source, R.id.layout_back, "field 'layoutBack' and method 'onViewClicked'");
     target.layoutBack = Utils.castView(view, R.id.layout_back, "field 'layoutBack'", LinearLayout.class);
-    view7f090259 = view;
+    view7f09025f = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -43,7 +43,7 @@ public class ConsultDetailsActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.tv_finish, "field 'tvFinish' and method 'onViewClicked'");
     target.tvFinish = Utils.castView(view, R.id.tv_finish, "field 'tvFinish'", TextView.class);
-    view7f09047b = view;
+    view7f09048c = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -74,9 +74,9 @@ public class ConsultDetailsActivity_ViewBinding implements Unbinder {
     target.tvNumber = null;
     target.tvFault = null;
 
-    view7f090259.setOnClickListener(null);
-    view7f090259 = null;
-    view7f09047b.setOnClickListener(null);
-    view7f09047b = null;
+    view7f09025f.setOnClickListener(null);
+    view7f09025f = null;
+    view7f09048c.setOnClickListener(null);
+    view7f09048c = null;
   }
 }

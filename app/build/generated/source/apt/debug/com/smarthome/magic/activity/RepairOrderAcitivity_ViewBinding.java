@@ -16,7 +16,7 @@ import java.lang.Override;
 public class RepairOrderAcitivity_ViewBinding implements Unbinder {
   private RepairOrderAcitivity target;
 
-  private View view7f090352;
+  private View view7f090359;
 
   @UiThread
   public RepairOrderAcitivity_ViewBinding(RepairOrderAcitivity target) {
@@ -30,7 +30,7 @@ public class RepairOrderAcitivity_ViewBinding implements Unbinder {
     View view;
     view = Utils.findRequiredView(source, R.id.rl_back, "field 'rlBack' and method 'onViewClicked'");
     target.rlBack = Utils.castView(view, R.id.rl_back, "field 'rlBack'", RelativeLayout.class);
-    view7f090352 = view;
+    view7f090359 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -50,7 +50,7 @@ public class RepairOrderAcitivity_ViewBinding implements Unbinder {
     target.rlBack = null;
     target.list = null;
 
-    view7f090352.setOnClickListener(null);
-    view7f090352 = null;
+    view7f090359.setOnClickListener(null);
+    view7f090359 = null;
   }
 }

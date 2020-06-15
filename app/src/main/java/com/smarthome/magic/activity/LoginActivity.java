@@ -102,6 +102,11 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
+    public void initImmersion() {
+        mImmersionBar.with(this).statusBarColor(R.color.white).init();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);

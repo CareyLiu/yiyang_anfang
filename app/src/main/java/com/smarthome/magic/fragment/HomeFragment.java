@@ -61,7 +61,9 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.AirConditionerActivity;
 import com.smarthome.magic.activity.CarListActivity;
+import com.smarthome.magic.activity.PlumbingHeaterActivity;
 import com.smarthome.magic.activity.TuanYouWebView;
 import com.smarthome.magic.activity.WebViewActivity;
 import com.smarthome.magic.activity.gouwuche.GouWuCheActivity;
@@ -486,10 +488,10 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
                         } else if (intellectListBean.getId().equals("2")) {
                             startActivity(new Intent(getActivity(), CarListActivity.class).putExtra("type", "wind"));
                         } else if (intellectListBean.getId().equals("3")) {
-                            UIHelper.ToastMessage(getActivity(), "开发中,敬请期待");
-                            // startActivity(new Intent(getActivity(), CarListActivity.class).putExtra("type", "plumbing"));
+//                            UIHelper.ToastMessage(getActivity(), "开发中,敬请期待");
+                             startActivity(new Intent(getActivity(), PlumbingHeaterActivity.class));
                         } else if (intellectListBean.getId().equals("4")) {//空调
-                            UIHelper.ToastMessage(getActivity(), "开发中,敬请期待");
+                            startActivity(new Intent(getActivity(), AirConditionerActivity.class));
                         } else if (intellectListBean.getId().equals("5")) {//神灯控车
                             UIHelper.ToastMessage(getActivity(), "开发中,敬请期待");
                         }
@@ -599,7 +601,6 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
 
         hotLRecyclerViewAdapter.addHeaderView(header);
         hotLRecyclerViewAdapter.addFooterView(footer);
-
 
 
         //设置图片加载器

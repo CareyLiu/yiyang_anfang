@@ -5,19 +5,25 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
 import com.google.android.material.navigation.NavigationView;
+
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.widget.Toolbar;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,7 +33,12 @@ import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.rairmmd.andmqtt.AndMqtt;
+import com.rairmmd.andmqtt.MqttPublish;
+import com.rairmmd.andmqtt.MqttSubscribe;
 import com.smarthome.magic.R;
+import com.smarthome.magic.app.ConstanceValue;
+import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.Constant;
@@ -42,6 +53,9 @@ import com.smarthome.magic.model.SmartDevice_car_0364;
 import com.smarthome.magic.service.WitMqttFormatService;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.ConstantUtil;
+
+import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttToken;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -58,8 +72,13 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
-public class PlumbingHeaterActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+import static com.smarthome.magic.config.MyApplication.CAR_NOTIFY;
+
+public class PlumbingHeaterActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener,
+        View.OnClickListener {
 
     private static final String TAG = "WindHeaterActivity";
     public Handler mHandler;
@@ -94,6 +113,10 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
 
     ImageView mZhenShuinuan;
     Bitmap bitmap;
+    AnimationDrawable animationDrawable;
+
+    String KT_Send = "wh/hardware/11111111111111111111111";
+    String KT_Accept = "wh/app/11111111111111111111111";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,49 +147,162 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
         initHandler();
         //  arcProgressBar.setHandler(mHandler);
         //   arcProgressBar.setOpen(true);
-        AnimationDrawable animationDrawable;
-        animationDrawable = (AnimationDrawable) ivHeaterHost.getBackground();
-        animationDrawable.start();
         mZhenShuinuan = findViewById(R.id.zhen_shuinuan);
-
 
         //mZhenShuinuan.setPivotX(mZhenShuinuan.getWidth() / 2);
         // mZhenShuinuan.setPivotY(mZhenShuinuan.getHeight() / 2);//支点在图片中心
         mZhenShuinuan.setRotation(-110);
 
-        OkHttpClient mOkHttpClient = new OkHttpClient();
-        DataIn in = new DataIn();
-        in.code = "03064";
-        in.key = Constant.KEY;
-        in.user_car_type = "1";
-        in.token = UserManager.getManager(this).getAppToken();
-        MediaType JSON = MediaType.parse("application/json;charset=utf-8");
-        RequestBody body = RequestBody.create(JSON, new Gson().toJson(in));
-        final Request request = new Request.Builder().url(Constant.SERVER_URL + "wit/app/user").post(body).build();
-        Call call = mOkHttpClient.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
+        btnHeaterClose.setOnClickListener(this);
 
+        registerKtMqtt();
+        snedDefaultMqtt();
+        getnotice();
+
+//        OkHttpClient mOkHttpClient = new OkHttpClient();
+//        DataIn in = new DataIn();
+//        in.code = "03064";
+//        in.key = Constant.KEY;
+//        in.user_car_type = "1";
+//        in.token = UserManager.getManager(this).getAppToken();
+//        MediaType JSON = MediaType.parse("application/json;charset=utf-8");
+//        RequestBody body = RequestBody.create(JSON, new Gson().toJson(in));
+//        final Request request = new Request.Builder().url(Constant.SERVER_URL + "wit/app/user").post(body).build();
+//        Call call = mOkHttpClient.newCall(request);
+//        call.enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, okhttp3.Response response) throws IOException {
+//                Gson gson = new Gson();
+//                SmartDevice_0 bean = gson.fromJson(response.body().string(), SmartDevice_0.class);
+//
+//                System.out.println(bean.getData().size() + "");
+//                for (int i = 0; i < bean.getData().size(); i++) {
+//                    System.out.println(bean.getData().get(i).getCar_brand_name());
+//                }
+//
+//
+//            }
+//        });
+    }
+
+    private void registerKtMqtt() {
+        //注册向空调发送数据的主题
+        AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                .setTopic(KT_Send)
+                .setQos(2), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+                Log.i("Rair", "notify:  " + CAR_NOTIFY);
             }
 
             @Override
-            public void onResponse(Call call, okhttp3.Response response) throws IOException {
-                Gson gson = new Gson();
-                SmartDevice_0 bean = gson.fromJson(response.body().string(), SmartDevice_0.class);
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                Log.i("CAR_NOTIFY", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
+            }
+        });
+        //注册空调向app回调数据的主题
+        AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                .setTopic(KT_Accept)
+                .setQos(2), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+                Log.i("Rair", "notify:  " + CAR_NOTIFY);
+            }
 
-                System.out.println(bean.getData().size()+"");
-                for (int i = 0; i < bean.getData().size(); i++) {
-                   System.out.println(bean.getData().get(i).getCar_brand_name());
-               }
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                Log.i("CAR_NOTIFY", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
+            }
+        });
+    }
 
+    /**
+     * 界面打开时向空调发送查询实时数据指令
+     */
+    private void snedDefaultMqtt() {
+        AndMqtt.getInstance().publish(new MqttPublish()
+                .setMsg("j_s")
+                .setQos(2).setRetained(false)
+                .setTopic(KT_Accept), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+                Log.i("Rair", "(KT_Accept)-onSuccess:-&gt;发布成功");
+            }
 
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
             }
         });
 
-
     }
 
+    /**
+     * 获取通知返回的数据
+     */
+    private void getnotice() {
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_SN_DATA) {
+                    //接收到信息
+                    Log.i("msg_kt_j_", message.content.toString());
+                    String messageData = message.content.toString().substring(3, message.content.toString().length() - 1);
+                    //水暖状态
+                    String sn_state = messageData.substring(0, 1);
+                    switch (sn_state) {
+                        case "0":
+                            //待机中
+                            btnHeaterClose.setBackgroundResource(R.mipmap.car_open);
+                            break;
+                        case "1":
+                            //开机中
+                            btnHeaterClose.setBackgroundResource(R.mipmap.car_open);
+                            ivHeaterHost.setBackgroundResource(R.drawable.plumbing);
+                            animationDrawable = (AnimationDrawable) ivHeaterHost.getBackground();
+                            animationDrawable.start();
+                            break;
+                        case "2":
+                            //加热中
+                            btnHeaterClose.setBackgroundResource(R.mipmap.car_open);
+                            ivHeaterHost.setBackgroundResource(R.drawable.plumbing);
+                            animationDrawable = (AnimationDrawable) ivHeaterHost.getBackground();
+                            animationDrawable.start();
+                            break;
+                        case "3":
+                            //关机中
+                            btnHeaterClose.setBackgroundResource(R.mipmap.car_close);
+                            break;
+                        case "4":
+                            //循环水
+                            btnHeaterClose.setBackgroundResource(R.mipmap.car_open);
+                            ivHeaterHost.setBackgroundResource(R.drawable.plumbing);
+                            animationDrawable = (AnimationDrawable) ivHeaterHost.getBackground();
+                            animationDrawable.start();
+                            break;
+                    }
+                }
+            }
+        }));
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_heater_close:
+                ShuiNuanSwitch();
+                break;
+        }
+    }
+
+    private void ShuiNuanSwitch() {
+
+    }
 
     @SuppressLint("HandlerLeak")
     private void initHandler() {

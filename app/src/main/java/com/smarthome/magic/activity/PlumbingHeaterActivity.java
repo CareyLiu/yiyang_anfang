@@ -167,7 +167,6 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
 
         //mZhenShuinuan.setPivotX(mZhenShuinuan.getWidth() / 2);
         // mZhenShuinuan.setPivotY(mZhenShuinuan.getHeight() / 2);//支点在图片中心
-//        mZhenShuinuan.setRotation(-120);
         mZhenShuinuan.setRotation(-123);
 
         shuiwen1.setOnLongClickListener(this);
@@ -276,10 +275,10 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
                     String state = messageData.substring(0, 1);
                     sn_state = state;
                     //预设温度
-                    String preset_temperature = messageData.substring(39, 41);
+                    String preset_temperature = messageData.substring(35, 37);
                     sn_preset_temperature1 = preset_temperature;
                     //当前出水口温度
-                    String current_temperature = messageData.substring(32, 36);
+                    String current_temperature = messageData.substring(27, 30);
                     switch (state) {
                         case "0":
                             //待机中
@@ -303,6 +302,7 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
                             //关机中
                             btnHeaterClose.setBackgroundResource(R.mipmap.car_close);
                             ivHeaterHost.setBackgroundResource(R.drawable.shuinuan_pic_gif_nor);
+                            mZhenShuinuan.setRotation(-123);
                             break;
                         case "4":
                             //循环水
@@ -313,6 +313,7 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
                             break;
                     }
                     if (!state.equals("3")) {
+                        //开机状态显示当前设置问题
                         if (Integer.parseInt(preset_temperature) <= 60) {
                             shuiwen1.setBackgroundResource(R.mipmap.sheding_button_sel);
                             wendu2.setBackgroundResource(R.mipmap.sheding_button_nor);
@@ -323,22 +324,26 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
                             shuiwen1.setBackgroundResource(R.mipmap.sheding_button_nor);
                             wendu2.setBackgroundResource(R.mipmap.sheding_button_sel);
                         }
+                        //开机状态显示当前出水温度
+                        float temperature = 0;
+                        if (current_temperature.contains("-")) {
+                            String[] str = current_temperature.split("-");
+                            String format = new BigDecimal("-" + str[1]).toString();
+                            temperature = Float.valueOf(format) / 10;
+                        } else {
+                            String format = new BigDecimal(current_temperature).toString();
+                            temperature = Float.valueOf(format) / 10;
+                        }
+                        //先把仪表盘指针复位，再重新旋转
+                        mZhenShuinuan.setRotation(-123);
+                        float default_angle = mZhenShuinuan.getRotation();
+                        mZhenShuinuan.setRotation(default_angle + temperature * temperature_lattice);
+
                     } else {
                         shuiwen1.setBackgroundResource(R.mipmap.sheding_button_nor);
                         wendu2.setBackgroundResource(R.mipmap.sheding_button_nor);
                     }
 
-                    float temperature = 0;
-                    if (current_temperature.contains("-")) {
-                        String[] str = current_temperature.split("-");
-                        String format = new BigDecimal("-" + str[1]).toString();
-                        temperature = Float.valueOf(format) / 10;
-                    } else {
-                        String format = new BigDecimal(current_temperature).toString();
-                        temperature = Float.valueOf(format) / 10;
-                    }
-                    float default_angle = mZhenShuinuan.getRotation();
-                    mZhenShuinuan.setRotation(default_angle + temperature * temperature_lattice);
                 }
             }
         }));
@@ -375,7 +380,7 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
             return;
         }
         sn_preset_temperature1 = "60";
-        String data = "j_s" + sn_state + "45666666126666666110264026500010010001" + sn_preset_temperature1 + "02310.";
+        String data = "j_s" + sn_state + "4561116666666110264026505007060001" + sn_preset_temperature1 + "02310.";
         AndMqtt.getInstance().publish(new MqttPublish()
                 .setMsg(data)
                 .setQos(2).setRetained(false)
@@ -401,7 +406,7 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
             return;
         }
         sn_preset_temperature1 = "80";
-        String data = "j_s" + sn_state + "45666666126666666110264026500010010001" + sn_preset_temperature1 + "02310.";
+        String data = "j_s" + sn_state + "4561116666666110264026505007060001" + sn_preset_temperature1 + "02310.";
         AndMqtt.getInstance().publish(new MqttPublish()
                 .setMsg(data)
                 .setQos(2).setRetained(false)
@@ -429,7 +434,7 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
             state = 1;
         }
 
-        String data = "j_s" + state + "456666661266666661102640265000100100017002310.";
+        String data = "j_s" + state + "45611166666661102640265050070600017002310.";
         AndMqtt.getInstance().publish(new MqttPublish()
                 .setMsg(data)
                 .setQos(2).setRetained(false)

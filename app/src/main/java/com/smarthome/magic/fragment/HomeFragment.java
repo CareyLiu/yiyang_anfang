@@ -61,6 +61,8 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.AirConditionerActivity;
 import com.smarthome.magic.activity.CarListActivity;
+import com.smarthome.magic.activity.DefaultX5WebViewActivity;
+import com.smarthome.magic.activity.DefaultX5WebView_HaveNameActivity;
 import com.smarthome.magic.activity.PlumbingHeaterActivity;
 import com.smarthome.magic.activity.TuanYouWebView;
 import com.smarthome.magic.activity.WebViewActivity;
@@ -343,7 +345,6 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
     RelativeLayout rl_GouWuChe;
 
 
-
     @Override
     protected void initLogic() {
 
@@ -520,7 +521,7 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
                         /**
                          * iconList
                          * 美团小图标	id	图标id   1.美食 2.电影 3.酒店 4.休闲娱乐 5.旅游 6.加油
-                         * 7.修配厂 8.体检 9.丽人/美发 10更多
+                         * 7.修配厂 8.体检 9.丽人/美发 10更多 14 房产
                          */
 
                         //首先获得权限
@@ -550,6 +551,12 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
                             //UIHelper.ToastMessage(getActivity(), "开发中,敬请期待");
 
                             TuanYouList.actionStart(getActivity());
+                        } else if (chiHeWanLeListAdapter.getData().get(position).getId().equals("14")) {
+                            //               TuanGouShangJiaListActivity.actionStart(getActivity(), chiHeWanLeListAdapter.getData().get(position).getId());
+                            //UIHelper.ToastMessage(getActivity(), "开发中,敬请期待");
+
+                            DefaultX5WebView_HaveNameActivity.actionStart(getActivity(), chiHeWanLeListAdapter.getData().get(position).getHref_url(), chiHeWanLeListAdapter.getData().get(position).getName());
+                            //TuanYouList.actionStart(getActivity());
                         } else {
                             TuanGouShangJiaListActivity.actionStart(getActivity(), chiHeWanLeListAdapter.getData().get(position).getId());
 
@@ -653,7 +660,7 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
             }
         }));
 
-       // mImmersionBar.with(this).statusBarDarkFont(true).fitsSystemWindows(true).statusBarColor(R.color.white).init();
+        // mImmersionBar.with(this).statusBarDarkFont(true).fitsSystemWindows(true).statusBarColor(R.color.white).init();
     }
 
 

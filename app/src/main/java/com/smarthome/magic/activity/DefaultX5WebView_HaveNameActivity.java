@@ -38,9 +38,9 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 
-public class DefaultX5WebViewActivity extends BaseActivity {
+public class DefaultX5WebView_HaveNameActivity extends BaseActivity {
 
-    public final static String tag = DefaultX5WebViewActivity.class.getSimpleName();
+    public final static String tag = DefaultX5WebView_HaveNameActivity.class.getSimpleName();
     @BindView(R.id.x5_webView)
     X5WebView x5WebView;
 
@@ -59,21 +59,16 @@ public class DefaultX5WebViewActivity extends BaseActivity {
      * @param context 上下文
      * @param url     需要显示的url地址
      */
-    public static void actionStart(Context context, String url, String shareId, String shareType) {
-        Intent intent = new Intent(context, DefaultX5WebViewActivity.class);
+    public static void actionStart(Context context, String url, String titleName) {
+        Intent intent = new Intent(context, DefaultX5WebView_HaveNameActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("url", url);
-        if (shareId != null && shareType != null) {
-            intent.putExtra("shareId", shareId);
-            intent.putExtra("shareType", shareType);
-        }
+        intent.putExtra("titleName", titleName);
         context.startActivity(intent);
     }
 
-    public static void actionStart(Context context, String url) {
-        actionStart(context, url, null, null);
-    }
 
+    private String titleName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +82,7 @@ public class DefaultX5WebViewActivity extends BaseActivity {
         url = intent.getStringExtra("url");
         shareId = intent.getStringExtra("shareId");
         shareType = intent.getStringExtra("shareType");
+        titleName = intent.getStringExtra("titleName");
         init();
         if (!TextUtils.isEmpty(shareId) && !TextUtils.isEmpty(shareType)) {
             iv_rightTitle.setVisibility(View.VISIBLE);
@@ -99,7 +95,7 @@ public class DefaultX5WebViewActivity extends BaseActivity {
                     // x5WebView.loadUrl("javascript:java_js('appToJsPaySuccess')");
                     x5WebView.loadUrl("javascript:appToJsPaySuccess()");
                     Log.i("x5webviewsuccess", "webview_success");
-                    UIHelper.ToastMessage(DefaultX5WebViewActivity.this, "支付成功");
+                    UIHelper.ToastMessage(DefaultX5WebView_HaveNameActivity.this, "支付成功");
                 } else if (message.type == ConstanceValue.MSG_SAOMAFAILE) {
                     //x5WebView.loadUrl("javascript:java_js('appToJsPayFaile')");
                     x5WebView.loadUrl("javascript:appToJsPayFaile()");
@@ -114,8 +110,6 @@ public class DefaultX5WebViewActivity extends BaseActivity {
     public int getContentViewResId() {
         return R.layout.activity_default_x5_web_view;
     }
-
-
 
     private void init() {
         x5WebView.setWebViewClient(new MyWebViewClient());
@@ -149,7 +143,7 @@ public class DefaultX5WebViewActivity extends BaseActivity {
         webSetting.setDatabasePath(x5WebView.getContext().getDir("databases", 0).getPath());
         webSetting.setGeolocationDatabasePath(x5WebView.getContext().getDir("geolocation", 0).getPath());
         webSetting.setPluginState(WebSettings.PluginState.ON_DEMAND);
-        x5WebView.addJavascriptInterface(new AndroidForJs(DefaultX5WebViewActivity.this), "android");
+        x5WebView.addJavascriptInterface(new AndroidForJs(DefaultX5WebView_HaveNameActivity.this), "android");
         long time = System.currentTimeMillis();
         Log.e(tag, "DefaultX5WebViewActivity : " + url);
         if (url != null) {
@@ -184,7 +178,7 @@ public class DefaultX5WebViewActivity extends BaseActivity {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             if (progressDialog == null) {
-                progressDialog = new ProgressDialog(DefaultX5WebViewActivity.this);//网页没加载出来时显示的dialog提示
+                progressDialog = new ProgressDialog(DefaultX5WebView_HaveNameActivity.this);//网页没加载出来时显示的dialog提示
                 progressDialog.setMessage("加载中，请稍后...");
                 progressDialog.show();
                 x5WebView.setEnabled(false);// 当加载网页的时候将网页进行隐藏
@@ -278,10 +272,5 @@ public class DefaultX5WebViewActivity extends BaseActivity {
             }
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    public boolean showToolBar() {
-        return true;
     }
 }

@@ -15,10 +15,10 @@
 
         <com.smarthome.magic.util.x5.utils.X5WebView
             android:id="@+id/x5_webView"
-            android:visibility="visible"
-            android:scrollbars="none"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:visibility="visible" />
 
     </LinearLayout>
 

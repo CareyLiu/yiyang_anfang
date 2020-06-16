@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
@@ -24,9 +23,11 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.DefaultX5WebViewActivity;
 import com.smarthome.magic.activity.SettingActivity;
 import com.smarthome.magic.activity.dingdan.MyOrderActivity;
 import com.smarthome.magic.activity.gouwuche.GouWuCheActivity;
+import com.smarthome.magic.activity.saoma.ScanActivity;
 import com.smarthome.magic.activity.tuangou.KaQuanActivity;
 import com.smarthome.magic.activity.wode_page.AboutUsActivity;
 import com.smarthome.magic.activity.wode_page.DianPuListActivity;
@@ -197,6 +198,8 @@ public class MineFragment extends BaseFragment implements Observer {
 
     @BindView(R.id.rl_main)
     RelativeLayout rlMain;
+    @BindView(R.id.tv_dalishang)
+    TextView tvDalishang;
 
 
     @Override
@@ -221,15 +224,13 @@ public class MineFragment extends BaseFragment implements Observer {
 
     @Override
     protected void immersionInit(ImmersionBar mImmersionBar) {
-        mImmersionBar.with(this) .statusBarDarkFont(true)    .fitsSystemWindows(true).statusBarColor(R.color.grayfff5f5f5).init();
+        mImmersionBar.with(this).statusBarDarkFont(true).fitsSystemWindows(true).statusBarColor(R.color.grayfff5f5f5).init();
     }
 
     @Override
     protected boolean immersionEnabled() {
         return true;
     }
-
-
 
 
     public void initData() {
@@ -270,13 +271,13 @@ public class MineFragment extends BaseFragment implements Observer {
 
     MineModel.DataBean dataBean;
     private String aliPayCheck;//
+    String agentUrl = "";
 
     private void getNet() {
         Map<String, String> map = new HashMap<>();
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(getActivity()).getAppToken());
         map.put("code", "04201");
-
 
         Gson gson = new Gson();
         OkGo.<AppResponse<MineModel.DataBean>>post(Urls.HOME_PICTURE_HOME)
@@ -299,6 +300,19 @@ public class MineFragment extends BaseFragment implements Observer {
 
                         PreferenceHelper.getInstance(getActivity()).putString(App.CUNCHUBIND_ALIPAY, response.body().data.get(0).getAlipay_number_check());
                         PreferenceHelper.getInstance(getActivity()).putString(App.CUNCHU_ZHIFUMIMA, response.body().data.get(0).getPay_pwd_check());//1 已经设置 2 未设置
+
+
+                        /**
+                         * agent_user_type	用户是否是代理商 1.是 2.不是
+                         */
+                        if (response.body().data.get(0).getAgent_user_type().equals("1")) {
+                            ivDailishang.setVisibility(View.VISIBLE);
+                            tvDalishang.setVisibility(View.VISIBLE);
+                        } else {
+                            ivDailishang.setVisibility(View.GONE);
+                            tvDalishang.setVisibility(View.GONE);
+                        }
+                        agentUrl = response.body().data.get(0).getAgent_url();
 
 
                     }
@@ -335,7 +349,8 @@ public class MineFragment extends BaseFragment implements Observer {
             R.id.tv_maiche_jindu, R.id.iv_xiaofeijilu, R.id.tv_shouhou, R.id.iv_quanbu_dingdan, R.id.rlv_ershouche, R.id.tv_zhanghu_chongzhi,
             R.id.iv_zhanghu_chongzhi, R.id.iv_kapianchongzhi, R.id.tv_kapianchongzhi, R.id.iv_chongzhi_jilu, R.id.tv_chongzhi_jilu, R.id.iv_shouhou_fuwu,
             R.id.tv_xiaofeijilu, R.id.iv_xiche_erwei, R.id.rlv_xiche, R.id.iv_tuiguangma, R.id.tv_tuiguangma, R.id.iv_dailishang, R.id.iv_about_us,
-            R.id.view, R.id.rlv_about_us, R.id.ll_kaquan, R.id.tv_daifukuan, R.id.tv_daishouhuo, R.id.tv_daodian, R.id.ll_shoucangjia, R.id.ll_guanzhudianpu})
+            R.id.view, R.id.rlv_about_us, R.id.ll_kaquan, R.id.tv_daifukuan, R.id.tv_daishouhuo, R.id.tv_daodian, R.id.ll_shoucangjia,
+            R.id.ll_guanzhudianpu, R.id.tv_dalishang})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.riv_image:
@@ -456,8 +471,7 @@ public class MineFragment extends BaseFragment implements Observer {
                 break;
             case R.id.tv_tuiguangma:
                 break;
-            case R.id.iv_dailishang:
-                break;
+
             case R.id.iv_about_us:
                 AboutUsActivity.actionStart(getActivity());
                 break;
@@ -487,6 +501,13 @@ public class MineFragment extends BaseFragment implements Observer {
                 }
                 ShangPinShouCangActivity.actionStart(getActivity());
                 break;
+            case R.id.iv_dailishang:
+            case R.id.tv_dalishang:
+                if (!StringUtils.isEmpty(agentUrl)) {
+                    DefaultX5WebViewActivity.actionStart(getActivity(), agentUrl);
+                }
+                break;
+
         }
     }
 

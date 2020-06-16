@@ -107,6 +107,26 @@ public class MineModel {
         private String score_tx;
         private List<?> makeList;
 
+        public String getAgent_url() {
+            return agent_url;
+        }
+
+        public void setAgent_url(String agent_url) {
+            this.agent_url = agent_url;
+        }
+
+        private String agent_url;
+
+        public String getAgent_user_type() {
+            return agent_user_type;
+        }
+
+        public void setAgent_user_type(String agent_user_type) {
+            this.agent_user_type = agent_user_type;
+        }
+
+        private String agent_user_type;
+
         public String getReferral_code_url() {
             return referral_code_url;
         }

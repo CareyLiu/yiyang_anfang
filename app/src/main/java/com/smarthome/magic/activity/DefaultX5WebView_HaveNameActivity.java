@@ -273,4 +273,9 @@ public class DefaultX5WebView_HaveNameActivity extends BaseActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
+    @Override
+    public boolean showToolBar() {
+        return true;
+    }
 }

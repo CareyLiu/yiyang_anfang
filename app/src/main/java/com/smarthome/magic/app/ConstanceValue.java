@@ -49,4 +49,5 @@ public interface ConstanceValue {
 
     int MSG_KT_DATA = 0x10034;//空调实时数据
     int MSG_SN_DATA = 0x10035;//水暖实时数据
+    int MSG_DAILISHANG_TIXIAN = 0x10036;//水暖实时数据
 }

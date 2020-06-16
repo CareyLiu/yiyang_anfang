@@ -108,7 +108,7 @@ public class MyQianBaoActivity extends BaseActivity {
 
                     if (bigDecimal.compareTo(BigDecimal.ZERO) == 1) {
                         //跳正常页面
-                        TiXianActivity.actionStart(MyQianBaoActivity.this, response.body().data.get(0).getMoney_use());
+                        TiXianActivity.actionStart(MyQianBaoActivity.this, response.body().data.get(0).getMoney_use(),"0");
                     } else {
                         UIHelper.ToastMessage(MyQianBaoActivity.this, "当前不可提现");
                     }

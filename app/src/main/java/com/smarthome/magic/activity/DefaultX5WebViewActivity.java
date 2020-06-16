@@ -104,6 +104,12 @@ public class DefaultX5WebViewActivity extends BaseActivity {
                     //x5WebView.loadUrl("javascript:java_js('appToJsPayFaile')");
                     x5WebView.loadUrl("javascript:appToJsPayFaile()");
 
+                } else if (message.type == ConstanceValue.MSG_DAILISHANG_TIXIAN) {
+                    if (message.content.toString().equals("0")) {
+                        x5WebView.loadUrl("javascript:appToJsTXResult(0)");
+                    } else {
+                        x5WebView.loadUrl("javascript:appToJsTXResult(1)");
+                    }
                 }
             }
         }));
@@ -114,7 +120,6 @@ public class DefaultX5WebViewActivity extends BaseActivity {
     public int getContentViewResId() {
         return R.layout.activity_default_x5_web_view;
     }
-
 
 
     private void init() {

@@ -3,6 +3,7 @@ package com.smarthome.magic.util.x5.utils;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,9 +13,18 @@ import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+
 import com.alipay.sdk.app.PayTask;
 import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
+import com.smarthome.magic.R;
+import com.smarthome.magic.activity.PhoneCheckActivity;
+import com.smarthome.magic.activity.ShopCartActivity;
 import com.smarthome.magic.activity.saoma.SaoMaZhiFuActivity;
+import com.smarthome.magic.activity.wode_page.MyQianBaoActivity;
+import com.smarthome.magic.activity.wode_page.TiXianActivity;
 import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallDetailsActivity;
 import com.smarthome.magic.adapter.xin_tuanyou.XinTuanYouShengChengDingDanActivity;
 import com.smarthome.magic.app.App;
@@ -22,18 +32,25 @@ import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
+import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.common.StringUtils;
+import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.Constant;
 import com.smarthome.magic.config.PreferenceHelper;
+import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.model.DaiLiShangQianBaoModel;
 import com.smarthome.magic.model.MenSuoModel;
 import com.smarthome.magic.model.SaoMaPayModel;
 import com.smarthome.magic.model.SaoMaWeiXinPayModel;
 import com.smarthome.magic.model.SaoMaZhiFuBaoPayModel;
-import com.smarthome.magic.model.YuZhiFuModel;
 import com.smarthome.magic.pay_about.alipay.PayResult;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -142,6 +159,15 @@ public class AndroidForJs {
         }
     }
 
+    //JS请求java
+    @JavascriptInterface
+    public void jsToAppDlsTXActionn(String para) {
+
+
+        getDaiLiQianBaoNet();
+
+    }
+
     //支付宝支付
 
     /**
@@ -245,5 +271,80 @@ public class AndroidForJs {
         api.sendReq(req);
     }
 
+    public void getDaiLiQianBaoNet() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "04344");
+        map.put("key", Constant.KEY);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
 
+        Gson gson = new Gson();
+        OkGo.<AppResponse<DaiLiShangQianBaoModel.DataBean>>post(Constant.SERVER_URL + "shop_new/app/user ")
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<DaiLiShangQianBaoModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(final Response<AppResponse<DaiLiShangQianBaoModel.DataBean>> response) {
+                        /**
+                         * msg_code	返回码
+                         * msg	应答描述
+                         * data	应答数据
+                         * user_money	可提现余额
+                         * inst_money_cash	已提现金额
+                         * userable_red	可抵扣金额
+                         * pay_num	提现账号（如未设置则为空）
+                         * pwd_pay	是否设置过支付密码：0未设置1已设置
+                         * userName	用户名
+                         * pay_name	支付宝真实姓名
+                         */
+
+                        String checkAliPay = PreferenceHelper.getInstance(mContext).getString(App.CUNCHUBIND_ALIPAY, "0x11");
+                        if (checkAliPay.equals("1")) {//已经设置
+                            if (StringUtils.isEmpty(response.body().data.get(0).getUser_money())) {
+                                response.body().data.get(0).setUser_money("0.00");
+                            }
+                            BigDecimal bigDecimal = new BigDecimal(response.body().data.get(0).getUser_money());
+
+                            if (bigDecimal.compareTo(BigDecimal.ZERO) == 1) {
+                                //跳正常页面
+                                TiXianActivity.actionStart(mContext, response.body().data.get(0).getUser_money(),"1");
+                            } else {
+                                UIHelper.ToastMessage(mContext, "当前不可提现");
+                            }
+                        } else {//2 未设置
+                            showTwo();
+                        }
+                    }
+
+
+                    @Override
+                    public void onError(Response<AppResponse<DaiLiShangQianBaoModel.DataBean>> response) {
+
+                    }
+
+                });
+    }
+
+    /**
+     * 两个按钮的 dialog
+     */
+    private void showTwo() {
+
+        builder = new AlertDialog.Builder(mContext).setIcon(R.mipmap.logi_icon).setTitle("账号绑定")
+                .setMessage("是否前去绑定支付宝账号").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        mContext.startActivity(new Intent(mContext, PhoneCheckActivity.class).putExtra("mod_id", "0008"));
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        dialogInterface.dismiss();
+                    }
+                });
+        builder.create().show();
+    }
+
+    private AlertDialog.Builder builder;
 }

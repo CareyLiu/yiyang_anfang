@@ -43,7 +43,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -52,8 +51,8 @@
             <LinearLayout
                 android:id="@+id/layout_header"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_height="50dp"
+
                 android:orientation="horizontal">
 
                 <TextView
@@ -63,12 +62,14 @@
                     android:layout_marginLeft="15dp"
                     android:layout_weight="1"
                     android:text="头像"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black_333333"
+                    android:textSize="15sp" />
 
                 <ImageView
                     android:id="@+id/iv_header"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="0"
                     app:srcCompat="@color/chuck_status_requested" />
 
@@ -81,6 +82,11 @@
                     android:layout_marginRight="15dp"
                     app:srcCompat="@drawable/push_gray" />
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/split" />
 
             <LinearLayout
                 android:id="@+id/layout_nickname"
@@ -97,7 +103,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_weight="1"
                     android:text="昵称"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black_333333" />
 
                 <TextView
                     android:id="@+id/tv_nickname"
@@ -115,6 +121,11 @@
                     app:srcCompat="@drawable/push_gray" />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/split" />
+
             <LinearLayout
                 android:id="@+id/layout_gender"
                 android:layout_width="match_parent"
@@ -130,7 +141,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_weight="1"
                     android:text="性别"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black_333333" />
 
                 <TextView
                     android:id="@+id/tv_gender"
@@ -148,6 +159,11 @@
                     app:srcCompat="@drawable/push_gray" />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/split" />
+
             <LinearLayout
                 android:id="@+id/layout_birthday"
                 android:layout_width="match_parent"
@@ -163,7 +179,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_weight="1"
                     android:text="出生日期"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black_333333" />
 
                 <TextView
                     android:id="@+id/tv_birthday"
@@ -181,6 +197,11 @@
                     app:srcCompat="@drawable/push_gray" />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/split" />
+
             <LinearLayout
                 android:id="@+id/layout_address"
                 android:layout_width="match_parent"
@@ -196,7 +217,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_weight="1"
                     android:text="收货地址"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black_333333" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -213,6 +234,11 @@
                     app:srcCompat="@drawable/push_gray" />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/split" />
+
             <LinearLayout
                 android:id="@+id/layout_cash_account"
                 android:layout_width="match_parent"
@@ -228,7 +254,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_weight="1"
                     android:text="提现账号设置（支付宝）"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black_333333" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -243,6 +269,11 @@
                     android:layout_marginRight="15dp"
                     app:srcCompat="@drawable/push_gray" />
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/split" />
 
             <LinearLayout
                 android:id="@+id/layout_login_password"
@@ -259,7 +290,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_weight="1"
                     android:text="登录密码设置"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black_333333" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -274,6 +305,11 @@
                     android:layout_marginRight="15dp"
                     app:srcCompat="@drawable/push_gray" />
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/split" />
 
             <LinearLayout
                 android:id="@+id/layout_pay_password"
@@ -290,7 +326,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_weight="1"
                     android:text="支付密码设置"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black_333333" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -305,6 +341,11 @@
                     android:layout_marginRight="15dp"
                     app:srcCompat="@drawable/push_gray" />
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/split" />
 
             <LinearLayout
                 android:id="@+id/layout_clear_cache"
@@ -321,7 +362,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_weight="1"
                     android:text="清除缓存"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black_333333" />
 
                 <TextView
                     android:id="@+id/tv_cache"
@@ -338,6 +379,11 @@
                     app:srcCompat="@drawable/push_gray" />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/split" />
+
             <LinearLayout
                 android:id="@+id/shebei_peiwang"
                 android:layout_width="match_parent"
@@ -353,7 +399,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_weight="1"
                     android:text="设备配网"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black_333333" />
 
 
                 <ImageView
@@ -365,6 +411,7 @@
                     android:layout_marginRight="15dp"
                     app:srcCompat="@drawable/push_gray" />
             </LinearLayout>
+
 
         </LinearLayout>
     </ScrollView>
@@ -382,7 +429,8 @@
             android:gravity="center"
             android:padding="25dp"
             android:text="注销当前账户"
-            android:textColor="@color/car_text_red" />
+            android:textColor="@color/car_text_red"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>

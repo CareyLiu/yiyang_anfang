@@ -1,24 +1,33 @@
 package com.smarthome.magic.fragment;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.gyf.barlibrary.ImmersionBar;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.smarthome.magic.R;
 import com.smarthome.magic.basicmvp.BaseFragment;
 
 import java.util.Observable;
 import java.util.Observer;
 
+import butterknife.BindView;
+
 
 /**
  * Created by Administrator on 2018/3/29 0029.
  */
 
-public class ZhiNengJiaJuFragment extends BaseFragment implements Observer {
+public class ZhiNengJiaJuFragment extends BaseFragment  {
     private static final String TAG = "ZhiNengJiaJuFragment";
+    @BindView(R.id.rl_title)
+    RelativeLayout rlTitle;
+    @BindView(R.id.srL_smart)
+    SmartRefreshLayout srLSmart;
 
 
     @Override
@@ -28,7 +37,6 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements Observer {
 
     public void initData() {
 
-
     }
 
     @Override
@@ -37,13 +45,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements Observer {
     }
 
 
-    @Override
-    public void update(Observable o, Object arg) {
 
-        if (arg.equals("update")) {
-            initData();
-        }
-    }
 
     @Override
     protected void immersionInit(ImmersionBar mImmersionBar) {
@@ -62,6 +64,11 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements Observer {
 
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        srLSmart.setEnableLoadMore(false);
+    }
 
     @Override
     protected boolean immersionEnabled() {

@@ -60,6 +60,7 @@ import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -131,6 +132,7 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
 
     private String sn_state = "";
     private String sn_preset_temperature1 = "";
+    float temperature_lattice = 360 / 14;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,7 +167,8 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
 
         //mZhenShuinuan.setPivotX(mZhenShuinuan.getWidth() / 2);
         // mZhenShuinuan.setPivotY(mZhenShuinuan.getHeight() / 2);//支点在图片中心
-        mZhenShuinuan.setRotation(-120);
+//        mZhenShuinuan.setRotation(-120);
+        mZhenShuinuan.setRotation(-123);
 
         shuiwen1.setOnLongClickListener(this);
         wendu2.setOnLongClickListener(this);
@@ -275,6 +278,8 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
                     //预设温度
                     String preset_temperature = messageData.substring(39, 41);
                     sn_preset_temperature1 = preset_temperature;
+                    //当前出水口温度
+                    String current_temperature = messageData.substring(32, 36);
                     switch (state) {
                         case "0":
                             //待机中
@@ -322,6 +327,18 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
                         shuiwen1.setBackgroundResource(R.mipmap.sheding_button_nor);
                         wendu2.setBackgroundResource(R.mipmap.sheding_button_nor);
                     }
+
+                    float temperature = 0;
+                    if (current_temperature.contains("-")) {
+                        String[] str = current_temperature.split("-");
+                        String format = new BigDecimal("-" + str[1]).toString();
+                        temperature = Float.valueOf(format) / 10;
+                    } else {
+                        String format = new BigDecimal(current_temperature).toString();
+                        temperature = Float.valueOf(format) / 10;
+                    }
+                    float default_angle = mZhenShuinuan.getRotation();
+                    mZhenShuinuan.setRotation(default_angle + temperature * temperature_lattice);
                 }
             }
         }));

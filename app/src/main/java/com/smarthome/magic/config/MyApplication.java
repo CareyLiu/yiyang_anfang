@@ -248,26 +248,26 @@ public class MyApplication extends MultiDexApplication {
 
         setMqttConnect();
 
-        AlibcTradeSDK.asyncInit(this, new AlibcTradeInitCallback() {
-            @Override
-            public void onSuccess() {
-                // 初始化成功，设置相关的全局配置参数
-                // 设置是否使用同步淘客打点
-                AlibcTradeSDK.setSyncForTaoke(true);
-
-
-                // 设置全局淘客参数，方便开发者用同一个淘客参数，不需要在show接口重复传入
-                //   AlibcTradeSDK.setTaokeParams(taokeParams);
-                Log.i("AlibcTradeSDK", "success");
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                //初始化失败，可以根据code和msg判断失败原因，详情参见错误说明
-
-                Log.i("AlibcTradeSDK", "fail" + "code:" + code + "msg:" + msg);
-            }
-        });
+//        AlibcTradeSDK.asyncInit(this, new AlibcTradeInitCallback() {
+//            @Override
+//            public void onSuccess() {
+//                // 初始化成功，设置相关的全局配置参数
+//                // 设置是否使用同步淘客打点
+//                AlibcTradeSDK.setSyncForTaoke(true);
+//
+//
+//                // 设置全局淘客参数，方便开发者用同一个淘客参数，不需要在show接口重复传入
+//                //   AlibcTradeSDK.setTaokeParams(taokeParams);
+//                Log.i("AlibcTradeSDK", "success");
+//            }
+//
+//            @Override
+//            public void onFailure(int code, String msg) {
+//                //初始化失败，可以根据code和msg判断失败原因，详情参见错误说明
+//
+//                Log.i("AlibcTradeSDK", "fail" + "code:" + code + "msg:" + msg);
+//            }
+//        });
 
         application = this;
 
@@ -455,7 +455,7 @@ public class MyApplication extends MultiDexApplication {
                             Notice n = new Notice();
                             n.type = ConstanceValue.MSG_SN_DATA;
 //                            n.content = message.toString();
-                            n.content = "j_s3456666661266666661102640265000100100017002310.";
+                            n.content = "j_s3456666661266666661102640265000100500017002310.";
                             RxBus.getDefault().sendRx(n);
                         } else if (message.toString().contains("j_s")) {
                             Notice n = new Notice();

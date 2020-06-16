@@ -4,7 +4,7 @@
         android:id="@+id/i_home"
         android:checked="true"
         android:icon="@drawable/selector_home"
-        android:title="@string/home" />
+        android:title="聚易佳" />
 
         <item
             android:id="@+id/i_zhinengjiaju"

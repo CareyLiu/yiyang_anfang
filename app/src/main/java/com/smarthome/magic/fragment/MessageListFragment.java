@@ -1,9 +1,6 @@
 package com.smarthome.magic.fragment;
 
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,17 +8,29 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.dingdan.DaiFuKuanDingDanActivity;
 import com.smarthome.magic.adapter.MessageListAdapter;
+import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.get_net.Urls;
-import com.smarthome.magic.model.MessageListBean;
 import com.smarthome.magic.model.MessageModel;
+import com.smarthome.magic.model.OrderListModel;
 import com.smarthome.magic.util.NetUtils;
 
 import java.util.ArrayList;
@@ -29,14 +38,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
 public class MessageListFragment extends BaseFragment {
 
+
     private RecyclerView recyclerView;
     List<MessageModel.DataBean> mDatas = new ArrayList<>();
     private MessageListAdapter messageListAdapter;
+
+    SmartRefreshLayout srLSmart;
+
+    String notifyId = "";
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +65,7 @@ public class MessageListFragment extends BaseFragment {
         map.put("code", "03003");
         map.put("key", Urls.key);
         map.put("token", PreferenceHelper.getInstance(getActivity()).getString("app_token", "0"));
+        map.put("notify_id", notifyId);
         if (strTitle.equals("全部")) {
 
         } else if (strTitle.equals("未读")) {
@@ -65,22 +82,33 @@ public class MessageListFragment extends BaseFragment {
         netUtils.requestData(map, Urls.MESSAGE_URL, getActivity(), new JsonCallback<AppResponse<MessageModel.DataBean>>() {
             @Override
             public void onSuccess(Response<AppResponse<MessageModel.DataBean>> response) {
-                List<MessageModel.DataBean> dataBean = new ArrayList<>();
-                dataBean.addAll(response.body().data);
-                if (dataBean.size() > 0) {
-                    for (int i = 0; i < dataBean.size(); i++) {
-                        Log.i("dataBean", dataBean.get(i).getNotify_text());
+                if (response.body().data.size() > 0) {
+                    if (StringUtils.isEmpty(notifyId)) {
+                        mDatas.clear();
+                        mDatas.addAll(response.body().data);
+                        messageListAdapter.setNewData(mDatas);
 
+                    } else {
+                        srLSmart.setEnableLoadMore(true);
+                        mDatas.addAll(response.body().data);
                     }
-                    messageListAdapter.setNewData(dataBean);
+
+                    notifyId = mDatas.get(mDatas.size() - 1).getNotify_id();
                     messageListAdapter.notifyDataSetChanged();
 
-
+                    recyclerView.setVisibility(View.VISIBLE);
+                    ivNone.setVisibility(View.GONE);
+                    srLSmart.setEnableLoadMore(true);
                 } else {
+                    srLSmart.setEnableLoadMore(false);
+                }
+
+                if (mDatas.size() == 0) {
                     recyclerView.setVisibility(View.GONE);
                     ivNone.setVisibility(View.VISIBLE);
                 }
-
+                srLSmart.finishLoadMore();
+                srLSmart.finishRefresh();
 
             }
 
@@ -128,7 +156,63 @@ public class MessageListFragment extends BaseFragment {
         rlMain = rootView.findViewById(R.id.rl_main);
         ivNone = rootView.findViewById(R.id.iv_none);
         view = rootView.findViewById(R.id.view);
+        srLSmart = rootView.findViewById(R.id.srL_smart);
         initAdapter();
+        srLSmart.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                getNet();
+            }
+        });
+        srLSmart.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                notifyId = "";
+                getNet();
+            }
+        });
+        messageListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+
+                switch (view.getId()) {
+                    case R.id.constrain:
+                        /**
+                         * 通知类型：1.风暖加热器报警
+                         * 2.水暖加热器故障报警3.汽车报警
+                         * 8.普通消息 9.广告消息 11.商城消息
+                         * 12.商城订单消息 13.拼单消息
+                         */
+
+                        switch (mDatas.get(position).getNotify_type()) {
+
+                            case "1":
+                                break;
+                            case "2":
+                                break;
+                            case "3":
+                                break;
+
+                            case "8":
+                                break;
+                            case "9":
+                                break;
+                            case "11":
+                                break;
+                            case "12":
+                                OrderListModel.DataBean dataBean = new OrderListModel.DataBean();
+                                dataBean.setShop_form_id(mDatas.get(position).getOper_id());
+                                DaiFuKuanDingDanActivity.actionStart(getActivity(), dataBean);
+                                break;
+                            case "13":
+                                break;
+
+                        }
+                        break;
+                }
+
+            }
+        });
     }
 
     @Override

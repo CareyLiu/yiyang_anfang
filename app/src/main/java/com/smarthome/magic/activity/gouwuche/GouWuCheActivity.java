@@ -354,11 +354,16 @@ public class GouWuCheActivity extends BaseActivity {
                         gouWuCheAdapter.notifyDataSetChanged();
                         tvPrice.setText("(¥" + getJieSuanJinE().toString() + ")");
                         tvJiesuanJine.setText("结算(" + String.valueOf(chooseCount) + ")");
+
+                        if (isSelectAllDianPu(position).equals("1")) {
+
+                        } else {
+
+                        }
                         if (isSelectAll()) {
                             ivChooseAll.setBackgroundResource(R.mipmap.quxiaodingdan_button_sel);
                         } else {
                             ivChooseAll.setBackgroundResource(R.mipmap.quxiaodingdan_button_nor);
-
                         }
                         break;
 
@@ -479,10 +484,14 @@ public class GouWuCheActivity extends BaseActivity {
 
         boolean flag = true;
         for (int i = 0; i < mDatas.size(); i++) {
+
+
             if (mDatas.get(i).getIsSelect().equals("0")) {
+
                 flag = false;
                 break;
             }
+
         }
         return flag;
     }
@@ -582,5 +591,34 @@ public class GouWuCheActivity extends BaseActivity {
             }
         }
         return gouWuCheZhengHeModels;
+    }
+
+    String selectDianPuAll;//0 没有全选店铺 1 全选了店铺
+
+
+    private String isSelectAllDianPu(int position) {
+        selectDianPuAll = "1";
+        int dianpuSelectPosition = -1;
+        String biaoshi = mDatas.get(position).getBiaoshi();
+        for (int i = 0; i < mDatas.size(); i++) {
+
+            if (mDatas.get(i).getBiaoshi().equals(biaoshi)) {
+//同一标志下的所有数据
+                if (mDatas.get(i).isHeader) {
+                    dianpuSelectPosition = i;
+                }
+                if (!mDatas.get(i).isHeader){
+                    if (mDatas.get(i).getIsSelect().equals("0")) {
+                        selectDianPuAll = "0";
+                        mDatas.get(dianpuSelectPosition).setIsSelect("0");
+                        break;
+                    }
+                }
+            }
+        }
+        if (selectDianPuAll.equals("1")){
+            mDatas.get(dianpuSelectPosition).setIsSelect("1");
+        }
+        return selectDianPuAll;
     }
 }

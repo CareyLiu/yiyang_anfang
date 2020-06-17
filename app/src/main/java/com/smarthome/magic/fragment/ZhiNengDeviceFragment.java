@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.smarthome.magic.R;
 import com.smarthome.magic.adapter.ZhiNengDeviceListAdapter;
+import com.smarthome.magic.util.GridAverageUIDecoration;
+import com.smarthome.magic.util.GridSectionAverageGapItemDecoration;
 import com.smarthome.magic.view.RecycleItemSpance;
 
 import org.jaaksi.pickerview.util.Util;
@@ -46,6 +48,8 @@ public class ZhiNengDeviceFragment extends Fragment {
         ll_content_bg = view.findViewById(R.id.ll_content_bg);
         recyclerView = view.findViewById(R.id.recyclerView);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+        recyclerView.addItemDecoration(new GridAverageUIDecoration(14, 10));
+
         recyclerView.setLayoutManager(layoutManager);
         ArrayList<String> shopList = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
@@ -56,11 +60,11 @@ public class ZhiNengDeviceFragment extends Fragment {
         zhiNengDeviceListAdapter.openLoadAnimation();//默认为渐显效果
         recyclerView.setAdapter(zhiNengDeviceListAdapter);
 
-        if (shopList.size() == 0) {
-            ll_content_bg.setPadding(Util.dip2px(getActivity(), 14), 0, Util.dip2px(getActivity(), 14), 0);
-        } else {
-            ll_content_bg.setPadding(Util.dip2px(getActivity(), 10), 0, Util.dip2px(getActivity(), 10), 0);
-            recyclerView.addItemDecoration(new RecycleItemSpance(20, 2));
-        }
+//        if (shopList.size() == 0) {
+//            ll_content_bg.setPadding(Util.dip2px(getActivity(), 14), 0, Util.dip2px(getActivity(), 14), 0);
+//        } else {
+////            ll_content_bg.setPadding(Util.dip2px(getActivity(), 10), 0, Util.dip2px(getActivity(), 10), 0);
+////            recyclerView.addItemDecoration(new RecycleItemSpance(20, 2));
+//        }
     }
 }

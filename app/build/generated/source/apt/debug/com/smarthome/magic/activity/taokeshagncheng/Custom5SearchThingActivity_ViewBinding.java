@@ -23,9 +23,9 @@ import java.lang.Override;
 public class Custom5SearchThingActivity_ViewBinding implements Unbinder {
   private Custom5SearchThingActivity target;
 
-  private View view7f0901e0;
+  private View view7f0901ea;
 
-  private View view7f0901e6;
+  private View view7f0901f0;
 
   @UiThread
   public Custom5SearchThingActivity_ViewBinding(Custom5SearchThingActivity target) {
@@ -40,7 +40,7 @@ public class Custom5SearchThingActivity_ViewBinding implements Unbinder {
     View view;
     view = Utils.findRequiredView(source, R.id.iv_back, "field 'ivBack' and method 'onClick'");
     target.ivBack = Utils.castView(view, R.id.iv_back, "field 'ivBack'", ImageView.class);
-    view7f0901e0 = view;
+    view7f0901ea = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -51,7 +51,7 @@ public class Custom5SearchThingActivity_ViewBinding implements Unbinder {
     target.rlSearch = Utils.findRequiredViewAsType(source, R.id.rl_search, "field 'rlSearch'", RoundLinearLayout.class);
     view = Utils.findRequiredView(source, R.id.iv_cancel, "field 'ivCancel' and method 'onClick'");
     target.ivCancel = Utils.castView(view, R.id.iv_cancel, "field 'ivCancel'", TextView.class);
-    view7f0901e6 = view;
+    view7f0901f0 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -110,9 +110,9 @@ public class Custom5SearchThingActivity_ViewBinding implements Unbinder {
     target.constrain = null;
     target.constrainXx = null;
 
-    view7f0901e0.setOnClickListener(null);
-    view7f0901e0 = null;
-    view7f0901e6.setOnClickListener(null);
-    view7f0901e6 = null;
+    view7f0901ea.setOnClickListener(null);
+    view7f0901ea = null;
+    view7f0901f0.setOnClickListener(null);
+    view7f0901f0 = null;
   }
 }

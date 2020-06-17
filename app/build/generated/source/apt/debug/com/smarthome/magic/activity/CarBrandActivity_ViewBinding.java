@@ -17,7 +17,7 @@ import java.lang.Override;
 public class CarBrandActivity_ViewBinding implements Unbinder {
   private CarBrandActivity target;
 
-  private View view7f090359;
+  private View view7f090366;
 
   @UiThread
   public CarBrandActivity_ViewBinding(CarBrandActivity target) {
@@ -33,7 +33,7 @@ public class CarBrandActivity_ViewBinding implements Unbinder {
     target.mHintSideBar = Utils.findRequiredViewAsType(source, R.id.hintSideBar, "field 'mHintSideBar'", HintSideBar.class);
     view = Utils.findRequiredView(source, R.id.rl_back, "field 'rlBack' and method 'onViewClicked'");
     target.rlBack = Utils.castView(view, R.id.rl_back, "field 'rlBack'", RelativeLayout.class);
-    view7f090359 = view;
+    view7f090366 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -53,7 +53,7 @@ public class CarBrandActivity_ViewBinding implements Unbinder {
     target.mHintSideBar = null;
     target.rlBack = null;
 
-    view7f090359.setOnClickListener(null);
-    view7f090359 = null;
+    view7f090366.setOnClickListener(null);
+    view7f090366 = null;
   }
 }

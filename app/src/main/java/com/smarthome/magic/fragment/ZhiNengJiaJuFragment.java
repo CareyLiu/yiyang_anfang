@@ -3,21 +3,32 @@ package com.smarthome.magic.fragment;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.smarthome.magic.R;
 import com.smarthome.magic.adapter.NewsFragmentPagerAdapter;
 import com.smarthome.magic.basicmvp.BaseFragment;
+import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.ZhiNengHomeBean;
+import com.smarthome.magic.model.ZiJianFenLeiBean;
 import com.smarthome.magic.view.CustomViewPager;
 import com.smarthome.magic.view.NoSlidingViewPager;
 import com.smarthome.magic.view.magicindicator.MagicIndicator;
@@ -33,11 +44,16 @@ import com.smarthome.magic.view.magicindicator.buildins.commonnavigator.titles.S
 import org.jaaksi.pickerview.util.Util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
 import butterknife.BindView;
+
+import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
+import static com.smarthome.magic.get_net.Urls.ZIYINGFENLEI;
 
 
 /**
@@ -50,6 +66,10 @@ public class ZhiNengJiaJuFragment extends BaseFragment {
     RelativeLayout rlTitle;
     @BindView(R.id.srL_smart)
     SmartRefreshLayout srLSmart;
+    @BindView(R.id.tv_family_name)
+    TextView tv_family_name;
+    @BindView(R.id.tv_device_num)
+    TextView tv_device_num;
     @BindView(R.id.magic_indicator)
     MagicIndicator magicIndicator;
     @BindView(R.id.viewPager)
@@ -61,6 +81,9 @@ public class ZhiNengJiaJuFragment extends BaseFragment {
     private ArrayList<Fragment> fragmentList = new ArrayList<>();
     private ZhiNengDeviceFragment zhiNengDeviceFragment;
     private ZhiNengRoomFragment zhiNengRoomFragment;
+
+    private List<ZhiNengHomeBean.DataBean> dataBean = new ArrayList<>();
+    private Bundle device = new Bundle();
 
     @Override
     protected void initLogic() {
@@ -89,11 +112,12 @@ public class ZhiNengJiaJuFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         view.setClickable(true);// 防止点击穿透，底层的fragment响应上层点击触摸事件
+        getnet();
     }
 
     private void initViewpager() {
         viewPager.setScroll(false);
-        zhiNengDeviceFragment = ZhiNengDeviceFragment.newInstance(null);
+        zhiNengDeviceFragment = ZhiNengDeviceFragment.newInstance(device);
         fragmentList.add(zhiNengDeviceFragment);
         zhiNengRoomFragment = ZhiNengRoomFragment.newInstance(null);
         fragmentList.add(zhiNengRoomFragment);
@@ -153,5 +177,30 @@ public class ZhiNengJiaJuFragment extends BaseFragment {
         return true;
     }
 
+
+    private void getnet() {
+        //访问网络获取数据 下面的列表数据
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16001");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(getActivity()).getAppToken());
+        Gson gson = new Gson();
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<ZhiNengHomeBean.DataBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ZhiNengHomeBean.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ZhiNengHomeBean.DataBean>> response) {
+                        dataBean = response.body().data;
+                        tv_family_name.setText(dataBean.get(0).getFamily_name());
+                        tv_device_num.setText(dataBean.get(0).getDevice_num() + "个设备");
+                        device.putParcelableArrayList("device", dataBean.get(0).getDevice());
+                        if (zhiNengDeviceFragment != null) {
+                            zhiNengDeviceFragment.onRefresh();
+                        }
+                    }
+                });
+    }
 
 }

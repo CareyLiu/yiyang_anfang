@@ -16,7 +16,7 @@ import java.lang.Override;
 public class SelectLoginActivity_ViewBinding implements Unbinder {
   private SelectLoginActivity target;
 
-  private View view7f09035d;
+  private View view7f09036a;
 
   @UiThread
   public SelectLoginActivity_ViewBinding(SelectLoginActivity target) {
@@ -30,7 +30,7 @@ public class SelectLoginActivity_ViewBinding implements Unbinder {
     View view;
     view = Utils.findRequiredView(source, R.id.rl_close, "field 'rlClose' and method 'onViewClicked'");
     target.rlClose = Utils.castView(view, R.id.rl_close, "field 'rlClose'", RelativeLayout.class);
-    view7f09035d = view;
+    view7f09036a = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -50,7 +50,7 @@ public class SelectLoginActivity_ViewBinding implements Unbinder {
     target.rlClose = null;
     target.list = null;
 
-    view7f09035d.setOnClickListener(null);
-    view7f09035d = null;
+    view7f09036a.setOnClickListener(null);
+    view7f09036a = null;
   }
 }

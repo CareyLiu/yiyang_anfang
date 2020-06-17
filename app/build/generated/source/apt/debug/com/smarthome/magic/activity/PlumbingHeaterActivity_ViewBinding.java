@@ -31,6 +31,8 @@ public class PlumbingHeaterActivity_ViewBinding implements Unbinder {
     target.toolbarTitle = Utils.findRequiredViewAsType(source, R.id.toolbar_title, "field 'toolbarTitle'", TextView.class);
     target.toolbar = Utils.findRequiredViewAsType(source, R.id.toolbar, "field 'toolbar'", Toolbar.class);
     target.ivHeaterHost = Utils.findRequiredViewAsType(source, R.id.iv_heater_host, "field 'ivHeaterHost'", RelativeLayout.class);
+    target.shuiwen1 = Utils.findRequiredViewAsType(source, R.id.shuiwen1, "field 'shuiwen1'", TextView.class);
+    target.wendu2 = Utils.findRequiredViewAsType(source, R.id.wendu2, "field 'wendu2'", TextView.class);
     target.btnHeaterClose = Utils.findRequiredViewAsType(source, R.id.btn_heater_close, "field 'btnHeaterClose'", ImageView.class);
     target.navView = Utils.findRequiredViewAsType(source, R.id.nav_view, "field 'navView'", NavigationView.class);
     target.drawerLayout = Utils.findRequiredViewAsType(source, R.id.drawer_layout, "field 'drawerLayout'", DrawerLayout.class);
@@ -46,6 +48,8 @@ public class PlumbingHeaterActivity_ViewBinding implements Unbinder {
     target.toolbarTitle = null;
     target.toolbar = null;
     target.ivHeaterHost = null;
+    target.shuiwen1 = null;
+    target.wendu2 = null;
     target.btnHeaterClose = null;
     target.navView = null;
     target.drawerLayout = null;

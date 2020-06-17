@@ -16,7 +16,7 @@ import java.lang.Override;
 public class CashAccountActivity_ViewBinding implements Unbinder {
   private CashAccountActivity target;
 
-  private View view7f090095;
+  private View view7f090097;
 
   @UiThread
   public CashAccountActivity_ViewBinding(CashAccountActivity target) {
@@ -32,7 +32,7 @@ public class CashAccountActivity_ViewBinding implements Unbinder {
     target.etName = Utils.findRequiredViewAsType(source, R.id.et_name, "field 'etName'", EditText.class);
     view = Utils.findRequiredView(source, R.id.btn_save, "field 'btnSave' and method 'onViewClicked'");
     target.btnSave = Utils.castView(view, R.id.btn_save, "field 'btnSave'", Button.class);
-    view7f090095 = view;
+    view7f090097 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -52,7 +52,7 @@ public class CashAccountActivity_ViewBinding implements Unbinder {
     target.etName = null;
     target.btnSave = null;
 
-    view7f090095.setOnClickListener(null);
-    view7f090095 = null;
+    view7f090097.setOnClickListener(null);
+    view7f090097 = null;
   }
 }

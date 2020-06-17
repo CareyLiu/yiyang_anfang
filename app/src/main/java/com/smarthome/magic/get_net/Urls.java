@@ -19,6 +19,6 @@ public class Urls {
     public static String PDDWEB = "https://u.jd.com/SgYbff";//京东的连接
     public static String HOME_PICTURE_HOME = SERVER_URL + "shop_new/app/user";
     public static String WIT_APP = SERVER_URL + "wit/app";
-
+    public static String ZHINENGJIAJU = SERVER_URL + "znjj/app/user";//智能家居
 
 }

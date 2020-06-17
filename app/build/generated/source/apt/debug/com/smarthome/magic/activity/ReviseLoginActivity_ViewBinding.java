@@ -17,9 +17,9 @@ import java.lang.Override;
 public class ReviseLoginActivity_ViewBinding implements Unbinder {
   private ReviseLoginActivity target;
 
-  private View view7f090359;
+  private View view7f090366;
 
-  private View view7f090095;
+  private View view7f090097;
 
   @UiThread
   public ReviseLoginActivity_ViewBinding(ReviseLoginActivity target) {
@@ -33,18 +33,18 @@ public class ReviseLoginActivity_ViewBinding implements Unbinder {
     View view;
     view = Utils.findRequiredView(source, R.id.rl_back, "field 'rlBack' and method 'onViewClicked'");
     target.rlBack = Utils.castView(view, R.id.rl_back, "field 'rlBack'", RelativeLayout.class);
-    view7f090359 = view;
+    view7f090366 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
         target.onViewClicked(p0);
       }
     });
-    target.etPassword = Utils.findRequiredViewAsType(source, R.id.et_account, "field 'etPassword'", EditText.class);
+    target.etPassword = Utils.findRequiredViewAsType(source, R.id.et_password, "field 'etPassword'", EditText.class);
     target.etRepeat = Utils.findRequiredViewAsType(source, R.id.et_repeat, "field 'etRepeat'", EditText.class);
     view = Utils.findRequiredView(source, R.id.btn_save, "field 'btnSave' and method 'onViewClicked'");
     target.btnSave = Utils.castView(view, R.id.btn_save, "field 'btnSave'", Button.class);
-    view7f090095 = view;
+    view7f090097 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -65,9 +65,9 @@ public class ReviseLoginActivity_ViewBinding implements Unbinder {
     target.etRepeat = null;
     target.btnSave = null;
 
-    view7f090359.setOnClickListener(null);
-    view7f090359 = null;
-    view7f090095.setOnClickListener(null);
-    view7f090095 = null;
+    view7f090366.setOnClickListener(null);
+    view7f090366 = null;
+    view7f090097.setOnClickListener(null);
+    view7f090097 = null;
   }
 }

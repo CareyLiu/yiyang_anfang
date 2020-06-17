@@ -19,15 +19,15 @@ import java.lang.Override;
 public class HistoryLocusActivity_ViewBinding implements Unbinder {
   private HistoryLocusActivity target;
 
-  private View view7f090359;
+  private View view7f090366;
 
-  private View view7f090367;
+  private View view7f090374;
 
-  private View view7f090436;
+  private View view7f090445;
 
-  private View view7f09047e;
+  private View view7f09048f;
 
-  private View view7f09027b;
+  private View view7f090286;
 
   @UiThread
   public HistoryLocusActivity_ViewBinding(HistoryLocusActivity target) {
@@ -41,7 +41,7 @@ public class HistoryLocusActivity_ViewBinding implements Unbinder {
     View view;
     view = Utils.findRequiredView(source, R.id.rl_back, "field 'rlBack' and method 'onViewClicked'");
     target.rlBack = Utils.castView(view, R.id.rl_back, "field 'rlBack'", RelativeLayout.class);
-    view7f090359 = view;
+    view7f090366 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -50,7 +50,7 @@ public class HistoryLocusActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.rl_map, "field 'rlMap' and method 'onViewClicked'");
     target.rlMap = Utils.castView(view, R.id.rl_map, "field 'rlMap'", RelativeLayout.class);
-    view7f090367 = view;
+    view7f090374 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -59,7 +59,7 @@ public class HistoryLocusActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.tv_begin_date, "field 'tvBeginDate' and method 'onViewClicked'");
     target.tvBeginDate = Utils.castView(view, R.id.tv_begin_date, "field 'tvBeginDate'", TextView.class);
-    view7f090436 = view;
+    view7f090445 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -68,7 +68,7 @@ public class HistoryLocusActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.tv_end_date, "field 'tvEndDate' and method 'onViewClicked'");
     target.tvEndDate = Utils.castView(view, R.id.tv_end_date, "field 'tvEndDate'", TextView.class);
-    view7f09047e = view;
+    view7f09048f = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -77,7 +77,7 @@ public class HistoryLocusActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.layout_screen, "field 'layoutScreen' and method 'onViewClicked'");
     target.layoutScreen = Utils.castView(view, R.id.layout_screen, "field 'layoutScreen'", LinearLayout.class);
-    view7f09027b = view;
+    view7f090286 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -107,15 +107,15 @@ public class HistoryLocusActivity_ViewBinding implements Unbinder {
     target.tvCarNumber = null;
     target.list = null;
 
-    view7f090359.setOnClickListener(null);
-    view7f090359 = null;
-    view7f090367.setOnClickListener(null);
-    view7f090367 = null;
-    view7f090436.setOnClickListener(null);
-    view7f090436 = null;
-    view7f09047e.setOnClickListener(null);
-    view7f09047e = null;
-    view7f09027b.setOnClickListener(null);
-    view7f09027b = null;
+    view7f090366.setOnClickListener(null);
+    view7f090366 = null;
+    view7f090374.setOnClickListener(null);
+    view7f090374 = null;
+    view7f090445.setOnClickListener(null);
+    view7f090445 = null;
+    view7f09048f.setOnClickListener(null);
+    view7f09048f = null;
+    view7f090286.setOnClickListener(null);
+    view7f090286 = null;
   }
 }

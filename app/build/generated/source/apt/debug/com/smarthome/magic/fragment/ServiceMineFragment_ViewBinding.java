@@ -17,25 +17,25 @@ import java.lang.Override;
 public class ServiceMineFragment_ViewBinding implements Unbinder {
   private ServiceMineFragment target;
 
-  private View view7f090208;
+  private View view7f090212;
 
-  private View view7f09051e;
+  private View view7f090532;
 
-  private View view7f090266;
+  private View view7f090271;
 
-  private View view7f090277;
+  private View view7f090282;
 
-  private View view7f090278;
+  private View view7f090283;
 
-  private View view7f090280;
+  private View view7f09028b;
 
-  private View view7f090265;
+  private View view7f090270;
 
-  private View view7f09025d;
+  private View view7f090268;
 
-  private View view7f090264;
+  private View view7f09026f;
 
-  private View view7f090274;
+  private View view7f09027f;
 
   @UiThread
   public ServiceMineFragment_ViewBinding(final ServiceMineFragment target, View source) {
@@ -44,7 +44,7 @@ public class ServiceMineFragment_ViewBinding implements Unbinder {
     View view;
     view = Utils.findRequiredView(source, R.id.iv_header, "field 'ivHeader' and method 'onViewClicked'");
     target.ivHeader = Utils.castView(view, R.id.iv_header, "field 'ivHeader'", RoundedImageView.class);
-    view7f090208 = view;
+    view7f090212 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -56,7 +56,7 @@ public class ServiceMineFragment_ViewBinding implements Unbinder {
     target.servicePhone = Utils.findRequiredViewAsType(source, R.id.service_phone, "field 'servicePhone'", TextView.class);
     view = Utils.findRequiredView(source, R.id.tv_setting, "field 'tvSetting' and method 'onViewClicked'");
     target.tvSetting = Utils.castView(view, R.id.tv_setting, "field 'tvSetting'", TextView.class);
-    view7f09051e = view;
+    view7f090532 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -65,7 +65,7 @@ public class ServiceMineFragment_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.layout_consult, "field 'layoutConsult' and method 'onViewClicked'");
     target.layoutConsult = Utils.castView(view, R.id.layout_consult, "field 'layoutConsult'", LinearLayout.class);
-    view7f090266 = view;
+    view7f090271 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -74,7 +74,7 @@ public class ServiceMineFragment_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.layout_pending, "field 'layoutPending' and method 'onViewClicked'");
     target.layoutPending = Utils.castView(view, R.id.layout_pending, "field 'layoutPending'", LinearLayout.class);
-    view7f090277 = view;
+    view7f090282 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -83,7 +83,7 @@ public class ServiceMineFragment_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.layout_processed, "field 'layoutProcessed' and method 'onViewClicked'");
     target.layoutProcessed = Utils.castView(view, R.id.layout_processed, "field 'layoutProcessed'", LinearLayout.class);
-    view7f090278 = view;
+    view7f090283 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -92,7 +92,7 @@ public class ServiceMineFragment_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.layout_tobe_evaluated, "field 'layoutTobeEvaluated' and method 'onViewClicked'");
     target.layoutTobeEvaluated = Utils.castView(view, R.id.layout_tobe_evaluated, "field 'layoutTobeEvaluated'", LinearLayout.class);
-    view7f090280 = view;
+    view7f09028b = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -101,7 +101,7 @@ public class ServiceMineFragment_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.layout_closed, "field 'layoutClosed' and method 'onViewClicked'");
     target.layoutClosed = Utils.castView(view, R.id.layout_closed, "field 'layoutClosed'", LinearLayout.class);
-    view7f090265 = view;
+    view7f090270 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -110,7 +110,7 @@ public class ServiceMineFragment_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.layout_about_us, "field 'layoutAboutUs' and method 'onViewClicked'");
     target.layoutAboutUs = Utils.castView(view, R.id.layout_about_us, "field 'layoutAboutUs'", LinearLayout.class);
-    view7f09025d = view;
+    view7f090268 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -119,7 +119,7 @@ public class ServiceMineFragment_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.layout_clear_cache, "field 'layoutClearCache' and method 'onViewClicked'");
     target.layoutClearCache = Utils.castView(view, R.id.layout_clear_cache, "field 'layoutClearCache'", LinearLayout.class);
-    view7f090264 = view;
+    view7f09026f = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -128,7 +128,7 @@ public class ServiceMineFragment_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.layout_out, "field 'layoutOut' and method 'onViewClicked'");
     target.layoutOut = Utils.castView(view, R.id.layout_out, "field 'layoutOut'", LinearLayout.class);
-    view7f090274 = view;
+    view7f09027f = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -160,25 +160,25 @@ public class ServiceMineFragment_ViewBinding implements Unbinder {
     target.layoutOut = null;
     target.tvCache = null;
 
-    view7f090208.setOnClickListener(null);
-    view7f090208 = null;
-    view7f09051e.setOnClickListener(null);
-    view7f09051e = null;
-    view7f090266.setOnClickListener(null);
-    view7f090266 = null;
-    view7f090277.setOnClickListener(null);
-    view7f090277 = null;
-    view7f090278.setOnClickListener(null);
-    view7f090278 = null;
-    view7f090280.setOnClickListener(null);
-    view7f090280 = null;
-    view7f090265.setOnClickListener(null);
-    view7f090265 = null;
-    view7f09025d.setOnClickListener(null);
-    view7f09025d = null;
-    view7f090264.setOnClickListener(null);
-    view7f090264 = null;
-    view7f090274.setOnClickListener(null);
-    view7f090274 = null;
+    view7f090212.setOnClickListener(null);
+    view7f090212 = null;
+    view7f090532.setOnClickListener(null);
+    view7f090532 = null;
+    view7f090271.setOnClickListener(null);
+    view7f090271 = null;
+    view7f090282.setOnClickListener(null);
+    view7f090282 = null;
+    view7f090283.setOnClickListener(null);
+    view7f090283 = null;
+    view7f09028b.setOnClickListener(null);
+    view7f09028b = null;
+    view7f090270.setOnClickListener(null);
+    view7f090270 = null;
+    view7f090268.setOnClickListener(null);
+    view7f090268 = null;
+    view7f09026f.setOnClickListener(null);
+    view7f09026f = null;
+    view7f09027f.setOnClickListener(null);
+    view7f09027f = null;
   }
 }

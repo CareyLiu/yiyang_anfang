@@ -18,7 +18,7 @@ import java.lang.Override;
 public class RevisePayActivity_ViewBinding implements Unbinder {
   private RevisePayActivity target;
 
-  private View view7f090359;
+  private View view7f090366;
 
   @UiThread
   public RevisePayActivity_ViewBinding(RevisePayActivity target) {
@@ -32,7 +32,7 @@ public class RevisePayActivity_ViewBinding implements Unbinder {
     View view;
     view = Utils.findRequiredView(source, R.id.rl_back, "field 'rlBack' and method 'onViewClicked'");
     target.rlBack = Utils.castView(view, R.id.rl_back, "field 'rlBack'", RelativeLayout.class);
-    view7f090359 = view;
+    view7f090366 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -56,7 +56,7 @@ public class RevisePayActivity_ViewBinding implements Unbinder {
     target.KeyboardViewPay = null;
     target.tvTips = null;
 
-    view7f090359.setOnClickListener(null);
-    view7f090359 = null;
+    view7f090366.setOnClickListener(null);
+    view7f090366 = null;
   }
 }

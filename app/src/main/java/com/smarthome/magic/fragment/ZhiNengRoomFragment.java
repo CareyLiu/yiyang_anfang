@@ -54,4 +54,8 @@ public class ZhiNengRoomFragment extends Fragment {
         zhiNengRoomListAdapter.openLoadAnimation();//默认为渐显效果
         recyclerView.setAdapter(zhiNengRoomListAdapter);
     }
+
+    public void onRefresh() {
+
+    }
 }

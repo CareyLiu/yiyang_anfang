@@ -19,11 +19,11 @@ import java.lang.Override;
 public class LoginActivity_ViewBinding implements Unbinder {
   private LoginActivity target;
 
-  private View view7f090541;
+  private View view7f090556;
 
-  private View view7f090087;
+  private View view7f090089;
 
-  private View view7f090495;
+  private View view7f0904a7;
 
   @UiThread
   public LoginActivity_ViewBinding(LoginActivity target) {
@@ -40,7 +40,7 @@ public class LoginActivity_ViewBinding implements Unbinder {
     target.mGetCode = Utils.findRequiredViewAsType(source, R.id.get_code, "field 'mGetCode'", LinearLayout.class);
     view = Utils.findRequiredView(source, R.id.tv_switch, "field 'mTvSwitch' and method 'onClick'");
     target.mTvSwitch = Utils.castView(view, R.id.tv_switch, "field 'mTvSwitch'", TextView.class);
-    view7f090541 = view;
+    view7f090556 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -49,7 +49,7 @@ public class LoginActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.bt_login, "field 'mBtLogin' and method 'onClick'");
     target.mBtLogin = Utils.castView(view, R.id.bt_login, "field 'mBtLogin'", Button.class);
-    view7f090087 = view;
+    view7f090089 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -58,7 +58,7 @@ public class LoginActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.tv_get_code, "field 'mTvGetCode' and method 'onClick'");
     target.mTvGetCode = Utils.castView(view, R.id.tv_get_code, "field 'mTvGetCode'", TextView.class);
-    view7f090495 = view;
+    view7f0904a7 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -97,11 +97,11 @@ public class LoginActivity_ViewBinding implements Unbinder {
     target.tvYonghushiyong = null;
     target.imageView9 = null;
 
-    view7f090541.setOnClickListener(null);
-    view7f090541 = null;
-    view7f090087.setOnClickListener(null);
-    view7f090087 = null;
-    view7f090495.setOnClickListener(null);
-    view7f090495 = null;
+    view7f090556.setOnClickListener(null);
+    view7f090556 = null;
+    view7f090089.setOnClickListener(null);
+    view7f090089 = null;
+    view7f0904a7.setOnClickListener(null);
+    view7f0904a7 = null;
   }
 }

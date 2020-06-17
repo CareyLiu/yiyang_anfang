@@ -17,9 +17,9 @@ import java.lang.Override;
 public class AtmosActivity_ViewBinding implements Unbinder {
   private AtmosActivity target;
 
-  private View view7f090359;
+  private View view7f090366;
 
-  private View view7f09008a;
+  private View view7f09008c;
 
   @UiThread
   public AtmosActivity_ViewBinding(AtmosActivity target) {
@@ -33,7 +33,7 @@ public class AtmosActivity_ViewBinding implements Unbinder {
     View view;
     view = Utils.findRequiredView(source, R.id.rl_back, "field 'mRlBack' and method 'onClick'");
     target.mRlBack = Utils.castView(view, R.id.rl_back, "field 'mRlBack'", RelativeLayout.class);
-    view7f090359 = view;
+    view7f090366 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -43,7 +43,7 @@ public class AtmosActivity_ViewBinding implements Unbinder {
     target.mEtAtmos = Utils.findRequiredViewAsType(source, R.id.et_atmos, "field 'mEtAtmos'", EditText.class);
     view = Utils.findRequiredView(source, R.id.bt_sure, "field 'mBtSure' and method 'onClick'");
     target.mBtSure = Utils.castView(view, R.id.bt_sure, "field 'mBtSure'", Button.class);
-    view7f09008a = view;
+    view7f09008c = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -63,9 +63,9 @@ public class AtmosActivity_ViewBinding implements Unbinder {
     target.mEtAtmos = null;
     target.mBtSure = null;
 
-    view7f090359.setOnClickListener(null);
-    view7f090359 = null;
-    view7f09008a.setOnClickListener(null);
-    view7f09008a = null;
+    view7f090366.setOnClickListener(null);
+    view7f090366 = null;
+    view7f09008c.setOnClickListener(null);
+    view7f09008c = null;
   }
 }

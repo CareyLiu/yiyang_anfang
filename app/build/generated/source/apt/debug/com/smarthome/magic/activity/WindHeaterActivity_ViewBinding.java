@@ -21,15 +21,15 @@ import java.lang.Override;
 public class WindHeaterActivity_ViewBinding implements Unbinder {
   private WindHeaterActivity target;
 
-  private View view7f09032d;
+  private View view7f09033a;
 
-  private View view7f09032e;
+  private View view7f09033b;
 
-  private View view7f09032f;
+  private View view7f09033c;
 
-  private View view7f090330;
+  private View view7f09033d;
 
-  private View view7f090331;
+  private View view7f09033e;
 
   @UiThread
   public WindHeaterActivity_ViewBinding(WindHeaterActivity target) {
@@ -50,7 +50,7 @@ public class WindHeaterActivity_ViewBinding implements Unbinder {
     target.mTvWd = Utils.findRequiredViewAsType(source, R.id.tv_wd, "field 'mTvWd'", TextView.class);
     view = Utils.findRequiredView(source, R.id.rb_heater_air_mode, "field 'rbHeaterAirMode' and method 'onViewClicked'");
     target.rbHeaterAirMode = Utils.castView(view, R.id.rb_heater_air_mode, "field 'rbHeaterAirMode'", RadioButton.class);
-    view7f09032d = view;
+    view7f09033a = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -59,7 +59,7 @@ public class WindHeaterActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.rb_heater_gear_mode, "field 'rbHeaterGearMode' and method 'onViewClicked'");
     target.rbHeaterGearMode = Utils.castView(view, R.id.rb_heater_gear_mode, "field 'rbHeaterGearMode'", RadioButton.class);
-    view7f09032e = view;
+    view7f09033b = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -68,7 +68,7 @@ public class WindHeaterActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.rb_heater_pump_mode, "field 'rbHeaterPumpMode' and method 'onViewClicked'");
     target.rbHeaterPumpMode = Utils.castView(view, R.id.rb_heater_pump_mode, "field 'rbHeaterPumpMode'", RadioButton.class);
-    view7f09032f = view;
+    view7f09033c = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -77,7 +77,7 @@ public class WindHeaterActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.rb_heater_yby_mode, "field 'rbHeaterYbyMode' and method 'onViewClicked'");
     target.rbHeaterYbyMode = Utils.castView(view, R.id.rb_heater_yby_mode, "field 'rbHeaterYbyMode'", RadioButton.class);
-    view7f090330 = view;
+    view7f09033d = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -86,7 +86,7 @@ public class WindHeaterActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.rb_heater_ytf_mode, "field 'rbHeaterYtfMode' and method 'onViewClicked'");
     target.rbHeaterYtfMode = Utils.castView(view, R.id.rb_heater_ytf_mode, "field 'rbHeaterYtfMode'", RadioButton.class);
-    view7f090331 = view;
+    view7f09033e = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -119,15 +119,15 @@ public class WindHeaterActivity_ViewBinding implements Unbinder {
     target.rgMagnet = null;
     target.tvYuShe_WenDu = null;
 
-    view7f09032d.setOnClickListener(null);
-    view7f09032d = null;
-    view7f09032e.setOnClickListener(null);
-    view7f09032e = null;
-    view7f09032f.setOnClickListener(null);
-    view7f09032f = null;
-    view7f090330.setOnClickListener(null);
-    view7f090330 = null;
-    view7f090331.setOnClickListener(null);
-    view7f090331 = null;
+    view7f09033a.setOnClickListener(null);
+    view7f09033a = null;
+    view7f09033b.setOnClickListener(null);
+    view7f09033b = null;
+    view7f09033c.setOnClickListener(null);
+    view7f09033c = null;
+    view7f09033d.setOnClickListener(null);
+    view7f09033d = null;
+    view7f09033e.setOnClickListener(null);
+    view7f09033e = null;
   }
 }

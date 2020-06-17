@@ -81,6 +81,7 @@
                                     android:layout_centerVertical="true">
 
                                     <TextView
+                                        android:id="@+id/tv_family_name"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center_vertical"
@@ -128,6 +129,7 @@
                             </RelativeLayout>
 
                             <TextView
+                                android:id="@+id/tv_device_num"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="15dp"

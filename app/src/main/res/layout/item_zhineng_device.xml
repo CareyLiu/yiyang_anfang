@@ -7,11 +7,11 @@
     <LinearLayout
         android:id="@+id/ll_content"
         android:layout_width="match_parent"
-        android:layout_height="96dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/item_connect_device_bg"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -36,8 +36,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
             android:orientation="horizontal">
 
             <TextView
@@ -90,8 +90,7 @@
                 android:includeFontPadding="false"
                 android:text="默认房间"
                 android:textColor="#999999"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textSize="12sp" />
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

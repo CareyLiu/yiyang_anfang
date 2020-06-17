@@ -16,11 +16,13 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.adapter.ZhiNengDeviceListAdapter;
 import com.smarthome.magic.util.GridAverageUIDecoration;
 import com.smarthome.magic.util.GridSectionAverageGapItemDecoration;
+import com.smarthome.magic.model.ZhiNengHomeBean;
 import com.smarthome.magic.view.RecycleItemSpance;
 
 import org.jaaksi.pickerview.util.Util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class ZhiNengDeviceFragment extends Fragment {
@@ -29,6 +31,7 @@ public class ZhiNengDeviceFragment extends Fragment {
     private LinearLayout ll_content_bg;
     private RecyclerView recyclerView;
     private ZhiNengDeviceListAdapter zhiNengDeviceListAdapter;
+    private List<ZhiNengHomeBean.DataBean.DeviceBean> dataBean = new ArrayList<>();
 
     @Nullable
     @Override
@@ -47,24 +50,22 @@ public class ZhiNengDeviceFragment extends Fragment {
     private void initView(View view) {
         ll_content_bg = view.findViewById(R.id.ll_content_bg);
         recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.addItemDecoration(new RecycleItemSpance(20, 2));
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.addItemDecoration(new GridAverageUIDecoration(14, 10));
 
         recyclerView.setLayoutManager(layoutManager);
-        ArrayList<String> shopList = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-            shopList.add("");
-        }
-        zhiNengDeviceListAdapter = new ZhiNengDeviceListAdapter(R.layout.item_zhineng_device, shopList);
+        zhiNengDeviceListAdapter = new ZhiNengDeviceListAdapter(R.layout.item_zhineng_device, dataBean);
         zhiNengDeviceListAdapter.setEmptyView(LayoutInflater.from(getActivity()).inflate(R.layout.activity_zhineng_device_none, null));
         zhiNengDeviceListAdapter.openLoadAnimation();//默认为渐显效果
         recyclerView.setAdapter(zhiNengDeviceListAdapter);
+    }
 
-//        if (shopList.size() == 0) {
-//            ll_content_bg.setPadding(Util.dip2px(getActivity(), 14), 0, Util.dip2px(getActivity(), 14), 0);
-//        } else {
-////            ll_content_bg.setPadding(Util.dip2px(getActivity(), 10), 0, Util.dip2px(getActivity(), 10), 0);
-////            recyclerView.addItemDecoration(new RecycleItemSpance(20, 2));
-//        }
+    public void onRefresh() {
+        if (getArguments() != null) {
+            List<ZhiNengHomeBean.DataBean.DeviceBean> device = getArguments().getParcelableArrayList("device");
+            dataBean.addAll(device);
+            zhiNengDeviceListAdapter.notifyDataSetChanged();
+        }
     }
 }

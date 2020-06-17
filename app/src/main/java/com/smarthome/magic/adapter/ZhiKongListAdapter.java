@@ -29,7 +29,7 @@ public class ZhiKongListAdapter extends BaseQuickAdapter<Home.DataBean.Intellect
 //        if (helper.getAdapterPosition() == 0) {
 //            setMargins(helper.getView(R.id.constrain), DensityUtil.dp2px(13), DensityUtil.dp2px(10), 0, 0);
 //        }
-        setMargins(helper.getView(R.id.constrain), DensityUtil.dp2px(13), DensityUtil.dp2px(10), 0, 0);
+//        setMargins(helper.getView(R.id.constrain), DensityUtil.dp2px(13), DensityUtil.dp2px(10), 0, 0);
 
 
         Log.i("getPosition   ：   ",helper.getPosition()+"");

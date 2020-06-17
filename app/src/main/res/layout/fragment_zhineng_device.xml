@@ -4,7 +4,9 @@
     android:id="@+id/ll_content_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingLeft="14dp"
+    android:paddingRight="14dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

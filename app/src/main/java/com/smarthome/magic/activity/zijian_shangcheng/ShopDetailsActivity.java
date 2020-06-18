@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,6 +31,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.adapter.ShopDetailsAdapter;
+import com.smarthome.magic.adapter.ZhiNengDeviceListAdapter;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
@@ -38,6 +40,7 @@ import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.DianPuXiangQingModel;
 import com.smarthome.magic.util.GlideShowImageUtils;
+import com.smarthome.magic.util.GridAverageUIDecoration;
 import com.smarthome.magic.view.GridSpacingItemDecoration;
 
 import java.util.ArrayList;
@@ -215,11 +218,14 @@ public class ShopDetailsActivity extends BaseActivity {
     }
 
     private void setListAdapter() {
-        shopDetailsAdapter = new ShopDetailsAdapter(R.layout.item_shopdetails_shangpin, mDatas);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 2);
-        rlvList.addItemDecoration(new GridSpacingItemDecoration(2, getResources().getDimensionPixelSize(R.dimen.nav_header_vertical_spacing), true));
 
-        rlvList.setLayoutManager(gridLayoutManager);
+        // recyclerView.addItemDecoration(new RecycleItemSpance(20, 2));
+        GridLayoutManager layoutManager = new GridLayoutManager(mContext, 2);
+        rlvList.addItemDecoration(new GridAverageUIDecoration(14, 10));
+
+        rlvList.setLayoutManager(layoutManager);
+        shopDetailsAdapter = new ShopDetailsAdapter(R.layout.item_shopdetails_shangpin, mDatas);
+        shopDetailsAdapter.openLoadAnimation();//默认为渐显效果
         rlvList.setAdapter(shopDetailsAdapter);
     }
 
@@ -263,7 +269,7 @@ public class ShopDetailsActivity extends BaseActivity {
                             mDatas.clear();
                             mDatas.addAll(dataBean.getWaresList());
 
-                            shopDetailsAdapter.setNewData(mDatas);
+                           // shopDetailsAdapter.setNewData(mDatas);
                         } else {
                             mDatas.addAll(dataBean.getWaresList());
                         }

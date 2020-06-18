@@ -93,11 +93,11 @@ public class TiXianActivity extends BaseActivity implements PayPassWordInter {
                 }
 
 
-//                if (zhanShiJinE.compareTo(new BigDecimal("9")) == -1) {
-//                    UIHelper.ToastMessage(TiXianActivity.this, "提现金额需大于10元");
-//                    etText.setText("");
-//                    return;
-//                }
+                if (zhanShiJinE.compareTo(new BigDecimal("9")) == -1) {
+                    UIHelper.ToastMessage(TiXianActivity.this, "提现金额需大于10元");
+                    etText.setText("");
+                    return;
+                }
 
 
                 String str = PreferenceHelper.getInstance(TiXianActivity.this).getString(CUNCHU_ZHIFUMIMA, "1");

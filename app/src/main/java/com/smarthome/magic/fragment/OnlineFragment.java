@@ -1,50 +1,50 @@
 package com.smarthome.magic.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-
 import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.CarBrandActivity;
-import com.smarthome.magic.activity.CarListActivity;
-import com.smarthome.magic.activity.ControCarActivity;
-import com.smarthome.magic.activity.PlumbingHeaterActivity;
 import com.smarthome.magic.activity.WindHeaterActivity;
 import com.smarthome.magic.adapter.CarList1Adapter;
+import com.smarthome.magic.app.ConstanceValue;
+import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.basicmvp.BaseFragment;
+import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.Constant;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
-import com.smarthome.magic.model.DataIn;
 import com.smarthome.magic.model.SmartDevice_car_0364;
+import com.smarthome.magic.util.AlertUtil;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 import static com.smarthome.magic.config.MyApplication.CARBOX_GETNOW;
 import static com.smarthome.magic.config.MyApplication.CAR_CTROL;
@@ -65,6 +65,12 @@ public class OnlineFragment extends BaseFragment implements Observer {
     RecyclerView mList;
     CarList1Adapter carListAdapter;//车联网列表适配器
     List<SmartDevice_car_0364.DataBean> carList = new ArrayList<>();//车联网列表数据源
+    @BindView(R.id.iv_add)
+    ImageView ivAdd;
+    @BindView(R.id.rl_main)
+    LinearLayout rlMain;
+    @BindView(R.id.srL_smart)
+    SmartRefreshLayout srLSmart;
 
 
     @Override
@@ -79,18 +85,13 @@ public class OnlineFragment extends BaseFragment implements Observer {
 
     @Override
     protected void initView(View view) {
-
         view.setClickable(true);// 防止点击穿透，底层的fragment响应上层点击触摸事件
         unbinder = ButterKnife.bind(this, view);
-
-
         getData();
-
         carListAdapter = new CarList1Adapter(carList);
         mList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mList.setAdapter(carListAdapter);
         getData();
-        ImmersionBar.with(this).statusBarColor(R.color.black).init();
         carListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -123,11 +124,38 @@ public class OnlineFragment extends BaseFragment implements Observer {
             }
         });
 
+        ivAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CarBrandActivity.actionStart(getActivity());
+
+            }
+        });
+
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_ADD_CHELIANG_SUCCESS) {
+                    //车辆添加成功
+                    srLSmart.autoRefresh();
+
+                }
+            }
+        }));
+
+        srLSmart.setEnableRefresh(true);
+        srLSmart.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getData();
+            }
+        });
+
     }
 
     @Override
     protected void immersionInit(ImmersionBar mImmersionBar) {
-        mImmersionBar.with(this).statusBarDarkFont(true)    .fitsSystemWindows(true).statusBarColor(R.color.white).init();
+        mImmersionBar.with(this).statusBarDarkFont(true).fitsSystemWindows(true).statusBarColor(R.color.white).init();
     }
 
 
@@ -153,71 +181,73 @@ public class OnlineFragment extends BaseFragment implements Observer {
     }
 
     public void getData() {
-//        Map<String, String> map = new HashMap<>();
-//        map.put("code", "03064");
-//        map.put("key", Constant.KEY);
-//        map.put("user_car_type", "1");
-//        map.put("token", UserManager.getManager(this).getAppToken());
-//        Gson gson = new Gson();
-//        OkGo.<AppResponse<SmartDevice_car_0364.DataBean>>post(Constant.SERVER_URL + "wit/app/user")
-//                .tag(this)//
-//                .upJson(gson.toJson(map))
-//                .execute(new JsonCallback<AppResponse<SmartDevice_car_0364.DataBean>>() {
-//                    @Override
-//                    public void onSuccess(final Response<AppResponse<SmartDevice_car_0364.DataBean>> response) {
-//                        carList = response.body().data;
-//                        carListAdapter.addAll(carList);
-//                        mList.refreshComplete(10);
-//                        lRecyclerViewAdapter.notifyDataSetChanged();
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Response<AppResponse<SmartDevice_car_0364.DataBean>> response) {
-//                        AlertUtil.t(CarListActivity.this, response.getException().getMessage());
-//                    }
-//                });
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "03064");
+        map.put("key", Constant.KEY);
+        map.put("user_car_type", "1");
+        map.put("token", UserManager.getManager(getActivity()).getAppToken());
+        Gson gson = new Gson();
+        OkGo.<AppResponse<SmartDevice_car_0364.DataBean>>post(Constant.SERVER_URL + "wit/app/user")
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<SmartDevice_car_0364.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<SmartDevice_car_0364.DataBean>> response) {
+                        srLSmart.finishRefresh();
+                        carList.clear();
+                        carList.addAll(response.body().data);
 
-        OkHttpClient mOkHttpClient = new OkHttpClient();
-        DataIn in = new DataIn();
-        in.code = "03064";
-        in.key = Constant.KEY;
-        in.user_car_type = "1";
-        in.token = UserManager.getManager(getActivity()).getAppToken();
-        MediaType JSON = MediaType.parse("application/json;charset=utf-8");
-        RequestBody body = RequestBody.create(JSON, new Gson().toJson(in));
-        final Request request = new Request.Builder().url(Constant.SERVER_URL + "wit/app/user").post(body).build();
-        Call call = mOkHttpClient.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                Gson gson = new Gson();
-                SmartDevice_car_0364 bean = gson.fromJson(response.body().string(), SmartDevice_car_0364.class);
-
-                System.out.println(bean.getData().size() + "");
-                for (int i = 0; i < bean.getData().size(); i++) {
-                    System.out.println(bean.getData().get(i).getCar_brand_name());
-                }
-                carList.clear();
-                carList.addAll(bean.getData());
-
-                getActivity().runOnUiThread(new Runnable() {
-                    public void run() {
                         if (carList.size() == 0) {
                             View view = View.inflate(getActivity(), R.layout.online_empty_view, null);
                             carListAdapter.setHeaderView(view);
                         }
                         carListAdapter.notifyDataSetChanged();
                     }
+
+
+                    @Override
+                    public void onError(Response<AppResponse<SmartDevice_car_0364.DataBean>> response) {
+                        AlertUtil.t(getActivity(), response.getException().getMessage());
+                    }
                 });
 
-            }
-        });
+//        OkHttpClient mOkHttpClient = new OkHttpClient();
+//        DataIn in = new DataIn();
+//        in.code = "03064";
+//        in.key = Constant.KEY;
+//        in.user_car_type = "1";
+//        in.token = UserManager.getManager(getActivity()).getAppToken();
+//        MediaType JSON = MediaType.parse("application/json;charset=utf-8");
+//        RequestBody body = RequestBody.create(JSON, new Gson().toJson(in));
+//        final Request request = new Request.Builder().url(Constant.SERVER_URL + "wit/app/user").post(body).build();
+//        Call call = mOkHttpClient.newCall(request);
+//        call.enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//                Gson gson = new Gson();
+//                SmartDevice_car_0364 bean = gson.fromJson(response.body().string(), SmartDevice_car_0364.class);
+//
+//
+//                carList.clear();
+//                carList.addAll(bean.getData());
+//
+//                getActivity().runOnUiThread(new Runnable() {
+//                    public void run() {
+//                        if (carList.size() == 0) {
+//                            View view = View.inflate(getActivity(), R.layout.online_empty_view, null);
+//                            carListAdapter.setHeaderView(view);
+//                        }
+//                        carListAdapter.notifyDataSetChanged();
+//                    }
+//                });
+//
+//            }
+//        });
 
     }
 

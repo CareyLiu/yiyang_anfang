@@ -1,12 +1,12 @@
 package com.smarthome.magic.adapter.xin_tuanyou;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.alipay.sdk.app.PayTask;
 import com.flyco.roundview.RoundRelativeLayout;
@@ -115,13 +117,20 @@ public class XinTuanYouShengChengDingDanActivity extends BaseActivity {
     @BindView(R.id.tv_zhijiang)
     TextView tvZhijiang;
 
+    @BindView(R.id.cl_main_4)
+    ConstraintLayout clMain4;
+    @BindView(R.id.tv_weixin)
+    TextView tvWeixin;
+    @BindView(R.id.tv_zhifubao)
+    TextView tvZhifubao;
+
     private String userHongBao = "2";//1 不用 2 用
     private IWXAPI api;
     YuZhiFuModel.DataBean dataBean;
     private String appId;//支付id 给支付宝
 
     private String diYongQuan;
-    String pay_id = "2";//支付方式-- 1 支付宝 2 微信
+    String pay_id = "";//支付方式-- 1 支付宝 2 微信
     String payType = "4";//1 支付宝 4 微信
     private String inst_id;
 
@@ -132,9 +141,11 @@ public class XinTuanYouShengChengDingDanActivity extends BaseActivity {
     String shengShu;
     private String selectHongBaoFlag = "1";//选中 默认选中  1选中 0 未选中
     Response<AppResponse<XinTuanYouShengChengDingDanBean.DataBean>> response;
-
-
     BigDecimal diYongQuanDecimeal;
+    private ProgressDialog progressDialog;
+    String ali_pay;//是否支持支付宝
+    String wx_pay;//是否支持微信
+    String is_buy;//是否支持网络购买
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,7 +159,7 @@ public class XinTuanYouShengChengDingDanActivity extends BaseActivity {
         inst_id = getIntent().getStringExtra("inst_id");
 
         tvYouhaoQianghao.setText(shenMYouHao + " " + shenMQiangHao + "号枪");
-
+        progressDialog = new ProgressDialog(mContext);//网页没加载出来时显示的dialog提示;
 
         // tvMoney.setText("¥" + shenMJIne);
 
@@ -156,14 +167,19 @@ public class XinTuanYouShengChengDingDanActivity extends BaseActivity {
         viewWeixin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //  wx_pay	1.支持微信支付  2.不支持微信支付
 
+                if (wx_pay.equals("2")) {
+                    UIHelper.ToastMessage(mContext, "当前油站不支持微信支付");
+                    return;
+                }
                 pay_id = "2";//支付方式-- 1 支付宝 2 微信
                 payType = "4";//1 支付宝 4 微信
 
                 //  ivIcon1.setBackgroundResource(R.mipmap.dingdan_icon_duihao);
                 ivZhifubaoChoose.setVisibility(View.INVISIBLE);
                 ivWeixinChoose.setVisibility(View.VISIBLE);
-                getWeiXinOrZhiFuBao();
+                // getWeiXinOrZhiFuBao();
             }
         });
 
@@ -171,19 +187,28 @@ public class XinTuanYouShengChengDingDanActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
+                if (ali_pay.equals("2")) {
+                    UIHelper.ToastMessage(mContext, "当前油站不支持支付宝支付");
+                    return;
+                }
                 pay_id = "1";//支付方式-- 1 支付宝 2 微信
                 payType = "1";//1 支付宝 4 微信
 
                 ivZhifubaoChoose.setVisibility(View.VISIBLE);
                 ivWeixinChoose.setVisibility(View.INVISIBLE);
                 //ivWeixinChoose.setBackgroundResource(R.mipmap.dingdan_icon_duihao);
-                getWeiXinOrZhiFuBao();
+                // getWeiXinOrZhiFuBao();
             }
         });
 
         rl3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (is_buy.equals("2")) {
+                    UIHelper.ToastMessage(mContext, "当前不支付网络支付，无法使用红包");
+                    return;
+                }
                 if (userHongBao.equals("2")) {
                     ivChoose.setVisibility(View.INVISIBLE);
                     userHongBao = "1";//不用
@@ -234,6 +259,10 @@ public class XinTuanYouShengChengDingDanActivity extends BaseActivity {
         rl2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (is_buy.equals("2")) {
+                    UIHelper.ToastMessage(mContext, "当前不支付网络支付，无法使用优惠券");
+                    return;
+                }
                 if (selectHongBaoFlag.equals("1")) {
                     UIHelper.ToastMessage(XinTuanYouShengChengDingDanActivity.this, "使用余额抵扣,无法使用抵用券");
                 } else {
@@ -290,14 +319,22 @@ public class XinTuanYouShengChengDingDanActivity extends BaseActivity {
         tvQuerenPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PreferenceHelper.getInstance(XinTuanYouShengChengDingDanActivity.this).putString(App.XINTUANYOU_PAY, "XINTUANYOU_PAY");
-                if (pay_id.equals("2")) {
-                    //     finish();
-                    goToWeChatPay(dataBean);
 
-                } else if (pay_id.equals("1")) {
-                    payV2(appId);//这里填写后台返回的支付信息
+                /**
+                 * is_buy	1.支持购买  2.不支持购买
+                 */
+                if (is_buy.equals("1")) {
+
+                } else if (is_buy.equals("2")) {
+                    UIHelper.ToastMessage(mContext, "该油站不支持网络支付");
+                    return;
                 }
+
+                PreferenceHelper.getInstance(XinTuanYouShengChengDingDanActivity.this).putString(App.XINTUANYOU_PAY, "XINTUANYOU_PAY");
+                progressDialog.setMessage("正在拉起支付，请稍后...");
+                progressDialog.show();
+                getWeiXinOrZhiFuBao();
+
             }
         });
 
@@ -444,7 +481,11 @@ public class XinTuanYouShengChengDingDanActivity extends BaseActivity {
     private String diYongQuanId;
 
     private void getWeiXinOrZhiFuBao() {
-
+        if (StringUtils.isEmpty(pay_id)) {
+            UIHelper.ToastMessage(mContext, "请选择您的支付方式");
+            progressDialog.dismiss();
+            return;
+        }
         if (pay_id.equals("1")) {//1支付宝
 
             //获得后台的支付信息\
@@ -515,13 +556,24 @@ public class XinTuanYouShengChengDingDanActivity extends BaseActivity {
                             appId = response.body().data.get(0).getPay();
 
                             form_id = response.body().data.get(0).getOut_trade_no();
+                            payV2(appId);//这里填写后台返回的支付信息
 
-
+                            progressDialog.dismiss();
                         }
 
                         @Override
                         public void onError(Response<AppResponse<YuZhiFuModel_AliPay.DataBean>> response) {
                             super.onError(response);
+
+                            //  UIHelper.ToastMessage(getActivity(), response.body().msg);
+                            String str = response.getException().getMessage();
+                            //    Log.i("cuifahuo", str);
+
+                            String[] str1 = str.split("：");
+
+                            if (str1.length == 3) {
+                                UIHelper.ToastMessage(mContext, str1[2]);
+                            }
                         }
                     });
 
@@ -589,11 +641,23 @@ public class XinTuanYouShengChengDingDanActivity extends BaseActivity {
                             api = WXAPIFactory.createWXAPI(XinTuanYouShengChengDingDanActivity.this, dataBean.getPay().getAppid());
 
                             form_id = dataBean.getPay().getOut_trade_no();
+                            goToWeChatPay(dataBean);
+                            progressDialog.dismiss();
                         }
 
                         @Override
                         public void onError(Response<AppResponse<YuZhiFuModel.DataBean>> response) {
                             super.onError(response);
+                            progressDialog.dismiss();
+                            //  UIHelper.ToastMessage(getActivity(), response.body().msg);
+                            String str = response.getException().getMessage();
+                            //    Log.i("cuifahuo", str);
+
+                            String[] str1 = str.split("：");
+
+                            if (str1.length == 3) {
+                                UIHelper.ToastMessage(mContext, str1[2]);
+                            }
                         }
                     });
 
@@ -674,7 +738,38 @@ public class XinTuanYouShengChengDingDanActivity extends BaseActivity {
 
                         tvSheng.setText("约" + response.body().data.get(0).getLitre() + "L");
 
-                        getWeiXinOrZhiFuBao();//默认选中了 微信
+                        wx_pay = response.body().data.get(0).getWx_pay();
+                        ali_pay = response.body().data.get(0).getAli_pay();
+                        is_buy = response.body().data.get(0).getIs_buy();
+
+
+                        if (ali_pay.equals("1")) {
+                            tvZhifubao.setText("支付宝支付(当前可网络购买)");
+                            //  ivZhifubaoChoose.setVisibility(View.VISIBLE);
+
+                        } else if (ali_pay.equals("2")) {
+                            tvZhifubao.setText("支付宝支付(当前不可网络购买)");
+                            // ivZhifubaoChoose.setVisibility(View.GONE);
+                        }
+
+                        if (wx_pay.equals("1")) {
+                            tvWeixin.setText("微信支付(当前可网络购买)");
+                            // ivWeixinChoose.setVisibility(View.VISIBLE);
+
+                        } else if (wx_pay.equals("2")) {
+                            tvWeixin.setText("微信支付(当前不可网络购买)");
+                            // ivZhifubaoChoose.setVisibility(View.GONE);
+                        }
+
+                        if (is_buy.equals("1")) {
+
+
+                        } else if (is_buy.equals("2")) {
+                            ivWeixinChoose.setVisibility(View.GONE);
+                            ivZhifubaoChoose.setVisibility(View.GONE);
+                        }
+
+
                     }
                 });
     }

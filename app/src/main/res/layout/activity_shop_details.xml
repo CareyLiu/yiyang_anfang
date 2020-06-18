@@ -298,6 +298,8 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rlv_list"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/grayf3f3f3"

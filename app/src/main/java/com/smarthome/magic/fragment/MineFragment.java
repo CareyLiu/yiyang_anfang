@@ -212,6 +212,11 @@ public class MineFragment extends BaseFragment implements Observer {
         return R.layout.layout_fragment_wode;
     }
 
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+
+    }
 
     @Override
     protected void initView(View rootView) {

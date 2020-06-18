@@ -340,6 +340,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/tv_weixin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
@@ -351,6 +352,7 @@
                     app:layout_constraintTop_toTopOf="@+id/iv_icon_1" />
 
                 <ImageView
+                    android:visibility="gone"
                     android:id="@+id/iv_weixin_choose"
                     android:layout_width="23dp"
                     android:layout_height="23dp"
@@ -379,6 +381,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/view" />
 
                 <TextView
+                    android:id="@+id/tv_zhifubao"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"

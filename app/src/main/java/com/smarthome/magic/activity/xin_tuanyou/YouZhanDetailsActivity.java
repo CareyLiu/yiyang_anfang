@@ -6,13 +6,17 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -423,7 +427,7 @@ public class YouZhanDetailsActivity extends BaseActivity {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.constrain:
-                        for (int i = 0; i < detailsAllProductAdapter.getData().size(); i++) {
+                        for (int i = 0; i < detailsQiangHaoAdapter.getData().size(); i++) {
                             qiangHaoList.get(i).setIsSelect("0");
                         }
                         qiangHaoList.get(position).setIsSelect("1");

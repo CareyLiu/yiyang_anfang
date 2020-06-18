@@ -2,9 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_content"
-    android:layout_width="match_parent"
+    android:layout_width="158dp"
     android:layout_height="wrap_content"
-
     android:background="@drawable/item_connect_device_bg">
 
 
@@ -98,7 +97,7 @@
         app:layout_constraintTop_toTopOf="@+id/rl_zaixian" />
 
     <View
-        android:layout_width="wrap_content"
+        android:layout_width="8dp"
         android:layout_height="8dp"
         android:layout_marginLeft="15dp"
         app:layout_constraintLeft_toLeftOf="parent"

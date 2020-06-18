@@ -61,6 +61,34 @@ public class XinTuanYouShengChengDingDanBean {
         private String reduction_money;
         private String available_balance;
         private String oilNo;
+        private String is_buy;
+        private String wx_pay;
+
+        public String getIs_buy() {
+            return is_buy;
+        }
+
+        public void setIs_buy(String is_buy) {
+            this.is_buy = is_buy;
+        }
+
+        public String getWx_pay() {
+            return wx_pay;
+        }
+
+        public void setWx_pay(String wx_pay) {
+            this.wx_pay = wx_pay;
+        }
+
+        public String getAli_pay() {
+            return ali_pay;
+        }
+
+        public void setAli_pay(String ali_pay) {
+            this.ali_pay = ali_pay;
+        }
+
+        private String ali_pay;
 
         public String getGunNo() {
             return gunNo;

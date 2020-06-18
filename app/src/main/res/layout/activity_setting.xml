@@ -44,9 +44,10 @@
             android:orientation="vertical">
 
             <View
+
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/split" />
+                android:background="@color/grayfff5f5f5" />
 
             <LinearLayout
                 android:id="@+id/layout_header"
@@ -84,9 +85,10 @@
             </LinearLayout>
 
             <View
+                android:layout_marginHorizontal="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/split" />
+                android:background="@color/grayfff5f5f5" />
 
             <LinearLayout
                 android:id="@+id/layout_nickname"
@@ -106,6 +108,7 @@
                     android:textColor="@color/black_333333" />
 
                 <TextView
+                    android:textColor="@color/black_333333"
                     android:id="@+id/tv_nickname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -122,9 +125,10 @@
             </LinearLayout>
 
             <View
+                android:layout_marginHorizontal="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/split" />
+                android:background="@color/grayfff5f5f5"  />
 
             <LinearLayout
                 android:id="@+id/layout_gender"
@@ -144,6 +148,7 @@
                     android:textColor="@color/black_333333" />
 
                 <TextView
+                    android:textColor="@color/black_333333"
                     android:id="@+id/tv_gender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -160,9 +165,10 @@
             </LinearLayout>
 
             <View
+                android:layout_marginHorizontal="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/split" />
+                android:background="@color/grayfff5f5f5"  />
 
             <LinearLayout
                 android:id="@+id/layout_birthday"
@@ -182,6 +188,7 @@
                     android:textColor="@color/black_333333" />
 
                 <TextView
+                    android:textColor="@color/black_333333"
                     android:id="@+id/tv_birthday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -198,9 +205,10 @@
             </LinearLayout>
 
             <View
+                android:layout_marginHorizontal="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/split" />
+                android:background="@color/grayfff5f5f5" />
 
             <LinearLayout
                 android:id="@+id/layout_address"
@@ -220,6 +228,7 @@
                     android:textColor="@color/black_333333" />
 
                 <TextView
+                    android:textColor="@color/black_333333"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="修改/添加" />
@@ -235,9 +244,10 @@
             </LinearLayout>
 
             <View
+                android:layout_marginHorizontal="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/split" />
+                android:background="@color/grayfff5f5f5" />
 
             <LinearLayout
                 android:id="@+id/layout_cash_account"
@@ -271,9 +281,10 @@
             </LinearLayout>
 
             <View
+                android:layout_marginHorizontal="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/split" />
+                android:background="@color/grayfff5f5f5" />
 
             <LinearLayout
                 android:id="@+id/layout_login_password"
@@ -307,9 +318,10 @@
             </LinearLayout>
 
             <View
+                android:layout_marginHorizontal="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/split" />
+                android:background="@color/grayfff5f5f5" />
 
             <LinearLayout
                 android:id="@+id/layout_pay_password"
@@ -343,9 +355,10 @@
             </LinearLayout>
 
             <View
+                android:layout_marginHorizontal="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/split" />
+                android:background="@color/grayfff5f5f5" />
 
             <LinearLayout
                 android:id="@+id/layout_clear_cache"
@@ -380,9 +393,10 @@
             </LinearLayout>
 
             <View
+                android:layout_marginHorizontal="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/split" />
+                android:background="@color/grayfff5f5f5" />
 
             <LinearLayout
                 android:id="@+id/shebei_peiwang"

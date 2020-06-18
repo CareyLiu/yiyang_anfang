@@ -3,12 +3,16 @@ package com.smarthome.magic.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
+
 import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.jaeger.library.StatusBarUtil;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.chelianwang.ScanAddCarActivity;
+import com.smarthome.magic.activity.saoma.ScanActivity;
 import com.smarthome.magic.util.AppToast;
 
 import java.util.List;
@@ -17,10 +21,9 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by Sl on 2019/6/18.
- *
  */
 
-public class BindBoxActivity extends BaseActivity implements View.OnClickListener,EasyPermissions.PermissionCallbacks {
+public class BindBoxActivity extends BaseActivity implements View.OnClickListener, EasyPermissions.PermissionCallbacks {
     private RelativeLayout mRlBack;
     private RelativeLayout mRlScanAdd;
     private RelativeLayout mRlHandAdd;
@@ -53,13 +56,15 @@ public class BindBoxActivity extends BaseActivity implements View.OnClickListene
             case R.id.rl_scan_add:
 
                 if (EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA)) {
-                   // startActivity(new Intent(this, ScanActivity.class));
+                    ScanAddCarActivity.actionStart(BindBoxActivity.this);
                 } else {
                     EasyPermissions.requestPermissions(this, getString(R.string.xjqx), 0, Manifest.permission.CAMERA);
                 }
+                finish();
                 break;
             case R.id.rl_hand_add:
-                startActivity(new Intent(this,HandAddActivity.class));
+                finish();
+                startActivity(new Intent(this, HandAddActivity.class));
                 break;
         }
     }

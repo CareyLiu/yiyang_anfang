@@ -62,7 +62,7 @@ public class ZhiNengHomeListActivity extends BaseActivity {
         }
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
-        zhiNengHomeListAdapter = new ZhiNengHomeListAdapter(R.layout.item_zhineng_room, data);
+        zhiNengHomeListAdapter = new ZhiNengHomeListAdapter(R.layout.item_zhineng_home, data);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(zhiNengHomeListAdapter);
     }

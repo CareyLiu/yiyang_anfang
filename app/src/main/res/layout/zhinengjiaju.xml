@@ -75,10 +75,14 @@
                                 android:layout_marginRight="15dp">
 
                                 <LinearLayout
+                                    android:id="@+id/ll_checkhome"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentLeft="true"
-                                    android:layout_centerVertical="true">
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_toStartOf="@+id/ll_connect_device"
+                                    android:layout_toLeftOf="@+id/ll_connect_device">
 
                                     <TextView
                                         android:id="@+id/tv_family_name"
@@ -100,6 +104,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:id="@+id/ll_connect_device"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentRight="true"
@@ -165,7 +170,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
                                         android:layout_gravity="center"
-                                        android:layout_marginBottom="10dp" />
+                                        android:layout_marginBottom="5dp" />
                                 </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>

@@ -67,7 +67,7 @@ public class ZhiNengHomeBean {
         private String family_id;
         private String family_name;
         private ArrayList<DeviceBean> device;
-        private List<RoomBean> room;
+        private ArrayList<RoomBean> room;
 
         public String getMember_type() {
             return member_type;
@@ -109,11 +109,11 @@ public class ZhiNengHomeBean {
             this.device = device;
         }
 
-        public List<RoomBean> getRoom() {
+        public ArrayList<RoomBean> getRoom() {
             return room;
         }
 
-        public void setRoom(List<RoomBean> room) {
+        public void setRoom(ArrayList<RoomBean> room) {
             this.room = room;
         }
 
@@ -279,7 +279,7 @@ public class ZhiNengHomeBean {
             }
         }
 
-        public static class RoomBean {
+        public static class RoomBean implements Parcelable {
             /**
              * room_id : 11
              * room_name : 主卧
@@ -291,6 +291,25 @@ public class ZhiNengHomeBean {
             private String room_name;
             private String family_id;
             private String device_number;
+
+            protected RoomBean(Parcel in) {
+                room_id = in.readString();
+                room_name = in.readString();
+                family_id = in.readString();
+                device_number = in.readString();
+            }
+
+            public static final Creator<RoomBean> CREATOR = new Creator<RoomBean>() {
+                @Override
+                public RoomBean createFromParcel(Parcel in) {
+                    return new RoomBean(in);
+                }
+
+                @Override
+                public RoomBean[] newArray(int size) {
+                    return new RoomBean[size];
+                }
+            };
 
             public String getRoom_id() {
                 return room_id;
@@ -322,6 +341,19 @@ public class ZhiNengHomeBean {
 
             public void setDevice_number(String device_number) {
                 this.device_number = device_number;
+            }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(room_id);
+                dest.writeString(room_name);
+                dest.writeString(family_id);
+                dest.writeString(device_number);
             }
         }
     }

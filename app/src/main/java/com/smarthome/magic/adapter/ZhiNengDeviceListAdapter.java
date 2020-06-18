@@ -21,16 +21,23 @@ public class ZhiNengDeviceListAdapter extends BaseQuickAdapter<ZhiNengHomeBean.D
 
     @Override
     protected void convert(BaseViewHolder helper, ZhiNengHomeBean.DataBean.DeviceBean item) {
-        Glide.with(mContext).load(item.getDevice_type_pic()).into((ImageView) helper.getView(R.id.img_device));
-        helper.setText(R.id.tv_room_name, item.getDevice_name());
+        Glide.with(mContext).load(item.getDevice_type_pic()).into((ImageView) helper.getView(R.id.iv_device));
+        helper.setText(R.id.tv_device_name, item.getDevice_name());
+        helper.setText(R.id.tv_room_name, item.getRoom_name());
         if (item.getOnline_state().equals("1")) {
             //设备在线
-            helper.setBackgroundRes(R.id.img_state, R.drawable.bg_zhineng_device_online);
+            helper.setBackgroundRes(R.id.iv_state, R.drawable.bg_zhineng_device_online);
             helper.setText(R.id.tv_state, "在线");
         } else {
             //设备离线
-            helper.setBackgroundRes(R.id.img_state, R.drawable.bg_zhineng_device_offline);
+            helper.setBackgroundRes(R.id.iv_state, R.drawable.bg_zhineng_device_offline);
             helper.setText(R.id.tv_state, "离线");
+        }
+
+        if (item.getWork_state().equals("1")) {
+            helper.setBackgroundRes(R.id.iv_switch, R.mipmap.img_device_switch_open);
+        } else if (item.getWork_state().equals("2")) {
+            helper.setBackgroundRes(R.id.iv_switch, R.mipmap.img_device_switch_close);
         }
     }
 }

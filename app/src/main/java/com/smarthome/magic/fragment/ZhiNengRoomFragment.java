@@ -12,11 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.smarthome.magic.R;
 import com.smarthome.magic.adapter.ZhiNengRoomListAdapter;
+import com.smarthome.magic.model.ZhiNengHomeBean;
 import com.smarthome.magic.view.XRecyclerView;
 
 import org.jaaksi.pickerview.util.Util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class ZhiNengRoomFragment extends Fragment {
@@ -24,6 +26,7 @@ public class ZhiNengRoomFragment extends Fragment {
     private View footerView;
     private XRecyclerView recyclerView;
     private ZhiNengRoomListAdapter zhiNengRoomListAdapter;
+    private List<ZhiNengHomeBean.DataBean.RoomBean> roomBeanList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -42,20 +45,21 @@ public class ZhiNengRoomFragment extends Fragment {
     private void initView(View view) {
         recyclerView = view.findViewById(R.id.recyclerView);
         footerView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_zhineng_room_footer, null);
-        recyclerView.addFooterView(footerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        ArrayList<String> shopList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            shopList.add("");
-        }
-        zhiNengRoomListAdapter = new ZhiNengRoomListAdapter(R.layout.item_zhineng_room, shopList);
+        zhiNengRoomListAdapter = new ZhiNengRoomListAdapter(R.layout.item_zhineng_room, roomBeanList);
         zhiNengRoomListAdapter.setEmptyView(LayoutInflater.from(getActivity()).inflate(R.layout.activity_zhineng_room_none, null));
         zhiNengRoomListAdapter.openLoadAnimation();//默认为渐显效果
+        zhiNengRoomListAdapter.addFooterView(footerView);
         recyclerView.setAdapter(zhiNengRoomListAdapter);
     }
 
     public void onRefresh() {
-
+        if (getArguments() != null) {
+            List<ZhiNengHomeBean.DataBean.RoomBean> room = getArguments().getParcelableArrayList("room");
+            roomBeanList.clear();
+            roomBeanList.addAll(room);
+            zhiNengRoomListAdapter.notifyDataSetChanged();
+        }
     }
 }

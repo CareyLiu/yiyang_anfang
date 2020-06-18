@@ -1,6 +1,7 @@
 package com.smarthome.magic.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -20,7 +22,10 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.ZhiNengHomeListActivity;
 import com.smarthome.magic.adapter.NewsFragmentPagerAdapter;
 import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
@@ -60,12 +65,14 @@ import static com.smarthome.magic.get_net.Urls.ZIYINGFENLEI;
  * Created by Administrator on 2018/3/29 0029.
  */
 
-public class ZhiNengJiaJuFragment extends BaseFragment {
+public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickListener {
     private static final String TAG = "ZhiNengJiaJuFragment";
     @BindView(R.id.rl_title)
     RelativeLayout rlTitle;
     @BindView(R.id.srL_smart)
     SmartRefreshLayout srLSmart;
+    @BindView(R.id.ll_checkhome)
+    LinearLayout ll_checkhome;
     @BindView(R.id.tv_family_name)
     TextView tv_family_name;
     @BindView(R.id.tv_device_num)
@@ -84,6 +91,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment {
 
     private List<ZhiNengHomeBean.DataBean> dataBean = new ArrayList<>();
     private Bundle device = new Bundle();
+    private Bundle room = new Bundle();
 
     @Override
     protected void initLogic() {
@@ -119,7 +127,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment {
         viewPager.setScroll(false);
         zhiNengDeviceFragment = ZhiNengDeviceFragment.newInstance(device);
         fragmentList.add(zhiNengDeviceFragment);
-        zhiNengRoomFragment = ZhiNengRoomFragment.newInstance(null);
+        zhiNengRoomFragment = ZhiNengRoomFragment.newInstance(room);
         fragmentList.add(zhiNengRoomFragment);
         tabs.add("设备");
         tabs.add("房间");
@@ -166,7 +174,14 @@ public class ZhiNengJiaJuFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        srLSmart.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getnet();
+            }
+        });
         srLSmart.setEnableLoadMore(false);
+        ll_checkhome.setOnClickListener(this);
         initViewpager();
         initMagicIndicator();
         initData();
@@ -192,15 +207,32 @@ public class ZhiNengJiaJuFragment extends BaseFragment {
                 .execute(new JsonCallback<AppResponse<ZhiNengHomeBean.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<ZhiNengHomeBean.DataBean>> response) {
+                        if (srLSmart != null) {
+                            srLSmart.setEnableRefresh(true);
+                            srLSmart.finishRefresh();
+                            srLSmart.setEnableLoadMore(false);
+                        }
                         dataBean = response.body().data;
                         tv_family_name.setText(dataBean.get(0).getFamily_name());
                         tv_device_num.setText(dataBean.get(0).getDevice_num() + "个设备");
                         device.putParcelableArrayList("device", dataBean.get(0).getDevice());
+                        room.putParcelableArrayList("room", dataBean.get(0).getRoom());
                         if (zhiNengDeviceFragment != null) {
                             zhiNengDeviceFragment.onRefresh();
+                        }
+                        if (zhiNengRoomFragment != null) {
+                            zhiNengRoomFragment.onRefresh();
                         }
                     }
                 });
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ll_checkhome:
+                startActivity(new Intent(getActivity(), ZhiNengHomeListActivity.class));
+                break;
+        }
+    }
 }

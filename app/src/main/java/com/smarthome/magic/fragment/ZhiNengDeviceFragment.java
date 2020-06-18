@@ -50,9 +50,9 @@ public class ZhiNengDeviceFragment extends Fragment {
     private void initView(View view) {
         ll_content_bg = view.findViewById(R.id.ll_content_bg);
         recyclerView = view.findViewById(R.id.recyclerView);
-       // recyclerView.addItemDecoration(new RecycleItemSpance(20, 2));
+//        recyclerView.addItemDecoration(new RecycleItemSpance(20, 2));
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
-        recyclerView.addItemDecoration(new GridAverageUIDecoration(14, 10));
+        recyclerView.addItemDecoration(new GridAverageUIDecoration(14, 5));
 
         recyclerView.setLayoutManager(layoutManager);
         zhiNengDeviceListAdapter = new ZhiNengDeviceListAdapter(R.layout.item_zhineng_device, dataBean);

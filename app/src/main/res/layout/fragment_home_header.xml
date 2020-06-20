@@ -116,9 +116,9 @@
                 android:layout_marginLeft="3dp"
                 android:layout_marginTop="15dp"
                 android:includeFontPadding="false"
-                android:text="品牌制造商直供"
+                android:text="自营直供(自买省、分享赚)"
                 android:textColor="#ff333333"
-                android:textSize="15sp"
+                android:textSize="13sp"
 
                 app:layout_constraintLeft_toRightOf="@+id/view_pink_line"
                 app:layout_constraintTop_toTopOf="parent" />

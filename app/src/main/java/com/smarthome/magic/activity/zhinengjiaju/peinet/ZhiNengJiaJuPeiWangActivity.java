@@ -38,6 +38,8 @@ import com.flyco.roundview.RoundLinearLayout;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.v1.EspTouchActivity;
 import com.smarthome.magic.app.AppConfig;
+import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.MyApplication;
@@ -48,6 +50,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+
+import static com.smarthome.magic.app.ConstanceValue.MSG_PEIWANG_SUCCESS;
 
 public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
 
@@ -113,6 +117,7 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
 
 
     public EsptouchAsyncTask4 mTask;
+    private String jiZhuMiMa = "1";//0 不记住  1 记住
 
     @Override
     protected String getEspTouchVersion() {
@@ -157,13 +162,20 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
+        ivPeiwangMima.setBackgroundResource(R.mipmap.peiwang_icon_mima_jizhu);
+        setPeiWangMiMa();
         rllKaishilianjie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!StringUtils.isEmpty(etWifiMima.getText().toString())) {
                     setZhuangTaiZhanShi("2");
                     executeEsptouch();
+                    if (jiZhuMiMa.equals("1")) {
+                        PreferenceHelper.getInstance(mContext).putString(AppConfig.PEIWANG_MIMA, etWifiMima.getText().toString());
+                    } else {
+                        PreferenceHelper.getInstance(mContext).removeKey(AppConfig.PEIWANG_MIMA);
+                    }
+
                 } else {
                     UIHelper.ToastMessage(mContext, "请输入您的配网密码");
                 }
@@ -214,6 +226,25 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
         });
     }
 
+    private void setPeiWangMiMa() {
+
+
+        ivPeiwangMima.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (jiZhuMiMa.equals("0")) {
+
+                    ivPeiwangMima.setBackgroundResource(R.mipmap.peiwang_icon_mima_jizhu);
+                    jiZhuMiMa = "1";
+                } else if (jiZhuMiMa.equals("1")) {
+
+                    ivPeiwangMima.setBackgroundResource(R.mipmap.peiwang_icon_mima_weixuanze);
+                    jiZhuMiMa = "0";
+                }
+            }
+        });
+    }
+
     private String seeMiMa = "0";//0 隐藏 1显示
 
     private void executeEsptouch() {
@@ -232,7 +263,30 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
             mTask.cancelEsptouch();
         }
         mTask = new EsptouchAsyncTask4(this);
-        mTask.execute(ssid, bssid, password, deviceCount, broadcast);
+
+        int yonghuming_length = mSsid.toString().length();
+        int password_length = password.toString().length();
+
+        String zhengHeYongHuMing = String.format("%02d", yonghuming_length) + mSsid.toString();
+
+        String zhengHePasssword_length = String.format("%02d", password_length);
+
+        String familyId = PreferenceHelper.getInstance(mContext).getString(AppConfig.PEIWANG_FAMILYID, "");
+
+        if (familyId == null) {
+            UIHelper.ToastMessage(mContext, "请退出应用后重新进入");
+            return;
+        }
+
+        String familyId_length = String.format("%02d", familyId.length());
+
+        Log.i("execute_info", "   mssid  :" + mSsid.toString() + "   mBssid  :" + mBssid + "   password  :" + password);
+
+        String zhengHePassWord = zhengHePasssword_length + familyId_length + password + familyId;
+
+        Log.i("execute_info", zhengHePassWord);
+
+        mTask.execute(zhengHeYongHuMing.getBytes(), bssid, zhengHePassWord.getBytes(), deviceCount, broadcast);
     }
 
     @Override
@@ -352,7 +406,13 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
 //                        .show();
 //                mResultDialog.setCanceledOnTouchOutside(false);
                 Toast.makeText(context, "配网成功", Toast.LENGTH_SHORT).show();
+
+                Notice notice = new Notice();
+                notice.type = MSG_PEIWANG_SUCCESS;
+                RxBus.getDefault().sendRx(notice);
                 context.finish();
+
+
             }
 
         }
@@ -417,25 +477,30 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
                 resultMsgList.add(message);
             }
             CharSequence[] items = new CharSequence[resultMsgList.size()];
-            mResultDialog = new AlertDialog.Builder(activity)
-                    .setTitle(R.string.esptouch1_configure_result_success)
-                    //.setItems(resultMsgList.toArray(items), null)
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            PreferenceHelper.getInstance(activity).putString(AppConfig.PEIWANG_MIMA, activity.etWifiMima.getText().toString());
-                            mEsptouchTask.interrupt();
+//            mResultDialog = new AlertDialog.Builder(activity)
+//                    .setTitle(R.string.esptouch1_configure_result_success)
+//                    //.setItems(resultMsgList.toArray(items), null)
+//                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//
+//                            mEsptouchTask.interrupt();
+//
+//                            if (mResultDialog.isShowing()) {
+//                                mResultDialog.dismiss();
+//                            }
+//
+//
+//
+//                        }
+//                    })
+//                    .show();
+//            mResultDialog.setCanceledOnTouchOutside(false);
 
-                            if (mResultDialog.isShowing()) {
-                                mResultDialog.dismiss();
-                            }
-                            activity.finish();
-
-                        }
-                    })
-                    .show();
-            mResultDialog.setCanceledOnTouchOutside(false);
-
+            Notice notice = new Notice();
+            notice.type = MSG_PEIWANG_SUCCESS;
+            RxBus.getDefault().sendRx(notice);
+            activity.finish();
 
         }
 

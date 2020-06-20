@@ -2,21 +2,20 @@ package com.smarthome.magic.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewOutlineProvider;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.OkGo;
@@ -28,6 +27,8 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.ZhiNengHomeListActivity;
 import com.smarthome.magic.adapter.NewsFragmentPagerAdapter;
 import com.smarthome.magic.app.AppConfig;
+import com.smarthome.magic.app.ConstanceValue;
+import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
@@ -35,8 +36,6 @@ import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.ZhiNengHomeBean;
-import com.smarthome.magic.model.ZiJianFenLeiBean;
-import com.smarthome.magic.view.CustomViewPager;
 import com.smarthome.magic.view.NoSlidingViewPager;
 import com.smarthome.magic.view.magicindicator.MagicIndicator;
 import com.smarthome.magic.view.magicindicator.ViewPagerHelper;
@@ -48,19 +47,16 @@ import com.smarthome.magic.view.magicindicator.buildins.commonnavigator.indicato
 import com.smarthome.magic.view.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
 import com.smarthome.magic.view.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
-import org.jaaksi.pickerview.util.Util;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
 
 import butterknife.BindView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
-import static com.smarthome.magic.get_net.Urls.ZIYINGFENLEI;
 
 
 /**
@@ -83,6 +79,18 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     MagicIndicator magicIndicator;
     @BindView(R.id.viewPager)
     NoSlidingViewPager viewPager;
+    @BindView(R.id.iv_zhuji_zhuangtai)
+    ImageView ivZhujiZhuangtai;
+    @BindView(R.id.ll_connect_device)
+    LinearLayout llConnectDevice;
+    @BindView(R.id.app_bar)
+    AppBarLayout appBar;
+    @BindView(R.id.coordinatorLayout)
+    CoordinatorLayout coordinatorLayout;
+    @BindView(R.id.rl_main)
+    LinearLayout rlMain;
+    @BindView(R.id.tv_zhuji_zhuangtai)
+    TextView tvZhujiZhuangtai;
 
 
     private List<String> tabs = new ArrayList<>();
@@ -192,6 +200,20 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
         initViewpager();
         initMagicIndicator();
         initData();
+
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_PEIWANG_SUCCESS) {
+
+                    Log.v("MSG_PEIWANG_SUCCESS", "000");
+                    ivZhujiZhuangtai.setBackgroundResource(R.mipmap.zhikong_zhujizaixian);
+                    tvZhujiZhuangtai.setText("主机在线");
+                    // getnet();
+
+                }
+            }
+        }));
     }
 
     @Override
@@ -237,6 +259,25 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
 
                         String familyId = dataBean.get(0).getFamily_id();
                         PreferenceHelper.getInstance(getActivity()).putString(AppConfig.PEIWANG_FAMILYID, familyId);
+
+                        /**
+                         * online_state	在线状态：1.在线 2.离线
+                         */
+
+                        if (dataBean.get(0).getDevice().size() == 0) {
+                            ivZhujiZhuangtai.setBackgroundResource(R.mipmap.img_connect_device);
+                            tvZhujiZhuangtai.setText("添加主机");
+                        } else {
+                            if (dataBean.get(0).getDevice().get(0).getOnline_state().equals("1")) {
+                                ivZhujiZhuangtai.setBackgroundResource(R.mipmap.zhikong_zhujizaixian);
+                                tvZhujiZhuangtai.setText("主机在线");
+                            } else {
+                                ivZhujiZhuangtai.setBackgroundResource(R.mipmap.zhikong_zhujilixian);
+                                tvZhujiZhuangtai.setText("主机离线");
+                            }
+                        }
+
+
                     }
                 });
     }

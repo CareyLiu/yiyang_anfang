@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,14 +22,19 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
+import com.smarthome.magic.adapter.ZhiNengFamilyManageAdapter;
 import com.smarthome.magic.adapter.ZhiNengHomeListAdapter;
+import com.smarthome.magic.adapter.ZhiNengRoomListAdapter;
 import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.app.ConstanceValue;
+import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.ZhiNengFamilyAddDIalog;
 import com.smarthome.magic.get_net.Urls;
-import com.smarthome.magic.model.ZhiNengHomeBean;
+import com.smarthome.magic.model.ZhiNengFamilyManageBean;
 import com.smarthome.magic.model.ZhiNengHomeListBean;
 
 import java.util.ArrayList;
@@ -38,26 +43,25 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
-public class ZhiNengHomeListActivity extends BaseActivity implements View.OnClickListener {
-
+public class ZhiNengFamilyManageActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.srL_smart)
     SmartRefreshLayout srLSmart;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    TextView tv_family_name;
-    TextView tv_family_num;
-    LinearLayout ll_family_manage;
-    private Context context = ZhiNengHomeListActivity.this;
-    private ZhiNengHomeListAdapter zhiNengHomeListAdapter;
+    @BindView(R.id.rl_family_add)
+    RelativeLayout rl_family_add;
+    private Context context = ZhiNengFamilyManageActivity.this;
     private List<ZhiNengHomeListBean.DataBean> dataBean = new ArrayList<>();
-    private View headView, footerView;
+    private ZhiNengFamilyManageAdapter zhiNengFamilyManageAdapter;
 
     @Override
     public int getContentViewResId() {
-        return R.layout.activity_zhineng_home_list;
+        return R.layout.activity_zhineng_family_manage;
     }
 
     @Override
@@ -87,27 +91,30 @@ public class ZhiNengHomeListActivity extends BaseActivity implements View.OnClic
             }
         });
         srLSmart.setEnableLoadMore(false);
-        headView = LayoutInflater.from(context).inflate(R.layout.activity_zhineng_familylist_head, null);
-        footerView = LayoutInflater.from(context).inflate(R.layout.activity_zhineng_familylist_footer, null);
-        tv_family_name = headView.findViewById(R.id.tv_family_name);
-        tv_family_num = headView.findViewById(R.id.tv_family_num);
-        ll_family_manage = footerView.findViewById(R.id.ll_family_manage);
-        ll_family_manage.setOnClickListener(this);
+        rl_family_add.setOnClickListener(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
-        zhiNengHomeListAdapter = new ZhiNengHomeListAdapter(R.layout.item_zhineng_home, dataBean);
-        recyclerView.setLayoutManager(layoutManager);
-        zhiNengHomeListAdapter.openLoadAnimation();//默认为渐显效果
-        recyclerView.setAdapter(zhiNengHomeListAdapter);
-        zhiNengHomeListAdapter.addHeaderView(headView);
-        zhiNengHomeListAdapter.addFooterView(footerView);
-        zhiNengHomeListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        zhiNengFamilyManageAdapter = new ZhiNengFamilyManageAdapter(R.layout.item_zhineng_family_manage, dataBean);
+        zhiNengFamilyManageAdapter.openLoadAnimation();//默认为渐显效果
+        recyclerView.setAdapter(zhiNengFamilyManageAdapter);
+
+        zhiNengFamilyManageAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 ZhiNengHomeListBean.DataBean dataBean = (ZhiNengHomeListBean.DataBean) adapter.getItem(position);
-                checkFamily(dataBean);
+                Bundle bundle = new Bundle();
+                bundle.putString("family_id", dataBean.getFamily_id());
+                startActivity(new Intent(context, ZhiNengFamilyManageDetailActivity.class).putExtras(bundle));
             }
         });
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_FAMILY_MANAGE_ADD) {
+                    creatFamily(message.content.toString());
+                }
+            }
+        }));
     }
 
     @Override
@@ -118,7 +125,7 @@ public class ZhiNengHomeListActivity extends BaseActivity implements View.OnClic
     @Override
     protected void initToolbar() {
         super.initToolbar();
-        tv_title.setText("切换家庭");
+        tv_title.setText("家庭管理");
         tv_title.setTextSize(17);
         tv_title.setTextColor(getResources().getColor(R.color.black));
         mToolbar.setNavigationIcon(R.mipmap.backbutton);
@@ -133,32 +140,11 @@ public class ZhiNengHomeListActivity extends BaseActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_family_manage:
-                startActivity(new Intent(context, ZhiNengFamilyManageActivity.class));
+            case R.id.rl_family_add:
+                ZhiNengFamilyAddDIalog zhiNengFamilyAddDIalog = new ZhiNengFamilyAddDIalog(context, ConstanceValue.MSG_FAMILY_MANAGE_ADD);
+                zhiNengFamilyAddDIalog.show();
                 break;
         }
-    }
-
-    private void checkFamily(ZhiNengHomeListBean.DataBean dataBean) {
-        //访问网络获取数据 下面的列表数据
-        Map<String, String> map = new HashMap<>();
-        map.put("code", "16014");
-        map.put("key", Urls.key);
-        map.put("token", UserManager.getManager(context).getAppToken());
-        map.put("family_id", dataBean.getFamily_id());
-        Gson gson = new Gson();
-        Log.e("map_data", gson.toJson(map));
-        OkGo.<AppResponse<ZhiNengHomeBean.DataBean>>post(ZHINENGJIAJU)
-                .tag(this)//
-                .upJson(gson.toJson(map))
-                .execute(new JsonCallback<AppResponse<ZhiNengHomeBean.DataBean>>() {
-                    @Override
-                    public void onSuccess(Response<AppResponse<ZhiNengHomeBean.DataBean>> response) {
-                        if (response.body().msg.equals("ok")) {
-                            finish();
-                        }
-                    }
-                });
     }
 
     private void getnet() {
@@ -182,16 +168,32 @@ public class ZhiNengHomeListActivity extends BaseActivity implements View.OnClic
                         }
                         dataBean.clear();
                         dataBean.addAll(response.body().data);
-
-                        for (int i = 0; i < dataBean.size(); i++) {
-                            if (dataBean.get(i).getActive().equals("1")) {
-                                tv_family_name.setText(dataBean.get(i).getFamily_name());
-                            }
-                        }
-                        tv_family_num.setText(dataBean.size() + "个家庭");
-                        zhiNengHomeListAdapter.notifyDataSetChanged();
+                        zhiNengFamilyManageAdapter.notifyDataSetChanged();
                     }
                 });
     }
 
+    private void creatFamily(String familyName) {
+        //访问网络获取数据 下面的列表数据
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16011");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(context).getAppToken());
+        map.put("family_name", familyName);
+        Gson gson = new Gson();
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<ZhiNengFamilyManageBean.DataBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ZhiNengFamilyManageBean.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ZhiNengFamilyManageBean.DataBean>> response) {
+                        if (response.body().msg.equals("ok")) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("family_id", response.body().data.get(0).getFamily_id());
+                            startActivity(new Intent(context, ZhiNengFamilyManageDetailActivity.class).putExtras(bundle));
+                        }
+                    }
+                });
+    }
 }

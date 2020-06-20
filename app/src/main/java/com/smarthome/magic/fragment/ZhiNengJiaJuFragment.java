@@ -122,6 +122,11 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     @Override
     protected void initView(View view) {
         view.setClickable(true);// 防止点击穿透，底层的fragment响应上层点击触摸事件
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         getnet();
     }
 
@@ -215,7 +220,11 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                             srLSmart.setEnableLoadMore(false);
                         }
                         dataBean = response.body().data;
-                        tv_family_name.setText(dataBean.get(0).getFamily_name());
+                        if (dataBean.get(0).getMember_type().equals("1")) {
+                            tv_family_name.setText(dataBean.get(0).getFamily_name());
+                        } else {
+                            tv_family_name.setText(dataBean.get(0).getFamily_name() + "(共享家庭)");
+                        }
                         tv_device_num.setText(dataBean.get(0).getDevice_num() + "个设备");
                         device.putParcelableArrayList("device", dataBean.get(0).getDevice());
                         room.putParcelableArrayList("room", dataBean.get(0).getRoom());

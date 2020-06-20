@@ -52,4 +52,12 @@ public interface ConstanceValue {
     int MSG_DAILISHANG_TIXIAN = 0x10036;//水暖实时数据
     int MSG_ADD_CHELIANG_SUCCESS = 0x10037;//添加车辆成功
 
+
+    /**
+     * 智能家居部分
+     */
+    int MSG_FAMILY_MANAGE_ADD = 0x10038;//家庭管理，创建家庭
+    int MSG_FAMILY_MANAGE_CHANGENAME = 0x10039;//家庭管理，更改家庭名字
+    int MSG_ROOM_MANAGE_ADD = 0x10040;//家庭管理，更改家庭名字
+
 }

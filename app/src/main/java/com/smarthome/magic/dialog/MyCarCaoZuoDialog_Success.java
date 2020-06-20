@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -18,13 +20,30 @@ public class MyCarCaoZuoDialog_Success extends Dialog {
 
     TextView tvOk;
 
-    String str, str2;
+    String str, str2, str3;
 
     public MyCarCaoZuoDialog_Success(@NonNull Activity context, String str, String str2) {
         super(context, R.style.turntable_dialog);
         this.context = context;
         this.str = str;
         this.str2 = str2;
+    }
+
+    public MyCarCaoZuoDialog_Success(@NonNull Activity context, String str, String str2, String str3, OnDialogItemClickListener listener) {
+        super(context, R.style.turntable_dialog);
+        this.context = context;
+        this.str = str;
+        this.str2 = str2;
+        this.str3 = str3;
+        this.listener = listener;
+    }
+
+    public MyCarCaoZuoDialog_Success(@NonNull Activity context, String str, String str2, OnDialogItemClickListener listener) {
+        super(context, R.style.turntable_dialog);
+        this.context = context;
+        this.str = str;
+        this.str2 = str2;
+        this.listener = listener;
     }
 
     public MyCarCaoZuoDialog_Success(@NonNull Activity context) {
@@ -48,15 +67,26 @@ public class MyCarCaoZuoDialog_Success extends Dialog {
             tvCaoZuoChengGongHuaShu.setText(str2);
         }
 
-
         tvOk = theView.findViewById(R.id.tv_ok);
+        if (str3 != null) {
+            tvOk.setText(str3);
+        }
         tvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                listener.clickRight();
                 dismiss();
             }
         });
         setContentView(theView);
+    }
+
+    private OnDialogItemClickListener listener;
+
+    public interface OnDialogItemClickListener {
+        void clickLeft();
+
+        void clickRight();
     }
 }
 

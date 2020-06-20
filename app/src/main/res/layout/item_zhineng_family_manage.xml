@@ -69,11 +69,11 @@
 
         <ImageView
             android:id="@+id/iv_check"
-            android:layout_width="21dp"
-            android:layout_height="21dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="14dp"
-            android:src="@mipmap/img_homelist_checked" />
+            android:src="@mipmap/push_gray_999" />
     </RelativeLayout>
 </LinearLayout>

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/shebei_pic_bg"
-    android:descendantFocusability="blocksDescendants"
+    android:background="#F5F5F5"
     android:orientation="vertical"
     tools:context=".activity.AirConditionerActivity">
 
@@ -13,6 +12,7 @@
         android:id="@+id/srL_smart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="111dp"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
@@ -22,7 +22,7 @@
             app:srlTextSizeTime="10sp"
             app:srlTextSizeTitle="@dimen/sp_12" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -33,9 +33,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="10dp"
                 android:overScrollMode="never" />
-        </LinearLayout>
+        </RelativeLayout>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-</LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="53dp">
+
+        <ImageView
+            android:id="@+id/iv_room_add"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="27dp"
+            android:src="@mipmap/img_room_add" />
+    </RelativeLayout>
+</RelativeLayout>

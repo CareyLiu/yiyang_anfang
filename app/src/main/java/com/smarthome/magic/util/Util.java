@@ -79,6 +79,15 @@ public class Util {
 
 
 	/**
+	 * 收起键盘
+	 */
+	public static void pickKey(Context context, View view) {
+		InputMethodManager imm = (InputMethodManager)
+				context.getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+	}
+
+	/**
 	 *
 	 * 方法描述：获取系统版本 创建人： yantong<br/>
 	 *

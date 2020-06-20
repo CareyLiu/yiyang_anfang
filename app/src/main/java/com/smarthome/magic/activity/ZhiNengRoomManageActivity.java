@@ -104,7 +104,7 @@ public class ZhiNengRoomManageActivity extends BaseActivity implements View.OnCl
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
         zhiNengRoomManageAdapter = new ZhiNengRoomManageAdapter(R.layout.item_zhineng_room, dataBeanList);
-        zhiNengRoomManageAdapter.setEmptyView(LayoutInflater.from(context).inflate(R.layout.activity_zhineng_room_none, null));
+        zhiNengRoomManageAdapter.setEmptyView(LayoutInflater.from(context).inflate(R.layout.activity_zhineng_room_manage_none, null));
         zhiNengRoomManageAdapter.openLoadAnimation();//默认为渐显效果
         recyclerView.setAdapter(zhiNengRoomManageAdapter);
         zhiNengRoomManageAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {

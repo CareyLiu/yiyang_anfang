@@ -8,6 +8,8 @@
         android:id="@+id/ll_content"
         android:layout_width="match_parent"
         android:layout_height="65dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/item_connect_device_bg"
         android:orientation="vertical"

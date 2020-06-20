@@ -10,13 +10,13 @@ android {
 
             keyAlias 'release'
             keyPassword 'zxc741asd852qwe963'
-            storeFile file('C:/keystore/magic_lamp_release.jks')
+            storeFile file('/Users/linxudong/Desktop/聚易佳/app/magic_lamp_release.jks')
             storePassword 'zxc741asd852qwe963'
         }
         release {
             keyAlias 'release'
             keyPassword 'zxc741asd852qwe963'
-            storeFile file('C:/keystore/magic_lamp_release.jks')
+            storeFile file('/Users/linxudong/Desktop/聚易佳/app/magic_lamp_release.jks')
             storePassword 'zxc741asd852qwe963'
         }
     }
@@ -280,5 +280,6 @@ dependencies {
     def lottieVersion = "3.4.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
 
+    implementation 'com.github.zcweng:switch-button:0.0.3@aar'
 
 }

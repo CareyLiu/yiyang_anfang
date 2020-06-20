@@ -250,6 +250,8 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                         tv_device_num.setText(dataBean.get(0).getDevice_num() + "个设备");
                         device.putParcelableArrayList("device", dataBean.get(0).getDevice());
                         room.putParcelableArrayList("room", dataBean.get(0).getRoom());
+                        room.putString("member_type", dataBean.get(0).getMember_type());
+                        room.putString("family_id", dataBean.get(0).getFamily_id());
                         if (zhiNengDeviceFragment != null) {
                             zhiNengDeviceFragment.onRefresh();
                         }

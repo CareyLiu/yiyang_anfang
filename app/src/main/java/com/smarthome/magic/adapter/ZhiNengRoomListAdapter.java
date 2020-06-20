@@ -24,5 +24,6 @@ public class ZhiNengRoomListAdapter extends BaseQuickAdapter<ZhiNengHomeBean.Dat
     protected void convert(BaseViewHolder helper, ZhiNengHomeBean.DataBean.RoomBean item) {
         helper.setText(R.id.tv_room_name, item.getRoom_name());
         helper.setText(R.id.tv_device_num, item.getDevice_number() + "个设备");
+        helper.addOnClickListener(R.id.ll_content);
     }
 }

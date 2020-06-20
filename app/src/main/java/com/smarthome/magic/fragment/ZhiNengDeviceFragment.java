@@ -1,5 +1,6 @@
 package com.smarthome.magic.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +15,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.ZhiNengRoomDeviceDetailAutoActivity;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.PeiWangYinDaoPageActivity;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.v1.EspTouchActivity;
 import com.smarthome.magic.adapter.ZhiNengDeviceListAdapter;
+import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.util.GridAverageUIDecoration;
 import com.smarthome.magic.util.GridSectionAverageGapItemDecoration;
 import com.smarthome.magic.model.ZhiNengHomeBean;
@@ -72,6 +75,16 @@ public class ZhiNengDeviceFragment extends Fragment {
 
         zhiNengDeviceListAdapter.openLoadAnimation();//默认为渐显效果
         recyclerView.setAdapter(zhiNengDeviceListAdapter);
+
+        zhiNengDeviceListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                ZhiNengHomeBean.DataBean.DeviceBean deviceBean = (ZhiNengHomeBean.DataBean.DeviceBean) adapter.getItem(position);
+                Bundle bundle = new Bundle();
+                bundle.putString("device_id", deviceBean.getDevice_id());
+                startActivity(new Intent(getActivity(), ZhiNengRoomDeviceDetailAutoActivity.class).putExtras(bundle));
+            }
+        });
     }
 
     public void onRefresh() {

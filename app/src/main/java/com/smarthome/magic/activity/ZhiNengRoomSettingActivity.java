@@ -1,6 +1,7 @@
 package com.smarthome.magic.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -121,6 +122,9 @@ public class ZhiNengRoomSettingActivity extends BaseActivity implements View.OnC
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 ZhiNengRoomManageSettingBean.DataBean dataBean = (ZhiNengRoomManageSettingBean.DataBean) adapter.getItem(position);
+                Bundle bundle = new Bundle();
+                bundle.putString("device_id", dataBean.getDevice_id());
+                startActivity(new Intent(context, ZhiNengRoomDeviceDetailAutoActivity.class).putExtras(bundle));
             }
         });
 

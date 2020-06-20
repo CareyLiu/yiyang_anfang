@@ -55,14 +55,14 @@
     <string name="esptouch1_package_broadcast" translatable="false">Broadcast</string>
     <string name="esptouch1_package_multicast" translatable="false">Multicast</string>
     <string name="esptouch1_confirm" translatable="false">Confirm</string>
-    <string name="esptouch1_wifi_5g_message" translatable="false">Device don\'t support 5G Wi-Fi, please make sure the currently connected Wi-Fi is 2.4G, or you can try multicast</string>
+    <string name="esptouch1_wifi_5g_message" translatable="false">当前配网不支持5G制式，请切换后重新尝试</string>
     <string name="esptouch1_location_permission_title" translatable="false">⚠️Warning</string>
     <string name="esptouch1_location_permission_message" translatable="false">On Android M or higher version, App can\'t get Wi-Fi connection information if you forbid Location permission.</string>
-    <string name="esptouch1_configuring_message" translatable="false">Esptouch is configuring, please wait for a moment…</string>
+    <string name="esptouch1_configuring_message" translatable="false">请稍后</string>
     <string name="esptouch1_configure_wifi_change_message" translatable="false">Wi-Fi disconnected or changed</string>
     <string name="esptouch1_configure_result_failed" translatable="false">EspTouch failed</string>
     <string name="esptouch1_configure_result_failed_port" translatable="false">Create EspTouch task failed, the EspTouch port could be used by other thread</string>
-    <string name="esptouch1_configure_result_success" translatable="false">EspTouch 完成</string>
+    <string name="esptouch1_configure_result_success" translatable="false">网络连接成功</string>
     <string name="esptouch1_configure_result_success_item" translatable="false">BSSID = %1$s, InetAddress = %2$s</string>
 
     <string name="esptouch2_title" translatable="false">EspTouch V2</string>

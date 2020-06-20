@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.zhinengjiaju.peinet.PeiWangYinDaoPageActivity;
+import com.smarthome.magic.activity.zhinengjiaju.peinet.v1.EspTouchActivity;
 import com.smarthome.magic.adapter.ZhiNengDeviceListAdapter;
 import com.smarthome.magic.util.GridAverageUIDecoration;
 import com.smarthome.magic.util.GridSectionAverageGapItemDecoration;
@@ -56,7 +59,17 @@ public class ZhiNengDeviceFragment extends Fragment {
 
         recyclerView.setLayoutManager(layoutManager);
         zhiNengDeviceListAdapter = new ZhiNengDeviceListAdapter(R.layout.item_zhineng_device, dataBean);
-        zhiNengDeviceListAdapter.setEmptyView(LayoutInflater.from(getActivity()).inflate(R.layout.activity_zhineng_device_none, null));
+
+        View view1 = LayoutInflater.from(getActivity()).inflate(R.layout.activity_zhineng_device_none, null);
+        TextView tvBangDingZhuJi = view1.findViewById(R.id.tv_bangdingzhuji);
+        tvBangDingZhuJi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PeiWangYinDaoPageActivity.actionStart(getActivity());
+            }
+        });
+        zhiNengDeviceListAdapter.setEmptyView(view1);
+
         zhiNengDeviceListAdapter.openLoadAnimation();//默认为渐显效果
         recyclerView.setAdapter(zhiNengDeviceListAdapter);
     }

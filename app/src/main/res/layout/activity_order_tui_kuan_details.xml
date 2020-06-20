@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".activity.dingdan.OrderTuiKuanDetailsActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/ll_1"
@@ -176,7 +180,6 @@
             android:layout_marginLeft="20dp"
             android:background="@null"
             android:hint="请输入您的物流单号"
-            android:inputType="number"
             android:textColor="#ff201f1e"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -211,6 +214,7 @@
         android:layout_width="match_parent"
         android:layout_height="10dp"/>
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_product"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -290,5 +294,15 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <LinearLayout
+        android:id="@+id/ll_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/cl_product">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -102,6 +102,8 @@ public class AppConfig {
     public static boolean showAppAccess = true;//是否展示评论
     public final static String showAppAccessthis = "showAppAccessthis";
     public final static String LOCATION_CITY_NAME = "LOCATION_CITY_NAME";
+    public final static String PEIWANG_FAMILYID = "PEIWANGFAMILYID";//智能家居 家庭id
+    public final static String PEIWANG_MIMA = "PEIWANG_MIMA";
 
     //福利功能  需要的字段
     //作废时间  --待使用

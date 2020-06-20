@@ -144,6 +144,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
         }));
 
         srLSmart.setEnableRefresh(true);
+        srLSmart.setEnableLoadMore(false);
         srLSmart.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {

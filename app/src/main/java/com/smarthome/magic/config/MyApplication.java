@@ -177,7 +177,6 @@ public class MyApplication extends MultiDexApplication {
     };
 
 
-    @SuppressLint("NewApi")
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
@@ -342,7 +341,6 @@ public class MyApplication extends MultiDexApplication {
                         .setUserName("witandroid")
                         .setUserPassword("aG678om34buysdi")
                         .setServer("tcp://mqtt.hljsdkj.com").setTimeout(1);
-
 
                 AndMqtt.getInstance().setMessageListener(new MqttCallbackExtended() {
                     @Override
@@ -593,9 +591,7 @@ public class MyApplication extends MultiDexApplication {
                     public void deliveryComplete(IMqttDeliveryToken token) {
                         Log.i("Rair", "(MainActivity.java:44)-deliveryComplete:-&gt;消息已送达");
                     }
-                }).
-
-                        connect(builder
+                }).  connect(builder
                                 //设置自动重连
                                 , new IMqttActionListener() {
                                     @Override
@@ -608,7 +604,7 @@ public class MyApplication extends MultiDexApplication {
                                                 .setQos(2), new IMqttActionListener() {
                                             @Override
                                             public void onSuccess(IMqttToken asyncActionToken) {
-                                                Log.i("Rair", "警报订阅成功 用户订阅成功" + CARBOX_JINGBAO);
+                                                Log.i("Rair", "自动连接 成功" + CARBOX_JINGBAO);
 
                                             }
 

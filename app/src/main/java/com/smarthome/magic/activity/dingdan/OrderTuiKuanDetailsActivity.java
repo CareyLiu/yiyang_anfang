@@ -84,6 +84,10 @@ public class OrderTuiKuanDetailsActivity extends BaseActivity {
     View viewLine;
     @BindView(R.id.tv_wuliudanhao_maijia)
     TextView tvWuliudanhaoMaijia;
+    @BindView(R.id.cl_product)
+    ConstraintLayout clProduct;
+    @BindView(R.id.ll_info)
+    LinearLayout llInfo;
     private String shopFormId;//订单id
 
     @Override
@@ -289,6 +293,18 @@ public class OrderTuiKuanDetailsActivity extends BaseActivity {
                                     llJindutiao.addView(createView(5, false, false, false, true, dataBean.getRefund_arr().get(4)));
 
                                     break;
+                            }
+                        }
+
+                        if (dataBean.getOrder_info_arr() != null) {
+
+
+                            for (int i = 0; i < dataBean.getOrder_info_arr().size(); i++) {
+                                View view = View.inflate(mContext, R.layout.layout_view_info, null);
+                                TextView tv = view.findViewById(R.id.tv_text);
+                                tv.setText(dataBean.getOrder_info_arr().get(i));
+                                llInfo.addView(view);
+
                             }
                         }
 

@@ -7,7 +7,7 @@ public class OrderTuiKuanDetailsModel {
      * msg_code : 0000
      * msg : ok
      * row_num : 1
-     * data : [{"shop_form_id":"2816","inst_worker_name":"月亮 18249030297","form_no":"20200601163134000001","refund_express_url":"","refund_type":"2","shop_product_title":"横版数码按键开关","refund_express_name":"","refund_rate":"1","refund_over_time":"2020-06-06 08:53:20","refund_no":"rollback_20200601163134000001","index_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9931","pay_money":"0.50","refund_index":"0","product_title":"套餐1","refund_express_no":"","refund_arr":["发起退款","审核通过","用户发货","商家收货","退款"],"inst_addr_all":"黑龙江省哈尔滨市南岗区花园街道哈哈哈哈"}]
+     * data : [{"shop_form_id":"3031","inst_worker_name":"月亮 18249030297","form_no":"20200619165250000003","refund_express_url":"","refund_type":"2","shop_product_title":"横版数码按键开关","refund_express_name":"","user_name":"王大力","refund_rate":"2","refund_over_time":"2020-06-22 16:54:07","refund_no":"rollback_20200619165250000003","index_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9931","pay_money":"0.50","refund_index":"1","product_title":"套餐1","refund_express_no":"","refund_arr":["发起退款","审核通过","用户发货","商家收货","退款"],"inst_addr_all":"黑龙江省哈尔滨市南岗区花园街道哈哈哈哈","user_phone":"15236586932","user_addr_all":"北京北京市东城区丽景花园1栋301","order_info_arr":["订单备注：","订单编号：20200619165250000003","下单时间：2020-06-19 16:52:50","支付方式：微信支付","付款时间：2020-06-19 16:52:57"]}]
      */
 
     private String msg_code;
@@ -49,23 +49,27 @@ public class OrderTuiKuanDetailsModel {
 
     public static class DataBean {
         /**
-         * shop_form_id : 2816
+         * shop_form_id : 3031
          * inst_worker_name : 月亮 18249030297
-         * form_no : 20200601163134000001
+         * form_no : 20200619165250000003
          * refund_express_url :
          * refund_type : 2
          * shop_product_title : 横版数码按键开关
          * refund_express_name :
-         * refund_rate : 1
-         * refund_over_time : 2020-06-06 08:53:20
-         * refund_no : rollback_20200601163134000001
+         * user_name : 王大力
+         * refund_rate : 2
+         * refund_over_time : 2020-06-22 16:54:07
+         * refund_no : rollback_20200619165250000003
          * index_photo_url : https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9931
          * pay_money : 0.50
-         * refund_index : 0
+         * refund_index : 1
          * product_title : 套餐1
          * refund_express_no :
          * refund_arr : ["发起退款","审核通过","用户发货","商家收货","退款"]
          * inst_addr_all : 黑龙江省哈尔滨市南岗区花园街道哈哈哈哈
+         * user_phone : 15236586932
+         * user_addr_all : 北京北京市东城区丽景花园1栋301
+         * order_info_arr : ["订单备注：","订单编号：20200619165250000003","下单时间：2020-06-19 16:52:50","支付方式：微信支付","付款时间：2020-06-19 16:52:57"]
          */
 
         private String shop_form_id;
@@ -75,6 +79,7 @@ public class OrderTuiKuanDetailsModel {
         private String refund_type;
         private String shop_product_title;
         private String refund_express_name;
+        private String user_name;
         private String refund_rate;
         private String refund_over_time;
         private String refund_no;
@@ -84,7 +89,10 @@ public class OrderTuiKuanDetailsModel {
         private String product_title;
         private String refund_express_no;
         private String inst_addr_all;
+        private String user_phone;
+        private String user_addr_all;
         private List<String> refund_arr;
+        private List<String> order_info_arr;
 
         public String getShop_form_id() {
             return shop_form_id;
@@ -140,6 +148,14 @@ public class OrderTuiKuanDetailsModel {
 
         public void setRefund_express_name(String refund_express_name) {
             this.refund_express_name = refund_express_name;
+        }
+
+        public String getUser_name() {
+            return user_name;
+        }
+
+        public void setUser_name(String user_name) {
+            this.user_name = user_name;
         }
 
         public String getRefund_rate() {
@@ -214,6 +230,22 @@ public class OrderTuiKuanDetailsModel {
             this.inst_addr_all = inst_addr_all;
         }
 
+        public String getUser_phone() {
+            return user_phone;
+        }
+
+        public void setUser_phone(String user_phone) {
+            this.user_phone = user_phone;
+        }
+
+        public String getUser_addr_all() {
+            return user_addr_all;
+        }
+
+        public void setUser_addr_all(String user_addr_all) {
+            this.user_addr_all = user_addr_all;
+        }
+
         public List<String> getRefund_arr() {
             return refund_arr;
         }
@@ -221,7 +253,16 @@ public class OrderTuiKuanDetailsModel {
         public void setRefund_arr(List<String> refund_arr) {
             this.refund_arr = refund_arr;
         }
+
+        public List<String> getOrder_info_arr() {
+            return order_info_arr;
+        }
+
+        public void setOrder_info_arr(List<String> order_info_arr) {
+            this.order_info_arr = order_info_arr;
+        }
     }
+
 
     /**
      * msg_code	返回码

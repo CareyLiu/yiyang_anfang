@@ -27,9 +27,11 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.ZhiNengHomeListActivity;
 import com.smarthome.magic.adapter.NewsFragmentPagerAdapter;
+import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.ZhiNengHomeBean;
@@ -223,6 +225,9 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                         if (zhiNengRoomFragment != null) {
                             zhiNengRoomFragment.onRefresh();
                         }
+
+                        String familyId = dataBean.get(0).getFamily_id();
+                        PreferenceHelper.getInstance(getActivity()).putString(AppConfig.PEIWANG_FAMILYID, familyId);
                     }
                 });
     }

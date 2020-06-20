@@ -171,6 +171,7 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
             case R.id.rl_family_room_num:
                 Bundle bundle1 = new Bundle();
                 bundle1.putString("family_id", family_id);
+                bundle1.putString("member_type", dataBean.getMember_type());
                 startActivity(new Intent(context, ZhiNengRoomManageActivity.class).putExtras(bundle1));
                 break;
             case R.id.ll_add_share:
@@ -251,7 +252,18 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                     public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
                         if (response.body().msg.equals("ok")) {
                             tv_family_name.setText(family_name);
-                            MyCarCaoZuoDialog_Success dialog_success = new MyCarCaoZuoDialog_Success(ZhiNengFamilyManageDetailActivity.this, "成功", "修改成功");
+                            MyCarCaoZuoDialog_Success dialog_success = new MyCarCaoZuoDialog_Success(ZhiNengFamilyManageDetailActivity.this,
+                                    "成功", "修改成功", new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
+                                @Override
+                                public void clickLeft() {
+
+                                }
+
+                                @Override
+                                public void clickRight() {
+
+                                }
+                            });
                             dialog_success.show();
                         }
                     }

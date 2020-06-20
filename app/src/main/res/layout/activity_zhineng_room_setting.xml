@@ -26,6 +26,7 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
+                    android:id="@+id/rl_room_name"
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
                     android:background="@color/white">
@@ -86,7 +87,7 @@
         </androidx.core.widget.NestedScrollView>
 
         <TextView
-            android:id="@+id/tv_family_delete"
+            android:id="@+id/tv_room_delete"
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:layout_marginLeft="14dp"
@@ -95,7 +96,7 @@
             android:layout_marginBottom="38dp"
             android:background="@drawable/bg_family_add_edittext"
             android:gravity="center"
-            android:text="删除家庭"
+            android:text="删除房间"
             android:textColor="#F83A47"
             android:textSize="14sp" />
     </RelativeLayout>

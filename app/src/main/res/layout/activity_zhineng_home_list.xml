@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/shebei_pic_bg"
+    android:background="@mipmap/img_change_family"
     android:descendantFocusability="blocksDescendants"
     android:orientation="vertical"
     tools:context=".activity.AirConditionerActivity">

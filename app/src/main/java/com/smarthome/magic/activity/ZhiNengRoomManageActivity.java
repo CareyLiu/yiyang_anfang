@@ -55,9 +55,8 @@ public class ZhiNengRoomManageActivity extends BaseActivity implements View.OnCl
     @BindView(R.id.iv_room_add)
     ImageView iv_room_add;
     private Context context = ZhiNengRoomManageActivity.this;
+    private String member_type = "";
     private String family_id = "";
-    private String room_id = "";
-    private String old_name = "";
     private List<ZhiNengRoomManageBean.DataBean> dataBeanList = new ArrayList<>();
     private ZhiNengRoomManageAdapter zhiNengRoomManageAdapter;
 
@@ -82,6 +81,10 @@ public class ZhiNengRoomManageActivity extends BaseActivity implements View.OnCl
     @Override
     protected void onResume() {
         super.onResume();
+        member_type = getIntent().getStringExtra("member_type");
+        if (member_type == null) {
+            member_type = "";
+        }
         family_id = getIntent().getStringExtra("family_id");
         if (family_id == null) {
             family_id = "";
@@ -111,7 +114,8 @@ public class ZhiNengRoomManageActivity extends BaseActivity implements View.OnCl
                 Bundle bundle = new Bundle();
                 bundle.putString("room_id", dataBean.getRoom_id());
                 bundle.putString("family_id", dataBean.getFamily_id());
-                bundle.putString("room_name",dataBean.getRoom_name());
+                bundle.putString("room_name", dataBean.getRoom_name());
+                bundle.putString("member_type", member_type);
                 startActivity(new Intent(context, ZhiNengRoomSettingActivity.class).putExtras(bundle));
             }
         });
@@ -192,12 +196,6 @@ public class ZhiNengRoomManageActivity extends BaseActivity implements View.OnCl
         map.put("token", UserManager.getManager(context).getAppToken());
         map.put("family_id", family_id);
         map.put("room_name", roomName);
-        if (!room_id.isEmpty()) {
-            map.put("room_id", room_id);
-        }
-        if (!old_name.isEmpty()) {
-            map.put("old_name", old_name);
-        }
         Gson gson = new Gson();
         Log.e("map_data", gson.toJson(map));
         OkGo.<AppResponse<ZhiNengRoomManageCreatBean>>post(ZHINENGJIAJU)

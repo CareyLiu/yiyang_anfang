@@ -78,6 +78,9 @@ public class ZhiNengFamilyAddDIalog implements View.OnClickListener {
             case ConstanceValue.MSG_ROOM_MANAGE_ADD:
                 tv_dialog_name.setText("请输入新建房间名字");
                 break;
+            case ConstanceValue.MSG_ROOM_MANAGE_CHANGENAME:
+                tv_dialog_name.setText("请输入新建房间名字");
+                break;
         }
     }
 

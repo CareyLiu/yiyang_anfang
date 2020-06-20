@@ -58,6 +58,7 @@ public interface ConstanceValue {
      */
     int MSG_FAMILY_MANAGE_ADD = 0x10038;//家庭管理，创建家庭
     int MSG_FAMILY_MANAGE_CHANGENAME = 0x10039;//家庭管理，更改家庭名字
-    int MSG_ROOM_MANAGE_ADD = 0x10040;//家庭管理，更改家庭名字
+    int MSG_ROOM_MANAGE_ADD = 0x10040;//家庭管理，新建家庭名字
+    int MSG_ROOM_MANAGE_CHANGENAME = 0x10041;//家庭管理，更改家庭名字
 
 }

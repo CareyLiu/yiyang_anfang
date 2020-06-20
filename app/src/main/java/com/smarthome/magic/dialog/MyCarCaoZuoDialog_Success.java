@@ -22,12 +22,12 @@ public class MyCarCaoZuoDialog_Success extends Dialog {
 
     String str, str2, str3;
 
-    public MyCarCaoZuoDialog_Success(@NonNull Activity context, String str, String str2) {
-        super(context, R.style.turntable_dialog);
-        this.context = context;
-        this.str = str;
-        this.str2 = str2;
-    }
+//    public MyCarCaoZuoDialog_Success(@NonNull Activity context, String str, String str2) {
+//        super(context, R.style.turntable_dialog);
+//        this.context = context;
+//        this.str = str;
+//        this.str2 = str2;
+//    }
 
     public MyCarCaoZuoDialog_Success(@NonNull Activity context, String str, String str2, String str3, OnDialogItemClickListener listener) {
         super(context, R.style.turntable_dialog);

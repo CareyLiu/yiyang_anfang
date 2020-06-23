@@ -81,6 +81,9 @@ public class ZhiNengFamilyAddDIalog implements View.OnClickListener {
             case ConstanceValue.MSG_ROOM_MANAGE_CHANGENAME:
                 tv_dialog_name.setText("请输入新建房间名字");
                 break;
+            case ConstanceValue.MSG_ROOM_DEVICE_CHANGENAME:
+                tv_dialog_name.setText("请输入设备新名字");
+                break;
         }
     }
 
@@ -94,7 +97,23 @@ public class ZhiNengFamilyAddDIalog implements View.OnClickListener {
             case R.id.tv_submit:
                 String family_name = et_name.getText().toString();
                 if (family_name.isEmpty()) {
-                    Toast.makeText(mContext, "房间名不能为空", Toast.LENGTH_SHORT).show();
+                    switch (noticeType){
+                        case ConstanceValue.MSG_FAMILY_MANAGE_ADD:
+                            Toast.makeText(mContext, "家庭名不能为空", Toast.LENGTH_SHORT).show();
+                            break;
+                        case ConstanceValue.MSG_FAMILY_MANAGE_CHANGENAME:
+                            Toast.makeText(mContext, "家庭名不能为空", Toast.LENGTH_SHORT).show();
+                            break;
+                        case ConstanceValue.MSG_ROOM_MANAGE_ADD:
+                            Toast.makeText(mContext, "房间名不能为空", Toast.LENGTH_SHORT).show();
+                            break;
+                        case ConstanceValue.MSG_ROOM_MANAGE_CHANGENAME:
+                            Toast.makeText(mContext, "房间名不能为空", Toast.LENGTH_SHORT).show();
+                            break;
+                        case ConstanceValue.MSG_ROOM_DEVICE_CHANGENAME:
+                            Toast.makeText(mContext, "设备名不能为空", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
                     return;
                 }
                 Notice n = new Notice();

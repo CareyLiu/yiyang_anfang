@@ -536,11 +536,11 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
 //                overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                 break;
             case R.id.action_settings:
-                if (drawer.isDrawerOpen(GravityCompat.END)) {
-                    drawer.closeDrawers();
-                } else {
-                    drawer.openDrawer(GravityCompat.END);
-                }
+//                if (drawer.isDrawerOpen(GravityCompat.END)) {
+//                    drawer.closeDrawers();
+//                } else {
+//                    drawer.openDrawer(GravityCompat.END);
+//                }
                 break;
         }
 

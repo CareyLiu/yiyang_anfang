@@ -61,5 +61,6 @@ public interface ConstanceValue {
     int MSG_PEIWANG_SUCCESS = 0x10041;//配网成功
     int MSG_ROOM_MANAGE_ADD = 0x10042;//家庭管理，新建家庭名字
     int MSG_ROOM_MANAGE_CHANGENAME = 0x10043;//家庭管理，更改家庭名字
+    int MSG_ROOM_DEVICE_CHANGENAME = 0x10044;//家庭管理，更改家庭名字
 
 }

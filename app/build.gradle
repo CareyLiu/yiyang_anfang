@@ -281,5 +281,6 @@ dependencies {
     implementation "com.airbnb.android:lottie:$lottieVersion"
 
     implementation 'com.github.zcweng:switch-button:0.0.3@aar'
+    implementation 'com.contrarywind:Android-PickerView:4.1.9'
 
 }

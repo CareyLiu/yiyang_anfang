@@ -124,6 +124,7 @@ public class ZhiNengRoomSettingActivity extends BaseActivity implements View.OnC
                 ZhiNengRoomManageSettingBean.DataBean dataBean = (ZhiNengRoomManageSettingBean.DataBean) adapter.getItem(position);
                 Bundle bundle = new Bundle();
                 bundle.putString("device_id", dataBean.getDevice_id());
+                bundle.putString("device_type", dataBean.getDevice_type());
                 startActivity(new Intent(context, ZhiNengRoomDeviceDetailAutoActivity.class).putExtras(bundle));
             }
         });

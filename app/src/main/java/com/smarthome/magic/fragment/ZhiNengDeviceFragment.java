@@ -82,6 +82,7 @@ public class ZhiNengDeviceFragment extends Fragment {
                 ZhiNengHomeBean.DataBean.DeviceBean deviceBean = (ZhiNengHomeBean.DataBean.DeviceBean) adapter.getItem(position);
                 Bundle bundle = new Bundle();
                 bundle.putString("device_id", deviceBean.getDevice_id());
+                bundle.putString("device_type", deviceBean.getDevice_type());
                 startActivity(new Intent(getActivity(), ZhiNengRoomDeviceDetailAutoActivity.class).putExtras(bundle));
             }
         });

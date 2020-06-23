@@ -44,6 +44,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp"
             android:text="确认此操作?"
             android:textColor="#ffa5a5a5"
             android:textSize="12sp"

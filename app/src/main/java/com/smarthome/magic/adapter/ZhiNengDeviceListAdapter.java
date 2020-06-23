@@ -1,5 +1,6 @@
 package com.smarthome.magic.adapter;
 
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
@@ -34,6 +35,23 @@ public class ZhiNengDeviceListAdapter extends BaseQuickAdapter<ZhiNengHomeBean.D
             helper.setText(R.id.tv_state, "离线");
         }
 
+        switch (item.getDevice_type()) {
+            case "11":
+                helper.getView(R.id.iv_switch).setVisibility(View.INVISIBLE);
+                break;
+            case "12":
+                helper.getView(R.id.iv_switch).setVisibility(View.INVISIBLE);
+                break;
+            case "13":
+                helper.getView(R.id.iv_switch).setVisibility(View.INVISIBLE);
+                break;
+            case "14":
+                helper.getView(R.id.iv_switch).setVisibility(View.INVISIBLE);
+                break;
+            case "15":
+                helper.getView(R.id.iv_switch).setVisibility(View.INVISIBLE);
+                break;
+        }
         if (item.getWork_state().equals("1")) {
             helper.setBackgroundRes(R.id.iv_switch, R.mipmap.img_device_switch_open);
         } else if (item.getWork_state().equals("2")) {

@@ -104,6 +104,7 @@ public class MyCarCaoZuoDialog_CaoZuoTIshi extends Dialog {
             tvCaoZuoChengGongHuaShu.setText(str2);
         }
         setContentView(theView);
+        setCanceledOnTouchOutside(false);
     }
 
     private OnDialogItemClickListener listener;

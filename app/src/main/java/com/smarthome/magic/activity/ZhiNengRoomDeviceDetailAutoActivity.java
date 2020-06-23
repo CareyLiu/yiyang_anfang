@@ -76,6 +76,8 @@ public class ZhiNengRoomDeviceDetailAutoActivity extends BaseActivity implements
     LinearLayout ll_auto_jiaohua_config;
     @BindView(R.id.rl_ertongmoshi)
     RelativeLayout rl_ertongmoshi;
+    @BindView(R.id.switch_ertong)
+    SwitchButton switch_ertong;
     @BindView(R.id.ll_online_state)
     LinearLayout ll_online_state;
 
@@ -85,6 +87,7 @@ public class ZhiNengRoomDeviceDetailAutoActivity extends BaseActivity implements
     private ZhiiNengRoomDeviceRoomBean.DataBean dataBean;
     private boolean autoState = false;
     private boolean switchState = false;
+    private boolean ertongSwitchState = false;
 
     @Override
     public int getContentViewResId() {
@@ -202,7 +205,52 @@ public class ZhiNengRoomDeviceDetailAutoActivity extends BaseActivity implements
             }
         });
 
-        if (device_type.equals("03")) {
+        switch_ertong.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(SwitchButton view, boolean isChecked) {
+                if (isChecked) {
+                    if (!ertongSwitchState) {
+                        MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(ZhiNengRoomDeviceDetailAutoActivity.this,
+                                "提示", "您要开启儿童模式吗？开启后，设备物理按键失效", "取消", "确定", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+                            @Override
+                            public void clickLeft() {
+                                switch_ertong.setChecked(false);
+                                ertongSwitchState = false;
+                            }
+
+                            @Override
+                            public void clickRight() {
+                                switch_ertong.setChecked(true);
+                                ertongSwitchState = true;
+                            }
+                        });
+                        myCarCaoZuoDialog_caoZuoTIshi.show();
+                    }
+                } else {
+                    if (ertongSwitchState) {
+                        MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(ZhiNengRoomDeviceDetailAutoActivity.this,
+                                "提示", "您要关闭儿童模式吗？关闭后，设备物理按键恢复", "取消", "确定", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+                            @Override
+                            public void clickLeft() {
+                                switch_ertong.setChecked(true);
+                                ertongSwitchState = true;
+                            }
+
+                            @Override
+                            public void clickRight() {
+                                switch_ertong.setChecked(false);
+                                ertongSwitchState = false;
+                            }
+                        });
+                        myCarCaoZuoDialog_caoZuoTIshi.show();
+                    }
+                }
+            }
+        });
+
+        if (device_type.equals("0") || device_type.equals("60")) {
+            rl_switch.setVisibility(View.GONE);
+        } else if (device_type.equals("03")) {
             tv_auto_switch_title.setText("自动喂鱼设置");
             ll_online_state.setVisibility(View.VISIBLE);
             iv_auto.setBackgroundResource(R.mipmap.img_lijiweiyu);
@@ -214,7 +262,8 @@ public class ZhiNengRoomDeviceDetailAutoActivity extends BaseActivity implements
             iv_auto.setBackgroundResource(R.mipmap.img_lijijiaohua);
             rl_auto_switch.setVisibility(View.VISIBLE);
             rl_ertongmoshi.setVisibility(View.VISIBLE);
-        } else if (device_type.equals("13")) {
+        } else if (device_type.equals("11") || device_type.equals("12") || device_type.equals("13")
+                || device_type.equals("14") || device_type.equals("15")) {
             rl_device_state.setVisibility(View.VISIBLE);
         } else {
             rl_switch.setVisibility(View.VISIBLE);

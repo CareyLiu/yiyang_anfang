@@ -79,6 +79,7 @@ public class MyCarCaoZuoDialog_Success extends Dialog {
             }
         });
         setContentView(theView);
+        setCanceledOnTouchOutside(false);
     }
 
     private OnDialogItemClickListener listener;

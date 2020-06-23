@@ -45,6 +45,7 @@ public class MyCarCaoZuoDialog_CaoZuoTIshi_Clear extends Dialog {
             }
         });
         setContentView(theView);
+        setCanceledOnTouchOutside(false);
     }
 
     private OnDialogItemClickListener listener;

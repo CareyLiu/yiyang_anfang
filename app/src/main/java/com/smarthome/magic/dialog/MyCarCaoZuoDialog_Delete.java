@@ -46,6 +46,7 @@ public class MyCarCaoZuoDialog_Delete extends Dialog {
             }
         });
         setContentView(theView);
+        setCanceledOnTouchOutside(false);
     }
 
     private OnDialogItemClickListener listener;

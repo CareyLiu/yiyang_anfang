@@ -579,7 +579,7 @@
                             android:textStyle="bold" />
 
                         <com.suke.widget.SwitchButton
-                            android:id="@+id/switch_model"
+                            android:id="@+id/switch_ertong"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"

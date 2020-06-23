@@ -578,9 +578,6 @@
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
-
-
-
                         <com.suke.widget.SwitchButton
                             android:id="@+id/switch_ertong"
                             android:layout_width="wrap_content"
@@ -639,6 +636,8 @@
                 android:text="删除"
                 android:textColor="#F83A47"
                 android:textSize="14sp" />
+
+
         </RelativeLayout>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

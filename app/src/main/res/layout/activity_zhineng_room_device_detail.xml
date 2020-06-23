@@ -578,6 +578,7 @@
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
+
                         <com.suke.widget.SwitchButton
                             android:id="@+id/switch_ertong"
                             android:layout_width="wrap_content"

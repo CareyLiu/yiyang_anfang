@@ -125,6 +125,7 @@ public class ZhiNengRoomSettingActivity extends BaseActivity implements View.OnC
                 Bundle bundle = new Bundle();
                 bundle.putString("device_id", dataBean.getDevice_id());
                 bundle.putString("device_type", dataBean.getDevice_type());
+                bundle.putString("member_type",member_type);
                 startActivity(new Intent(context, ZhiNengRoomDeviceDetailAutoActivity.class).putExtras(bundle));
             }
         });
@@ -165,8 +166,25 @@ public class ZhiNengRoomSettingActivity extends BaseActivity implements View.OnC
             case R.id.rl_room_name:
                 if (member_type.equals("1")) {
                     //管理员身份，可以编辑房间名字
-                    ZhiNengFamilyAddDIalog zhiNengFamilyAddDIalog = new ZhiNengFamilyAddDIalog(context, ConstanceValue.MSG_ROOM_MANAGE_CHANGENAME);
-                    zhiNengFamilyAddDIalog.show();
+                    if (room_id.equals("0")) {
+                        //默认房间不能修改名字
+                        MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(ZhiNengRoomSettingActivity.this,
+                                "提示", "默认房间无法修改名字", "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+                            @Override
+                            public void clickLeft() {
+
+                            }
+
+                            @Override
+                            public void clickRight() {
+
+                            }
+                        });
+                        myCarCaoZuoDialog_caoZuoTIshi.show();
+                    } else {
+                        ZhiNengFamilyAddDIalog zhiNengFamilyAddDIalog = new ZhiNengFamilyAddDIalog(context, ConstanceValue.MSG_ROOM_MANAGE_CHANGENAME);
+                        zhiNengFamilyAddDIalog.show();
+                    }
                 } else {
                     //成员身份，不可以编辑房间名字
                     MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(ZhiNengRoomSettingActivity.this,
@@ -187,19 +205,36 @@ public class ZhiNengRoomSettingActivity extends BaseActivity implements View.OnC
             case R.id.tv_room_delete:
                 if (member_type.equals("1")) {
                     //管理员身份，可以删除房间
-                    MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(ZhiNengRoomSettingActivity.this,
-                            "提示", "确定要删除该房间吗？", "取消", "确定", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
-                        @Override
-                        public void clickLeft() {
+                    if (room_id.equals("0")) {
+                        //默认房间不能修改名字
+                        MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(ZhiNengRoomSettingActivity.this,
+                                "提示", "默认房间无法删除", "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+                            @Override
+                            public void clickLeft() {
 
-                        }
+                            }
 
-                        @Override
-                        public void clickRight() {
-                            deleteRoom();
-                        }
-                    });
-                    myCarCaoZuoDialog_caoZuoTIshi.show();
+                            @Override
+                            public void clickRight() {
+
+                            }
+                        });
+                        myCarCaoZuoDialog_caoZuoTIshi.show();
+                    } else {
+                        MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(ZhiNengRoomSettingActivity.this,
+                                "提示", "确定要删除该房间吗？", "取消", "确定", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+                            @Override
+                            public void clickLeft() {
+
+                            }
+
+                            @Override
+                            public void clickRight() {
+                                deleteRoom();
+                            }
+                        });
+                        myCarCaoZuoDialog_caoZuoTIshi.show();
+                    }
                 } else {
                     //成员身份，不可以删除房间
                     MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(ZhiNengRoomSettingActivity.this,

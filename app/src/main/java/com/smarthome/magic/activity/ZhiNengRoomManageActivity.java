@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,6 +33,7 @@ import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuoTIshi;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Success;
 import com.smarthome.magic.dialog.ZhiNengFamilyAddDIalog;
 import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.model.ZhiNengRoomManageBean;
 import com.smarthome.magic.model.ZhiNengRoomManageCreatBean;
 
@@ -57,6 +59,7 @@ public class ZhiNengRoomManageActivity extends BaseActivity implements View.OnCl
     private Context context = ZhiNengRoomManageActivity.this;
     private String member_type = "";
     private String family_id = "";
+    private String device_id = "";
     private List<ZhiNengRoomManageBean.DataBean> dataBeanList = new ArrayList<>();
     private ZhiNengRoomManageAdapter zhiNengRoomManageAdapter;
 
@@ -89,6 +92,15 @@ public class ZhiNengRoomManageActivity extends BaseActivity implements View.OnCl
         if (family_id == null) {
             family_id = "";
         }
+        device_id = getIntent().getStringExtra("device_id");
+        if (device_id == null) {
+            device_id = "";
+        }
+        if (device_id.equals("")) {
+            tv_title.setText("房间管理");
+        } else {
+            tv_title.setText("设备转移");
+        }
         getnet();
     }
 
@@ -111,12 +123,33 @@ public class ZhiNengRoomManageActivity extends BaseActivity implements View.OnCl
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 ZhiNengRoomManageBean.DataBean dataBean = (ZhiNengRoomManageBean.DataBean) adapter.getItem(position);
-                Bundle bundle = new Bundle();
-                bundle.putString("room_id", dataBean.getRoom_id());
-                bundle.putString("family_id", dataBean.getFamily_id());
-                bundle.putString("room_name", dataBean.getRoom_name());
-                bundle.putString("member_type", member_type);
-                startActivity(new Intent(context, ZhiNengRoomSettingActivity.class).putExtras(bundle));
+                if (device_id.equals("")) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("room_id", dataBean.getRoom_id());
+                    bundle.putString("family_id", dataBean.getFamily_id());
+                    bundle.putString("room_name", dataBean.getRoom_name());
+                    bundle.putString("member_type", member_type);
+                    startActivity(new Intent(context, ZhiNengRoomSettingActivity.class).putExtras(bundle));
+                } else {
+                    //调设备转移接口
+                    MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(context,
+                            "提示", "确定要转移到该房间吗？", "取消", "确定", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+                        @Override
+                        public void clickLeft() {
+
+                        }
+
+                        @Override
+                        public void clickRight() {
+                            if (member_type.equals("1")) {
+                                deviceTransfer(dataBean.getRoom_id());
+                            } else {
+                                Toast.makeText(context, "操作失败，需要管理员身份", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                    myCarCaoZuoDialog_caoZuoTIshi.show();
+                }
             }
         });
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
@@ -137,7 +170,6 @@ public class ZhiNengRoomManageActivity extends BaseActivity implements View.OnCl
     @Override
     protected void initToolbar() {
         super.initToolbar();
-        tv_title.setText("房间管理");
         tv_title.setTextSize(17);
         tv_title.setTextColor(getResources().getColor(R.color.black));
         mToolbar.setNavigationIcon(R.mipmap.backbutton);
@@ -209,6 +241,67 @@ public class ZhiNengRoomManageActivity extends BaseActivity implements View.OnCl
 
                     @Override
                     public void onError(Response<AppResponse<ZhiNengRoomManageCreatBean>> response) {
+                        String str = response.getException().getMessage();
+                        Log.i("cuifahuo", str);
+                        String[] str1 = str.split("：");
+                        if (str1.length == 3) {
+                            MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(context,
+                                    "提示", str1[2], "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+                                @Override
+                                public void clickLeft() {
+
+                                }
+
+                                @Override
+                                public void clickRight() {
+
+                                }
+                            });
+                            myCarCaoZuoDialog_caoZuoTIshi.show();
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 设备转移
+     */
+    private void deviceTransfer(String room_id) {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16025");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(context).getAppToken());
+        map.put("move_type", "1");
+        map.put("room_id", room_id);
+        map.put("device_id", device_id);
+        map.put("family_id", family_id);
+        Gson gson = new Gson();
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<ZhiNengFamilyEditBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ZhiNengFamilyEditBean>>() {
+                    @Override
+                    public void onSuccess(final Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        if (response.body().msg.equals("ok")) {
+                            MyCarCaoZuoDialog_Success dialog_success = new MyCarCaoZuoDialog_Success(ZhiNengRoomManageActivity.this,
+                                    "成功", "成功将设备移入该房间", new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
+                                @Override
+                                public void clickLeft() {
+
+                                }
+
+                                @Override
+                                public void clickRight() {
+                                    finish();
+                                }
+                            });
+                            dialog_success.show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
                         String str = response.getException().getMessage();
                         Log.i("cuifahuo", str);
                         String[] str1 = str.split("：");

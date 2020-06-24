@@ -32,6 +32,8 @@ public class ZhiNengFamilyMemberDetailActivity extends BaseActivity implements V
 
     @BindView(R.id.tv_name)
     TextView tv_name;
+    @BindView(R.id.tv_phone)
+    TextView tv_phone;
     @BindView(R.id.tv_type)
     TextView tv_type;
     @BindView(R.id.tv_delete)
@@ -67,6 +69,7 @@ public class ZhiNengFamilyMemberDetailActivity extends BaseActivity implements V
         memberBean = getIntent().getParcelableExtra("member");
         member_id = memberBean.getMember_id();
         tv_name.setText(memberBean.getUser_name());
+        tv_phone.setText(memberBean.getMember_phone());
         tv_type.setText(memberBean.getMember_type_name());
         if (member_type.equals("1")) {
             if (memberBean.getMember_type_name().equals("管理员")) {

@@ -38,6 +38,7 @@ public class ZhiNengDeviceFragment extends Fragment {
     private RecyclerView recyclerView;
     private ZhiNengDeviceListAdapter zhiNengDeviceListAdapter;
     private List<ZhiNengHomeBean.DataBean.DeviceBean> dataBean = new ArrayList<>();
+    private String member_type = "";
 
     @Nullable
     @Override
@@ -83,6 +84,7 @@ public class ZhiNengDeviceFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("device_id", deviceBean.getDevice_id());
                 bundle.putString("device_type", deviceBean.getDevice_type());
+                bundle.putString("member_type", member_type);
                 startActivity(new Intent(getActivity(), ZhiNengRoomDeviceDetailAutoActivity.class).putExtras(bundle));
             }
         });
@@ -91,6 +93,7 @@ public class ZhiNengDeviceFragment extends Fragment {
     public void onRefresh() {
         if (getArguments() != null) {
             List<ZhiNengHomeBean.DataBean.DeviceBean> device = getArguments().getParcelableArrayList("device");
+            member_type = getArguments().getString("member_type");
             dataBean.clear();
             dataBean.addAll(device);
             zhiNengDeviceListAdapter.notifyDataSetChanged();

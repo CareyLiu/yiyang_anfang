@@ -267,6 +267,28 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                             dialog_success.show();
                         }
                     }
+
+                    @Override
+                    public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        String str = response.getException().getMessage();
+                        Log.i("cuifahuo", str);
+                        String[] str1 = str.split("：");
+                        if (str1.length == 3) {
+                            MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(context,
+                                    "提示", str1[2], "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+                                @Override
+                                public void clickLeft() {
+
+                                }
+
+                                @Override
+                                public void clickRight() {
+
+                                }
+                            });
+                            myCarCaoZuoDialog_caoZuoTIshi.show();
+                        }
+                    }
                 });
     }
 
@@ -288,8 +310,14 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                     @Override
                     public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
                         if (response.body().msg.equals("ok")) {
+                            String title = "";
+                            if (dataBean.getMember_type().equals("1")) {
+                                title = "删除家庭";
+                            } else {
+                                title = "退出家庭";
+                            }
                             MyCarCaoZuoDialog_Success dialog_success = new MyCarCaoZuoDialog_Success(ZhiNengFamilyManageDetailActivity.this,
-                                    "成功", "已成功删除家庭", new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
+                                    "成功", title, new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
                                 @Override
                                 public void clickLeft() {
 

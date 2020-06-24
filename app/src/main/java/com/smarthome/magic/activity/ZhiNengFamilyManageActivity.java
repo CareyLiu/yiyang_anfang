@@ -32,8 +32,10 @@ import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAd
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuoTIshi;
 import com.smarthome.magic.dialog.ZhiNengFamilyAddDIalog;
 import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.model.ZhiNengFamilyManageBean;
 import com.smarthome.magic.model.ZhiNengHomeListBean;
 
@@ -187,11 +189,33 @@ public class ZhiNengFamilyManageActivity extends BaseActivity implements View.On
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<ZhiNengFamilyManageBean.DataBean>>() {
                     @Override
-                    public void onSuccess(Response<AppResponse<ZhiNengFamilyManageBean.DataBean>> response) {
+                    public void onSuccess(final Response<AppResponse<ZhiNengFamilyManageBean.DataBean>> response) {
                         if (response.body().msg.equals("ok")) {
                             Bundle bundle = new Bundle();
                             bundle.putString("family_id", response.body().data.get(0).getFamily_id());
                             startActivity(new Intent(context, ZhiNengFamilyManageDetailActivity.class).putExtras(bundle));
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ZhiNengFamilyManageBean.DataBean>> response) {
+                        String str = response.getException().getMessage();
+                        Log.i("cuifahuo", str);
+                        String[] str1 = str.split("：");
+                        if (str1.length == 3) {
+                            MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(context,
+                                    "提示", str1[2], "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+                                @Override
+                                public void clickLeft() {
+
+                                }
+
+                                @Override
+                                public void clickRight() {
+
+                                }
+                            });
+                            myCarCaoZuoDialog_caoZuoTIshi.show();
                         }
                     }
                 });

@@ -16,6 +16,6 @@ import com.youth.banner.loader.ImageLoader;
 public class GlideImageLoader extends ImageLoader {
     @Override
     public void displayImage(Context context, Object path, ImageView imageView) {
-        Glide.with(MyApplication.mContext).applyDefaultRequestOptions(GlideShowImageUtils.showBannerCelve()).load(path).into(imageView);
+        Glide.with(MyApplication.getAppContext()).applyDefaultRequestOptions(GlideShowImageUtils.showBannerCelve()).load(path).into(imageView);
     }
 }

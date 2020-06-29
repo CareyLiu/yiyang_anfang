@@ -81,6 +81,17 @@ public class UserInfo {
         private String score_tx;
         private List<?> makeList;
 
+        public String getWx_user_name() {
+            return wx_user_name;
+        }
+
+        public void setWx_user_name(String wx_user_name) {
+            this.wx_user_name = wx_user_name;
+        }
+
+        private String wx_user_name;
+
+
         public String getOf_user_id() {
             return of_user_id;
         }

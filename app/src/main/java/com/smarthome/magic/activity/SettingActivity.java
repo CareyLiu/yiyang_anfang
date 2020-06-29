@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
@@ -102,6 +103,14 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
     TextView tvCache;
     @BindView(R.id.shebei_peiwang)
     LinearLayout shebeiPeiwang;
+    @BindView(R.id.rl_back)
+    RelativeLayout rlBack;
+    @BindView(R.id.tv_zhifubao_ming)
+    TextView tvZhifubaoMing;
+    @BindView(R.id.tv_weixin_ming)
+    TextView tvWeixinMing;
+    @BindView(R.id.ll_shezhi_weixin)
+    LinearLayout llShezhiWeixin;
     private BaseAnimatorSet mBasIn = new BounceBottomEnter();
     private BaseAnimatorSet mBasOut = new SlideBottomExit();
     private TakePhoto takePhoto;
@@ -157,6 +166,8 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
                         } else {
                             tvGender.setText("女");
                         }
+                        tvZhifubaoMing.setText(response.body().data.get(0).getAlipay_uname());
+                        tvWeixinMing.setText(response.body().data.get(0).getWx_user_name());
 
                     }
 
@@ -200,7 +211,9 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
     }
 
 
-    @OnClick({R.id.rl_back, R.id.layout_header, R.id.layout_nickname, R.id.layout_gender, R.id.layout_birthday, R.id.layout_address, R.id.layout_cash_account, R.id.layout_login_password, R.id.layout_pay_password, R.id.layout_clear_cache, R.id.tv_exit})
+    @OnClick({R.id.rl_back, R.id.layout_header, R.id.layout_nickname, R.id.layout_gender, R.id.layout_birthday,
+            R.id.layout_address, R.id.layout_cash_account, R.id.layout_login_password, R.id.layout_pay_password, R.id.layout_clear_cache,
+            R.id.tv_exit, R.id.ll_shezhi_weixin})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_back:
@@ -269,13 +282,17 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
                 startActivity(new Intent(SettingActivity.this, AddressActivity.class));
                 break;
             case R.id.layout_cash_account:
-                startActivity(new Intent(SettingActivity.this, PhoneCheckActivity.class).putExtra("mod_id", "0008"));
+                PhoneCheckActivity.actionStart(SettingActivity.this, "0008", "1");
                 break;
             case R.id.layout_login_password:
-                startActivity(new Intent(SettingActivity.this, PhoneCheckActivity.class).putExtra("mod_id", "0007"));
+                PhoneCheckActivity.actionStart(SettingActivity.this, "0007");
+
                 break;
             case R.id.layout_pay_password:
-                startActivity(new Intent(SettingActivity.this, PhoneCheckActivity.class).putExtra("mod_id", "0006"));
+                PhoneCheckActivity.actionStart(SettingActivity.this, "0006");
+                break;
+            case R.id.ll_shezhi_weixin:
+                PhoneCheckActivity.actionStart(SettingActivity.this, "0008", "2");
                 break;
             case R.id.layout_clear_cache:
                 normalDialog = new NormalDialog(this);

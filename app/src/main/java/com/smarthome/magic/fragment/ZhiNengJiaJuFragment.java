@@ -25,6 +25,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.ZhiNengHomeListActivity;
+import com.smarthome.magic.activity.zhinengjiaju.peinet.PeiWangYinDaoPageActivity;
 import com.smarthome.magic.adapter.NewsFragmentPagerAdapter;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.ConstanceValue;
@@ -109,7 +110,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     }
 
     public void initData() {
-
+        getnet();
     }
 
     @Override
@@ -135,7 +136,6 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     @Override
     public void onResume() {
         super.onResume();
-        getnet();
     }
 
     private void initViewpager() {
@@ -210,7 +210,8 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                     ivZhujiZhuangtai.setBackgroundResource(R.mipmap.zhikong_zhujizaixian);
                     tvZhujiZhuangtai.setText("主机在线");
                     // getnet();
-
+                } else if (message.type == ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN) {
+                    getnet();
                 }
             }
         }));
@@ -270,6 +271,13 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                         if (dataBean.get(0).getDevice().size() == 0) {
                             ivZhujiZhuangtai.setBackgroundResource(R.mipmap.img_connect_device);
                             tvZhujiZhuangtai.setText("添加主机");
+
+                            llConnectDevice.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    PeiWangYinDaoPageActivity.actionStart(getActivity());
+                                }
+                            });
                         } else {
                             if (dataBean.get(0).getDevice().get(0).getOnline_state().equals("1")) {
                                 ivZhujiZhuangtai.setBackgroundResource(R.mipmap.zhikong_zhujizaixian);

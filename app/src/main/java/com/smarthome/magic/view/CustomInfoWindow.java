@@ -19,7 +19,7 @@ import com.smarthome.magic.util.NavigationUtils;
  */
 
 public class CustomInfoWindow implements AMap.InfoWindowAdapter {
-    private Context mContext = MyApplication.mContext;
+    private Context mContext = MyApplication.getAppContext();
     private String title;
     private LatLng latLng;
     View infoWindow = null;

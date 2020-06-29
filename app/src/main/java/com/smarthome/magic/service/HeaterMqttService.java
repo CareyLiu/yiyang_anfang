@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.DiagnosisActivity;
 import com.smarthome.magic.config.AudioFocusManager;
+import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.model.HostModel;
 import com.smarthome.magic.model.NotifyModel;
@@ -33,7 +34,7 @@ import org.eclipse.paho.client.mqttv3.IMqttToken;
 import java.util.Arrays;
 import java.util.Map;
 
-import static com.smarthome.magic.config.MyApplication.mContext;
+
 
 /**
  * Created by Sl on 2019/7/2.
@@ -96,7 +97,7 @@ public class HeaterMqttService extends Service {
         if (dialog != null) {
             dialog.dismiss();
         }
-        dialog = new CustomBaseDialog(mContext);
+        dialog = new CustomBaseDialog(getApplicationContext());
         dialog.setTitle("操作提示");
         dialog.setContent(content);
         dialog.setCancelClickListener(new View.OnClickListener() {
@@ -109,7 +110,7 @@ public class HeaterMqttService extends Service {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-                mContext.startActivity(new Intent(mContext, DiagnosisActivity.class));
+                MyApplication.getAppContext().startActivity(new Intent( MyApplication.getAppContext(), DiagnosisActivity.class));
             }
         });
         dialog.show();
@@ -120,7 +121,7 @@ public class HeaterMqttService extends Service {
         if (player != null) {  //判断当mPlayer不为空的时候
             player.reset();
         }
-        player = MediaPlayer.create(mContext, res);
+        player = MediaPlayer.create( MyApplication.getAppContext(), res);
         if (audioFocusManage != null) {
             //请求语音播放焦点
             int requestCode = audioFocusManage.requestTheAudioFocus(new AudioFocusManager.AudioListener() {
@@ -188,12 +189,12 @@ public class HeaterMqttService extends Service {
      * 订阅主题
      */
     public static void subscribe() {
-        server_id = PreferenceHelper.getInstance(mContext).getString("server_id", "");
-        user_id = PreferenceHelper.getInstance(mContext).getString("of_user_id", "");
+        server_id = PreferenceHelper.getInstance( MyApplication.getAppContext()).getString("server_id", "");
+        user_id = PreferenceHelper.getInstance( MyApplication.getAppContext()).getString("of_user_id", "");
         if (server_id.equals("") || user_id.equals("")) {
             Log.d(TAG, "user_id或server_id为空");
         } else {
-            ccid = PreferenceHelper.getInstance(mContext).getString("ccid", "");
+            ccid = PreferenceHelper.getInstance( MyApplication.getAppContext()).getString("ccid", "");
             TOPIC_APP_FAULT = "wit/app/" + user_id;
             TOPIC_SERVER_ONLINE = "wit/server/" + server_id + user_id;
             if (ccid.length() > 1) {
@@ -203,8 +204,8 @@ public class HeaterMqttService extends Service {
 //            String activity[] = {"activity.WindHeaterActivity", "activity.HostActivity", "activity.DiagnosisActivity"};
             topics = new String[]{TOPIC_SERVER_ONLINE, TOPIC_APP_FAULT};
             int[] qoss = new int[]{2, 2};
-            //Log.d(TAG,((Activity)mContext).getLocalClassName());
-            if (Arrays.asList(activity).contains(((Activity) mContext).getLocalClassName())) {
+            //Log.d(TAG,((Activity) MyApplication.getAppContext()).getLocalClassName());
+            if (Arrays.asList(activity).contains(((Activity)  MyApplication.getAppContext()).getLocalClassName())) {
                 //当前Activity如果需要实时数据则重新订阅相关主题
                 topics = new String[]{TOPIC_SERVER_ORDER, TOPIC_APP_DATA};
                 mqttService.subscribe(topics, qoss);
@@ -261,8 +262,8 @@ public class HeaterMqttService extends Service {
                 } else if (topic.contains("wit/app/")) {
                     if (message.contains("notify")) {
                         //判断当前不是启动页面或诊断页面
-                        if (!((Activity) mContext).getLocalClassName().equals("com.smarthome.magic.activity.SplashActivity") &&
-                                !((Activity) mContext).getLocalClassName().equals("com.smarthome.magic.activity.DiagnosisActivity")) {
+                        if (!((Activity)  MyApplication.getAppContext()).getLocalClassName().equals("com.smarthome.magic.activity.SplashActivity") &&
+                                !((Activity)  MyApplication.getAppContext()).getLocalClassName().equals("com.smarthome.magic.activity.DiagnosisActivity")) {
                             //故障、报警
                             Gson gson = new Gson();
                             notifyModel = gson.fromJson(message, NotifyModel.class);
@@ -313,8 +314,8 @@ public class HeaterMqttService extends Service {
             @Override
             public void connectionLost(Throwable throwable) {
                 Log.d(TAG, "连接断开");
-                if (Arrays.asList(activity).contains(((Activity) mContext).getLocalClassName()))
-                    DialogManager.getManager((Activity) mContext).showMessage("正在重新连接....");
+                if (Arrays.asList(activity).contains(((Activity)  MyApplication.getAppContext()).getLocalClassName()))
+                    DialogManager.getManager((Activity)  MyApplication.getAppContext()).showMessage("正在重新连接....");
                 MqttConnect();
 
             }
@@ -326,7 +327,7 @@ public class HeaterMqttService extends Service {
 
             @Override
             public void connectSuccess(IMqttToken iMqttToken) {
-                DialogManager.getManager((Activity) mContext).dismiss();
+                DialogManager.getManager((Activity)  MyApplication.getAppContext()).dismiss();
                 Log.d(TAG, "连接成功");
                 subscribe();
 
@@ -335,8 +336,8 @@ public class HeaterMqttService extends Service {
             @Override
             public void connectFailed(IMqttToken iMqttToken, Throwable throwable) {
                 Log.d(TAG, "连接失败!");
-                if (Arrays.asList(activity).contains(((Activity) mContext).getLocalClassName()))
-                    DialogManager.getManager((Activity) mContext).showMessage("正在重新连接....");
+                if (Arrays.asList(activity).contains(((Activity)  MyApplication.getAppContext()).getLocalClassName()))
+                    DialogManager.getManager((Activity)  MyApplication.getAppContext()).showMessage("正在重新连接....");
                 MqttConnect();
 
             }

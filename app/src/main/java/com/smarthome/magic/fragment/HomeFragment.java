@@ -104,7 +104,6 @@ import com.smarthome.magic.util.Utils;
 import com.smarthome.magic.util.chenck_banben.UpdateManager;
 
 import com.tbruyelle.rxpermissions.RxPermissions;
-import com.tencent.bugly.crashreport.CrashReport;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 

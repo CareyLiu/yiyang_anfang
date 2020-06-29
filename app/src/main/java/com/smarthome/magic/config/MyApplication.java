@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -44,12 +45,17 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
+import com.lzy.okgo.model.Response;
 import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttConnect;
+import com.rairmmd.andmqtt.MqttPublish;
 import com.rairmmd.andmqtt.MqttSubscribe;
 import com.rairmmd.andmqtt.MqttUnSubscribe;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.DiagnosisActivity;
+import com.smarthome.magic.activity.WindHeaterActivity;
+import com.smarthome.magic.activity.chelianwang.ScanAddCarActivity;
+import com.smarthome.magic.activity.wode_page.MyQianBaoActivity;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.CodeClass;
@@ -59,10 +65,14 @@ import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.RxUtils;
 import com.smarthome.magic.app.UIHelper;
+import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Notify;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.AlarmClass;
 import com.smarthome.magic.model.HostModel;
+import com.smarthome.magic.model.MyQianBaoModel;
+import com.smarthome.magic.tools.NetworkUtils;
 import com.smarthome.magic.util.ConstantUtil;
 import com.smarthome.magic.util.JinChengUtils;
 import com.smarthome.magic.util.SerializeUtil;
@@ -79,8 +89,10 @@ import org.jaaksi.pickerview.util.Util;
 import org.jaaksi.pickerview.widget.DefaultCenterDecoration;
 import org.jaaksi.pickerview.widget.PickerView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
@@ -92,6 +104,9 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 
+import static com.smarthome.magic.get_net.Urls.HOME_PICTURE_HOME;
+import static com.smarthome.magic.get_net.Urls.MESSAGE_URL;
+
 
 public class MyApplication extends MultiDexApplication {
     protected static final String TAG = "MyApplication";
@@ -100,7 +115,7 @@ public class MyApplication extends MultiDexApplication {
     //获取屏幕宽高
     public static int windowHeight;
     public static int windowWidth;
-    public static Context mContext;
+
     public Activity activity_main;
 
 
@@ -247,26 +262,26 @@ public class MyApplication extends MultiDexApplication {
 
         setMqttConnect();
 
-//        AlibcTradeSDK.asyncInit(this, new AlibcTradeInitCallback() {
-//            @Override
-//            public void onSuccess() {
-//                // 初始化成功，设置相关的全局配置参数
-//                // 设置是否使用同步淘客打点
-//                AlibcTradeSDK.setSyncForTaoke(true);
-//
-//
-//                // 设置全局淘客参数，方便开发者用同一个淘客参数，不需要在show接口重复传入
-//                //   AlibcTradeSDK.setTaokeParams(taokeParams);
-//                Log.i("AlibcTradeSDK", "success");
-//            }
-//
-//            @Override
-//            public void onFailure(int code, String msg) {
-//                //初始化失败，可以根据code和msg判断失败原因，详情参见错误说明
-//
-//                Log.i("AlibcTradeSDK", "fail" + "code:" + code + "msg:" + msg);
-//            }
-//        });
+        AlibcTradeSDK.asyncInit(this, new AlibcTradeInitCallback() {
+            @Override
+            public void onSuccess() {
+                // 初始化成功，设置相关的全局配置参数
+                // 设置是否使用同步淘客打点
+                AlibcTradeSDK.setSyncForTaoke(true);
+
+
+                // 设置全局淘客参数，方便开发者用同一个淘客参数，不需要在show接口重复传入
+                //   AlibcTradeSDK.setTaokeParams(taokeParams);
+                Log.i("AlibcTradeSDK", "success");
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                //初始化失败，可以根据code和msg判断失败原因，详情参见错误说明
+
+                Log.i("AlibcTradeSDK", "fail" + "code:" + code + "msg:" + msg);
+            }
+        });
 
         application = this;
 
@@ -322,7 +337,7 @@ public class MyApplication extends MultiDexApplication {
         Log.i("getInformation", "CARBOX_GETNOW   " + CARBOX_GETNOW);
 
 
-        CAR_NOTIFY = "wit/server/" + getServer_id() + getUser_id();
+        CAR_NOTIFY = "wit/server/" + "01/" + getUser_id();
         Log.i("getInformation", "CAR_NOTIFY     " + CAR_NOTIFY);
 
         CAR_CTROL = "wit/cbox/hardware/" + getServer_id() + getCcid();
@@ -335,7 +350,7 @@ public class MyApplication extends MultiDexApplication {
                         .setPort(9096)
                         .setAutoReconnect(true)
                         .setCleanSession(true)
-                        .setKeepAlive(60)
+                        .setKeepAlive(5)
                         .setCleanSession(true)
                         .setLastWill("K.", "wit/server/" + getUser_id(), 2, true)
                         .setUserName("witandroid")
@@ -346,19 +361,24 @@ public class MyApplication extends MultiDexApplication {
                     @Override
                     public void connectComplete(boolean reconnect, String serverURI) {
                         Log.i("Rair", "(MainActivity.java:29)-connectComplete:-&gt;连接完成");
+                        sendRx(ConstanceValue.MSG_MQTT_CONNECTCOMPLETE, "");
+
+
                     }
 
                     @Override
                     public void connectionLost(Throwable cause) {
                         Log.i("Rair", "(MainActivity.java:34)-connectionLost:-&gt;连接丢失");
                         //UIHelper.ToastMessage(context, "网络不稳定持续连接中", Toast.LENGTH_SHORT);
+                        sendRx(ConstanceValue.MSG_MQTT_CONNECTLOST, "");
                     }
 
                     @Override
                     public void messageArrived(String topic, MqttMessage message) throws Exception {
                         System.out.println("Rair-MqttMessage    " + "收到的消息的主题是   ： 订阅的主题：" + topic + "  收到的数据信息：  " + message.toString());
-                        if (message.toString().contains("{")) {
 
+
+                        if (message.toString().contains("{")) {
                             //解析对象 code
 
                             Gson gson = new Gson();
@@ -424,7 +444,11 @@ public class MyApplication extends MultiDexApplication {
                                         MyCarCaoZuoDialog_Notify myCarCaoZuoDialog_notify = new MyCarCaoZuoDialog_Notify(activity_main, new MyCarCaoZuoDialog_Notify.OnDialogItemClickListener() {
                                             @Override
                                             public void clickLeft() {
-
+                                                // player.stop();
+                                                if (player != null && player.isPlaying()) {
+                                                    player.stop();
+                                                    audioFocusManage.releaseTheAudioFocus();
+                                                }
                                             }
 
                                             @Override
@@ -439,16 +463,19 @@ public class MyApplication extends MultiDexApplication {
                                     }
 
                                 }
-//                            if (!currentActivity.getComponentName().equals(DiagnosisActivity.class.getSimpleName())) {
-//
-//
-//                                MyCarCaoZuoDialog_Notify_Activity.actionStart(getAppContext());
-//
-//                            }
-
+                                return;
                             }
 
                             //大水假数据
+                        }
+
+                        if (topic.contains("zn/")) {//智能家居 主题
+                            String messageData = message.toString().substring(2, message.toString().length() - 1);
+
+
+                            //     String[] arr = messageData.split("_");
+
+
                         } else if (message.toString().equals("j_s")) {
                             Notice n = new Notice();
                             n.type = ConstanceValue.MSG_SN_DATA;
@@ -560,13 +587,12 @@ public class MyApplication extends MultiDexApplication {
                             n.content = message.toString();
                             RxBus.getDefault().sendRx(n);
                         } else if (message.toString().contains("i")) {
-                            //主机参数实时数据
-//                                       HostModel.build(message.toString());
-//                                    msg.what = ConstantUtil.MSG_HEATER_HOST_DATA;.
+
                             Notice n = new Notice();
                             n.type = ConstanceValue.MSG_CAR_I;
                             n.content = message.toString();
                             RxBus.getDefault().sendRx(n);
+
                         } else if (message.toString().equals("k5011.")) {
                             Notice n = new Notice();
                             n.type = ConstanceValue.MSG_CAR_HUI_FU_CHU_CHAGN;
@@ -590,40 +616,45 @@ public class MyApplication extends MultiDexApplication {
                     @Override
                     public void deliveryComplete(IMqttDeliveryToken token) {
                         Log.i("Rair", "(MainActivity.java:44)-deliveryComplete:-&gt;消息已送达");
+                        sendRx(ConstanceValue.MSG_MQTT_CONNECTCOMPLETE, "");
                     }
-                }).  connect(builder
-                                //设置自动重连
-                                , new IMqttActionListener() {
+                }).connect(builder
+                        //设置自动重连
+                        , new IMqttActionListener() {
+                            @Override
+                            public void onSuccess(IMqttToken asyncActionToken) {
+
+                                Log.i("Rair", "(MainActivity.java:51)-onSuccess:-&gt;连接成功");
+
+                                AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                                        .setTopic(CARBOX_JINGBAO)
+                                        .setQos(2), new IMqttActionListener() {
                                     @Override
                                     public void onSuccess(IMqttToken asyncActionToken) {
-
-                                        Log.i("Rair", "(MainActivity.java:51)-onSuccess:-&gt;连接成功");
-
-                                        AndMqtt.getInstance().subscribe(new MqttSubscribe()
-                                                .setTopic(CARBOX_JINGBAO)
-                                                .setQos(2), new IMqttActionListener() {
-                                            @Override
-                                            public void onSuccess(IMqttToken asyncActionToken) {
-                                                Log.i("Rair", "自动连接 成功" + CARBOX_JINGBAO);
-
-                                            }
-
-                                            @Override
-                                            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                                                Log.i("Rair", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
-                                            }
-                                        });
+                                        Log.i("Rair", "自动连接 成功" + CARBOX_JINGBAO);
                                     }
 
                                     @Override
                                     public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                                        Log.i("Rair", "(MainActivity.java:56)-onFailure:-&gt;连接失败");
-                                        System.out.println("exception.getMessage" + exception.getMessage());
+                                        Log.i("Rair", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
                                     }
                                 });
+
+                                sendRx(ConstanceValue.MSG_MQTT_CONNECT_CHONGLIAN_ONSUCCESS, "");
+
+                            }
+
+                            @Override
+                            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                                Log.i("Rair", "(MainActivity.java:56)-onFailure:-&gt;连接失败" + exception.getMessage() + "..." + exception.getLocalizedMessage());
+                                //System.out.println("exception.getMessage" + exception.getMessage());
+                                sendRx(ConstanceValue.MSG_MQTT_CONNECT_CHONGLIAN_ONFAILE, "");
+                            }
+                        });
             }
         }
     }
+
 
     public boolean containsProperty(String key) {
         Properties props = getProperties();
@@ -682,10 +713,10 @@ public class MyApplication extends MultiDexApplication {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
                 if (activity.getParent() != null) {//如果这个视图是嵌入的子视图
-                    mContext = activity.getParent();
+                    context = activity.getParent();
 
                 } else {
-                    mContext = activity;
+                    context = activity;
                 }
                 activity_main = activity;
             }
@@ -693,9 +724,9 @@ public class MyApplication extends MultiDexApplication {
             @Override
             public void onActivityStarted(Activity activity) {
                 if (activity.getParent() != null) {
-                    mContext = activity.getParent();
+                    context = activity.getParent();
                 } else {
-                    mContext = activity;
+                    context = activity;
                 }
                 activity_main = activity;
             }
@@ -703,9 +734,9 @@ public class MyApplication extends MultiDexApplication {
             @Override
             public void onActivityResumed(Activity activity) {
                 if (activity.getParent() != null) {
-                    mContext = activity.getParent();
+                    context = activity.getParent();
                 } else {
-                    mContext = activity;
+                    context = activity;
                 }
 
             }
@@ -887,7 +918,7 @@ public class MyApplication extends MultiDexApplication {
         if (player != null) {  //判断当mPlayer不为空的时候
             player.reset();
         }
-        player = MediaPlayer.create(mContext, res);
+        player = MediaPlayer.create(context, res);
         audioFocusManage = new AudioFocusManager();
         if (audioFocusManage != null) {
             //请求语音播放焦点
@@ -900,6 +931,7 @@ public class MyApplication extends MultiDexApplication {
                 @Override
                 public void pause() {
                     player.stop();
+                    audioFocusManage.releaseTheAudioFocus();
                 }
             });
             if (requestCode == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
@@ -911,6 +943,7 @@ public class MyApplication extends MultiDexApplication {
                     audioFocusManage.releaseTheAudioFocus();
                 }
             });
+
         }
 
 
@@ -931,6 +964,39 @@ public class MyApplication extends MultiDexApplication {
 
         unregisterReceiver(mReceiver);
 
+    }
+
+    public void setHuLvJingBao(List<CarCode> code) {
+        //访问网络获取数据 下面的列表数据
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", "03221");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(getApp()).getAppToken());
+        map.put("where", code);
+
+        Gson gson = new Gson();
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse>post(MESSAGE_URL)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse> response) {
+
+                    }
+                });
+    }
+
+    public class CarCode {
+        String car_code;
+    }
+
+    public void sendRx(int strValue, String strContent) {
+        Notice n = new Notice();
+        n.type = strValue;
+//                            n.content = message.toString();
+        n.content = strContent;
+        RxBus.getDefault().sendRx(n);
     }
 
 }

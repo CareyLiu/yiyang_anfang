@@ -3,17 +3,22 @@ package com.smarthome.magic.activity;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
 import androidx.annotation.RequiresApi;
+
 import com.google.android.material.navigation.NavigationView;
+
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.widget.Toolbar;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,6 +40,7 @@ import com.rairmmd.andmqtt.MqttPublish;
 import com.rairmmd.andmqtt.MqttSubscribe;
 import com.rairmmd.andmqtt.MqttUnSubscribe;
 import com.smarthome.magic.R;
+import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConfigValue;
 import com.smarthome.magic.app.ConstanceValue;
@@ -72,10 +78,15 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 import static com.smarthome.magic.app.ConfigValue.STARTSHELVES;
+import static com.smarthome.magic.app.ConstanceValue.MSG_MQTT_CONNECTARRIVE;
+import static com.smarthome.magic.app.ConstanceValue.MSG_MQTT_CONNECTCOMPLETE;
+import static com.smarthome.magic.app.ConstanceValue.MSG_MQTT_CONNECTLOST;
+import static com.smarthome.magic.app.ConstanceValue.MSG_MQTT_CONNECT_CHONGLIAN_ONFAILE;
+import static com.smarthome.magic.app.ConstanceValue.MSG_MQTT_CONNECT_CHONGLIAN_ONSUCCESS;
 import static com.smarthome.magic.config.MyApplication.CARBOX_GETNOW;
 import static com.smarthome.magic.config.MyApplication.CAR_CTROL;
 import static com.smarthome.magic.config.MyApplication.CAR_NOTIFY;
-import static com.smarthome.magic.config.MyApplication.mContext;
+
 
 public class WindHeaterActivity extends BaseActivity implements View.OnLongClickListener, NavigationView.OnNavigationItemSelectedListener {
 
@@ -134,10 +145,14 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
         return R.layout.activity_wind_heater;
     }
 
+    ProgressDialog waitDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        waitDialog = ProgressDialog.show(mContext, null, "网络状态不稳定,连接中···", true, true);
+
 
         initView();
         toolbar = findViewById(R.id.toolbar);
@@ -168,118 +183,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
         car_server_id = PreferenceHelper.getInstance(mContext).getString("car_server_id", "");
         ccid = PreferenceHelper.getInstance(mContext).getString("ccid", "");
         of_user_id = PreferenceHelper.getInstance(mContext).getString("of_user_id", "");
-
-        AndMqtt.getInstance().subscribe(new MqttSubscribe()
-                .setTopic(CAR_NOTIFY)
-                .setQos(2), new IMqttActionListener() {
-            @Override
-            public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("Rair", "notify:  " + CAR_NOTIFY);
-            }
-
-            @Override
-            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                Log.i("CAR_NOTIFY", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
-            }
-        });
-
-        AndMqtt.getInstance().publish(new MqttPublish()
-                .setMsg("O.")
-                .setQos(2).setRetained(false)
-                .setTopic(CAR_NOTIFY), new IMqttActionListener() {
-            @Override
-            public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("Rair", "(CAR_NOTIFY.java:79)-onSuccess:-&gt;发布成功");
-            }
-
-            @Override
-            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
-            }
-        });
-
-        AndMqtt.getInstance().publish(new MqttPublish()
-                .setMsg("k001.")
-                .setQos(2).setRetained(false)
-                .setTopic(CAR_NOTIFY), new IMqttActionListener() {
-            @Override
-            public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("Rair", "(CAR_NOTIFY.java:79)-onSuccess:-&gt;发布成功");
-            }
-
-            @Override
-            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
-            }
-        });
-
-        //获得车辆的实时数据和基本信息
-        AndMqtt.getInstance().subscribe(new MqttSubscribe()
-                .setTopic(CARBOX_GETNOW)
-                .setQos(2), new IMqttActionListener() {
-            @Override
-            public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("Rair", "订阅成功 carbox_getnow:  " + CARBOX_GETNOW);
-            }
-
-            @Override
-            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                Log.i("Rair", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
-            }
-        });
-
-
-        //控制车辆
-        AndMqtt.getInstance().subscribe(new MqttSubscribe()
-                .setTopic(CAR_CTROL)
-                .setQos(2), new IMqttActionListener() {
-            @Override
-            public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("Rair", " Rair用户订阅成功" + "wit/app/" + of_user_id);
-            }
-
-            @Override
-            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                Log.i("Rair", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
-            }
-        });
-
-
-        AndMqtt.getInstance().publish(new MqttPublish()
-                .setMsg("N9.")
-                .setQos(2)
-                .setTopic(CAR_CTROL)
-                .setRetained(false), new IMqttActionListener() {
-            @Override
-            public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
-            }
-
-            @Override
-            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
-            }
-        });
-
-        //查询车辆详情数据
-        requestData();
-
-
-        // HeaterMqttService.mqttService.publish("M512.", HeaterMqttService.TOPIC_SERVER_ORDER, 2, false);
-        AndMqtt.getInstance().publish(new MqttPublish()
-                .setMsg("M512.")
-                .setQos(2).setRetained(false)
-                .setTopic(CAR_CTROL), new IMqttActionListener() {
-            @Override
-            public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("Rair", "(CAR_NOTIFY.java:79)-onSuccess:-&gt;发布成功");
-            }
-
-            @Override
-            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
-            }
-        });
+        setMqttZhiLing();
 
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
@@ -469,6 +373,46 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
 
                         }
                     }
+
+                    /**
+                     *     int MSG_MQTT_CONNECTCOMPLETE = 0x10045;//连接完成
+                     *     int MSG_MQTT_CONNECTLOST = 0x10046;//连接丢失
+                     *     int MSG_MQTT_CONNECTARRIVE = 0x10047;//收到连接
+                     *     int MSG_MQTT_CONNECT_CHONGLIAN_ONSUCCESS = 0x10048;//重连成功
+                     *     int MSG_MQTT_CONNECT_CHONGLIAN_ONFAILE = 0x10049;//重连失败
+                     */
+                } else if (message.type == MSG_MQTT_CONNECTCOMPLETE) {
+                    if (waitDialog.isShowing()) {
+                        waitDialog.dismiss();
+                        setMqttZhiLing();
+                    }
+                    Log.i("rair", "complete");
+
+                } else if (message.type == MSG_MQTT_CONNECTLOST) {
+                    if (!waitDialog.isShowing()) {
+                        waitDialog.show();
+                    }
+                    Log.i("rair", "complete_lost");
+                } else if (message.type == MSG_MQTT_CONNECTARRIVE) {
+
+                    if (waitDialog.isShowing()) {
+                        waitDialog.dismiss();
+                    }
+                    Log.i("rair", "arrive");
+                } else if (message.type == MSG_MQTT_CONNECT_CHONGLIAN_ONSUCCESS) {
+
+                    if (waitDialog.isShowing()) {
+                        waitDialog.dismiss();
+                    }
+
+                    Log.i("rair", "chonglian_success");
+
+                } else if (message.type == MSG_MQTT_CONNECT_CHONGLIAN_ONFAILE) {
+
+                    if (!waitDialog.isShowing()) {
+                        waitDialog.show();
+                    }
+                    Log.i("rair", "chonglian_failer");
                 }
             }
         }));
@@ -1119,5 +1063,105 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
 
     }
 
+    public void setMqttZhiLing() {
+
+        AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                .setTopic(CAR_NOTIFY)
+                .setQos(2), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+                Log.i("Rair", "notify:  " + CAR_NOTIFY);
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                Log.i("CAR_NOTIFY", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
+            }
+        });
+
+
+        AndMqtt.getInstance().publish(new MqttPublish()
+                .setMsg("k001.")
+                .setQos(2).setRetained(false)
+                .setTopic(CAR_NOTIFY), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+                Log.i("Rair", "(CAR_NOTIFY.java:79)-onSuccess:-&gt;发布成功");
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+            }
+        });
+
+        //获得车辆的实时数据和基本信息
+        AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                .setTopic(CARBOX_GETNOW)
+                .setQos(2), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+                Log.i("Rair", "订阅成功 carbox_getnow:  " + CARBOX_GETNOW);
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                Log.i("Rair", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
+            }
+        });
+
+
+        //控制车辆
+        AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                .setTopic(CAR_CTROL)
+                .setQos(2), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+                Log.i("Rair", " Rair用户订阅成功" + "wit/app/" + of_user_id);
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                Log.i("Rair", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
+            }
+        });
+
+
+        AndMqtt.getInstance().publish(new MqttPublish()
+                .setMsg("N9.")
+                .setQos(2)
+                .setTopic(CAR_CTROL)
+                .setRetained(false), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+                Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+            }
+        });
+
+        //查询车辆详情数据
+        requestData();
+
+
+        // HeaterMqttService.mqttService.publish("M512.", HeaterMqttService.TOPIC_SERVER_ORDER, 2, false);
+        AndMqtt.getInstance().publish(new MqttPublish()
+                .setMsg("M512.")
+                .setQos(2).setRetained(false)
+                .setTopic(CAR_CTROL), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+                Log.i("Rair", "(CAR_NOTIFY.java:79)-onSuccess:-&gt;发布成功");
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+            }
+        });
+    }
 
 }

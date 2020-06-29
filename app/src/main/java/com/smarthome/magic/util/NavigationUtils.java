@@ -23,7 +23,7 @@ public class NavigationUtils {
     private static Context mContext;
 
     public static void Navigation(LatLng latLng){
-        mContext = MyApplication.mContext;
+        mContext = MyApplication.getAppContext();
 
 
         if(isInstallPackage("com.autonavi.minimap")){

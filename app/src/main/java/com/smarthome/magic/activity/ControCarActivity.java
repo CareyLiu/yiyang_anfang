@@ -36,7 +36,7 @@ import com.smarthome.magic.view.CircleMenuView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.smarthome.magic.config.MyApplication.mContext;
+
 
 public class ControCarActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -124,7 +124,7 @@ public class ControCarActivity extends BaseActivity implements NavigationView.On
         HeaterMqttService.subscribe();
         //查询时时数据
         HeaterMqttService.mqttService.publish("N9.", HeaterMqttService.TOPIC_SERVER_ORDER, 2, false);
-        DialogManager.getManager((Activity) mContext).showMessage("正在获取车辆信息");
+        DialogManager.getManager((Activity) ControCarActivity.this).showMessage("正在获取车辆信息");
 
 
 
@@ -202,7 +202,7 @@ public class ControCarActivity extends BaseActivity implements NavigationView.On
                 switch (msg.what) {
                     case ConstantUtil.MSG_HEATER_ACTUAL_DATA:
                         //加载实时数据
-                        DialogManager.getManager((Activity) mContext).dismiss();
+                        DialogManager.getManager((Activity) ControCarActivity.this).dismiss();
                         SerializableMap serializableMap = (SerializableMap) b.get("map");
                         assert serializableMap != null;
                         Log.d("version", serializableMap.getMap().get("version_feng"));

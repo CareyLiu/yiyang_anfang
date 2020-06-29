@@ -22,7 +22,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 import static com.smarthome.magic.config.MyApplication.CAR_CTROL;
-import static com.smarthome.magic.config.MyApplication.mContext;
+
 
 public class DeviceStateActivity extends BaseActivity {
     @BindView(R.id.rl_back)
@@ -58,8 +58,8 @@ public class DeviceStateActivity extends BaseActivity {
         //HeaterMqttService.handler = stateHandler;
 
 
-        String server_id = PreferenceHelper.getInstance(mContext).getString("server_id", "");
-        String ccid = PreferenceHelper.getInstance(mContext).getString("ccid", "");
+        String server_id = PreferenceHelper.getInstance(DeviceStateActivity.this).getString("server_id", "");
+        String ccid = PreferenceHelper.getInstance(DeviceStateActivity.this).getString("ccid", "");
 
 
         AndMqtt.getInstance().publish(new MqttPublish()

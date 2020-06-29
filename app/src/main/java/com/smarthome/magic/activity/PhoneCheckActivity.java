@@ -1,5 +1,6 @@
 package com.smarthome.magic.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -17,14 +18,21 @@ import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.wode_page.MyQianBaoActivity;
 import com.smarthome.magic.app.App;
+import com.smarthome.magic.app.AppConfig;
+import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.Constant;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.config.Wetch_S;
 import com.smarthome.magic.model.Message;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.TimeCount;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,13 +55,17 @@ public class PhoneCheckActivity extends BaseActivity {
     Button btnSubmit;
     private TimeCount timeCount;
     private String smsId;
+    private String weixinOrZhiFuBao;
+
+
+    @Override
+    public int getContentViewResId() {
+        return R.layout.activity_phone_check;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_phone_check);
-
-
         ButterKnife.bind(this);
         StatusBarUtil.setLightMode(this);
 
@@ -61,6 +73,16 @@ public class PhoneCheckActivity extends BaseActivity {
         if (getIntent().getStringExtra("mod_id").equals("0006")) {
             tvShouJiYanZheng.setText("支付密码");
         }
+        if (getIntent().getStringExtra("weixinOrZhiFuBao") != null) {
+            weixinOrZhiFuBao = getIntent().getStringExtra("weixinOrZhiFuBao");
+
+            if (weixinOrZhiFuBao.equals("1")) {
+
+            } else if (weixinOrZhiFuBao.equals("2")) {
+                btnSubmit.setText("去微信授权");
+            }
+        }
+
         timeCount = new TimeCount(60000, 1000, tvGetCode);
         tvPhone.setText(PreferenceHelper.getInstance(this).getString("user_phone", ""));
         etCode.addTextChangedListener(new TextWatcher() {
@@ -122,7 +144,8 @@ public class PhoneCheckActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse<Message.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<Message.DataBean>> response) {
-                        showToast(response.body().msg);
+                        // showToast(response.body().msg);
+                        UIHelper.ToastMessage(mContext, response.body().msg);
                         timeCount.start();
                         smsId = response.body().data.get(0).getSms_id();
                     }
@@ -154,7 +177,7 @@ public class PhoneCheckActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse<Message.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<Message.DataBean>> response) {
-                        AlertUtil.t(PhoneCheckActivity.this, response.body().msg);
+                        //AlertUtil.t(PhoneCheckActivity.this, response.body().msg);
                         switch (getIntent().getStringExtra("mod_id")) {
                             case "0006"://修改支付密码
                                 startActivity(new Intent(PhoneCheckActivity.this, RevisePayActivity.class).putExtra("sms_id", smsId).putExtra("sms_code", etCode.getText().toString()));
@@ -166,7 +189,21 @@ public class PhoneCheckActivity extends BaseActivity {
                                 startActivity(new Intent(PhoneCheckActivity.this, ReviseLoginActivity.class).putExtra("sms_id", smsId).putExtra("sms_code", etCode.getText().toString()));
                                 break;
                             case "0008"://修改提现账号
-                                startActivity(new Intent(PhoneCheckActivity.this, CashAccountActivity.class).putExtra("sms_id", smsId).putExtra("sms_code", etCode.getText().toString()));
+                                if (weixinOrZhiFuBao.equals("1")) {
+                                    startActivity(new Intent(PhoneCheckActivity.this, CashAccountActivity.class).putExtra("sms_id", smsId)
+                                            .putExtra("sms_code", etCode.getText().toString()).putExtra("weixinOrZhiFuBao", weixinOrZhiFuBao));
+                                } else if (weixinOrZhiFuBao.equals("2")) {
+
+                                    //保存 微信回调使用
+                                    PreferenceHelper.getInstance(mContext).putString(AppConfig.SMS_ID, smsId);
+                                    PreferenceHelper.getInstance(mContext).putString(AppConfig.SMS_CODE,etCode.getText().toString());
+                                    IWXAPI api;
+                                    api = WXAPIFactory.createWXAPI(mContext, Wetch_S.APP_ID);
+                                    SendAuth.Req req = new SendAuth.Req();
+                                    req.scope = "snsapi_userinfo";
+                                    req.state = "wechat_sdk_demo_test";
+                                    api.sendReq(req);
+                                }
 
                                 finish();
                                 break;
@@ -182,4 +219,26 @@ public class PhoneCheckActivity extends BaseActivity {
 
     }
 
+    /**
+     * 用于其他Activty跳转到该Activity
+     *
+     * @param weixinOrZhiFuBao 1支付宝 2微信
+     */
+    public static void actionStart(Context context, String mod_id, String weixinOrZhiFuBao) {
+        Intent intent = new Intent(context, PhoneCheckActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("mod_id", mod_id);
+        intent.putExtra("weixinOrZhiFuBao", weixinOrZhiFuBao);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 用于其他Activty跳转到该Activity
+     */
+    public static void actionStart(Context context, String mod_id) {
+        Intent intent = new Intent(context, PhoneCheckActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("mod_id", mod_id);
+        context.startActivity(intent);
+    }
 }

@@ -63,4 +63,15 @@ public interface ConstanceValue {
     int MSG_ROOM_MANAGE_CHANGENAME = 0x10043;//家庭管理，更改家庭名字
     int MSG_ROOM_DEVICE_CHANGENAME = 0x10044;//家庭管理，更改家庭名字
 
+    /**
+     * MQTT 连接
+     */
+    int MSG_MQTT_CONNECTCOMPLETE = 0x10045;//连接完成
+    int MSG_MQTT_CONNECTLOST = 0x10046;//连接丢失
+    int MSG_MQTT_CONNECTARRIVE = 0x10047;//收到连接
+    int MSG_MQTT_CONNECT_CHONGLIAN_ONSUCCESS = 0x10048;//重连成功
+    int MSG_MQTT_CONNECT_CHONGLIAN_ONFAILE = 0x10049;//重连失败
+
+
+    int MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN = 0x10050;//重连失败
 }

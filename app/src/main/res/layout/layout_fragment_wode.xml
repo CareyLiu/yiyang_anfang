@@ -234,7 +234,7 @@
                     android:textStyle="bold"
                     app:layout_constraintLeft_toLeftOf="@+id/tv_kajuan"
                     app:layout_constraintRight_toRightOf="@+id/tv_kajuan"
-                    app:layout_constraintTop_toTopOf="@+id/tv_zhanghu_jifen_number" />
+                    app:layout_constraintTop_toTopOf="@+id/tv_shoucangjia_number" />
 
 
                 <com.flyco.roundview.RoundRelativeLayout

@@ -27,6 +27,7 @@ import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Success;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -56,10 +57,13 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
 
     @Override
     public void onReq(BaseReq req) {
+        Log.e("shouquan_huidiao：", "" + req.toString());
     }
 
     @Override
     public void onResp(BaseResp resp) {
+
+
         Log.e("微信支付回调：", "" + resp.errCode);
         String dalibao = PreferenceHelper.getInstance(this).getString(App.DALIBAO_PAY, "");
 
@@ -140,9 +144,6 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
                     //  n.content = message.toString();
                     RxBus.getDefault().sendRx(n);
                     PreferenceHelper.getInstance(this).removeKey(App.ZIYING_PAY);
-
-
-
 
 
                     WXPayEntryActivity.this.finish();

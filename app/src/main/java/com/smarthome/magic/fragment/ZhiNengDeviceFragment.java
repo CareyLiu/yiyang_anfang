@@ -96,15 +96,22 @@ public class ZhiNengDeviceFragment extends Fragment {
             member_type = getArguments().getString("member_type");
             dataBean.clear();
             dataBean.addAll(device);
-            zhiNengDeviceListAdapter.notifyDataSetChanged();
+            if (zhiNengDeviceListAdapter!=null){
+                zhiNengDeviceListAdapter.notifyDataSetChanged();
+            }
+
         }
-        for (int i = 0; i < recyclerView.getItemDecorationCount(); i++) {
-            recyclerView.removeItemDecorationAt(i);
+
+        if (recyclerView!=null){
+            for (int i = 0; i < recyclerView.getItemDecorationCount(); i++) {
+                recyclerView.removeItemDecorationAt(i);
+            }
+            if (dataBean.size() == 0) {
+                recyclerView.addItemDecoration(new GridAverageUIDecoration(0, 10));
+            } else {
+                recyclerView.addItemDecoration(new GridAverageUIDecoration(14, 10));
+            }
         }
-        if (dataBean.size() == 0) {
-            recyclerView.addItemDecoration(new GridAverageUIDecoration(0, 10));
-        } else {
-            recyclerView.addItemDecoration(new GridAverageUIDecoration(14, 10));
-        }
+
     }
 }

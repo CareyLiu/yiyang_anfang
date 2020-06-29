@@ -21,6 +21,7 @@ public class TaoCanAdapter extends BaseQuickAdapter<GoodsDetails_f.DataBean.Prod
     protected void convert(BaseViewHolder helper, GoodsDetails_f.DataBean.ProductListBean item) {
         helper.setText(R.id.tv_text, item.getProduct_title());
         helper.addOnClickListener(R.id.constrain);
+
         if (item.getSelect().equals("1")) {
             TextView tv = helper.getView(R.id.tv_text);
             tv.setBackgroundResource(R.drawable.background_select);

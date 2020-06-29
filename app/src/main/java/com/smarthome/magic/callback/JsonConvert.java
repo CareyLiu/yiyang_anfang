@@ -147,8 +147,8 @@ public class JsonConvert<T> implements Converter<T> {
                     return (T) appResponse;
                 }
                 else if (msg_code.equals("0003")){
-                    MyApplication.mContext.startActivity(new Intent( MyApplication.mContext, LoginActivity.class));
-                    UserManager.getManager(MyApplication.mContext).removeUser();
+                    MyApplication.getAppContext().startActivity(new Intent( MyApplication.getAppContext(), LoginActivity.class));
+                    UserManager.getManager(MyApplication.getAppContext()).removeUser();
                     throw new IllegalStateException(appResponse.msg);
                 }
                 else {

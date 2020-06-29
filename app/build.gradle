@@ -10,13 +10,13 @@ android {
 
             keyAlias 'release'
             keyPassword 'zxc741asd852qwe963'
-            storeFile file('/Users/linxudong/Desktop/聚易佳/app/magic_lamp_release.jks')
+            storeFile file('C:/keystore/magic_lamp_release.jks')
             storePassword 'zxc741asd852qwe963'
         }
         release {
             keyAlias 'release'
             keyPassword 'zxc741asd852qwe963'
-            storeFile file('/Users/linxudong/Desktop/聚易佳/app/magic_lamp_release.jks')
+            storeFile file('C:/keystore/magic_lamp_release.jks')
             storePassword 'zxc741asd852qwe963'
         }
     }

@@ -108,8 +108,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
                 startActivity(new Intent(getActivity(), WindHeaterActivity.class));
 
 
-                CAR_NOTIFY = "wit/server/" + getServer_id() + getCcid();
-                Log.i("getInformation", "CAR_NOTIFY     " + CAR_NOTIFY);
+
 
                 CAR_CTROL = "wit/cbox/hardware/" + getServer_id() + getCcid();
                 Log.i("getInformation", "CAR_CTROL     " + CAR_CTROL);

@@ -40,6 +40,7 @@ public class CashAccountActivity extends BaseActivity {
     EditText etName;
     @BindView(R.id.btn_save)
     Button btnSave;
+    private String weixinOrZhiFuBao;
 
     @Override
     public int getContentViewResId() {
@@ -51,7 +52,14 @@ public class CashAccountActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         ButterKnife.bind(this);
-
+        weixinOrZhiFuBao = getIntent().getStringExtra("weixinOrZhiFuBao");
+        if (weixinOrZhiFuBao.equals("1")) {
+            //UIHelper.ToastMessage(mContext, "支付宝");
+            tv_title.setText("提现到支付宝");
+        } else if (weixinOrZhiFuBao.equals("2")) {
+            //UIHelper.ToastMessage(mContext, "微信");
+            tv_title.setText("提现到微信");
+        }
         etAccount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -118,6 +126,7 @@ public class CashAccountActivity extends BaseActivity {
         map.put("alipay_number", etAccount.getText().toString());
         map.put("sms_id", getIntent().getStringExtra("sms_id"));
         map.put("sms_code", getIntent().getStringExtra("sms_code"));
+
         Gson gson = new Gson();
         OkGo.<AppResponse>post(Urls.HOME_PICTURE_HOME)
                 .tag(this)//
@@ -126,10 +135,9 @@ public class CashAccountActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Response<AppResponse> response) {
                         // AlertUtil.t(getApplicationContext(), response.body().msg);
-                        UIHelper.ToastMessage(CashAccountActivity.this, "保存成功");
-                        PreferenceHelper.getInstance(CashAccountActivity.this).putString(App.CUNCHUBIND_ALIPAY, "1");
-                        finish();
-
+                            UIHelper.ToastMessage(CashAccountActivity.this, "保存成功");
+                            PreferenceHelper.getInstance(CashAccountActivity.this).putString(App.CUNCHUBIND_ALIPAY, "1");
+                            finish();
                         //  AppManager.getAppManager().finishActivity(PhoneCheckActivity.class);
                         //AppManager.getAppManager().finishActivity();
 
@@ -152,7 +160,7 @@ public class CashAccountActivity extends BaseActivity {
     @Override
     protected void initToolbar() {
         super.initToolbar();
-        tv_title.setText("提现到支付宝");
+
         tv_title.setTextSize(17);
         tv_title.setTextColor(getResources().getColor(R.color.black));
         mToolbar.setNavigationIcon(R.mipmap.backbutton);

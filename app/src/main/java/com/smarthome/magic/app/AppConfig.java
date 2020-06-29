@@ -104,7 +104,8 @@ public class AppConfig {
     public final static String LOCATION_CITY_NAME = "LOCATION_CITY_NAME";
     public final static String PEIWANG_FAMILYID = "PEIWANGFAMILYID";//智能家居 家庭id
     public final static String PEIWANG_MIMA = "PEIWANG_MIMA";
-
+    public final static String SMS_ID = "SMS_ID";//smsId;//临时使用
+    public final static String SMS_CODE = "SMS_CODE";//临时使用
     //福利功能  需要的字段
     //作废时间  --待使用
     public static String abolishDate;

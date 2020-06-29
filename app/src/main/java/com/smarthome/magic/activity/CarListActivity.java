@@ -1,6 +1,7 @@
 package com.smarthome.magic.activity;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,7 +17,9 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.jaeger.library.StatusBarUtil;
 import com.smarthome.magic.R;
 import com.smarthome.magic.adapter.CarList1Adapter;
+import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.config.Constant;
 import com.smarthome.magic.config.MyApplication;
@@ -24,6 +27,7 @@ import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.model.DataIn;
 import com.smarthome.magic.model.SmartDevice_car_0364;
+import com.smarthome.magic.tools.NetworkUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -90,7 +94,14 @@ public class CarListActivity extends BaseActivity {
 
                 switch (getIntent().getStringExtra("type")) {
                     case "wind":
-                        startActivity(new Intent(CarListActivity.this, WindHeaterActivity.class));
+                        if (NetworkUtils.isConnected(mContext)) {
+                            Activity currentActivity = AppManager.getAppManager().currentActivity();
+                            if (currentActivity != null) {
+                                startActivity(new Intent(CarListActivity.this, WindHeaterActivity.class));
+                            }
+                        } else {
+                            UIHelper.ToastMessage(mContext, "请连接网络后重新尝试");
+                        }
                         break;
                     case "plumbing":
                         startActivity(new Intent(CarListActivity.this, PlumbingHeaterActivity.class));
@@ -99,8 +110,8 @@ public class CarListActivity extends BaseActivity {
                         startActivity(new Intent(CarListActivity.this, ControCarActivity.class));
                         break;
                 }
-                CAR_NOTIFY = "wit/server/" + getServer_id() + getCcid();
-                Log.i("getInformation", "CAR_NOTIFY     " + CAR_NOTIFY);
+                // CAR_NOTIFY = "wit/server/" + "01/" + getCcid();
+                // Log.i("getInformation", "CAR_NOTIFY     " + CAR_NOTIFY);
 
                 CAR_CTROL = "wit/cbox/hardware/" + getServer_id() + getCcid();
                 Log.i("getInformation", "CAR_CTROL     " + CAR_CTROL);

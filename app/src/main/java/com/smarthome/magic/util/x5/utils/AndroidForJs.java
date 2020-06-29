@@ -38,12 +38,14 @@ import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.Constant;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.config.Wetch_S;
 import com.smarthome.magic.model.DaiLiShangQianBaoModel;
 import com.smarthome.magic.model.MenSuoModel;
 import com.smarthome.magic.model.SaoMaPayModel;
 import com.smarthome.magic.model.SaoMaWeiXinPayModel;
 import com.smarthome.magic.model.SaoMaZhiFuBaoPayModel;
 import com.smarthome.magic.pay_about.alipay.PayResult;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -135,6 +137,36 @@ public class AndroidForJs {
             goToWeChatPay(saoMaWeiXinPayModel);
         }
 
+
+    }
+
+    @JavascriptInterface
+    public void jsToAppMap(String startLat) {
+        //去做想做的事情。比如导航，直接带着开始和结束的经纬度Intent到导航activity就可以
+
+        Log.i("isToAppConkOut", startLat);
+//        if (TextUtils.isEmpty(startLat) || TextUtils.isEmpty(startLng) || TextUtils.isEmpty(endLat)
+//                || TextUtils.isEmpty(endLng)) {//如果接收的数据不正确，给予提示
+//            Toast.makeText(activity, "有不正确的数据", Toast.LENGTH_LONG).show();
+//            return;
+//        }
+//
+//        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+//        builder.setTitle("提示");
+//        builder.setMessage("请调用自己的导航\n开始经纬度:" +
+//                startLat + "    " + startLng +
+//                "\n结束经纬度:" + endLat + "    " + endLng);
+//
+//        builder.setPositiveButton("确定",
+//                new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//
+//        builder.setCancelable(false);
+//        builder.show();
 
     }
 
@@ -297,22 +329,25 @@ public class AndroidForJs {
                          * pay_name	支付宝真实姓名
                          */
 
-                        String checkAliPay = PreferenceHelper.getInstance(mContext).getString(App.CUNCHUBIND_ALIPAY, "0x11");
-                        if (checkAliPay.equals("1")) {//已经设置
-                            if (StringUtils.isEmpty(response.body().data.get(0).getUser_money())) {
-                                response.body().data.get(0).setUser_money("0.00");
-                            }
-                            BigDecimal bigDecimal = new BigDecimal(response.body().data.get(0).getUser_money());
 
-                            if (bigDecimal.compareTo(BigDecimal.ZERO) == 1) {
-                                //跳正常页面
-                                TiXianActivity.actionStart(mContext, response.body().data.get(0).getUser_money(),"1");
-                            } else {
-                                UIHelper.ToastMessage(mContext, "当前不可提现");
-                            }
-                        } else {//2 未设置
-                            showTwo();
-                        }
+//                        String checkAliPay = PreferenceHelper.getInstance(mContext).getString(App.CUNCHUBIND_ALIPAY, "0x11");
+//                        if (checkAliPay.equals("1")) {//已经设置
+//                            if (StringUtils.isEmpty(response.body().data.get(0).getUser_money())) {
+//                                response.body().data.get(0).setUser_money("0.00");
+//                            }
+//                            BigDecimal bigDecimal = new BigDecimal(response.body().data.get(0).getUser_money());
+//
+//                            if (bigDecimal.compareTo(BigDecimal.ZERO) == 1) {
+//                                //跳正常页面
+//                                TiXianActivity.actionStart(mContext, response.body().data.get(0).getUser_money(),"1");
+//                            } else {
+//                                UIHelper.ToastMessage(mContext, "当前不可提现");
+//                            }
+//                        } else {//2 未设置
+//                            showTwo();
+//                        }
+                        showWeiXinOrZhiFuBaoSelect(response);
+
                     }
 
 
@@ -347,4 +382,55 @@ public class AndroidForJs {
     }
 
     private AlertDialog.Builder builder;
+
+    private int choice = 0;
+
+    /**
+     * 单选 dialog
+     */
+    private void showWeiXinOrZhiFuBaoSelect(Response<AppResponse<DaiLiShangQianBaoModel.DataBean>> response) {
+
+        //默认选中第一个
+        final String[] items = {"微信", "支付宝"};
+        builder = new AlertDialog.Builder(mContext).setIcon(R.mipmap.ic_launcher).setTitle("选择您的提现方式")
+                .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        choice = i;
+
+
+                    }
+                }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (choice == 0) {//微信
+
+                            String weixinPay = PreferenceHelper.getInstance(mContext).getString(App.CUNCHUBIND_WEIXINPAY, "0x11");
+                            if (weixinPay.equals("1")) {
+                                TiXianActivity.actionStart(mContext, response.body().data.get(0).getUser_money(), "0", "2");
+                            } else {
+                                IWXAPI api;
+                                api = WXAPIFactory.createWXAPI(mContext, Wetch_S.APP_ID);
+                                SendAuth.Req req = new SendAuth.Req();
+                                req.scope = "snsapi_userinfo";
+                                req.state = "wechat_sdk_demo_test";
+                                api.sendReq(req);
+                            }
+
+                        } else {//支付宝
+                            String checkAliPay = PreferenceHelper.getInstance(mContext).getString(App.CUNCHUBIND_ALIPAY, "0x11");
+                            if (checkAliPay.equals("1")) {//已经设置
+
+                                TiXianActivity.actionStart(mContext, response.body().data.get(0).getUser_money(), "0", "1");
+
+                            } else {//2 未设置
+                                showTwo();
+                            }
+
+                        }
+                    }
+                });
+        builder.create().show();
+    }
 }
+

@@ -2,19 +2,16 @@ package com.smarthome.magic.activity.wode_page;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
@@ -40,8 +37,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 
 import static com.smarthome.magic.app.App.CUNCHU_ZHIFUMIMA;
 
@@ -49,8 +44,6 @@ public class TiXianActivity extends BaseActivity implements PayPassWordInter {
 
     @BindView(R.id.ll_1)
     LinearLayout ll1;
-    @BindView(R.id.iv_zhifubao_icon)
-    ImageView ivZhifubaoIcon;
     @BindView(R.id.iv_right_back)
     ImageView ivRightBack;
     @BindView(R.id.view_line)
@@ -73,10 +66,15 @@ public class TiXianActivity extends BaseActivity implements PayPassWordInter {
     TextView tvTixian;
     @BindView(R.id.show_shui)
     TextView showShui;
+    @BindView(R.id.iv_icon)
+    ImageView ivIcon;
+    @BindView(R.id.tv_zhifufangshi)
+    TextView tvZhifufangshi;
 
     private String moneyUse;
     BigDecimal zhanShiJinE;
     private String puTongUserOrDaiLiShang = "0";//0 普通用户 1 代理商
+    private String weiXinOrZhiFuBao = "1";//1 微信 2 支付宝
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +82,17 @@ public class TiXianActivity extends BaseActivity implements PayPassWordInter {
         moneyUse = getIntent().getStringExtra("money_use");
         etText.setHint("当前可提现金额 " + moneyUse);
         puTongUserOrDaiLiShang = getIntent().getStringExtra("puTongUserOrDaiLiShang");
+        weiXinOrZhiFuBao = getIntent().getStringExtra("weixinOrZhiFubao");
+
+        if (weiXinOrZhiFuBao.equals("2")) {
+            ivIcon.setBackgroundResource(R.mipmap.dingdan_icon_wexin);
+            tvZhifufangshi.setText("微信");
+        } else if (weiXinOrZhiFuBao.equals("1")) {
+            ivIcon.setBackgroundResource(R.mipmap.dingdan_icon_zhifubao);
+            tvZhifufangshi.setText("支付宝");
+
+        }
+
         tvTixian.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -203,6 +212,7 @@ public class TiXianActivity extends BaseActivity implements PayPassWordInter {
         }
         map.put("pay_pwd", pwd);
         map.put("money", etText.getText().toString());
+        map.put("withdraw_type", weiXinOrZhiFuBao);
 
         Gson gson = new Gson();
         OkGo.<AppResponse<Object>>post(Urls.HOME_PICTURE_HOME)
@@ -256,13 +266,14 @@ public class TiXianActivity extends BaseActivity implements PayPassWordInter {
     /**
      * 用于其他Activty跳转到该Activity
      *
-     * @param context
+     * @param context weixinorzhifubao 1 支付宝 2 微信
      */
-    public static void actionStart(Context context, String money_use, String puTongUserOrDaiLiShang) {
+    public static void actionStart(Context context, String money_use, String puTongUserOrDaiLiShang, String weixinOrZhiFubao) {
         Intent intent = new Intent(context, TiXianActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("money_use", money_use);
         intent.putExtra("puTongUserOrDaiLiShang", puTongUserOrDaiLiShang);
+        intent.putExtra("weixinOrZhiFubao", weixinOrZhiFubao);
         context.startActivity(intent);
     }
 

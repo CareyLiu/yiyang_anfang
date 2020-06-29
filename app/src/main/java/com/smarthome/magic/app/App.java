@@ -65,8 +65,8 @@ public class App extends MultiDexApplication {
     public static final String SHIFOUYOUSHANGJI = "0X1114";//是否有上级 0 没有 1 有
     public static final String CUNCHUBIND_ALIPAY = "0X1115";//是否绑定过阿里的支付宝账号用于提现
     public static final String CUNCHU_ZHIFUMIMA = "0X1116";//是否设置过支付密码
-
     public static final String DINGDANZHIFU = "0X1117";//我得订单列表里面调支付
+    public static final String CUNCHUBIND_WEIXINPAY = "0X1118";//是否绑定过微信支付用于提现
 
     //发送通知
     public static final int TOKEN_ERROR = 0x04;

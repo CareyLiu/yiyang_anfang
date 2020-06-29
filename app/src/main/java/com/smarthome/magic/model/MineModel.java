@@ -107,6 +107,16 @@ public class MineModel {
         private String score_tx;
         private List<?> makeList;
 
+        public String getWx_pay_number_check() {
+            return wx_pay_number_check;
+        }
+
+        public void setWx_pay_number_check(String wx_pay_number_check) {
+            this.wx_pay_number_check = wx_pay_number_check;
+        }
+
+        private String wx_pay_number_check;
+
         public String getAgent_url() {
             return agent_url;
         }

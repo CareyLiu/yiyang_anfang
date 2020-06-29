@@ -86,7 +86,10 @@ public class ZhiNengRoomFragment extends Fragment implements View.OnClickListene
             family_id = getArguments().getString("family_id");
             roomBeanList.clear();
             roomBeanList.addAll(room);
-            zhiNengRoomListAdapter.notifyDataSetChanged();
+            if(zhiNengRoomListAdapter!=null){
+                zhiNengRoomListAdapter.notifyDataSetChanged();
+            }
+
         }
     }
 

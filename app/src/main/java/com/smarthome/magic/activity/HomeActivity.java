@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -22,6 +23,8 @@ import android.widget.RelativeLayout;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.jaeger.library.StatusBarUtil;
+import com.rairmmd.andmqtt.AndMqtt;
+import com.rairmmd.andmqtt.MqttPublish;
 import com.smarthome.magic.R;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.BaseActivity;
@@ -36,11 +39,16 @@ import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.AppToast;
 import com.smarthome.magic.view.NoScrollViewPager;
 
+import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttToken;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.smarthome.magic.config.MyApplication.CAR_NOTIFY;
 
 
 public class HomeActivity extends BaseActivity {
@@ -104,6 +112,8 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+
     }
 
 
@@ -234,6 +244,29 @@ public class HomeActivity extends BaseActivity {
     }
 
 
+    @Override
+    protected void onResumeFragments() {
+        super.onResumeFragments();
+        if (AndMqtt.getInstance().isConneect()) {
+            //连接完成 订阅全局主题
+            AndMqtt.getInstance().publish(new MqttPublish()
+                    .setMsg("O.")
+                    .setQos(2).setRetained(false)
+                    .setTopic(CAR_NOTIFY), new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Log.i("Rair", "(CAR_NOTIFY.java:79)-onSuccess:-&gt;发布成功");
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                    Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+                }
+            });
+        }
+
+    }
+
     /**
      * view pager adapter
      */
@@ -260,7 +293,6 @@ public class HomeActivity extends BaseActivity {
     public static HomeActivity getInstance() {
         return new HomeActivity();
     }
-
 
 
 }

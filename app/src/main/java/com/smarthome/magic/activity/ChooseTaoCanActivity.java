@@ -189,8 +189,16 @@ public class ChooseTaoCanActivity extends Activity {
         productListBeans = new ArrayList<>();
         productListBeans.addAll(dataBean.getProductList());
         //    productListBeans.get(0).setFlag(true);
-        position = "0";
-        productListBeans.get(Integer.parseInt(position)).setSelect("1");
+
+        for (int i = 0; i < productListBeans.size(); i++) {
+
+            if (productListBeans.get(i).getFlag()) {
+                productListBeans.get(i).setSelect("1");
+                position= String.valueOf(i);
+            } else {
+                productListBeans.get(i).setSelect("0");
+            }
+        }
         Glide.with(ChooseTaoCanActivity.this).load(productListBeans.get(0).getIndex_photo_url()).into(ivImage);
         tvPrice.setText("¥" + productListBeans.get(0).getMoney_now());
         tvKucun.setText("库存（" + productListBeans.get(0).getShop_product_count() + ")");

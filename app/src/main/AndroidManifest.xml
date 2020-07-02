@@ -576,6 +576,36 @@
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
+
+
+        <!--    八紫首页    -->
+        <activity
+            android:name=".activity.wode_page.bazinew.BazismMainActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
+        <!--    新建命盘    -->
+        <activity
+            android:name=".activity.wode_page.bazinew.DanganNewActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
+        <!--    编辑命盘    -->
+        <activity
+            android:name=".activity.wode_page.bazinew.DanganEditActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
+        <!--    档案管理    -->
+        <activity
+            android:name=".activity.wode_page.bazinew.DanganguanliActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".activity.zhinengjiaju.peinet.v1.EspTouchActivity"
             android:configChanges="locale|keyboardHidden|orientation"
@@ -733,13 +763,13 @@
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:launchMode="singleTop"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".activity.chelianwang.ScanAddCarActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:launchMode="singleTop"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode="singleTop" />
     </application>
 </manifest>

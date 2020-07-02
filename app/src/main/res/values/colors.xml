@@ -518,4 +518,7 @@
     <color name="FC0100">#FC0100</color>
     <color name="E21838">#E21838</color>
 
+
+    <!--  八紫主颜色  -->
+    <color name="bazi_main">#673AB7</color>
 </resources>

@@ -27,9 +27,9 @@ import com.smarthome.magic.activity.DefaultX5WebViewActivity;
 import com.smarthome.magic.activity.SettingActivity;
 import com.smarthome.magic.activity.dingdan.MyOrderActivity;
 import com.smarthome.magic.activity.gouwuche.GouWuCheActivity;
-import com.smarthome.magic.activity.saoma.ScanActivity;
 import com.smarthome.magic.activity.tuangou.KaQuanActivity;
 import com.smarthome.magic.activity.wode_page.AboutUsActivity;
+import com.smarthome.magic.activity.wode_page.bazinew.BazismMainActivity;
 import com.smarthome.magic.activity.wode_page.DianPuListActivity;
 import com.smarthome.magic.activity.wode_page.MyQianBaoActivity;
 import com.smarthome.magic.activity.wode_page.ShangPinShouCangActivity;
@@ -163,6 +163,8 @@ public class MineFragment extends BaseFragment implements Observer {
     ImageView ivDailishang;
     @BindView(R.id.iv_about_us)
     ImageView ivAboutUs;
+    @BindView(R.id.iv_bazism)
+    ImageView ivBazism;
     @BindView(R.id.view)
     View view;
     @BindView(R.id.rlv_about_us)
@@ -354,7 +356,7 @@ public class MineFragment extends BaseFragment implements Observer {
             R.id.tv_ershou_che, R.id.iv_che_yuyue, R.id.iv_chejindu, R.id.tv_chejindu, R.id.iv_maiche_jindu,
             R.id.tv_maiche_jindu, R.id.iv_xiaofeijilu, R.id.tv_shouhou, R.id.iv_quanbu_dingdan, R.id.rlv_ershouche, R.id.tv_zhanghu_chongzhi,
             R.id.iv_zhanghu_chongzhi, R.id.iv_kapianchongzhi, R.id.tv_kapianchongzhi, R.id.iv_chongzhi_jilu, R.id.tv_chongzhi_jilu, R.id.iv_shouhou_fuwu,
-            R.id.tv_xiaofeijilu, R.id.iv_xiche_erwei, R.id.rlv_xiche, R.id.iv_tuiguangma, R.id.tv_tuiguangma, R.id.iv_dailishang, R.id.iv_about_us,
+            R.id.tv_xiaofeijilu, R.id.iv_xiche_erwei, R.id.rlv_xiche, R.id.iv_tuiguangma, R.id.tv_tuiguangma, R.id.iv_dailishang, R.id.iv_about_us, R.id.iv_bazism,
             R.id.view, R.id.rlv_about_us, R.id.ll_kaquan, R.id.tv_daifukuan, R.id.tv_daishouhuo, R.id.tv_daodian, R.id.ll_shoucangjia,
             R.id.ll_guanzhudianpu, R.id.tv_dalishang})
     public void onViewClicked(View view) {
@@ -480,6 +482,9 @@ public class MineFragment extends BaseFragment implements Observer {
 
             case R.id.iv_about_us:
                 AboutUsActivity.actionStart(getActivity());
+                break;
+            case R.id.iv_bazism:
+                BazismMainActivity.actionStart(getActivity());
                 break;
             case R.id.view:
                 break;

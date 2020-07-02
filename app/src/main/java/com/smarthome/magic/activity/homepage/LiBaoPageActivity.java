@@ -117,6 +117,7 @@ public class LiBaoPageActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
+
     @Override
     public boolean showToolBar() {
         return true;

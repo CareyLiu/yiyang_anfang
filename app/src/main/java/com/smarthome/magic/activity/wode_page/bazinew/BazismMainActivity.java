@@ -42,6 +42,12 @@ public class BazismMainActivity extends BaziBaseActivity {
     TextView tv_dongwu;
     @BindView(R.id.tv_shuzi)
     TextView tv_shuzi;
+    @BindView(R.id.view_chuanyi)
+    View view_chuanyi;
+    @BindView(R.id.view_shangcheng)
+    View view_shangcheng;
+    @BindView(R.id.view_yanpan)
+    View view_yanpan;
 
     @Override
     public int getContentViewResId() {
@@ -67,7 +73,7 @@ public class BazismMainActivity extends BaziBaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.view_tab_zhitianming, R.id.view_tab_nianyunshi, R.id.view_tab_yueyunshi, R.id.view_tab_riyunshi, R.id.fl_fenrendangan})
+    @OnClick({R.id.view_chuanyi, R.id.view_shangcheng, R.id.view_yanpan, R.id.view_tab_zhitianming, R.id.view_tab_nianyunshi, R.id.view_tab_yueyunshi, R.id.view_tab_riyunshi, R.id.fl_fenrendangan})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.view_tab_nianyunshi:
@@ -83,9 +89,17 @@ public class BazismMainActivity extends BaziBaseActivity {
             case R.id.fl_fenrendangan:
                 clickDanan(BaziCode.ST_mingpan);
                 break;
+            case R.id.view_chuanyi:
+                clickDanan(BaziCode.ST_chuanyi);
+                break;
+            case R.id.view_shangcheng:
+
+                break;
+            case R.id.view_yanpan:
+                clickDanan(BaziCode.ST_yanpan);
+                break;
         }
     }
-
 
     private void clickDanan(int code) {
         Intent intent = new Intent(this, DanganguanliActivity.class);

@@ -265,4 +265,36 @@
         android:text="八紫服务"
         android:textSize="15sp"
         android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="167dp"
+        android:background="@mipmap/fuwu_pic"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/view_chuanyi"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/view_shangcheng"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <View
+                android:id="@+id/view_yanpan"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

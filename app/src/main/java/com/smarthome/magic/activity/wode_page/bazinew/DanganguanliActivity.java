@@ -87,23 +87,18 @@ public class DanganguanliActivity extends BaziBaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (list != null && list.size() > position) {
+                    DanganModel.DataBean dataBean = list.get(position);
                     if (code == BaziCode.ST_mingpan) {
 
-                    } else if (code == BaziCode.ST_nian) {
-
-
-                    } else if (code == BaziCode.ST_yue) {
-
-
-                    } else if (code == BaziCode.ST_ri) {
-
-
-                    } else if (code == BaziCode.ST_chuanyi) {
-
-
+                    } else if (code == BaziCode.ST_nian || code == BaziCode.ST_yue || code == BaziCode.ST_ri || code == BaziCode.ST_chuanyi) {
+                        Intent intent = new Intent(DanganguanliActivity.this, YunshiActivity.class);
+                        intent.putExtra("mingpan_id", dataBean.getMingpan_id());
+                        intent.putExtra("code", code);
+                        startActivity(intent);
                     } else if (code == BaziCode.ST_yanpan) {
-
-
+                        Intent intent = new Intent(DanganguanliActivity.this, YanpanActivity.class);
+                        intent.putExtra("model", dataBean);
+                        startActivity(intent);
                     }
                 }
             }
@@ -115,7 +110,7 @@ public class DanganguanliActivity extends BaziBaseActivity {
                 if (list != null && list.size() > pos) {
                     DanganModel.DataBean dataBean = list.get(pos);
                     Intent intent = new Intent(DanganguanliActivity.this, DanganEditActivity.class);
-                    intent.putExtra("model", (Serializable) dataBean);
+                    intent.putExtra("model", dataBean);
                     startActivity(intent);
                 }
             }

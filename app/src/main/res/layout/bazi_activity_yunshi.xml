@@ -29,7 +29,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tv_yangli"
+            android:id="@+id/tv_birthday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
@@ -46,7 +46,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_nongli"
+            android:id="@+id/tv_data_jiexi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="14dp"
@@ -91,16 +91,16 @@
 
             <LinearLayout
                 android:id="@+id/ll_jiesuo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="60dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="115dp"
                     android:layout_height="115dp"
+                    android:layout_marginTop="60dp"
                     android:layout_marginBottom="23dp"
                     android:scaleType="fitXY"
                     android:src="@mipmap/yunshi_icon_jiesuo" />

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.wode_page.bazinew.base.BaziBaseActivity;
+import com.smarthome.magic.activity.wode_page.bazinew.utils.BaziCode;
 import com.youth.banner.Banner;
 
 import butterknife.BindView;
@@ -70,34 +71,25 @@ public class BazismMainActivity extends BaziBaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.view_tab_nianyunshi:
-                clickNian();
+                clickDanan(BaziCode.ST_nian);
                 break;
             case R.id.view_tab_yueyunshi:
-                clickYue();
+                clickDanan(BaziCode.ST_yue);
                 break;
             case R.id.view_tab_riyunshi:
-                clickRi();
+                clickDanan(BaziCode.ST_ri);
                 break;
             case R.id.view_tab_zhitianming:
             case R.id.fl_fenrendangan:
-                clickDanan();
+                clickDanan(BaziCode.ST_mingpan);
                 break;
         }
     }
 
-    private void clickNian() {
-        openActivity(DanganguanliActivity.class);
-    }
 
-    private void clickYue() {
-        openActivity(DanganguanliActivity.class);
-    }
-
-    private void clickRi() {
-        openActivity(DanganguanliActivity.class);
-    }
-
-    private void clickDanan() {
-        openActivity(DanganguanliActivity.class);
+    private void clickDanan(int code) {
+        Intent intent = new Intent(this, DanganguanliActivity.class);
+        intent.putExtra("code", code);
+        startActivity(intent);
     }
 }

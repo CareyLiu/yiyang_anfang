@@ -19,6 +19,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.wode_page.bazinew.base.BaziBaseActivity;
 import com.smarthome.magic.activity.wode_page.bazinew.model.DanganModel;
 import com.smarthome.magic.activity.wode_page.bazinew.adapter.DananguanliAdapter;
+import com.smarthome.magic.activity.wode_page.bazinew.utils.BaziCode;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
@@ -43,9 +44,9 @@ public class DanganguanliActivity extends BaziBaseActivity {
     @BindView(R.id.bt_add)
     Button bt_add;
 
-
     private List<DanganModel.DataBean> list = new ArrayList<>();
     private DananguanliAdapter adapter;
+    private int code;
 
     @Override
     public int getContentViewResId() {
@@ -74,6 +75,7 @@ public class DanganguanliActivity extends BaziBaseActivity {
     }
 
     private void init() {
+        code = getIntent().getIntExtra("code", 0);
         initAdapter();
         initSM();
     }
@@ -84,7 +86,26 @@ public class DanganguanliActivity extends BaziBaseActivity {
         lv_dangan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (list != null && list.size() > position) {
+                    if (code == BaziCode.ST_mingpan) {
 
+                    } else if (code == BaziCode.ST_nian) {
+
+
+                    } else if (code == BaziCode.ST_yue) {
+
+
+                    } else if (code == BaziCode.ST_ri) {
+
+
+                    } else if (code == BaziCode.ST_chuanyi) {
+
+
+                    } else if (code == BaziCode.ST_yanpan) {
+
+
+                    }
+                }
             }
         });
 

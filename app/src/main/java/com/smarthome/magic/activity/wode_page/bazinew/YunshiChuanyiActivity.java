@@ -7,10 +7,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.gouwuche.GouWuCheQueRenDingDanActivity;
+import com.smarthome.magic.activity.tuangou.TuanGouZhiFuActivity;
 import com.smarthome.magic.activity.wode_page.bazinew.base.BaziBaseActivity;
 import com.smarthome.magic.activity.wode_page.bazinew.dialog.JiesuoDialog;
 import com.smarthome.magic.activity.wode_page.bazinew.model.YunshiModel;
@@ -19,7 +24,14 @@ import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.YuZhiFuModel;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +70,9 @@ public class YunshiChuanyiActivity extends BaziBaseActivity {
     private int year;
     private int month;
     private int day;
+    private TimePickerView timePicker;
+    private YuZhiFuModel.DataBean dataBean;
+    private IWXAPI api;
 
     @Override
     public int getContentViewResId() {
@@ -177,11 +192,71 @@ public class YunshiChuanyiActivity extends BaziBaseActivity {
 
     private void clickJiesuo() {
         JiesuoDialog dialog = new JiesuoDialog(this, 1);
+        dialog.setPayClick(new JiesuoDialog.JieSuoPayClick() {
+            @Override
+            public void payCi() {
+                Map<String, String> map = new HashMap<>();
+                map.put("key", Urls.key);
+                map.put("token", UserManager.getManager(YunshiChuanyiActivity.this).getAppToken());
+                map.put("pay_id", "2");
+                map.put("pay_type", "22");
+                map.put("operate_id", "4");
+                map.put("operate_type", "27");
+                map.put("time", "2020-07-01");
+
+                
+
+                String myHeaderLog = new Gson().toJson(map);
+                String myHeaderInfo = StringEscapeUtils.unescapeJava(myHeaderLog);
+                Gson gson = new Gson();
+                Log.e("map_data", gson.toJson(map));
+
+                OkGo.<AppResponse<YuZhiFuModel.DataBean>>post(Urls.DALIBAO_PAY)
+                        .tag(YunshiChuanyiActivity.this)//
+                        .upJson(myHeaderInfo)
+                        .execute(new JsonCallback<AppResponse<YuZhiFuModel.DataBean>>() {
+                            @Override
+                            public void onSuccess(Response<AppResponse<YuZhiFuModel.DataBean>> response) {
+
+                                //   appId = response.body().data.get(0).getPay().getAppid();
+                                dataBean = response.body().data.get(0);
+                                api = WXAPIFactory.createWXAPI(YunshiChuanyiActivity.this, dataBean.getPay().getAppid());
+                            }
+
+                            @Override
+                            public void onError(Response<AppResponse<YuZhiFuModel.DataBean>> response) {
+                                super.onError(response);
+                            }
+                        });
+
+            }
+
+            @Override
+            public void payNian() {
+
+            }
+        });
         dialog.show();
     }
 
     private void selectData() {
-
+        if (timePicker == null) {
+            //时间选择器
+            timePicker = new TimePickerBuilder(this, new OnTimeSelectListener() {
+                @Override
+                public void onTimeSelect(Date date, View v) {
+                    Calendar instance = Calendar.getInstance();
+                    instance.setTime(date);
+                    year = instance.get(Calendar.YEAR);
+                    month = instance.get(Calendar.MONTH) + 1;
+                    day = instance.get(Calendar.DATE);
+                    tv_select_data.setText(TimeUtils.getData(date));
+                    ex_factor = TimeUtils.getData(date, "yyyyMMdd");
+                    getNet();
+                }
+            }).build();
+        }
+        timePicker.show();
     }
 
     private void clickRight() {

@@ -79,6 +79,8 @@ public class BazismMainActivity extends BaziBaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+
+//        DaLiBaoAdapter
     }
 
     @OnClick({R.id.view_chuanyi, R.id.view_shangcheng, R.id.view_yanpan, R.id.view_tab_zhitianming, R.id.view_tab_nianyunshi, R.id.view_tab_yueyunshi, R.id.view_tab_riyunshi, R.id.fl_fenrendangan})

@@ -7,6 +7,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -22,6 +25,8 @@ import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +63,7 @@ public class YunshiActivity extends BaziBaseActivity {
     private int year;
     private int month;
     private int day;
+    private TimePickerView timePicker;
 
     @Override
     public int getContentViewResId() {
@@ -205,15 +211,80 @@ public class YunshiActivity extends BaziBaseActivity {
     private void clickJiesuo() {
         if (code == BaziCode.ST_nian || code == BaziCode.ST_yue) {
             JiesuoDialog dialog = new JiesuoDialog(this, 0);
+            dialog.setPayClick(new JiesuoDialog.JieSuoPayClick() {
+                @Override
+                public void payCi() {
+
+                }
+
+                @Override
+                public void payNian() {
+
+                }
+            });
             dialog.show();
         } else if (code == BaziCode.ST_ri) {
             JiesuoDialog dialog = new JiesuoDialog(this, 1);
+            dialog.setPayClick(new JiesuoDialog.JieSuoPayClick() {
+                @Override
+                public void payCi() {
+
+                }
+
+                @Override
+                public void payNian() {
+
+                }
+            });
             dialog.show();
         }
     }
 
     private void selectData() {
+        if (timePicker == null) {
+            boolean[] time = {false, false, false, false, false, false};
+            if (code == BaziCode.ST_nian) {
+                time[0] = true;
+            } else if (code == BaziCode.ST_yue) {
+                time[0] = true;
+                time[1] = true;
+            } else if (code == BaziCode.ST_ri) {
+                time[0] = true;
+                time[1] = true;
+                time[2] = true;
+            }
 
+            //时间选择器
+            timePicker = new TimePickerBuilder(this, new OnTimeSelectListener() {
+                @Override
+                public void onTimeSelect(Date date, View v) {
+
+                    Calendar instance = Calendar.getInstance();
+                    instance.setTime(date);
+                    if (code == BaziCode.ST_nian) {
+                        year = instance.get(Calendar.YEAR);
+
+                        tv_select_data.setText(TimeUtils.getData(date, "yyyy"));
+                        ex_factor = TimeUtils.getData(date, "yyyy");
+                    } else if (code == BaziCode.ST_yue) {
+                        year = instance.get(Calendar.YEAR);
+                        month = instance.get(Calendar.MONTH) + 1;
+
+                        tv_select_data.setText(TimeUtils.getData(date, "yyyy-MM"));
+                        ex_factor = TimeUtils.getData(date, "yyyyMM");
+                    } else if (code == BaziCode.ST_ri) {
+                        year = instance.get(Calendar.YEAR);
+                        month = instance.get(Calendar.MONTH) + 1;
+                        day = instance.get(Calendar.DATE);
+
+                        tv_select_data.setText(TimeUtils.getData(date));
+                        ex_factor = TimeUtils.getData(date, "yyyyMMdd");
+                    }
+                    getNet();
+                }
+            }).setType(time).build();
+        }
+        timePicker.show();
     }
 
     private void clickRight() {

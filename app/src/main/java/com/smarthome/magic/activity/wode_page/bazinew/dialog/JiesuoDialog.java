@@ -41,6 +41,7 @@ public class JiesuoDialog implements View.OnClickListener {
     private WindowManager windowManager;
     private int mStyle = R.style.UserinfoDialogStyle;
 
+    private JieSuoPayClick payClick;
 
     private int mType;
     private int payType;
@@ -49,6 +50,10 @@ public class JiesuoDialog implements View.OnClickListener {
         mContext = context;
         mType = type;
         initView();
+    }
+
+    public void setPayClick(JieSuoPayClick payClick) {
+        this.payClick = payClick;
     }
 
     private void initView() {
@@ -115,8 +120,15 @@ public class JiesuoDialog implements View.OnClickListener {
     private void pay() {
         dismiss();
         if (payType == 0) {
+            if (payClick!=null){
+                payClick.payCi();
+            }
             Toast.makeText(mContext, "次付款", Toast.LENGTH_SHORT).show();
         } else {
+
+            if (payClick!=null){
+                payClick.payNian();
+            }
             Toast.makeText(mContext, "年付款", Toast.LENGTH_SHORT).show();
         }
     }
@@ -169,5 +181,11 @@ public class JiesuoDialog implements View.OnClickListener {
         } else {
             return false;
         }
+    }
+
+    public interface JieSuoPayClick{
+        void  payCi();
+
+        void payNian();
     }
 }

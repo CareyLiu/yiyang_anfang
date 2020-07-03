@@ -102,7 +102,7 @@
                     android:layout_height="115dp"
                     android:layout_marginTop="60dp"
                     android:layout_marginBottom="23dp"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerCrop"
                     android:src="@mipmap/yunshi_icon_jiesuo" />
 
                 <TextView
@@ -128,7 +128,7 @@
             android:layout_height="35dp"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/tv_select_data"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:src="@mipmap/yunshi_jiantou_icon_left" />
 
         <ImageView
@@ -137,7 +137,7 @@
             android:layout_height="35dp"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/tv_select_data"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:src="@mipmap/yunshi_jiantou_icon_right" />
 
         <TextView

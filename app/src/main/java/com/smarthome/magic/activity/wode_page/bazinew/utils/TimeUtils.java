@@ -2,6 +2,7 @@ package com.smarthome.magic.activity.wode_page.bazinew.utils;
 
 import android.annotation.SuppressLint;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -104,5 +105,42 @@ public class TimeUtils {
         a.roll(Calendar.DATE, -1);//日期回滚一天，也就是最后一天
         int maxDate = a.get(Calendar.DATE);
         return maxDate;
+    }
+
+
+    /**
+     * 指定的日期
+     */
+    public static final String getData(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String time = formatter.format(date);//格式化数据，取当前时间结果为 2014-10-30
+        return time;
+    }
+
+    /**
+     * 指定的日期
+     */
+    public static final String getData(Date date, String wei) {
+        SimpleDateFormat formatter = new SimpleDateFormat(wei);
+        String time = formatter.format(date);//格式化数据，取当前时间结果为 2014-10-30
+        return time;
+    }
+
+    /**
+     * 日期转Data
+     */
+    public static final Date getData(String date) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date time = formatter.parse(date);//格式化数据，取当前时间结果为 2014-10-30
+        return time;
+    }
+
+    /**
+     * 日期转Data
+     */
+    public static final Date getData(String date, String wei) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat(wei);
+        Date time = formatter.parse(date);//格式化数据，取当前时间结果为 2014-10-30
+        return time;
     }
 }

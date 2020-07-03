@@ -89,8 +89,10 @@ public class DanganguanliActivity extends BaziBaseActivity {
                 if (list != null && list.size() > position) {
                     DanganModel.DataBean dataBean = list.get(position);
                     if (code == BaziCode.ST_mingpan) {
-
-                    } else if (code == BaziCode.ST_nian || code == BaziCode.ST_yue || code == BaziCode.ST_ri || code == BaziCode.ST_chuanyi) {
+                        Intent intent = new Intent(DanganguanliActivity.this, MingpanActivity.class);
+                        intent.putExtra("model", dataBean);
+                        startActivity(intent);
+                    } else if (code == BaziCode.ST_nian || code == BaziCode.ST_yue || code == BaziCode.ST_ri ) {
                         Intent intent = new Intent(DanganguanliActivity.this, YunshiActivity.class);
                         intent.putExtra("mingpan_id", dataBean.getMingpan_id());
                         intent.putExtra("code", code);
@@ -98,6 +100,11 @@ public class DanganguanliActivity extends BaziBaseActivity {
                     } else if (code == BaziCode.ST_yanpan) {
                         Intent intent = new Intent(DanganguanliActivity.this, YanpanActivity.class);
                         intent.putExtra("model", dataBean);
+                        startActivity(intent);
+                    }else if (code == BaziCode.ST_chuanyi) {
+                        Intent intent = new Intent(DanganguanliActivity.this, YunshiChuanyiActivity.class);
+                        intent.putExtra("mingpan_id", dataBean.getMingpan_id());
+                        intent.putExtra("code", code);
                         startActivity(intent);
                     }
                 }

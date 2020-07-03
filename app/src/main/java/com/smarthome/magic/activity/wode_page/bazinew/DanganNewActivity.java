@@ -11,6 +11,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -18,12 +24,16 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.wode_page.bazinew.base.BaziBaseActivity;
 import com.smarthome.magic.activity.wode_page.bazinew.model.DanganModel;
 import com.smarthome.magic.activity.wode_page.bazinew.model.PaipanModel;
+import com.smarthome.magic.activity.wode_page.bazinew.utils.TimeUtils;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -76,9 +86,11 @@ public class DanganNewActivity extends BaziBaseActivity {
     private String sex;
     private String li;
     private String runyue;
-    private String data;
+    private String birthdayData;
     private String shichen;
     private String name;
+    private OptionsPickerView shiPicker;
+    private TimePickerView timePicker;
 
     @Override
     public int getContentViewResId() {
@@ -103,9 +115,6 @@ public class DanganNewActivity extends BaziBaseActivity {
         sex = "1";
         li = "1";
         runyue = "0";
-        data = "1992-11-23";
-        shichen = "19:20:00";
-        name = "加加加";
     }
 
     @OnClick({R.id.ll_select_nan, R.id.ll_select_nv, R.id.ll_select_yang, R.id.ll_select_yin, R.id.ll_select_runyue_n, R.id.ll_select_runyue_s, R.id.ll_data, R.id.ll_shichen, R.id.bt_paipan})
@@ -130,13 +139,54 @@ public class DanganNewActivity extends BaziBaseActivity {
                 selectRunyue("1");
                 break;
             case R.id.ll_data:
+                selectData();
                 break;
             case R.id.ll_shichen:
+                selectTime();
                 break;
             case R.id.bt_paipan:
                 clickPaipan();
                 break;
         }
+    }
+
+    private void selectTime() {
+        if (shiPicker == null) {
+            List<String> shichenList = new ArrayList<>();
+            for (int i = 0; i < 24; i++) {
+                if (i < 10) {
+                    shichenList.add("0" + i);
+                } else {
+                    shichenList.add("" + i);
+                }
+            }
+
+            //条件选择器
+            shiPicker = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
+                @Override
+                public void onOptionsSelect(int options1, int option2, int options3, View v) {
+                    //返回的分别是三个级别的选中位置
+                    shichen = shichenList.get(options1);
+                    tv_shichen.setText(shichen);
+                }
+            }).build();
+            shiPicker.setPicker(shichenList);
+        }
+        shiPicker.show();
+    }
+
+    private void selectData() {
+        if (timePicker == null) {
+            //时间选择器
+            timePicker = new TimePickerBuilder(this, new OnTimeSelectListener() {
+                @Override
+                public void onTimeSelect(Date date, View v) {
+                    birthdayData = TimeUtils.getData(date);
+                    tv_data.setText(birthdayData);
+                }
+            }).build();
+        }
+        timePicker.show();
     }
 
     private void selectRunyue(String runyue) {
@@ -193,7 +243,7 @@ public class DanganNewActivity extends BaziBaseActivity {
             t("请输入姓名");
             return;
         }
-        if (TextUtils.isEmpty(data)) {
+        if (TextUtils.isEmpty(birthdayData)) {
             t("请选择日期");
             return;
         }
@@ -212,7 +262,7 @@ public class DanganNewActivity extends BaziBaseActivity {
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("name", name);
-        map.put("birthday", data);
+        map.put("birthday", birthdayData);
         map.put("birthhour", shichen);
         map.put("sex", sex + "");
         map.put("birthday_type", li + "");

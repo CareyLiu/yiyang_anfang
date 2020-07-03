@@ -60,7 +60,6 @@ public class YanpanActivity extends BaziBaseActivity {
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
         init();
-
     }
 
     private void init() {

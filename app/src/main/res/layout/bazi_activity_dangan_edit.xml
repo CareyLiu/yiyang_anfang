@@ -67,7 +67,7 @@
                 android:layout_width="13dp"
                 android:layout_height="13dp"
                 android:layout_marginRight="9dp"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:src="@mipmap/ziwei_icon_circle_purple" />
 
             <TextView
@@ -90,7 +90,7 @@
                 android:layout_width="13dp"
                 android:layout_height="13dp"
                 android:layout_marginRight="9dp"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:src="@mipmap/ziwei_icon_circle_grey" />
 
             <TextView
@@ -133,7 +133,7 @@
                 android:layout_width="13dp"
                 android:layout_height="13dp"
                 android:layout_marginRight="9dp"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:src="@mipmap/ziwei_icon_circle_purple" />
 
             <TextView
@@ -156,7 +156,7 @@
                 android:layout_width="13dp"
                 android:layout_height="13dp"
                 android:layout_marginRight="9dp"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:src="@mipmap/ziwei_icon_circle_grey" />
 
             <TextView
@@ -202,7 +202,7 @@
                 android:layout_width="13dp"
                 android:layout_height="13dp"
                 android:layout_marginRight="9dp"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:src="@mipmap/ziwei_icon_circle_purple" />
 
             <TextView
@@ -225,7 +225,7 @@
                 android:layout_width="13dp"
                 android:layout_height="13dp"
                 android:layout_marginRight="9dp"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:src="@mipmap/ziwei_icon_circle_grey" />
 
             <TextView

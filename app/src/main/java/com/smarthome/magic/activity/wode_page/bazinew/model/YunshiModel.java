@@ -72,11 +72,29 @@ public class YunshiModel {
         private String time_text;
         private String birthday_type;
         private String ex_text;
+        private String ex_dress;
+        private String ex_caishenwei;
         private String ex_hour;
         private String sex;
         private String name;
         private String lock;
         private String solar_birthday;
+
+        public String getEx_dress() {
+            return ex_dress;
+        }
+
+        public void setEx_dress(String ex_dress) {
+            this.ex_dress = ex_dress;
+        }
+
+        public String getEx_caishenwei() {
+            return ex_caishenwei;
+        }
+
+        public void setEx_caishenwei(String ex_caishenwei) {
+            this.ex_caishenwei = ex_caishenwei;
+        }
 
         public String getBirthday() {
             return birthday;

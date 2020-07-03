@@ -1,5 +1,6 @@
 package com.smarthome.magic.activity.wode_page.bazinew;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -10,20 +11,35 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.airbnb.lottie.L;
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.wode_page.bazinew.base.BaziBaseActivity;
 import com.smarthome.magic.activity.wode_page.bazinew.model.DanganModel;
 import com.smarthome.magic.activity.wode_page.bazinew.model.PaipanModel;
+import com.smarthome.magic.activity.wode_page.bazinew.utils.TimeUtils;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 
-import java.io.Serializable;
+import org.jaaksi.pickerview.picker.TimePicker;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -79,9 +95,11 @@ public class DanganEditActivity extends BaziBaseActivity {
     private String sex;
     private String li;
     private String runyue;
-    private String data;
+    private String birthdayData;
     private String shichen;
     private String name;
+    private TimePickerView timePicker;
+    private OptionsPickerView shiPicker;
 
     @Override
     public int getContentViewResId() {
@@ -92,7 +110,10 @@ public class DanganEditActivity extends BaziBaseActivity {
     protected void initToolbar() {
         super.initToolbar();
         tv_title.setText("编辑排盘");
+        tv_rightTitle.setVisibility(View.VISIBLE);
         tv_rightTitle.setText("排盘");
+        tv_rightTitle.setTextSize(17);
+        tv_rightTitle.setTextColor(Color.WHITE);
         tv_rightTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,7 +135,7 @@ public class DanganEditActivity extends BaziBaseActivity {
         model = (DanganModel.DataBean) getIntent().getSerializableExtra("model");
 
         name = model.getName();
-        data = model.getBirthday();
+        birthdayData = model.getBirthday();
         shichen = model.getBirthhour();
 
         selectSex(model.getSex());
@@ -122,7 +143,7 @@ public class DanganEditActivity extends BaziBaseActivity {
         selectRunyue(model.getIsleap());
 
         ed_name.setText(name);
-        tv_data.setText(data);
+        tv_data.setText(birthdayData);
         tv_shichen.setText(shichen);
     }
 
@@ -148,10 +169,10 @@ public class DanganEditActivity extends BaziBaseActivity {
                 selectRunyue("1");
                 break;
             case R.id.ll_data:
-
+                selectData();
                 break;
             case R.id.ll_shichen:
-
+                selectTime();
                 break;
             case R.id.bt_moren:
                 setMoren();
@@ -160,6 +181,45 @@ public class DanganEditActivity extends BaziBaseActivity {
                 deleteMinpan();
                 break;
         }
+    }
+
+    private void selectTime() {
+        if (shiPicker == null) {
+            List<String> shichenList = new ArrayList<>();
+            for (int i = 0; i < 24; i++) {
+                if (i < 10) {
+                    shichenList.add("0" + i);
+                } else {
+                    shichenList.add("" + i);
+                }
+            }
+
+            //条件选择器
+            shiPicker = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
+                @Override
+                public void onOptionsSelect(int options1, int option2, int options3, View v) {
+                    //返回的分别是三个级别的选中位置
+                    shichen = shichenList.get(options1);
+                    tv_shichen.setText(shichen);
+                }
+            }).build();
+            shiPicker.setPicker(shichenList);
+        }
+        shiPicker.show();
+    }
+
+    private void selectData() {
+        if (timePicker == null) {
+            //时间选择器
+            timePicker = new TimePickerBuilder(this, new OnTimeSelectListener() {
+                @Override
+                public void onTimeSelect(Date date, View v) {
+                    birthdayData = TimeUtils.getData(date);
+                    tv_data.setText(birthdayData);
+                }
+            }).build();
+        }
+        timePicker.show();
     }
 
     private void selectRunyue(String runyue) {
@@ -215,7 +275,7 @@ public class DanganEditActivity extends BaziBaseActivity {
             t("请输入姓名");
             return;
         }
-        if (TextUtils.isEmpty(data)) {
+        if (TextUtils.isEmpty(birthdayData)) {
             t("请选择日期");
             return;
         }
@@ -231,7 +291,7 @@ public class DanganEditActivity extends BaziBaseActivity {
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("mingpan_id", model.getMingpan_id());
         map.put("name", name);
-        map.put("birthday", data);
+        map.put("birthday", birthdayData);
         map.put("birthhour", shichen);
         map.put("sex", sex + "");
         map.put("birthday_type", li + "");
@@ -248,9 +308,13 @@ public class DanganEditActivity extends BaziBaseActivity {
                         t("我成功了");
                         finish();
                     }
+
+                    @Override
+                    public void onStart(Request<AppResponse<PaipanModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                    }
                 });
     }
-
 
     private void setMoren() {
         Map<String, String> map = new HashMap<>();

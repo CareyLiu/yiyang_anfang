@@ -58,6 +58,14 @@ public class BazismMainActivity extends BaziBaseActivity {
     protected void initToolbar() {
         super.initToolbar();
         tv_title.setText("八紫");
+        iv_rightTitle.setVisibility(View.VISIBLE);
+        iv_rightTitle.setBackgroundResource(R.mipmap.home_icon_qiehuan);
+        iv_rightTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     public static void actionStart(Context context) {

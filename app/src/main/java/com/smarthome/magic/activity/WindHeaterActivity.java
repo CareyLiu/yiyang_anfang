@@ -189,6 +189,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
             @Override
             public void call(Notice message) {
                 if (message.type == ConstanceValue.MSG_CAR_J_G) {
+                    showLoadSuccess();
                     //接收到信息
                     Log.i("msg_car_j_", message.content.toString());
                     String messageData = message.content.toString().substring(1, message.content.toString().length() - 1);
@@ -223,6 +224,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                         }
                     }
                 } else if (message.type == ConstanceValue.MSG_CAR_J_M) {
+                    showLoadSuccess();
                     //接收到信息
                     Log.i("msg_car_j_m", message.content.toString());
 
@@ -275,6 +277,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
 
                             break;
                         case "2":
+                            showLoadSuccess();
                             if (oper_wendu_now != null) {
                                 tvYuShe_WenDu.setText("当前的预设温度为：" + oper_wendu_now + "℃");
                             }
@@ -290,12 +293,13 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                             button = rbHeaterAirMode;
                             break;
                         case "3":
+                            showLoadSuccess();
                             closeMode(0);
                             AlertUtil.t(WindHeaterActivity.this, "当前设备已关机");
                             tvYuShe_WenDu.setText("长按选择开机模式");
                             break;
                         case "4"://水泵开机
-
+                            showLoadSuccess();
                             boolean flag = true;
                             if (version != null) {
                                 if (version.equals("2019")) {
@@ -321,6 +325,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
 
                             break;
                         case "6":
+                            showLoadSuccess();
                             tvYuShe_WenDu.setText("当前的挡位为：" + oper_dang + "挡");
                             PreferenceHelper.getInstance(mContext).putString(STARTSHELVES, "6");
                             button = rbHeaterYbyMode;
@@ -332,6 +337,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
 
                             break;
                         case "7":
+                            showLoadSuccess();
                             tvYuShe_WenDu.setText("当前的挡位为：" + oper_dang + "挡");
                             button = rbHeaterYtfMode;
                             PreferenceHelper.getInstance(mContext).putString(STARTSHELVES, "7");
@@ -344,6 +350,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
 
                             break;
                         case "9":
+                            showLoadSuccess();
                             AlertUtil.t(WindHeaterActivity.this, "正在关机，请稍候");
                             break;
                     }
@@ -352,8 +359,9 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                     mTvWd.setText(oper_wendu);
 
                 } else if (message.type == ConstanceValue.MSG_CAR_K) {
-
+                    showLoadSuccess();
                 } else if (message.type == ConstanceValue.MSG_CAR_I) {
+                    showLoadSuccess();
                     //接收到信息
                     Log.i("msg_car_i", message.content.toString());
 
@@ -382,6 +390,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                      *     int MSG_MQTT_CONNECT_CHONGLIAN_ONFAILE = 0x10049;//重连失败
                      */
                 } else if (message.type == MSG_MQTT_CONNECTCOMPLETE) {
+                    showLoadSuccess();
                     if (waitDialog.isShowing()) {
                         waitDialog.dismiss();
                         setMqttZhiLing();
@@ -389,18 +398,19 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                     Log.i("rair", "complete");
 
                 } else if (message.type == MSG_MQTT_CONNECTLOST) {
+                    showLoadSuccess();
                     if (!waitDialog.isShowing()) {
                         waitDialog.show();
                     }
                     Log.i("rair", "complete_lost");
                 } else if (message.type == MSG_MQTT_CONNECTARRIVE) {
-
+                    showLoadSuccess();
                     if (waitDialog.isShowing()) {
                         waitDialog.dismiss();
                     }
                     Log.i("rair", "arrive");
                 } else if (message.type == MSG_MQTT_CONNECT_CHONGLIAN_ONSUCCESS) {
-
+                    showLoadSuccess();
                     if (waitDialog.isShowing()) {
                         waitDialog.dismiss();
                     }
@@ -408,7 +418,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                     Log.i("rair", "chonglian_success");
 
                 } else if (message.type == MSG_MQTT_CONNECT_CHONGLIAN_ONFAILE) {
-
+                    showLoadSuccess();
                     if (!waitDialog.isShowing()) {
                         waitDialog.show();
                     }
@@ -523,6 +533,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                 public void onSuccess(IMqttToken asyncActionToken) {
                     Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
                     UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
+                    showLoading();
                 }
 
                 @Override
@@ -542,6 +553,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                     public void onSuccess(IMqttToken asyncActionToken) {
                         Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
                         UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
+                        showLoading();
                     }
 
                     @Override
@@ -637,6 +649,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                     @Override
                     public void onSuccess(IMqttToken asyncActionToken) {
                         Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
+                        showLoading();
                     }
 
                     @Override
@@ -656,6 +669,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                     @Override
                     public void onSuccess(IMqttToken asyncActionToken) {
                         Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
+                        showLoading();
                     }
 
                     @Override
@@ -675,6 +689,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                     @Override
                     public void onSuccess(IMqttToken asyncActionToken) {
                         Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
+                        showLoading();
                     }
 
                     @Override
@@ -729,6 +744,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
                 Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
+                showLoading();
             }
 
             @Override
@@ -788,6 +804,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                         public void onSuccess(IMqttToken asyncActionToken) {
                             Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
                             UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
+                            showLoading();
                         }
 
                         @Override
@@ -812,6 +829,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                         public void onSuccess(IMqttToken asyncActionToken) {
                             Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
                             UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
+                            showLoading();
                         }
 
                         @Override
@@ -1071,6 +1089,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
                 Log.i("Rair", "notify:  " + CAR_NOTIFY);
+
             }
 
             @Override
@@ -1087,6 +1106,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
                 Log.i("Rair", "(CAR_NOTIFY.java:79)-onSuccess:-&gt;发布成功");
+                showLoading();
             }
 
             @Override
@@ -1102,6 +1122,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
                 Log.i("Rair", "订阅成功 carbox_getnow:  " + CARBOX_GETNOW);
+                showLoading();
             }
 
             @Override
@@ -1155,6 +1176,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
                 Log.i("Rair", "(CAR_NOTIFY.java:79)-onSuccess:-&gt;发布成功");
+                showLoading();
             }
 
             @Override

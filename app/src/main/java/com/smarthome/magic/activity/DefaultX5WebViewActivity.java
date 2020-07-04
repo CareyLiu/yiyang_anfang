@@ -106,9 +106,11 @@ public class DefaultX5WebViewActivity extends BaseActivity {
 
                 } else if (message.type == ConstanceValue.MSG_DAILISHANG_TIXIAN) {
                     if (message.content.toString().equals("0")) {
-                        x5WebView.loadUrl("javascript:appToJsTXResult(0)");
+                       x5WebView.loadUrl("javascript:appToJsTXResult(0)");
+                        x5WebView.reload();
                     } else {
                         x5WebView.loadUrl("javascript:appToJsTXResult(1)");
+                        x5WebView.reload();
                     }
                 }
             }

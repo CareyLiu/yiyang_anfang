@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.billy.android.loading.Gloading;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.RxUtils;
@@ -17,6 +18,7 @@ public abstract class BaseFragment<T extends BasicPresenter, E extends BasicMode
 
     protected CompositeSubscription _subscriptions = new CompositeSubscription();
 
+    protected Gloading.Holder mHolder;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
@@ -25,6 +27,43 @@ public abstract class BaseFragment<T extends BasicPresenter, E extends BasicMode
         _subscriptions = RxUtils.getNewCompositeSubIfUnsubscribed(_subscriptions);
         return rootView;
     }
+
+    /**
+     * make a Gloading.Holder wrap with current activity by default
+     * override this method in subclass to do special initialization
+     */
+    protected void initLoadingStatusViewIfNeed() {
+        if (mHolder == null) {
+            //bind status view to activity root view by default
+            mHolder = Gloading.getDefault().wrap(getActivity()).withRetry(new Runnable() {
+                @Override
+                public void run() {
+                    onLoadRetry();
+                }
+            });
+        }
+    }
+
+    protected void onLoadRetry() {
+        // override this method in subclass to do retry task
+    }
+
+    public void showLoading() {
+        initLoadingStatusViewIfNeed();
+        mHolder.showLoading();
+    }
+
+    public void showLoadSuccess() {
+        initLoadingStatusViewIfNeed();
+        mHolder.showLoadSuccess();
+    }
+
+    public void showLoadFailed() {
+        initLoadingStatusViewIfNeed();
+        mHolder.showLoadFailed();
+    }
+
+
 
     @Override
     public void onDestroyView() {

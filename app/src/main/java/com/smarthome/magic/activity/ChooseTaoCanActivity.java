@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.view.View;
 import android.view.Window;
@@ -276,8 +278,7 @@ public class ChooseTaoCanActivity extends Activity {
 
     public void initAdapter() {
         taoCanAdapter = new TaoCanAdapter(R.layout.item_taocan, productListBeans);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChooseTaoCanActivity.this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager linearLayoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.HORIZONTAL);
         rlvList.setLayoutManager(linearLayoutManager);
         rlvList.setAdapter(taoCanAdapter);
         taoCanAdapter.notifyDataSetChanged();

@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -952,11 +953,18 @@ public class TuanYouList extends BaseActivity {
                         }
                         //page_number++;
                         xinTuanYouHomeListAdapter.notifyDataSetChanged();
+                        showLoadSuccess();
                     }
 
                     @Override
                     public void onError(Response<AppResponse<JiaYouFirstModel.DataBean>> response) {
                         AlertUtil.t(TuanYouList.this, response.getException().getMessage());
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<JiaYouFirstModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showLoading();
                     }
                 });
     }

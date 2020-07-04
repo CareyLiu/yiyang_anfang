@@ -20,6 +20,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.ChooseTaoCanActivity;
+import com.smarthome.magic.activity.Demo_rongyun;
 import com.smarthome.magic.activity.gouwuche.GouWuCheActivity;
 import com.smarthome.magic.adapter.ZiJianPingLunAdapter;
 import com.smarthome.magic.app.App;
@@ -46,6 +47,8 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 
 import static com.smarthome.magic.get_net.Urls.HOME_PICTURE_HOME;
 
@@ -379,6 +382,14 @@ public class ZiJianShopMallDetailsActivity extends BaseActivity implements Zijia
             @Override
             public void onClick(View v) {
                 //客服
+                //Demo_rongyun.actionStart(mContext,response.body().data.get(0).getInst_accid());
+                Conversation.ConversationType conversationType = Conversation.ConversationType.PRIVATE;
+                String targetId = response.body().data.get(0).getInst_accid();
+                String instName = response.body().data.get(0).getInst_name();
+                Bundle bundle = new Bundle();
+                bundle.putString("dianpuming", instName);
+                bundle.putString("inst_accid", response.body().data.get(0).getInst_accid());
+                RongIM.getInstance().startConversation(mContext, conversationType, targetId, instName, bundle);
             }
         });
         ivShoucangIamge.setOnClickListener(new View.OnClickListener() {

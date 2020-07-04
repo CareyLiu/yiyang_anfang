@@ -2,6 +2,7 @@ package com.smarthome.magic.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.method.HideReturnsTransformationMethod;
@@ -24,6 +25,7 @@ import com.jakewharton.rxbinding.view.RxView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
+import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
@@ -32,15 +34,14 @@ import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.DialogCallback;
 import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.Constant;
-import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.model.LoginUser;
 import com.smarthome.magic.model.Message;
 import com.smarthome.magic.util.AlertUtil;
-import com.smarthome.magic.util.SystemUtils;
 import com.smarthome.magic.util.TimeCount;
 
 import java.util.ArrayList;
@@ -53,6 +54,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import io.rong.imkit.RongIM;
+import io.rong.imlib.NativeObject;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
 import rx.functions.Action1;
 
 import static com.smarthome.magic.get_net.Urls.SERVER_URL;
@@ -307,6 +312,15 @@ public class LoginActivity extends BaseActivity {
                                 userlist.addAll(response.body().data);
                                 startActivity(new Intent(LoginActivity.this, SelectLoginActivity.class));
                             }
+
+
+                            String rongYunTouken =UserManager.getManager(mContext).getRongYun();
+
+                            if (!StringUtils.isEmpty(rongYunTouken)) {
+                                connectRongYun(response.body().data.get(0).getToken_rong());
+
+
+                            }
                         }
 
                         @Override
@@ -315,6 +329,50 @@ public class LoginActivity extends BaseActivity {
                         }
                     });
         }
+
+    }
+
+
+    public void connectRongYun(String token) {
+
+        RongIM.connect(token, new RongIMClient.ConnectCallbackEx() {
+            /**
+             * 数据库回调.
+             * @param code 数据库打开状态. DATABASE_OPEN_SUCCESS 数据库打开成功; DATABASE_OPEN_ERROR 数据库打开失败
+             */
+            @Override
+            public void OnDatabaseOpened(RongIMClient.DatabaseOpenStatus code) {
+                Log.i("rongYun", "数据库打开失败");
+            }
+
+            /**
+             * token 无效
+             */
+            @Override
+            public void onTokenIncorrect() {
+                Log.i("rongYun", "token 无效");
+            }
+
+            /**
+             * 成功回调
+             * @param userId 当前用户 ID
+             */
+            @Override
+            public void onSuccess(String userId) {
+                //UIHelper.ToastMessage(mContext, "融云连接成功");
+                Log.i("rongYun", "融云连接成功");
+                PreferenceHelper.getInstance(mContext).putString(AppConfig.RONGYUN_TOKEN, token);
+            }
+
+            /**
+             * 错误回调
+             * @param errorCode 错误码
+             */
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.i("rongYun", "融云连接失败");
+            }
+        });
 
     }
 

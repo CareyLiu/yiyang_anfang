@@ -13,8 +13,11 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
+import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -26,8 +29,12 @@ import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAd
 import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
+import com.smarthome.magic.common.UIHelper;
 import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
+import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Delete;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.MessageModel;
 import com.smarthome.magic.model.OrderListModel;
@@ -40,6 +47,9 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.smarthome.magic.config.MyApplication.getApp;
+import static com.smarthome.magic.get_net.Urls.MESSAGE_URL;
 
 
 public class MessageListFragment extends BaseFragment {
@@ -109,12 +119,19 @@ public class MessageListFragment extends BaseFragment {
                 }
                 srLSmart.finishLoadMore();
                 srLSmart.finishRefresh();
-
+                showLoadSuccess();
             }
 
             @Override
             public void onError(Response<AppResponse<MessageModel.DataBean>> response) {
                 super.onError(response);
+
+            }
+
+            @Override
+            public void onStart(Request<AppResponse<MessageModel.DataBean>, ? extends Request> request) {
+                super.onStart(request);
+                showLoading();
             }
         });
     }
@@ -169,6 +186,31 @@ public class MessageListFragment extends BaseFragment {
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 notifyId = "";
                 getNet();
+            }
+        });
+        messageListAdapter.setOnItemChildLongClickListener(new BaseQuickAdapter.OnItemChildLongClickListener() {
+            @Override
+            public boolean onItemChildLongClick(BaseQuickAdapter adapter, View view, int position) {
+                //UIHelper.ToastMessage(getActivity(), "长按");
+
+
+                MyCarCaoZuoDialog_Delete myCarCaoZuoDialog_delete = new MyCarCaoZuoDialog_Delete(getActivity(), new MyCarCaoZuoDialog_Delete.OnDialogItemClickListener() {
+                    @Override
+                    public void clickLeft() {
+
+                    }
+
+                    @Override
+                    public void clickRight() {
+
+                        MessageModel.DataBean dataBean = (MessageModel.DataBean) adapter.getData().get(position);
+                        String notifyId = dataBean.getNotify_id();
+                        String of_user_id = PreferenceHelper.getInstance(getActivity()).getString("of_user_id", "");
+                        deleteMessageNet(notifyId, of_user_id);
+                    }
+                });
+                myCarCaoZuoDialog_delete.show();
+                return false;
             }
         });
         messageListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
@@ -228,6 +270,35 @@ public class MessageListFragment extends BaseFragment {
         messageListAdapter = new MessageListAdapter(R.layout.item_messagelist, mDatas);
         messageListAdapter.openLoadAnimation();//默认为渐显效果
         recyclerView.setAdapter(messageListAdapter);
+    }
+
+    public void deleteMessageNet(String notifyId, String of_user_id) {
+        //访问网络获取数据 下面的列表数据
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", "03002");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(getApp()).getAppToken());
+        map.put("notify_id", notifyId);
+        map.put("of_user_id", of_user_id);
+
+        Gson gson = new Gson();
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse>post(MESSAGE_URL)
+                .tag(this)
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse> response) {
+                        showLoadSuccess();
+                        srLSmart.autoRefresh();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse, ? extends Request> request) {
+                        super.onStart(request);
+                        showLoading();
+                    }
+                });
     }
 }
 

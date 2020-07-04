@@ -59,6 +59,7 @@ public class MessageListAdapter extends BaseQuickAdapter<MessageModel.DataBean, 
         helper.setText(R.id.tv_type, item.getNotify_text());
         helper.setText(R.id.tv_text, item.getCreate_time());
         helper.addOnClickListener(R.id.constrain);
+        helper.addOnLongClickListener(R.id.constrain);
 
     }
 }

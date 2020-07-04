@@ -86,6 +86,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     @Override
                     public void onSuccess(Response<AppResponse> response) {
                         UIHelper.ToastMessage(WXEntryActivity.this, response.body().msg);
+                        UIHelper.ToastMessage(WXEntryActivity.this, "微信提现绑定成功");
                         PreferenceHelper.getInstance(WXEntryActivity.this).putString(App.CUNCHUBIND_WEIXINPAY, "1");
                         finish();
                     }

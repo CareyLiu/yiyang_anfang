@@ -65,7 +65,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:replace="android:allowBackup">
-
+        <activity android:name=".activity.Demo_rongyun"></activity>
 
         <meta-data
             android:name="BUGLY_APPID"
@@ -288,7 +288,7 @@
             android:name=".activity.PhoneCheckActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.RevisePayActivity"
             android:configChanges="locale|keyboardHidden|orientation"
@@ -577,6 +577,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
+
         <!--    八紫首页    -->
         <activity
             android:name=".activity.wode_page.bazinew.BazismMainActivity"
@@ -818,6 +819,46 @@
             android:name=".activity.chelianwang.ScanAddCarActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop" /> <!-- 会话列表 -->
+        <activity
+            android:name=".activity.rongyun_liaotian.ConversationListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.smarthome.magic"
+                    android:pathPrefix="/conversationlist"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity> <!-- 会话界面 -->
+        <activity
+            android:name=".activity.rongyun_liaotian.ConversationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.smarthome.magic"
+                    android:pathPrefix="/conversation/"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".service.SealNotificationReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
+                <action android:name="io.rong.push.intent.MESSAGE_CLICKED" />
+                <action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

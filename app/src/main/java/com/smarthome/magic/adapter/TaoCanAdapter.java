@@ -25,9 +25,14 @@ public class TaoCanAdapter extends BaseQuickAdapter<GoodsDetails_f.DataBean.Prod
         if (item.getSelect().equals("1")) {
             TextView tv = helper.getView(R.id.tv_text);
             tv.setBackgroundResource(R.drawable.background_select);
+            tv.setTextColor(mContext.getResources().getColor(R.color.orange_fa7e00));
         } else {
             TextView tv = helper.getView(R.id.tv_text);
             tv.setBackgroundResource(R.drawable.background_noselect);
+            tv.setTextColor(mContext.getResources().getColor(R.color.black_111111));
         }
+
+
+
     }
 }

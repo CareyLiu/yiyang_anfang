@@ -27,6 +27,7 @@ import com.smarthome.magic.config.Constant;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.config.Wetch_S;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.Message;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.TimeCount;
@@ -55,8 +56,8 @@ public class PhoneCheckActivity extends BaseActivity {
     Button btnSubmit;
     private TimeCount timeCount;
     private String smsId;
-    private String weixinOrZhiFuBao;
-
+    private String weixinOrZhiFuBao = "1";
+    private boolean weixin_flag;
 
     @Override
     public int getContentViewResId() {
@@ -82,6 +83,8 @@ public class PhoneCheckActivity extends BaseActivity {
                 btnSubmit.setText("去微信授权");
             }
         }
+
+        weixin_flag = getIntent().getBooleanExtra("weixin_flag", true);
 
         timeCount = new TimeCount(60000, 1000, tvGetCode);
         tvPhone.setText(PreferenceHelper.getInstance(this).getString("user_phone", ""));
@@ -120,6 +123,7 @@ public class PhoneCheckActivity extends BaseActivity {
                 getCode(getIntent().getStringExtra("mod_id"));
                 break;
             case R.id.btn_submit:
+
                 requestData();
                 break;
         }
@@ -196,7 +200,7 @@ public class PhoneCheckActivity extends BaseActivity {
 
                                     //保存 微信回调使用
                                     PreferenceHelper.getInstance(mContext).putString(AppConfig.SMS_ID, smsId);
-                                    PreferenceHelper.getInstance(mContext).putString(AppConfig.SMS_CODE,etCode.getText().toString());
+                                    PreferenceHelper.getInstance(mContext).putString(AppConfig.SMS_CODE, etCode.getText().toString());
                                     IWXAPI api;
                                     api = WXAPIFactory.createWXAPI(mContext, Wetch_S.APP_ID);
                                     SendAuth.Req req = new SendAuth.Req();
@@ -205,6 +209,23 @@ public class PhoneCheckActivity extends BaseActivity {
                                     api.sendReq(req);
                                 }
 
+                                finish();
+                                break;
+
+                            case "0320"://微信解绑
+                                if (weixin_flag) {
+                                    //保存 微信回调使用
+                                    PreferenceHelper.getInstance(mContext).putString(AppConfig.SMS_ID, smsId);
+                                    PreferenceHelper.getInstance(mContext).putString(AppConfig.SMS_CODE, etCode.getText().toString());
+                                    IWXAPI api;
+                                    api = WXAPIFactory.createWXAPI(mContext, Wetch_S.APP_ID);
+                                    SendAuth.Req req = new SendAuth.Req();
+                                    req.scope = "snsapi_userinfo";
+                                    req.state = "wechat_sdk_demo_test";
+                                    api.sendReq(req);
+                                } else {
+                                    weiXinJieBang();
+                                }
                                 finish();
                                 break;
                         }
@@ -240,5 +261,74 @@ public class PhoneCheckActivity extends BaseActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("mod_id", mod_id);
         context.startActivity(intent);
+    }
+
+    /**
+     * 用于其他Activty跳转到该Activity
+     * flag  true  绑定  false 解绑
+     */
+    public static void actionStart_WeiBind(Context context, String mod_id, boolean flag) {
+        Intent intent = new Intent(context, PhoneCheckActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("mod_id", mod_id);
+        intent.putExtra("weixin_flag", flag);
+        context.startActivity(intent);
+    }
+
+
+    /**
+     * 	JSON请求数据示例
+     * {
+     * "code":"04185",
+     * "key":"20180305124455yu",
+     * "token":"1541309Q02920100l000v000e000H0"
+     * }
+     * 	请求参数说明
+     * 参数	说明	长度	是否必填
+     * code	请求码(04185)	6	是
+     * key	身份标识	10	是
+     * token	token		是
+     * sms_id	短信验证码id		是
+     * sms_code	短信验证码		是
+     */
+
+    private void weiXinJieBang() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "04185");
+        map.put("key", Constant.KEY);
+        map.put("token", UserManager.getManager(getApplication()).getAppToken());
+        map.put("sms_id", smsId);
+        map.put("sms_code", etCode.getText().toString());
+
+
+        Gson gson = new Gson();
+        OkGo.<AppResponse>post(Urls.HOME_PICTURE_HOME)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse> response) {
+                        // AlertUtil.t(getApplicationContext(), response.body().msg);
+                        UIHelper.ToastMessage(mContext, "微信解绑成功");
+                        finish();
+                        hideInput();
+                        //  AppManager.getAppManager().finishActivity(PhoneCheckActivity.class);
+                        //AppManager.getAppManager().finishActivity();
+                        PreferenceHelper.getInstance(mContext).putString(App.CUNCHUBIND_WEIXINPAY, "2");
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse> response) {
+                        AlertUtil.t(getApplication(), response.getException().getMessage());
+
+                    }
+                });
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        hideInput();
     }
 }

@@ -5,8 +5,10 @@ import android.content.pm.ActivityInfo;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 
+import com.billy.android.loading.Gloading;
 import com.gyf.barlibrary.ImmersionBar;
 import com.smarthome.magic.R;
 import com.smarthome.magic.basicmvp.BasicModel;
@@ -26,6 +28,46 @@ public abstract class BaseActivity<T extends BasicPresenter, E extends BasicMode
     protected ImmersionBar mImmersionBar;
 
     protected CompositeSubscription _subscriptions = new CompositeSubscription();
+
+    protected Gloading.Holder mHolder;
+
+    /**
+     * make a Gloading.Holder wrap with current activity by default
+     * override this method in subclass to do special initialization
+     */
+    protected void initLoadingStatusViewIfNeed() {
+        if (mHolder == null) {
+            //bind status view to activity root view by default
+            mHolder = Gloading.getDefault().wrap(this).withRetry(new Runnable() {
+                @Override
+                public void run() {
+                    onLoadRetry();
+                }
+            });
+        }
+    }
+
+    protected void onLoadRetry() {
+        // override this method in subclass to do retry task
+    }
+
+    public void showLoading() {
+        initLoadingStatusViewIfNeed();
+        mHolder.showLoading();
+    }
+
+    public void showLoadSuccess() {
+        initLoadingStatusViewIfNeed();
+        mHolder.showLoadSuccess();
+
+    }
+
+    public void showLoadFailed() {
+        initLoadingStatusViewIfNeed();
+        mHolder.showLoadFailed();
+    }
+
+
 
 
     @Override

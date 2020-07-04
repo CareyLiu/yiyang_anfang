@@ -28,8 +28,11 @@ import com.google.gson.Gson;
 import com.jaeger.library.StatusBarUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.rairmmd.andmqtt.AndMqtt;
+import com.rairmmd.andmqtt.MqttPublish;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.v1.EspTouchActivity;
+import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
@@ -38,7 +41,9 @@ import com.smarthome.magic.config.AppEvent;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.Constant;
 import com.smarthome.magic.config.MyApplication;
+import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuo_Base;
 import com.smarthome.magic.model.Upload;
 import com.smarthome.magic.model.UserInfo;
 import com.smarthome.magic.util.AlertUtil;
@@ -53,6 +58,8 @@ import org.devio.takephoto.model.TResult;
 import org.devio.takephoto.permission.InvokeListener;
 import org.devio.takephoto.permission.PermissionManager;
 import org.devio.takephoto.permission.TakePhotoInvocationHandler;
+import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.jaaksi.pickerview.picker.TimePicker;
 
 import java.io.File;
@@ -68,6 +75,9 @@ import java.util.Observer;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+
+import static com.smarthome.magic.config.MyApplication.CAR_CTROL;
 
 public class SettingActivity extends BaseActivity implements Observer, TakePhoto.TakeResultListener, InvokeListener {
     @BindView(R.id.iv_header)
@@ -119,6 +129,7 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
     private OptionsPickerView pvOptions;
     private TimePicker timePicker;
     private int index = 0;
+    private String yongHuMing = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +156,12 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        requestData();
+    }
+
     public void requestData() {
         Map<String, String> map = new HashMap<>();
         map.put("code", "04201");
@@ -168,7 +185,7 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
                         }
                         tvZhifubaoMing.setText(response.body().data.get(0).getAlipay_uname());
                         tvWeixinMing.setText(response.body().data.get(0).getWx_user_name());
-
+                        yongHuMing = response.body().data.get(0).getUser_name();
                     }
 
                     @Override
@@ -292,7 +309,43 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
                 PhoneCheckActivity.actionStart(SettingActivity.this, "0006");
                 break;
             case R.id.ll_shezhi_weixin:
-                PhoneCheckActivity.actionStart(SettingActivity.this, "0008", "2");
+
+                String str = PreferenceHelper.getInstance(SettingActivity.this).getString(App.CUNCHUBIND_WEIXINPAY, "");
+
+                String huashu1 = "";
+                String huashu2 = "";
+                //1 已经设置 2 未设置
+                if (str.equals("1")) {
+                    huashu1 = "您已绑定" + tvWeixinMing.getText().toString().trim() + "微信" + "需要解绑吗？";
+
+                } else if (str.equals("2")) {
+                    huashu1 = "您还未绑定微信，去绑定吗？";
+                }
+
+                MyCarCaoZuoDialog_CaoZuo_Base base = new MyCarCaoZuoDialog_CaoZuo_Base(this, "操作", huashu1, new MyCarCaoZuoDialog_CaoZuo_Base.OnDialogItemClickListener() {
+                    @Override
+                    public void clickLeft() {
+                        // base.dismiss();
+
+                    }
+
+                    @Override
+                    public void clickRight() {
+                        if (str.equals("1")) {
+                            PhoneCheckActivity.actionStart_WeiBind(SettingActivity.this, "0320",false);
+                        } else if (str.equals("2")) {
+                            PhoneCheckActivity.actionStart_WeiBind(SettingActivity.this, "0320", true);
+                        }
+                    }
+                });
+
+
+                if (str.equals("1")) {
+                    base.show();
+                } else if (str.equals("2")) {
+                    base.show();
+                }
+
                 break;
             case R.id.layout_clear_cache:
                 normalDialog = new NormalDialog(this);
@@ -340,7 +393,7 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
                                 n.type = ConstanceValue.MSG_UNSUB_MQTT;
                                 RxBus.getDefault().sendRx(n);
 
-
+                                RongIM.getInstance().logout();
                                 startActivity(new Intent(SettingActivity.this, LoginActivity.class));
                             }
                         });
@@ -447,6 +500,10 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
         if (arg.equals("update")) {
             requestData();
         }
+    }
+
+    public void jieBangWeiXin() {
+        //
     }
 
 }

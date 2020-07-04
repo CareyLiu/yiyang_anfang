@@ -407,7 +407,7 @@ public class AndroidForJs {
 
                             String weixinPay = PreferenceHelper.getInstance(mContext).getString(App.CUNCHUBIND_WEIXINPAY, "0x11");
                             if (weixinPay.equals("1")) {
-                                TiXianActivity.actionStart(mContext, response.body().data.get(0).getUser_money(), "0", "2");
+                                TiXianActivity.actionStart(mContext, response.body().data.get(0).getUser_money(), "1", "2");
                             } else {
                                 IWXAPI api;
                                 api = WXAPIFactory.createWXAPI(mContext, Wetch_S.APP_ID);
@@ -421,7 +421,7 @@ public class AndroidForJs {
                             String checkAliPay = PreferenceHelper.getInstance(mContext).getString(App.CUNCHUBIND_ALIPAY, "0x11");
                             if (checkAliPay.equals("1")) {//已经设置
 
-                                TiXianActivity.actionStart(mContext, response.body().data.get(0).getUser_money(), "0", "1");
+                                TiXianActivity.actionStart(mContext, response.body().data.get(0).getUser_money(), "1", "1");
 
                             } else {//2 未设置
                                 showTwo();

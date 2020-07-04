@@ -3,9 +3,6 @@ package com.smarthome.magic.config;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
-
-
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -20,10 +17,8 @@ import android.location.LocationManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.wifi.WifiManager;
-import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -32,14 +27,14 @@ import androidx.multidex.MultiDexApplication;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import com.alibaba.baichuan.android.trade.AlibcTradeSDK;
 import com.alibaba.baichuan.android.trade.callback.AlibcTradeInitCallback;
-import com.alibaba.baichuan.trade.biz.core.taoke.AlibcTaokeParams;
+
+import com.billy.android.loading.Gloading;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
@@ -48,14 +43,11 @@ import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import com.lzy.okgo.model.Response;
 import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttConnect;
-import com.rairmmd.andmqtt.MqttPublish;
 import com.rairmmd.andmqtt.MqttSubscribe;
 import com.rairmmd.andmqtt.MqttUnSubscribe;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.DiagnosisActivity;
-import com.smarthome.magic.activity.WindHeaterActivity;
-import com.smarthome.magic.activity.chelianwang.ScanAddCarActivity;
-import com.smarthome.magic.activity.wode_page.MyQianBaoActivity;
+import com.smarthome.magic.adapter.view.GlobalAdapter;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.CodeClass;
@@ -64,16 +56,11 @@ import com.smarthome.magic.app.HardWareValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.RxUtils;
-import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Notify;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.AlarmClass;
-import com.smarthome.magic.model.HostModel;
-import com.smarthome.magic.model.MyQianBaoModel;
-import com.smarthome.magic.tools.NetworkUtils;
-import com.smarthome.magic.util.ConstantUtil;
 import com.smarthome.magic.util.JinChengUtils;
 import com.smarthome.magic.util.SerializeUtil;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -89,9 +76,7 @@ import org.jaaksi.pickerview.util.Util;
 import org.jaaksi.pickerview.widget.DefaultCenterDecoration;
 import org.jaaksi.pickerview.widget.PickerView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -99,14 +84,20 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
+import io.rong.imkit.RongIM;
+import io.rong.imlib.IRongCallback;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
+import io.rong.message.TextMessage;
+import io.rong.push.RongPushClient;
+import io.rong.push.core.PushProtocalStack;
 import okhttp3.OkHttpClient;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 
-import static com.smarthome.magic.get_net.Urls.HOME_PICTURE_HOME;
 import static com.smarthome.magic.get_net.Urls.MESSAGE_URL;
-
 
 public class MyApplication extends MultiDexApplication {
     protected static final String TAG = "MyApplication";
@@ -191,11 +182,11 @@ public class MyApplication extends MultiDexApplication {
         }
     };
 
-
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
 
+        initRongYun();
         initLifecycle();
         initWindow();
         initDefaultPicker();
@@ -294,6 +285,159 @@ public class MyApplication extends MultiDexApplication {
 //        }
         registerReceiver(mReceiver, filter);
 
+        //view
+
+
+        Gloading.initDefault(new GlobalAdapter());
+
+
+    }
+
+    private void initRongYun() {
+// 初始化. 建议在 Application 中进行初始化.
+        String appKey = "cpj2xarlct6en";
+        RongIM.init(context, appKey);
+        String rongYunToken = PreferenceHelper.getInstance(getApplicationContext()).getString("token_rong", "");
+        if (!StringUtils.isEmpty(rongYunToken)) {
+            connectRongYun(rongYunToken);
+
+            RongIM.setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageWrapperListener() {
+                /**
+                 * 接收实时或者离线消息。
+                 * 注意:
+                 * 1. 针对接收离线消息时，服务端会将 200 条消息打成一个包发到客户端，客户端对这包数据进行解析。
+                 * 2. hasPackage 标识是否还有剩余的消息包，left 标识这包消息解析完逐条抛送给 App 层后，剩余多少条。
+                 * 如何判断离线消息收完：
+                 * 1. hasPackage 和 left 都为 0；
+                 * 2. hasPackage 为 0 标识当前正在接收最后一包（200条）消息，left 为 0 标识最后一包的最后一条消息也已接收完毕。
+                 *
+                 * @param message    接收到的消息对象
+                 * @param left       每个数据包数据逐条上抛后，还剩余的条数
+                 * @param hasPackage 是否在服务端还存在未下发的消息包
+                 * @param offline    消息是否离线消息
+                 * @return 是否处理消息。 如果 App 处理了此消息，返回 true; 否则返回 false 由 SDK 处理。
+                 */
+                @Override
+                public boolean onReceived(final Message message, final int left, boolean hasPackage, boolean offline) {
+                    return false;
+                }
+            });
+
+            RongIM.setConnectionStatusListener(new RongIMClient.ConnectionStatusListener() {
+                /**
+                 * 连接状态返回回调
+                 * @param status 状态值
+                 * CONN_USER_BLOCKED
+                 * 用户被开发者后台封禁
+                 * CONNECTED
+                 * 连接成功。
+                 * CONNECTING
+                 * 连接中。
+                 * DISCONNECTED
+                 * 断开连接。
+                 * KICKED_OFFLINE_BY_OTHER_CLIENT
+                 * 用户账户在其他设备登录，本机会被踢掉线。
+                 * NETWORK_UNAVAILABLE
+                 * 网络不可用。
+                 * SERVER_INVALID
+                 * 服务器异常或无法连接。
+                 * TOKEN_INCORRECT
+                 * Token 不正确。
+                 */
+                @Override
+                public void onChanged(ConnectionStatus status) {
+
+                    Log.i("rongyun", status.getMessage());
+                    Notice notice = new Notice();
+                    notice.type = ConstanceValue.MSG_RONGYUN_STATE;
+                    // notice.content = status.
+                    //* 用户被开发者后台封禁
+                    notice.content = status;
+                    RxBus.getDefault().sendRx(notice);
+
+
+                }
+            });
+        }
+
+    }
+
+    public void connectRongYun(String token) {
+        RongIM.connect(token, new RongIMClient.ConnectCallbackEx() {
+            /**
+             * 数据库回调.
+             * @param code 数据库打开状态. DATABASE_OPEN_SUCCESS 数据库打开成功; DATABASE_OPEN_ERROR 数据库打开失败
+             */
+            @Override
+            public void OnDatabaseOpened(RongIMClient.DatabaseOpenStatus code) {
+                Log.i("rongYun", "数据库打开失败");
+            }
+
+            /**
+             * token 无效
+             */
+            @Override
+            public void onTokenIncorrect() {
+                Log.i("rongYun", "token 无效");
+            }
+
+            /**
+             * 成功回调
+             * @param userId 当前用户 ID
+             */
+            @Override
+            public void onSuccess(String userId) {
+                //UIHelper.ToastMessage(mContext, "融云连接成功");
+                Log.i("rongYun", "融云连接成功");
+                PreferenceHelper.getInstance(getApplicationContext()).putString(AppConfig.RONGYUN_TOKEN, token);
+
+//                String content = "再来一次";
+//
+//                Conversation.ConversationType conversationType = Conversation.ConversationType.PRIVATE;
+//                String targetId = "jcz_sub_230";
+//
+//                TextMessage messageContent = TextMessage.obtain(content);
+//                Message message = Message.obtain(targetId, conversationType, messageContent);
+//                RongIM.getInstance().sendMessage(message, null, null, new IRongCallback.ISendMessageCallback() {
+//                    /**
+//                     * 消息发送前回调, 回调时消息已存储数据库
+//                     * @param message 已存库的消息体
+//                     */
+//                    @Override
+//                    public void onAttached(Message message) {
+//
+//                    }
+//
+//                    /**
+//                     * 消息发送成功。
+//                     * @param message 发送成功后的消息体
+//                     */
+//                    @Override
+//                    public void onSuccess(Message message) {
+//
+//                    }
+//
+//                    /**
+//                     * 消息发送失败
+//                     * @param message   发送失败的消息体
+//                     * @param errorCode 具体的错误
+//                     */
+//                    @Override
+//                    public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+//
+//                    }
+//                });
+            }
+
+            /**
+             * 错误回调
+             * @param errorCode 错误码
+             */
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.i("rongYun", "融云连接失败");
+            }
+        });
 
     }
 

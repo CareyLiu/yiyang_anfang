@@ -45,6 +45,15 @@ public class UserManager {
         return PreferenceHelper.getInstance(mContext).getString("app_token", "");
     }
 
+
+    public String getUserName(){
+        return PreferenceHelper.getInstance(mContext).getString("user_name", "");
+    }
+
+    public String getRongYun(){
+        return PreferenceHelper.getInstance(mContext).getString("token_rong", "");
+    }
+
     //保存用户信息
     public void saveUser(LoginUser.DataBean user) {
         if (user != null) {

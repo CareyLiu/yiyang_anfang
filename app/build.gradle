@@ -282,5 +282,9 @@ dependencies {
 
     implementation 'com.github.zcweng:switch-button:0.0.3@aar'
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
+    implementation 'com.billy.android:gloading:1.1.0'
+    implementation 'cn.rongcloud.sdk:im_lib:2.10.5'
+    implementation 'cn.rongcloud.sdk:im_kit:2.10.5'
+
 
 }

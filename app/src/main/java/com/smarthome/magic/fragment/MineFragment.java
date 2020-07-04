@@ -35,6 +35,7 @@ import com.smarthome.magic.activity.wode_page.MyQianBaoActivity;
 import com.smarthome.magic.activity.wode_page.ShangPinShouCangActivity;
 import com.smarthome.magic.activity.wode_page.TuiGuangMaActivity;
 import com.smarthome.magic.app.App;
+import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.UIHelper;
@@ -308,7 +309,7 @@ public class MineFragment extends BaseFragment implements Observer {
                         PreferenceHelper.getInstance(getActivity()).putString(App.CUNCHUBIND_ALIPAY, response.body().data.get(0).getAlipay_number_check());
                         PreferenceHelper.getInstance(getActivity()).putString(App.CUNCHU_ZHIFUMIMA, response.body().data.get(0).getPay_pwd_check());//1 已经设置 2 未设置
                         PreferenceHelper.getInstance(getActivity()).putString(App.CUNCHUBIND_WEIXINPAY, response.body().data.get(0).getWx_pay_number_check());//1 已经设置 2 未设置
-
+                        PreferenceHelper.getInstance(getActivity()).putString(App.CUN_GEREN_TOUXIANG, response.body().data.get(0).getUser_img_url());
 
                         /**
                          * agent_user_type	用户是否是代理商 1.是 2.不是

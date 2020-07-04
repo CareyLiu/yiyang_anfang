@@ -106,6 +106,7 @@ public class AppConfig {
     public final static String PEIWANG_MIMA = "PEIWANG_MIMA";
     public final static String SMS_ID = "SMS_ID";//smsId;//临时使用
     public final static String SMS_CODE = "SMS_CODE";//临时使用
+    public final static String RONGYUN_TOKEN = "RONGYUN_TOKEN";
     //福利功能  需要的字段
     //作废时间  --待使用
     public static String abolishDate;

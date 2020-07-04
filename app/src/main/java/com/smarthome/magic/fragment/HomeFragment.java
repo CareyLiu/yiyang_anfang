@@ -63,12 +63,14 @@ import com.smarthome.magic.activity.AirConditionerActivity;
 import com.smarthome.magic.activity.CarListActivity;
 import com.smarthome.magic.activity.DefaultX5WebViewActivity;
 import com.smarthome.magic.activity.DefaultX5WebView_HaveNameActivity;
+import com.smarthome.magic.activity.Demo_rongyun;
 import com.smarthome.magic.activity.PlumbingHeaterActivity;
 import com.smarthome.magic.activity.TuanYouWebView;
 import com.smarthome.magic.activity.WebViewActivity;
 import com.smarthome.magic.activity.gouwuche.GouWuCheActivity;
 import com.smarthome.magic.activity.homepage.DaLiBaoActivity;
 import com.smarthome.magic.activity.jd_taobao_pinduoduo.TaoBao_Jd_PinDuoDuoActivity;
+import com.smarthome.magic.activity.rongyun_liaotian.ConversationListActivity;
 import com.smarthome.magic.activity.saoma.ScanActivity;
 import com.smarthome.magic.activity.tuangou.TuanGouShangJiaListActivity;
 import com.smarthome.magic.activity.xin_tuanyou.TuanYouList;
@@ -93,6 +95,7 @@ import com.smarthome.magic.config.Constant;
 import com.smarthome.magic.config.GlideImageLoader;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.config.Wetch_S;
 import com.smarthome.magic.model.CheckModel;
 import com.smarthome.magic.model.FenLeiContentModel;
 import com.smarthome.magic.model.Home;
@@ -104,6 +107,9 @@ import com.smarthome.magic.util.Utils;
 import com.smarthome.magic.util.chenck_banben.UpdateManager;
 
 import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
@@ -449,9 +455,18 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
                     }
                 });
 
+                // ConversationListActivity.actionStart(getActivity());
+                //   Demo_rongyun.actionStart(getActivity());
                 // TuanYouList.actionStart(getActivity());
                 //EspTouchActivity.actionStart(getActivity());
                 //getNet_check();
+
+//                IWXAPI api;
+//                api = WXAPIFactory.createWXAPI(getActivity(), Wetch_S.APP_ID);
+//                SendAuth.Req req = new SendAuth.Req();
+//                req.scope = "snsapi_userinfo";
+//                req.state = "wechat_sdk_demo_test";
+//                api.sendReq(req);
             }
         });
         //吃喝玩乐相关列表

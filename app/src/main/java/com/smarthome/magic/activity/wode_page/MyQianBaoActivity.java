@@ -106,19 +106,19 @@ public class MyQianBaoActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-//                if (StringUtils.isEmpty(response.body().data.get(0).getMoney_use())) {
-//                    response.body().data.get(0).setMoney_use("0.00");
-//                }
-//                BigDecimal bigDecimal = new BigDecimal(response.body().data.get(0).getMoney_use());
-//
-//                if (bigDecimal.compareTo(BigDecimal.ZERO) == 1) {
-//                    //跳正常页面
-//                    showWeiXinOrZhiFuBaoSelect();
-//                } else {
-//                    UIHelper.ToastMessage(MyQianBaoActivity.this, "当前不可提现");
-//                }
+                if (StringUtils.isEmpty(response.body().data.get(0).getMoney_use())) {
+                    response.body().data.get(0).setMoney_use("0.00");
+                }
+                BigDecimal bigDecimal = new BigDecimal(response.body().data.get(0).getMoney_use());
 
-                showWeiXinOrZhiFuBaoSelect();
+                if (bigDecimal.compareTo(BigDecimal.ZERO) == 1) {
+                    //跳正常页面
+                    showWeiXinOrZhiFuBaoSelect();
+                } else {
+                    UIHelper.ToastMessage(MyQianBaoActivity.this, "当前金额为0，不可提现");
+                }
+
+               // showWeiXinOrZhiFuBaoSelect();
 
             }
         });
@@ -270,7 +270,7 @@ public class MyQianBaoActivity extends BaseActivity {
                             if (weixinPay.equals("1")){
                                 TiXianActivity.actionStart(MyQianBaoActivity.this, response.body().data.get(0).getMoney_use(), "0","2");
                             }else {
-                                PhoneCheckActivity.actionStart(mContext,"0008","2");
+                                PhoneCheckActivity.actionStart_WeiBind(mContext,"0320",true);
                             }
 
                         } else {//支付宝

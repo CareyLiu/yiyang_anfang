@@ -4,6 +4,7 @@ package com.smarthome.magic.app;
  * Created by Administrator on 2016/11/18 0018.
  */
 public interface ConstanceValue {
+    String HIDE_LOADING_STATUS_MSG = "hide_loading_status_msg";
     int MSG_CAR_J_G = 0x10000;//g汽车GPS经纬度
     int MSG_CAR_J_M = 0x10001;//M风暖加热器时时数据
     int MSG_CAR_K = 0x0002;//k车门/车窗/车锁
@@ -74,4 +75,5 @@ public interface ConstanceValue {
 
 
     int MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN = 0x10050;//重连失败
+    int MSG_RONGYUN_STATE = 0x10051;//连接状态
 }

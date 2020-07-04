@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.jaeger.library.StatusBarUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -73,11 +74,14 @@ public class ZhiNengHomeListActivity extends BaseActivity implements View.OnClic
         StatusBarUtil.setLightMode(this);
         initToolbar();
         initView();
+        showLoadFailed();
+        getnet();
     }
 
+
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onLoadRetry() {
+        super.onLoadRetry();
         getnet();
     }
 
@@ -85,6 +89,7 @@ public class ZhiNengHomeListActivity extends BaseActivity implements View.OnClic
         srLSmart.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                showLoading();
                 getnet();
             }
         });
@@ -197,6 +202,28 @@ public class ZhiNengHomeListActivity extends BaseActivity implements View.OnClic
                         }
                         tv_family_num.setText(dataBean.size() + "个家庭");
                         zhiNengHomeListAdapter.notifyDataSetChanged();
+                        showLoadSuccess();
+
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ZhiNengHomeListBean.DataBean>> response) {
+                        super.onError(response);
+                        showLoadFailed();
+
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<ZhiNengHomeListBean.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showLoading();
+
                     }
                 });
     }

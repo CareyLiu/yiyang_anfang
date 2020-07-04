@@ -619,6 +619,13 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
+        <!--    推广总人数    -->
+        <activity
+            android:name=".activity.wode_page.bazinew.TuiguangActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
         <!--    本命盘    -->
         <activity
             android:name=".activity.wode_page.bazinew.MingpanActivity"

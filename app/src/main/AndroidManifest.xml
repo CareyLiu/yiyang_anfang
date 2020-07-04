@@ -620,6 +620,13 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
+        <!--    穿衣指数    -->
+        <activity
+            android:name=".activity.wode_page.bazinew.BaziPayActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
         <!--    推广总人数    -->
         <activity
             android:name=".activity.wode_page.bazinew.TuiguangActivity"

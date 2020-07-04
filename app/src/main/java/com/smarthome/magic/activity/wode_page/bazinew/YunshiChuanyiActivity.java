@@ -1,5 +1,6 @@
 package com.smarthome.magic.activity.wode_page.bazinew;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,6 +40,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -198,51 +200,20 @@ public class YunshiChuanyiActivity extends BaziBaseActivity {
         dialog.setPayClick(new JiesuoDialog.JieSuoPayClick() {
             @Override
             public void payCi() {
-                Map<String, String> map = new HashMap<>();
-                map.put("key", Urls.key);
-                map.put("token", UserManager.getManager(YunshiChuanyiActivity.this).getAppToken());
-                map.put("pay_id", "2");
-                map.put("pay_type", "4");
-                map.put("operate_id", "4");
-                map.put("operate_type", "27");
-                map.put("project_type", "bz");
-                map.put("mingpan_id", mingpan_id);
-                map.put("time", "2020-07-01");
-
-                Gson gson = new Gson();
-                OkGo.<AppResponse<YuZhiFuModel.DataBean>>post(Urls.DALIBAO_PAY)
-                        .tag(YunshiChuanyiActivity.this)//
-                        .upJson(gson.toJson(map))
-                        .execute(new JsonCallback<AppResponse<YuZhiFuModel.DataBean>>() {
-                            @Override
-                            public void onSuccess(Response<AppResponse<YuZhiFuModel.DataBean>> response) {
-
-                                //   appId = response.body().data.get(0).getPay().getAppid();
-                                dataBean = response.body().data.get(0);
-                                api = WXAPIFactory.createWXAPI(YunshiChuanyiActivity.this, dataBean.getPay().getAppid());
-                                api.registerApp(dataBean.getPay().getAppid());
-                                PayReq req = new PayReq();
-                                req.appId = dataBean.getPay().getAppid();
-                                req.partnerId = dataBean.getPay().getPartnerid();
-                                req.prepayId = dataBean.getPay().getPrepayid();
-                                req.timeStamp = dataBean.getPay().getTimestamp();
-                                req.nonceStr = dataBean.getPay().getNoncestr();
-                                req.sign = dataBean.getPay().getSign();
-                                req.packageValue = dataBean.getPay().getPackageX();
-                                api.sendReq(req);
-                            }
-
-                            @Override
-                            public void onError(Response<AppResponse<YuZhiFuModel.DataBean>> response) {
-                                super.onError(response);
-                            }
-                        });
-
+                Intent intent = new Intent(YunshiChuanyiActivity.this, BaziPayActivity.class);
+                intent.putExtra("mingpan_id", mingpan_id);
+                intent.putExtra("payType", 1);
+                intent.putExtra("time", tv_select_data.getText().toString());
+                startActivityForResult(intent, 100);
             }
 
             @Override
             public void payNian() {
-
+                Intent intent = new Intent(YunshiChuanyiActivity.this, BaziPayActivity.class);
+                intent.putExtra("mingpan_id", mingpan_id);
+                intent.putExtra("payType", 100);
+                intent.putExtra("time", tv_select_data.getText().toString());
+                startActivityForResult(intent, 100);
             }
         });
         dialog.show();
@@ -329,5 +300,13 @@ public class YunshiChuanyiActivity extends BaziBaseActivity {
         tv_select_data.setText(year + "-" + monthS + "-" + dayS);
 
         getNet();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && requestCode == 100) {
+            getNet();
+        }
     }
 }

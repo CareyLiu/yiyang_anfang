@@ -103,7 +103,7 @@ public class BazismMainActivity extends BaziBaseActivity {
                 clickDanan(BaziCode.ST_chuanyi);
                 break;
             case R.id.view_shangcheng:
-
+                openActivity(TuiguangActivity.class);
                 break;
             case R.id.view_yanpan:
                 clickDanan(BaziCode.ST_yanpan);

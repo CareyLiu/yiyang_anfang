@@ -78,6 +78,7 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
         String ziYingPay = PreferenceHelper.getInstance(this).getString(App.ZIYING_PAY, "");
 
         String wodeDingDanZhiFu = PreferenceHelper.getInstance(this).getString(App.DINGDANZHIFU, "");
+        String baziPay = PreferenceHelper.getInstance(this).getString(App.BAZI_PAY, "");
 
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
 
@@ -155,13 +156,18 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
                     n.type = ConstanceValue.MSG_DINGDAN_PAY;
                     //  n.content = message.toString();
                     RxBus.getDefault().sendRx(n);
-                    ;
+
+                    WXPayEntryActivity.this.finish();
+                } else if (!StringUtils.isEmpty(baziPay)) {
+                    //八紫支付成功
+                    PreferenceHelper.getInstance(this).removeKey(App.BAZI_PAY);
+                    Notice n = new Notice();
+                    n.type = ConstanceValue.MSG_SAOMASUCCESS;
+                    RxBus.getDefault().sendRx(n);
                     WXPayEntryActivity.this.finish();
                 } else {
                     WXPayEntryActivity.this.finish();
                 }
-
-
             } else {
                 if (!StringUtils.isEmpty(xinTuanYouPay)) {
                     Notice n1 = new Notice();
@@ -170,7 +176,6 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
                     RxBus.getDefault().sendRx(n1);
                     PreferenceHelper.getInstance(this).removeKey(App.XINTUANYOU_PAY);
                     WXPayEntryActivity.this.finish();
-
                 } else if (!StringUtils.isEmpty(saomaPay)) {
                     WXPayEntryActivity.this.finish();
                     // UIHelper.ToastMessage(this, "支付失败");
@@ -186,6 +191,13 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
                     //  n.content = message.toString();
                     RxBus.getDefault().sendRx(n);
                     PreferenceHelper.getInstance(this).removeKey(App.ZIYING_PAY);
+                    WXPayEntryActivity.this.finish();
+                } else if (!StringUtils.isEmpty(baziPay)) {
+                    //八紫支付失败
+                    PreferenceHelper.getInstance(this).removeKey(App.BAZI_PAY);
+                    Notice n = new Notice();
+                    n.type = ConstanceValue.MSG_SAOMAFAILE;
+                    RxBus.getDefault().sendRx(n);
                     WXPayEntryActivity.this.finish();
                 } else {
                     WXPayEntryActivity.this.finish();

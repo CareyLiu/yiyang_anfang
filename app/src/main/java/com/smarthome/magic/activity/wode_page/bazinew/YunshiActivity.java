@@ -1,5 +1,6 @@
 package com.smarthome.magic.activity.wode_page.bazinew;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -228,12 +229,20 @@ public class YunshiActivity extends BaziBaseActivity {
             dialog.setPayClick(new JiesuoDialog.JieSuoPayClick() {
                 @Override
                 public void payCi() {
-
+                    Intent intent = new Intent(YunshiActivity.this, BaziPayActivity.class);
+                    intent.putExtra("mingpan_id", mingpan_id);
+                    intent.putExtra("payType", 1);
+                    intent.putExtra("time", tv_select_data.getText().toString());
+                    startActivityForResult(intent, 100);
                 }
 
                 @Override
                 public void payNian() {
-
+                    Intent intent = new Intent(YunshiActivity.this, BaziPayActivity.class);
+                    intent.putExtra("mingpan_id", mingpan_id);
+                    intent.putExtra("payType", 100);
+                    intent.putExtra("time", tv_select_data.getText().toString());
+                    startActivityForResult(intent, 100);
                 }
             });
             dialog.show();

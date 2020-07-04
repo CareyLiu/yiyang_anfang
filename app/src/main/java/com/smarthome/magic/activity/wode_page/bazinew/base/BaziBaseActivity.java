@@ -8,7 +8,9 @@ import android.widget.Toast;
 
 import com.gyf.barlibrary.ImmersionBar;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.taokeshagncheng.QueRenDingDanActivity;
 import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.app.UIHelper;
 
 import androidx.annotation.Nullable;
 
@@ -31,7 +33,7 @@ public class BaziBaseActivity extends BaseActivity {
         tv_title.setTextSize(17);
         tv_title.setTextColor(getResources().getColor(R.color.white));
         mToolbar.setNavigationIcon(R.drawable.back_icon);
-        mToolbar.setBackgroundColor(Color.parseColor("#673AB7"));
+        mToolbar.setBackgroundColor(Color.parseColor("#6666CC"));
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +63,6 @@ public class BaziBaseActivity extends BaseActivity {
 
 
     public void t(String msg) {
-        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+        UIHelper.ToastMessage(mContext, msg, Toast.LENGTH_SHORT);
     }
 }

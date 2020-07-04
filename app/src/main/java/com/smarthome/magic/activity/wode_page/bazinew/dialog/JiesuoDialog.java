@@ -123,13 +123,10 @@ public class JiesuoDialog implements View.OnClickListener {
             if (payClick!=null){
                 payClick.payCi();
             }
-            Toast.makeText(mContext, "次付款", Toast.LENGTH_SHORT).show();
         } else {
-
             if (payClick!=null){
                 payClick.payNian();
             }
-            Toast.makeText(mContext, "年付款", Toast.LENGTH_SHORT).show();
         }
     }
 

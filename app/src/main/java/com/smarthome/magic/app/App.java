@@ -57,6 +57,7 @@ public class App extends MultiDexApplication {
     public static final String ZIYING_PAY = "ziYingPay";
 
     public static final String SAOMA_PAY = "SAOMAPAY";
+    public static final String BAZI_PAY = "BAZI_PAY";
 
 
     public static final String KUAIDIFEI = "0X1111";

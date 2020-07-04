@@ -24,4 +24,5 @@ public class Urls {
 
     public static String BAZIAPP = SERVER_URL + "bz/app";//八紫APP接口
     public static String BAZIAPPUSER = SERVER_URL + "bz/app/user";//八紫APP接口
+    public static String BAZIPAYOK = SERVER_URL + "msg/pay/createbz/ok";//大礼包支付
 }

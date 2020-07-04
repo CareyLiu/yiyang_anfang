@@ -15,16 +15,19 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.gouwuche.GouWuCheQueRenDingDanActivity;
+import com.smarthome.magic.activity.tuangou.TuanGouMaiDanZhiFuActivity;
 import com.smarthome.magic.activity.tuangou.TuanGouZhiFuActivity;
 import com.smarthome.magic.activity.wode_page.bazinew.base.BaziBaseActivity;
 import com.smarthome.magic.activity.wode_page.bazinew.dialog.JiesuoDialog;
 import com.smarthome.magic.activity.wode_page.bazinew.model.YunshiModel;
 import com.smarthome.magic.activity.wode_page.bazinew.utils.TimeUtils;
+import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.YuZhiFuModel;
+import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
@@ -199,21 +202,17 @@ public class YunshiChuanyiActivity extends BaziBaseActivity {
                 map.put("key", Urls.key);
                 map.put("token", UserManager.getManager(YunshiChuanyiActivity.this).getAppToken());
                 map.put("pay_id", "2");
-                map.put("pay_type", "22");
+                map.put("pay_type", "4");
                 map.put("operate_id", "4");
                 map.put("operate_type", "27");
+                map.put("project_type", "bz");
+                map.put("mingpan_id", mingpan_id);
                 map.put("time", "2020-07-01");
 
-                
-
-                String myHeaderLog = new Gson().toJson(map);
-                String myHeaderInfo = StringEscapeUtils.unescapeJava(myHeaderLog);
                 Gson gson = new Gson();
-                Log.e("map_data", gson.toJson(map));
-
                 OkGo.<AppResponse<YuZhiFuModel.DataBean>>post(Urls.DALIBAO_PAY)
                         .tag(YunshiChuanyiActivity.this)//
-                        .upJson(myHeaderInfo)
+                        .upJson(gson.toJson(map))
                         .execute(new JsonCallback<AppResponse<YuZhiFuModel.DataBean>>() {
                             @Override
                             public void onSuccess(Response<AppResponse<YuZhiFuModel.DataBean>> response) {
@@ -221,6 +220,16 @@ public class YunshiChuanyiActivity extends BaziBaseActivity {
                                 //   appId = response.body().data.get(0).getPay().getAppid();
                                 dataBean = response.body().data.get(0);
                                 api = WXAPIFactory.createWXAPI(YunshiChuanyiActivity.this, dataBean.getPay().getAppid());
+                                api.registerApp(dataBean.getPay().getAppid());
+                                PayReq req = new PayReq();
+                                req.appId = dataBean.getPay().getAppid();
+                                req.partnerId = dataBean.getPay().getPartnerid();
+                                req.prepayId = dataBean.getPay().getPrepayid();
+                                req.timeStamp = dataBean.getPay().getTimestamp();
+                                req.nonceStr = dataBean.getPay().getNoncestr();
+                                req.sign = dataBean.getPay().getSign();
+                                req.packageValue = dataBean.getPay().getPackageX();
+                                api.sendReq(req);
                             }
 
                             @Override

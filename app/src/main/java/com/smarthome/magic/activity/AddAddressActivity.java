@@ -79,6 +79,13 @@ public class AddAddressActivity extends BaseActivity implements OnAddressSelecte
         etPhone.setText(getIntent().getStringExtra("user_phone"));
         etAddress.setText(getIntent().getStringExtra("address"));
 
+        if (tvTitle.getText().toString().equals("添加收货地址")) {
+            tvDelete.setVisibility(View.GONE);
+
+        } else if (tvTitle.getText().toString().equals("编辑收货地址")) {
+            tvDelete.setVisibility(View.VISIBLE);
+        }
+
         if (province_name != null && !getIntent().getStringExtra("isDefault").equals("")) {
             tvRegion.setText(String.format("%s-%s-%s", province_name, city_name, area_name));
             swDefault.setChecked(getIntent().getStringExtra("isDefault").equals("1"));

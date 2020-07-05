@@ -23,6 +23,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.CheLianWangNoticeActvity;
 import com.smarthome.magic.activity.dingdan.DaiFuKuanDingDanActivity;
 import com.smarthome.magic.adapter.MessageListAdapter;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
@@ -226,15 +227,14 @@ public class MessageListFragment extends BaseFragment {
                          * 12.商城订单消息 13.拼单消息
                          */
 
+                        MessageModel.DataBean dataBean = (MessageModel.DataBean) adapter.getData().get(position);
                         switch (mDatas.get(position).getNotify_type()) {
 
                             case "1":
-                                break;
                             case "2":
-                                break;
                             case "3":
+                                CheLianWangNoticeActvity.actionStart(getActivity(), dataBean.getNotify_id());
                                 break;
-
                             case "8":
                                 break;
                             case "9":
@@ -242,9 +242,9 @@ public class MessageListFragment extends BaseFragment {
                             case "11":
                                 break;
                             case "12":
-                                OrderListModel.DataBean dataBean = new OrderListModel.DataBean();
-                                dataBean.setShop_form_id(mDatas.get(position).getOper_id());
-                                DaiFuKuanDingDanActivity.actionStart(getActivity(), dataBean);
+//                                OrderListModel.DataBean dataBean = new OrderListModel.DataBean();
+//                                dataBean.setShop_form_id(mDatas.get(position).getOper_id());
+//                                DaiFuKuanDingDanActivity.actionStart(getActivity(), dataBean);
                                 break;
                             case "13":
                                 break;

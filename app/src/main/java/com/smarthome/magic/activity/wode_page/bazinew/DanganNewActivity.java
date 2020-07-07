@@ -21,6 +21,7 @@ import com.bigkoo.pickerview.view.TimePickerView;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.wode_page.bazinew.base.BaziBaseActivity;
 import com.smarthome.magic.activity.wode_page.bazinew.model.DanganModel;
@@ -268,7 +269,7 @@ public class DanganNewActivity extends BaziBaseActivity {
         map.put("sex", sex + "");
         map.put("birthday_type", li + "");
         map.put("isleap", runyue + "");
-
+        map.put("mingpan_user", "1");
 
         Gson gson = new Gson();
         Log.e("map_data", gson.toJson(map));
@@ -278,11 +279,18 @@ public class DanganNewActivity extends BaziBaseActivity {
                 .execute(new JsonCallback<AppResponse<PaipanModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<PaipanModel.DataBean>> response) {
+                        showLoadSuccess();
                         PaipanModel.DataBean dataBean = response.body().data.get(0);
                         Intent intent = new Intent(DanganNewActivity.this, MingpanActivity.class);
                         intent.putExtra("model", dataBean);
                         startActivity(intent);
                         finish();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<PaipanModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showLoading();
                     }
                 });
     }

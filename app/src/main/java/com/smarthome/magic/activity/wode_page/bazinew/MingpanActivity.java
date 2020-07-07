@@ -1,6 +1,7 @@
 package com.smarthome.magic.activity.wode_page.bazinew;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -112,6 +113,16 @@ public class MingpanActivity extends BaziBaseActivity {
     protected void initToolbar() {
         super.initToolbar();
         tv_title.setText("本命盘");
+        tv_rightTitle.setVisibility(View.VISIBLE);
+        tv_rightTitle.setText("解析");
+        tv_rightTitle.setTextSize(17);
+        tv_rightTitle.setTextColor(Color.WHITE);
+        tv_rightTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickJiexi();
+            }
+        });
     }
 
     @Override

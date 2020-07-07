@@ -297,6 +297,7 @@ public class DanganEditActivity extends BaziBaseActivity {
         map.put("sex", sex + "");
         map.put("birthday_type", li + "");
         map.put("isleap", runyue + "");
+        map.put("mingpan_user", "1");
 
         Gson gson = new Gson();
         Log.e("map_data", gson.toJson(map));
@@ -306,18 +307,18 @@ public class DanganEditActivity extends BaziBaseActivity {
                 .execute(new JsonCallback<AppResponse<PaipanModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<PaipanModel.DataBean>> response) {
-
-                        t("可垃圾发多少发");
+                        showLoadSuccess();
                         PaipanModel.DataBean dataBean = response.body().data.get(0);
                         Intent intent = new Intent(DanganEditActivity.this, MingpanActivity.class);
                         intent.putExtra("model", dataBean);
                         startActivity(intent);
-//                        finish();
+                        finish();
                     }
 
                     @Override
                     public void onStart(Request<AppResponse<PaipanModel.DataBean>, ? extends Request> request) {
                         super.onStart(request);
+                        showLoading();
                     }
                 });
     }

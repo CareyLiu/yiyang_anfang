@@ -14,6 +14,7 @@ import com.bigkoo.pickerview.view.TimePickerView;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.wode_page.bazinew.base.BaziBaseActivity;
 import com.smarthome.magic.activity.wode_page.bazinew.dialog.JiesuoDialog;
@@ -158,6 +159,7 @@ public class YunshiActivity extends BaziBaseActivity {
                 .execute(new JsonCallback<AppResponse<YunshiModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<YunshiModel.DataBean>> response) {
+                        showLoadSuccess();
                         List<YunshiModel.DataBean> data = response.body().data;
                         if (data != null && data.size() > 0) {
                             YunshiModel.DataBean bean = data.get(0);
@@ -180,6 +182,7 @@ public class YunshiActivity extends BaziBaseActivity {
                     @Override
                     public void onError(Response<AppResponse<YunshiModel.DataBean>> response) {
                         super.onError(response);
+                        showLoadFailed();
                         tv_content.setVisibility(View.GONE);
                         ll_jiesuo.setVisibility(View.GONE);
                         String msg = response.getException().getMessage();
@@ -187,6 +190,12 @@ public class YunshiActivity extends BaziBaseActivity {
                         if (msgToast.length == 3) {
                             t(msgToast[2]);
                         }
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<YunshiModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showLoading();
                     }
                 });
     }

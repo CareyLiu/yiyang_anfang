@@ -11,6 +11,7 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -137,9 +138,16 @@ public class DanganguanliActivity extends BaziBaseActivity {
                 .execute(new JsonCallback<AppResponse<PaipanModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<PaipanModel.DataBean>> response) {
+                        showLoadSuccess();
                         Intent intent = new Intent(DanganguanliActivity.this, MingpanActivity.class);
                         intent.putExtra("model", response.body().data.get(0));
                         startActivity(intent);
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<PaipanModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showLoading();
                     }
                 });
     }

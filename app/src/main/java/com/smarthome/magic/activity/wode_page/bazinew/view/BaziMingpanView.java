@@ -22,7 +22,7 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 
-public class BaziMingpanView extends RelativeLayout {
+public class BaziMingpanView extends RelativeLayout {//命盘详情view
 
     LinearLayout ll_top;
     LinearLayout ll_three;
@@ -83,7 +83,7 @@ public class BaziMingpanView extends RelativeLayout {
         return model;
     }
 
-    public void setModel(PaipanDetailsModes model, String shu) {
+    public void setModel(PaipanDetailsModes model, String shu) {//设置外侧12宫的数据
         this.model = model;
 
         tv_left.setText(model.getBoShi());
@@ -134,7 +134,7 @@ public class BaziMingpanView extends RelativeLayout {
     }
 
 
-    public void setCenterModel(PaipanDetailsModes model, String shu) {
+    public void setCenterModel(PaipanDetailsModes model, String shu) {//设置中间点击的数据
         this.model = model;
         ll_top.removeAllViews();
 

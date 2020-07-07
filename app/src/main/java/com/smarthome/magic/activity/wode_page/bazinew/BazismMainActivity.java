@@ -3,16 +3,36 @@ package com.smarthome.magic.activity.wode_page.bazinew;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.taokeshagncheng.TaoKeHomeActivity;
+import com.smarthome.magic.activity.taokeshagncheng.TaokeListActivity;
 import com.smarthome.magic.activity.wode_page.bazinew.base.BaziBaseActivity;
+import com.smarthome.magic.activity.wode_page.bazinew.model.DanganModel;
 import com.smarthome.magic.activity.wode_page.bazinew.utils.BaziCode;
+import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerListener;
+import com.youth.banner.loader.ImageLoader;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,10 +64,16 @@ public class BazismMainActivity extends BaziBaseActivity {
     TextView tv_shuzi;
     @BindView(R.id.view_chuanyi)
     View view_chuanyi;
-    @BindView(R.id.view_shangcheng)
-    View view_shangcheng;
+    @BindView(R.id.view_tuiguagn)
+    View view_tuiguagn;
     @BindView(R.id.view_yanpan)
     View view_yanpan;
+    @BindView(R.id.iv_head)
+    ImageView ivHead;
+    @BindView(R.id.tv_name_sex)
+    TextView tv_name_sex;
+    @BindView(R.id.tv_birthday)
+    TextView tv_birthday;
 
     @Override
     public int getContentViewResId() {
@@ -79,11 +105,41 @@ public class BazismMainActivity extends BaziBaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
-
-//        DaLiBaoAdapter
+        initBanner();
     }
 
-    @OnClick({R.id.view_chuanyi, R.id.view_shangcheng, R.id.view_yanpan, R.id.view_tab_zhitianming, R.id.view_tab_nianyunshi, R.id.view_tab_yueyunshi, R.id.view_tab_riyunshi, R.id.fl_fenrendangan})
+    /**
+     * 图片加载类
+     */
+    private class MyImageLoader extends ImageLoader {
+        @Override
+        public void displayImage(Context context, Object path, ImageView imageView) {
+            Glide.with(context.getApplicationContext())
+                    .load(path)
+                    .into(imageView);
+        }
+    }
+
+    private void initBanner() {//初始化banner
+        MyImageLoader mMyImageLoader = new MyImageLoader();
+        banner.setImageLoader(mMyImageLoader);
+        //  initMagicIndicator1(tagList);
+        List imagePath = new ArrayList<>();
+        imagePath.add(R.mipmap.banner_1);
+        imagePath.add(R.mipmap.banner_2);
+        imagePath.add(R.mipmap.banner_3);
+        banner.setImages(imagePath);
+        //设置图片加载地址
+        banner.start();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getNet();
+    }
+
+    @OnClick({R.id.view_chuanyi, R.id.view_tuiguagn, R.id.view_yanpan, R.id.view_tab_zhitianming, R.id.view_tab_nianyunshi, R.id.view_tab_yueyunshi, R.id.view_tab_riyunshi, R.id.fl_fenrendangan})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.view_tab_nianyunshi:
@@ -102,7 +158,7 @@ public class BazismMainActivity extends BaziBaseActivity {
             case R.id.view_chuanyi:
                 clickDanan(BaziCode.ST_chuanyi);
                 break;
-            case R.id.view_shangcheng:
+            case R.id.view_tuiguagn:
                 openActivity(TuiguangActivity.class);
                 break;
             case R.id.view_yanpan:
@@ -115,5 +171,45 @@ public class BazismMainActivity extends BaziBaseActivity {
         Intent intent = new Intent(this, DanganguanliActivity.class);
         intent.putExtra("code", code);
         startActivity(intent);
+    }
+
+    public void getNet() {//命盘档案列表  判读是否有数据
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "11013");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(this).getAppToken());
+        Gson gson = new Gson();
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<DanganModel.DataBean>>post(Urls.BAZIAPP)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<DanganModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<DanganModel.DataBean>> response) {
+                        List<DanganModel.DataBean> data = response.body().data;
+                        if (data.size() > 0) {
+                            DanganModel.DataBean dataBean = data.get(0);
+                            tv_name_sex.setText(dataBean.getName() + "    " + dataBean.getSex_text());
+                            ll_gerendangan.setVisibility(View.VISIBLE);
+                            iv_gerendangan.setVisibility(View.GONE);
+                            tv_color.setText(dataBean.getLucky_colour());
+                            tv_dongwu.setText(dataBean.getLucky_goods());
+                            tv_shuzi.setText(dataBean.getLucky_number());
+
+                            String birthday_type = dataBean.getBirthday_type();
+                            if (birthday_type.equals("1")) {
+                                tv_birthday.setText(dataBean.getSolar_birthday());
+                            } else {
+                                tv_birthday.setText(dataBean.getLunar_birthday());
+                            }
+                        } else {
+                            ll_gerendangan.setVisibility(View.GONE);
+                            iv_gerendangan.setVisibility(View.VISIBLE);
+                            tv_color.setText("");
+                            tv_dongwu.setText("");
+                            tv_shuzi.setText("");
+                        }
+                    }
+                });
     }
 }

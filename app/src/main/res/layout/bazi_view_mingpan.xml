@@ -61,7 +61,7 @@
                 android:ems="1"
                 android:gravity="bottom"
                 android:text="命宫"
-                android:textColor="#AB3B53"
+                android:textColor="#A8B33F"
                 android:textSize="12sp"
                 android:visibility="gone" />
 
@@ -72,7 +72,7 @@
                 android:ems="1"
                 android:gravity="bottom"
                 android:text="命宫"
-                android:textColor="#AB3B53"
+                android:textColor="#008310"
                 android:textSize="12sp"
                 android:visibility="gone" />
 
@@ -116,7 +116,7 @@
                 android:ems="1"
                 android:gravity="bottom"
                 android:text="命宫工"
-                android:textColor="#D7183D"
+                android:textColor="#FF9600"
                 android:textSize="12sp"
                 android:visibility="gone" />
 
@@ -127,7 +127,7 @@
                 android:ems="1"
                 android:gravity="bottom"
                 android:text="命宫"
-                android:textColor="#D7183D"
+                android:textColor="#20B780"
                 android:textSize="12sp"
                 android:visibility="gone" />
 

@@ -99,7 +99,12 @@ public class BaziPayActivity extends BaziBaseActivity {
     private void init() {
         payType = getIntent().getIntExtra("payType", 0);
         mingpan_id = getIntent().getStringExtra("mingpan_id");
-        time = getIntent().getStringExtra("time");
+
+        if (payType==1){
+            time = getIntent().getStringExtra("time");
+        }else {
+            time=TimeUtils.getCurrentTime();
+        }
 
         if (payType == 1) {
             operate_id = "4";

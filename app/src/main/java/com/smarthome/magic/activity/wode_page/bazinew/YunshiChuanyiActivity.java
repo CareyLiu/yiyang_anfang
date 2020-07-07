@@ -221,7 +221,7 @@ public class YunshiChuanyiActivity extends BaziBaseActivity {
                 Intent intent = new Intent(YunshiChuanyiActivity.this, BaziPayActivity.class);
                 intent.putExtra("mingpan_id", mingpan_id);
                 intent.putExtra("payType", 100);
-                intent.putExtra("time", tv_select_data.getText().toString());
+                intent.putExtra("time", "");
                 startActivityForResult(intent, 100);
             }
         });

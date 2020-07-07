@@ -3,7 +3,7 @@ package com.smarthome.magic.activity.wode_page.bazinew.model;
 import java.io.Serializable;
 import java.util.List;
 
-public class PaipanModel {
+public class PaipanModel implements Serializable {
 
 
     /**
@@ -50,7 +50,7 @@ public class PaipanModel {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         /**
          * mingpan_id : 597
          * mingpan_bazi : [{"msg":"暂无数据"}]
@@ -95,7 +95,7 @@ public class PaipanModel {
             this.mingpan_ziwei = mingpan_ziwei;
         }
 
-        public static class MingpanBaziBean {
+        public static class MingpanBaziBean  implements Serializable {
             /**
              * msg : 暂无数据
              */
@@ -111,7 +111,7 @@ public class PaipanModel {
             }
         }
 
-        public static class MingpanXingmingBean {
+        public static class MingpanXingmingBean  implements Serializable {
             /**
              * msg : 暂无数据
              */
@@ -127,7 +127,7 @@ public class PaipanModel {
             }
         }
 
-        public static class MingpanZiweiBean {
+        public static class MingpanZiweiBean  implements Serializable {
             /**
              * mingZhu : 巨门
              * solarTermsbaZi : ["壬申","辛亥","癸卯","壬戌"]

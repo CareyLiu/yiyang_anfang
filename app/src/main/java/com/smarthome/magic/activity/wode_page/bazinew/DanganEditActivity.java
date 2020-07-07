@@ -1,5 +1,6 @@
 package com.smarthome.magic.activity.wode_page.bazinew;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -305,8 +306,13 @@ public class DanganEditActivity extends BaziBaseActivity {
                 .execute(new JsonCallback<AppResponse<PaipanModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<PaipanModel.DataBean>> response) {
-                        t("我成功了");
-                        finish();
+
+                        t("可垃圾发多少发");
+                        PaipanModel.DataBean dataBean = response.body().data.get(0);
+                        Intent intent = new Intent(DanganEditActivity.this, MingpanActivity.class);
+                        intent.putExtra("model", dataBean);
+                        startActivity(intent);
+//                        finish();
                     }
 
                     @Override

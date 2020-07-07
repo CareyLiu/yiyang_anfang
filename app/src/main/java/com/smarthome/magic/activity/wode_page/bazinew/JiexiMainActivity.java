@@ -48,7 +48,8 @@ public class JiexiMainActivity extends BaziBaseActivity {
     LinearLayout llYsYue;
     @BindView(R.id.ll_ys_ri)
     LinearLayout llYsRi;
-    private DanganModel.DataBean model;
+
+    private String mingpan_id;
 
     @Override
     public int getContentViewResId() {
@@ -70,7 +71,7 @@ public class JiexiMainActivity extends BaziBaseActivity {
     }
 
     private void init() {
-        model = (DanganModel.DataBean) getIntent().getSerializableExtra("model");
+        mingpan_id =getIntent().getStringExtra("mingpan_id");
     }
 
     @OnClick({R.id.ll_tab_minggong, R.id.ll_tab_fuqi, R.id.ll_tab_fumu, R.id.ll_tab_xiongdi, R.id.ll_tab_caibo, R.id.ll_tab_jie, R.id.ll_tab_fude, R.id.ll_tab_zinv, R.id.ll_tab_tianzhai, R.id.ll_tab_guanlu, R.id.ll_tab_puyi, R.id.ll_tab_qianyi, R.id.ll_ys_nian, R.id.ll_ys_yue, R.id.ll_ys_ri})
@@ -126,14 +127,14 @@ public class JiexiMainActivity extends BaziBaseActivity {
 
     private void clickJiexi(int jiexi) {
         Intent intent = new Intent(this, JiexiDetailsActivity.class);
-        intent.putExtra("mingpan_id", model.getMingpan_id());
+        intent.putExtra("mingpan_id", mingpan_id);
         intent.putExtra("jiexi", jiexi);
         startActivity(intent);
     }
 
     private void clickYunshi(int code) {
         Intent intent = new Intent(this, YunshiActivity.class);
-        intent.putExtra("mingpan_id", model.getMingpan_id());
+        intent.putExtra("mingpan_id", mingpan_id);
         intent.putExtra("code", code);
         startActivity(intent);
     }

@@ -19,6 +19,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.wode_page.bazinew.base.BaziBaseActivity;
 import com.smarthome.magic.activity.wode_page.bazinew.model.DanganModel;
 import com.smarthome.magic.activity.wode_page.bazinew.adapter.DananguanliAdapter;
+import com.smarthome.magic.activity.wode_page.bazinew.model.PaipanModel;
 import com.smarthome.magic.activity.wode_page.bazinew.utils.BaziCode;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
@@ -89,10 +90,8 @@ public class DanganguanliActivity extends BaziBaseActivity {
                 if (list != null && list.size() > position) {
                     DanganModel.DataBean dataBean = list.get(position);
                     if (code == BaziCode.ST_mingpan) {
-                        Intent intent = new Intent(DanganguanliActivity.this, MingpanActivity.class);
-                        intent.putExtra("model", dataBean);
-                        startActivity(intent);
-                    } else if (code == BaziCode.ST_nian || code == BaziCode.ST_yue || code == BaziCode.ST_ri ) {
+                        getMingPan(dataBean.getMingpan_id());
+                    } else if (code == BaziCode.ST_nian || code == BaziCode.ST_yue || code == BaziCode.ST_ri) {
                         Intent intent = new Intent(DanganguanliActivity.this, YunshiActivity.class);
                         intent.putExtra("mingpan_id", dataBean.getMingpan_id());
                         intent.putExtra("code", code);
@@ -101,7 +100,7 @@ public class DanganguanliActivity extends BaziBaseActivity {
                         Intent intent = new Intent(DanganguanliActivity.this, YanpanActivity.class);
                         intent.putExtra("model", dataBean);
                         startActivity(intent);
-                    }else if (code == BaziCode.ST_chuanyi) {
+                    } else if (code == BaziCode.ST_chuanyi) {
                         Intent intent = new Intent(DanganguanliActivity.this, YunshiChuanyiActivity.class);
                         intent.putExtra("mingpan_id", dataBean.getMingpan_id());
                         intent.putExtra("code", code);
@@ -122,6 +121,27 @@ public class DanganguanliActivity extends BaziBaseActivity {
                 }
             }
         });
+    }
+
+    private void getMingPan(String mingpan_id) {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "11014");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(this).getAppToken());
+        map.put("mingpan_id", mingpan_id);
+        Gson gson = new Gson();
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<PaipanModel.DataBean>>post(Urls.BAZIAPP)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<PaipanModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<PaipanModel.DataBean>> response) {
+                        Intent intent = new Intent(DanganguanliActivity.this, MingpanActivity.class);
+                        intent.putExtra("model", response.body().data.get(0));
+                        startActivity(intent);
+                    }
+                });
     }
 
     private void initSM() {

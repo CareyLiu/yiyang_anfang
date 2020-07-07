@@ -26,6 +26,7 @@ import com.alipay.sdk.app.PayTask;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.AddressActivity;
 import com.smarthome.magic.adapter.GouWuCheAdapter;
@@ -329,11 +330,18 @@ public class GouWuCheQueRenDingDanActivity extends BaseActivity implements QueRe
                         //测试一下
                         setShouHuoAddress();
                         setTurn();
+                        showLoadSuccess();
                     }
 
                     @Override
                     public void onError(Response<AppResponse<AddressListModel.DataBean>> response) {
                         AlertUtil.t(GouWuCheQueRenDingDanActivity.this, response.getException().getMessage());
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<AddressListModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showLoading();
                     }
                 });
     }
@@ -742,6 +750,7 @@ public class GouWuCheQueRenDingDanActivity extends BaseActivity implements QueRe
         private String pay_count;
         private String shop_form_text;
         private String wares_go_type;
+        private String installation_type_id;//门锁安装方式
     }
 
     String liuYan = "";
@@ -761,6 +770,8 @@ public class GouWuCheQueRenDingDanActivity extends BaseActivity implements QueRe
                 productDetails.shop_form_text = liuYan;
                 productDetails.shop_product_id = mDatas.get(i).getShop_product_id();
                 productDetails.wares_go_type = mDatas.get(i).getWares_go_type();
+                productDetails.installation_type_id = mDatas.get(i).getInstallation_type_id();
+
                 productDetailsList.add(productDetails);
             } else {
                 liuYan = "";

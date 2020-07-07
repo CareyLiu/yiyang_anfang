@@ -75,7 +75,7 @@ public class FenLeiThirdFragment extends BaseFragment implements FenLeiContenInt
         map.put("code", "04132");
         map.put("key", Urls.key);
         //map.put("item_id_one", item_id);
-     map.put("token", UserManager.getManager(getActivity()).getAppToken());
+        map.put("token", UserManager.getManager(getActivity()).getAppToken());
         //map.put("", "");
         map.put("item_id_one", bundle.getString("one_item"));
         map.put("item_id_two", bundle.getString("two_item"));
@@ -87,7 +87,7 @@ public class FenLeiThirdFragment extends BaseFragment implements FenLeiContenInt
             map.put("wares_type", shouYeId);
         }
 
-        map.put("page_number", "0");
+        map.put("page_number", String.valueOf(pageNumber));
 
         // if (strPage.equals("1")) {
 

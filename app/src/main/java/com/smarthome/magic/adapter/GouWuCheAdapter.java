@@ -1,5 +1,6 @@
 package com.smarthome.magic.adapter;
 
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -32,6 +33,7 @@ public class GouWuCheAdapter extends BaseSectionQuickAdapter<GouWuCheZhengHeMode
     protected void convertHead(BaseViewHolder helper, GouWuCheZhengHeModel item) {
 
         helper.addOnClickListener(R.id.dianpu_select);
+
         Glide.with(mContext).setDefaultRequestOptions(GlideShowImageUtils.showZhengFangXing()).load(item.getInst_logo_url()).into((ImageView) helper.getView(R.id.shop_img));
         helper.setText(R.id.tv_dianpu_ming, item.getInst_name());//店铺名
         ImageView dianPuSelect = helper.getView(R.id.dianpu_select);
@@ -47,7 +49,8 @@ public class GouWuCheAdapter extends BaseSectionQuickAdapter<GouWuCheZhengHeMode
     protected void convert(BaseViewHolder helper, GouWuCheZhengHeModel item) {
 
         helper.addOnClickListener(R.id.iv_select_item);
-
+        helper.addOnClickListener(R.id.cl_item);
+        helper.addOnLongClickListener(R.id.cl_item);
         Glide.with(mContext).setDefaultRequestOptions(GlideShowImageUtils.showZhengFangXing()).load(item.getIndex_photo_url()).into((ImageView) helper.getView(R.id.iv_product));
         helper.setText(R.id.tv_guige_ming, item.getProduct_title());
         helper.setText(R.id.tv_shangpin_ming, item.getShop_product_title());
@@ -68,17 +71,26 @@ public class GouWuCheAdapter extends BaseSectionQuickAdapter<GouWuCheZhengHeMode
             ConstraintLayout cl_item = helper.getView(R.id.cl_item);
 
             cl_item.setBackgroundResource(R.drawable.item_yuanjiao_bottom_zuo_you);
-        }else {
+        } else {
             ConstraintLayout cl_item = helper.getView(R.id.cl_item);
 
             cl_item.setBackgroundResource(R.color.white);
         }
         ImageView ivSelectItem = helper.getView(R.id.iv_select_item);
-        if (item.getIsSelect().equals("0")) {
-            ivSelectItem.setBackgroundResource(R.mipmap.quxiaodingdan_button_nor);
-        } else {
-            ivSelectItem.setBackgroundResource(R.mipmap.quxiaodingdan_button_sel);
+
+
+        //添加失效商品
+        if (item.getForm_product_state().equals("2")) {//2 失效 1 正常
+            ivSelectItem.setBackgroundResource(R.mipmap.gouwuche_shixiao);
+        } else if (item.getForm_product_state().equals("1")) {
+            if (item.getIsSelect().equals("0")) {
+                ivSelectItem.setBackgroundResource(R.mipmap.quxiaodingdan_button_nor);
+            } else {
+                ivSelectItem.setBackgroundResource(R.mipmap.quxiaodingdan_button_sel);
+            }
+
         }
+
 
     }
 }

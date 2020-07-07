@@ -6,14 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".activity.taokeshagncheng.QueRenDingDanActivity">
 
+    <View
+        android:id="@+id/view"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gragline" />
 
     <androidx.recyclerview.widget.RecyclerView
+
         android:id="@+id/rlv_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/grayf3f3f3"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_shop_name" />
+        app:layout_constraintTop_toBottomOf="@+id/view" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout

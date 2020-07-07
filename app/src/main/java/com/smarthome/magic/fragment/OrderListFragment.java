@@ -632,6 +632,7 @@ public class OrderListFragment extends BaseFragment {
         private String pay_count;
         private String shop_form_text;
         private String wares_go_type;
+        private String installation_type_id;
     }
 
     private void getWeiXinOrZhiFuBao(String pay_id, OrderListModel.DataBean dataBean) {
@@ -647,6 +648,7 @@ public class OrderListFragment extends BaseFragment {
         productDetails.pay_count = dataBean.getPay_count();
         productDetails.shop_form_text = dataBean.getShop_form_text();
         productDetails.wares_go_type = dataBean.getWares_go_type();
+        productDetails.form_product_id = dataBean.getInstallation_type_id();
         productDetailsForJava.add(productDetails);
 
         //OrderListModel.DataBean dataBean = orderListAdapter.getData().get(position);

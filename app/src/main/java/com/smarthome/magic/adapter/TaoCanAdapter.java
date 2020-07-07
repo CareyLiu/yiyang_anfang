@@ -1,12 +1,17 @@
 package com.smarthome.magic.adapter;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.smarthome.magic.R;
 import com.smarthome.magic.model.GoodsDetails_f;
+import com.smarthome.magic.util.GlideShowImageUtils;
 
 import java.util.List;
 
@@ -21,17 +26,17 @@ public class TaoCanAdapter extends BaseQuickAdapter<GoodsDetails_f.DataBean.Prod
     protected void convert(BaseViewHolder helper, GoodsDetails_f.DataBean.ProductListBean item) {
         helper.setText(R.id.tv_text, item.getProduct_title());
         helper.addOnClickListener(R.id.constrain);
-
+        Glide.with(mContext).load(item.getIndex_photo_url()).apply(GlideShowImageUtils.showZhengFangXing()).into((ImageView) helper.getView(R.id.iv_product));
+        ConstraintLayout constraintLayout = helper.getView(R.id.constrain);
         if (item.getSelect().equals("1")) {
             TextView tv = helper.getView(R.id.tv_text);
-            tv.setBackgroundResource(R.drawable.background_select);
-            tv.setTextColor(mContext.getResources().getColor(R.color.orange_fa7e00));
+            constraintLayout.setBackgroundResource(R.drawable.background_select);
+            tv.setTextColor(mContext.getResources().getColor(R.color.FC0100));
         } else {
             TextView tv = helper.getView(R.id.tv_text);
-            tv.setBackgroundResource(R.drawable.background_noselect);
-            tv.setTextColor(mContext.getResources().getColor(R.color.black_111111));
+            constraintLayout.setBackgroundResource(R.drawable.background_noselect);
+            tv.setTextColor(mContext.getResources().getColor(R.color.black_333333));
         }
-
 
 
     }

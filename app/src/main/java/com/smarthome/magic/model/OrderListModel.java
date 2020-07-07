@@ -119,6 +119,16 @@ public class OrderListModel implements Serializable {
         private String inst_name;
         private String total_money;
 
+        public String getInstallation_type_id() {
+            return installation_type_id;
+        }
+
+        public void setInstallation_type_id(String installation_type_id) {
+            this.installation_type_id = installation_type_id;
+        }
+
+        private String installation_type_id;
+
         public String getShop_form_id() {
             return shop_form_id;
         }

@@ -113,7 +113,7 @@
                 android:id="@+id/tv_pinpai"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
+                android:layout_marginLeft="12dp"
                 android:layout_marginTop="15dp"
                 android:includeFontPadding="false"
                 android:text="自营直供(自买省、分享赚)"
@@ -179,12 +179,12 @@
                 android:id="@+id/tv_remen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
+                android:layout_marginLeft="12dp"
                 android:layout_marginTop="15dp"
                 android:includeFontPadding="false"
                 android:text="热门商品"
                 android:textColor="#ff333333"
-                android:textSize="15sp"
+                android:textSize="13sp"
 
                 app:layout_constraintLeft_toRightOf="@+id/line"
                 app:layout_constraintTop_toTopOf="parent" />

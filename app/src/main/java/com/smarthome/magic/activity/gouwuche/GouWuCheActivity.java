@@ -26,6 +26,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.NetUtils;
+import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallDetailsActivity;
 import com.smarthome.magic.adapter.GouWuCheAdapter;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
@@ -318,6 +319,7 @@ public class GouWuCheActivity extends BaseActivity {
                 gouWuCheZhengHeModel_list.setPay_count(proListBean.getPay_count());
                 gouWuCheZhengHeModel_list.setForm_product_state(proListBean.getForm_product_state());
                 gouWuCheZhengHeModel_list.setWares_go_type(proListBean.getWares_go_type());
+                gouWuCheZhengHeModel_list.setInstallation_type_id(proListBean.getInstallation_type_id());
                 gouWuCheZhengHeModel_list.setBiaoshi(biaoshi + i);
                 if (j == response.body().data.get(i).getProList().size() - 1) {
                     //最后一个
@@ -346,6 +348,9 @@ public class GouWuCheActivity extends BaseActivity {
                 switch (view.getId()) {
 
                     case R.id.iv_select_item:
+                        if (mDatas.get(position).getForm_product_state().equals("2")) {
+                            return;
+                        }
                         if (mDatas.get(position).getIsSelect().equals("0")) {
                             mDatas.get(position).setIsSelect("1");
                         } else {
@@ -355,11 +360,7 @@ public class GouWuCheActivity extends BaseActivity {
                         tvPrice.setText("(¥" + getJieSuanJinE().toString() + ")");
                         tvJiesuanJine.setText("结算(" + String.valueOf(chooseCount) + ")");
 
-                        if (isSelectAllDianPu(position).equals("1")) {
 
-                        } else {
-
-                        }
                         if (isSelectAll()) {
                             ivChooseAll.setBackgroundResource(R.mipmap.quxiaodingdan_button_sel);
                         } else {
@@ -415,7 +416,24 @@ public class GouWuCheActivity extends BaseActivity {
                         tvJiesuanJine.setText("结算(" + String.valueOf(chooseCount) + ")");
                         gouWuCheAdapter.notifyDataSetChanged();
                         break;
+                    case R.id.cl_item:
+                        ZiJianShopMallDetailsActivity.actionStart(mContext, mDatas.get(position).getShop_product_id(), mDatas.get(position).getWares_id());
+                        break;
                 }
+
+
+            }
+        });
+
+        gouWuCheAdapter.setOnItemChildLongClickListener(new BaseQuickAdapter.OnItemChildLongClickListener() {
+            @Override
+            public boolean onItemChildLongClick(BaseQuickAdapter adapter, View view, int position) {
+                if (mDatas.get(position).getForm_product_state().equals("2")) {
+
+                    showDngDanDeleteDanTiaoCaoZuo(position);
+
+                }
+                return false;
             }
         });
     }
@@ -466,12 +484,15 @@ public class GouWuCheActivity extends BaseActivity {
         for (int i = 0; i < mDatas.size(); i++) {
             if (mDatas.get(i).getIsSelect().equals("1")) {//选中
                 if (!mDatas.get(i).isHeader) {
-                    BigDecimal djBigDecimal = new BigDecimal(mDatas.get(i).getForm_product_money());
-                    BigDecimal countBigDecimal = new BigDecimal(mDatas.get(i).getPay_count());
-                    BigDecimal danShangPinBigDecimal = djBigDecimal.multiply(countBigDecimal);
-                    zongJiaBigDecimal = danShangPinBigDecimal.add(zongJiaBigDecimal);
-                    zongJiaBigDecimal = zongJiaBigDecimal.add(new BigDecimal(mDatas.get(i).getWares_money_go()));
-                    chooseCount = chooseCount + Integer.valueOf(mDatas.get(i).getPay_count());
+                    if (mDatas.get(i).getForm_product_state().equals("1")) {
+                        BigDecimal djBigDecimal = new BigDecimal(mDatas.get(i).getForm_product_money());
+                        BigDecimal countBigDecimal = new BigDecimal(mDatas.get(i).getPay_count());
+                        BigDecimal danShangPinBigDecimal = djBigDecimal.multiply(countBigDecimal);
+                        zongJiaBigDecimal = danShangPinBigDecimal.add(zongJiaBigDecimal);
+                        zongJiaBigDecimal = zongJiaBigDecimal.add(new BigDecimal(mDatas.get(i).getWares_money_go()));
+                        chooseCount = chooseCount + Integer.valueOf(mDatas.get(i).getPay_count());
+                    }
+
                 }
             }
         }
@@ -487,6 +508,7 @@ public class GouWuCheActivity extends BaseActivity {
 
 
             if (mDatas.get(i).getIsSelect().equals("0")) {
+
 
                 flag = false;
                 break;
@@ -582,12 +604,48 @@ public class GouWuCheActivity extends BaseActivity {
         builder.create().show();
     }
 
+
+    /**
+     * 两个按钮的 dialog
+     */
+    private void showDngDanDeleteDanTiaoCaoZuo(int position) {
+
+        builder = new AlertDialog.Builder(GouWuCheActivity.this).setIcon(R.mipmap.logi_icon).setTitle("订单操作")
+                .setMessage("是否确定删除订单").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int j) {
+                        //ToDo: 你想做的事情
+                        //Toast.makeText(getActivity(), "确定按钮", Toast.LENGTH_LONG).show();
+                        String type = "2";   //type	全部删除：1.是2.否
+                        formProductIdList = new ArrayList<>();
+                        FormProductId formProductId = new FormProductId();
+                        formProductId.form_product_id = mDatas.get(position).getForm_product_id();
+                        formProductIdList.add(formProductId);
+
+                        getDeleteNet(type);
+
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //ToDo: 你想做的事情
+                        // Toast.makeText(getActivity(), "关闭按钮", Toast.LENGTH_LONG).show();
+                        dialogInterface.dismiss();
+                    }
+                });
+        builder.create().show();
+    }
+
     private List<GouWuCheZhengHeModel> getJieSuanList() {
         List<GouWuCheZhengHeModel> gouWuCheZhengHeModels = new ArrayList<>();
 
         for (int i = 0; i < mDatas.size(); i++) {
             if (mDatas.get(i).getIsSelect().equals("1")) {
-                gouWuCheZhengHeModels.add(mDatas.get(i));
+                if (mDatas.get(i).getForm_product_state() == null) {
+                    gouWuCheZhengHeModels.add(mDatas.get(i));
+                } else if (mDatas.get(i).getForm_product_state().equals("1")) {
+                    gouWuCheZhengHeModels.add(mDatas.get(i));
+                }
             }
         }
         return gouWuCheZhengHeModels;
@@ -607,7 +665,7 @@ public class GouWuCheActivity extends BaseActivity {
                 if (mDatas.get(i).isHeader) {
                     dianpuSelectPosition = i;
                 }
-                if (!mDatas.get(i).isHeader){
+                if (!mDatas.get(i).isHeader) {
                     if (mDatas.get(i).getIsSelect().equals("0")) {
                         selectDianPuAll = "0";
                         mDatas.get(dianpuSelectPosition).setIsSelect("0");
@@ -616,7 +674,7 @@ public class GouWuCheActivity extends BaseActivity {
                 }
             }
         }
-        if (selectDianPuAll.equals("1")){
+        if (selectDianPuAll.equals("1")) {
             mDatas.get(dianpuSelectPosition).setIsSelect("1");
         }
         return selectDianPuAll;

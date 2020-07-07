@@ -106,6 +106,7 @@ public class GoodsDetails_f implements Serializable {
         private List<BannerListBean> bannerList;
         private List<DetailImgListBean> detailImgList;
         private List<ProductListBean> productList;
+        public List<InstallationTypeBean> installationType;
 
         public String getInst_accid() {
             return inst_accid;
@@ -490,6 +491,7 @@ public class GoodsDetails_f implements Serializable {
             private String index_photo_url;
             private String money_make;
             private String product_title;
+            public String index_small_photo_url;
 
             public String getShopName() {
                 return shopName;
@@ -605,6 +607,23 @@ public class GoodsDetails_f implements Serializable {
             public void setProduct_title(String product_title) {
                 this.product_title = product_title;
             }
+        }
+
+        public static class InstallationTypeBean implements Serializable {
+
+            /**
+             * installation_type_name	安装类型名称
+             * installation_type_id	安装类型id
+             * installation_money	安装金额
+             * install_default	默认选中 1.选中 0未选中
+             */
+
+            public String installation_type_name;//安装类型名
+            public String installation_type_id;
+            public String installation_money;
+            public String install_default;
+
+
         }
     }
 }

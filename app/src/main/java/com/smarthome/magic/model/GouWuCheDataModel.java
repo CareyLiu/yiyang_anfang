@@ -180,6 +180,17 @@ public class GouWuCheDataModel  {
             private String pay_count;
             private String form_product_state;
             private String wares_go_type;
+            private String installation_type_id;
+
+            public String getInstallation_type_id() {
+                return installation_type_id;
+            }
+
+            public void setInstallation_type_id(String installation_type_id) {
+                this.installation_type_id = installation_type_id;
+            }
+
+
 
             public String getShop_product_title() {
                 return shop_product_title;

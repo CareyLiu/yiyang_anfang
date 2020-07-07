@@ -4,13 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -18,15 +11,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.roundview.RoundTextView;
+import com.github.jdsjlzx.ItemDecoration.SpacesItemDecoration;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.gouwuche.GouWuCheQueRenDingDanActivity;
-import com.smarthome.magic.activity.taokeshagncheng.QueRenDingDanActivity;
+import com.smarthome.magic.adapter.SongZhuangServerAdapter;
 import com.smarthome.magic.adapter.TaoCanAdapter;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
@@ -38,6 +39,8 @@ import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.GoodsDetails_f;
 import com.smarthome.magic.model.GouWuCheZhengHeModel;
 import com.smarthome.magic.util.AlertUtil;
+import com.smarthome.magic.util.FlowLayoutManager;
+import com.smarthome.magic.util.StaggeredDividerItemDecoration;
 import com.smarthome.magic.util.phoneview.sample.ImageShowActivity;
 
 import java.util.ArrayList;
@@ -91,6 +94,16 @@ public class ChooseTaoCanActivity extends Activity {
     RoundTextView rtvText;
     @BindView(R.id.tv_jian)
     TextView tvJian;
+    @BindView(R.id.constrain_shangpin)
+    ConstraintLayout constrainShangpin;
+    @BindView(R.id.tv_songzhuangfuwu_huashu)
+    TextView tvSongzhuangfuwuHuashu;
+    @BindView(R.id.cl_songzhuang_fuwu)
+    ConstraintLayout clSongzhuangFuwu;
+    @BindView(R.id.rlv_songzhuang_fuwu)
+    RecyclerView rlvSongzhuangFuwu;
+
+
     private String position;
 
     private String moneyBegin;
@@ -101,6 +114,8 @@ public class ChooseTaoCanActivity extends Activity {
     private String imageUrl;
     private String wares_go_type;
     private String leixing;
+    private String str = "0";
+    private String anZhuangFangShiId;//
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -196,19 +211,31 @@ public class ChooseTaoCanActivity extends Activity {
 
             if (productListBeans.get(i).getFlag()) {
                 productListBeans.get(i).setSelect("1");
-                position= String.valueOf(i);
+                position = String.valueOf(i);
             } else {
                 productListBeans.get(i).setSelect("0");
             }
         }
-        Glide.with(ChooseTaoCanActivity.this).load(productListBeans.get(0).getIndex_photo_url()).into(ivImage);
+        RoundedCorners roundedCorners = new RoundedCorners(14);
+
+        RequestOptions requestOptions = RequestOptions.bitmapTransform(roundedCorners);
+
+        Glide.with(ChooseTaoCanActivity.this).load(productListBeans.get(0).getIndex_photo_url()).apply(requestOptions).into(ivImage);
         tvPrice.setText("¥" + productListBeans.get(0).getMoney_now());
-        tvKucun.setText("库存（" + productListBeans.get(0).getShop_product_count() + ")");
-        tvYanse.setText(productListBeans.get(0).getProduct_title());
+        tvKucun.setText("库存" + productListBeans.get(0).getShop_product_count() + "件");
+        tvYanse.setText(productListBeans.get(0).getProduct_title().trim());
 
         tvNumber.setText("1");
         setclick();
         initAdapter();
+
+        if (dataBean.installationType.size() > 0) {
+            initSerVerAdapter();
+        } else {
+            clSongzhuangFuwu.setVisibility(View.GONE);
+        }
+
+
     }
 
     /**
@@ -228,7 +255,8 @@ public class ChooseTaoCanActivity extends Activity {
      * @param wares_go_type
      * @param leixing       0 加入购物车 1立即购买
      */
-    public static void actionStart(Context context, GoodsDetails_f.DataBean dataBean, String canshu, String moneyBegin, String moneyEnd, String title, String shopName, String imageUrl, String wares_go_type, String leixing) {
+    public static void actionStart(Context context, GoodsDetails_f.DataBean dataBean, String canshu, String moneyBegin, String moneyEnd, String title,
+                                   String shopName, String imageUrl, String wares_go_type, String leixing) {
         Intent intent = new Intent(context, ChooseTaoCanActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("dataBean", dataBean);
@@ -275,11 +303,14 @@ public class ChooseTaoCanActivity extends Activity {
     }
 
     TaoCanAdapter taoCanAdapter;
+    SongZhuangServerAdapter songZhuangServerAdapter;//送装服务adapter
 
     public void initAdapter() {
         taoCanAdapter = new TaoCanAdapter(R.layout.item_taocan, productListBeans);
-        StaggeredGridLayoutManager linearLayoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.HORIZONTAL);
+        FlowLayoutManager linearLayoutManager = new FlowLayoutManager(ChooseTaoCanActivity.this, true);
+
         rlvList.setLayoutManager(linearLayoutManager);
+        rlvList.setNestedScrollingEnabled(false);
         rlvList.setAdapter(taoCanAdapter);
         taoCanAdapter.notifyDataSetChanged();
         taoCanAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
@@ -299,10 +330,21 @@ public class ChooseTaoCanActivity extends Activity {
                         }
 
 
-                        Glide.with(ChooseTaoCanActivity.this).load(productListBeans.get(position).getIndex_photo_url()).into(ivImage);
-                        tvPrice.setText(productListBeans.get(position).getMoney_now());
-                        tvKucun.setText("库存（" + productListBeans.get(position).getShop_product_count() + ")");
-                        tvYanse.setText(productListBeans.get(position).getProduct_title());
+//                        Glide.with(ChooseTaoCanActivity.this).load(productListBeans.get(position).getIndex_photo_url()).into(ivImage);
+//                        tvPrice.setText(productListBeans.get(position).getMoney_now());
+//                        tvKucun.setText("库存" + productListBeans.get(position).getShop_product_count() + "件");
+//                        tvYanse.setText(productListBeans.get(position).getProduct_title());
+
+
+                        RoundedCorners roundedCorners = new RoundedCorners(14);
+
+                        RequestOptions requestOptions = RequestOptions.bitmapTransform(roundedCorners);
+
+                        Glide.with(ChooseTaoCanActivity.this).load(productListBeans.get(position).getIndex_photo_url()).apply(requestOptions).into(ivImage);
+                        tvPrice.setText("¥" + productListBeans.get(position).getMoney_now());
+                        tvKucun.setText("库存" + productListBeans.get(position).getShop_product_count() + "件");
+                        tvYanse.setText(productListBeans.get(position).getProduct_title().trim());
+
 
                         //展示图片 和地址
                         taoCanAdapter.notifyDataSetChanged();
@@ -345,6 +387,7 @@ public class ChooseTaoCanActivity extends Activity {
             map.put("shop_product_id", taoCanId);
         }
         map.put("pay_count", tvNumber.getText().toString());
+        map.put("installation_type_id", anZhuangFangShiId);
 
         Gson gson = new Gson();
         OkGo.<AppResponse<Object>>post(Urls.HOME_PICTURE_HOME)
@@ -446,7 +489,41 @@ public class ChooseTaoCanActivity extends Activity {
         gouWuCheZhengHeModel1.setWares_go_type(wares_go_type);
         gouWuCheZhengHeModel1.setBottomYuanJiao("1");
         gouWuCheZhengHeModel1.setIsSelect("1");
+        gouWuCheZhengHeModel1.setInstallation_type_id(anZhuangFangShiId);
         list.add(gouWuCheZhengHeModel1);
         return list;
     }
+
+    public void initSerVerAdapter() {
+        anZhuangFangShiId = dataBean.installationType.get(0).installation_type_id;
+        songZhuangServerAdapter = new SongZhuangServerAdapter(R.layout.item_songzhuagnfuwu, dataBean.installationType);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChooseTaoCanActivity.this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        rlvSongzhuangFuwu.setLayoutManager(linearLayoutManager);
+        rlvSongzhuangFuwu.setNestedScrollingEnabled(false);
+        rlvSongzhuangFuwu.setAdapter(songZhuangServerAdapter);
+        songZhuangServerAdapter.notifyDataSetChanged();
+        songZhuangServerAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.constrain:
+
+                        anZhuangFangShiId = dataBean.installationType.get(position).installation_type_id;
+                        for (int i = 0; i < dataBean.installationType.size(); i++) {
+                            if (position == i) {
+                                dataBean.installationType.get(i).install_default = "1";
+                            } else {
+                                dataBean.installationType.get(i).install_default = "0";
+                            }
+                        }
+
+                        //展示图片 和地址
+                        songZhuangServerAdapter.notifyDataSetChanged();
+                        break;
+                }
+            }
+        });
+    }
+
 }

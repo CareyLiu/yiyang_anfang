@@ -24,6 +24,18 @@ public class GouWuCheZhengHeModel extends SectionEntity {
     private String bottomYuanJiao = "0";//0不是圆角 1 是圆角
     private String isSelect = "0";//默认没有选中
     private String liuyan = "";
+    private String installation_type_id;//安装id
+
+
+    public String getInstallation_type_id() {
+        return installation_type_id;
+    }
+
+    public void setInstallation_type_id(String installation_type_id) {
+        this.installation_type_id = installation_type_id;
+    }
+
+
     public String getLiuyan() {
         return liuyan;
     }
@@ -31,7 +43,6 @@ public class GouWuCheZhengHeModel extends SectionEntity {
     public void setLiuyan(String liuyan) {
         this.liuyan = liuyan;
     }
-
 
 
     public String getBottomYuanJiao() {

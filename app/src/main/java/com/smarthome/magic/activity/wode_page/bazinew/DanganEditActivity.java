@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.airbnb.lottie.L;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
@@ -33,11 +32,7 @@ import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 
-import org.jaaksi.pickerview.picker.TimePicker;
-
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -91,6 +86,8 @@ public class DanganEditActivity extends BaziBaseActivity {
     Button bt_moren;
     @BindView(R.id.bt_delete)
     Button bt_delete;
+    @BindView(R.id.iv_switch)
+    ImageView iv_switch;
 
     private DanganModel.DataBean model;
     private String sex;
@@ -102,6 +99,8 @@ public class DanganEditActivity extends BaziBaseActivity {
     private TimePickerView timePicker;
     private OptionsPickerView shiPicker;
 
+    private String mingpan_user;
+
     @Override
     public int getContentViewResId() {
         return R.layout.bazi_activity_dangan_edit;
@@ -111,14 +110,14 @@ public class DanganEditActivity extends BaziBaseActivity {
     protected void initToolbar() {
         super.initToolbar();
         tv_title.setText("编辑排盘");
-        tv_rightTitle.setVisibility(View.VISIBLE);
+        tv_rightTitle.setVisibility(View.GONE);
         tv_rightTitle.setText("排盘");
         tv_rightTitle.setTextSize(17);
         tv_rightTitle.setTextColor(Color.WHITE);
         tv_rightTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editMinpan();
+
             }
         });
     }
@@ -146,9 +145,11 @@ public class DanganEditActivity extends BaziBaseActivity {
         ed_name.setText(name);
         tv_data.setText(birthdayData);
         tv_shichen.setText(shichen);
+
+        mingpan_user = "1";
     }
 
-    @OnClick({R.id.ll_select_nan, R.id.ll_select_nv, R.id.ll_select_yang, R.id.ll_select_yin, R.id.ll_select_runyue_n, R.id.ll_select_runyue_s, R.id.ll_data, R.id.ll_shichen, R.id.bt_moren, R.id.bt_delete})
+    @OnClick({R.id.iv_switch, R.id.ll_select_nan, R.id.ll_select_nv, R.id.ll_select_yang, R.id.ll_select_yin, R.id.ll_select_runyue_n, R.id.ll_select_runyue_s, R.id.ll_data, R.id.ll_shichen, R.id.bt_moren, R.id.bt_delete})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_select_nan:
@@ -176,11 +177,25 @@ public class DanganEditActivity extends BaziBaseActivity {
                 selectTime();
                 break;
             case R.id.bt_moren:
-                setMoren();
+//                setMoren();
+                editMinpan();
                 break;
             case R.id.bt_delete:
                 deleteMinpan();
                 break;
+            case R.id.iv_switch:
+                clickSwich();
+                break;
+        }
+    }
+
+    private void clickSwich() {
+        if (mingpan_user.equals("1")) {
+            mingpan_user = "2";
+            iv_switch.setImageResource(R.mipmap.swich_off);
+        } else {
+            mingpan_user = "1";
+            iv_switch.setImageResource(R.mipmap.swich_on);
         }
     }
 
@@ -297,7 +312,7 @@ public class DanganEditActivity extends BaziBaseActivity {
         map.put("sex", sex + "");
         map.put("birthday_type", li + "");
         map.put("isleap", runyue + "");
-        map.put("mingpan_user", "1");
+        map.put("mingpan_user", mingpan_user);
 
         Gson gson = new Gson();
         Log.e("map_data", gson.toJson(map));

@@ -14,10 +14,12 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
-import com.lzy.okgo.request.base.Request;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.taokeshagncheng.TaoKeHomeActivity;
-import com.smarthome.magic.activity.taokeshagncheng.TaokeListActivity;
+import com.smarthome.magic.activity.WebViewActivity;
+import com.smarthome.magic.activity.tuangou.TuanGouShangJiaListActivity;
 import com.smarthome.magic.activity.wode_page.bazinew.base.BaziBaseActivity;
 import com.smarthome.magic.activity.wode_page.bazinew.model.DanganModel;
 import com.smarthome.magic.activity.wode_page.bazinew.utils.BaziCode;
@@ -34,6 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -74,6 +77,8 @@ public class BazismMainActivity extends BaziBaseActivity {
     TextView tv_name_sex;
     @BindView(R.id.tv_birthday)
     TextView tv_birthday;
+    @BindView(R.id.smartRefreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
 
     @Override
     public int getContentViewResId() {
@@ -89,7 +94,7 @@ public class BazismMainActivity extends BaziBaseActivity {
         iv_rightTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                clickDanan(BaziCode.ST_mingpan);
             }
         });
     }
@@ -106,6 +111,18 @@ public class BazismMainActivity extends BaziBaseActivity {
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
         initBanner();
+        initSM();
+    }
+
+    private void initSM() {
+        smartRefreshLayout.setEnableLoadMore(false);
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getNet();
+            }
+        });
+
     }
 
     /**
@@ -130,6 +147,13 @@ public class BazismMainActivity extends BaziBaseActivity {
         imagePath.add(R.mipmap.banner_3);
         banner.setImages(imagePath);
         //设置图片加载地址
+
+        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                clickDanan(BaziCode.ST_mingpan);
+            }
+        });
         banner.start();
     }
 
@@ -209,6 +233,12 @@ public class BazismMainActivity extends BaziBaseActivity {
                             tv_dongwu.setText("");
                             tv_shuzi.setText("");
                         }
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        smartRefreshLayout.finishRefresh();
                     }
                 });
     }

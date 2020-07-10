@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
@@ -24,7 +23,6 @@ import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.wode_page.bazinew.base.BaziBaseActivity;
-import com.smarthome.magic.activity.wode_page.bazinew.model.DanganModel;
 import com.smarthome.magic.activity.wode_page.bazinew.model.PaipanModel;
 import com.smarthome.magic.activity.wode_page.bazinew.utils.TimeUtils;
 import com.smarthome.magic.callback.JsonCallback;
@@ -84,6 +82,8 @@ public class DanganNewActivity extends BaziBaseActivity {
     LinearLayout ll_shichen;
     @BindView(R.id.bt_paipan)
     Button bt_paipan;
+    @BindView(R.id.iv_switch)
+    ImageView iv_switch;
 
     private String sex;
     private String li;
@@ -93,6 +93,7 @@ public class DanganNewActivity extends BaziBaseActivity {
     private String name;
     private OptionsPickerView shiPicker;
     private TimePickerView timePicker;
+    private String mingpan_user;
 
     @Override
     public int getContentViewResId() {
@@ -117,9 +118,10 @@ public class DanganNewActivity extends BaziBaseActivity {
         sex = "1";
         li = "1";
         runyue = "0";
+        mingpan_user = "1";
     }
 
-    @OnClick({R.id.ll_select_nan, R.id.ll_select_nv, R.id.ll_select_yang, R.id.ll_select_yin, R.id.ll_select_runyue_n, R.id.ll_select_runyue_s, R.id.ll_data, R.id.ll_shichen, R.id.bt_paipan})
+    @OnClick({R.id.iv_switch, R.id.ll_select_nan, R.id.ll_select_nv, R.id.ll_select_yang, R.id.ll_select_yin, R.id.ll_select_runyue_n, R.id.ll_select_runyue_s, R.id.ll_data, R.id.ll_shichen, R.id.bt_paipan})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_select_nan:
@@ -149,6 +151,19 @@ public class DanganNewActivity extends BaziBaseActivity {
             case R.id.bt_paipan:
                 clickPaipan();
                 break;
+            case R.id.iv_switch:
+                clickSW();
+                break;
+        }
+    }
+
+    private void clickSW() {
+        if (mingpan_user.equals("1")) {
+            mingpan_user = "2";
+            iv_switch.setImageResource(R.mipmap.swich_off);
+        } else {
+            mingpan_user = "1";
+            iv_switch.setImageResource(R.mipmap.swich_on);
         }
     }
 
@@ -269,7 +284,7 @@ public class DanganNewActivity extends BaziBaseActivity {
         map.put("sex", sex + "");
         map.put("birthday_type", li + "");
         map.put("isleap", runyue + "");
-        map.put("mingpan_user", "1");
+        map.put("mingpan_user", mingpan_user);
 
         Gson gson = new Gson();
         Log.e("map_data", gson.toJson(map));

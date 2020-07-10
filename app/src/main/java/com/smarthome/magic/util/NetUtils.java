@@ -7,7 +7,7 @@ import com.lzy.okgo.OkGo;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.tools.NetworkUtils;
 
 import java.util.HashMap;

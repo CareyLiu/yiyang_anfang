@@ -27,9 +27,10 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.adapter.GoodsEvaluateAdapter;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.GlideImageLoader;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.GoodsDetails_f;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.view.CustomBottomDialog;
@@ -143,11 +144,11 @@ public class GoosDetailsActivity extends BaseActivity implements AppBarLayout.On
     public void getData() {
         Map<String, String> map = new HashMap<>();
         map.put("code", "04133");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("shop_product_id", getIntent().getStringExtra("shop_product_id"));
         map.put("wares_id", getIntent().getStringExtra("wares_id"));
         Gson gson = new Gson();
-        OkGo.<AppResponse<GoodsDetails_f.DataBean>>post(Constant.SERVER_URL + "shop_new/app")
+        OkGo.<AppResponse<GoodsDetails_f.DataBean>>post(Urls.SERVER_URL + "shop_new/app")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<GoodsDetails_f.DataBean>>() {
@@ -194,13 +195,13 @@ public class GoosDetailsActivity extends BaseActivity implements AppBarLayout.On
     public void addShopCart(){
         Map<String, String> map = new HashMap<>();
         map.put("code", "04151");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("shop_product_id", getIntent().getStringExtra("shop_product_id"));
         map.put("wares_id", getIntent().getStringExtra("wares_id"));
         map.put("pay_count",customBottomDialog.getCount());
         Gson gson = new Gson();
-        OkGo.<AppResponse>post(Constant.SERVER_URL + "shop_new/app/user")
+        OkGo.<AppResponse>post(Urls.SERVER_URL + "shop_new/app/user")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse>() {

@@ -21,10 +21,11 @@ import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.lanya_fengnuan.DriverData;
 import com.smarthome.magic.lanya_fengnuan.DriverDialog;
 import com.smarthome.magic.lanya_fengnuan.GsonUtil;
@@ -495,7 +496,7 @@ public class DriveinfoActivity extends BaseActivity implements View.OnClickListe
         Gson gson = new Gson();
         HashMap<String, String> map = new HashMap<>();
         map.put("code", "03206");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(DriveinfoActivity.this).getAppToken());
         map.put("user_car_id", user_car_id);
         if (!StringUtils.isEmpty(ignition_id_one)){
@@ -615,7 +616,7 @@ public class DriveinfoActivity extends BaseActivity implements View.OnClickListe
 
 
 
-        OkGo.<AppResponse>post(Constant.SERVER_URL + "wit/app/zhu")
+        OkGo.<AppResponse>post(Urls.SERVER_URL + "wit/app/zhu")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse>() {
@@ -654,11 +655,11 @@ public class DriveinfoActivity extends BaseActivity implements View.OnClickListe
     public void requestData11() {//请求的参数
         Map<String, String> map = new HashMap<>();
         map.put("code", "00005");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         //map.put("token", UserManager.getManager(this).getAppToken());
         map.put("type_id", "zhu_parts_factory");
         Gson gson = new Gson();
-        OkGo.<AppResponse<DriverData.DataBean>>post(Constant.SERVER_URL + "msg")
+        OkGo.<AppResponse<DriverData.DataBean>>post(Urls.SERVER_URL + "msg")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<DriverData.DataBean>>() {
@@ -687,11 +688,11 @@ public class DriveinfoActivity extends BaseActivity implements View.OnClickListe
 
         Map<String, String> map = new HashMap<>();
         map.put("code", "03205");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("user_car_id", PreferenceHelper.getInstance(this).getString("car_id", ""));
         Gson gson = new Gson();
-        OkGo.<AppResponse<OwnerInfo.DataBean>>post(Constant.SERVER_URL + "wit/app/zhu")
+        OkGo.<AppResponse<OwnerInfo.DataBean>>post(Urls.SERVER_URL + "wit/app/zhu")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<OwnerInfo.DataBean>>() {

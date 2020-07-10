@@ -39,11 +39,12 @@ import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppEvent;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuo_Base;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.Upload;
 import com.smarthome.magic.model.UserInfo;
 import com.smarthome.magic.util.AlertUtil;
@@ -165,10 +166,10 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
     public void requestData() {
         Map<String, String> map = new HashMap<>();
         map.put("code", "04201");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(this).getAppToken());
         Gson gson = new Gson();
-        OkGo.<AppResponse<UserInfo.DataBean>>post(Constant.SERVER_URL + "shop_new/app/user")
+        OkGo.<AppResponse<UserInfo.DataBean>>post(Urls.SERVER_URL + "shop_new/app/user")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<UserInfo.DataBean>>() {
@@ -199,7 +200,7 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
     public void updateInfo(String updateType) {
         Map<String, String> map = new HashMap<>();
         map.put("code", "00701");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("of_user_id", UserManager.getManager(this).getUserId());
         map.put("update_type", updateType);
         switch (updateType) {
@@ -211,7 +212,7 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
                 break;
         }
         Gson gson = new Gson();
-        OkGo.<AppResponse>post(Constant.SERVER_URL + "msg")
+        OkGo.<AppResponse>post(Urls.SERVER_URL + "msg")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse>() {
@@ -405,10 +406,10 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
     public void takeSuccess(TResult result) {
         //此处使用原图路径，不压缩
         File file = new File(result.getImage().getOriginalPath());
-        OkGo.<AppResponse<Upload.DataBean>>post(Constant.SERVER_URL + "msg/upload")
+        OkGo.<AppResponse<Upload.DataBean>>post(Urls.SERVER_URL + "msg/upload")
                 .tag(this)//
                 .isSpliceUrl(true)
-                .params("key", Constant.KEY)
+                .params("key", Urls.key)
                 .params("token", UserManager.getManager(SettingActivity.this).getAppToken())
                 .params("type", "1")
                 .params("file", file)

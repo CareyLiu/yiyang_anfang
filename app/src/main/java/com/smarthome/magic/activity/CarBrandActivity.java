@@ -21,8 +21,8 @@ import com.smarthome.magic.adapter.ExpandableRecyclerAdapter;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
 import com.smarthome.magic.config.PreferenceHelper;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.CarBrand;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.DialogManager;
@@ -101,10 +101,10 @@ public class CarBrandActivity extends BaseActivity implements SideBar.OnChooseLe
             DialogManager.getManager(this).showMessage("加载中，请稍候");
         Map<String, String> map = new HashMap<>();
         map.put("code", "00005");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("type_id", "car_brand_type");
         Gson gson = new Gson();
-        OkGo.<AppResponse<CarBrand.DataBean>>post(Constant.SERVER_URL + "msg")
+        OkGo.<AppResponse<CarBrand.DataBean>>post(Urls.SERVER_URL + "msg")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)  //缓存模式先使用缓存,然后使用网络数据

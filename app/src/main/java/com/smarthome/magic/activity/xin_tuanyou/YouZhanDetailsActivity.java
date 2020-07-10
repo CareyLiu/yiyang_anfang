@@ -48,8 +48,9 @@ import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAd
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.PreferenceHelper;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.YouZhanDetailsModel;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.GridSectionAverageGapItemDecoration;
@@ -518,7 +519,7 @@ public class YouZhanDetailsActivity extends BaseActivity {
          */
         Map<String, String> map = new HashMap<>();
         map.put("code", "04246");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("inst_id", inst_id);
         map.put("oilType", oilType);
         map.put("oilNo", oilName);

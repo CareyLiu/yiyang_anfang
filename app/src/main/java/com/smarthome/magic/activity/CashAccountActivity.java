@@ -19,7 +19,7 @@ import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
@@ -120,7 +120,7 @@ public class CashAccountActivity extends BaseActivity {
     private void requestData() {
         Map<String, String> map = new HashMap<>();
         map.put("code", "04238");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(getApplication()).getAppToken());
         map.put("alipay_uname", etName.getText().toString());
         map.put("alipay_number", etAccount.getText().toString());

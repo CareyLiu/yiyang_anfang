@@ -18,9 +18,10 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.adapter.RuleListAdapter;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.LoginUser;
 import com.smarthome.magic.service.HeaterMqttService;
 import com.smarthome.magic.util.AlertUtil;
@@ -100,7 +101,7 @@ public class SelectLoginActivity extends BaseActivity {
 
         Map<String, String> map = new HashMap<>();
         map.put("code", "00051");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("subsystem_id", subsystem_id);
         map.put("user_id_key", user_id_key);
         map.put("power_state", power_state);

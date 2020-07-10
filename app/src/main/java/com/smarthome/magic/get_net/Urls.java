@@ -3,10 +3,10 @@ package com.smarthome.magic.get_net;
 //网络接口地址
 public class Urls {
     public static String key = "20180305124455yu";//全局请求key
-    public static String SERVER_URL = "https://shop.hljsdkj.com/";//基本地址
+    //public static String SERVER_URL = "https://shop.hljsdkj.com/";//基本地址
 //public static String SERVER_URL = "http://192.168.1.122:8080/";//大志本地
 //public static String SERVER_URL = "http://192.168.1.127:8080/";//大ge本地
-
+    public static String SERVER_URL = "https://test.hljsdkj.com/";//基本地址
 
     public static String MESSAGE_URL = SERVER_URL + "wit/app/user";
     public static String HOME_PICTURE = SERVER_URL + "shop_new/app";
@@ -25,4 +25,6 @@ public class Urls {
     public static String BAZIAPP = SERVER_URL + "bz/app";//八紫APP接口
     public static String BAZIAPPUSER = SERVER_URL + "bz/app/user";//八紫APP接口
     public static String BAZIPAYOK = SERVER_URL + "msg/pay/createbz/ok";//大礼包支付
+    public static String ARGEMENTS = SERVER_URL + "shop_new/user_agreement";// ARGEMENTS
+
 }

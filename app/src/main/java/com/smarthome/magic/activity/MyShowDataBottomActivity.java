@@ -17,8 +17,9 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.LingPeiJianModel;
 import com.smarthome.magic.util.AlertUtil;
 import java.util.ArrayList;
@@ -113,7 +114,7 @@ public class MyShowDataBottomActivity extends Activity {
 
                     Map<String, String> map = new HashMap<>();
                     map.put("code", "03206");
-                    map.put("key", Constant.KEY);
+                    map.put("key", Urls.key);
                     map.put("token", UserManager.getManager(MyShowDataBottomActivity.this).getAppToken());
 
                     map.put("ignition_all_name", "");//点火塞总名称
@@ -127,7 +128,7 @@ public class MyShowDataBottomActivity extends Activity {
 
                     Gson gson = new Gson();
 
-                    OkGo.<AppResponse>post(Constant.SERVER_URL + "wit/app/user")
+                    OkGo.<AppResponse>post(Urls.SERVER_URL + "wit/app/user")
                             .tag(this)//
                             .upJson(gson.toJson(map))
                             .execute(new JsonCallback<AppResponse>() {
@@ -178,11 +179,11 @@ public class MyShowDataBottomActivity extends Activity {
     public void requestData11() {//请求的参数
         Map<String, String> map = new HashMap<>();
         map.put("code", "00005");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         //map.put("token", UserManager.getManager(this).getAppToken());
         map.put("type_id", "zhu_parts_factory");
         Gson gson = new Gson();
-        OkGo.<AppResponse<LingPeiJianModel.DataBean>>post(Constant.SERVER_URL + "msg")
+        OkGo.<AppResponse<LingPeiJianModel.DataBean>>post(Urls.SERVER_URL + "msg")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<LingPeiJianModel.DataBean>>() {
@@ -455,12 +456,12 @@ public class MyShowDataBottomActivity extends Activity {
 //        OkHttpClient mOkHttpClient = new OkHttpClient();
 //        DataLingPeiJianIn in = new DataLingPeiJianIn();
 //        in.code = "00005";
-//        in.key = Constant.KEY;
+//        in.key = Urls.key;
 //        in.type_id = "zhu_parts_factory";
 //
 //        MediaType JSON = MediaType.parse("application/json;charset=utf-8");
 //        RequestBody body = RequestBody.create(JSON, new Gson().toJson(in));
-//        final Request request = new Request.Builder().url(Constant.SERVER_URL + "msg").post(body).build();
+//        final Request request = new Request.Builder().url(Urls.SERVER_URL + "msg").post(body).build();
 //        Log.i("lingpeijianbody",new Gson().toJson(request.url()));
 //        Call call = mOkHttpClient.newCall(request);
 //        call.enqueue(new Callback() {

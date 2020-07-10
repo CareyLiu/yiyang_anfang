@@ -23,8 +23,9 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.adapter.MasterListAdapter;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.MasterModel;
 import com.smarthome.magic.util.AlertUtil;
 
@@ -115,13 +116,13 @@ public class ServiceMasterFragment extends BaseFragment {
     public void requestData(final String fromId, String plate_number, String user_phone) {
         Map<String, String> map = new HashMap<>();
         map.put("code", "03319");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(getActivity()).getAppToken());
         map.put("plate_number", plate_number);
         map.put("user_phone", user_phone);
         map.put("of_user_id", fromId);
         Gson gson = new Gson();
-        OkGo.<AppResponse<MasterModel.DataBean>>post(Constant.SERVER_URL + "wit/app/car/witAgent")
+        OkGo.<AppResponse<MasterModel.DataBean>>post(Urls.SERVER_URL + "wit/app/car/witAgent")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<MasterModel.DataBean>>() {

@@ -97,7 +97,7 @@
             android:layout_width="23dp"
             android:layout_height="23dp"
             android:layout_centerInParent="true"
-            android:src="@mipmap/mine_icon_gouwuche" />
+            android:src="@mipmap/home_icon_gouwuche" />
 
     </RelativeLayout>
 

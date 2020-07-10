@@ -91,11 +91,11 @@ import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAd
 import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
 import com.smarthome.magic.config.GlideImageLoader;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.config.Wetch_S;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.CheckModel;
 import com.smarthome.magic.model.FenLeiContentModel;
 import com.smarthome.magic.model.Home;
@@ -278,7 +278,7 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
 
         Map<String, String> map = new HashMap<>();
         map.put("code", "00002");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("version_no", getAppVersionName(getActivity()));
         map.put("version_type", "6");
         map.put("version_code", getAppVersionCode(getActivity()));
@@ -740,7 +740,7 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
     public void getData() {
         Map<String, String> map = new HashMap<>();
         map.put("code", "04131");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(getActivity()).getAppToken());
         map.put("gps_x", PreferenceHelper.getInstance(getActivity()).getString(WEIDU, ""));
         map.put("gps_y", PreferenceHelper.getInstance(getActivity()).getString(JINGDU, ""));
@@ -871,14 +871,14 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
     public void getYaoQingNet(Context cnt) {
         Map<String, String> map = new HashMap<>();
         map.put("code", "04341");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(cnt).getAppToken());
         // map.put("shop_product_id", productId);
         //map.put("wares_id", warseId);
 
         Log.i("taoken_gg", UserManager.getManager(cnt).getAppToken());
         Gson gson = new Gson();
-        OkGo.<AppResponse<TuiGuangMaModel.DataBean>>post(Constant.SERVER_URL + "shop_new/app/user")
+        OkGo.<AppResponse<TuiGuangMaModel.DataBean>>post(Urls.SERVER_URL + "shop_new/app/user")
                 .tag(cnt)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<TuiGuangMaModel.DataBean>>() {

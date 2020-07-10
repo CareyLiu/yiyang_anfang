@@ -24,8 +24,9 @@ import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.TuiGuangMaModel;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.Tools;
@@ -73,14 +74,14 @@ public class TuiGuangMaActivity extends BaseActivity {
     private void getNet() {
         Map<String, String> map = new HashMap<>();
         map.put("code", "04341");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(TuiGuangMaActivity.this).getAppToken());
         // map.put("shop_product_id", productId);
         //map.put("wares_id", warseId);
 
         Log.i("taoken_gg", UserManager.getManager(TuiGuangMaActivity.this).getAppToken());
         Gson gson = new Gson();
-        OkGo.<AppResponse<TuiGuangMaModel.DataBean>>post(Constant.SERVER_URL + "shop_new/app/user")
+        OkGo.<AppResponse<TuiGuangMaModel.DataBean>>post(Urls.SERVER_URL + "shop_new/app/user")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<TuiGuangMaModel.DataBean>>() {
@@ -129,7 +130,7 @@ public class TuiGuangMaActivity extends BaseActivity {
     private void getNet_butian(String et) {
         Map<String, String> map = new HashMap<>();
         map.put("code", "04343");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(TuiGuangMaActivity.this).getAppToken());
         // map.put("shop_product_id", productId);
         //map.put("wares_id", warseId);
@@ -137,7 +138,7 @@ public class TuiGuangMaActivity extends BaseActivity {
 
         Log.i("taoken_gg", UserManager.getManager(TuiGuangMaActivity.this).getAppToken());
         Gson gson = new Gson();
-        OkGo.<AppResponse<Object>>post(Constant.SERVER_URL + "shop_new/app/user")
+        OkGo.<AppResponse<Object>>post(Urls.SERVER_URL + "shop_new/app/user")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<Object>>() {

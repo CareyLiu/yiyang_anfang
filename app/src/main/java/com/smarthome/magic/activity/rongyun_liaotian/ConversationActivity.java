@@ -33,6 +33,8 @@ import io.rong.imlib.RongIMClient;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
+import static com.smarthome.magic.get_net.Urls.HOME_PICTURE_HOME;
+
 public class ConversationActivity extends BaseActivity {
 
     @Override
@@ -125,7 +127,7 @@ public class ConversationActivity extends BaseActivity {
 
         Gson gson = new Gson();
         OkGo.<AppResponse<Object>>
-                post("https://shop.hljsdkj.com/shop_new/app/user").
+                post(HOME_PICTURE_HOME).
                 tag(context).
                 upJson(gson.toJson(map)).
                 execute(new JsonCallback<AppResponse<Object>>() {

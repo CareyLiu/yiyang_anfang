@@ -36,9 +36,10 @@ import com.smarthome.magic.callback.DialogCallback;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.LoginUser;
 import com.smarthome.magic.model.Message;
 import com.smarthome.magic.util.AlertUtil;
@@ -229,11 +230,11 @@ public class LoginActivity extends BaseActivity {
         } else {
             Map<String, String> map = new HashMap<>();
             map.put("code", "00001");
-            map.put("key", Constant.KEY);
+            map.put("key", Urls.key);
             map.put("user_phone", mEtPhone.getText().toString());
             map.put("mod_id", "0315");
             Gson gson = new Gson();
-            OkGo.<AppResponse<Message.DataBean>>post(Constant.SERVER_URL + "msg")
+            OkGo.<AppResponse<Message.DataBean>>post(Urls.SERVER_URL + "msg")
                     .tag(this)//
                     .upJson(gson.toJson(map))
                     .execute(new JsonCallback<AppResponse<Message.DataBean>>() {
@@ -266,7 +267,7 @@ public class LoginActivity extends BaseActivity {
         } else {
             Map<String, String> map = new HashMap<>();
             map.put("code", "00050");
-            map.put("key", Constant.KEY);
+            map.put("key", Urls.key);
             map.put("req_type", req_type);
 
             //map.put("phone_model", SystemUtils.getSystemModel());
@@ -383,7 +384,7 @@ public class LoginActivity extends BaseActivity {
 
         Map<String, String> map = new HashMap<>();
         map.put("code", "00051");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("subsystem_id", "");
         map.put("user_id_key", UserManager.getManager(this).getUserIdKey());
         map.put("power_state", UserManager.getManager(this).getPowerState());

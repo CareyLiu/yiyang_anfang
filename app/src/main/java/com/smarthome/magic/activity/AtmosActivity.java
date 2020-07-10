@@ -21,9 +21,9 @@ import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.AtmosBean;
 import com.smarthome.magic.model.DataIn;
 import com.smarthome.magic.model.SmartDevice_car_0364;
@@ -148,12 +148,12 @@ public class AtmosActivity extends BaseActivity {
 
         Map<String, String> map = new HashMap<>();
         map.put("code", "03112");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("user_car_id", PreferenceHelper.getInstance(AtmosActivity.this).getString("car_id", ""));
         map.put("zhu_apc", "0" + mEtAtmos.getText().toString());
         Gson gson = new Gson();
-        OkGo.<AppResponse>post(Constant.SERVER_URL + "wit/app/user")
+        OkGo.<AppResponse>post(Urls.SERVER_URL + "wit/app/user")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse>() {
@@ -185,13 +185,13 @@ public class AtmosActivity extends BaseActivity {
 
         Map<String, String> map = new HashMap<>();
         map.put("code", "03111");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("user_car_id", PreferenceHelper.getInstance(AtmosActivity.this).getString("car_id", ""));
 
         Gson gson = new Gson();
 
-        OkGo.<AppResponse<AtmosBean.DataBean>>post(Constant.SERVER_URL + "wit/app/user")
+        OkGo.<AppResponse<AtmosBean.DataBean>>post(Urls.SERVER_URL + "wit/app/user")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<AtmosBean.DataBean>>() {

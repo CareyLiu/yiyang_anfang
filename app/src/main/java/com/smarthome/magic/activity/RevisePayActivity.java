@@ -12,8 +12,9 @@ import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.view.Keyboard;
 import com.smarthome.magic.view.PayEditText;
@@ -95,13 +96,13 @@ public class RevisePayActivity extends BaseActivity {
     private void requestData() {
         Map<String, String> map = new HashMap<>();
         map.put("code", "04239");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(getApplication()).getAppToken());
         map.put("sms_id", getIntent().getStringExtra("sms_id"));
         map.put("sms_code", getIntent().getStringExtra("sms_code"));
         map.put("pay_password", PayEditTextPay.getText().toString().trim());
         Gson gson = new Gson();
-        OkGo.<AppResponse>post(Constant.SERVER_URL + "shop_new/app/user")
+        OkGo.<AppResponse>post(Urls.SERVER_URL + "shop_new/app/user")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse>() {

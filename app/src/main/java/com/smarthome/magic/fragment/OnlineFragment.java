@@ -27,9 +27,10 @@ import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAd
 import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.SmartDevice_car_0364;
 import com.smarthome.magic.util.AlertUtil;
 
@@ -183,11 +184,11 @@ public class OnlineFragment extends BaseFragment implements Observer {
     public void getData() {
         Map<String, String> map = new HashMap<>();
         map.put("code", "03064");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("user_car_type", "1");
         map.put("token", UserManager.getManager(getActivity()).getAppToken());
         Gson gson = new Gson();
-        OkGo.<AppResponse<SmartDevice_car_0364.DataBean>>post(Constant.SERVER_URL + "wit/app/user")
+        OkGo.<AppResponse<SmartDevice_car_0364.DataBean>>post(Urls.SERVER_URL + "wit/app/user")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<SmartDevice_car_0364.DataBean>>() {
@@ -214,12 +215,12 @@ public class OnlineFragment extends BaseFragment implements Observer {
 //        OkHttpClient mOkHttpClient = new OkHttpClient();
 //        DataIn in = new DataIn();
 //        in.code = "03064";
-//        in.key = Constant.KEY;
+//        in.key = Urls.key;
 //        in.user_car_type = "1";
 //        in.token = UserManager.getManager(getActivity()).getAppToken();
 //        MediaType JSON = MediaType.parse("application/json;charset=utf-8");
 //        RequestBody body = RequestBody.create(JSON, new Gson().toJson(in));
-//        final Request request = new Request.Builder().url(Constant.SERVER_URL + "wit/app/user").post(body).build();
+//        final Request request = new Request.Builder().url(Urls.SERVER_URL + "wit/app/user").post(body).build();
 //        Call call = mOkHttpClient.newCall(request);
 //        call.enqueue(new Callback() {
 //            @Override

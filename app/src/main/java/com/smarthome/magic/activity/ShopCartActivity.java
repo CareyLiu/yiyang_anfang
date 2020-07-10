@@ -17,8 +17,9 @@ import com.smarthome.magic.adapter.ExpandableRecyclerAdapter;
 import com.smarthome.magic.adapter.ShopCartExpandAdapter;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.GoodsItem;
 import com.smarthome.magic.model.ShopCartModel;
 import com.smarthome.magic.util.AlertUtil;
@@ -75,11 +76,11 @@ public class ShopCartActivity extends BaseActivity {
     public void requestData(){
         Map<String, String> map = new HashMap<>();
         map.put("code", "04152");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(ShopCartActivity.this).getAppToken());
         map.put("page_number","0");
         Gson gson = new Gson();
-        OkGo.<AppResponse<ShopCartModel.DataBean>>post(Constant.SERVER_URL + "shop_new/app/user ")
+        OkGo.<AppResponse<ShopCartModel.DataBean>>post(Urls.SERVER_URL + "shop_new/app/user ")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<ShopCartModel.DataBean>>() {

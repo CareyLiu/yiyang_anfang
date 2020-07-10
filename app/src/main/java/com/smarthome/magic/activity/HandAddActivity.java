@@ -20,9 +20,10 @@ import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.CarBrand;
 import com.smarthome.magic.util.AlertUtil;
 
@@ -102,7 +103,7 @@ public class HandAddActivity extends BaseActivity implements View.OnClickListene
         }
         Map<String, String> map = new HashMap<>();
         map.put("code", "03105");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(HandAddActivity.this).getAppToken());
         map.put("user_car_type", "1");
         map.put("ccid", mEtNumber.getText().toString());
@@ -113,7 +114,7 @@ public class HandAddActivity extends BaseActivity implements View.OnClickListene
         map.put("car_brand_name_two", PreferenceHelper.getInstance(HandAddActivity.this).getString("mode_name", ""));
         map.put("car_brand_url_two", PreferenceHelper.getInstance(HandAddActivity.this).getString("mode_pic", ""));
         Gson gson = new Gson();
-        OkGo.<AppResponse<CarBrand.DataBean>>post(Constant.SERVER_URL + "wit/app/user")
+        OkGo.<AppResponse<CarBrand.DataBean>>post(Urls.SERVER_URL + "wit/app/user")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<CarBrand.DataBean>>() {

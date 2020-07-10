@@ -28,8 +28,8 @@ import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppEvent;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.AddressModel;
 
 import com.smarthome.magic.util.AlertUtil;
@@ -103,10 +103,10 @@ public class AddressActivity extends BaseActivity implements Observer {
     public void requestData() {
         Map<String, String> map = new HashMap<>();
         map.put("code", "04129");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(this).getAppToken());
         Gson gson = new Gson();
-        OkGo.<AppResponse<AddressModel.DataBean>>post(Constant.SERVER_URL + "shop_new/app/user")
+        OkGo.<AppResponse<AddressModel.DataBean>>post(Urls.SERVER_URL + "shop_new/app/user")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<AddressModel.DataBean>>() {

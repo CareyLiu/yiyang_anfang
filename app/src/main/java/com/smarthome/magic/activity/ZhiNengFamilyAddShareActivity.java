@@ -18,7 +18,7 @@ import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuoTIshi;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Success;
@@ -127,11 +127,11 @@ public class ZhiNengFamilyAddShareActivity extends BaseActivity implements View.
     private void getCode() {
         Map<String, String> map = new HashMap<>();
         map.put("code", "00001");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("user_phone", et_phone.getText().toString());
         map.put("mod_id", "0315");
         Gson gson = new Gson();
-        OkGo.<AppResponse<Message.DataBean>>post(Constant.SERVER_URL + "msg")
+        OkGo.<AppResponse<Message.DataBean>>post(Urls.SERVER_URL + "msg")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<Message.DataBean>>() {

@@ -20,9 +20,10 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.adapter.ConsultListAdapter;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.ConsultModel;
 import com.smarthome.magic.util.AlertUtil;
 
@@ -99,12 +100,12 @@ public class ConsultActiviy extends BaseActivity {
     public void requestData(final String fromId,String state){
         Map<String, String> map = new HashMap<>();
         map.put("code", "03317");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(ConsultActiviy.this).getAppToken());
         map.put("service_form_id",fromId);
         map.put("state",state);
         Gson gson = new Gson();
-        OkGo.<AppResponse<ConsultModel.DataBean>>post(Constant.SERVER_URL + "wit/app/car/witAgent")
+        OkGo.<AppResponse<ConsultModel.DataBean>>post(Urls.SERVER_URL + "wit/app/car/witAgent")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<ConsultModel.DataBean>>() {

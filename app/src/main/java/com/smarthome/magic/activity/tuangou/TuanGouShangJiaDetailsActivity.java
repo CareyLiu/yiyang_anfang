@@ -32,9 +32,10 @@ import com.smarthome.magic.app.App;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.GlideImageLoader;
 import com.smarthome.magic.config.PreferenceHelper;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.TuanGouShangJiaDetailsModel;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.phoneview.sample.ImageShowActivity;
@@ -95,7 +96,7 @@ public class TuanGouShangJiaDetailsActivity extends AbStracTuanGouShangJiaDetail
 
         Map<String, String> map = new HashMap<>();
         map.put("code", "08012");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         //map.put("token", UserManager.getManager(TuanGouShangJiaDetailsActivity.this).getAppToken());
         map.put("inst_id", shangJiaId);
         // map.put("x", PreferenceHelper.getInstance(TuanGouShangJiaDetailsActivity.this).getString(App.WEIDU, ""));

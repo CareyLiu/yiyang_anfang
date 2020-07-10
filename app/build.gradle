@@ -25,8 +25,8 @@ android {
         applicationId "com.smarthome.magic"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 18
-        versionName "1.7.2"
+        versionCode 19
+        versionName "1.7.3"
         //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
@@ -60,6 +60,7 @@ android {
         }
     }
     repositories {
+        mavenCentral()
 //        maven {
 //            url "http://maven..com/nexus/content/repositories/releases"
 //        }

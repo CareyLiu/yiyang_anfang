@@ -31,8 +31,9 @@ import com.smarthome.magic.activity.ServiceAboutActivity;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppEvent;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.ServiceInfo;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.CleanMessageUtil;
@@ -189,10 +190,10 @@ public class ServiceMineFragment extends BaseFragment implements Observer {
     public void requestData(final String code) {
         Map<String, String> map = new HashMap<>();
         map.put("code", code);
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(getActivity()).getAppToken());
         Gson gson = new Gson();
-        OkGo.<AppResponse<ServiceInfo.DataBean>>post(Constant.SERVER_URL + "wit/app/car/witAgent")
+        OkGo.<AppResponse<ServiceInfo.DataBean>>post(Urls.SERVER_URL + "wit/app/car/witAgent")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<ServiceInfo.DataBean>>() {

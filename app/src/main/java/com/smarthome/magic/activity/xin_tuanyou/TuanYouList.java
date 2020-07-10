@@ -37,8 +37,9 @@ import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.PreferenceHelper;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.JiaYouFirstModel;
 import com.smarthome.magic.model.OilArrayBean;
 import com.smarthome.magic.util.AlertUtil;
@@ -823,7 +824,7 @@ public class TuanYouList extends BaseActivity {
          */
         Map<String, String> map = new HashMap<>();
         map.put("code", "04245");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("distance_type", distance_type);
         map.put("order_type", order_type);
         map.put("oilNoType", oilNoType);
@@ -912,7 +913,7 @@ public class TuanYouList extends BaseActivity {
          */
         Map<String, String> map = new HashMap<>();
         map.put("code", "04245");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("distance_type", distance_type);
         map.put("order_type", order_type);
         map.put("oilNoType", oilNoType);

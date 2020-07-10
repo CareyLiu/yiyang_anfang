@@ -3,6 +3,7 @@ package com.smarthome.magic.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,9 +15,11 @@ import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 
+import com.gyf.barlibrary.ImmersionBar;
 import com.jaeger.library.StatusBarUtil;
 import com.lzy.okgo.OkGo;
 
@@ -38,6 +41,7 @@ public class SplashActivity extends AppCompatActivity implements EasyPermissions
     public static final int OVERTIME = 1;
     protected boolean isAnimationEnd;
     private final NotLeakHandler mHandler = new NotLeakHandler(this);
+    private ImageView iv_background;
 
 
     private static class NotLeakHandler extends Handler {
@@ -109,29 +113,6 @@ public class SplashActivity extends AppCompatActivity implements EasyPermissions
 
             }
         }
-
-        private void initJump() {
-            //指纹高优先级
-            if (PreferenceCache.getFingerFlg()) {
-                //指纹已开启
-//                Intent intent = new Intent( mWeakReference.get(),VerifyFingerActivity.class);
-                // mWeakReference.get().startActivity(intent);
-                //  mWeakReference.get().finish();
-                return;
-            }
-            if (PreferenceCache.getGestureFlag()) {
-                Intent intent = new Intent(mWeakReference.get(), ClosePatternPswActivity.class);
-                //等于3为认证成功
-                intent.putExtra("gestureFlg", 3);
-                mWeakReference.get().startActivity(intent);
-                mWeakReference.get().finish();
-                return;
-            }
-            mWeakReference.get().startActivity(new Intent(mWeakReference.get(), HomeActivity.class));
-            mWeakReference.get().finish();
-        }
-
-
     }
 
 
@@ -140,9 +121,7 @@ public class SplashActivity extends AppCompatActivity implements EasyPermissions
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         RelativeLayout logoView = findViewById(R.id.iv_welcome);
-        StatusBarUtil.setTransparent(this);
-
-
+        iv_background = findViewById(R.id.iv_image);
         AlphaAnimation alphaAnimation = new AlphaAnimation(0.1f, 1.0f);
         // 动画效果时间为2秒
         alphaAnimation.setDuration(2000);
@@ -171,6 +150,10 @@ public class SplashActivity extends AppCompatActivity implements EasyPermissions
             }
         });
 
+        ImmersionBar immersionBar = ImmersionBar.with(SplashActivity.this);
+        immersionBar.with(this)
+                .titleBar(iv_background)
+                .init();
 
     }
 

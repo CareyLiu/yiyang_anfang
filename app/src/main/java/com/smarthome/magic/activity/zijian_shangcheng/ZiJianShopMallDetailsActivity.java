@@ -29,7 +29,7 @@ import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.GlideImageLoader;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.get_net.Urls;
@@ -143,12 +143,12 @@ public class ZiJianShopMallDetailsActivity extends BaseActivity implements Zijia
     public void getNet() {
         Map<String, String> map = new HashMap<>();
         map.put("code", "04133");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", PreferenceHelper.getInstance(mContext).getString("app_token", "0"));
         map.put("shop_product_id", productId);
         map.put("wares_id", warseId);
         Gson gson = new Gson();
-        OkGo.<AppResponse<GoodsDetails_f.DataBean>>post(Constant.SERVER_URL + "shop_new/app")
+        OkGo.<AppResponse<GoodsDetails_f.DataBean>>post(Urls.SERVER_URL + "shop_new/app")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<GoodsDetails_f.DataBean>>() {

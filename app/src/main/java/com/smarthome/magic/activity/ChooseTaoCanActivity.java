@@ -33,7 +33,7 @@ import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.GoodsDetails_f;
@@ -380,7 +380,7 @@ public class ChooseTaoCanActivity extends Activity {
         }
         Map<String, String> map = new HashMap<>();
         map.put("code", "04151");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(getApplication()).getAppToken());
         map.put("wares_id", dataBean.getWares_id());
         if (!StringUtils.isEmpty(taoCanId)) {

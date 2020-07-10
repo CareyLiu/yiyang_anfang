@@ -24,9 +24,9 @@ import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.CarBrand;
 import com.smarthome.magic.util.AlertUtil;
 
@@ -142,7 +142,7 @@ public class ScanAddCarActivity extends BaseActivity implements QRCodeView.Deleg
     public void requestData(String ccid) {
         Map<String, String> map = new HashMap<>();
         map.put("code", "03105");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
         map.put("user_car_type", "1");
         map.put("ccid", ccid);
@@ -153,7 +153,7 @@ public class ScanAddCarActivity extends BaseActivity implements QRCodeView.Deleg
         map.put("car_brand_name_two", PreferenceHelper.getInstance(mContext).getString("mode_name", ""));
         map.put("car_brand_url_two", PreferenceHelper.getInstance(mContext).getString("mode_pic", ""));
         Gson gson = new Gson();
-        OkGo.<AppResponse<CarBrand.DataBean>>post(Constant.SERVER_URL + "wit/app/user")
+        OkGo.<AppResponse<CarBrand.DataBean>>post(Urls.SERVER_URL + "wit/app/user")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<CarBrand.DataBean>>() {

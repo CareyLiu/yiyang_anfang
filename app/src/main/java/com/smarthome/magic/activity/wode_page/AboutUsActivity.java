@@ -16,6 +16,8 @@ import com.smarthome.magic.app.BaseActivity;
 
 import butterknife.BindView;
 
+import static com.smarthome.magic.get_net.Urls.ARGEMENTS;
+
 public class AboutUsActivity extends BaseActivity {
 
     @BindView(R.id.iv_image)
@@ -34,7 +36,7 @@ public class AboutUsActivity extends BaseActivity {
         tvYonghushiyong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DefaultX5WebViewActivity.actionStart(AboutUsActivity.this, "https://shop.hljsdkj.com/shop_new/user_agreement");
+                DefaultX5WebViewActivity.actionStart(AboutUsActivity.this, ARGEMENTS);
             }
         });
         tvYinsi.setOnClickListener(new View.OnClickListener() {

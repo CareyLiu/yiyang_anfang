@@ -15,8 +15,9 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppEvent;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.ServiceInfo;
 import com.smarthome.magic.util.AlertUtil;
 
@@ -59,12 +60,12 @@ public class ReviseNicknameActivity extends BaseActivity {
     public void requestData(){
         Map<String, String> map = new HashMap<>();
         map.put("code", "00701");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("update_type","1");
         map.put("user_name",etNickName.getText().toString());
         map.put("of_user_id",UserManager.getManager(ReviseNicknameActivity.this).getUserId());
         Gson gson = new Gson();
-        OkGo.<AppResponse>post(Constant.SERVER_URL + "msg")
+        OkGo.<AppResponse>post(Urls.SERVER_URL + "msg")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse>() {

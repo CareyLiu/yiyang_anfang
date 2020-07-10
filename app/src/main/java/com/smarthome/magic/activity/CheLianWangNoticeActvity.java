@@ -35,10 +35,11 @@ import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.common.UIHelper;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.GuZhangDetailsModel;
 import com.smarthome.magic.util.NavigationUtils;
 
@@ -153,11 +154,11 @@ public class CheLianWangNoticeActvity extends BaseActivity {
 
         Map<String, String> map = new HashMap<>();
         map.put("code", "03004");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("notify_id", notifyId);
         Gson gson = new Gson();
-        OkGo.<AppResponse<GuZhangDetailsModel.DataBean>>post(Constant.SERVER_URL + "wit/app/user")
+        OkGo.<AppResponse<GuZhangDetailsModel.DataBean>>post(Urls.SERVER_URL + "wit/app/user")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<GuZhangDetailsModel.DataBean>>() {

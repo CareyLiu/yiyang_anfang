@@ -16,7 +16,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.util.AlertUtil;
 
@@ -116,7 +116,7 @@ public class ReviseLoginActivity extends BaseActivity {
     private void requestData() {
         Map<String, String> map = new HashMap<>();
         map.put("code", "03009");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("password", etPassword.getText().toString());
         map.put("sms_id", getIntent().getStringExtra("sms_id"));
         map.put("sms_code", getIntent().getStringExtra("sms_code"));

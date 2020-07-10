@@ -23,9 +23,10 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.adapter.LocusListAdapter;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.Locus;
 import com.smarthome.magic.model.SmartDevices;
 import com.smarthome.magic.util.AlertUtil;
@@ -151,7 +152,7 @@ public class HistoryLocusActivity extends BaseActivity {
     public void requestData(final String id){
         Map<String, String> map = new HashMap<>();
         map.put("code", "04148");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("user_car_id", PreferenceHelper.getInstance(this).getString("car_id",""));
         map.put("begin_time",tvBeginDate.getText().toString());
@@ -161,7 +162,7 @@ public class HistoryLocusActivity extends BaseActivity {
 //        map.put("end_time","2019-05-22 23:59");
         map.put("car_gps_id",id);
         Gson gson = new Gson();
-        OkGo.<AppResponse<Locus.DataBean>>post(Constant.SERVER_URL + "wit/car/app/user")
+        OkGo.<AppResponse<Locus.DataBean>>post(Urls.SERVER_URL + "wit/car/app/user")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<Locus.DataBean>>() {

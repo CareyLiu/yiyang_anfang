@@ -38,7 +38,7 @@ import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
@@ -179,13 +179,13 @@ public class GouWuCheQueRenDingDanActivity extends BaseActivity implements QueRe
     private void getNet_butian(String et) {
         Map<String, String> map = new HashMap<>();
         map.put("code", "04343");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(GouWuCheQueRenDingDanActivity.this).getAppToken());
         map.put("invitation_code", et);
 
         Log.i("taoken_gg", UserManager.getManager(GouWuCheQueRenDingDanActivity.this).getAppToken());
         Gson gson = new Gson();
-        OkGo.<AppResponse<Object>>post(Constant.SERVER_URL + "shop_new/app/user")
+        OkGo.<AppResponse<Object>>post(Urls.SERVER_URL + "shop_new/app/user")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<Object>>() {
@@ -292,12 +292,12 @@ public class GouWuCheQueRenDingDanActivity extends BaseActivity implements QueRe
     public void getNet() {
         Map<String, String> map = new HashMap<>();
         map.put("code", "04243");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(GouWuCheQueRenDingDanActivity.this).getAppToken());
 
         Log.i("taoken_gg", UserManager.getManager(GouWuCheQueRenDingDanActivity.this).getAppToken());
         Gson gson = new Gson();
-        OkGo.<AppResponse<AddressListModel.DataBean>>post(Constant.SERVER_URL + "shop_new/app/user")
+        OkGo.<AppResponse<AddressListModel.DataBean>>post(Urls.SERVER_URL + "shop_new/app/user")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<AddressListModel.DataBean>>() {

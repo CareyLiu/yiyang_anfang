@@ -17,8 +17,8 @@ import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.common.UIHelper;
 import com.smarthome.magic.config.AppEvent;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarttop.library.bean.City;
 import com.smarttop.library.bean.County;
@@ -163,7 +163,7 @@ public class AddAddressActivity extends BaseActivity implements OnAddressSelecte
     public void requestData(String code) {
         Map<String, String> map = new HashMap<>();
         map.put("code", code);
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(AddAddressActivity.this).getAppToken());
         if (code.equals("04130"))
             map.put("users_addr_id", getIntent().getStringExtra("address_id"));
@@ -181,7 +181,7 @@ public class AddAddressActivity extends BaseActivity implements OnAddressSelecte
         map.put("user_addr_state", user_addr_state);
 
         Gson gson = new Gson();
-        OkGo.<AppResponse>post(Constant.SERVER_URL + "/shop_new/app/user")
+        OkGo.<AppResponse>post(Urls.SERVER_URL + "/shop_new/app/user")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse>() {
@@ -203,10 +203,10 @@ public class AddAddressActivity extends BaseActivity implements OnAddressSelecte
 //    public void requestData() {
 //        Map<String, String> map = new HashMap<>();
 //        map.put("code", "00005");
-//        map.put("key", Constant.KEY);
+//        map.put("key", Urls.key);
 //        map.put("type_id", "province_city_ch");
 //        Gson gson = new Gson();
-//        OkGo.<AppResponse<Region.DataBean>>post(Constant.SERVER_URL + "msg")
+//        OkGo.<AppResponse<Region.DataBean>>post(Urls.SERVER_URL + "msg")
 //                .tag(this)//
 //                .upJson(gson.toJson(map))
 //                .execute(new JsonCallback<AppResponse<Region.DataBean>>() {

@@ -11,9 +11,10 @@ import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.OwnerInfo;
 import com.smarthome.magic.util.AlertUtil;
 
@@ -135,11 +136,11 @@ public class PartsInfoActivity extends BaseActivity {
 
         Map<String, String> map = new HashMap<>();
         map.put("code", "03205");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("user_car_id", PreferenceHelper.getInstance(this).getString("car_id", ""));
         Gson gson = new Gson();
-        OkGo.<AppResponse<OwnerInfo.DataBean>>post(Constant.SERVER_URL + "wit/app/zhu")
+        OkGo.<AppResponse<OwnerInfo.DataBean>>post(Urls.SERVER_URL + "wit/app/zhu")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<OwnerInfo.DataBean>>() {

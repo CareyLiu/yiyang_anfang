@@ -32,9 +32,10 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.adapter.RepairPlantAdapter;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.RepairPlantModel;
 import com.smarthome.magic.util.AlertUtil;
 
@@ -242,11 +243,11 @@ public class ConsultDetailsActivity extends BaseActivity implements LocationSour
     public void requestData(final String fromId) {
         Map<String, String> map = new HashMap<>();
         map.put("code", "03318");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("service_form_id", fromId);
         Gson gson = new Gson();
-        OkGo.<AppResponse<RepairPlantModel.DataBean>>post(Constant.SERVER_URL + "wit/app/car/witAgent")
+        OkGo.<AppResponse<RepairPlantModel.DataBean>>post(Urls.SERVER_URL + "wit/app/car/witAgent")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<RepairPlantModel.DataBean>>() {

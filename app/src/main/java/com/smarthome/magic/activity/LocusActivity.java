@@ -35,9 +35,10 @@ import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.Locus;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.DateUtil;
@@ -232,13 +233,13 @@ public class LocusActivity extends BaseActivity implements OnDateSelectedListene
     public void requestData(String time) {
         Map<String, String> map = new HashMap<>();
         map.put("code", "04147");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("user_car_id", "30");
 //        map.put("user_car_id", PreferenceHelper.getInstance(LocusActivity.this).getString("car_id", ""));
         map.put("time", time);
         Gson gson = new Gson();
-        OkGo.<AppResponse<Locus.DataBean>>post(Constant.SERVER_URL + "wit/car/app/user")
+        OkGo.<AppResponse<Locus.DataBean>>post(Urls.SERVER_URL + "wit/car/app/user")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<Locus.DataBean>>() {

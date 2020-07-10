@@ -24,7 +24,7 @@ import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.config.Wetch_S;
@@ -138,12 +138,12 @@ public class PhoneCheckActivity extends BaseActivity {
 
         Map<String, String> map = new HashMap<>();
         map.put("code", "00001");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(getApplicationContext()).getAppToken());
         map.put("user_phone", PreferenceHelper.getInstance(PhoneCheckActivity.this).getString("user_phone", ""));
         map.put("mod_id", modeId);
         Gson gson = new Gson();
-        OkGo.<AppResponse<Message.DataBean>>post(Constant.SERVER_URL + "msg")
+        OkGo.<AppResponse<Message.DataBean>>post(Urls.SERVER_URL + "msg")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<Message.DataBean>>() {
@@ -172,11 +172,11 @@ public class PhoneCheckActivity extends BaseActivity {
     private void requestData() {
         Map<String, String> map = new HashMap<>();
         map.put("code", "00006");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("sms_id", smsId);
         map.put("sms_code", etCode.getText().toString());
         Gson gson = new Gson();
-        OkGo.<AppResponse<Message.DataBean>>post(Constant.SERVER_URL + "msg")
+        OkGo.<AppResponse<Message.DataBean>>post(Urls.SERVER_URL + "msg")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<Message.DataBean>>() {
@@ -296,7 +296,7 @@ public class PhoneCheckActivity extends BaseActivity {
     private void weiXinJieBang() {
         Map<String, String> map = new HashMap<>();
         map.put("code", "04185");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(getApplication()).getAppToken());
         map.put("sms_id", smsId);
         map.put("sms_code", etCode.getText().toString());

@@ -120,7 +120,6 @@ public class MessageListFragment extends BaseFragment {
                 }
                 srLSmart.finishLoadMore();
                 srLSmart.finishRefresh();
-                showLoadSuccess();
             }
 
             @Override
@@ -132,7 +131,6 @@ public class MessageListFragment extends BaseFragment {
             @Override
             public void onStart(Request<AppResponse<MessageModel.DataBean>, ? extends Request> request) {
                 super.onStart(request);
-                showLoading();
             }
         });
     }

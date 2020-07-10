@@ -35,10 +35,11 @@ import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.config.Wetch_S;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.DaiLiShangQianBaoModel;
 import com.smarthome.magic.model.MenSuoModel;
 import com.smarthome.magic.model.SaoMaPayModel;
@@ -306,11 +307,11 @@ public class AndroidForJs {
     public void getDaiLiQianBaoNet() {
         Map<String, String> map = new HashMap<>();
         map.put("code", "04344");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
 
         Gson gson = new Gson();
-        OkGo.<AppResponse<DaiLiShangQianBaoModel.DataBean>>post(Constant.SERVER_URL + "shop_new/app/user ")
+        OkGo.<AppResponse<DaiLiShangQianBaoModel.DataBean>>post(Urls.SERVER_URL + "shop_new/app/user ")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<DaiLiShangQianBaoModel.DataBean>>() {

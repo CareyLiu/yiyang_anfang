@@ -10,7 +10,7 @@ import com.smarthome.magic.activity.taokeshagncheng.QueRenDingDanActivity;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.model.GouWuCheZhengHeModel;

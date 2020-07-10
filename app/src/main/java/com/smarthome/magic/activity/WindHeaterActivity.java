@@ -48,10 +48,11 @@ import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.CarDetails;
 import com.smarthome.magic.model.HostModel;
 import com.smarthome.magic.model.SerializableMap;
@@ -945,11 +946,11 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
     public void requestData() {
         Map<String, String> map = new HashMap<>();
         map.put("code", "03107");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("user_car_id", PreferenceHelper.getInstance(this).getString("car_id", ""));
         Gson gson = new Gson();
-        OkGo.<AppResponse<CarDetails.DataBean>>post(Constant.SERVER_URL + "wit/app/user")
+        OkGo.<AppResponse<CarDetails.DataBean>>post(Urls.SERVER_URL + "wit/app/user")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<CarDetails.DataBean>>() {

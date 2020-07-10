@@ -42,13 +42,14 @@ import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.Constant;
+
 import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuoTIshi_Clear;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Delete;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Success;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.AlarmClass;
 import com.smarthome.magic.model.HeaterDetails;
 import com.smarthome.magic.model.ServiceModel;
@@ -270,7 +271,7 @@ public class DiagnosisActivity extends BaseActivity {
     public void requestData() {
         Map<String, String> map = new HashMap<>();
         map.put("code", "03225");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(this).getAppToken());
 
         Log.i("it_token", UserManager.getManager(this).getAppToken());
@@ -279,7 +280,7 @@ public class DiagnosisActivity extends BaseActivity {
         map.put("type", "1");
         map.put("type_msg", "2");
         Gson gson = new Gson();
-        OkGo.<AppResponse<HeaterDetails.DataBean>>post(Constant.SERVER_URL + "wit/app/user")
+        OkGo.<AppResponse<HeaterDetails.DataBean>>post(Urls.SERVER_URL + "wit/app/user")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<HeaterDetails.DataBean>>() {
@@ -334,14 +335,14 @@ public class DiagnosisActivity extends BaseActivity {
     public void requestData2() {
         Map<String, String> map = new HashMap<>();
         map.put("code", "03311");
-        map.put("key", Constant.KEY);
+        map.put("key", Urls.key);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("user_car_id", PreferenceHelper.getInstance(this).getString("of_user_id", ""));
         map.put("ccid", PreferenceHelper.getInstance(this).getString("ccid", ""));
         map.put("type", "1");
         map.put("type_msg", "2");
         Gson gson = new Gson();
-        OkGo.<AppResponse<ServiceModel.DataBean>>post(Constant.SERVER_URL + "wit/app/user")
+        OkGo.<AppResponse<ServiceModel.DataBean>>post(Urls.SERVER_URL + "wit/app/user")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<ServiceModel.DataBean>>() {

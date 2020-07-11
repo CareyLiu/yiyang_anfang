@@ -36,6 +36,7 @@ import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.DianPuXiangQingModel;
@@ -51,6 +52,7 @@ import java.util.Map;
 import butterknife.BindView;
 
 import static com.smarthome.magic.get_net.Urls.HOME_PICTURE;
+import static com.smarthome.magic.get_net.Urls.HOME_PICTURE_HOME;
 
 public class ShopDetailsActivity extends BaseActivity {
 
@@ -104,8 +106,9 @@ public class ShopDetailsActivity extends BaseActivity {
     ImageView ivJiageImg;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-
     private String inst_id;
+
+
     private String order_type = "";
     private int page_num;
 
@@ -143,7 +146,7 @@ public class ShopDetailsActivity extends BaseActivity {
         ll2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                setShouCang("04126");
             }
         });
 
@@ -251,6 +254,7 @@ public class ShopDetailsActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Response<AppResponse<DianPuXiangQingModel.DataBean>> response) {
                         DianPuXiangQingModel.DataBean dataBean = response.body().data.get(0);
+                        inst_id = response.body().data.get(0).getInst_id();
                         Glide.with(mContext).applyDefaultRequestOptions(GlideShowImageUtils.showZhengFangXing()).load(dataBean.getInst_photo_url()).into(ivImage);
                         tvShopName.setText(dataBean.getInst_name());
                         tvShoucangRenshu.setText(dataBean.getIsCollection() + "人收藏");
@@ -261,15 +265,29 @@ public class ShopDetailsActivity extends BaseActivity {
                          */
                         if (dataBean.getIsCollection().equals("0")) {
                             iv2.setBackgroundResource(R.mipmap.shop_icon_weiguanzhu);
+
+                            ll2.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    setShouCang("04126");
+                                }
+                            });
+
                         } else if (dataBean.getIsCollection().equals("1")) {
                             iv2.setBackgroundResource(R.mipmap.shop_icon_yiguanzhu);
+                            ll2.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    setShouCang("04127");
+                                }
+                            });
                         }
 
                         if (page_num == 0) {
                             mDatas.clear();
                             mDatas.addAll(dataBean.getWaresList());
 
-                           // shopDetailsAdapter.setNewData(mDatas);
+                            // shopDetailsAdapter.setNewData(mDatas);
                         } else {
                             mDatas.addAll(dataBean.getWaresList());
                         }
@@ -307,5 +325,66 @@ public class ShopDetailsActivity extends BaseActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("inst_id", inst_id);
         context.startActivity(intent);
+    }
+
+    private void setShouCang(String code) {
+        //收藏商品
+        /**
+         * code	请求码(04126)	6	是
+         * key	身份标识	10	是
+         * token	token	18	是
+         * collection_type	收藏类型 1.商品 2.商家		是
+         * wares_id	商品id(收藏类型为1时传)		否
+         * shop_product_id	产品id(收藏类型为1时传)		否
+         * inst_id	商家id(收藏类型为2时传)		否
+         */
+
+        Map<String, String> map = new HashMap<>();
+        map.put("code", code);
+        map.put("key", Urls.key);
+        map.put("token", PreferenceHelper.getInstance(mContext).getString("app_token", "0"));
+        map.put("collection_type", "2");
+        map.put("inst_id", inst_id);
+
+        Gson gson = new Gson();
+        OkGo.<AppResponse<Object>>post(HOME_PICTURE_HOME)
+                .tag(mContext)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<Object>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<Object>> response) {
+                        if (code.equals("04126")) {
+                            UIHelper.ToastMessage(mContext, "添加成功");
+                            iv2.setBackgroundResource(R.mipmap.shop_icon_yiguanzhu);
+                            ll2.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    setShouCang("04127");
+                                }
+                            });
+                        } else {
+                            UIHelper.ToastMessage(mContext, "取消收藏成功");
+                            iv2.setBackgroundResource(R.mipmap.shop_icon_weiguanzhu);
+                            ll2.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    setShouCang("04126");
+                                }
+                            });
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<Object>> response) {
+                        super.onError(response);
+                        String str = response.getException().getMessage();
+                        String[] str1 = str.split("：");
+
+                        if (str1.length == 3) {
+                            UIHelper.ToastMessage(mContext, str1[2]);
+                        }
+                    }
+                });
     }
 }

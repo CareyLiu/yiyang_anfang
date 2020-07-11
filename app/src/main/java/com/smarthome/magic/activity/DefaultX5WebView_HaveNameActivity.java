@@ -278,4 +278,19 @@ public class DefaultX5WebView_HaveNameActivity extends BaseActivity {
     public boolean showToolBar() {
         return true;
     }
+
+    @Override
+    protected void initToolbar() {
+        super.initToolbar();
+        tv_title.setTextSize(17);
+        tv_title.setTextColor(getResources().getColor(R.color.black));
+        mToolbar.setNavigationIcon(R.mipmap.backbutton);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //imm.hideSoftInputFromWindow(findViewById(R.id.cl_layout).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                finish();
+            }
+        });
+    }
 }

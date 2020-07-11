@@ -17,9 +17,9 @@ import java.lang.Override;
 public class AppointmentActivity_ViewBinding implements Unbinder {
   private AppointmentActivity target;
 
-  private View view7f090366;
+  private View view7f090516;
 
-  private View view7f090098;
+  private View view7f0900aa;
 
   @UiThread
   public AppointmentActivity_ViewBinding(AppointmentActivity target) {
@@ -33,7 +33,7 @@ public class AppointmentActivity_ViewBinding implements Unbinder {
     View view;
     view = Utils.findRequiredView(source, R.id.rl_back, "field 'rlBack' and method 'onViewClicked'");
     target.rlBack = Utils.castView(view, R.id.rl_back, "field 'rlBack'", RelativeLayout.class);
-    view7f090366 = view;
+    view7f090516 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -50,7 +50,7 @@ public class AppointmentActivity_ViewBinding implements Unbinder {
     target.cbSaturday = Utils.findRequiredViewAsType(source, R.id.cb_saturday, "field 'cbSaturday'", CheckBox.class);
     target.flTime = Utils.findRequiredViewAsType(source, R.id.fl_time, "field 'flTime'", FrameLayout.class);
     view = Utils.findRequiredView(source, R.id.btn_setting, "method 'onViewClicked'");
-    view7f090098 = view;
+    view7f0900aa = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -77,9 +77,9 @@ public class AppointmentActivity_ViewBinding implements Unbinder {
     target.cbSaturday = null;
     target.flTime = null;
 
-    view7f090366.setOnClickListener(null);
-    view7f090366 = null;
-    view7f090098.setOnClickListener(null);
-    view7f090098 = null;
+    view7f090516.setOnClickListener(null);
+    view7f090516 = null;
+    view7f0900aa.setOnClickListener(null);
+    view7f0900aa = null;
   }
 }

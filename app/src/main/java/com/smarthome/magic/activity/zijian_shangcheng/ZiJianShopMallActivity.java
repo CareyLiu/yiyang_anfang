@@ -210,7 +210,8 @@ public class ZiJianShopMallActivity extends BaseActivity implements ZiJianHomeIn
                 @Override
                 public void OnBannerClick(int position) {
                    // startActivity(new Intent(ZiJianShopMallActivity.this, WebViewActivity.class).putExtra("url", response.body().data.get(0).getBannerList().get(position).getHtml_url()));
-                    DefaultX5WebViewActivity.actionStart(ZiJianShopMallActivity.this, response.body().data.get(0).getBannerList().get(position).getHtml_url());
+                  //  DefaultX5WebViewActivity.actionStart(ZiJianShopMallActivity.this, response.body().data.get(0).getBannerList().get(position).getHtml_url());
+                    startActivity(new Intent(ZiJianShopMallActivity.this, WebViewActivity.class).putExtra("url", response.body().data.get(0).getBannerList().get(position).getHtml_url()));
 
                 }
             });

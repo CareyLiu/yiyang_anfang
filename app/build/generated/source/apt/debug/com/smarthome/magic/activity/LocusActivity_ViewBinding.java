@@ -21,15 +21,15 @@ import java.lang.Override;
 public class LocusActivity_ViewBinding implements Unbinder {
   private LocusActivity target;
 
-  private View view7f090366;
+  private View view7f090516;
 
-  private View view7f0901ed;
+  private View view7f090222;
 
-  private View view7f09056d;
+  private View view7f0907aa;
 
-  private View view7f090232;
+  private View view7f090270;
 
-  private View view7f0900a6;
+  private View view7f0900bb;
 
   @UiThread
   public LocusActivity_ViewBinding(LocusActivity target) {
@@ -44,7 +44,7 @@ public class LocusActivity_ViewBinding implements Unbinder {
     target.map = Utils.findRequiredViewAsType(source, R.id.map, "field 'map'", MapView.class);
     view = Utils.findRequiredView(source, R.id.rl_back, "field 'rlBack' and method 'onViewClicked'");
     target.rlBack = Utils.castView(view, R.id.rl_back, "field 'rlBack'", RelativeLayout.class);
-    view7f090366 = view;
+    view7f090516 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -53,7 +53,7 @@ public class LocusActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.iv_before, "field 'ivBefore' and method 'onViewClicked'");
     target.ivBefore = Utils.castView(view, R.id.iv_before, "field 'ivBefore'", ImageView.class);
-    view7f0901ed = view;
+    view7f090222 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -62,7 +62,7 @@ public class LocusActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.tv_today, "field 'tvToday' and method 'onViewClicked'");
     target.tvToday = Utils.castView(view, R.id.tv_today, "field 'tvToday'", TextView.class);
-    view7f09056d = view;
+    view7f0907aa = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -71,7 +71,7 @@ public class LocusActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.iv_next, "field 'ivNext' and method 'onViewClicked'");
     target.ivNext = Utils.castView(view, R.id.iv_next, "field 'ivNext'", ImageView.class);
-    view7f090232 = view;
+    view7f090270 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -83,7 +83,7 @@ public class LocusActivity_ViewBinding implements Unbinder {
     target.sbTime = Utils.findRequiredViewAsType(source, R.id.sb_time, "field 'sbTime'", SeekBar.class);
     view = Utils.findRequiredView(source, R.id.cb_switch, "field 'cbSwitch' and method 'onViewClicked'");
     target.cbSwitch = Utils.castView(view, R.id.cb_switch, "field 'cbSwitch'", CheckBox.class);
-    view7f0900a6 = view;
+    view7f0900bb = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -109,15 +109,15 @@ public class LocusActivity_ViewBinding implements Unbinder {
     target.sbTime = null;
     target.cbSwitch = null;
 
-    view7f090366.setOnClickListener(null);
-    view7f090366 = null;
-    view7f0901ed.setOnClickListener(null);
-    view7f0901ed = null;
-    view7f09056d.setOnClickListener(null);
-    view7f09056d = null;
-    view7f090232.setOnClickListener(null);
-    view7f090232 = null;
-    view7f0900a6.setOnClickListener(null);
-    view7f0900a6 = null;
+    view7f090516.setOnClickListener(null);
+    view7f090516 = null;
+    view7f090222.setOnClickListener(null);
+    view7f090222 = null;
+    view7f0907aa.setOnClickListener(null);
+    view7f0907aa = null;
+    view7f090270.setOnClickListener(null);
+    view7f090270 = null;
+    view7f0900bb.setOnClickListener(null);
+    view7f0900bb = null;
   }
 }

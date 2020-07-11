@@ -59,6 +59,9 @@ public class XinTuanYouShengChengDingDanActivity_ViewBinding implements Unbinder
     target.tvMingxi = Utils.findRequiredViewAsType(source, R.id.tv_mingxi, "field 'tvMingxi'", TextView.class);
     target.tvYouhaoQianghao = Utils.findRequiredViewAsType(source, R.id.tv_youhao_qianghao, "field 'tvYouhaoQianghao'", TextView.class);
     target.tvZhijiang = Utils.findRequiredViewAsType(source, R.id.tv_zhijiang, "field 'tvZhijiang'", TextView.class);
+    target.clMain4 = Utils.findRequiredViewAsType(source, R.id.cl_main_4, "field 'clMain4'", ConstraintLayout.class);
+    target.tvWeixin = Utils.findRequiredViewAsType(source, R.id.tv_weixin, "field 'tvWeixin'", TextView.class);
+    target.tvZhifubao = Utils.findRequiredViewAsType(source, R.id.tv_zhifubao, "field 'tvZhifubao'", TextView.class);
   }
 
   @Override
@@ -97,5 +100,8 @@ public class XinTuanYouShengChengDingDanActivity_ViewBinding implements Unbinder
     target.tvMingxi = null;
     target.tvYouhaoQianghao = null;
     target.tvZhijiang = null;
+    target.clMain4 = null;
+    target.tvWeixin = null;
+    target.tvZhifubao = null;
   }
 }

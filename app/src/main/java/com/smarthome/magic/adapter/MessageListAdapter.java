@@ -30,29 +30,36 @@ public class MessageListAdapter extends BaseQuickAdapter<MessageModel.DataBean, 
         //  8.普通消息 9.广告消息
         //  11.商城消息 12.商城订单消息
 
+        ImageView ivImage = helper.getView(R.id.iv_image);
+
         if (item.getNotify_type().equals("1")) {
-            helper.getView(R.id.iv_image).setBackgroundResource(R.mipmap.xiaoxi_icon_fengnuan);
+
+            Glide.with(mContext).load(R.mipmap.xiaoxi_icon_fengnuan).into(ivImage);
+
 
         } else if (item.getNotify_type().equals("2")) {
-            helper.getView(R.id.iv_image).setBackgroundResource(R.mipmap.xiaoxi_icon_shuinuan);
+            Glide.with(mContext).load(R.mipmap.xiaoxi_icon_shuinuan).into(ivImage);
+         //   ivImage.setBackgroundResource(R.mipmap.xiaoxi_icon_shuinuan);
         } else if (item.getNotify_type().equals("3")) {
-            helper.getView(R.id.iv_image).setBackgroundResource(R.mipmap.xiaoxi_icon_car);
+            Glide.with(mContext).load(R.mipmap.xiaoxi_icon_car).into(ivImage);
+           // ivImage.setBackgroundResource(R.mipmap.xiaoxi_icon_car);
         } else if (item.getNotify_type().equals("8")) {
-            helper.getView(R.id.iv_image).setBackgroundResource(R.mipmap.xiaoxi_icon_tonghzhi);
+            Glide.with(mContext).load(R.mipmap.xiaoxi_icon_tonghzhi).into(ivImage);
+            //ivImage.setBackgroundResource(R.mipmap.xiaoxi_icon_tonghzhi);
         } else if (item.getNotify_type().equals("9")) {
             Glide.with(mContext)
                     .load(item.getOther_img_url())
-                    .into((ImageView) helper.getView(R.id.iv_image));
+                    .into((ImageView) ivImage);
 
 
         } else if (item.getNotify_type().equals("11")) {
             Glide.with(mContext)
                     .load(item.getOther_img_url())
-                    .into((ImageView) helper.getView(R.id.iv_image));
+                    .into((ImageView) ivImage);
         } else if (item.getNotify_type().equals("12")) {
             Glide.with(mContext)
                     .load(item.getOther_img_url())
-                    .into((ImageView) helper.getView(R.id.iv_image));
+                    .into((ImageView) ivImage);
         }
 
 

@@ -28,7 +28,6 @@ public class TiXianActivity_ViewBinding implements Unbinder {
     this.target = target;
 
     target.ll1 = Utils.findRequiredViewAsType(source, R.id.ll_1, "field 'll1'", LinearLayout.class);
-    target.ivZhifubaoIcon = Utils.findRequiredViewAsType(source, R.id.iv_zhifubao_icon, "field 'ivZhifubaoIcon'", ImageView.class);
     target.ivRightBack = Utils.findRequiredViewAsType(source, R.id.iv_right_back, "field 'ivRightBack'", ImageView.class);
     target.viewLine = Utils.findRequiredView(source, R.id.view_line, "field 'viewLine'");
     target.ll2 = Utils.findRequiredViewAsType(source, R.id.ll_2, "field 'll2'", ConstraintLayout.class);
@@ -40,6 +39,8 @@ public class TiXianActivity_ViewBinding implements Unbinder {
     target.tvTixiankouchu = Utils.findRequiredViewAsType(source, R.id.tv_tixiankouchu, "field 'tvTixiankouchu'", TextView.class);
     target.tvTixian = Utils.findRequiredViewAsType(source, R.id.tv_tixian, "field 'tvTixian'", TextView.class);
     target.showShui = Utils.findRequiredViewAsType(source, R.id.show_shui, "field 'showShui'", TextView.class);
+    target.ivIcon = Utils.findRequiredViewAsType(source, R.id.iv_icon, "field 'ivIcon'", ImageView.class);
+    target.tvZhifufangshi = Utils.findRequiredViewAsType(source, R.id.tv_zhifufangshi, "field 'tvZhifufangshi'", TextView.class);
   }
 
   @Override
@@ -50,7 +51,6 @@ public class TiXianActivity_ViewBinding implements Unbinder {
     this.target = null;
 
     target.ll1 = null;
-    target.ivZhifubaoIcon = null;
     target.ivRightBack = null;
     target.viewLine = null;
     target.ll2 = null;
@@ -62,5 +62,7 @@ public class TiXianActivity_ViewBinding implements Unbinder {
     target.tvTixiankouchu = null;
     target.tvTixian = null;
     target.showShui = null;
+    target.ivIcon = null;
+    target.tvZhifufangshi = null;
   }
 }

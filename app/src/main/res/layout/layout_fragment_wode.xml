@@ -845,7 +845,7 @@
                             android:layout_width="31dp"
                             android:layout_height="31dp"
                             android:layout_marginLeft="33dp"
-                            android:src="@mipmap/guanyuwomen"
+                            android:src="@mipmap/mine_icon_bazifuwu"
                             app:layout_constraintLeft_toRightOf="@+id/iv_about_us"
                             app:layout_constraintTop_toTopOf="@+id/iv_about_us" />
 

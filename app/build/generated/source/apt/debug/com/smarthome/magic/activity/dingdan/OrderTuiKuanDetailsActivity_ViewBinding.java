@@ -52,6 +52,8 @@ public class OrderTuiKuanDetailsActivity_ViewBinding implements Unbinder {
     target.tvHaisheng = Utils.findRequiredViewAsType(source, R.id.tv_haisheng, "field 'tvHaisheng'", TextView.class);
     target.viewLine = Utils.findRequiredView(source, R.id.view_line, "field 'viewLine'");
     target.tvWuliudanhaoMaijia = Utils.findRequiredViewAsType(source, R.id.tv_wuliudanhao_maijia, "field 'tvWuliudanhaoMaijia'", TextView.class);
+    target.clProduct = Utils.findRequiredViewAsType(source, R.id.cl_product, "field 'clProduct'", ConstraintLayout.class);
+    target.llInfo = Utils.findRequiredViewAsType(source, R.id.ll_info, "field 'llInfo'", LinearLayout.class);
   }
 
   @Override
@@ -85,5 +87,7 @@ public class OrderTuiKuanDetailsActivity_ViewBinding implements Unbinder {
     target.tvHaisheng = null;
     target.viewLine = null;
     target.tvWuliudanhaoMaijia = null;
+    target.clProduct = null;
+    target.llInfo = null;
   }
 }

@@ -4,7 +4,6 @@ package com.smarthome.magic.activity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import androidx.annotation.CallSuper;
 import androidx.annotation.UiThread;
 import butterknife.Unbinder;
@@ -17,9 +16,7 @@ import java.lang.Override;
 public class HandAddActivity_ViewBinding implements Unbinder {
   private HandAddActivity target;
 
-  private View view7f09008b;
-
-  private View view7f090366;
+  private View view7f09009d;
 
   @UiThread
   public HandAddActivity_ViewBinding(HandAddActivity target) {
@@ -34,16 +31,7 @@ public class HandAddActivity_ViewBinding implements Unbinder {
     target.mEtNumber = Utils.findRequiredViewAsType(source, R.id.et_number, "field 'mEtNumber'", EditText.class);
     view = Utils.findRequiredView(source, R.id.bt_submit, "field 'mBtSubmit' and method 'onClick'");
     target.mBtSubmit = Utils.castView(view, R.id.bt_submit, "field 'mBtSubmit'", Button.class);
-    view7f09008b = view;
-    view.setOnClickListener(new DebouncingOnClickListener() {
-      @Override
-      public void doClick(View p0) {
-        target.onClick(p0);
-      }
-    });
-    view = Utils.findRequiredView(source, R.id.rl_back, "field 'mRlBack' and method 'onClick'");
-    target.mRlBack = Utils.castView(view, R.id.rl_back, "field 'mRlBack'", RelativeLayout.class);
-    view7f090366 = view;
+    view7f09009d = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -61,11 +49,8 @@ public class HandAddActivity_ViewBinding implements Unbinder {
 
     target.mEtNumber = null;
     target.mBtSubmit = null;
-    target.mRlBack = null;
 
-    view7f09008b.setOnClickListener(null);
-    view7f09008b = null;
-    view7f090366.setOnClickListener(null);
-    view7f090366 = null;
+    view7f09009d.setOnClickListener(null);
+    view7f09009d = null;
   }
 }

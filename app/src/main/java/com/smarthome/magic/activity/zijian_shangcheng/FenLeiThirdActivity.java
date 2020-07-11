@@ -224,14 +224,15 @@ public class FenLeiThirdActivity extends BaseActivity implements FenLeiListInter
                     if (tanchuCon.equals("0")) {
                         constrain.setVisibility(View.VISIBLE);
                         tanchuCon = "1";
+                        tvZonghe.setTextColor(getResources().getColor(R.color.red_61832));
+                        tvXiaoliang.setTextColor(getResources().getColor(R.color.black_111111));
                     } else if (tanchuCon.equals("1")) {
                         constrain.setVisibility(View.GONE);
                         tanchuCon = "0";
                     }
                     return;
                 }
-                tvZonghe.setTextColor(getResources().getColor(R.color.red_61832));
-                tvXiaoliang.setTextColor(getResources().getColor(R.color.black_111111));
+
 
                 FenLeiThirdFragment fenLeiThirdFragment = new FenLeiThirdFragment();
                 //传递数据到Fragment
@@ -243,7 +244,7 @@ public class FenLeiThirdActivity extends BaseActivity implements FenLeiListInter
                 mBundle.putString("two_item", twoitem);
                 fenLeiThirdFragment.setArguments(mBundle);
                 replaceFragment(fenLeiThirdFragment);
-                str = "0";
+                str = "1";
             }
         });
         rl2.setOnClickListener(new View.OnClickListener() {
@@ -267,7 +268,7 @@ public class FenLeiThirdActivity extends BaseActivity implements FenLeiListInter
                 mBundle.putString("two_item", twoitem);
                 fenLeiThirdFragment.setArguments(mBundle);
                 replaceFragment(fenLeiThirdFragment);
-                str = "1";
+                str = "0";
             }
         });
 

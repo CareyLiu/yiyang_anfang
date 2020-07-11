@@ -19,13 +19,13 @@ import java.lang.Override;
 public class HostActivity_ViewBinding implements Unbinder {
   private HostActivity target;
 
-  private View view7f0901ea;
+  private View view7f09021e;
 
-  private View view7f090088;
+  private View view7f090095;
 
-  private View view7f09008c;
+  private View view7f09009e;
 
-  private View view7f09008a;
+  private View view7f09009b;
 
   @UiThread
   public HostActivity_ViewBinding(HostActivity target) {
@@ -39,7 +39,7 @@ public class HostActivity_ViewBinding implements Unbinder {
     View view;
     view = Utils.findRequiredView(source, R.id.iv_back, "field 'mIvBack' and method 'onClick'");
     target.mIvBack = Utils.castView(view, R.id.iv_back, "field 'mIvBack'", ImageView.class);
-    view7f0901ea = view;
+    view7f09021e = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -68,7 +68,7 @@ public class HostActivity_ViewBinding implements Unbinder {
     target.mRgVoltage = Utils.findRequiredViewAsType(source, R.id.rg_voltage, "field 'mRgVoltage'", RadioGroup.class);
     view = Utils.findRequiredView(source, R.id.bt_cancel, "field 'mBtCancel' and method 'onClick'");
     target.mBtCancel = Utils.castView(view, R.id.bt_cancel, "field 'mBtCancel'", Button.class);
-    view7f090088 = view;
+    view7f090095 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -77,7 +77,7 @@ public class HostActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.bt_sure, "field 'mBtSure' and method 'onClick'");
     target.mBtSure = Utils.castView(view, R.id.bt_sure, "field 'mBtSure'", Button.class);
-    view7f09008c = view;
+    view7f09009e = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -86,7 +86,7 @@ public class HostActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.bt_recovery, "field 'mBtRecovery' and method 'onClick'");
     target.mBtRecovery = Utils.castView(view, R.id.bt_recovery, "field 'mBtRecovery'", Button.class);
-    view7f09008a = view;
+    view7f09009b = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -129,13 +129,13 @@ public class HostActivity_ViewBinding implements Unbinder {
     target.mBtRecovery = null;
     target.rlTitle = null;
 
-    view7f0901ea.setOnClickListener(null);
-    view7f0901ea = null;
-    view7f090088.setOnClickListener(null);
-    view7f090088 = null;
-    view7f09008c.setOnClickListener(null);
-    view7f09008c = null;
-    view7f09008a.setOnClickListener(null);
-    view7f09008a = null;
+    view7f09021e.setOnClickListener(null);
+    view7f09021e = null;
+    view7f090095.setOnClickListener(null);
+    view7f090095 = null;
+    view7f09009e.setOnClickListener(null);
+    view7f09009e = null;
+    view7f09009b.setOnClickListener(null);
+    view7f09009b = null;
   }
 }

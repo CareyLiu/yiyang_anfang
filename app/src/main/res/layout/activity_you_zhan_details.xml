@@ -134,13 +134,15 @@
                             android:layout_toRightOf="@+id/civ_youzhan_img">
 
                             <TextView
+                                android:ellipsize="end"
+                                android:lines="1"
                                 android:id="@+id/tv_shop_name"
-                                android:layout_width="wrap_content"
+                                android:layout_width="180dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="13dp"
                                 android:layout_marginTop="17dp"
                                 android:includeFontPadding="false"
-                                android:text="联府石油"
+                                android:text="联府石油联府石油联府石油"
                                 android:textColor="#ff222222"
                                 android:textSize="17sp"
                                 android:textStyle="bold"
@@ -158,14 +160,13 @@
                                 app:layout_constraintTop_toBottomOf="@+id/tv_shop_name" />
 
                             <TextView
+
                                 android:id="@+id/tv_address"
-                                android:layout_width="150dp"
+                                android:layout_width="180dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="3dp"
                                 android:includeFontPadding="false"
-
-                                android:lines="2"
-                                android:text="哈尔滨市南岗区学府路368号"
+                                android:text="哈尔滨市南岗区ssdddssddsdds"
                                 android:textColor="#ff666666"
                                 android:textSize="12sp"
                                 app:layout_constraintBottom_toBottomOf="@+id/iv_address"
@@ -191,7 +192,7 @@
                                 android:id="@+id/tv_price"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="14dp"
+
                                 android:includeFontPadding="false"
                                 android:text="4.54"
                                 android:textColor="#ffe31938"

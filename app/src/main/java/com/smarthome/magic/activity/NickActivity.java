@@ -65,7 +65,7 @@ public class NickActivity extends BaseActivity {
         map.put("key", Urls.key);
         map.put("of_user_id", UserManager.getManager(this).getUserId());
         map.put("update_type", "1");
-        map.put("user_name",etNickname.getText().toString());
+        map.put("user_name", etNickname.getText().toString());
         Gson gson = new Gson();
         OkGo.<AppResponse>post(Urls.SERVER_URL + "msg")
                 .tag(this)//
@@ -73,8 +73,9 @@ public class NickActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse>() {
                     @Override
                     public void onSuccess(final Response<AppResponse> response) {
-                        AlertUtil.t(NickActivity.this,response.body().msg);
+                        AlertUtil.t(NickActivity.this, response.body().msg);
                         AppEvent.setMessage("update");
+                        finish();
                     }
 
                     @Override

@@ -16,7 +16,7 @@ import java.lang.Override;
 public class ScanActivity_ViewBinding implements Unbinder {
   private ScanActivity target;
 
-  private View view7f09009e;
+  private View view7f0900b1;
 
   @UiThread
   public ScanActivity_ViewBinding(ScanActivity target) {
@@ -31,7 +31,7 @@ public class ScanActivity_ViewBinding implements Unbinder {
     target.mQRCodeView = Utils.findRequiredViewAsType(source, R.id.zxingview, "field 'mQRCodeView'", ZBarView.class);
     view = Utils.findRequiredView(source, R.id.capture_flash, "field 'captureFlash' and method 'onClick'");
     target.captureFlash = Utils.castView(view, R.id.capture_flash, "field 'captureFlash'", ImageView.class);
-    view7f09009e = view;
+    view7f0900b1 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -50,7 +50,7 @@ public class ScanActivity_ViewBinding implements Unbinder {
     target.mQRCodeView = null;
     target.captureFlash = null;
 
-    view7f09009e.setOnClickListener(null);
-    view7f09009e = null;
+    view7f0900b1.setOnClickListener(null);
+    view7f0900b1 = null;
   }
 }

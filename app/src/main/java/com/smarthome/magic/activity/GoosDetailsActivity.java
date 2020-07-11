@@ -4,11 +4,15 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.RequiresApi;
+
 import com.google.android.material.appbar.AppBarLayout;
+
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,8 +72,8 @@ public class GoosDetailsActivity extends BaseActivity implements AppBarLayout.On
     private LRecyclerViewAdapter lRecyclerViewAdapter;
     private List<GoodsDetails_f.DataBean.AssListBean> beanList = new ArrayList<>();
     private View header;
-    private TextView tvGoodsPrice,tvGoodsName,tvExpressPrice,tvSoldCount,tvAddress;
-    private LinearLayout layout_select,layout_parameter,layout_evaluate;
+    private TextView tvGoodsPrice, tvGoodsName, tvExpressPrice, tvSoldCount, tvAddress;
+    private LinearLayout layout_select, layout_parameter, layout_evaluate;
 
     private CustomBottomDialog customBottomDialog;
 
@@ -93,7 +97,7 @@ public class GoosDetailsActivity extends BaseActivity implements AppBarLayout.On
         layout_evaluate = header.findViewById(R.id.layout_evaluate);
         layout_parameter = header.findViewById(R.id.layout_parameter);
         layout_select = header.findViewById(R.id.layout_select);
-        customBottomDialog = new CustomBottomDialog(GoosDetailsActivity.this,null);
+        customBottomDialog = new CustomBottomDialog(GoosDetailsActivity.this, null);
         goodsEvaluateAdapter = new GoodsEvaluateAdapter(this);
         goodsEvaluateAdapter.setDataList(beanList);
         list.setLayoutManager(new LinearLayoutManager(this));
@@ -137,6 +141,7 @@ public class GoosDetailsActivity extends BaseActivity implements AppBarLayout.On
             @Override
             public void onClick(View v) {
                 //查看全部评价
+
             }
         });
     }
@@ -159,9 +164,9 @@ public class GoosDetailsActivity extends BaseActivity implements AppBarLayout.On
                         tvExpressPrice.setText(String.format("快递:%s", response.body().data.get(0).getWares_money_go()));
                         tvGoodsName.setText(response.body().data.get(0).getShop_product_title());
                         tvSoldCount.setText(response.body().data.get(0).getWares_sales_volume());
-                        for (int i = 0;i<2;i++){
-                            if (i<response.body().data.get(0).getAssList().size())
-                            beanList.add(response.body().data.get(0).getAssList().get(i));
+                        for (int i = 0; i < 2; i++) {
+                            if (i < response.body().data.get(0).getAssList().size())
+                                beanList.add(response.body().data.get(0).getAssList().get(i));
                         }
                         beanList = response.body().data.get(0).getAssList();
                         goodsEvaluateAdapter.setDataList(beanList);
@@ -192,14 +197,14 @@ public class GoosDetailsActivity extends BaseActivity implements AppBarLayout.On
                 });
     }
 
-    public void addShopCart(){
+    public void addShopCart() {
         Map<String, String> map = new HashMap<>();
         map.put("code", "04151");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("shop_product_id", getIntent().getStringExtra("shop_product_id"));
         map.put("wares_id", getIntent().getStringExtra("wares_id"));
-        map.put("pay_count",customBottomDialog.getCount());
+        map.put("pay_count", customBottomDialog.getCount());
         Gson gson = new Gson();
         OkGo.<AppResponse>post(Urls.SERVER_URL + "shop_new/app/user")
                 .tag(this)//
@@ -207,7 +212,7 @@ public class GoosDetailsActivity extends BaseActivity implements AppBarLayout.On
                 .execute(new JsonCallback<AppResponse>() {
                     @Override
                     public void onSuccess(final Response<AppResponse> response) {
-                        AlertUtil.t(GoosDetailsActivity.this,response.body().msg);
+                        AlertUtil.t(GoosDetailsActivity.this, response.body().msg);
                     }
 
                     @Override
@@ -216,7 +221,6 @@ public class GoosDetailsActivity extends BaseActivity implements AppBarLayout.On
                     }
                 });
     }
-
 
 
     @Override
@@ -252,7 +256,7 @@ public class GoosDetailsActivity extends BaseActivity implements AppBarLayout.On
                 finish();
                 break;
             case R.id.iv_cart:
-                startActivity(new Intent(GoosDetailsActivity.this,ShopCartActivity.class));
+                startActivity(new Intent(GoosDetailsActivity.this, ShopCartActivity.class));
                 break;
         }
     }

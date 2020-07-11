@@ -17,9 +17,9 @@ import java.lang.Override;
 public class ReviseNicknameActivity_ViewBinding implements Unbinder {
   private ReviseNicknameActivity target;
 
-  private View view7f090366;
+  private View view7f090516;
 
-  private View view7f09052e;
+  private View view7f090758;
 
   @UiThread
   public ReviseNicknameActivity_ViewBinding(ReviseNicknameActivity target) {
@@ -33,7 +33,7 @@ public class ReviseNicknameActivity_ViewBinding implements Unbinder {
     View view;
     view = Utils.findRequiredView(source, R.id.rl_back, "field 'rlBack' and method 'onViewClicked'");
     target.rlBack = Utils.castView(view, R.id.rl_back, "field 'rlBack'", RelativeLayout.class);
-    view7f090366 = view;
+    view7f090516 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -42,7 +42,7 @@ public class ReviseNicknameActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.tv_save, "field 'tvSave' and method 'onViewClicked'");
     target.tvSave = Utils.castView(view, R.id.tv_save, "field 'tvSave'", TextView.class);
-    view7f09052e = view;
+    view7f090758 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -63,9 +63,9 @@ public class ReviseNicknameActivity_ViewBinding implements Unbinder {
     target.tvSave = null;
     target.etNickName = null;
 
-    view7f090366.setOnClickListener(null);
-    view7f090366 = null;
-    view7f09052e.setOnClickListener(null);
-    view7f09052e = null;
+    view7f090516.setOnClickListener(null);
+    view7f090516 = null;
+    view7f090758.setOnClickListener(null);
+    view7f090758 = null;
   }
 }

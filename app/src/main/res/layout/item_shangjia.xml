@@ -94,7 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
-            android:background="@drawable/background_select"
+            android:background="@drawable/background_select_orange"
             android:padding="4dp"
             android:text="合作商家"
             android:textColor="#fffe9900"

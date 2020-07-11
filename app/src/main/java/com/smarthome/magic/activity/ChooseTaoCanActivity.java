@@ -43,6 +43,7 @@ import com.smarthome.magic.util.FlowLayoutManager;
 import com.smarthome.magic.util.StaggeredDividerItemDecoration;
 import com.smarthome.magic.util.phoneview.sample.ImageShowActivity;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -116,6 +117,9 @@ public class ChooseTaoCanActivity extends Activity {
     private String leixing;
     private String str = "0";
     private String anZhuangFangShiId;//
+
+    private BigDecimal chooseFenLeiBigDecimal = new BigDecimal("0");//选择分类bigdecimal
+    private BigDecimal songZhuangServerBigDecimal = new BigDecimal("0");//送装服务
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -221,21 +225,28 @@ public class ChooseTaoCanActivity extends Activity {
         RequestOptions requestOptions = RequestOptions.bitmapTransform(roundedCorners);
 
         Glide.with(ChooseTaoCanActivity.this).load(productListBeans.get(0).getIndex_photo_url()).apply(requestOptions).into(ivImage);
-        tvPrice.setText("¥" + productListBeans.get(0).getMoney_now());
-        tvKucun.setText("库存" + productListBeans.get(0).getShop_product_count() + "件");
-        tvYanse.setText(productListBeans.get(0).getProduct_title().trim());
+
+
+        chooseFenLeiBigDecimal = new BigDecimal(productListBeans.get(Integer.parseInt(position)).getMoney_now());
+        tvKucun.setText("库存" + productListBeans.get(Integer.parseInt(position)).getShop_product_count() + "件");
+        tvYanse.setText(productListBeans.get(Integer.parseInt(position)).getProduct_title().trim());
+
 
         tvNumber.setText("1");
         setclick();
         initAdapter();
 
-        if (dataBean.installationType.size() > 0) {
-            initSerVerAdapter();
-        } else {
-            clSongzhuangFuwu.setVisibility(View.GONE);
+        chooseFenLeiBigDecimal = new BigDecimal(productListBeans.get(Integer.parseInt(position)).getMoney_now());
+        String str = jiSuanFenLeiServer(chooseFenLeiBigDecimal, songZhuangServerBigDecimal);
+        tvPrice.setText("¥" + str);
+
+        if (dataBean.installationType != null) {
+            if (dataBean.installationType.size() > 0) {
+                initSerVerAdapter();
+            } else {
+                clSongzhuangFuwu.setVisibility(View.GONE);
+            }
         }
-
-
     }
 
     /**
@@ -341,9 +352,14 @@ public class ChooseTaoCanActivity extends Activity {
                         RequestOptions requestOptions = RequestOptions.bitmapTransform(roundedCorners);
 
                         Glide.with(ChooseTaoCanActivity.this).load(productListBeans.get(position).getIndex_photo_url()).apply(requestOptions).into(ivImage);
-                        tvPrice.setText("¥" + productListBeans.get(position).getMoney_now());
+
                         tvKucun.setText("库存" + productListBeans.get(position).getShop_product_count() + "件");
                         tvYanse.setText(productListBeans.get(position).getProduct_title().trim());
+
+                        chooseFenLeiBigDecimal = new BigDecimal(productListBeans.get(position).getMoney_now());
+                        String str = jiSuanFenLeiServer(chooseFenLeiBigDecimal, songZhuangServerBigDecimal);
+
+                        tvPrice.setText("¥" + str);
 
 
                         //展示图片 和地址
@@ -484,7 +500,7 @@ public class ChooseTaoCanActivity extends Activity {
         gouWuCheZhengHeModel1.setWares_money_go(dataBean.getWares_money_go());
         gouWuCheZhengHeModel1.setShop_product_title(dataBean.getShop_product_title());
         gouWuCheZhengHeModel1.setProduct_title(dataBean.getProductList().get(Integer.parseInt(position)).getProduct_title());
-        gouWuCheZhengHeModel1.setForm_product_money(dataBean.getProductList().get(Integer.parseInt(position)).getMoney_now());
+        gouWuCheZhengHeModel1.setForm_product_money(shangPinAndAnZhuangMoney);
         gouWuCheZhengHeModel1.setPay_count(count);
         gouWuCheZhengHeModel1.setWares_go_type(wares_go_type);
         gouWuCheZhengHeModel1.setBottomYuanJiao("1");
@@ -495,7 +511,19 @@ public class ChooseTaoCanActivity extends Activity {
     }
 
     public void initSerVerAdapter() {
-        anZhuangFangShiId = dataBean.installationType.get(0).installation_type_id;
+        //选中的条目
+        for (int i = 0; i < dataBean.installationType.size(); i++) {
+            if (dataBean.installationType.get(i).install_default.equals("0")) {
+
+            } else {
+                songZhuangServerBigDecimal = new BigDecimal(dataBean.installationType.get(i).installation_money);
+                anZhuangFangShiId = dataBean.installationType.get(0).installation_type_id;
+            }
+        }
+
+        String str = jiSuanFenLeiServer(chooseFenLeiBigDecimal, songZhuangServerBigDecimal);
+        tvPrice.setText("¥" + str);
+
         songZhuangServerAdapter = new SongZhuangServerAdapter(R.layout.item_songzhuagnfuwu, dataBean.installationType);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChooseTaoCanActivity.this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -518,12 +546,31 @@ public class ChooseTaoCanActivity extends Activity {
                             }
                         }
 
+                        if (dataBean.installationType.get(position).installation_money == null) {
+                            dataBean.installationType.get(position).installation_money = "0";
+                        }
+
+                        songZhuangServerBigDecimal = new BigDecimal(dataBean.installationType.get(position).installation_money);
+                        String str = jiSuanFenLeiServer(chooseFenLeiBigDecimal, songZhuangServerBigDecimal);
+
+                        tvPrice.setText("¥" + str);
+
+
                         //展示图片 和地址
                         songZhuangServerAdapter.notifyDataSetChanged();
                         break;
                 }
             }
         });
+    }
+
+    String shangPinAndAnZhuangMoney = "0";
+
+    private String jiSuanFenLeiServer(BigDecimal chooseFenLeiBigDecimal, BigDecimal songZhuangServerBigDecimal) {
+        BigDecimal sumBigDecimal = new BigDecimal("0");
+        sumBigDecimal = chooseFenLeiBigDecimal.add(songZhuangServerBigDecimal);
+        shangPinAndAnZhuangMoney = String.valueOf(sumBigDecimal);
+        return String.valueOf(sumBigDecimal);
     }
 
 }

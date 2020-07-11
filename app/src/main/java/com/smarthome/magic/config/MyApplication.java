@@ -732,10 +732,10 @@ public class MyApplication extends MultiDexApplication {
                             RxBus.getDefault().sendRx(n);
                         } else if (message.toString().contains("i")) {
 
-                            Notice n = new Notice();
-                            n.type = ConstanceValue.MSG_CAR_I;
-                            n.content = message.toString();
-                            RxBus.getDefault().sendRx(n);
+//                            Notice n = new Notice();
+//                            n.type = ConstanceValue.MSG_CAR_I;
+//                            n.content = message.toString();
+//                            RxBus.getDefault().sendRx(n);
 
                         } else if (message.toString().equals("k5011.")) {
                             Notice n = new Notice();

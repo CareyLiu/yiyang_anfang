@@ -17,7 +17,7 @@ import java.lang.Override;
 public class ShopCartActivity_ViewBinding implements Unbinder {
   private ShopCartActivity target;
 
-  private View view7f09026a;
+  private View view7f0902bb;
 
   @UiThread
   public ShopCartActivity_ViewBinding(ShopCartActivity target) {
@@ -31,7 +31,7 @@ public class ShopCartActivity_ViewBinding implements Unbinder {
     View view;
     view = Utils.findRequiredView(source, R.id.layout_back, "field 'layoutBack' and method 'onViewClicked'");
     target.layoutBack = Utils.castView(view, R.id.layout_back, "field 'layoutBack'", LinearLayout.class);
-    view7f09026a = view;
+    view7f0902bb = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -53,7 +53,7 @@ public class ShopCartActivity_ViewBinding implements Unbinder {
     target.tvTitle = null;
     target.list = null;
 
-    view7f09026a.setOnClickListener(null);
-    view7f09026a = null;
+    view7f0902bb.setOnClickListener(null);
+    view7f0902bb = null;
   }
 }

@@ -20,11 +20,11 @@ import java.lang.Override;
 public class DiagnosisActivity_ViewBinding implements Unbinder {
   private DiagnosisActivity target;
 
-  private View view7f090092;
+  private View view7f0900a4;
 
-  private View view7f090366;
+  private View view7f090516;
 
-  private View view7f09036b;
+  private View view7f09051b;
 
   @UiThread
   public DiagnosisActivity_ViewBinding(DiagnosisActivity target) {
@@ -50,7 +50,7 @@ public class DiagnosisActivity_ViewBinding implements Unbinder {
     target.layoutInfo = Utils.findRequiredViewAsType(source, R.id.layout_info, "field 'layoutInfo'", ConstraintLayout.class);
     view = Utils.findRequiredView(source, R.id.btn_clean, "field 'btnClean' and method 'onViewClicked'");
     target.btnClean = Utils.castView(view, R.id.btn_clean, "field 'btnClean'", Button.class);
-    view7f090092 = view;
+    view7f0900a4 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -59,7 +59,7 @@ public class DiagnosisActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.rl_back, "field 'rlBack' and method 'onViewClicked'");
     target.rlBack = Utils.castView(view, R.id.rl_back, "field 'rlBack'", RelativeLayout.class);
-    view7f090366 = view;
+    view7f090516 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -68,7 +68,7 @@ public class DiagnosisActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.rl_consult, "field 'rlConsult' and method 'onViewClicked'");
     target.rlConsult = Utils.castView(view, R.id.rl_consult, "field 'rlConsult'", RelativeLayout.class);
-    view7f09036b = view;
+    view7f09051b = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -102,11 +102,11 @@ public class DiagnosisActivity_ViewBinding implements Unbinder {
     target.rlConsult = null;
     target.rl_title = null;
 
-    view7f090092.setOnClickListener(null);
-    view7f090092 = null;
-    view7f090366.setOnClickListener(null);
-    view7f090366 = null;
-    view7f09036b.setOnClickListener(null);
-    view7f09036b = null;
+    view7f0900a4.setOnClickListener(null);
+    view7f0900a4 = null;
+    view7f090516.setOnClickListener(null);
+    view7f090516 = null;
+    view7f09051b.setOnClickListener(null);
+    view7f09051b = null;
   }
 }

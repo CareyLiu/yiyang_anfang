@@ -307,7 +307,7 @@ public class LoginActivity extends BaseActivity {
                                 Notice n = new Notice();
                                 n.type = ConstanceValue.MSG_CONNET_MQTT;
                                 RxBus.getDefault().sendRx(n);
-
+                                finish();
                             } else {
                                 //登录角色 >1 时，让用户选择要登录的角色
                                 userlist.addAll(response.body().data);
@@ -315,7 +315,7 @@ public class LoginActivity extends BaseActivity {
                             }
 
 
-                            String rongYunTouken =UserManager.getManager(mContext).getRongYun();
+                            String rongYunTouken = UserManager.getManager(mContext).getRongYun();
 
                             if (!StringUtils.isEmpty(rongYunTouken)) {
                                 connectRongYun(response.body().data.get(0).getToken_rong());

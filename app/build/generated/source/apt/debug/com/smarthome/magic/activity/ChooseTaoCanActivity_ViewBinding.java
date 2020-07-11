@@ -47,6 +47,10 @@ public class ChooseTaoCanActivity_ViewBinding implements Unbinder {
     target.rlGuige = Utils.findRequiredViewAsType(source, R.id.rl_guige, "field 'rlGuige'", RelativeLayout.class);
     target.rtvText = Utils.findRequiredViewAsType(source, R.id.rtv_text, "field 'rtvText'", RoundTextView.class);
     target.tvJian = Utils.findRequiredViewAsType(source, R.id.tv_jian, "field 'tvJian'", TextView.class);
+    target.constrainShangpin = Utils.findRequiredViewAsType(source, R.id.constrain_shangpin, "field 'constrainShangpin'", ConstraintLayout.class);
+    target.tvSongzhuangfuwuHuashu = Utils.findRequiredViewAsType(source, R.id.tv_songzhuangfuwu_huashu, "field 'tvSongzhuangfuwuHuashu'", TextView.class);
+    target.clSongzhuangFuwu = Utils.findRequiredViewAsType(source, R.id.cl_songzhuang_fuwu, "field 'clSongzhuangFuwu'", ConstraintLayout.class);
+    target.rlvSongzhuangFuwu = Utils.findRequiredViewAsType(source, R.id.rlv_songzhuang_fuwu, "field 'rlvSongzhuangFuwu'", RecyclerView.class);
   }
 
   @Override
@@ -75,5 +79,9 @@ public class ChooseTaoCanActivity_ViewBinding implements Unbinder {
     target.rlGuige = null;
     target.rtvText = null;
     target.tvJian = null;
+    target.constrainShangpin = null;
+    target.tvSongzhuangfuwuHuashu = null;
+    target.clSongzhuangFuwu = null;
+    target.rlvSongzhuangFuwu = null;
   }
 }

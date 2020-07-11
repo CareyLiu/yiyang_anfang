@@ -17,9 +17,9 @@ import java.lang.Override;
 public class NickActivity_ViewBinding implements Unbinder {
   private NickActivity target;
 
-  private View view7f090366;
+  private View view7f090516;
 
-  private View view7f090093;
+  private View view7f0900a5;
 
   @UiThread
   public NickActivity_ViewBinding(NickActivity target) {
@@ -33,7 +33,7 @@ public class NickActivity_ViewBinding implements Unbinder {
     View view;
     view = Utils.findRequiredView(source, R.id.rl_back, "field 'rlBack' and method 'onViewClicked'");
     target.rlBack = Utils.castView(view, R.id.rl_back, "field 'rlBack'", RelativeLayout.class);
-    view7f090366 = view;
+    view7f090516 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -43,7 +43,7 @@ public class NickActivity_ViewBinding implements Unbinder {
     target.etNickname = Utils.findRequiredViewAsType(source, R.id.et_nickname, "field 'etNickname'", EditText.class);
     view = Utils.findRequiredView(source, R.id.btn_confirm, "field 'btnConfirm' and method 'onViewClicked'");
     target.btnConfirm = Utils.castView(view, R.id.btn_confirm, "field 'btnConfirm'", Button.class);
-    view7f090093 = view;
+    view7f0900a5 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -63,9 +63,9 @@ public class NickActivity_ViewBinding implements Unbinder {
     target.etNickname = null;
     target.btnConfirm = null;
 
-    view7f090366.setOnClickListener(null);
-    view7f090366 = null;
-    view7f090093.setOnClickListener(null);
-    view7f090093 = null;
+    view7f090516.setOnClickListener(null);
+    view7f090516 = null;
+    view7f0900a5.setOnClickListener(null);
+    view7f0900a5 = null;
   }
 }

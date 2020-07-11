@@ -3,7 +3,6 @@ package com.smarthome.magic.activity.zijian_shangcheng;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,8 +18,8 @@ import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.AccessListActivity;
 import com.smarthome.magic.activity.ChooseTaoCanActivity;
-import com.smarthome.magic.activity.Demo_rongyun;
 import com.smarthome.magic.activity.gouwuche.GouWuCheActivity;
 import com.smarthome.magic.adapter.ZiJianPingLunAdapter;
 import com.smarthome.magic.app.App;
@@ -29,7 +28,6 @@ import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
-
 import com.smarthome.magic.config.GlideImageLoader;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.get_net.Urls;
@@ -77,6 +75,8 @@ public class ZiJianShopMallDetailsActivity extends BaseActivity implements Zijia
     LinearLayout llLijiGoumai;
     @BindView(R.id.tv_shoucang)
     TextView tvShoucang;
+    @BindView(R.id.tv_kefu)
+    TextView tvKefu;
     private Response<AppResponse<GoodsDetails_f.DataBean>> response;
     GoodsDetails_f.DataBean dataBean;
     private String productId;
@@ -191,6 +191,17 @@ public class ZiJianShopMallDetailsActivity extends BaseActivity implements Zijia
                                 }
                             }
                         });
+
+                        tvShoucang.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (isCollection.equals("0")) {
+                                    setShouCang("04126");
+                                } else if (isCollection.equals("1")) {
+                                    setShouCang("04127");
+                                }
+                            }
+                        });
                     }
 
                     @Override
@@ -287,6 +298,8 @@ public class ZiJianShopMallDetailsActivity extends BaseActivity implements Zijia
             }
         }
 
+
+
         tvPrice.setText("¥" + response.body().data.get(0).getMoney_begin() + "-" + response.body().data.get(0).getMoney_end());
         tvTitle.setText(response.body().data.get(0).getShop_product_title());
         String kuaidi = response.body().data.get(0).getWares_go_type();
@@ -331,6 +344,13 @@ public class ZiJianShopMallDetailsActivity extends BaseActivity implements Zijia
             ivSeeMore.setVisibility(View.GONE);
             tvSeeMore.setVisibility(View.GONE);
         }
+
+        tvSeeMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AccessListActivity.actionStart(mContext, warseId);
+            }
+        });
 
         ziJianPingLunAdapter.addHeaderView(headerView);
     }
@@ -378,6 +398,12 @@ public class ZiJianShopMallDetailsActivity extends BaseActivity implements Zijia
                 ShopDetailsActivity.actionStart(mContext, response.body().data.get(0).getInst_id());
             }
         });
+        tvDianpu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShopDetailsActivity.actionStart(mContext, response.body().data.get(0).getInst_id());
+            }
+        });
         ivKefuImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -392,14 +418,21 @@ public class ZiJianShopMallDetailsActivity extends BaseActivity implements Zijia
                 RongIM.getInstance().startConversation(mContext, conversationType, targetId, instName, bundle);
             }
         });
-        ivShoucangIamge.setOnClickListener(new View.OnClickListener() {
+        tvKefu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //收藏
-
-                //收藏接口
+                //客服
+                //Demo_rongyun.actionStart(mContext,response.body().data.get(0).getInst_accid());
+                Conversation.ConversationType conversationType = Conversation.ConversationType.PRIVATE;
+                String targetId = response.body().data.get(0).getInst_accid();
+                String instName = response.body().data.get(0).getInst_name();
+                Bundle bundle = new Bundle();
+                bundle.putString("dianpuming", instName);
+                bundle.putString("inst_accid", response.body().data.get(0).getInst_accid());
+                RongIM.getInstance().startConversation(mContext, conversationType, targetId, instName, bundle);
             }
         });
+
         llJiaruGouwuche.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

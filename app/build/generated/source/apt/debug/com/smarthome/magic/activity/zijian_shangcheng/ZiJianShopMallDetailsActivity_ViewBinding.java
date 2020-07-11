@@ -35,6 +35,7 @@ public class ZiJianShopMallDetailsActivity_ViewBinding implements Unbinder {
     target.llJiaruGouwuche = Utils.findRequiredViewAsType(source, R.id.ll_jiaru_gouwuche, "field 'llJiaruGouwuche'", LinearLayout.class);
     target.llLijiGoumai = Utils.findRequiredViewAsType(source, R.id.ll_liji_goumai, "field 'llLijiGoumai'", LinearLayout.class);
     target.tvShoucang = Utils.findRequiredViewAsType(source, R.id.tv_shoucang, "field 'tvShoucang'", TextView.class);
+    target.tvKefu = Utils.findRequiredViewAsType(source, R.id.tv_kefu, "field 'tvKefu'", TextView.class);
   }
 
   @Override
@@ -52,5 +53,6 @@ public class ZiJianShopMallDetailsActivity_ViewBinding implements Unbinder {
     target.llJiaruGouwuche = null;
     target.llLijiGoumai = null;
     target.tvShoucang = null;
+    target.tvKefu = null;
   }
 }

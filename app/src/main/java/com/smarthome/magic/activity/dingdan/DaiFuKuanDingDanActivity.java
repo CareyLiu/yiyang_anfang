@@ -131,6 +131,13 @@ public class DaiFuKuanDingDanActivity extends BaseActivity {
     private IWXAPI api;
     private String form_id;//订单id
 
+    /**
+     * ArrayList<String> list = new ArrayList<>();
+     * list.add(response.body().data.get(0).getBannerList().get(position).getImg_url());
+     * ImageShowActivity.actionStart(ZiJianShopMallDetailsActivity.this, list);
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -784,7 +791,7 @@ public class DaiFuKuanDingDanActivity extends BaseActivity {
     private void setDaoDian(DingDanDetailsModel.DataBean dataBean) {
         tvYanzhengma.setText("验证码：" + dataBean.getPay_code());
         Bitmap b = BitmapFactory.decodeResource(this.getResources(), R.mipmap.ic_launcher);
-        Bitmap bitmap = Tools.createQRImage(this, dataBean.getUrl(), b);
+        Bitmap bitmap = Tools.createQRImage(this, dataBean.getPay_code(), b);
         ivYanzhengma.setImageBitmap(bitmap);
 //pay_code_state	二维码状态：1.未使用2.已使用
         if (dataBean.getPay_code_state().equals("1")) {

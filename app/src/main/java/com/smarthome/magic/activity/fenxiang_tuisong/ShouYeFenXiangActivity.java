@@ -115,14 +115,12 @@ public class ShouYeFenXiangActivity extends Activity {
         clWeixin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 setWeatchShare(activity.share_title, activity.share_detail, activity.share_url, activity.share_img, "0");
             }
         });
         clPengyouquan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 setWeatchShare(activity.share_title, activity.share_detail, activity.share_url, activity.share_img, "1");
             }
         });

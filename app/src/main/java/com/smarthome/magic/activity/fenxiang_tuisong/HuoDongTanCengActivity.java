@@ -123,7 +123,7 @@ public class HuoDongTanCengActivity extends Activity {
         ivLijichakan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  UIHelper.ToastMessage(HuoDongTanCengActivity.this, "立即查看");
+                //  UIHelper.ToastMessage(HuoDongTanCengActivity.this, "立即查看");
                 if (activity.get(position).activity_type_id.equals("1")) {
                     ZiJianShopMallDetailsActivity.actionStart(HuoDongTanCengActivity.this, activity.get(position).shop_product_id, activity.get(position).wares_id);
                 } else {
@@ -135,6 +135,9 @@ public class HuoDongTanCengActivity extends Activity {
             @Override
             public void onClick(View v) {
                 //UIHelper.ToastMessage(HuoDongTanCengActivity.this, "分享赚");
+                if (activity.get(position).is_share.equals("2")) {
+                    return;
+                }
                 ShouYeFenXiangActivity.actionStart(HuoDongTanCengActivity.this, activity.get(position));
                 finish();
 
@@ -181,7 +184,10 @@ public class HuoDongTanCengActivity extends Activity {
                 if (activity.get(position).activity_type_id.equals("1")) {
                     ZiJianShopMallDetailsActivity.actionStart(HuoDongTanCengActivity.this, activity.get(position).shop_product_id, activity.get(position).wares_id);
                 } else {
-                    DefaultX5WebView_HaveNameActivity.actionStart(HuoDongTanCengActivity.this, activity.get(position).activity_type_id, "聚易佳");
+                    if (null == activity.get(position).html_url) {
+                        return;
+                    }
+                    DefaultX5WebView_HaveNameActivity.actionStart(HuoDongTanCengActivity.this, activity.get(position).html_url, "聚易佳");
                 }
             }
         });
@@ -226,6 +232,11 @@ public class HuoDongTanCengActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     @Override

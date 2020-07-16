@@ -41,6 +41,8 @@ import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import com.lzy.okgo.model.Response;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttConnect;
 import com.rairmmd.andmqtt.MqttSubscribe;
@@ -83,6 +85,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
+
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.IRongCallback;
@@ -286,11 +289,8 @@ public class MyApplication extends MultiDexApplication {
         registerReceiver(mReceiver, filter);
 
         //view
-
-
         Gloading.initDefault(new GlobalAdapter());
-
-
+        Logger.addLogAdapter(new AndroidLogAdapter());
     }
 
     private void initRongYun() {

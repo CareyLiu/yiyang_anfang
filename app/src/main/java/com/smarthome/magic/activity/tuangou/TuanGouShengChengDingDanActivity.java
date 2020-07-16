@@ -23,6 +23,7 @@ import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.TuanGouShengChengDingDanBean;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -92,9 +93,9 @@ public class TuanGouShengChengDingDanActivity extends AbTuanGouShengChengDingDan
     private String tvName1;
     private String shopType;
 
-    private String count;
+
     private String war_id;
-    private String userHongBao = "2";//1 不用 2 用
+    private String userHongBao = "1";//1 不用 2 用
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,31 +108,18 @@ public class TuanGouShengChengDingDanActivity extends AbTuanGouShengChengDingDan
         tvName1 = getIntent().getStringExtra("tvName");
         image = getIntent().getStringExtra("image");
         shopType = getIntent().getStringExtra("shopType");
-        count = "1";
+
+
+        shuLiangBigDecimal = new BigDecimal("1");
+        danjiaBigDecimal = new BigDecimal(money);
         rtvJine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TuanGouZhiFuActivity.actionStart(TuanGouShengChengDingDanActivity.this, inst_id, count, userHongBao, war_id);
+                TuanGouZhiFuActivity.actionStart(TuanGouShengChengDingDanActivity.this, inst_id, tvGeshu.getText().toString().trim(), userHongBao, war_id);
             }
         });
         getNet();
-        rl3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (userHongBao.equals("2")) {
-                    ivChoose.setVisibility(View.INVISIBLE);
-                    userHongBao = "1";//不用
 
-                    tvDanqianDikou.setVisibility(View.GONE);
-                    tvDikoujine.setVisibility(View.GONE);
-                } else {
-                    ivChoose.setVisibility(View.VISIBLE);
-                    userHongBao = "2";//用
-                    tvDanqianDikou.setVisibility(View.VISIBLE);
-                    tvDikoujine.setVisibility(View.VISIBLE);
-                }
-            }
-        });
     }
 
     @Override
@@ -168,6 +156,34 @@ public class TuanGouShengChengDingDanActivity extends AbTuanGouShengChengDingDan
     @Override
     public void showPage() {
         //if (response.body().data.get(0).getMoney())
+
+
+        String hongBaoJinE = response.body().data.get(0).getAvailable_balance();
+        BigDecimal hongBaoBigDecimal = new BigDecimal(hongBaoJinE);
+
+        if (hongBaoBigDecimal.compareTo(BigDecimal.ZERO) == 1) {
+
+            rl3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (userHongBao.equals("2")) {
+                        ivChoose.setVisibility(View.INVISIBLE);
+                        userHongBao = "1";//不用
+
+                        tvDanqianDikou.setVisibility(View.GONE);
+                        tvDikoujine.setVisibility(View.GONE);
+                    } else {
+                        ivChoose.setVisibility(View.VISIBLE);
+                        userHongBao = "2";//用
+                        tvDanqianDikou.setVisibility(View.VISIBLE);
+                        tvDikoujine.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
+        } else {
+            userHongBao = "1";
+        }
+
         tvDikoujine.setText(response.body().data.get(0).getAvailable_balance());
         tvMoney.setText("¥" + money);
         tvXiaojiPrice.setText("¥ " + money);
@@ -179,33 +195,15 @@ public class TuanGouShengChengDingDanActivity extends AbTuanGouShengChengDingDan
         ivJia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String strJine = tvGeshu.getText().toString();
-                int strJineInt = Integer.parseInt(strJine);
-                tvGeshu.setText(++strJineInt + "");
-
-                Float aaaa = strJineInt * Float.parseFloat(money);
-                tvXiaojiPrice.setText("¥" + aaaa + "");
-                tvMoney.setText("¥" + aaaa);
-                rtvJine.setText("¥" + aaaa + "生成订单");
-                count = strJine;
+                shuLiangBigDecimal = new BigDecimal(tvGeshu.getText().toString().trim());
+                setJiSuanShuLiang(shuLiangBigDecimal, danjiaBigDecimal, "1");
             }
         });
         ivJian.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String strJine = tvGeshu.getText().toString();
-                int strJineInt = Integer.parseInt(strJine);
-                if (strJineInt == 1) {
-                    UIHelper.ToastMessage(TuanGouShengChengDingDanActivity.this, "最少购买一件");
-                    return;
-                }
-
-                tvGeshu.setText(--strJineInt + "");
-                Float aaaa = strJineInt * Float.parseFloat(money);
-                tvXiaojiPrice.setText(aaaa + "");
-                tvMoney.setText("¥" + aaaa);
-                rtvJine.setText("¥" + aaaa + "生成订单");
-                count = strJine;
+                shuLiangBigDecimal = new BigDecimal(tvGeshu.getText().toString().trim());
+                setJiSuanShuLiang(shuLiangBigDecimal, danjiaBigDecimal, "0");
             }
         });
     }
@@ -262,5 +260,46 @@ public class TuanGouShengChengDingDanActivity extends AbTuanGouShengChengDingDan
                 finish();
             }
         });
+    }
+
+
+    /**
+     * @param shuLiang 数量
+     * @param danJia   单价
+     * @param type     0 减 1加
+     */
+    BigDecimal shuLiangBigDecimal;
+    BigDecimal danjiaBigDecimal;
+
+    private void setJiSuanShuLiang(BigDecimal shuLiangBigDecimal, BigDecimal danjiaBigDecimal, String type) {
+
+        BigDecimal finalDecimal = new BigDecimal("0");
+
+        if (type.equals("0")) {
+
+            if (shuLiangBigDecimal.compareTo(new BigDecimal("1")) == 0) {
+                //大于0
+                UIHelper.ToastMessage(mContext, "最小购买数量为1");
+                return;
+            } else {
+                shuLiangBigDecimal = shuLiangBigDecimal.subtract(new BigDecimal("1"));
+                finalDecimal = danjiaBigDecimal.multiply(shuLiangBigDecimal);
+                tvGeshu.setText(shuLiangBigDecimal.toString().trim());
+            }
+
+        } else if (type.equals("1")) {
+
+            shuLiangBigDecimal = shuLiangBigDecimal.add(new BigDecimal("1"));
+            finalDecimal = shuLiangBigDecimal.multiply(danjiaBigDecimal);
+
+            tvGeshu.setText(shuLiangBigDecimal.toString());
+
+        }
+
+
+        tvXiaojiPrice.setText(finalDecimal.toString() + "");
+        tvMoney.setText("¥" + finalDecimal.toString());
+        rtvJine.setText("¥" + finalDecimal.toString() + "生成订单");
+
     }
 }

@@ -705,7 +705,7 @@ public class OrderListFragment extends BaseFragment {
             Map<String, Object> map = new HashMap<>();
             map.put("key", Urls.key);
             map.put("token", UserManager.getManager(getActivity()).getAppToken());
-            map.put("operate_type", "21");
+            map.put("operate_type", dataBean.getOperate_type());
             map.put("pay_id", pay_id);
             map.put("pay_type", "4");
 

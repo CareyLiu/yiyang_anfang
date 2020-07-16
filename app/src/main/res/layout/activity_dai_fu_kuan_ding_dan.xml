@@ -11,10 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,6 +36,79 @@
                     tools:text="等待买家付款" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_erweima"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:visibility="gone">
+
+
+
+
+                <TextView
+                    android:id="@+id/tv_yanzhengma"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="29dp"
+                    android:layout_marginTop="43dp"
+                    android:includeFontPadding="false"
+                    android:textColor="#ff000000"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="验证码：89895656" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:includeFontPadding="false"
+                    android:text="点击查看到店二维码大图"
+                    android:textColor="#ff969696"
+                    android:textSize="14sp"
+                    app:layout_constraintLeft_toLeftOf="@+id/tv_yanzhengma"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_yanzhengma" />
+
+
+                <ImageView
+                    android:id="@+id/iv_yanzhengma"
+                    android:layout_width="97dp"
+                    android:layout_height="97dp"
+                    android:layout_marginRight="26dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:background="@color/blue" />
+
+                <View
+                    android:visibility="gone"
+                    android:id="@+id/view_mengban"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:background="#73ffffff"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/iv_yiwancheng"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:layout_marginLeft="34dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@mipmap/yiwangcheng"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <View
+
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginHorizontal="15dp"
+                    android:background="#cccccc"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constrain2"
@@ -237,7 +310,7 @@
                 android:background="@color/white"
                 app:layout_constraintTop_toBottomOf="@+id/ll_info" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
     </ScrollView>
 
 

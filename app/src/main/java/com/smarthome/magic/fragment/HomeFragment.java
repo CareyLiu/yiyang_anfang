@@ -41,11 +41,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.location.AMapLocationQualityReport;
+import com.blankj.utilcode.util.LogUtils;
 import com.bumptech.glide.Glide;
 import com.github.jdsjlzx.ItemDecoration.GridItemDecoration;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
@@ -55,6 +57,7 @@ import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -67,6 +70,9 @@ import com.smarthome.magic.activity.Demo_rongyun;
 import com.smarthome.magic.activity.PlumbingHeaterActivity;
 import com.smarthome.magic.activity.TuanYouWebView;
 import com.smarthome.magic.activity.WebViewActivity;
+import com.smarthome.magic.activity.fenxiang_tuisong.FenXiangTuiSongActivity;
+import com.smarthome.magic.activity.fenxiang_tuisong.HuoDongTanCengActivity;
+import com.smarthome.magic.activity.fenxiang_tuisong.ShouYeFenXiangActivity;
 import com.smarthome.magic.activity.gouwuche.GouWuCheActivity;
 import com.smarthome.magic.activity.homepage.DaLiBaoActivity;
 import com.smarthome.magic.activity.jd_taobao_pinduoduo.TaoBao_Jd_PinDuoDuoActivity;
@@ -125,6 +131,7 @@ import java.util.Observer;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import okhttp3.logging.HttpLoggingInterceptor;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
@@ -454,19 +461,8 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
                         }
                     }
                 });
+                //FenXiangTuiSongActivity.actionStart(getActivity());
 
-                // ConversationListActivity.actionStart(getActivity());
-                //   Demo_rongyun.actionStart(getActivity());
-                // TuanYouList.actionStart(getActivity());
-                //EspTouchActivity.actionStart(getActivity());
-                //getNet_check();
-
-//                IWXAPI api;
-//                api = WXAPIFactory.createWXAPI(getActivity(), Wetch_S.APP_ID);
-//                SendAuth.Req req = new SendAuth.Req();
-//                req.scope = "snsapi_userinfo";
-//                req.state = "wechat_sdk_demo_test";
-//                api.sendReq(req);
             }
         });
         //吃喝玩乐相关列表
@@ -736,6 +732,7 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
     }
 
     private String JiaMiToken;
+    public static List<String> items = new ArrayList<>();
 
     public void getData() {
         Map<String, String> map = new HashMap<>();
@@ -750,7 +747,10 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<Home.DataBean>>() {
                     @Override
-                    public void onSuccess(final Response<AppResponse<Home.DataBean>> response) {
+                    public void onSuccess(Response<AppResponse<Home.DataBean>> response) {
+
+
+                        Logger.d(gson.toJson(response.body()));
                         if (smartRefreshLayout != null) {
                             smartRefreshLayout.setEnableRefresh(true);
                             smartRefreshLayout.finishRefresh();
@@ -778,7 +778,7 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
                         hotLRecyclerViewAdapter.notifyDataSetChanged();
 
 
-                        List<String> items = new ArrayList<>();
+                        items = new ArrayList<>();
                         if (response.body().data != null) {
                             for (int i = 0; i < response.body().data.get(0).getBannerList().size(); i++) {
                                 items.add(response.body().data.get(0).getBannerList().get(i).getImg_url());
@@ -855,7 +855,13 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
                             }
                         });
 
-
+                        if (response.body().data.get(0).is_activity == null) {
+                            return;
+                        }
+                        if (response.body().data.get(0).is_activity.equals("1")) {
+                            return;
+                        }
+                        setHuoDong(response.body().data.get(0).getActivity());
                     }
 
                     @Override
@@ -1072,6 +1078,45 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
     private void stopLocation() {
         // 停止定位
         locationClient.stopLocation();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+    /**
+     * is_activity	是否显示活动 1.没活动 2.有活动
+     * img_url	图url
+     * img_width	图宽
+     * img_height	图高
+     * html_url	跳转地址url（app用）
+     * activity_type_id	类型 1.商品 2.广告
+     * wares_id	商品id
+     * shop_product_id	套餐id
+     * is_share	是否分享 1.分享 2.不分享
+     * share_title	分享标题
+     * share_detail	分享描述
+     * share_url	分享链接
+     * share_img	分享图片
+     */
+    private String strFirst = "0";//0第一次 1第二次
+
+    private void setHuoDong(List<Home.DataBean.activity> activity) {
+
+        if (activity.size() == 0) {
+            return;
+        }
+        if (strFirst.equals("1")) {
+            return;
+        }
+        strFirst = "1";
+
+
+        HuoDongTanCengActivity.actionStart(getActivity(), activity);
+
+
     }
 }
 

@@ -100,17 +100,19 @@ public class TuanGouZhiFuActivity extends BaseActivity {
             }
         }));
 
-        getNet();
+
         frtvPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PreferenceHelper.getInstance(TuanGouZhiFuActivity.this).putString(App.TUANGOU_PAY, "tuangoupay");
                 if (pay_id.equals("2")) {
                     //     finish();
-                    goToWeChatPay(dataBean);
+                    getNet();
+
 
                 } else if (pay_id.equals("1")) {
-                    payV2(appId);//这里填写后台返回的支付信息
+                    getNet();
+
                 }
             }
         });
@@ -125,7 +127,7 @@ public class TuanGouZhiFuActivity extends BaseActivity {
                 //  ivIcon1.setBackgroundResource(R.mipmap.dingdan_icon_duihao);
                 ivZhifubaoChoose.setVisibility(View.INVISIBLE);
                 ivWeixinChoose.setVisibility(View.VISIBLE);
-                getNet();
+
             }
         });
 
@@ -139,7 +141,7 @@ public class TuanGouZhiFuActivity extends BaseActivity {
                 ivZhifubaoChoose.setVisibility(View.VISIBLE);
                 ivWeixinChoose.setVisibility(View.INVISIBLE);
                 //ivWeixinChoose.setBackgroundResource(R.mipmap.dingdan_icon_duihao);
-                getNet();
+
             }
         });
     }
@@ -336,6 +338,7 @@ public class TuanGouZhiFuActivity extends BaseActivity {
                         public void onSuccess(Response<AppResponse<YuZhiFuModel_AliPay.DataBean>> response) {
 
                             appId = response.body().data.get(0).getPay();
+                            payV2(appId);
                         }
 
                         @Override
@@ -396,6 +399,8 @@ public class TuanGouZhiFuActivity extends BaseActivity {
                             //   appId = response.body().data.get(0).getPay().getAppid();
                             dataBean = response.body().data.get(0);
                             api = WXAPIFactory.createWXAPI(TuanGouZhiFuActivity.this, dataBean.getPay().getAppid());
+
+                            goToWeChatPay(dataBean);
                         }
 
                         @Override

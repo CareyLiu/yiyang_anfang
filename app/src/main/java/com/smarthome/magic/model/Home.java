@@ -1,5 +1,8 @@
 package com.smarthome.magic.model;
 
+import android.app.Activity;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -89,6 +92,17 @@ public class Home {
         private List<IconListBean> iconList;
         private List<IndexShowListBean> indexShowList;
         private List<ProShowListBean> proShowList;
+        public String is_activity;
+
+        public List<DataBean.activity> getActivity() {
+            return activity;
+        }
+
+        public void setActivity(List<DataBean.activity> activity) {
+            this.activity = activity;
+        }
+
+        private List<activity> activity;
 
         public String getTao_shop_img() {
             return tao_shop_img;
@@ -904,6 +918,38 @@ public class Home {
             public void setProduct_title(String product_title) {
                 this.product_title = product_title;
             }
+        }
+
+
+        /**
+         * is_activity	是否显示活动 1.没活动 2.有活动
+         * img_url	图url
+         * img_width	图宽
+         * img_height	图高
+         * html_url	跳转地址url（app用）
+         * activity_type_id	类型 1.商品 2.广告
+         * wares_id	商品id
+         * shop_product_id	套餐id
+         * is_share	是否分享 1.分享 2.不分享
+         * share_title	分享标题
+         * share_detail	分享描述
+         * share_url	分享链接
+         * share_img	分享图片
+         */
+        public static class activity  implements Serializable {
+            public String is_activity;
+            public String img_url;
+            public String img_width;
+            public String img_height;
+            public String html_url;
+            public String activity_type_id;
+            public String wares_id;
+            public String shop_product_id;
+            public String is_share;
+            public String share_title;
+            public String share_detail;
+            public String share_url;
+            public String share_img;
         }
     }
 }

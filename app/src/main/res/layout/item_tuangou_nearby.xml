@@ -35,7 +35,7 @@
         android:layout_width="155dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-        android:lines="1"
+        android:lines="2"
         android:text="精品肥牛，新西兰羊排，澳洲肥牛..."
         android:textColor="#ff666666"
         android:textSize="12sp"

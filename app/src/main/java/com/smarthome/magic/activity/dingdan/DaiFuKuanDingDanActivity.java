@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -38,6 +40,7 @@ import com.smarthome.magic.model.YuZhiFuModel;
 import com.smarthome.magic.model.YuZhiFuModel_AliPay;
 import com.smarthome.magic.pay_about.alipay.PayResult;
 import com.smarthome.magic.util.PaySuccessUtils;
+import com.smarthome.magic.util.Tools;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -113,6 +116,16 @@ public class DaiFuKuanDingDanActivity extends BaseActivity {
     TextView tvShangchudingdan;
     @BindView(R.id.cl_daiingjia)
     ConstraintLayout clDaiingjia;
+    @BindView(R.id.tv_yanzhengma)
+    TextView tvYanzhengma;
+    @BindView(R.id.iv_yanzhengma)
+    ImageView ivYanzhengma;
+    @BindView(R.id.cl_erweima)
+    ConstraintLayout clErweima;
+    @BindView(R.id.view_mengban)
+    View viewMengban;
+    @BindView(R.id.iv_yiwancheng)
+    ImageView ivYiwancheng;
     private Context cnt;
     private OrderListModel.DataBean dataBean;
     private IWXAPI api;
@@ -135,7 +148,7 @@ public class DaiFuKuanDingDanActivity extends BaseActivity {
         //wares_type	订单类型：1.普通2.拼单 3.团购		是
         clDaifukuan.setVisibility(View.GONE);
         clDaifahuo.setVisibility(View.GONE);
-        if (dataBean.getUser_pay_check()!=null){
+        if (dataBean.getUser_pay_check() != null) {
             switch (dataBean.getUser_pay_check()) {
                 case "1":
                     // tv_title.setText("待付款");
@@ -151,7 +164,9 @@ public class DaiFuKuanDingDanActivity extends BaseActivity {
                     //  tv_title.setText("已发货");
                     break;
                 case "5":
+
                     //  tv_title.setText("到店消费");
+                    clErweima.setVisibility(View.VISIBLE);
                     break;
                 case "6":
                     //  tv_title.setText("待评价");
@@ -397,7 +412,7 @@ public class DaiFuKuanDingDanActivity extends BaseActivity {
             Map<String, Object> map = new HashMap<>();
             map.put("key", Urls.key);
             map.put("token", UserManager.getManager(cnt).getAppToken());
-            map.put("operate_type", "21");
+            map.put("operate_type", dataBean.getOperate_type());
             map.put("pay_id", pay_id);
             map.put("pay_type", "1");
             //  map.put("users_addr_id", users_addr_id);
@@ -446,7 +461,7 @@ public class DaiFuKuanDingDanActivity extends BaseActivity {
             Map<String, Object> map = new HashMap<>();
             map.put("key", Urls.key);
             map.put("token", UserManager.getManager(cnt).getAppToken());
-            map.put("operate_type", "21");
+            map.put("operate_type", dataBean.getOperate_type());
             map.put("pay_id", pay_id);
             map.put("pay_type", "4");
 
@@ -638,7 +653,14 @@ public class DaiFuKuanDingDanActivity extends BaseActivity {
                          */
                         DingDanDetailsModel.DataBean dataBean = response.body().data.get(0);
                         DaiFuKuanDingDanActivity.this.dataBean.setUser_pay_check(dataBean.getUser_pay_check());
-                        tvAddress.setText(response.body().data.get(0).getUser_addr_all());
+
+
+                        if (dataBean.getOperate_type().equals("26")) {
+                            tvAddress.setText(response.body().data.get(0).getInst_addr_all());
+                        } else {
+                            tvAddress.setText(response.body().data.get(0).getUser_addr_all());
+                        }
+
                         tvShop.setText(response.body().data.get(0).getInst_name());
                         Glide.with(DaiFuKuanDingDanActivity.this).load(dataBean.getInst_img_url()).into(ivImage);
                         Glide.with(DaiFuKuanDingDanActivity.this).load(dataBean.getIndex_photo_url()).into(ivProduct);//商品图
@@ -646,11 +668,13 @@ public class DaiFuKuanDingDanActivity extends BaseActivity {
                         tvKuanshi.setText(dataBean.getProduct_title());
                         tvDanjia.setText(dataBean.getForm_product_money());
                         //消费方式：2.邮递3.到店4.直接下单
-                        if (dingDanLeixing!=null){
+                        if (dingDanLeixing != null) {
                             if (dingDanLeixing.equals("2")) {
                                 tvShifujine.setText("实付：¥" + dataBean.getPay_money() + "（运费:" + dataBean.getForm_money_go() + ")");
                             } else if (dingDanLeixing.equals("3")) {
-                                tvShifujine.setText("实付：¥" + dataBean.getPay_money());
+                                tvShifujine.setText("实付：¥" + dataBean.getPay_money() + "(到店)");
+
+
                             } else if (dingDanLeixing.equals("4")) {
                                 tvShifujine.setText("实付：¥" + dataBean.getPay_money());
                             }
@@ -712,13 +736,18 @@ public class DaiFuKuanDingDanActivity extends BaseActivity {
                                 break;
                             case "5":
 
-                                conlayout1.setBackgroundResource(R.mipmap.order_yifahuo);
+                                conlayout1.setBackgroundResource(R.mipmap.daishiyong);
                                 tvDingdanZhuangtai.setText("到店消费");
                                 break;
                             case "6":
                                 constrain2.setVisibility(View.GONE);
                                 conlayout1.setBackgroundResource(R.mipmap.jiaoyichenggong);
                                 tvDingdanZhuangtai.setText("待评价");
+                                if (dataBean.getWares_type().equals("3")) {
+                                    clErweima.setVisibility(View.VISIBLE);
+                                    constrain2.setVisibility(View.VISIBLE);
+                                    conlayout1.setBackgroundResource(R.mipmap.yishiyong);
+                                }
                                 break;
                             case "7":
                                 conlayout1.setBackgroundResource(R.mipmap.jiaoyichenggong);
@@ -743,12 +772,31 @@ public class DaiFuKuanDingDanActivity extends BaseActivity {
 
                                 break;
 
-
                         }
 
 
+                        setDaoDian(dataBean);
+
                     }
                 });
+    }
+
+    private void setDaoDian(DingDanDetailsModel.DataBean dataBean) {
+        tvYanzhengma.setText("验证码：" + dataBean.getPay_code());
+        Bitmap b = BitmapFactory.decodeResource(this.getResources(), R.mipmap.ic_launcher);
+        Bitmap bitmap = Tools.createQRImage(this, dataBean.getUrl(), b);
+        ivYanzhengma.setImageBitmap(bitmap);
+//pay_code_state	二维码状态：1.未使用2.已使用
+        if (dataBean.getPay_code_state().equals("1")) {
+
+            viewMengban.setVisibility(View.GONE);
+            ivYiwancheng.setVisibility(View.GONE);
+
+        } else if (dataBean.getPay_code_state().equals("2")) {
+            viewMengban.setVisibility(View.VISIBLE);
+            ivYiwancheng.setVisibility(View.VISIBLE);
+        }
+
     }
 
     @Override

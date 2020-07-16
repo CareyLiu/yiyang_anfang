@@ -7,11 +7,14 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.smarthome.magic.R;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.model.TuanGouShangJiaListBean;
+import com.smarthome.magic.util.DensityUtils;
 
 import java.util.List;
 
@@ -29,7 +32,7 @@ public class TuanGouShangJiaListAdapter extends BaseQuickAdapter<TuanGouShangJia
 
 
         helper.addOnClickListener(R.id.constrain);
-        Glide.with(mContext).load(item.getInst_photo_url()).into((ImageView) helper.getView(R.id.iv_image));
+        Glide.with(mContext).load(item.getInst_photo_url()).apply(new RequestOptions().bitmapTransform(new RoundedCorners(DensityUtils.dp2px(mContext, 10)))).into((ImageView) helper.getView(R.id.iv_image));
         helper.setText(R.id.tv_shop_name, item.getInst_name());//店铺名
 //        helper.setText(R.id.star)
         AppCompatRatingBar appCompatRatingBar = helper.getView(R.id.star);
@@ -40,7 +43,7 @@ public class TuanGouShangJiaListAdapter extends BaseQuickAdapter<TuanGouShangJia
             helper.setText(R.id.tv_zhekou, "享受" + "优惠");
         }
 
-        helper.setText(R.id.tv_addr_thing_xiao, item.getArea_name() + " | " + item.getInst_text() + " | " + "销量: " + item.getPay_count());
+        helper.setText(R.id.tv_addr_thing_xiao, item.getArea_name() + "  |  " + item.getInst_text() + "  |  " + "销量: " + item.getPay_count());
         helper.setText(R.id.tv_distance, item.getMeter_name());
 
 

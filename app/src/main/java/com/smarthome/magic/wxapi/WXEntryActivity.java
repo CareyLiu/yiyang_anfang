@@ -24,6 +24,7 @@ import com.smarthome.magic.model.MineModel;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -57,10 +58,40 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
     @Override
     public void onResp(BaseResp baseResp) {
-        // TODO: 2020/6/24 获取code 后，传递给后台，提现的时候 自动提现
-        SendAuth.Resp resp = (SendAuth.Resp) baseResp;
-        Log.i("sendAuth_code", resp.code);
-        getNet(resp.code);
+
+
+        if (baseResp instanceof SendAuth.Resp) {
+            // TODO: 2020/6/24 获取code 后，传递给后台，提现的时候 自动提现
+            SendAuth.Resp resp = (SendAuth.Resp) baseResp;
+            Log.i("sendAuth_code", resp.code);
+            getNet(resp.code);
+//登录授权回调
+        } else if (baseResp instanceof SendMessageToWX.Resp) {
+//分享成功之后回调
+            SendMessageToWX.Resp resp = (SendMessageToWX.Resp) baseResp;
+
+            UIHelper.ToastMessage(WXEntryActivity.this, resp.openId);
+
+            Log.i("FenXiang-Resp", String.valueOf(resp.errCode));
+
+            String result;
+            switch (resp.errCode) {
+                case BaseResp.ErrCode.ERR_OK:
+                    result = "分享成功";
+                    break;
+                case BaseResp.ErrCode.ERR_USER_CANCEL:
+                    result = "分享取消";
+                    break;
+                case BaseResp.ErrCode.ERR_AUTH_DENIED:
+                    result = "认证失败";
+                    break;
+                default:
+                    result = "未知错误";
+                    break;
+            }
+            UIHelper.ToastMessage(WXEntryActivity.this, result);
+            finish();
+        }
 
     }
 

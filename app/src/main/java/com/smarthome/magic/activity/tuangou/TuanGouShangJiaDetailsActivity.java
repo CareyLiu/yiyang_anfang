@@ -26,6 +26,7 @@ import com.smarthome.magic.activity.homepage.DaLiBaoActivity;
 import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallDetailsActivity;
 import com.smarthome.magic.adapter.ShangJiaNearbyAdapter;
 import com.smarthome.magic.adapter.tuangou.TuanGouShangJiaDetailsAdapter;
+import com.smarthome.magic.adapter.tuangou.TuanGouShangJiaHighScoreList1Adapter;
 import com.smarthome.magic.adapter.tuangou.TuanGouShangJiaHighScoreListAdapter;
 import com.smarthome.magic.adapter.tuangou.TuanGouShangJiaListAdapter;
 import com.smarthome.magic.app.App;
@@ -257,7 +258,7 @@ public class TuanGouShangJiaDetailsActivity extends AbStracTuanGouShangJiaDetail
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(this);
         rcvList2.setLayoutManager(gridLayoutManager);
 
-        final TuanGouShangJiaHighScoreListAdapter tuanGouShangJiaListAdapter = new TuanGouShangJiaHighScoreListAdapter(R.layout.item_shangjia, highScoreListBeans);
+        final TuanGouShangJiaHighScoreList1Adapter tuanGouShangJiaListAdapter = new TuanGouShangJiaHighScoreList1Adapter(R.layout.item_shangjia, highScoreListBeans);
         //  taoKeListAdapter = new TaoKeListAdapter(R.layout.layout_taokeshop, dataBeanList);
         tuanGouShangJiaListAdapter.openLoadAnimation();//默认为渐显效果
         rcvList2.setAdapter(tuanGouShangJiaListAdapter);

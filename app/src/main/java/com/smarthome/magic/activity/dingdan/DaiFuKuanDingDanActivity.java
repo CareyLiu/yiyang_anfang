@@ -41,6 +41,8 @@ import com.smarthome.magic.model.YuZhiFuModel_AliPay;
 import com.smarthome.magic.pay_about.alipay.PayResult;
 import com.smarthome.magic.util.PaySuccessUtils;
 import com.smarthome.magic.util.Tools;
+import com.smarthome.magic.util.phoneview.sample.ImageShowActivity;
+import com.smarthome.magic.util.phoneview.sample.ImageShow_OnePictureActivity;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -174,6 +176,7 @@ public class DaiFuKuanDingDanActivity extends BaseActivity {
 
                     //  tv_title.setText("到店消费");
                     clErweima.setVisibility(View.VISIBLE);
+
                     break;
                 case "6":
                     //  tv_title.setText("待评价");
@@ -803,6 +806,15 @@ public class DaiFuKuanDingDanActivity extends BaseActivity {
             viewMengban.setVisibility(View.VISIBLE);
             ivYiwancheng.setVisibility(View.VISIBLE);
         }
+
+        ivYanzhengma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String picture = Tools.converIconToString(bitmap);
+                ImageShow_OnePictureActivity.actionStart(mContext, picture);
+            }
+        });
 
     }
 

@@ -183,6 +183,10 @@ public class GouWuCheActivity extends BaseActivity {
         llJiesuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (chooseCount==0){
+                    UIHelper.ToastMessage(GouWuCheActivity.this, "请选择您要购买的商品");
+                    return;
+                }
                 List<GouWuCheZhengHeModel> gouWuCheZhengHeModels = getJieSuanList();
                 if (gouWuCheZhengHeModels.size() == 0) {
                     UIHelper.ToastMessage(GouWuCheActivity.this, "请选择您要购买的商品");

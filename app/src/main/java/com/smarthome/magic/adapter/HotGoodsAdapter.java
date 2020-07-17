@@ -34,7 +34,7 @@ public class HotGoodsAdapter extends ListBaseAdapter<Home.DataBean.IndexShowList
         Glide.with(mContext).load(getDataList().get(position).getIndex_photo_url()).into(iv_pic);
         tv_goods_name.setText(getDataList().get(position).getWares_name());
         tv_price.setText(getDataList().get(position).getMoney_now());
-        tv_reduce.setText("直降-"+getDataList().get(position).getMoney_lower());
+        tv_reduce.setText("直降 "+getDataList().get(position).getMoney_lower());
     }
 
 }

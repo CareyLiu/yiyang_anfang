@@ -11,6 +11,7 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.Base64;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -25,6 +26,7 @@ import com.smarthome.magic.util.zxing.qrcode.QRCodeWriter;
 import com.smarthome.magic.util.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -346,6 +348,34 @@ public class Tools {
             }
         }
     }
+
+    /*
+     * 图片转化成String
+     */
+    public static String converIconToString(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] b = stream.toByteArray();
+        return Base64.encodeToString(b, Base64.DEFAULT);
+    }
+
+    /*
+     * String 转化成图片
+     */
+
+    public static Bitmap converStringToIcon(String s) {
+        try {
+            Bitmap bitmap = null;
+            byte[] b = Base64.decode(s, Base64.DEFAULT);
+            bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
+            return bitmap;
+        } catch (Exception e) {
+            // TODO: handle exception
+            return null;
+        }
+
+    }
+
 
 
 }

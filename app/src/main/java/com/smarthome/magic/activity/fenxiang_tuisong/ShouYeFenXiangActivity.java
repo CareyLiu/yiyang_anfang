@@ -6,6 +6,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,6 +43,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 
+import static com.smarthome.magic.activity.fenxiang_tuisong.FenXiangTuiSongActivity.IMAGE_SIZE;
 import static com.smarthome.magic.config.Wetch_S.APP_ID;
 
 
@@ -216,13 +218,13 @@ public class ShouYeFenXiangActivity extends Activity {
                         ByteArrayOutputStream baos = new ByteArrayOutputStream();
                         resource.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                         byte[] data = baos.toByteArray();
-                        msg.thumbData = data;
+
 
                     }
                 });
 
 
-//构造一个Req
+                msg.thumbData = getThumbData();
                 SendMessageToWX.Req req = new SendMessageToWX.Req();
                 req.transaction = String.valueOf(System.currentTimeMillis());
                 req.message = msg;
@@ -241,6 +243,33 @@ public class ShouYeFenXiangActivity extends Activity {
 
             }
         }).start();
+    }
+
+    /**
+     * 获取分享封面byte数组 我们这边取的是软件启动icon
+     *
+     * @return
+     */
+    private byte[] getThumbData() {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 2;
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher, options);
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
+        int quality = 100;
+        while (output.toByteArray().length > IMAGE_SIZE && quality != 10) {
+            output.reset(); // 清空baos
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, output);// 这里压缩options%，把压缩后的数据存放到baos中
+            quality -= 10;
+        }
+        bitmap.recycle();
+        byte[] result = output.toByteArray();
+        try {
+            output.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }
 

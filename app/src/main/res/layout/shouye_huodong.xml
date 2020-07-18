@@ -45,6 +45,7 @@
 
             <com.youth.banner.Banner
                 android:id="@+id/banner"
+                android:layout_marginHorizontal="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"

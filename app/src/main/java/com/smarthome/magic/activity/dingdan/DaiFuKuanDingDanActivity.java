@@ -679,7 +679,7 @@ public class DaiFuKuanDingDanActivity extends BaseActivity {
                         tvDanjia.setText(dataBean.getForm_product_money());
                         //消费方式：2.邮递3.到店4.直接下单
                         if (dingDanLeixing != null) {
-                            if (dingDanLeixing.equals("2")) {
+                            if (dingDanLeixing.equals("1")) {
                                 tvShifujine.setText("实付：¥" + dataBean.getPay_money() + "（运费:" + dataBean.getForm_money_go() + ")");
                             } else if (dingDanLeixing.equals("3")) {
                                 tvShifujine.setText("实付：¥" + dataBean.getPay_money() + "(到店)");

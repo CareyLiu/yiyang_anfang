@@ -306,6 +306,8 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
                          * target_size : 601132
                          */
 
+                        Log.i("check_up", new Gson().toJson(response.body()));
+
                         if (response.body().data.get(0).getIsnew().equals("2")) {
                             UpdateManager.getUpdateManager().checkAppUpdate(getActivity(), false, response.body().data.get(0));
 

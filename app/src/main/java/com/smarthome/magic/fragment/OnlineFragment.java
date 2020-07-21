@@ -201,6 +201,8 @@ public class OnlineFragment extends BaseFragment implements Observer {
                         if (carList.size() == 0) {
                             View view = View.inflate(getActivity(), R.layout.online_empty_view, null);
                             carListAdapter.setHeaderView(view);
+                        }else {
+                            carListAdapter.removeAllHeaderView();
                         }
                         carListAdapter.notifyDataSetChanged();
                     }

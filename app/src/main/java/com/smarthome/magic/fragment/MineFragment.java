@@ -26,6 +26,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.DefaultX5WebViewActivity;
 import com.smarthome.magic.activity.SettingActivity;
 import com.smarthome.magic.activity.dingdan.MyOrderActivity;
+import com.smarthome.magic.activity.fenxiang_tuisong.ShouYeFenXiang_Url_Activity;
 import com.smarthome.magic.activity.gouwuche.GouWuCheActivity;
 import com.smarthome.magic.activity.tuangou.KaQuanActivity;
 import com.smarthome.magic.activity.wode_page.AboutUsActivity;
@@ -472,11 +473,14 @@ public class MineFragment extends BaseFragment implements Observer {
                     return;
                 }
                 if (!StringUtils.isEmpty(dataBean.getReferral_code_url())) {
-                    TuiGuangMaActivity.actionStart(getActivity());
+                    TuiGuangMaActivity.actionStart(getActivity(),dataBean.getReferral_code_url());
+                    //DefaultX5WebViewActivity.actionStart(getActivity(),dataBean.getReferral_code_url());
                 } else {
                     UIHelper.ToastMessage(getActivity(), "请先购买商品，方可获得自己的推广码");
                 }
 
+
+              //ShouYeFenXiang_Url_Activity.actionStart(getActivity());
                 break;
             case R.id.tv_tuiguangma:
                 break;

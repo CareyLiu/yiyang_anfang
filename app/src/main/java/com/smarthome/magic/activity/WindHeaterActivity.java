@@ -184,11 +184,12 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
         car_server_id = PreferenceHelper.getInstance(mContext).getString("car_server_id", "");
         ccid = PreferenceHelper.getInstance(mContext).getString("ccid", "");
         of_user_id = PreferenceHelper.getInstance(mContext).getString("of_user_id", "");
-        setMqttZhiLing();
+       setMqttZhiLing();
 
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
             public void call(Notice message) {
+                Log.i("message.type", String.valueOf(message.type));
                 if (message.type == ConstanceValue.MSG_CAR_J_G) {
                     showLoadSuccess();
                     //接收到信息
@@ -394,7 +395,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                     showLoadSuccess();
                     if (waitDialog.isShowing()) {
                         waitDialog.dismiss();
-                        setMqttZhiLing();
+                      //  setMqttZhiLing();
                     }
                     Log.i("rair", "complete");
 
@@ -432,6 +433,23 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
     @Override
     public void initImmersion() {
         mImmersionBar.with(this).titleBar(toolbar).init();
+    }
+
+    /**
+     * 将一个整形化为十六进制，并以字符串的形式返回
+     */
+    private final static String[] hexArray = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
+
+    public String byteToHex(int n) {
+        if (n < 0) {
+            n = n + 256;
+        }
+        int d1 = n / 16;
+        int d2 = n % 16;
+
+        Log.i("windheter1", String.valueOf(d1));
+        Log.i("windheter2", String.valueOf(d2));
+        return hexArray[d1] + hexArray[d2];
     }
 
     public void initView() {
@@ -1089,7 +1107,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                 .setQos(2), new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("Rair", "notify:  " + CAR_NOTIFY);
+                Log.i("Rair", "notify:  " + CAR_NOTIFY + "CAR_NOTIFY 我是在类里面订阅的");
 
             }
 
@@ -1106,8 +1124,8 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                 .setTopic(CAR_NOTIFY), new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("Rair", "(CAR_NOTIFY.java:79)-onSuccess:-&gt;发布成功");
-                showLoading();
+                Log.i("Rair", "(CAR_NOTIFY.java:79)-onSuccess:-&gt;发布成功"+ "k001 我是在类里面订阅的");
+
             }
 
             @Override
@@ -1122,8 +1140,8 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                 .setQos(2), new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("Rair", "订阅成功 carbox_getnow:  " + CARBOX_GETNOW);
-                showLoading();
+                Log.i("Rair", "订阅成功 carbox_getnow:  " + CARBOX_GETNOW+" CARBOX_GETNOW 我是在类里面订阅的");
+
             }
 
             @Override
@@ -1139,7 +1157,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                 .setQos(2), new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("Rair", " Rair用户订阅成功" + "wit/app/" + of_user_id);
+                Log.i("Rair", " Rair用户订阅成功" + "wit/app/" + of_user_id+" CAR_CTROL 我是在类里面订阅的");
             }
 
             @Override
@@ -1156,7 +1174,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                 .setRetained(false), new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
+                Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功"+" N9 我是在类里面订阅的");
             }
 
             @Override
@@ -1176,8 +1194,8 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                 .setTopic(CAR_CTROL), new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("Rair", "(CAR_NOTIFY.java:79)-onSuccess:-&gt;发布成功");
-                showLoading();
+                Log.i("Rair", "(CAR_NOTIFY.java:79)-onSuccess:-&gt;发布成功"+"M512 我是在类里面订阅的");
+
             }
 
             @Override

@@ -4,13 +4,13 @@
         android:id="@+id/i_home"
         android:checked="true"
         android:icon="@drawable/selector_home"
-        android:title="聚易佳" />
+        android:title="首页" />
 
-        <item
-            android:id="@+id/i_zhinengjiaju"
-            android:icon="@drawable/selector_car_online"
+    <item
+        android:id="@+id/i_zhinengjiaju"
+        android:icon="@drawable/selector_car_online"
 
-            android:title="智能家居" />
+        android:title="智能家居" />
 
     <item
         android:id="@+id/i_car_online"

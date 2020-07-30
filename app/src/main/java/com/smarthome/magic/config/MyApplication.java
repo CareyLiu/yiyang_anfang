@@ -221,7 +221,11 @@ public class MyApplication extends MultiDexApplication {
                     // AndMqtt.getInstance().init(MyApplication.this);
                     if (AndMqtt.getInstance().isConneect()) {
 
-
+//                        try {
+//                            AndMqtt.getInstance().getMqttClient().disconnect();
+//                        } catch (MqttException e) {
+//                            e.printStackTrace();
+//                        }
                         AndMqtt.getInstance().unSubscribe(new MqttUnSubscribe().setTopic(CARBOX_JINGBAO), new IMqttActionListener() {
                             @Override
                             public void onSuccess(IMqttToken asyncActionToken) {
@@ -494,7 +498,7 @@ public class MyApplication extends MultiDexApplication {
                         .setPort(9096)
                         .setAutoReconnect(true)
                         .setCleanSession(true)
-                        .setKeepAlive(5)
+                        .setKeepAlive(60)
                         .setCleanSession(true)
                         .setLastWill("K.", "wit/server/" + getUser_id(), 2, true)
                         .setUserName("witandroid")

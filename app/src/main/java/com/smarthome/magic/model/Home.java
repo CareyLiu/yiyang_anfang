@@ -936,7 +936,7 @@ public class Home {
          * share_url	分享链接
          * share_img	分享图片
          */
-        public static class activity  implements Serializable {
+        public static class activity implements Serializable {
             public String is_activity;
             public String img_url;
             public String img_width;
@@ -950,6 +950,7 @@ public class Home {
             public String share_detail;
             public String share_url;
             public String share_img;
+            public String img_type;
         }
     }
 }

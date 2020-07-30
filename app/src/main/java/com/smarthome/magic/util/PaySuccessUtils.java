@@ -19,6 +19,8 @@ import com.smarthome.magic.get_net.Urls;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.smarthome.magic.get_net.Urls.PAYSUCCESS;
+
 public class PaySuccessUtils {
 
     public static void getNet(final Context context, String payId) {
@@ -28,7 +30,7 @@ public class PaySuccessUtils {
         map.put("form_id", payId);
         Gson gson = new Gson();
         OkGo.<AppResponse<Object>>
-                post("https://shop.hljsdkj.com/msg/pay/create/ok").
+                post(PAYSUCCESS).
                 tag(context).
                 upJson(gson.toJson(map)).
 

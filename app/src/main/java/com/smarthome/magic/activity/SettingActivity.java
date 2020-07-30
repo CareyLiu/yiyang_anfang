@@ -503,8 +503,4 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
         }
     }
 
-    public void jieBangWeiXin() {
-        //
-    }
-
 }

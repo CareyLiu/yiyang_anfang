@@ -143,6 +143,8 @@ public class LoginActivity extends BaseActivity {
                 DefaultX5WebViewActivity.actionStart(LoginActivity.this, "https://shop.hljsdkj.com/shop_new/privacy_clause");
             }
         });
+
+
     }
 
 

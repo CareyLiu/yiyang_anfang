@@ -20,6 +20,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.DefaultX5WebView_HaveNameActivity;
+import com.smarthome.magic.activity.tuangou.TuanGouShangJiaListActivity;
 import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallDetailsActivity;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.Notice;
@@ -183,7 +184,10 @@ public class HuoDongTanCengActivity extends Activity {
             public void OnBannerClick(int position) {
                 if (activity.get(position).activity_type_id.equals("1")) {
                     ZiJianShopMallDetailsActivity.actionStart(HuoDongTanCengActivity.this, activity.get(position).shop_product_id, activity.get(position).wares_id);
-                } else {
+                } else if (activity.get(position).activity_type_id.equals("4")) {
+                    TuanGouShangJiaListActivity.actionStart(HuoDongTanCengActivity.this, activity.get(position).img_type);
+
+                } else if (activity.get(position).activity_type_id.equals("2")) {
                     if (null == activity.get(position).html_url) {
                         return;
                     }

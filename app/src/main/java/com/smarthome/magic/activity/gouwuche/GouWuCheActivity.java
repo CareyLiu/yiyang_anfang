@@ -183,7 +183,7 @@ public class GouWuCheActivity extends BaseActivity {
         llJiesuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (chooseCount==0){
+                if (chooseCount == 0) {
                     UIHelper.ToastMessage(GouWuCheActivity.this, "请选择您要购买的商品");
                     return;
                 }
@@ -360,6 +360,12 @@ public class GouWuCheActivity extends BaseActivity {
                         } else {
                             mDatas.get(position).setIsSelect("0");
                         }
+
+                        if (isSelectAllDianPu(position).equals("1")) {
+
+                        } else {
+
+                        }
                         gouWuCheAdapter.notifyDataSetChanged();
                         tvPrice.setText("(¥" + getJieSuanJinE().toString() + ")");
                         tvJiesuanJine.setText("结算(" + String.valueOf(chooseCount) + ")");
@@ -510,10 +516,7 @@ public class GouWuCheActivity extends BaseActivity {
         boolean flag = true;
         for (int i = 0; i < mDatas.size(); i++) {
 
-
             if (mDatas.get(i).getIsSelect().equals("0")) {
-
-
                 flag = false;
                 break;
             }
@@ -660,6 +663,7 @@ public class GouWuCheActivity extends BaseActivity {
 
     private String isSelectAllDianPu(int position) {
         selectDianPuAll = "1";
+        String strFlag = "0";//0 只选择了店铺头部  1 选择了商品了已经 选多少不知道
         int dianpuSelectPosition = -1;
         String biaoshi = mDatas.get(position).getBiaoshi();
         for (int i = 0; i < mDatas.size(); i++) {
@@ -668,19 +672,26 @@ public class GouWuCheActivity extends BaseActivity {
 //同一标志下的所有数据
                 if (mDatas.get(i).isHeader) {
                     dianpuSelectPosition = i;
+                    mDatas.get(dianpuSelectPosition).setIsSelect("1");
                 }
                 if (!mDatas.get(i).isHeader) {
-                    if (mDatas.get(i).getIsSelect().equals("0")) {
+                    if (mDatas.get(i).getIsSelect().equals("0")) {//没有选中
                         selectDianPuAll = "0";
-                        mDatas.get(dianpuSelectPosition).setIsSelect("0");
-                        break;
+
+
+                    } else {
+
+                        strFlag = "1";
+                        return "0";//没全选 但是选了
                     }
                 }
             }
         }
-        if (selectDianPuAll.equals("1")) {
-            mDatas.get(dianpuSelectPosition).setIsSelect("1");
+
+        if (strFlag.equals("0")){
+            mDatas.get(dianpuSelectPosition).setIsSelect("0");
         }
+
         return selectDianPuAll;
     }
 }

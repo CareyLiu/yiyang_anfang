@@ -19,6 +19,7 @@ import com.smarthome.magic.get_net.Urls;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.smarthome.magic.get_net.Urls.HOME_PICTURE_HOME;
 import static com.smarthome.magic.get_net.Urls.PAYSUCCESS;
 
 public class PaySuccessUtils {
@@ -63,7 +64,7 @@ public class PaySuccessUtils {
         map.put("form_id", payId);
         Gson gson = new Gson();
         OkGo.<AppResponse<Object>>
-                post("https://shop.hljsdkj.com/shop_new/app/user").
+                post(HOME_PICTURE_HOME).
                 tag(context).
                 upJson(gson.toJson(map)).
 

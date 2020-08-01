@@ -251,7 +251,7 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
 //        });
 
 
-        getNet_check();
+       // getNet_check();
 
         //初始化定位
         initLocation();

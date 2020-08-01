@@ -65,6 +65,7 @@ import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.AlarmClass;
 import com.smarthome.magic.util.JinChengUtils;
 import com.smarthome.magic.util.SerializeUtil;
+import com.tencent.bugly.Bugly;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -204,7 +205,9 @@ public class MyApplication extends MultiDexApplication {
         strategy.setUploadProcess(processName == null || processName.equals(packageName));
 // 初始化Bugly
 
-        CrashReport.initCrashReport(getApplicationContext());
+       // CrashReport.initCrashReport(getApplicationContext());
+
+        Bugly.init(getApplicationContext(), "9aef7d7467", false);
 
 
         // startService(new Intent(context, HeaterMqttService.class));

@@ -49,8 +49,12 @@ import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.MineModel;
+import com.smarthome.magic.util.phoneview.sample.ImageShowActivity;
+import com.smarthome.magic.util.phoneview.sample.ImageShow_OnePictureActivity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
@@ -364,6 +368,11 @@ public class MineFragment extends BaseFragment implements Observer {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.riv_image:
+                ArrayList<String> strings = new ArrayList<>();
+                strings.add(dataBean.getUser_img_url());
+                ImageShowActivity.actionStart(getActivity(), strings);
+
+               // UIHelper.ToastMessage(getActivity(),"点击了 头像");
                 break;
             case R.id.tv_name:
                 break;
@@ -473,14 +482,14 @@ public class MineFragment extends BaseFragment implements Observer {
                     return;
                 }
                 if (!StringUtils.isEmpty(dataBean.getReferral_code_url())) {
-                    TuiGuangMaActivity.actionStart(getActivity(),dataBean.getReferral_code_url());
+                    TuiGuangMaActivity.actionStart(getActivity(), dataBean.getReferral_code_url());
                     //DefaultX5WebViewActivity.actionStart(getActivity(),dataBean.getReferral_code_url());
                 } else {
                     UIHelper.ToastMessage(getActivity(), "请先购买商品，方可获得自己的推广码");
                 }
 
 
-              //ShouYeFenXiang_Url_Activity.actionStart(getActivity());
+                //ShouYeFenXiang_Url_Activity.actionStart(getActivity());
                 break;
             case R.id.tv_tuiguangma:
                 break;

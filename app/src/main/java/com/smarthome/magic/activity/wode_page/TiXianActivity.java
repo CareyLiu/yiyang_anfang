@@ -212,6 +212,7 @@ public class TiXianActivity extends BaseActivity implements PayPassWordInter {
                         String zhiFuBaoMing = response.body().data.get(0).getAlipay_uname();
 
                         if (weiXinOrZhiFuBao.equals("2")) {
+                            UIHelper.ToastMessage(mContext, "微信支付");
 
                             if (weiXinMing != null) {
                                 userName.setText(weiXinMing);

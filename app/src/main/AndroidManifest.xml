@@ -576,67 +576,127 @@
             android:name=".activity.wode_page.AboutUsActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 八紫首页 -->
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- 八紫首页 -->
         <activity
             android:name=".activity.wode_page.bazinew.BazismMainActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 新建命盘 -->
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- 新建命盘 -->
         <activity
             android:name=".activity.wode_page.bazinew.DanganNewActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 编辑命盘 -->
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- 编辑命盘 -->
         <activity
             android:name=".activity.wode_page.bazinew.DanganEditActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 档案管理 -->
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- 档案管理 -->
         <activity
             android:name=".activity.wode_page.bazinew.DanganguanliActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 运势 -->
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- 运势 -->
         <activity
             android:name=".activity.wode_page.bazinew.YunshiActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 穿衣指数 -->
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- 穿衣指数 -->
         <activity
             android:name=".activity.wode_page.bazinew.YunshiChuanyiActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 穿衣指数 -->
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- 八紫支付 -->
         <activity
             android:name=".activity.wode_page.bazinew.BaziPayActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 推广总人数 -->
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- 推广总人数 -->
         <activity
             android:name=".activity.wode_page.bazinew.TuiguangActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 本命盘 -->
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- 本命盘 -->
         <activity
             android:name=".activity.wode_page.bazinew.MingpanActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 解析 -->
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- 解析 -->
         <activity
             android:name=".activity.wode_page.bazinew.JiexiMainActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 解析详情 -->
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- 解析详情 -->
         <activity
             android:name=".activity.wode_page.bazinew.JiexiDetailsActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 验盘 -->
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- 验盘 -->
         <activity
             android:name=".activity.wode_page.bazinew.YanpanActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
+
+        <!-- 风水摆件档案 -->
+        <activity
+            android:name=".activity.wode_page.bazinew.FengshuiDanganActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- 风水摆件绑定 -->
+        <activity
+            android:name=".activity.wode_page.bazinew.FengshuiBindActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 风水摆件绑定二维码扫描 -->
+        <activity
+            android:name=".activity.wode_page.bazinew.FengshuiScanActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 风水摆件绑定手动 -->
+        <activity
+            android:name=".activity.wode_page.bazinew.FengshuiSHandActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 风水摆件完成 -->
+        <activity
+            android:name=".activity.wode_page.bazinew.FengshuiBangSActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
         <activity
             android:name=".activity.zhinengjiaju.peinet.v1.EspTouchActivity"
             android:configChanges="locale|keyboardHidden|orientation"
@@ -644,6 +704,11 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activity.wode_page.MyQianBaoActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wode_page.MingxiActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
@@ -854,15 +919,15 @@
         <activity
             android:name=".activity.fenxiang_tuisong.ShouYeFenXiangActivity"
             android:configChanges="locale|keyboardHidden|orientation"
-            android:theme="@style/MyTranslucentTheme"
             android:screenOrientation="portrait"
+            android:theme="@style/MyTranslucentTheme"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 
         <activity
             android:name=".activity.fenxiang_tuisong.HuoDongTanCengActivity"
             android:configChanges="locale|keyboardHidden|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
         <activity
             android:name=".activity.Demo_rongyun"
@@ -879,8 +944,8 @@
         <activity
             android:name=".activity.fenxiang_tuisong.ShouYeFenXiang_Url_Activity"
             android:configChanges="locale|keyboardHidden|orientation"
-            android:theme="@style/MyTranslucentTheme"
             android:screenOrientation="portrait"
+            android:theme="@style/MyTranslucentTheme"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 
     </application>

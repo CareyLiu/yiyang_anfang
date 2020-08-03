@@ -93,10 +93,14 @@ public class MyQianBaoActivity extends BaseActivity {
         myQianBaoAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                switch (view.getId()) {
-                    case R.id.constrain:
-                        // MyQianBaoDetailsActivity.actionStart(MyQianBaoActivity.this, myQianBaoAdapter.getData().get(position));
-                        break;
+                if (stringList!=null&&stringList.size()>position){
+                    String user_pay_id = stringList.get(position).getUser_pay_id();
+                    String er_type = stringList.get(position).getEr_type();
+                    switch (view.getId()) {
+                        case R.id.constrain:
+                            MingxiActivity.actionStart(mContext, user_pay_id,er_type);
+                            break;
+                    }
                 }
             }
         });
@@ -118,7 +122,7 @@ public class MyQianBaoActivity extends BaseActivity {
                     UIHelper.ToastMessage(MyQianBaoActivity.this, "当前金额为0，不可提现");
                 }
 
-               // showWeiXinOrZhiFuBaoSelect();
+                // showWeiXinOrZhiFuBaoSelect();
 
             }
         });
@@ -230,8 +234,8 @@ public class MyQianBaoActivity extends BaseActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        PhoneCheckActivity.actionStart(mContext,"0008","1");
-                       // startActivity(new Intent(MyQianBaoActivity.this, PhoneCheckActivity.class).putExtra("mod_id", "0008"));
+                        PhoneCheckActivity.actionStart(mContext, "0008", "1");
+                        // startActivity(new Intent(MyQianBaoActivity.this, PhoneCheckActivity.class).putExtra("mod_id", "0008"));
                     }
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
@@ -267,17 +271,17 @@ public class MyQianBaoActivity extends BaseActivity {
                         if (choice == 0) {//微信
 
                             String weixinPay = PreferenceHelper.getInstance(mContext).getString(App.CUNCHUBIND_WEIXINPAY, "0x11");
-                            if (weixinPay.equals("1")){
-                                TiXianActivity.actionStart(MyQianBaoActivity.this, response.body().data.get(0).getMoney_use(), "0","2");
-                            }else {
-                                PhoneCheckActivity.actionStart_WeiBind(mContext,"0320",true);
+                            if (weixinPay.equals("1")) {
+                                TiXianActivity.actionStart(MyQianBaoActivity.this, response.body().data.get(0).getMoney_use(), "0", "2");
+                            } else {
+                                PhoneCheckActivity.actionStart_WeiBind(mContext, "0320", true);
                             }
 
                         } else {//支付宝
                             String checkAliPay = PreferenceHelper.getInstance(MyQianBaoActivity.this).getString(App.CUNCHUBIND_ALIPAY, "0x11");
                             if (checkAliPay.equals("1")) {//已经设置
 
-                                TiXianActivity.actionStart(MyQianBaoActivity.this, response.body().data.get(0).getMoney_use(), "0","1");
+                                TiXianActivity.actionStart(MyQianBaoActivity.this, response.body().data.get(0).getMoney_use(), "0", "1");
 
                             } else {//2 未设置
                                 showTwo();

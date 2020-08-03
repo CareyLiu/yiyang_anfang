@@ -21,12 +21,12 @@
             app:srlTextSizeTime="10sp"
             app:srlTextSizeTitle="@dimen/sp_12" />
 
-        <ListView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/lv_dangan"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@null"
-            android:listSelector="@android:color/transparent"></ListView>
+            android:listSelector="@android:color/transparent"></androidx.recyclerview.widget.RecyclerView>
 
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"
@@ -35,21 +35,4 @@
             app:srlTextSizeTime="10sp"
             app:srlTextSizeTitle="@dimen/sp_12" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:gravity="center">
-
-        <Button
-            android:id="@+id/bt_add"
-            android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/bazi_button"
-            android:text="新增用户"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
-    </LinearLayout>
 </LinearLayout>

@@ -71,6 +71,8 @@ public class BazismMainActivity extends BaziBaseActivity {
     View view_tuiguagn;
     @BindView(R.id.view_yanpan)
     View view_yanpan;
+    @BindView(R.id.view_baijian)
+    View view_baijian;
     @BindView(R.id.iv_head)
     ImageView ivHead;
     @BindView(R.id.tv_name_sex)
@@ -122,7 +124,6 @@ public class BazismMainActivity extends BaziBaseActivity {
                 getNet();
             }
         });
-
     }
 
     /**
@@ -163,7 +164,7 @@ public class BazismMainActivity extends BaziBaseActivity {
         getNet();
     }
 
-    @OnClick({R.id.view_chuanyi, R.id.view_tuiguagn, R.id.view_yanpan, R.id.view_tab_zhitianming, R.id.view_tab_nianyunshi, R.id.view_tab_yueyunshi, R.id.view_tab_riyunshi, R.id.fl_fenrendangan})
+    @OnClick({R.id.view_baijian, R.id.view_chuanyi, R.id.view_tuiguagn, R.id.view_yanpan, R.id.view_tab_zhitianming, R.id.view_tab_nianyunshi, R.id.view_tab_yueyunshi, R.id.view_tab_riyunshi, R.id.fl_fenrendangan})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.view_tab_nianyunshi:
@@ -187,6 +188,9 @@ public class BazismMainActivity extends BaziBaseActivity {
                 break;
             case R.id.view_yanpan:
                 clickDanan(BaziCode.ST_yanpan);
+                break;
+            case R.id.view_baijian:
+                FengshuiDanganActivity.actionStart(mContext);
                 break;
         }
     }

@@ -76,4 +76,9 @@ public interface ConstanceValue {
 
     int MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN = 0x10050;//重连失败
     int MSG_RONGYUN_STATE = 0x10051;//连接状态
+
+
+
+    int MSG_BAZI_FSBJ1 = 0x10052;//风水摆件绑定成功
+    int MSG_BAZI_FSBJ2 = 0x10053;//风水摆件绑定成功2
 }

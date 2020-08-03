@@ -157,7 +157,8 @@ public class YunshiChuanyiActivity extends BaziBaseActivity {
                             if ("1".equals(lock)) {
                                 ll_data.setVisibility(View.VISIBLE);
                                 ll_jiesuo.setVisibility(View.GONE);
-                                tv_content.setText(bean.getEx_text());
+                                tv_content.setText(bean.getEx_dress());
+                                tv_yunshi.setText("财神方位："+bean.getEx_caishenwei());
                             } else {
                                 ll_data.setVisibility(View.GONE);
                                 ll_jiesuo.setVisibility(View.VISIBLE);

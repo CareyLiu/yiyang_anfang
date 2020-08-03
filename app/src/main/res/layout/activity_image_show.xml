@@ -25,4 +25,15 @@
         tools:text="123123123123123"
         android:textSize="12.0sp" />
 
+    <ImageView
+
+        android:layout_alignParentTop="true"
+        android:id="@+id/iv_back"
+        android:padding="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="15dp"
+        android:src="@mipmap/img_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 </RelativeLayout>

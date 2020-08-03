@@ -25,6 +25,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.CheLianWangNoticeActvity;
 import com.smarthome.magic.activity.dingdan.DaiFuKuanDingDanActivity;
+import com.smarthome.magic.activity.dingdan.XiaoXiEnterDingDanActivity;
 import com.smarthome.magic.adapter.MessageListAdapter;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.basicmvp.BaseFragment;
@@ -242,7 +243,8 @@ public class MessageListFragment extends BaseFragment {
                             case "12":
 //                                OrderListModel.DataBean dataBean = new OrderListModel.DataBean();
 //                                dataBean.setShop_form_id(mDatas.get(position).getOper_id());
-//                                DaiFuKuanDingDanActivity.actionStart(getActivity(), dataBean);
+
+                                XiaoXiEnterDingDanActivity.actionStart(getActivity(), mDatas.get(position).getOper_id());
                                 break;
                             case "13":
                                 break;

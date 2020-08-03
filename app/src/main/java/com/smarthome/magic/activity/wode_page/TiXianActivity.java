@@ -30,6 +30,8 @@ import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.inter.PayPassWordInter;
+import com.smarthome.magic.model.UserInfo;
+import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.dialog.TiXanPasswordDialog;
 
 import java.math.BigDecimal;
@@ -70,6 +72,8 @@ public class TiXianActivity extends BaseActivity implements PayPassWordInter {
     ImageView ivIcon;
     @BindView(R.id.tv_zhifufangshi)
     TextView tvZhifufangshi;
+    @BindView(R.id.user_name)
+    TextView userName;
 
     private String moneyUse;
     BigDecimal zhanShiJinE;
@@ -188,8 +192,49 @@ public class TiXianActivity extends BaseActivity implements PayPassWordInter {
             }
         });
 
-
+        requestData();
     }
+
+    public void requestData() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "04201");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(this).getAppToken());
+        Gson gson = new Gson();
+        OkGo.<AppResponse<UserInfo.DataBean>>post(Urls.SERVER_URL + "shop_new/app/user")
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<UserInfo.DataBean>>() {
+                    @Override
+                    public void onSuccess(final Response<AppResponse<UserInfo.DataBean>> response) {
+
+                        String weiXinMing = response.body().data.get(0).getWx_user_name();
+                        String zhiFuBaoMing = response.body().data.get(0).getAlipay_uname();
+
+                        if (weiXinOrZhiFuBao.equals("2")) {
+                            UIHelper.ToastMessage(mContext, "微信支付");
+
+                            if (weiXinMing != null) {
+                                userName.setText(weiXinMing);
+                            }
+
+                        } else if (weiXinOrZhiFuBao.equals("1")) {
+
+                            if (zhiFuBaoMing != null) {
+                                userName.setText(zhiFuBaoMing);
+                            }
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<UserInfo.DataBean>> response) {
+                        AlertUtil.t(mContext, response.getException().getMessage());
+                    }
+                });
+    }
+
 
     @Override
     public int getContentViewResId() {

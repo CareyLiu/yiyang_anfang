@@ -3,10 +3,12 @@ package com.smarthome.magic.util.phoneview.sample;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
 
 import com.gyf.barlibrary.ImmersionBar;
 import com.smarthome.magic.R;
@@ -25,6 +27,8 @@ public class ImageShowActivity extends BaseActivity {
     TextView pageNumber;
     @BindView(R.id.full_image_root)
     RelativeLayout fullImageRoot;
+    @BindView(R.id.iv_back)
+    ImageView ivBack;
     /**
      * 图片列表
      */
@@ -71,6 +75,12 @@ public class ImageShowActivity extends BaseActivity {
         initData();
         initViewPager();
         mImmersionBar();
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void initData() {

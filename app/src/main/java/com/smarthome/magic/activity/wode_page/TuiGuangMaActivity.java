@@ -70,6 +70,7 @@ public class TuiGuangMaActivity extends BaseActivity {
 
         String url = getIntent().getStringExtra("url");
         init(url);
+        getNet();
     }
 
 
@@ -329,6 +330,9 @@ public class TuiGuangMaActivity extends BaseActivity {
                     @Override
                     public void butianClick() {
 
+//                        if (response.body().data.get(0).getDisplay() == null) {
+//                            return;
+//                        }
                         if (response.body().data.get(0).getDisplay().equals("0")) {
                             showInput();
                         } else {

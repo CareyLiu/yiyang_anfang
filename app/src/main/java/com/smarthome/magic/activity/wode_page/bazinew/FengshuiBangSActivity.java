@@ -92,11 +92,11 @@ public class FengshuiBangSActivity extends BaziBaseActivity {
                         showLoadSuccess();
                         FengshuiDetails.DataBean dataBean = response.body().data.get(0);
                         String ls_jx = dataBean.getLs_jx();
-                            if (ls_jx.equals("1")){
-                                iv_yuanshi.setImageResource(R.mipmap.baijian_pic_ji);
-                            }else {
-                                iv_yuanshi.setImageResource(R.mipmap.baijian_pic_xiong);
-                            }
+                        if (ls_jx.equals("1")) {
+                            iv_yuanshi.setImageResource(R.mipmap.baijian_pic_ji);
+                        } else {
+                            iv_yuanshi.setImageResource(R.mipmap.baijian_pic_xiong);
+                        }
 
 
                         tv_title_name.setText(dataBean.getGoods_name());

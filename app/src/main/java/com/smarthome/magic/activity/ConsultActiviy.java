@@ -2,8 +2,10 @@ package com.smarthome.magic.activity;
 
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,6 +19,7 @@ import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
+import com.smarthome.magic.aakefudan.base.ServiceBaseActivity;
 import com.smarthome.magic.adapter.ConsultListAdapter;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
@@ -38,27 +41,38 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class ConsultActiviy extends BaseActivity {
-    @BindView(R.id.layout_back)
-    LinearLayout layoutBack;
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
+public class ConsultActiviy extends ServiceBaseActivity {
     @BindView(R.id.list)
     LRecyclerView list;
 
     List<ConsultModel.DataBean> modelList = new ArrayList<>();
     ConsultListAdapter consultListAdapter;
     LRecyclerViewAdapter lRecyclerViewAdapter;
-    String servicefromId,state = "";
+    String servicefromId, state = "";
+    private View mEmptyView;
+
+
+    @Override
+    public int getContentViewResId() {
+        return R.layout.activity_consult;
+    }
+
+    @Override
+    public boolean showToolBar() {
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_consult);
         ButterKnife.bind(this);
-        tvTitle.setText(getIntent().getStringExtra("title"));
+        init();
+    }
+
+    private void init() {
+        mEmptyView = findViewById(R.id.empty_view);
+        tv_title.setText(getIntent().getStringExtra("title"));
         state = getIntent().getStringExtra("state");
-        View mEmptyView = findViewById(R.id.empty_view);
         list.setEmptyView(mEmptyView);
         consultListAdapter = new ConsultListAdapter(this);
         consultListAdapter.setDataList(modelList);
@@ -69,14 +83,14 @@ public class ConsultActiviy extends BaseActivity {
         list.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                requestData(servicefromId,state);
+                requestData(servicefromId, state);
             }
         });
         list.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
                 modelList.clear();
-                requestData("",state);
+                requestData("", state);
             }
         });
         list.refresh();
@@ -85,25 +99,20 @@ public class ConsultActiviy extends BaseActivity {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onItemClick(View view, int position) {
-                PreferenceHelper.getInstance(ConsultActiviy.this).putString("service_form_id",modelList.get(position).getService_form_id());
+                PreferenceHelper.getInstance(ConsultActiviy.this).putString("service_form_id", modelList.get(position).getService_form_id());
                 //此处title参数用来区分是车主端还是客服端
 
             }
         });
     }
 
-    @OnClick(R.id.layout_back)
-    public void onViewClicked() {
-        finish();
-    }
-
-    public void requestData(final String fromId,String state){
+    public void requestData(final String fromId, String state) {
         Map<String, String> map = new HashMap<>();
         map.put("code", "03317");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(ConsultActiviy.this).getAppToken());
-        map.put("service_form_id",fromId);
-        map.put("state",state);
+        map.put("service_form_id", fromId);
+        map.put("state", state);
         Gson gson = new Gson();
         OkGo.<AppResponse<ConsultModel.DataBean>>post(Urls.SERVER_URL + "wit/app/car/witAgent")
                 .tag(this)//
@@ -115,9 +124,9 @@ public class ConsultActiviy extends BaseActivity {
                         consultListAdapter.setDataList(modelList);
                         list.refreshComplete(10);
                         lRecyclerViewAdapter.notifyDataSetChanged();
-                        if (response.body().data.size()>0){
-                            servicefromId = modelList.get(modelList.size()-1).getService_form_id();
-                        }else {
+                        if (response.body().data.size() > 0) {
+                            servicefromId = modelList.get(modelList.size() - 1).getService_form_id();
+                        } else {
                             if (!fromId.equals(""))
                                 list.setNoMore(true);
                         }
@@ -125,7 +134,7 @@ public class ConsultActiviy extends BaseActivity {
 
                     @Override
                     public void onError(Response<AppResponse<ConsultModel.DataBean>> response) {
-                        AlertUtil.t(ConsultActiviy.this,response.getException().getMessage());
+                        AlertUtil.t(ConsultActiviy.this, response.getException().getMessage());
                     }
                 });
     }

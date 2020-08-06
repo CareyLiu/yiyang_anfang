@@ -40,7 +40,7 @@ public class MasterListAdapter extends ListBaseAdapter<MasterModel.DataBean> {
         tvName.setText(getDataList().get(position).getUser_name());
         tvModel.setText(getDataList().get(position).getPlate_number());
         tvPhone.setText(getDataList().get(position).getUser_phone());
-        tvDate.setText(getDataList().get(position).getCreate_time());
+        tvDate.setText("安装时间：" + getDataList().get(position).getCreate_time());
 
 
     }

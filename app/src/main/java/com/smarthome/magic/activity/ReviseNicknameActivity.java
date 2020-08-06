@@ -1,5 +1,6 @@
 package com.smarthome.magic.activity;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.RequiresApi;
@@ -12,6 +13,8 @@ import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
+import com.smarthome.magic.aakefudan.base.ServiceBaseActivity;
+import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppEvent;
 import com.smarthome.magic.config.AppResponse;
@@ -28,33 +31,39 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ReviseNicknameActivity extends BaseActivity {
-    @BindView(R.id.rl_back)
-    RelativeLayout rlBack;
-    @BindView(R.id.tv_save)
-    TextView tvSave;
+public class ReviseNicknameActivity extends ServiceBaseActivity {
     @BindView(R.id.et_nick_name)
     EditText etNickName;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_revise_nickname);
-        ButterKnife.bind(this);
-        etNickName.setText(getIntent().getStringExtra("nick_name"));
-
+    public int getContentViewResId() {
+        return R.layout.activity_revise_nickname;
     }
 
-    @OnClick({R.id.rl_back, R.id.tv_save})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.rl_back:
-                finish();
-                break;
-            case R.id.tv_save:
+    @Override
+    protected void initToolbar() {
+        super.initToolbar();
+        tv_title.setText("修改昵称");
+        tv_rightTitle.setText("保存");
+        tv_rightTitle.setVisibility(View.VISIBLE);
+        tv_rightTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 requestData();
-                break;
-        }
+            }
+        });
+    }
+
+    @Override
+    public boolean showToolBar() {
+        return true;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ButterKnife.bind(this);
+        etNickName.setText(getIntent().getStringExtra("nick_name"));
     }
 
     public void requestData(){

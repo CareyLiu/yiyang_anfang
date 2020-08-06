@@ -9,7 +9,7 @@ public class FengshuiDetails {
      * msg_code : 0000
      * msg : ok
      * row_num : 1
-     * data : [{"mingpan_id":"318","goods_name":"天王财神爷开光佛像","ls_jx":"1","ccid":"202008020010000000000001","ji_img":"http://bz-goods.oss-cn-hangzhou.aliyuncs.com/ceshiji.jpg","xiong_img":"http://bz-goods.oss-cn-hangzhou.aliyuncs.com/ceshixiong.jpg","goods_img":"http://bz-goods.oss-cn-hangzhou.aliyuncs.com/twcskgfx.jpg"}]
+     * data : [{"mingpan_id":"318","goods_name":"天王财神爷开光佛像","ls_jx":"1","ccid":"202008020010000000000001","ji_img":"http://bz-goods.oss-cn-hangzhou.aliyuncs.com/ceshiji.jpg","xiong_img":"http://bz-goods.oss-cn-hangzhou.aliyuncs.com/ceshixiong.jpg","goods_img":"http://bz-goods.oss-cn-hangzhou.aliyuncs.com/twcskgfx.jpg","mingpan_goods_switch":"1"}]
      */
 
     private String msg_code;
@@ -58,6 +58,7 @@ public class FengshuiDetails {
          * ji_img : http://bz-goods.oss-cn-hangzhou.aliyuncs.com/ceshiji.jpg
          * xiong_img : http://bz-goods.oss-cn-hangzhou.aliyuncs.com/ceshixiong.jpg
          * goods_img : http://bz-goods.oss-cn-hangzhou.aliyuncs.com/twcskgfx.jpg
+         * mingpan_goods_switch : 1
          */
 
         private String mingpan_id;
@@ -67,6 +68,7 @@ public class FengshuiDetails {
         private String ji_img;
         private String xiong_img;
         private String goods_img;
+        private String mingpan_goods_switch;
 
         public String getMingpan_id() {
             return mingpan_id;
@@ -122,6 +124,14 @@ public class FengshuiDetails {
 
         public void setGoods_img(String goods_img) {
             this.goods_img = goods_img;
+        }
+
+        public String getMingpan_goods_switch() {
+            return mingpan_goods_switch;
+        }
+
+        public void setMingpan_goods_switch(String mingpan_goods_switch) {
+            this.mingpan_goods_switch = mingpan_goods_switch;
         }
     }
 }

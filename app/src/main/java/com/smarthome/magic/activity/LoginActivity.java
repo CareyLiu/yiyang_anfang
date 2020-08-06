@@ -297,13 +297,9 @@ public class LoginActivity extends BaseActivity {
                             userlist.clear();
                             //保存用户手机号码
                             PreferenceHelper.getInstance(LoginActivity.this).putString("user_phone", mEtPhone.getText().toString() + "");
-                            // UserManager.getManager(LoginActivity.this).saveUser(response.body().data.get(0));
-
                             if (response.body().data.size() == 1) {              //如果登录角色数量<=1则直接登录
-
                                 UserManager.getManager(LoginActivity.this).saveUser(response.body().data.get(0));
                                 startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-//                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
 
                                 //重连mqtt
                                 Notice n = new Notice();
@@ -316,13 +312,9 @@ public class LoginActivity extends BaseActivity {
                                 startActivity(new Intent(LoginActivity.this, SelectLoginActivity.class));
                             }
 
-
                             String rongYunTouken = UserManager.getManager(mContext).getRongYun();
-
                             if (!StringUtils.isEmpty(rongYunTouken)) {
                                 connectRongYun(response.body().data.get(0).getToken_rong());
-
-
                             }
                         }
 

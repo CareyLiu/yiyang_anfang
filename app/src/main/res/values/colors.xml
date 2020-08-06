@@ -523,4 +523,7 @@
 
     <!--  八紫主颜色  -->
     <color name="bazi_main">#6666CC</color>
+
+    <!--  客户端主颜色  -->
+    <color name="text_red">#FC0100</color>
 </resources>

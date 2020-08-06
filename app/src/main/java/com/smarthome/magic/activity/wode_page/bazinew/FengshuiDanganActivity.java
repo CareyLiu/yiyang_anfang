@@ -95,7 +95,7 @@ public class FengshuiDanganActivity extends BaziBaseActivity {
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
             public void call(Notice message) {
-                if (message.type == ConstanceValue.MSG_BAZI_FSBJ2) {
+                if (message.type == ConstanceValue.MSG_BAZI_FSBJ2) {//刷新列表
                     getNet();
                 }
             }

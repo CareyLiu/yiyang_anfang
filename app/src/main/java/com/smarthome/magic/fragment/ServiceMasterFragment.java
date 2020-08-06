@@ -1,16 +1,13 @@
 package com.smarthome.magic.fragment;
 
-import android.os.Build;
-import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
@@ -21,9 +18,9 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
 import com.smarthome.magic.adapter.MasterListAdapter;
+import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.MasterModel;
@@ -33,60 +30,80 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 
-import static android.view.ViewGroup.FOCUS_AFTER_DESCENDANTS;
+import static com.smarthome.magic.activity.taokeshagncheng.Custom5SearchThingActivity.hideKeyboard;
 
 public class ServiceMasterFragment extends BaseFragment {
 
     @BindView(R.id.list)
     LRecyclerView list;
     Unbinder unbinder;
-
     List<MasterModel.DataBean> modelList = new ArrayList<>();
     MasterListAdapter masterListAdapter;
     LRecyclerViewAdapter lRecyclerViewAdapter;
     String servicefromId, userPhone, plateNumber = "";
 
-    View header = null;
-    EditText etNumber;
+    @BindView(R.id.et_phone)
     EditText etPhone;
+    @BindView(R.id.layout_query)
     LinearLayout layoutQuery;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_service_master, container, false);
-        view.setClickable(true);// 防止点击穿透，底层的fragment响应上层点击触摸事件
-        unbinder = ButterKnife.bind(this, view);
 
+    @Override
+    protected void initLogic() {
+
+    }
+
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.fragment_service_master;
+    }
+
+    @Override
+    protected void initView(View rootView) {
+        unbinder = ButterKnife.bind(this, rootView);
         masterListAdapter = new MasterListAdapter(getActivity());
         masterListAdapter.setDataList(modelList);
         lRecyclerViewAdapter = new LRecyclerViewAdapter(masterListAdapter);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(lRecyclerViewAdapter);
-        header = LayoutInflater.from(getActivity()).inflate(R.layout.list_master_header, (ViewGroup) getActivity().findViewById(android.R.id.content), false);
-        etPhone = header.findViewById(R.id.et_phone);
-        etNumber = header.findViewById(R.id.et_number);
-        layoutQuery = header.findViewById(R.id.layout_query);
+        plateNumber = "";
+        etPhone.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    //点击搜索的时候隐藏软键盘
+                    hideKeyboard(etPhone);
+                    // 在这里写搜索的操作,一般都是网络请求数据
+                    userPhone = etPhone.getText().toString();
+                    modelList.clear();
+                    etPhone.setText("");
+                    requestData("", plateNumber, userPhone);
+                    return true;
+                }
+                return false;
+            }
+        });
+
         layoutQuery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                plateNumber = etNumber.getText().toString();
                 userPhone = etPhone.getText().toString();
                 modelList.clear();
+                hideKeyboard(etPhone);
+                etPhone.setText("");
                 requestData("", plateNumber, userPhone);
             }
         });
-        lRecyclerViewAdapter.addHeaderView(header);
         //设置头部加载颜色
-        list.setHeaderViewColor(R.color.blue_light, R.color.blue_light, R.color.transparent);
+        list.setHeaderViewColor(R.color.black_666666, R.color.black_666666, R.color.transparent);
         //设置底部加载颜色
-        list.setFooterViewColor(R.color.blue_light, R.color.blue_light, R.color.transparent);
+        list.setFooterViewColor(R.color.black_666666, R.color.black_666666, R.color.transparent);
         //设置底部加载文字提示
         list.setFooterViewHint("正在加载更多信息", "我是有底线的", "网络不给力啊，点击再试一次吧");
 
@@ -104,7 +121,6 @@ public class ServiceMasterFragment extends BaseFragment {
             }
         });
         list.refresh();
-        return view;
     }
 
     @Override
@@ -146,6 +162,4 @@ public class ServiceMasterFragment extends BaseFragment {
                     }
                 });
     }
-
-
 }

@@ -18,6 +18,11 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
+import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.animation.BounceEnter.BounceBottomEnter;
+import com.flyco.animation.SlideExit.SlideBottomExit;
+import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.widget.NormalDialog;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -181,7 +186,7 @@ public class DanganEditActivity extends BaziBaseActivity {
                 editMinpan();
                 break;
             case R.id.bt_delete:
-                deleteMinpan();
+                showJiebang();
                 break;
             case R.id.iv_switch:
                 clickSwich();
@@ -355,6 +360,29 @@ public class DanganEditActivity extends BaziBaseActivity {
                     @Override
                     public void onSuccess(Response<AppResponse<PaipanModel.DataBean>> response) {
                         t(response.body().msg);
+                    }
+                });
+    }
+
+
+
+    private BaseAnimatorSet mBasIn = new BounceBottomEnter();
+    private BaseAnimatorSet mBasOut = new SlideBottomExit();
+
+    private void showJiebang() {
+        NormalDialog normalDialog = new NormalDialog(this);
+        normalDialog.content("是否解除绑定?").showAnim(mBasIn).dismissAnim(mBasOut).show();
+        normalDialog.setOnBtnClickL(
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+                        normalDialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+                        deleteMinpan();
                     }
                 });
     }

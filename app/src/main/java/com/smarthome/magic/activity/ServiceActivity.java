@@ -4,13 +4,17 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.SystemClock;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.KeyEvent;
@@ -22,6 +26,7 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.jaeger.library.StatusBarUtil;
 import com.smarthome.magic.R;
 import com.smarthome.magic.app.AppManager;
+import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
@@ -39,8 +44,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class ServiceActivity extends AppCompatActivity {
-
+public class ServiceActivity extends BaseActivity {
 
     @BindView(R.id.bnve)
     BottomNavigationViewEx mBnve;
@@ -55,26 +59,30 @@ public class ServiceActivity extends AppCompatActivity {
     private SparseIntArray items;
 
     @Override
+    public int getContentViewResId() {
+        return R.layout.activity_service;
+    }
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_service);
-        StatusBarUtil.setTransparent(this);
-        StatusBarUtil.setLightMode(this);
+        // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+        init();
+    }
+
+    private void init() {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         initView();
         initData();
         initEvent();
-        Log.d("token", UserManager.getManager(getApplication()).getAppToken());
-
-
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-
     }
 
     @Override
@@ -92,10 +100,8 @@ public class ServiceActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
             if (!isExit) {
                 AppToast.makeShortToast(this, "再按一次返回键退出");
@@ -105,15 +111,12 @@ public class ServiceActivity extends AppCompatActivity {
                         SystemClock.sleep(3000);
                         isExit = false;
                     }
-
                 }.start();
                 return true;
             }
-//            AppManager.AppExit();
             AppManager.getAppManager().finishAllActivity();
         }
         return super.onKeyDown(keyCode, event);
-
     }
 
     @Override
@@ -127,15 +130,16 @@ public class ServiceActivity extends AppCompatActivity {
         super.finish();
     }
 
-
     /**
      * change BottomNavigationViewEx style
      */
     private void initView() {
-
         mBnve.enableAnimation(false);
         mBnve.enableShiftingMode(false);
         mBnve.enableItemShiftingMode(false);
+
+        layoutBg.setBackground(getResources().getDrawable(R.color.white));
+        StatusBarUtil.setLightMode(ServiceActivity.this);
     }
 
     /**
@@ -156,7 +160,6 @@ public class ServiceActivity extends AppCompatActivity {
         items.put(R.id.i_master, 1);
         items.put(R.id.i_mine, 2);
 
-
         // set adapter
         VpAdapter adapter = new VpAdapter(getSupportFragmentManager(), fragments);
         //禁用懒加载，不然每次切换页面都会重新获取数据
@@ -176,17 +179,7 @@ public class ServiceActivity extends AppCompatActivity {
 
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
                 int position = items.get(item.getItemId());
-                if (position == 2) {
-                    layoutBg.setBackground(getResources().getDrawable(R.color.blue));
-                    StatusBarUtil.setDarkMode(ServiceActivity.this);
-                } else {
-                    layoutBg.setBackground(getResources().getDrawable(R.color.white));
-                    StatusBarUtil.setLightMode(ServiceActivity.this);
-                }
-
-
                 if (previousPosition != position) {
                     previousPosition = position;
                     mVp.setCurrentItem(position, false);
@@ -213,7 +206,6 @@ public class ServiceActivity extends AppCompatActivity {
         });
     }
 
-
     /**
      * view pager adapter
      */
@@ -237,10 +229,7 @@ public class ServiceActivity extends AppCompatActivity {
     }
 
 
-
     public static ServiceActivity getInstance() {
         return new ServiceActivity();
     }
-
-
 }

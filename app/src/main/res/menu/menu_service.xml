@@ -3,12 +3,12 @@
     <item
         android:id="@+id/i_consult"
         android:checked="true"
-        android:icon="@drawable/selector_home"
+        android:icon="@drawable/selector_service_home"
         android:title="@string/consult" />
 
     <item
         android:id="@+id/i_master"
-        android:icon="@drawable/selector_master"
+        android:icon="@drawable/selector_service_master"
         android:title="@string/master_info" />
 
     <item

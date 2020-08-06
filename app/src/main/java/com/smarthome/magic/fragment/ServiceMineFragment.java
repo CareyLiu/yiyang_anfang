@@ -3,7 +3,9 @@ package com.smarthome.magic.fragment;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.RequiresApi;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,7 @@ import com.smarthome.magic.activity.ConsultActiviy;
 import com.smarthome.magic.activity.LoginActivity;
 import com.smarthome.magic.activity.PersonInfoAcctivity;
 import com.smarthome.magic.activity.ServiceAboutActivity;
+import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppEvent;
 import com.smarthome.magic.config.AppResponse;
@@ -80,19 +83,26 @@ public class ServiceMineFragment extends BaseFragment implements Observer {
     Unbinder unbinder;
     @BindView(R.id.tv_cache)
     TextView tvCache;
+
     private NormalDialog normalDialog;
     private BaseAnimatorSet mBasIn = new BounceBottomEnter();
     private BaseAnimatorSet mBasOut = new SlideBottomExit();
 
+    @Override
+    protected void initLogic() {
+
+    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_service_mine, container, false);
-        view.setClickable(true);// 防止点击穿透，底层的fragment响应上层点击触摸事件
+    protected int getLayoutRes() {
+        return R.layout.fragment_service_mine;
+    }
+
+    @Override
+    protected void initView(View rootView) {
+        unbinder = ButterKnife.bind(this, rootView);
         AppEvent.getClassEvent().addObserver(this);
-        unbinder = ButterKnife.bind(this, view);
         requestData("03314");
-        return view;
     }
 
     @Override
@@ -115,19 +125,19 @@ public class ServiceMineFragment extends BaseFragment implements Observer {
                         .putExtra("phone", servicePhone.getText()));
                 break;
             case R.id.layout_consult://全部咨询
-                startActivity(new Intent(getActivity(), ConsultActiviy.class).putExtra("title","全部咨询").putExtra("state", "5"));
+                startActivity(new Intent(getActivity(), ConsultActiviy.class).putExtra("title", "全部咨询").putExtra("state", "5"));
                 break;
             case R.id.layout_pending://待处理
-                startActivity(new Intent(getActivity(), ConsultActiviy.class).putExtra("title","待处理咨询").putExtra("state", "1"));
+                startActivity(new Intent(getActivity(), ConsultActiviy.class).putExtra("title", "待处理咨询").putExtra("state", "1"));
                 break;
             case R.id.layout_processed://已处理
-                startActivity(new Intent(getActivity(), ConsultActiviy.class).putExtra("title","已处理咨询").putExtra("state", "3"));
+                startActivity(new Intent(getActivity(), ConsultActiviy.class).putExtra("title", "已处理咨询").putExtra("state", "3"));
                 break;
             case R.id.layout_tobe_evaluated://待评价
-                startActivity(new Intent(getActivity(), ConsultActiviy.class).putExtra("title","待评价咨询").putExtra("state", "3"));
+                startActivity(new Intent(getActivity(), ConsultActiviy.class).putExtra("title", "待评价咨询").putExtra("state", "3"));
                 break;
             case R.id.layout_closed://已关闭
-                startActivity(new Intent(getActivity(), ConsultActiviy.class).putExtra("title","已关闭咨询").putExtra("state", "4"));
+                startActivity(new Intent(getActivity(), ConsultActiviy.class).putExtra("title", "已关闭咨询").putExtra("state", "4"));
                 break;
             case R.id.layout_about_us:
                 startActivity(new Intent(getActivity(), ServiceAboutActivity.class));
@@ -159,7 +169,6 @@ public class ServiceMineFragment extends BaseFragment implements Observer {
 
                 break;
             case R.id.layout_out:
-
                 String[] items = {"确认"};
                 final ActionSheetDialog dialog = new ActionSheetDialog(getActivity(), items, null);
                 dialog.title("确定要退出登录吗？");
@@ -169,23 +178,19 @@ public class ServiceMineFragment extends BaseFragment implements Observer {
                 dialog.setOnOperItemClickL(new OnOperItemClickL() {
                     @Override
                     public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                         switch (position) {
                             case 0:
                                 requestData("03321");
-
                                 break;
                             case 1:
                                 break;
                         }
                         dialog.dismiss();
-
                     }
                 });
                 break;
         }
     }
-
 
     public void requestData(final String code) {
         Map<String, String> map = new HashMap<>();

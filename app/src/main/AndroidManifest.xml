@@ -941,14 +941,14 @@
         <activity
             android:name=".activity.fenxiang_tuisong.ShouYeFenXiangActivity"
             android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/MyTranslucentTheme"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 
         <activity
             android:name=".activity.fenxiang_tuisong.HuoDongTanCengActivity"
             android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/MyTranslucentTheme"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
         <activity
@@ -961,18 +961,18 @@
         <activity
             android:name=".util.phoneview.sample.ImageShow_OnePictureActivity"
             android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activity.fenxiang_tuisong.ShouYeFenXiang_Url_Activity"
             android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/MyTranslucentTheme"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
         <activity
             android:name=".activity.dingdan.XiaoXiEnterDingDanActivity"
             android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/MyTranslucentTheme"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 

@@ -159,7 +159,7 @@ public class XiaoXiEnterDingDanActivity extends BaseActivity {
         //wares_type	订单类型：1.普通2.拼单 3.团购		是
         clDaifukuan.setVisibility(View.GONE);
         clDaifahuo.setVisibility(View.GONE);
-id = getIntent().getStringExtra("dingdanId");
+        id = getIntent().getStringExtra("dingdanId");
 
         getNet(id, "", "", "");
         tvGoPay.setOnClickListener(new View.OnClickListener() {
@@ -254,7 +254,7 @@ id = getIntent().getStringExtra("dingdanId");
         });
     }
 
-    private void getNetCuiFaHuo( DingDanDetailsModel.DataBean dataBean) {
+    private void getNetCuiFaHuo(DingDanDetailsModel.DataBean dataBean) {
         Map<String, String> map = new HashMap<>();
         map.put("code", "04167");
         map.put("key", Urls.key);
@@ -336,7 +336,7 @@ id = getIntent().getStringExtra("dingdanId");
     /**
      * 单选 dialog
      */
-    private void showSingSelect( DingDanDetailsModel.DataBean dataBean) {
+    private void showSingSelect(DingDanDetailsModel.DataBean dataBean) {
 
         //默认选中第一个
         final String[] items = {"微信", "支付宝"};
@@ -374,7 +374,7 @@ id = getIntent().getStringExtra("dingdanId");
     ProgressDialog progressDialog;
     private String appId;//支付id 给支付宝
 
-    private void getWeiXinOrZhiFuBao(String pay_id,  DingDanDetailsModel.DataBean dataBean) {
+    private void getWeiXinOrZhiFuBao(String pay_id, DingDanDetailsModel.DataBean dataBean) {
         //   productDetailsForJava.get(0).shop_form_text = etLiuYan.getText().toString();
 //        form_product_id 	购物车产品id
 //        shop_product_id	商品套餐id
@@ -633,10 +633,13 @@ id = getIntent().getStringExtra("dingdanId");
                          * express_url	查看物流url
                          * order_info_arr	订单信息数组
                          */
-                   dataBean = response.body().data.get(0);
-                      //  XiaoXiEnterDingDanActivity.this.dataBean.setUser_pay_check(dataBean.getUser_pay_check());
+                        dataBean = response.body().data.get(0);
+                        //  XiaoXiEnterDingDanActivity.this.dataBean.setUser_pay_check(dataBean.getUser_pay_check());
 
 
+                        if (dataBean == null) {
+                            return;
+                        }
                         if (dataBean.getOperate_type().equals("26")) {
                             tvAddress.setText(response.body().data.get(0).getInst_addr_all());
                         } else {
@@ -817,7 +820,7 @@ id = getIntent().getStringExtra("dingdanId");
 
     private AlertDialog.Builder builder;
 
-    private void showDngDanCaoZuo( DingDanDetailsModel.DataBean dataBean, String quXiaoDingDanHuaShu, String code) {
+    private void showDngDanCaoZuo(DingDanDetailsModel.DataBean dataBean, String quXiaoDingDanHuaShu, String code) {
 
         builder = new AlertDialog.Builder(mContext).setIcon(R.mipmap.logi_icon).setTitle("订单操作")
                 .setMessage(quXiaoDingDanHuaShu).setPositiveButton("确定", new DialogInterface.OnClickListener() {

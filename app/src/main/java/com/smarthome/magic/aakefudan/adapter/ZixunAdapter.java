@@ -22,7 +22,7 @@ public class ZixunAdapter extends BaseQuickAdapter<ConsultModel.DataBean, BaseVi
     @Override
     protected void convert(BaseViewHolder helper, ConsultModel.DataBean item) {
         Glide.with(mContext).load(item.getUser_car_img_url()).into((ImageView) helper.getView(R.id.iv_head));
-        helper.setText(R.id.tv_name, item.getSub_user_name());
+        helper.setText(R.id.tv_name, item.getUser_name_car());
         helper.setText(R.id.tv_model, item.getPlate_number());
         helper.setText(R.id.tv_fault, item.getError_text());
         helper.setText(R.id.tv_date, item.getCreate_time());

@@ -48,6 +48,8 @@ import com.rairmmd.andmqtt.MqttConnect;
 import com.rairmmd.andmqtt.MqttSubscribe;
 import com.rairmmd.andmqtt.MqttUnSubscribe;
 import com.smarthome.magic.R;
+import com.smarthome.magic.aakefudan.chat.MyMessage;
+import com.smarthome.magic.aakefudan.chat.MyMessageItemProvider;
 import com.smarthome.magic.activity.DiagnosisActivity;
 import com.smarthome.magic.adapter.view.GlobalAdapter;
 import com.smarthome.magic.app.AppConfig;
@@ -304,6 +306,9 @@ public class MyApplication extends MultiDexApplication {
 // 初始化. 建议在 Application 中进行初始化.
         String appKey = "cpj2xarlct6en";
         RongIM.init(context, appKey);
+        RongIM.registerMessageType(MyMessage.class);
+        RongIM.getInstance().registerMessageTemplate(new MyMessageItemProvider());
+
         String rongYunToken = PreferenceHelper.getInstance(getApplicationContext()).getString("token_rong", "");
         if (!StringUtils.isEmpty(rongYunToken)) {
             connectRongYun(rongYunToken);

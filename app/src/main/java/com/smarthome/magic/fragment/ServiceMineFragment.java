@@ -131,7 +131,7 @@ public class ServiceMineFragment extends BaseFragment implements Observer {
                 startActivity(new Intent(getActivity(), ConsultActiviy.class).putExtra("title", "待处理咨询").putExtra("state", "1"));
                 break;
             case R.id.layout_processed://已处理
-                startActivity(new Intent(getActivity(), ConsultActiviy.class).putExtra("title", "已处理咨询").putExtra("state", "3"));
+                startActivity(new Intent(getActivity(), ConsultActiviy.class).putExtra("title", "处理中咨询").putExtra("state", "2"));
                 break;
             case R.id.layout_tobe_evaluated://待评价
                 startActivity(new Intent(getActivity(), ConsultActiviy.class).putExtra("title", "待评价咨询").putExtra("state", "3"));

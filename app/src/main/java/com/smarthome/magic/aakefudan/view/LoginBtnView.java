@@ -127,11 +127,13 @@ public class LoginBtnView extends LinearLayout {
                         switch (power_state) {
                             case "1"://聚易佳
                                 activity.startActivity(new Intent(activity, HomeActivity.class));
+                                activity.finish();
                                 break;
                             case "2"://维修厂
                                 break;
                             case "3"://客服端
                                 activity.startActivity(new Intent(activity, ServiceActivity.class));
+                                activity.finish();
                                 break;
                         }
                     }

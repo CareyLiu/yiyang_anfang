@@ -81,4 +81,5 @@ public interface ConstanceValue {
 
     int MSG_BAZI_FSBJ1 = 0x10052;//风水摆件绑定成功
     int MSG_BAZI_FSBJ2 = 0x10053;//风水摆件绑定成功2
+    int MSG_SERVICE_CHAT = 0x10054;//服务跳转
 }

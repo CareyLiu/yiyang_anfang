@@ -75,7 +75,6 @@ public class FengshuiBindActivity extends BaseActivity implements View.OnClickLi
 
         mingpan_id = getIntent().getStringExtra("mingpan_id");
 
-
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
             public void call(Notice message) {
@@ -99,13 +98,13 @@ public class FengshuiBindActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.rl_scan_add:
                 if (EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA)) {
-                    FengshuiScanActivity.actionStart(FengshuiBindActivity.this,mingpan_id);
+                    FengshuiScanActivity.actionStart(FengshuiBindActivity.this, mingpan_id);
                 } else {
                     EasyPermissions.requestPermissions(this, getString(R.string.xjqx), 0, Manifest.permission.CAMERA);
                 }
                 break;
             case R.id.rl_hand_add:
-                FengshuiSHandActivity.actionStart(FengshuiBindActivity.this,mingpan_id);
+                FengshuiSHandActivity.actionStart(FengshuiBindActivity.this, mingpan_id);
                 break;
         }
     }
@@ -116,7 +115,6 @@ public class FengshuiBindActivity extends BaseActivity implements View.OnClickLi
         // 将结果转发到EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
-
 
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {

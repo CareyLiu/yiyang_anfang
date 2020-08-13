@@ -454,7 +454,7 @@
             android:name=".activity.ChooseTaoCanActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:theme="@style/MyTranslucentTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activity.taokeshagncheng.QueRenDingDanActivity"
@@ -727,7 +727,7 @@
             android:name=".activity.dingdan.QuXiaoDingDanTanCengActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:theme="@style/MyTranslucentTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activity.wode_page.TiXianActivity"
@@ -949,7 +949,7 @@
             android:name=".activity.fenxiang_tuisong.HuoDongTanCengActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:theme="@style/MyTranslucentTheme"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
         <activity
             android:name=".activity.Demo_rongyun"

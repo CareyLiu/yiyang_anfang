@@ -26,17 +26,15 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.DefaultX5WebViewActivity;
 import com.smarthome.magic.activity.SettingActivity;
 import com.smarthome.magic.activity.dingdan.MyOrderActivity;
-import com.smarthome.magic.activity.fenxiang_tuisong.ShouYeFenXiang_Url_Activity;
 import com.smarthome.magic.activity.gouwuche.GouWuCheActivity;
 import com.smarthome.magic.activity.tuangou.KaQuanActivity;
 import com.smarthome.magic.activity.wode_page.AboutUsActivity;
-import com.smarthome.magic.activity.wode_page.bazinew.BazismMainActivity;
 import com.smarthome.magic.activity.wode_page.DianPuListActivity;
 import com.smarthome.magic.activity.wode_page.MyQianBaoActivity;
 import com.smarthome.magic.activity.wode_page.ShangPinShouCangActivity;
 import com.smarthome.magic.activity.wode_page.TuiGuangMaActivity;
+import com.smarthome.magic.activity.wode_page.bazinew.BazismMainActivity;
 import com.smarthome.magic.app.App;
-import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.UIHelper;
@@ -50,11 +48,9 @@ import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.MineModel;
 import com.smarthome.magic.util.phoneview.sample.ImageShowActivity;
-import com.smarthome.magic.util.phoneview.sample.ImageShow_OnePictureActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
@@ -208,6 +204,10 @@ public class MineFragment extends BaseFragment implements Observer {
     RelativeLayout rlMain;
     @BindView(R.id.tv_dalishang)
     TextView tvDalishang;
+    @BindView(R.id.tv_about_us)
+    TextView tvAboutUs;
+    @BindView(R.id.tv_bazism)
+    TextView tvBazism;
 
 
     @Override
@@ -372,7 +372,7 @@ public class MineFragment extends BaseFragment implements Observer {
                 strings.add(dataBean.getUser_img_url());
                 ImageShowActivity.actionStart(getActivity(), strings);
 
-               // UIHelper.ToastMessage(getActivity(),"点击了 头像");
+                // UIHelper.ToastMessage(getActivity(),"点击了 头像");
                 break;
             case R.id.tv_name:
                 break;
@@ -476,6 +476,7 @@ public class MineFragment extends BaseFragment implements Observer {
             case R.id.rlv_xiche:
                 break;
             case R.id.iv_tuiguangma:
+            case R.id.tv_tuiguangma:
                 //UIHelper.ToastMessage(getActivity(), "进入二维码");
 
                 if (null == dataBean.getReferral_code_url()) {
@@ -490,8 +491,6 @@ public class MineFragment extends BaseFragment implements Observer {
 
 
                 //ShouYeFenXiang_Url_Activity.actionStart(getActivity());
-                break;
-            case R.id.tv_tuiguangma:
                 break;
 
             case R.id.iv_about_us:

@@ -6,14 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".activity.tuangou.TuanGouShangJiaListActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/swipe_target"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/srL_smart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlTextSizeTime="10sp"
+            app:srlTextSizeTitle="@dimen/sp_12" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/swipe_target"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffeeeeee"
+            app:srlTextSizeTime="10sp"
+            app:srlTextSizeTitle="@dimen/sp_12" />
+
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constrain"

@@ -19,7 +19,7 @@ public abstract class AbStractTuanGouShangJia extends BaseActivity implements Tu
     public void getTurn() {
         getBanner();
         getHortialList();
-        getVertialList();
+
     }
 
 

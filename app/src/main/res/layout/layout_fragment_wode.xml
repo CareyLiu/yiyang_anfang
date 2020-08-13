@@ -15,7 +15,11 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         app:layout_constraintTop_toTopOf="parent">
-
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlTextSizeTime="10sp"
+            app:srlTextSizeTitle="@dimen/sp_12" />
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -938,11 +942,7 @@
             app:srlTextSizeTime="10sp"
             app:srlTextSizeTitle="@dimen/sp_12" />
 
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srlTextSizeTime="10sp"
-            app:srlTextSizeTitle="@dimen/sp_12" />
+
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </RelativeLayout>

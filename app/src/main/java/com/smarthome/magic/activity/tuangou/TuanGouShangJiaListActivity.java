@@ -3,26 +3,30 @@ package com.smarthome.magic.activity.tuangou;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.WebViewActivity;
 import com.smarthome.magic.activity.xin_tuanyou.TuanYouList;
 import com.smarthome.magic.adapter.TuanGouShangJiaHeaderListAdapter;
 import com.smarthome.magic.adapter.tuangou.TuanGouShangJiaListAdapter;
+import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
@@ -30,7 +34,6 @@ import com.smarthome.magic.config.GlideImageLoader;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.TuanGouShangJiaListBean;
-import com.smarthome.magic.project_A.tuangou.TuanGouShangJiaList;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
@@ -55,10 +58,18 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
     LinearLayout constrainXx;
     @BindView(R.id.constrain)
     ConstraintLayout constrain;
+    @BindView(R.id.srL_smart)
+    SmartRefreshLayout srLSmart;
     private String type;//首页图标类型 1.美食 2.电影/演出 3.酒店住宿 4.休闲娱乐 5.旅游
 
     List<TuanGouShangJiaListBean.DataBean> dataBeans = new ArrayList<>();
     Response<AppResponse<TuanGouShangJiaListBean.DataBean>> response;
+
+    private String inst_number = "";
+    private String count = "";
+
+    private String pageNumber = "0";
+
 
     @Override
     public int getContentViewResId() {
@@ -76,6 +87,20 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
             @Override
             public void onClick(View v) {
                 constrain.setVisibility(View.GONE);
+            }
+        });
+        srLSmart.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                pageNumber = "1";
+                getNet();
+                inst_id = "";
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                pageNumber = "0";
+                getNet();
             }
         });
     }
@@ -229,13 +254,24 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
         map.put("key", Urls.key);
         map.put("y", PreferenceHelper.getInstance(TuanGouShangJiaListActivity.this).getString(JINGDU, "0X11"));
         map.put("x", PreferenceHelper.getInstance(TuanGouShangJiaListActivity.this).getString(WEIDU, "0X11"));
-        map.put("img_type", type);
+        map.put("img_type", type);//上一页带过来的
         map.put("item_id", item_id);
         map.put("neibour", neibour);
         map.put("three_img_id", three_img_id);
         map.put("order", order);
+
+
         map.put("inst_id", inst_id);
-        map.put("meter", meter);
+
+        if (order.equals("1")) {
+            map.put("meter", meter);
+        } else if (order.equals("2")) {
+
+            map.put("inst_number", inst_number);
+        } else if (order.equals("3")) {
+            map.put("count", count);
+        }
+
         if (type.equals("10")) {
             map.put("more_type", "1");
         }
@@ -245,35 +281,67 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<TuanGouShangJiaListBean.DataBean>>() {
+
                     @Override
                     public void onSuccess(Response<AppResponse<TuanGouShangJiaListBean.DataBean>> response) {
                         TuanGouShangJiaListActivity.this.response = response;
                         dataBeans.clear();
                         iconListBeans.clear();
-                        storeListBeans.clear();
 
+
+                        UIHelper.ToastMessage(mContext, "");
                         dataBeans.addAll(response.body().data);
 
                         if (iconListBeans.size() == 0) {
                             iconListBeans.addAll(response.body().data.get(0).getIcon());
                         }
-                        storeListBeans.addAll(response.body().data.get(0).getStore_list());
 
 
                         setHeader();
+
+                        if (pageNumber.equals("0")) {
+                            storeListBeans.clear();
+                            storeListBeans.addAll(response.body().data.get(0).getStore_list());
+                            tuanGouShangJiaListAdapter.setNewData(storeListBeans);
+                        } else {
+                            storeListBeans.addAll(response.body().data.get(0).getStore_list());
+                        }
+
                         if (storeListBeans.size() == 0) {
                             constraintLayout.setVisibility(View.VISIBLE);
                             //ivNoneImage.setVisibility(View.VISIBLE);
                             //noneText.setVisibility(View.VISIBLE);
                         } else {
+                            if (order.equals("1")) {
+                                //   map.put("meter", meter);
+                                meter = storeListBeans.get(storeListBeans.size() - 1).getMeter();
+                            } else if (order.equals("2")) {
+
+                                inst_number = storeListBeans.get(storeListBeans.size() - 1).getInst_number();
+
+//                                map.put("inst_number", inst_number);
+                            } else if (order.equals("3")) {
+                                count = storeListBeans.get(storeListBeans.size() - 1).getPay_count();
+                                //map.put("count", count);
+                            }
+                            inst_id = storeListBeans.get(storeListBeans.size() - 1).getInst_id();
+
                             constraintLayout.setVisibility(View.GONE);
                             //ivNoneImage.setVisibility(View.GONE);
                             //noneText.setVisibility(View.GONE);
                         }
-                        tuanGouShangJiaListAdapter.setNewData(storeListBeans);
+                        // tuanGouShangJiaListAdapter.setNewData(storeListBeans);
                         tuanGouShangJiaListAdapter.notifyDataSetChanged();
                         getTurn();
 
+                        srLSmart.finishRefresh();
+                        srLSmart.finishLoadMore();
+
+                        if (response.body().typeNext.equals("0")) {
+                            srLSmart.setEnableLoadMore(false);
+                        } else {
+                            srLSmart.setEnableLoadMore(true);
+                        }
                     }
                 });
     }
@@ -454,16 +522,16 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
 
                                 //    private List<String> listData = Arrays.asList("智能排序", "离我最近", "好评优先", "销量最高");
 
-                                if (listData.get(finalI).equals("")) {
+                                if (listData.get(finalI).equals("智能排序")) {
 
                                     order = "";
-                                } else if (listData.get(finalI).equals("")) {
+                                } else if (listData.get(finalI).equals("离我最近")) {
 
                                     order = "1";
-                                } else if (listData.get(finalI).equals("")) {
+                                } else if (listData.get(finalI).equals("好评优先")) {
 
                                     order = "2";
-                                } else if (listData.get(finalI).equals("")) {
+                                } else if (listData.get(finalI).equals("销量最高")) {
 
                                     order = "3";
                                 }

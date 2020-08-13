@@ -27,8 +27,10 @@ public class AppResponse<T> implements Serializable {
     public String msg_code;
     public String msg;
     public String next;//0 否 1 是
+    public String typeNext;//
     public List<T> data;
     public String wares_id_data;//商品列表
+
     @Override
     public String toString() {
         return "AppResponse{\n" +//

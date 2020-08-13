@@ -93,6 +93,7 @@ public class Home {
         private List<IndexShowListBean> indexShowList;
         private List<ProShowListBean> proShowList;
         public String is_activity;
+        public String activity_id;//活动id
 
         public List<DataBean.activity> getActivity() {
             return activity;
@@ -937,6 +938,7 @@ public class Home {
          * share_img	分享图片
          */
         public static class activity implements Serializable {
+            public String activity_id;
             public String is_activity;
             public String img_url;
             public String img_width;

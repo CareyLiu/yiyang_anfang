@@ -205,7 +205,7 @@ public class HuoDongTanCengActivity extends Activity {
         map.put("token", UserManager.getManager(HuoDongTanCengActivity.this).getAppToken());
         // map.put("shop_product_id", productId);
         //map.put("wares_id", warseId);
-        map.put("activity_id", activity.get(position).activity_type_id);
+        map.put("activity_id", activity.get(position).activity_id);
 
         Gson gson = new Gson();
         OkGo.<AppResponse<Object>>post(Urls.SERVER_URL + "shop_new/app/user")

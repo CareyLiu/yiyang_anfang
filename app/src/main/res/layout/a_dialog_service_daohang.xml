@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.smarthome.magic.activity.CarBrandActivity">
+
+    <LinearLayout
+        android:layout_width="288dp"
+        android:layout_height="278dp"
+        android:background="@drawable/bazi_renzheng"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:gravity="center">
+
+            <View
+                android:layout_width="29dp"
+                android:layout_height="3dp"
+                android:background="@color/red" />
+
+            <TextView
+                android:id="@+id/tv_chepai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:includeFontPadding="false"
+                android:text="修配厂推荐"
+                android:textColor="@color/black_111111"
+                android:textSize="26dp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="29dp"
+                android:layout_height="3dp"
+                android:background="@color/red" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/split" />
+
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:includeFontPadding="false"
+            android:text="致腾汽车修配厂"
+            android:textColor="@color/black_111111"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/shangjiadizhi" />
+
+            <TextView
+                android:id="@+id/tv_dizhi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:ellipsize="end"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:text="逛下区凤台路108号500M"
+                android:textColor="@color/black_666666"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/bt_ok"
+            android:layout_width="211dp"
+            android:layout_height="38dp"
+            android:background="@drawable/a_service_button"
+            android:gravity="center"
+            android:text="去这里"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+</LinearLayout>

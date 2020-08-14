@@ -71,6 +71,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
@@ -406,17 +408,24 @@ public class DiagnosisActivity extends BaseActivity {
                     @Override
                     public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
                         //此处title参数用来区分是车主端还是客服端
-
+                        ServiceModel.DataBean dataBean = list.get(position);
+                        Conversation.ConversationType conversationType = Conversation.ConversationType.PRIVATE;
+                        String targetId = dataBean.getSub_accid();
+                        String instName = dataBean.getSub_user_name();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("dianpuming", instName);
+                        bundle.putString("inst_accid", targetId);
+                        RongIM.getInstance().startConversation(mContext, conversationType, targetId, instName, bundle);
                         dialog.dismiss();
                     }
                 });
                 break;
             case R.id.btn_clean:
-                MyCarCaoZuoDialog_CaoZuoTIshi_Clear clear = new MyCarCaoZuoDialog_CaoZuoTIshi_Clear(DiagnosisActivity.this, new MyCarCaoZuoDialog_CaoZuoTIshi_Clear.OnDialogItemClickListener() {
-                    @Override
-                    public void clickLeft() {
+                    MyCarCaoZuoDialog_CaoZuoTIshi_Clear clear = new MyCarCaoZuoDialog_CaoZuoTIshi_Clear(DiagnosisActivity.this, new MyCarCaoZuoDialog_CaoZuoTIshi_Clear.OnDialogItemClickListener() {
+                        @Override
+                        public void clickLeft() {
 
-                    }
+                        }
 
                     @Override
                     public void clickRight() {

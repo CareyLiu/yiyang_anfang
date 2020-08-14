@@ -21,6 +21,8 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.aakefudan.adapter.ZixunAdapter;
 import com.smarthome.magic.aakefudan.base.ServiceBaseActivity;
 import com.smarthome.magic.adapter.ConsultListAdapter;
+import com.smarthome.magic.app.ConstanceValue;
+import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
@@ -43,6 +45,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.rong.imlib.model.Conversation;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 
 public class ConsultActiviy extends ServiceBaseActivity {
@@ -81,6 +85,35 @@ public class ConsultActiviy extends ServiceBaseActivity {
         initAdapter();
         initSM();
         getNet();
+        initHuidiao();
+    }
+
+    private boolean isOn = false;
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isOn = false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isOn = true;
+        adapter.notifyDataSetChanged();
+    }
+
+    private void initHuidiao() {
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_RONGYUN_REVICE) {
+                    if (isOn) {
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        }));
     }
 
     private void initAdapter() {
@@ -151,7 +184,7 @@ public class ConsultActiviy extends ServiceBaseActivity {
                         if (modelList.size() > 0) {
                             servicefromId = modelList.get(modelList.size() - 1).getService_form_id();
                             mEmptyView.setVisibility(View.GONE);
-                        }else {
+                        } else {
                             mEmptyView.setVisibility(View.VISIBLE);
                         }
                     }
@@ -190,7 +223,7 @@ public class ConsultActiviy extends ServiceBaseActivity {
                         if (modelList.size() > 0) {
                             servicefromId = modelList.get(modelList.size() - 1).getService_form_id();
                             mEmptyView.setVisibility(View.GONE);
-                        }else {
+                        } else {
                             mEmptyView.setVisibility(View.VISIBLE);
                         }
                     }

@@ -138,6 +138,7 @@ public abstract class BasicFragment<T extends BasicPresenter, E extends BasicMod
         hideInput();
     }
 
+
     /**
      * 逻辑内容初始化，懒加载模式
      */

@@ -207,7 +207,7 @@ public class MyApplication extends MultiDexApplication {
         strategy.setUploadProcess(processName == null || processName.equals(packageName));
 // 初始化Bugly
 
-       // CrashReport.initCrashReport(getApplicationContext());
+        // CrashReport.initCrashReport(getApplicationContext());
 
         Bugly.init(getApplicationContext(), "9aef7d7467", false);
 
@@ -331,6 +331,12 @@ public class MyApplication extends MultiDexApplication {
                  */
                 @Override
                 public boolean onReceived(final Message message, final int left, boolean hasPackage, boolean offline) {
+                    Notice notice = new Notice();
+                    notice.type = ConstanceValue.MSG_RONGYUN_REVICE;
+                    // notice.content = status.
+                    //* 用户被开发者后台封禁
+                    notice.content = message;
+                    RxBus.getDefault().sendRx(notice);
                     return false;
                 }
             });

@@ -49,6 +49,7 @@ import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.DaohangDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.NavigationUtils;
@@ -150,7 +151,26 @@ public class ServiciLiaoActivity extends BaseActivity {
                     }
                 } else if (message.type == ConstanceValue.MSG_SERVICE_CHAT) {
                     MyMessage model = (MyMessage) message.content;
-                    ServiceMapActivity.actionStart(mContext, model);
+                    DaohangDialog dialog = new DaohangDialog(mContext, model);
+                    dialog.setCilck(new DaohangDialog.OnDaohangCilck() {
+                        @Override
+                        public void click(MyMessage message) {
+                            try {
+                                String lat_x = message.getLat_x();
+                                String lon_y = message.getLon_y();
+                                Double x = Double.valueOf(lat_x);
+                                Double y = Double.valueOf(lon_y);
+                                LatLng latLng = new LatLng(x, y);
+                                NavigationUtils.Navigation(latLng);
+                            } catch (Exception e) {
+                                com.smarthome.magic.app.UIHelper.ToastMessage(MyApplication.getApp().getApplicationContext(), "请下载高德后重新尝试", Toast.LENGTH_SHORT);
+                            }
+
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.show();
+
                 }
             }
         }));
@@ -276,11 +296,13 @@ public class ServiciLiaoActivity extends BaseActivity {
             bt_ok.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (zixunModel.getAction().equals("2")) {
-                        AlertUtil.t(mContext, "咨询已完成");
-                    } else {
-                        sendXiaoxi(model);
-                    }
+                    sendXiaoxi(model);
+
+//                    if (zixunModel.getAction().equals("2")) {
+//                        AlertUtil.t(mContext, "咨询已完成");
+//                    } else {
+//                        sendXiaoxi(model);
+//                    }
                 }
             });
 
@@ -420,10 +442,10 @@ public class ServiciLiaoActivity extends BaseActivity {
                 Double y = Double.valueOf(y_begin);
                 LatLng marker1 = new LatLng(x, y);
                 if (listBean.getType().equals("1")) {
-                    BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.yixuanze));
+                    BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.cai_xiu_s));
                     com.amap.api.maps2d.model.Marker marker = aMap.addMarker(new MarkerOptions().position(marker1).icon(bitmapDescriptor).title(inst_name));
                 } else {
-                    BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.weixuanze));
+                    BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.cai_xiu_n));
                     com.amap.api.maps2d.model.Marker marker = aMap.addMarker(new MarkerOptions().position(marker1).icon(bitmapDescriptor).title(inst_name));
                 }
             }
@@ -436,7 +458,7 @@ public class ServiciLiaoActivity extends BaseActivity {
             CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(new CameraPosition(carMarker, 15, 0, 30));
             aMap.moveCamera(cameraUpdate);
 
-            BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.car));
+            BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.car_master_weizhi));
             com.amap.api.maps2d.model.Marker marker = aMap.addMarker(new MarkerOptions().position(carMarker).icon(bitmapDescriptor).title(zixunModel.getCar_user_name()));
         }
         mMapView.onCreate(savedInstanceState);
@@ -457,13 +479,6 @@ public class ServiciLiaoActivity extends BaseActivity {
             }
 
 //            //UIHelper.ToastMessage(mContext, "点击了这个");
-//            try {
-//                LatLng latLng = marker.getPosition();
-//                NavigationUtils.Navigation(latLng);
-//            } catch (Exception e) {
-//                com.smarthome.magic.app.UIHelper.ToastMessage(MyApplication.getApp().getApplicationContext(), "请下载高德后重新尝试", Toast.LENGTH_SHORT);
-//            }
-
             return true; // 返回:true 表示点击marker 后marker 不会移动到地图中心；返回false 表示点击marker 后marker 会自动移动到地图中心
         }
     };

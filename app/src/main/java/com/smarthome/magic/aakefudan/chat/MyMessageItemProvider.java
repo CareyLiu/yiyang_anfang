@@ -41,7 +41,9 @@ public class MyMessageItemProvider extends IContainerItemProvider.MessageProvide
         holder.tv2.setText("总公里数" + customMessage.getCustomRepairDis() + "KM");
         holder.tv3.setText(customMessage.getAddr());
         if (mContext != null) {
-            Glide.with(mContext).load(customMessage.getCustomRepairUrl()).into(holder.iv_main);
+            Glide.with(mContext).load(customMessage.getCustomRepairUrl())
+                    .error(R.mipmap.logi_icon)
+                    .into(holder.iv_main);
         }
     }
 

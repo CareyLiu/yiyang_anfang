@@ -57,33 +57,53 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="15dp"
-            android:gravity="center_vertical|right"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_date"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:includeFontPadding="false"
-                android:text="2019-03-14"
-                android:textColor="@color/split"
-                android:textSize="13sp" />
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="2019-03-14"
+                    android:textColor="@color/split"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tv_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:includeFontPadding="false"
+                    android:text="进行中"
+                    android:textColor="@color/text_red"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_state"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:includeFontPadding="false"
-                android:text="进行中"
-                android:textColor="@color/text_red"
-                android:textSize="13sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                android:id="@+id/tv_num"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:visibility="gone"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@drawable/a_service_xiaoxi"
+                android:text="10"
+                android:textSize="8sp" />
+        </FrameLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -96,10 +116,10 @@
             android:layout_height="1dp"
             android:background="@color/bg_app" />
 
-<!--        <View-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="1dp"-->
-<!--            android:layout_weight="1"-->
-<!--            android:background="@color/split" />-->
+        <!--        <View-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="1dp"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:background="@color/split" />-->
     </LinearLayout>
 </LinearLayout>

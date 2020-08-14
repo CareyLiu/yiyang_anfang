@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.amap.api.maps2d.model.LatLng;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -17,15 +20,22 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.aakefudan.adapter.ZixunAdapter;
+import com.smarthome.magic.aakefudan.chat.MyMessage;
 import com.smarthome.magic.adapter.ConsultListAdapter;
+import com.smarthome.magic.app.ConstanceValue;
+import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.DaohangDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.ConsultModel;
 import com.smarthome.magic.util.AlertUtil;
+import com.smarthome.magic.util.NavigationUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +51,10 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.rong.common.RLog;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 
 public class ServiceConsultFragment extends BaseFragment {
@@ -54,6 +67,25 @@ public class ServiceConsultFragment extends BaseFragment {
     private String servicefromId = "";
 
     private View mEmptyView;
+
+    private boolean isOn = false;
+    private boolean isShow = false;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isOn = true;
+        if (isSupportVisible()) {
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isOn = false;
+    }
+
 
     @Override
     protected void initLogic() {
@@ -73,6 +105,20 @@ public class ServiceConsultFragment extends BaseFragment {
         initAdapter();
         initSM();
         getNet();
+        initHuidiao();
+    }
+
+    private void initHuidiao() {
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_RONGYUN_REVICE) {
+                    if (isOn) {
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        }));
     }
 
     private void initSM() {
@@ -146,7 +192,7 @@ public class ServiceConsultFragment extends BaseFragment {
                         if (modelList.size() > 0) {
                             servicefromId = modelList.get(modelList.size() - 1).getService_form_id();
                             mEmptyView.setVisibility(View.GONE);
-                        }else {
+                        } else {
                             mEmptyView.setVisibility(View.VISIBLE);
                         }
                     }
@@ -186,7 +232,7 @@ public class ServiceConsultFragment extends BaseFragment {
                         if (modelList.size() > 0) {
                             servicefromId = modelList.get(modelList.size() - 1).getService_form_id();
                             mEmptyView.setVisibility(View.GONE);
-                        }else {
+                        } else {
                             mEmptyView.setVisibility(View.VISIBLE);
                         }
                     }

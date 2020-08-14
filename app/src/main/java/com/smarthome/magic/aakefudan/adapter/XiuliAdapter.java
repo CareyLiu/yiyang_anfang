@@ -27,7 +27,9 @@ public class XiuliAdapter extends BaseQuickAdapter<ZixunModel.DataBean.ListBean,
         helper.setText(R.id.tv_juli, item.getMeter() + "KM");
 
 
-        Glide.with(mContext).load(item.getUrl()).into((ImageView) helper.getView(R.id.iv_icon));
+        Glide.with(mContext).load(item.getUrl())
+                .error(R.mipmap.logi_icon)
+                .into((ImageView) helper.getView(R.id.iv_icon));
 
         boolean select = item.isSelect();
         ImageView iv_select = helper.getView(R.id.iv_select);

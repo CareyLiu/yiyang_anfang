@@ -191,7 +191,6 @@ public class MyApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-
         initRongYun();
         initLifecycle();
         initWindow();

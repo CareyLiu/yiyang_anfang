@@ -1,4 +1,4 @@
-package com.smarthome.magic.dialog;
+package com.smarthome.magic.aakefudan.chat;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.smarthome.magic.R;
 import com.smarthome.magic.aakefudan.chat.MyMessage;
+import com.smarthome.magic.aakefudan.model.ZixunModel;
 
 import androidx.annotation.NonNull;
 
@@ -29,9 +30,9 @@ public class DaohangDialog implements View.OnClickListener {
     private int mStyle = R.style.UserinfoDialogStyle;
 
     private Context mContext;
-    private MyMessage model;
+    private ZixunModel.DataBean.ListBean model;
 
-    public DaohangDialog(@NonNull Context context, MyMessage model) {
+    public DaohangDialog(@NonNull Context context, ZixunModel.DataBean.ListBean model) {
         this.mContext = context;
         this.model = model;
         initView();
@@ -63,9 +64,8 @@ public class DaohangDialog implements View.OnClickListener {
         tv_chepai = mView.findViewById(R.id.tv_chepai);
         tv_dizhi = mView.findViewById(R.id.tv_dizhi);
 
-
-        tv_name.setText(model.getCustomRepairName());
-        tv_dizhi.setText(model.getAddr() + "  " + model.getCustomRepairDis() + "km");
+        tv_name.setText(model.getInst_name());
+        tv_dizhi.setText(model.getAddr() + "  " + model.getMeter() + "km");
 
         bt_ok.setOnClickListener(this);
     }
@@ -85,7 +85,7 @@ public class DaohangDialog implements View.OnClickListener {
     }
 
     public interface OnDaohangCilck {
-        void click(MyMessage message);
+        void click(ZixunModel.DataBean.ListBean model);
     }
 
     public void show() {

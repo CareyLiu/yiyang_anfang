@@ -691,13 +691,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
-        <!-- 服务端地图页面 -->
-        <activity
-            android:name=".aakefudan.chat.ServiceMapActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".activity.zhinengjiaju.peinet.v1.EspTouchActivity"
             android:configChanges="locale|keyboardHidden|orientation"

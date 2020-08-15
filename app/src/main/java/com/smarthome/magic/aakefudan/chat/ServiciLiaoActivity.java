@@ -1,23 +1,22 @@
 package com.smarthome.magic.aakefudan.chat;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amap.api.interfaces.MapCameraMessage;
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMapOptions;
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.CameraUpdate;
@@ -30,6 +29,8 @@ import com.amap.api.maps2d.model.CameraPosition;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
+import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.ActionSheetDialog;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -37,19 +38,15 @@ import com.lzy.okgo.request.base.Request;
 import com.smarthome.magic.R;
 import com.smarthome.magic.aakefudan.adapter.XiuliAdapter;
 import com.smarthome.magic.aakefudan.model.ZixunModel;
-import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.callback.JsonCallback;
-import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.MyApplication;
-import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
-import com.smarthome.magic.dialog.DaohangDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.NavigationUtils;
@@ -74,7 +71,7 @@ import io.rong.imlib.model.Message;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-public class ServiciLiaoActivity extends BaseActivity {
+public class ServiciLiaoActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.rl_main_title)
     RelativeLayout rl_main_title;
@@ -88,6 +85,7 @@ public class ServiciLiaoActivity extends BaseActivity {
     private ZixunModel.DataBean zixunModel;
     private List<ZixunModel.DataBean.ListBean> weixiuList = new ArrayList<>();
     private XiuliAdapter xiuliAdapter;
+    private String service_form_id;
 
     @Override
     public int getContentViewResId() {
@@ -151,33 +149,58 @@ public class ServiciLiaoActivity extends BaseActivity {
                     }
                 } else if (message.type == ConstanceValue.MSG_SERVICE_CHAT) {
                     MyMessage model = (MyMessage) message.content;
-                    DaohangDialog dialog = new DaohangDialog(mContext, model);
-                    dialog.setCilck(new DaohangDialog.OnDaohangCilck() {
-                        @Override
-                        public void click(MyMessage message) {
-                            try {
-                                String lat_x = message.getLat_x();
-                                String lon_y = message.getLon_y();
-                                Double x = Double.valueOf(lat_x);
-                                Double y = Double.valueOf(lon_y);
-                                LatLng latLng = new LatLng(x, y);
-                                NavigationUtils.Navigation(latLng);
-                            } catch (Exception e) {
-                                com.smarthome.magic.app.UIHelper.ToastMessage(MyApplication.getApp().getApplicationContext(), "请下载高德后重新尝试", Toast.LENGTH_SHORT);
-                            }
-
-                            dialog.dismiss();
-                        }
-                    });
-                    dialog.show();
+                    clickDaohang(model);
 
                 }
             }
         }));
     }
 
+    private void clickDaohang(MyMessage model) {
+        String items[] = {"高德地图导航", "百度地图导航"};
+        final ActionSheetDialog dialog = new ActionSheetDialog(this, items, null);
+        dialog.isTitleShow(false).show();
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        try {
+                            String lat_x = model.getLat_x();
+                            String lon_y = model.getLon_y();
+                            Double x = Double.valueOf(lat_x);
+                            Double y = Double.valueOf(lon_y);
+                            LatLng latLng = new LatLng(x, y);
+                            NavigationUtils.Navigation(latLng);
+                        } catch (Exception e) {
+                            com.smarthome.magic.app.UIHelper.ToastMessage(MyApplication.getApp().getApplicationContext(), "请下载高德地图后重新尝试", Toast.LENGTH_SHORT);
+                        }
+                        break;
+                    case 1:
+                        try {
+                            String lat_x = model.getLat_x();
+                            String lon_y = model.getLon_y();
+                            Double x = Double.valueOf(lat_x);
+                            Double y = Double.valueOf(lon_y);
+                            LatLng latLng = new LatLng(x, y);
+                            NavigationUtils.NavigationBaidu(latLng, model.getCustomRepairName());
+                        } catch (Exception e) {
+                            com.smarthome.magic.app.UIHelper.ToastMessage(MyApplication.getApp().getApplicationContext(), "请下载百度地图后重新尝试", Toast.LENGTH_SHORT);
+                        }
+
+
+                        break;
+                }
+                dialog.dismiss();
+
+            }
+        });
+
+
+    }
+
     private void initView() {
-        String service_form_id = getIntent().getStringExtra("service_form_id");
+        service_form_id = getIntent().getStringExtra("service_form_id");
         String str = getIntent().getStringExtra("dianpuming");
         String inst_accid = getIntent().getStringExtra("inst_accid");
         tv_title_name.setText(str);
@@ -240,6 +263,158 @@ public class ServiciLiaoActivity extends BaseActivity {
     private PopupWindow popKeshi;
     private ZixunModel.DataBean.ListBean model;
 
+    private Bundle savedInstanceState;
+    private AMap aMap;
+    private MapView mMapView;
+    private View ll_master_info;
+    private View ll_guzhang_info;
+    private View ll_mendian_info;
+    private View ll_ditu_info;
+    private View ll_wancheng_info;
+
+    private ImageView iv_master_info;
+    private ImageView iv_guzhang_info;
+    private ImageView iv_mendian_info;
+    private ImageView iv_ditu_info;
+    private ImageView iv_wancheng_info;
+
+    private RecyclerView rv_mendian;
+    private TextView tv_master_name;
+    private TextView tv_master_num;
+    private TextView tv_master_guzhang;
+    private TextView tv_ok;
+
+    private int type = 0;
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ll_master_info:
+                select(1);
+                break;
+            case R.id.ll_guzhang_info:
+                select(2);
+                break;
+            case R.id.ll_mendian_info:
+                select(3);
+                break;
+            case R.id.ll_ditu_info:
+                select(4);
+                break;
+            case R.id.ll_wancheng_info:
+                select(5);
+                break;
+            case R.id.tv_ok:
+                clickFinish();
+                break;
+        }
+    }
+
+    private void clickFinish() {
+        WanchengDialog dialog = new WanchengDialog(mContext);
+        dialog.setCilck(new WanchengDialog.OnDaohangCilck() {
+            @Override
+            public void click() {
+                Map<String, String> map = new HashMap<>();
+                map.put("token", UserManager.getManager(mContext).getAppToken());
+                map.put("code", "03316");
+                map.put("key", Urls.key);
+                map.put("service_form_id", service_form_id);
+                map.put("type", "2");
+
+                Gson gson = new Gson();
+                gson.toJson(map);
+                OkGo.<AppResponse<ZixunModel.DataBean>>
+                        post(Urls.SERVER_URL + "wit/app/car/witAgent").
+                        tag(mContext).
+                        upJson(gson.toJson(map)).
+                        execute(new JsonCallback<AppResponse<ZixunModel.DataBean>>() {
+                            @Override
+                            public void onSuccess(Response<AppResponse<ZixunModel.DataBean>> response) {
+                                AlertUtil.t(mContext, "咨询完成");
+                            }
+
+                            @Override
+                            public void onError(Response<AppResponse<ZixunModel.DataBean>> response) {
+                                AlertUtil.t(mContext, response.getException().getMessage());
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                super.onFinish();
+                                dialog.dismiss();
+                            }
+                        });
+            }
+        });
+        dialog.show();
+
+    }
+
+    private void select(int i) {
+        mMapView.setVisibility(View.GONE);
+        rv_mendian.setVisibility(View.GONE);
+        tv_master_name.setVisibility(View.GONE);
+        tv_master_num.setVisibility(View.GONE);
+        tv_master_guzhang.setVisibility(View.GONE);
+        tv_ok.setVisibility(View.GONE);
+
+        iv_master_info.setImageResource(R.mipmap.kefu_xia);
+        iv_guzhang_info.setImageResource(R.mipmap.kefu_xia);
+        iv_master_info.setImageResource(R.mipmap.kefu_xia);
+        iv_ditu_info.setImageResource(R.mipmap.kefu_xia);
+        iv_wancheng_info.setImageResource(R.mipmap.kefu_xia);
+
+        switch (i) {
+            case 1:
+                if (type == 1) {
+                    type = 0;
+                } else {
+                    type = 1;
+                    tv_master_name.setVisibility(View.VISIBLE);
+                    tv_master_num.setVisibility(View.VISIBLE);
+                    iv_master_info.setImageResource(R.mipmap.kefu_shang);
+                }
+                break;
+            case 2:
+                if (type == 2) {
+                    type = 0;
+                } else {
+                    type = 2;
+                    tv_master_guzhang.setVisibility(View.VISIBLE);
+                    iv_guzhang_info.setImageResource(R.mipmap.kefu_shang);
+                }
+                break;
+            case 3:
+                if (type == 3) {
+                    type = 0;
+                } else {
+                    type = 3;
+                    rv_mendian.setVisibility(View.VISIBLE);
+                    iv_master_info.setImageResource(R.mipmap.kefu_shang);
+                }
+                break;
+            case 4:
+                if (type == 4) {
+                    type = 0;
+                } else {
+                    type = 4;
+                    mMapView.setVisibility(View.VISIBLE);
+                    iv_ditu_info.setImageResource(R.mipmap.kefu_shang);
+                }
+                break;
+            case 5:
+                if (type == 5) {
+                    type = 0;
+                } else {
+                    type = 5;
+                    tv_ok.setVisibility(View.VISIBLE);
+                    iv_wancheng_info.setImageResource(R.mipmap.kefu_shang);
+                }
+                break;
+        }
+    }
+
     private void showZixun() {
         if (zixunModel == null && weixiuList.size() > 0) {
             return;
@@ -253,10 +428,33 @@ public class ServiciLiaoActivity extends BaseActivity {
             popKeshi.setAnimationStyle(android.R.style.Animation_Dialog); //使用系统的
             popKeshi.showAsDropDown(rl_main_title);
 
-
             mMapView = view.findViewById(R.id.map);
+            rv_mendian = view.findViewById(R.id.rv_mendian);
+            tv_master_name = view.findViewById(R.id.tv_master_name);
+            tv_master_num = view.findViewById(R.id.tv_master_num);
+            tv_master_guzhang = view.findViewById(R.id.tv_master_guzhang);
+            tv_ok = view.findViewById(R.id.tv_ok);
 
-            RecyclerView rv_mendian = view.findViewById(R.id.rv_mendian);
+            ll_master_info = view.findViewById(R.id.ll_master_info);
+            ll_guzhang_info = view.findViewById(R.id.ll_guzhang_info);
+            ll_mendian_info = view.findViewById(R.id.ll_mendian_info);
+            ll_ditu_info = view.findViewById(R.id.ll_ditu_info);
+            ll_wancheng_info = view.findViewById(R.id.ll_wancheng_info);
+
+            iv_master_info = view.findViewById(R.id.iv_master_info);
+            iv_guzhang_info = view.findViewById(R.id.iv_guzhang_info);
+            iv_mendian_info = view.findViewById(R.id.iv_mendian_info);
+            iv_ditu_info = view.findViewById(R.id.iv_ditu_info);
+            iv_wancheng_info = view.findViewById(R.id.iv_wancheng_info);
+
+            ll_master_info.setOnClickListener(this);
+            ll_guzhang_info.setOnClickListener(this);
+            ll_mendian_info.setOnClickListener(this);
+            ll_ditu_info.setOnClickListener(this);
+            ll_wancheng_info.setOnClickListener(this);
+            tv_ok.setOnClickListener(this);
+
+
             model = weixiuList.get(0);
             model.setSelect(true);
             weixiuList.set(0, model);
@@ -272,6 +470,7 @@ public class ServiciLiaoActivity extends BaseActivity {
                         if (i == position) {
                             listBean.setSelect(true);
                             model = listBean;
+                            sendDialog();
                         } else {
                             listBean.setSelect(false);
                         }
@@ -282,37 +481,11 @@ public class ServiciLiaoActivity extends BaseActivity {
                 }
             });
 
-            TextView bt_ok = view.findViewById(R.id.bt_ok);
-            TextView tv_master_name = view.findViewById(R.id.tv_master_name);
-            TextView tv_master_num = view.findViewById(R.id.tv_master_num);
-            TextView tv_master_guzhang = view.findViewById(R.id.tv_master_guzhang);
-
             tv_master_name.setText("车主姓名：" + zixunModel.getCar_user_name());
             tv_master_num.setText("车牌号码：" + zixunModel.getPlate_number());
             tv_master_guzhang.setText(zixunModel.getAction_name());
 
             initMap();
-
-            bt_ok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    sendXiaoxi(model);
-
-//                    if (zixunModel.getAction().equals("2")) {
-//                        AlertUtil.t(mContext, "咨询已完成");
-//                    } else {
-//                        sendXiaoxi(model);
-//                    }
-                }
-            });
-
-            ImageView iv_close = view.findViewById(R.id.iv_close);
-            iv_close.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    popKeshi.dismiss();
-                }
-            });
 
             WindowManager.LayoutParams attributes = getWindow().getAttributes(); //获取程序的WINDOW属性
             attributes.alpha = 0.5f;  //0.1-1.0
@@ -324,13 +497,12 @@ public class ServiciLiaoActivity extends BaseActivity {
                     WindowManager.LayoutParams attributes = getWindow().getAttributes(); //获取程序的WINDOW属性
                     attributes.alpha = 1.0F;  //0.1-1.0
                     getWindow().setAttributes(attributes);// 在把所有属性重新设置回去
-
-//                if (mMapView!=null){
-//                    mMapView.onDestroy();
-//                }
                 }
             });
         } else {
+            WindowManager.LayoutParams attributes = getWindow().getAttributes(); //获取程序的WINDOW属性
+            attributes.alpha = 0.5f;  //0.1-1.0
+            getWindow().setAttributes(attributes);// 在把所有属性重新设置回去
             popKeshi.showAsDropDown(rl_main_title);
         }
     }
@@ -399,10 +571,6 @@ public class ServiciLiaoActivity extends BaseActivity {
             }
         });
     }
-
-    private Bundle savedInstanceState;
-    private AMap aMap;
-    MapView mMapView;
 
     private void initMap() {
         if (aMap == null) {
@@ -478,8 +646,31 @@ public class ServiciLiaoActivity extends BaseActivity {
                 marker.showInfoWindow();
             }
 
-//            //UIHelper.ToastMessage(mContext, "点击了这个");
-            return true; // 返回:true 表示点击marker 后marker 不会移动到地图中心；返回false 表示点击marker 后marker 会自动移动到地图中心
+            for (int i = 0; i < weixiuList.size(); i++) {
+                String title = marker.getTitle();
+                ZixunModel.DataBean.ListBean listBean = weixiuList.get(i);
+                String inst_name = listBean.getInst_name();
+                if (title.equals(inst_name)) {
+                    model = listBean;
+                    sendDialog();
+                    break;
+                }
+            }
+
+            return false; // 返回:true 表示点击marker 后marker 不会移动到地图中心；返回false 表示点击marker 后marker 会自动移动到地图中心
         }
     };
+
+    private void sendDialog() {
+        DaohangDialog dialog = new DaohangDialog(mContext, model);
+        dialog.setCilck(new DaohangDialog.OnDaohangCilck() {
+            @Override
+            public void click(ZixunModel.DataBean.ListBean model) {
+
+                sendXiaoxi(model);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
 }

@@ -49,6 +49,7 @@ public class ZixunModel {
     }
 
     public static class DataBean {
+        public static Object ListBean;
         /**
          * worker_state : 2
          * y_begin : 126.605662

@@ -67,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:gravity="center"
+                android:gravity="right"
                 android:orientation="vertical">
 
                 <TextView
@@ -95,14 +95,14 @@
                 android:id="@+id/tv_num"
                 android:layout_width="14dp"
                 android:layout_height="14dp"
-                android:layout_gravity="bottom|center_horizontal"
-                android:visibility="gone"
+                android:layout_gravity="bottom|right"
                 android:layout_marginBottom="5dp"
-                android:gravity="center"
-                android:textColor="@color/white"
                 android:background="@drawable/a_service_xiaoxi"
+                android:gravity="center"
                 android:text="10"
-                android:textSize="8sp" />
+                android:textColor="@color/white"
+                android:textSize="8sp"
+                android:visibility="gone" />
         </FrameLayout>
     </LinearLayout>
 

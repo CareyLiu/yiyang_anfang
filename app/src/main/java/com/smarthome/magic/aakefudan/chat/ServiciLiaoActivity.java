@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -83,7 +85,7 @@ public class ServiciLiaoActivity extends BaseActivity implements View.OnClickLis
     TextView tv_title_name;
 
     private ZixunModel.DataBean zixunModel;
-    private List<ZixunModel.DataBean.ListBean> weixiuList = new ArrayList<>();
+    private List<ZixunModel.DataBean.ListBean> weixiuList;
     private XiuliAdapter xiuliAdapter;
     private String service_form_id;
 
@@ -100,8 +102,6 @@ public class ServiciLiaoActivity extends BaseActivity implements View.OnClickLis
         initHuihua();
         initHuidiao();
         initView();
-
-//        mMapView = view.findViewById(R.id.map);
     }
 
     private void initHuihua() {
@@ -243,7 +243,11 @@ public class ServiciLiaoActivity extends BaseActivity implements View.OnClickLis
 
                     @Override
                     public void onError(Response<AppResponse<ZixunModel.DataBean>> response) {
-                        AlertUtil.t(context, response.getException().getMessage());
+                        String msg = response.getException().getMessage();
+                        String[] msgToast = msg.split("：");
+                        if (msgToast.length == 3) {
+                            AlertUtil.t(mContext, msgToast[2]);
+                        }
                     }
 
                     @Override
@@ -336,7 +340,11 @@ public class ServiciLiaoActivity extends BaseActivity implements View.OnClickLis
 
                             @Override
                             public void onError(Response<AppResponse<ZixunModel.DataBean>> response) {
-                                AlertUtil.t(mContext, response.getException().getMessage());
+                                String msg = response.getException().getMessage();
+                                String[] msgToast = msg.split("：");
+                                if (msgToast.length == 3) {
+                                    AlertUtil.t(mContext, msgToast[2]);
+                                }
                             }
 
                             @Override
@@ -416,7 +424,7 @@ public class ServiciLiaoActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void showZixun() {
-        if (zixunModel == null && weixiuList.size() > 0) {
+        if (zixunModel == null || weixiuList == null) {
             return;
         }
 
@@ -454,10 +462,11 @@ public class ServiciLiaoActivity extends BaseActivity implements View.OnClickLis
             ll_wancheng_info.setOnClickListener(this);
             tv_ok.setOnClickListener(this);
 
-
-            model = weixiuList.get(0);
-            model.setSelect(true);
-            weixiuList.set(0, model);
+            if (weixiuList.size() > 0) {
+                model = weixiuList.get(0);
+                model.setSelect(true);
+                weixiuList.set(0, model);
+            }
 
             xiuliAdapter = new XiuliAdapter(R.layout.a_item_service_weixiu, weixiuList);
             rv_mendian.setLayoutManager(new LinearLayoutManager(mContext));
@@ -483,7 +492,13 @@ public class ServiciLiaoActivity extends BaseActivity implements View.OnClickLis
 
             tv_master_name.setText("车主姓名：" + zixunModel.getCar_user_name());
             tv_master_num.setText("车牌号码：" + zixunModel.getPlate_number());
-            tv_master_guzhang.setText(zixunModel.getAction_name());
+
+            String error_text = zixunModel.getError_text();
+            if (TextUtils.isEmpty(error_text)) {
+                tv_master_guzhang.setText("暂无故障信息");
+            } else {
+                tv_master_guzhang.setText(error_text);
+            }
 
             initMap();
 

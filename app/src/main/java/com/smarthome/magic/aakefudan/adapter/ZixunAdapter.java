@@ -1,5 +1,6 @@
 package com.smarthome.magic.aakefudan.adapter;
 
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -31,6 +32,19 @@ public class ZixunAdapter extends BaseQuickAdapter<ConsultModel.DataBean, BaseVi
         helper.setText(R.id.tv_fault, item.getError_text());
         helper.setText(R.id.tv_date, item.getCreate_time());
         helper.setText(R.id.tv_state, item.getState_name());
+
+
+        TextView tv_state = helper.getView(R.id.tv_state);
+        String state = item.getState();
+        if (state.equals("1")){
+            tv_state.setTextColor(Color.parseColor("#FC0100"));
+        }else if (state.equals("2")){
+            tv_state.setTextColor(Color.parseColor("#1DBB9C"));
+        }else {
+            tv_state.setTextColor(Color.parseColor("#666666"));
+        }
+
+
 
         Conversation.ConversationType conversationType = Conversation.ConversationType.PRIVATE;
         String targetId = item.getOf_user_accid();

@@ -166,11 +166,13 @@ public class ConsultActiviy extends ServiceBaseActivity {
     }
 
     public void getNet() {
+        page_number = 0;
         Map<String, String> map = new HashMap<>();
         map.put("code", "03317");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
         map.put("state", state);
+        map.put("page_number", page_number + "");
         Gson gson = new Gson();
         OkGo.<AppResponse<ConsultModel.DataBean>>post(Urls.SERVER_URL + "wit/app/car/witAgent")
                 .tag(this)//
@@ -203,12 +205,15 @@ public class ConsultActiviy extends ServiceBaseActivity {
                 });
     }
 
+    private int page_number = 0;
+
     public void getMore() {
+        page_number++;
         Map<String, String> map = new HashMap<>();
         map.put("code", "03317");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
-        map.put("service_form_id", servicefromId);
+        map.put("page_number", page_number + "");
         map.put("state", state);
         Gson gson = new Gson();
         OkGo.<AppResponse<ConsultModel.DataBean>>post(Urls.SERVER_URL + "wit/app/car/witAgent")

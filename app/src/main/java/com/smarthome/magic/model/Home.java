@@ -2,6 +2,7 @@ package com.smarthome.magic.model;
 
 import android.app.Activity;
 
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -94,7 +95,15 @@ public class Home {
         private List<ProShowListBean> proShowList;
         public String is_activity;
         public String activity_id;//活动id
+        private List<WaresTypeListBean> waresTypeList;
+        private List<BigGiftListBean> big_gift_list;
+        public List<WaresTypeListBean> getWaresTypeList() {
+            return waresTypeList;
+        }
 
+        public void setWaresTypeList(List<WaresTypeListBean> waresTypeList) {
+            this.waresTypeList = waresTypeList;
+        }
         public List<DataBean.activity> getActivity() {
             return activity;
         }
@@ -232,7 +241,28 @@ public class Home {
         public void setProShowList(List<ProShowListBean> proShowList) {
             this.proShowList = proShowList;
         }
+        public List<BigGiftListBean> getBig_gift_list() {
+            return big_gift_list;
+        }
 
+        public void setBig_gift_list(List<BigGiftListBean> big_gift_list) {
+            this.big_gift_list = big_gift_list;
+        }
+        public static class BigGiftListBean {
+            /**
+             * url : https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11697
+             */
+
+            private String url;
+
+            public String getUrl() {
+                return url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url;
+            }
+        }
         public static class IntellectListBean {
             /**
              * img_url : https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=10212
@@ -953,6 +983,42 @@ public class Home {
             public String share_url;
             public String share_img;
             public String img_type;
+        }
+
+        public static class WaresTypeListBean {
+            /**
+             * name : 自建商城
+             * img_url : https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11693
+             * id : 1
+             */
+
+            private String name;
+            private String img_url;
+            private String id;
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getImg_url() {
+                return img_url;
+            }
+
+            public void setImg_url(String img_url) {
+                this.img_url = img_url;
+            }
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
         }
     }
 }

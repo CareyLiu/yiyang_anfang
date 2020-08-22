@@ -221,6 +221,13 @@ public class TuanGouShangPinDetailsModel {
             private String menu_title;
             private List<MenuBean> menu;
 
+
+            public String menu_detail_id;
+            public String menu_pay;
+            public String menu_text;
+            public String menu_count;
+
+
             public String getMenu_title() {
                 return menu_title;
             }
@@ -247,6 +254,7 @@ public class TuanGouShangPinDetailsModel {
                 private String menu_text;
                 private String menu_count;
                 private String menu_pay;
+
 
                 public String getMenu_text() {
                     return menu_text;
@@ -282,6 +290,9 @@ public class TuanGouShangPinDetailsModel {
 
             private String prompt_title;
             private List<PromptBean> prompt;
+
+            public String prompt_detail_id;
+            public String prompt_text;
 
             public String getPrompt_title() {
                 return prompt_title;

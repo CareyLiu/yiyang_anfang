@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
+
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -288,10 +290,13 @@ public class DiagnosisActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse<HeaterDetails.DataBean>>() {
                     @Override
                     public void onSuccess(final Response<AppResponse<HeaterDetails.DataBean>> response) {
-
+                        if (response.body().data.get(0).getZhu_car_stoppage_no() == null) {
+                            response.body().data.get(0).setZhu_car_stoppage_no("");
+                        }
                         if (response.body().data.get(0).getZhu_car_stoppage_no().equals("")) {
                             //UIHelper.ToastMessage(DiagnosisActivity.this, "故障清除成功", Toast.LENGTH_LONG);
                             mTvTitle.setText("整机运转正常");
+
                         } else {
 
                             //重新获取ccid

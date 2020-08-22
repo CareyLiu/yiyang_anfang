@@ -94,12 +94,13 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 pageNumber = "1";
                 getNet();
-                inst_id = "";
+
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 pageNumber = "0";
+                inst_id = "";
                 getNet();
             }
         });
@@ -151,10 +152,11 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                     TuanYouList.actionStart(TuanGouShangJiaListActivity.this);
 
                 } else {
-
+                    inst_id = "";
+                    meter = "";
                     item_id = ziJian_headerAdapter.getData().get(position).getHref_url();
                     three_img_id = ziJian_headerAdapter.getData().get(position).getThree_img_id();
-                    type = ziJian_headerAdapter.getData().get(position).getId();
+//                    type = ziJian_headerAdapter.getData().get(position).getId();
                     //image_type =
                     getNet_storeList();
                 }
@@ -203,10 +205,9 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
         map.put("neibour", neibour);
         map.put("three_img_id", three_img_id);
         map.put("order", order);
-        map.put("inst_id", inst_id);
-        map.put("meter", meter);
-
-        map.put("more_type", "1");
+        if (type.equals("10")) {
+            map.put("more_type", "1");
+        }
 
         Gson gson = new Gson();
         Log.e("map_data", gson.toJson(map));
@@ -286,18 +287,17 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                     public void onSuccess(Response<AppResponse<TuanGouShangJiaListBean.DataBean>> response) {
                         TuanGouShangJiaListActivity.this.response = response;
                         dataBeans.clear();
-                        iconListBeans.clear();
-
-
-                        UIHelper.ToastMessage(mContext, "");
                         dataBeans.addAll(response.body().data);
 
-                        if (iconListBeans.size() == 0) {
-                            iconListBeans.addAll(response.body().data.get(0).getIcon());
+
+                        if (view == null) {
+
+                            if (iconListBeans.size() == 0) {
+                                iconListBeans.addAll(response.body().data.get(0).getIcon());
+                            }
+                            setHeader();
+                            getTurn();
                         }
-
-
-                        setHeader();
 
                         if (pageNumber.equals("0")) {
                             storeListBeans.clear();
@@ -332,7 +332,7 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                         }
                         // tuanGouShangJiaListAdapter.setNewData(storeListBeans);
                         tuanGouShangJiaListAdapter.notifyDataSetChanged();
-                        getTurn();
+
 
                         srLSmart.finishRefresh();
                         srLSmart.finishLoadMore();
@@ -370,6 +370,7 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
     private TextView noneText;//没有文字话术
 
     private ConstraintLayout constraintLayout;
+    View view;
 
     @Override
     public void setHeader() {
@@ -422,6 +423,7 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                     constrain.setVisibility(View.VISIBLE);
                     constrainXx.setVisibility(View.VISIBLE);
                     constrain.getBackground().setAlpha(200);// 0~255透明度值
+
                     constrainXx.removeAllViews();
 
                     for (int i = 0; i < iconListBeans.size(); i++) {
@@ -432,9 +434,12 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                         viewHortial.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                pageNumber = "0";
                                 item_id = ziJian_headerAdapter.getData().get(finalI).getHref_url();
                                 three_img_id = ziJian_headerAdapter.getData().get(finalI).getThree_img_id();
-                                type = ziJian_headerAdapter.getData().get(finalI).getId();
+                                inst_id = "";
+
+
                                 //image_type =
                                 getNet_storeList();
                                 constrain.setVisibility(View.GONE);

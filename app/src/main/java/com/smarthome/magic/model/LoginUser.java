@@ -80,6 +80,7 @@ public class LoginUser {
         private String server_id;
         private String power_state;
         private String subsystem_id;
+        public String invitation_code_state;
 
         public String getSubsystem_id() {
             return subsystem_id;

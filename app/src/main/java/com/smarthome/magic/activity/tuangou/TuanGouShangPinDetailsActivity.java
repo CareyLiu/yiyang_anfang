@@ -3,7 +3,9 @@ package com.smarthome.magic.activity.tuangou;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.widget.AppCompatRatingBar;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -98,7 +100,7 @@ public class TuanGouShangPinDetailsActivity extends AbTuanGouShangPinDetails {
         shopName = getIntent().getStringExtra("shopName");
         shopStar = getIntent().getStringExtra("shopStar");
         shopAddr = getIntent().getStringExtra("shopAddr");
-       // shopType = getIntent().getStringExtra("shopType");
+        // shopType = getIntent().getStringExtra("shopType");
         getNet();
     }
 
@@ -111,7 +113,7 @@ public class TuanGouShangPinDetailsActivity extends AbTuanGouShangPinDetails {
         map.put("key", Urls.key);
         map.put("wares_id", warseId);
         map.put("inst_id", shopId);
-        map.put("shopType",shopType);
+        map.put("shopType", shopType);
         Gson gson = new Gson();
         Log.e("map_data", gson.toJson(map));
         OkGo.<AppResponse<TuanGouShangPinDetailsModel.DataBean>>post(LIBAOLIST)
@@ -138,20 +140,20 @@ public class TuanGouShangPinDetailsActivity extends AbTuanGouShangPinDetails {
         if (dataBean.getText_1() != null) {
             for (int i = 0; i < dataBean.getText_1().size(); i++) {
 
-                View view = View.inflate(TuanGouShangPinDetailsActivity.this, R.layout.item_taocan_details, null);
-                TextView tvName = view.findViewById(R.id.tv_name);
-                LinearLayout llParent = view.findViewById(R.id.ll_parent);
-                tvName.setText(dataBean.getText_1().get(i).getMenu_title());
-                for (int j = 0; j < dataBean.getText_1().get(i).getMenu().size(); j++) {
+//                View view = View.inflate(TuanGouShangPinDetailsActivity.this, R.layout.item_taocan_details, null);
+//                TextView tvName = view.findViewById(R.id.tv_name);
+//                LinearLayout llParent = view.findViewById(R.id.ll_parent);
+//                tvName.setText(dataBean.getText_1().get(i).getMenu_title());
+//                for (int j = 0; j < dataBean.getText_1().get(i).getMenu().size(); j++) {
 
-                    View view1 = View.inflate(TuanGouShangPinDetailsActivity.this, R.layout.item_taocan_erji, null);
-                    TextView tvShuoMing = view1.findViewById(R.id.tv_shuoming);
-                    TextView tvFen = view1.findViewById(R.id.tv_fen);
-                    tvShuoMing.setText("●" + dataBean.getText_1().get(i).getMenu().get(j).getMenu_text());
-                    tvFen.setText(dataBean.getText_1().get(i).getMenu().get(j).getMenu_count());
-                    llParent.addView(view1);
-                }
-                llTaocanDetails.addView(view);
+                View view1 = View.inflate(TuanGouShangPinDetailsActivity.this, R.layout.item_taocan_erji, null);
+                TextView tvShuoMing = view1.findViewById(R.id.tv_shuoming);
+                TextView tvFen = view1.findViewById(R.id.tv_fen);
+                tvShuoMing.setText(dataBean.getText_1().get(i).menu_text);
+                tvFen.setText(dataBean.getText_1().get(i).menu_count);
+
+//                }
+                llTaocanDetails.addView(view1);
             }
         }
 
@@ -167,8 +169,8 @@ public class TuanGouShangPinDetailsActivity extends AbTuanGouShangPinDetails {
                 TextView tvYouXiaoQi = view.findViewById(R.id.tv_youxiaoqi);
                 TextView tvData = view.findViewById(R.id.tv_data);
 
-                tvYouXiaoQi.setText(dataBean.getText_2().get(i).getPrompt_title());
-                tvData.setText(dataBean.getText_2().get(i).getPrompt().get(0).getPrompt_text());
+             //   tvYouXiaoQi.setText(dataBean.getText_2().get(i).prompt_text);
+                tvData.setText(dataBean.getText_2().get(i).prompt_text);
                 llWenxin.addView(view);
             }
         }
@@ -183,7 +185,7 @@ public class TuanGouShangPinDetailsActivity extends AbTuanGouShangPinDetails {
             @Override
             public void onClick(View v) {
 
-                TuanGouShengChengDingDanActivity.actionStart(TuanGouShangPinDetailsActivity.this, shopId, dataBean.getShop_money_now(), dataBean.getImg_url(), dataBean.getShop_title(),shopType,warseId);
+                TuanGouShengChengDingDanActivity.actionStart(TuanGouShangPinDetailsActivity.this, shopId, dataBean.getShop_money_now(), dataBean.getImg_url(), dataBean.getShop_title(), shopType, warseId);
             }
         });
     }

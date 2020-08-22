@@ -251,7 +251,7 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
 //        });
 
 
-       // getNet_check();
+        // getNet_check();
 
         //初始化定位
         initLocation();
@@ -458,6 +458,8 @@ public class HomeFragment extends BaseFragment implements Observer, View.OnClick
                     public void call(Boolean granted) {
                         if (granted) { // 在android 6.0之前会默认返回true
                             ScanActivity.actionStart(getActivity());
+
+                          //  YanShiActivity.actionStart(getActivity());
                         } else {
                             Toast.makeText(getActivity(), "该应用需要赋予访问相机的权限，不开启将无法正常工作！", Toast.LENGTH_LONG).show();
                         }

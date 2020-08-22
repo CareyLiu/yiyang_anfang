@@ -26,6 +26,7 @@ import com.jaeger.library.StatusBarUtil;
 import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.gaiban.HomeFragment_New;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.config.MyApplication;
@@ -170,7 +171,7 @@ public class HomeActivity extends BaseActivity {
         List<Fragment> fragments = new ArrayList<>(5);
         items = new SparseIntArray(5);
 
-        HomeFragment homeFragment = new HomeFragment();
+        HomeFragment_New homeFragment = new HomeFragment_New();
         ZhiNengJiaJuFragment zhiNengJiaJuFragment = new ZhiNengJiaJuFragment();
         OnlineFragment onlineFragment = new OnlineFragment();
         MessagerFragment messagerFragment = new MessagerFragment();

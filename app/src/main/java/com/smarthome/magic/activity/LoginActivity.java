@@ -25,6 +25,7 @@ import com.jakewharton.rxbinding.view.RxView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.wode_page.TuiGuangMaActivity;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.BaseActivity;
@@ -39,6 +40,7 @@ import com.smarthome.magic.config.AppResponse;
 
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.BuTianYaoQingMaDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.LoginUser;
 import com.smarthome.magic.model.Message;
@@ -101,6 +103,7 @@ public class LoginActivity extends BaseActivity {
     private String smsId;
 
     public static List<LoginUser.DataBean> userlist = new ArrayList<>();
+    Response<AppResponse<LoginUser.DataBean>> response;
 
     @Override
     public int getContentViewResId() {
@@ -295,17 +298,65 @@ public class LoginActivity extends BaseActivity {
                         @Override
                         public void onSuccess(Response<AppResponse<LoginUser.DataBean>> response) {
                             userlist.clear();
+
+                            LoginActivity.this.response = response;
                             //保存用户手机号码
                             PreferenceHelper.getInstance(LoginActivity.this).putString("user_phone", mEtPhone.getText().toString() + "");
-                            if (response.body().data.size() == 1) {              //如果登录角色数量<=1则直接登录
-                                UserManager.getManager(LoginActivity.this).saveUser(response.body().data.get(0));
-                                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                            if (response.body().data.size() == 1) {
+                                //如果登录角色数量<=1则直接登录
+                               // response.body().data.get(0).invitation_code_state = "2";
+                                UserManager.getManager(LoginActivity.this).saveUser(LoginActivity.this.response.body().data.get(0));
+                                if (response.body().data.get(0).getPower_state().equals("1")) {
 
-                                //重连mqtt
-                                Notice n = new Notice();
-                                n.type = ConstanceValue.MSG_CONNET_MQTT;
-                                RxBus.getDefault().sendRx(n);
-                                finish();
+                                    if (response.body().data.get(0).invitation_code_state.equals("2")) {
+                                        BuTianYaoQingMaDialog buTianYaoQingMaDialog = new BuTianYaoQingMaDialog(mContext, new BuTianYaoQingMaDialog.OnDialogItemClickListener() {
+                                            @Override
+                                            public void qudingclick(String str) {
+
+                                                if (StringUtils.isEmpty(str)) {
+                                                    UIHelper.ToastMessage(mContext, "请输入邀请码后再进行验证");
+                                                } else {
+                                                    getNet_butian(str);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void quxiaoclick() {
+
+                                                UserManager.getManager(LoginActivity.this).saveUser(response.body().data.get(0));
+                                                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+
+                                                //重连mqtt
+                                                Notice n = new Notice();
+                                                n.type = ConstanceValue.MSG_CONNET_MQTT;
+                                                RxBus.getDefault().sendRx(n);
+                                                finish();
+
+                                            }
+                                        });
+                                        buTianYaoQingMaDialog.show();
+                                    } else {
+                                        UserManager.getManager(LoginActivity.this).saveUser(response.body().data.get(0));
+                                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+
+                                        //重连mqtt
+                                        Notice n = new Notice();
+                                        n.type = ConstanceValue.MSG_CONNET_MQTT;
+                                        RxBus.getDefault().sendRx(n);
+                                        finish();
+                                    }
+
+                                } else {
+                                    UserManager.getManager(LoginActivity.this).saveUser(response.body().data.get(0));
+                                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+
+                                    //重连mqtt
+                                    Notice n = new Notice();
+                                    n.type = ConstanceValue.MSG_CONNET_MQTT;
+                                    RxBus.getDefault().sendRx(n);
+                                    finish();
+                                }
+
                             } else {
                                 //登录角色 >1 时，让用户选择要登录的角色
                                 userlist.addAll(response.body().data);
@@ -409,6 +460,51 @@ public class LoginActivity extends BaseActivity {
                 });
 
 
+    }
+
+    private void getNet_butian(String et) {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "04343");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        // map.put("shop_product_id", productId);
+        //map.put("wares_id", warseId);
+        map.put("invitation_code", et);
+
+        Log.i("taoken_gg", UserManager.getManager(mContext).getAppToken());
+        Gson gson = new Gson();
+        OkGo.<AppResponse<Object>>post(Urls.SERVER_URL + "shop_new/app/user")
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<Object>>() {
+                    @Override
+
+                    public void onSuccess(final Response<AppResponse<Object>> response) {
+
+                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+
+                        //重连mqtt
+                        Notice n = new Notice();
+                        n.type = ConstanceValue.MSG_CONNET_MQTT;
+                        RxBus.getDefault().sendRx(n);
+                        finish();
+
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<Object>> response) {
+                        AlertUtil.t(mContext, response.getException().getMessage());
+
+                        UserManager.getManager(LoginActivity.this).saveUser(LoginActivity.this.response.body().data.get(0));
+                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+
+                        //重连mqtt
+                        Notice n = new Notice();
+                        n.type = ConstanceValue.MSG_CONNET_MQTT;
+                        RxBus.getDefault().sendRx(n);
+                        finish();
+                    }
+                });
     }
 
 

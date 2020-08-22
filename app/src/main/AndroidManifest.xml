@@ -10,7 +10,6 @@
         android:resizeable="true"
         android:smallScreens="true" />
 
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 用于访问GPS定位 -->
@@ -61,7 +60,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:replace="android:allowBackup">
-
+        <activity android:name=".activity.YanShiActivity"></activity>
 
         <meta-data
             android:name="BUGLY_APPID"
@@ -689,8 +688,12 @@
             android:name=".activity.wode_page.bazinew.FengshuiBangSActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 服务端地图页面 -->
+        <activity
+            android:name=".aakefudan.chat.ServiceMapActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.zhinengjiaju.peinet.v1.EspTouchActivity"
             android:configChanges="locale|keyboardHidden|orientation"

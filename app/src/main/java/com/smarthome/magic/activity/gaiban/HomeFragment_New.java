@@ -353,7 +353,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         clZiYing_Top.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIHelper.ToastMessage(getActivity(), "点击了自营");
+                //UIHelper.ToastMessage(getActivity(), "点击了自营");
                 rlv_ziYing.setVisibility(View.VISIBLE);
                 rlvRemen.setVisibility(View.GONE);
                 setZiYingOrReMenLine("0");
@@ -364,7 +364,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
             @Override
             public void onClick(View v) {
 
-                UIHelper.ToastMessage(getActivity(), "点击了热门");
+                //UIHelper.ToastMessage(getActivity(), "点击了热门");
                 rlv_ziYing.setVisibility(View.GONE);
                 rlvRemen.setVisibility(View.VISIBLE);
                 setZiYingOrReMenLine("1");
@@ -375,7 +375,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         clReMen_Middle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIHelper.ToastMessage(getActivity(), "点击了热门");
+                //UIHelper.ToastMessage(getActivity(), "点击了热门");
                 rlv_ziYing.setVisibility(View.GONE);
                 rlvRemen.setVisibility(View.VISIBLE);
                 setZiYingOrReMenLine("1");
@@ -386,7 +386,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         clZiYing_Middle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIHelper.ToastMessage(getActivity(), "点击了自营");
+                //UIHelper.ToastMessage(getActivity(), "点击了自营");
                 rlv_ziYing.setVisibility(View.VISIBLE);
                 rlvRemen.setVisibility(View.GONE);
                 setZiYingOrReMenLine("0");

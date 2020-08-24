@@ -205,6 +205,9 @@ public class FenLeiThirdFragment extends BaseFragment implements FenLeiContenInt
         smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                if (next==null){
+                    return;
+                }
                 if (next.equals("1")) {
                     pageNumber = pageNumber + 1;
                     getNet();

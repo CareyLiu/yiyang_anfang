@@ -61,6 +61,7 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
     @BindView(R.id.srL_smart)
     SmartRefreshLayout srLSmart;
     private String type;//首页图标类型 1.美食 2.电影/演出 3.酒店住宿 4.休闲娱乐 5.旅游
+    private String imgType;//
 
     List<TuanGouShangJiaListBean.DataBean> dataBeans = new ArrayList<>();
     Response<AppResponse<TuanGouShangJiaListBean.DataBean>> response;
@@ -156,7 +157,7 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                     meter = "";
                     item_id = ziJian_headerAdapter.getData().get(position).getHref_url();
                     three_img_id = ziJian_headerAdapter.getData().get(position).getThree_img_id();
-//                    type = ziJian_headerAdapter.getData().get(position).getId();
+                    imgType = ziJian_headerAdapter.getData().get(position).getId();
                     //image_type =
                     getNet_storeList();
                 }
@@ -200,7 +201,7 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
         map.put("key", Urls.key);
         map.put("y", PreferenceHelper.getInstance(TuanGouShangJiaListActivity.this).getString(JINGDU, "0X11"));
         map.put("x", PreferenceHelper.getInstance(TuanGouShangJiaListActivity.this).getString(WEIDU, "0X11"));
-        map.put("img_type", type);
+        map.put("img_type", imgType);
         map.put("item_id", item_id);
         map.put("neibour", neibour);
         map.put("three_img_id", three_img_id);
@@ -230,12 +231,12 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                         //   setHeader();
                         if (storeListBeans.size() == 0) {
                             constraintLayout.setVisibility(View.VISIBLE);
-                            //ivNoneImage.setVisibility(View.VISIBLE);
-                            //noneText.setVisibility(View.VISIBLE);
+                            ivNoneImage.setVisibility(View.VISIBLE);
+                            noneText.setVisibility(View.VISIBLE);
                         } else {
                             constraintLayout.setVisibility(View.GONE);
-                            //ivNoneImage.setVisibility(View.GONE);
-                            //noneText.setVisibility(View.GONE);
+                            ivNoneImage.setVisibility(View.GONE);
+                            noneText.setVisibility(View.GONE);
                         }
                         tuanGouShangJiaListAdapter.setNewData(storeListBeans);
                         tuanGouShangJiaListAdapter.notifyDataSetChanged();

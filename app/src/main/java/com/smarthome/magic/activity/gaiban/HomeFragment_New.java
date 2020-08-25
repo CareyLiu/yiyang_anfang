@@ -651,6 +651,15 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
 
             }
         });
+
+        homeReMenAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ZiJianShopMallDetailsActivity.actionStart(getActivity(), remenListBean.get(position).getShop_product_id(), remenListBean.get(position).getWares_id());
+
+            }
+        });
+
         tianMaoOrTaoBao.setOnClickListener(this);
         ivDaLiBao.setOnClickListener(this);
         // ivJd.setOnClickListener(this);

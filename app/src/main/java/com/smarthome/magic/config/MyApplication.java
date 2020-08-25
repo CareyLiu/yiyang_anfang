@@ -3,6 +3,7 @@ package com.smarthome.magic.config;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.UiAutomation;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -60,6 +61,7 @@ import com.smarthome.magic.app.HardWareValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.RxUtils;
+import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Notify;
@@ -524,7 +526,6 @@ public class MyApplication extends MultiDexApplication {
                         Log.i("Rair", "(MainActivity.java:29)-connectComplete:-&gt;连接完成");
                         sendRx(ConstanceValue.MSG_MQTT_CONNECTCOMPLETE, "");
 
-
                     }
 
                     @Override
@@ -551,90 +552,22 @@ public class MyApplication extends MultiDexApplication {
 
                             } else if (codeClass.code.equals("o")) {
 
-                                //o 是接收 警报
-                                //对象类型 传递到故障页面
 
                                 Notice n = new Notice();
-                                n.type = ConstanceValue.MSG_GUZHANG;
+                                n.type = ConstanceValue.MSG_GUZHANG_SHOUYE;
                                 n.content = message.toString();
                                 RxBus.getDefault().sendRx(n);
-                                Log.i("MSG_GUZHANG", n.content.toString() + " 订阅的主题：" + topic);
 
-                                AlarmClass alarmClass = gson.fromJson(message.toString(), AlarmClass.class);
-                                Log.i("alarmClass", alarmClass.changjia_name + alarmClass.sell_phone);
+                                Notice n1 = new Notice();
+                                n1.type = ConstanceValue.MSG_GUZHANG;
+                                n1.content = message.toString();
+                                RxBus.getDefault().sendRx(n1);
 
-                                switch (alarmClass.sound) {
-                                    case "chSound1.mp3":
-                                        playMusic(R.raw.ch_sound1);
-                                        break;
-                                    case "chSound2.mp3":
-                                        playMusic(R.raw.ch_sound2);
-                                        break;
-                                    case "chSound3.mp3":
-                                        playMusic(R.raw.ch_sound3);
-                                        break;
-                                    case "chSound4.mp3":
-                                        playMusic(R.raw.ch_sound4);
-                                        break;
-                                    case "chSound5.mp3":
-                                        playMusic(R.raw.ch_sound5);
-                                        break;
-                                    case "chSound6.mp3":
-                                        playMusic(R.raw.ch_sound6);
-                                        break;
-                                    case "chSound8.mp3":
-                                        playMusic(R.raw.ch_sound8);
-                                        break;
-                                    case "chSound9.mp3":
-                                        playMusic(R.raw.ch_sound9);
-                                        break;
-                                    case "chSound10.mp3":
-                                        playMusic(R.raw.ch_sound10);
-                                        break;
-                                    case "chSound11.mp3":
-                                        playMusic(R.raw.ch_sound11);
-                                        break;
-                                    case "chSound18.mp3":
-                                        playMusic(R.raw.ch_sound18);
-                                        break;
-                                }
-
-                                Activity currentActivity = AppManager.getAppManager().currentActivity();
-                                if (currentActivity != null) {
-                                    if (!currentActivity.getClass().getSimpleName().equals(DiagnosisActivity.class.getSimpleName())) {
-                                        MyCarCaoZuoDialog_Notify myCarCaoZuoDialog_notify = new MyCarCaoZuoDialog_Notify(activity_main, new MyCarCaoZuoDialog_Notify.OnDialogItemClickListener() {
-                                            @Override
-                                            public void clickLeft() {
-                                                // player.stop();
-                                                if (player != null && player.isPlaying()) {
-                                                    player.stop();
-                                                    audioFocusManage.releaseTheAudioFocus();
-                                                }
-                                            }
-
-                                            @Override
-                                            public void clickRight() {
-                                                DiagnosisActivity.actionStart(getAppContext());
-                                            }
-                                        }
-                                        );
-
-                                        myCarCaoZuoDialog_notify.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG);
-                                        myCarCaoZuoDialog_notify.show();
-                                    }
-
-                                }
-                                return;
                             }
 
                             //大水假数据
-                        }
-
-                        if (topic.contains("zn/")) {//智能家居 主题
+                        } else if (topic.contains("zn/")) {//智能家居 主题
                             String messageData = message.toString().substring(2, message.toString().length() - 1);
-
-
-                            //     String[] arr = messageData.split("_");
 
 
                         } else if (message.toString().equals("j_s")) {
@@ -1072,43 +1005,6 @@ public class MyApplication extends MultiDexApplication {
 
     }
 
-    public MediaPlayer player;
-    public AudioFocusManager audioFocusManage;
-
-    public void playMusic(int res) {
-        if (player != null) {  //判断当mPlayer不为空的时候
-            player.reset();
-        }
-        player = MediaPlayer.create(context, res);
-        audioFocusManage = new AudioFocusManager();
-        if (audioFocusManage != null) {
-            //请求语音播放焦点
-            int requestCode = audioFocusManage.requestTheAudioFocus(new AudioFocusManager.AudioListener() {
-                @Override
-                public void start() {
-                    player.start();//播放音频的方法
-                }
-
-                @Override
-                public void pause() {
-                    player.stop();
-                    audioFocusManage.releaseTheAudioFocus();
-                }
-            });
-            if (requestCode == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-                player.start();//播放音频的方法
-            }
-            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mediaPlayer) {
-                    audioFocusManage.releaseTheAudioFocus();
-                }
-            });
-
-        }
-
-
-    }
 
     @Override
     public void onTerminate() {

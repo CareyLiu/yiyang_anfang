@@ -1,6 +1,8 @@
 package com.smarthome.magic.model;
 
-public class AlarmClass {
+import java.io.Serializable;
+
+public class AlarmClass implements Serializable {
     public String type; //1.风暖加热器 2.水暖加热器 3.汽车 4.货车防盗
 
     public String sound;//要播放音乐的名字

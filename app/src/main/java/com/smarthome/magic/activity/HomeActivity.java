@@ -1,7 +1,11 @@
 package com.smarthome.magic.activity;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.SystemClock;
 
@@ -18,9 +22,13 @@ import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.jaeger.library.StatusBarUtil;
 import com.rairmmd.andmqtt.AndMqtt;
@@ -29,13 +37,21 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.gaiban.HomeFragment_New;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.app.ConstanceValue;
+import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.RxBus;
+import com.smarthome.magic.app.UIHelper;
+import com.smarthome.magic.config.AudioFocusManager;
 import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
+import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Notify;
+import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Success;
 import com.smarthome.magic.fragment.HomeFragment;
 import com.smarthome.magic.fragment.MessagerFragment;
 import com.smarthome.magic.fragment.MineFragment;
 import com.smarthome.magic.fragment.OnlineFragment;
 import com.smarthome.magic.fragment.ZhiNengJiaJuFragment;
+import com.smarthome.magic.model.AlarmClass;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.AppToast;
 import com.smarthome.magic.view.NoScrollViewPager;
@@ -48,6 +64,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 import static com.smarthome.magic.config.MyApplication.CAR_NOTIFY;
 
@@ -65,6 +83,7 @@ public class HomeActivity extends BaseActivity {
     private boolean isExit;
 
     private SparseIntArray items;
+    AlarmClass alarmClass;
 
     @Override
     public int getContentViewResId() {
@@ -91,6 +110,150 @@ public class HomeActivity extends BaseActivity {
         initEvent();
 
         com.smarthome.magic.app.AppManager.getAppManager().addActivity(this);
+
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice notice) {
+                if (notice.type == ConstanceValue.MSG_GUZHANG_SHOUYE) {
+
+                    String message = (String) notice.content;
+                    Gson gson = new Gson();
+                    alarmClass = gson.fromJson(message.toString(), AlarmClass.class);
+                    Log.i("alarmClass", alarmClass.changjia_name + alarmClass.sell_phone);
+
+                    if (player != null) {
+                        player.stop();
+                        player.release();
+                        audioFocusManage.releaseTheAudioFocus();
+                        player = null;
+                    }
+
+
+                    switch (alarmClass.sound) {
+
+                        case "chSound1.mp3":
+                            playMusic(R.raw.ch_sound1);
+                            break;
+                        case "chSound2.mp3":
+                            playMusic(R.raw.ch_sound2);
+                            break;
+                        case "chSound3.mp3":
+                            playMusic(R.raw.ch_sound3);
+                            break;
+                        case "chSound4.mp3":
+                            playMusic(R.raw.ch_sound4);
+                            break;
+                        case "chSound5.mp3":
+                            playMusic(R.raw.ch_sound5);
+                            break;
+                        case "chSound6.mp3":
+                            playMusic(R.raw.ch_sound6);
+                            break;
+                        case "chSound8.mp3":
+                            playMusic(R.raw.ch_sound8);
+                            break;
+                        case "chSound9.mp3":
+                            playMusic(R.raw.ch_sound9);
+                            break;
+                        case "chSound10.mp3":
+                            playMusic(R.raw.ch_sound10);
+                            break;
+                        case "chSound11.mp3":
+                            playMusic(R.raw.ch_sound11);
+                            break;
+                        case "chSound18.mp3":
+                            playMusic(R.raw.ch_sound18);
+                            break;
+                    }
+                }
+            }
+        }));
+
+    }
+
+    public MediaPlayer player;
+    public AudioFocusManager audioFocusManage;
+
+    public void playMusic(int res) {
+        boolean flag = false;
+
+        Activity currentActivity = AppManager.getAppManager().currentActivity();
+        if (currentActivity != null) {
+            if (!currentActivity.getClass().getSimpleName().equals(DiagnosisActivity.class.getSimpleName())) {
+                MyCarCaoZuoDialog_Notify myCarCaoZuoDialog_notify = new MyCarCaoZuoDialog_Notify(HomeActivity.this, new MyCarCaoZuoDialog_Notify.OnDialogItemClickListener() {
+                    @Override
+                    public void clickLeft() {
+                        // player.stop();
+                        if (player != null && player.isPlaying()) {
+                            player.stop();
+                            //audioFocusManage.releaseTheAudioFocus();
+                        }
+                    }
+
+                    @Override
+                    public void clickRight() {
+                        DiagnosisActivity.actionStart(HomeActivity.this, alarmClass);
+
+                        if (player != null && player.isPlaying()) {
+                            player.stop();
+                            //audioFocusManage.releaseTheAudioFocus();
+                        }
+
+                    }
+                }
+                );
+
+                myCarCaoZuoDialog_notify.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG);
+                myCarCaoZuoDialog_notify.show();
+
+                myCarCaoZuoDialog_notify.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        if (player!=null){
+                            player.stop();
+                        }
+                    }
+                });
+
+
+            }else {
+                flag = true;
+            }
+        }
+
+        if (flag) {
+            return;
+        }
+
+        player = MediaPlayer.create(HomeActivity.this, res);
+        audioFocusManage = new AudioFocusManager();
+        if (audioFocusManage != null) {
+            //请求语音播放焦点
+            int requestCode = audioFocusManage.requestTheAudioFocus(new AudioFocusManager.AudioListener() {
+                @Override
+                public void start() {
+                    player.start();//播放音频的方法
+                }
+
+                @Override
+                public void pause() {
+                    player.stop();
+                    audioFocusManage.releaseTheAudioFocus();
+                }
+            });
+            if (requestCode == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                player.start();//播放音频的方法
+            }
+//            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//                @Override
+//                public void onCompletion(MediaPlayer mediaPlayer) {
+//                    audioFocusManage.releaseTheAudioFocus();
+//
+//
+//                }
+//            });
+
+        }
 
     }
 
@@ -244,27 +407,33 @@ public class HomeActivity extends BaseActivity {
         });
     }
 
+    private boolean flag = true;
 
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
-        if (AndMqtt.getInstance().isConneect()) {
-            //连接完成 订阅全局主题
-            AndMqtt.getInstance().publish(new MqttPublish()
-                    .setMsg("O.")
-                    .setQos(2).setRetained(false)
-                    .setTopic(CAR_NOTIFY), new IMqttActionListener() {
-                @Override
-                public void onSuccess(IMqttToken asyncActionToken) {
-                    Log.i("Rair", "(CAR_NOTIFY.java:79)-onSuccess:-&gt;发布成功");
-                }
 
-                @Override
-                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                    Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
-                }
-            });
+        if (flag) {
+            if (AndMqtt.getInstance().isConneect()) {
+                //连接完成 订阅全局主题
+                AndMqtt.getInstance().publish(new MqttPublish()
+                        .setMsg("O.")
+                        .setQos(2).setRetained(false)
+                        .setTopic(CAR_NOTIFY), new IMqttActionListener() {
+                    @Override
+                    public void onSuccess(IMqttToken asyncActionToken) {
+                        Log.i("Rair", "订阅O.成功");
+                    }
+
+                    @Override
+                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                        Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+                    }
+                });
+            }
+            flag = false;
         }
+
 
     }
 

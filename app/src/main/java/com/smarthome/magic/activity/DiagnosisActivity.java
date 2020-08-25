@@ -126,7 +126,7 @@ public class DiagnosisActivity extends BaseActivity {
     private CustomBaseDialog dialog;
     private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
     private List<ServiceModel.DataBean> list = new ArrayList<>();
-
+    AlarmClass alarmClass;
 
     @Override
     public int getContentViewResId() {
@@ -144,6 +144,18 @@ public class DiagnosisActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
+    /**
+     * 用于其他Activty跳转到该Activity
+     *
+     * @param context
+     */
+    public static void actionStart(Context context, AlarmClass alarmClass) {
+        Intent intent = new Intent(context, DiagnosisActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("alarmClass", alarmClass);
+        context.startActivity(intent);
+    }
+
     @Override
     public void initImmersion() {
         super.initImmersion();
@@ -155,21 +167,7 @@ public class DiagnosisActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-//        MyCarCaoZuoDialog_Delete dialog_delete = new MyCarCaoZuoDialog_Delete(DiagnosisActivity.this, new MyCarCaoZuoDialog_Delete.OnDialogItemClickListener() {
-//            @Override
-//            public void clickLeft() {
-//                UIHelper.ToastMessage(DiagnosisActivity.this, "left", Toast.LENGTH_SHORT);
-//            }
-//
-//            @Override
-//            public void clickRight() {
-//                UIHelper.ToastMessage(DiagnosisActivity.this, "left", Toast.LENGTH_SHORT);
-//            }
-//        });
-//
-//        dialog_delete.show();
 
-        //initHandler();
         final Animation animation = new AlphaAnimation(1, 0); // Change alpha from fully visible to invisible
         animation.setDuration(500); // duration - half a second
         animation.setInterpolator(new LinearInterpolator()); // do not alter animation rate
@@ -178,9 +176,25 @@ public class DiagnosisActivity extends BaseActivity {
         mIvIcon.setAnimation(animation);
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
-        requestData();
+        // requestData();
         requestData2();
+        alarmClass = (AlarmClass) getIntent().getSerializableExtra("alarmClass");
+        if (alarmClass != null) {
+            Log.i("alarmClass", alarmClass.changjia_name + alarmClass.sell_phone);
+            mTvTitle.setText("整机运转异常");
+            layoutInfo.setVisibility(View.VISIBLE);
+            layoutMessage.setVisibility(View.VISIBLE);
+            btnClean.setVisibility(View.VISIBLE);
+            mTvMessage.setText(alarmClass.failure_name);
+            mTvAddr.setText(alarmClass.install_addr);
+            mTvDate.setText(alarmClass.install_time);
+            mTvFactory.setText(alarmClass.changjia_name);
+            mTvPhone.setText(alarmClass.sell_phone);
+            mTvType.setText(alarmClass.xinghao);
 
+        } else {
+            requestData();
+        }
 
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
@@ -202,7 +216,7 @@ public class DiagnosisActivity extends BaseActivity {
                         mTvType.setText(alarmClass.xinghao);
 
                         //重新获取ccid
-                        CAR_CTROL = "wit/cbox/hardware/" + MyApplication.getServer_id() + alarmClass.ccid;
+//                        CAR_CTROL = "wit/cbox/hardware/" + MyApplication.getServer_id() + alarmClass.ccid;
                     } catch (Exception e) {
                         System.out.println("警报异常" + e.getMessage());
                     }
@@ -211,37 +225,37 @@ public class DiagnosisActivity extends BaseActivity {
 
                     // showDialog("是否清除故障");
 
-                    MyCarCaoZuoDialog_CaoZuoTIshi_Clear clear = new MyCarCaoZuoDialog_CaoZuoTIshi_Clear(DiagnosisActivity.this, new MyCarCaoZuoDialog_CaoZuoTIshi_Clear.OnDialogItemClickListener() {
-                        @Override
-                        public void clickLeft() {
-
-                        }
-
-                        @Override
-                        public void clickRight() {
-                            AndMqtt.getInstance().publish(new MqttPublish()
-                                    .setMsg("M691.").setRetained(false)
-                                    .setQos(2)
-                                    .setTopic(CAR_CTROL), new IMqttActionListener() {
-                                @Override
-                                public void onSuccess(IMqttToken asyncActionToken) {
-                                    Log.i("Rair", "(清除故障 --- 发布成功");
-                                    //      UIHelper.ToastMessage(DiagnosisActivity.this, "故障清除中，请稍候", Toast.LENGTH_SHORT);
-                                    // dialog.dismiss();
-                                    UIHelper.ToastMessage(DiagnosisActivity.this, "故障已清除", Toast.LENGTH_SHORT);
-                                    //获得车辆的实时数据和基本信息
-                                    finish();
-
-                                }
-
-                                @Override
-                                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                                    Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
-                                }
-                            });
-                        }
-                    });
-                    clear.show();
+//                    MyCarCaoZuoDialog_CaoZuoTIshi_Clear clear = new MyCarCaoZuoDialog_CaoZuoTIshi_Clear(DiagnosisActivity.this, new MyCarCaoZuoDialog_CaoZuoTIshi_Clear.OnDialogItemClickListener() {
+//                        @Override
+//                        public void clickLeft() {
+//
+//                        }
+//
+//                        @Override
+//                        public void clickRight() {
+//                            AndMqtt.getInstance().publish(new MqttPublish()
+//                                    .setMsg("M691.").setRetained(false)
+//                                    .setQos(2)
+//                                    .setTopic(CAR_CTROL), new IMqttActionListener() {
+//                                @Override
+//                                public void onSuccess(IMqttToken asyncActionToken) {
+//                                    Log.i("Rair", "(清除故障 --- 发布成功");
+//                                    //      UIHelper.ToastMessage(DiagnosisActivity.this, "故障清除中，请稍候", Toast.LENGTH_SHORT);
+//                                    // dialog.dismiss();
+//                                    UIHelper.ToastMessage(DiagnosisActivity.this, "故障已清除", Toast.LENGTH_SHORT);
+//                                    //获得车辆的实时数据和基本信息
+//                                    finish();
+//
+//                                }
+//
+//                                @Override
+//                                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+//                                    Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+//                                }
+//                            });
+//                        }
+//                    });
+//                    clear.show();
                 } else if (message.type == ConstanceValue.MSG_CLEARGUZHANGSUCCESS) {
                     //清除故障
 //                    dialog.setTitle("成功");
@@ -300,7 +314,7 @@ public class DiagnosisActivity extends BaseActivity {
                         } else {
 
                             //重新获取ccid
-                            CAR_CTROL = "wit/cbox/hardware/" + MyApplication.getServer_id() + response.body().data.get(0).getCcid();
+                           // CAR_CTROL = "wit/cbox/hardware/" + MyApplication.getServer_id() + response.body().data.get(0).getCcid();
                             CARBOX_GETNOW = "wit/cbox/app/" + MyApplication.getServer_id() + response.body().data.get(0).getCcid();
 
                             AndMqtt.getInstance().subscribe(new MqttSubscribe()
@@ -426,11 +440,11 @@ public class DiagnosisActivity extends BaseActivity {
                 });
                 break;
             case R.id.btn_clean:
-                    MyCarCaoZuoDialog_CaoZuoTIshi_Clear clear = new MyCarCaoZuoDialog_CaoZuoTIshi_Clear(DiagnosisActivity.this, new MyCarCaoZuoDialog_CaoZuoTIshi_Clear.OnDialogItemClickListener() {
-                        @Override
-                        public void clickLeft() {
+                MyCarCaoZuoDialog_CaoZuoTIshi_Clear clear = new MyCarCaoZuoDialog_CaoZuoTIshi_Clear(DiagnosisActivity.this, new MyCarCaoZuoDialog_CaoZuoTIshi_Clear.OnDialogItemClickListener() {
+                    @Override
+                    public void clickLeft() {
 
-                        }
+                    }
 
                     @Override
                     public void clickRight() {
@@ -444,7 +458,7 @@ public class DiagnosisActivity extends BaseActivity {
                                 //      UIHelper.ToastMessage(DiagnosisActivity.this, "故障清除中，请稍候", Toast.LENGTH_SHORT);
                                 // dialog.dismiss();
                                 UIHelper.ToastMessage(DiagnosisActivity.this, "故障已清除", Toast.LENGTH_SHORT);
-                                finish();
+
                                 //finish();
                             }
 

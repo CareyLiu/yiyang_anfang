@@ -83,4 +83,5 @@ public interface ConstanceValue {
     int MSG_SERVICE_CHAT = 0x10054;//服务跳转
 
     int MSG_RONGYUN_REVICE = 0x10055;//接收聊天消息
+    int MSG_GUZHANG_SHOUYE = 0x10056;//故障到首页
 }

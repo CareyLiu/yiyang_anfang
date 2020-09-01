@@ -131,6 +131,7 @@ public class ConsultActiviy extends ServiceBaseActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString("dianpuming", instName);
                 bundle.putString("inst_accid", of_user_accid);
+                bundle.putString("shoptype","1");
                 startConversation(mContext, conversationType, of_user_accid, instName, bundle, service_form_id);
             }
         });

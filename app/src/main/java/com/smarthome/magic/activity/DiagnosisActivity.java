@@ -434,6 +434,7 @@ public class DiagnosisActivity extends BaseActivity {
                         Bundle bundle = new Bundle();
                         bundle.putString("dianpuming", instName);
                         bundle.putString("inst_accid", targetId);
+                        bundle.putString("shoptype","1");
                         RongIM.getInstance().startConversation(mContext, conversationType, targetId, instName, bundle);
                         dialog.dismiss();
                     }
@@ -458,7 +459,10 @@ public class DiagnosisActivity extends BaseActivity {
                                 //      UIHelper.ToastMessage(DiagnosisActivity.this, "故障清除中，请稍候", Toast.LENGTH_SHORT);
                                 // dialog.dismiss();
                                 UIHelper.ToastMessage(DiagnosisActivity.this, "故障已清除", Toast.LENGTH_SHORT);
-
+                                mTvTitle.setText("整机运转正常");
+                                layoutInfo.setVisibility(View.GONE);
+                                layoutMessage.setVisibility(View.GONE);
+                                btnClean.setVisibility(View.GONE);
                                 //finish();
                             }
 

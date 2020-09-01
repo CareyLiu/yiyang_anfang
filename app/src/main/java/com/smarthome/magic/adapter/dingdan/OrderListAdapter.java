@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallDetailsActivity;
 import com.smarthome.magic.model.OrderListModel;
 
 import java.util.List;
@@ -77,8 +78,11 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListModel.DataBean, 
             case "5":
                 helper.setText(R.id.tv_yipingjia, "到店消费");
 
-                helper.setText(R.id.tv_caozuo, "查看详情");
                 helper.setText(R.id.tv_caozuo1, "申请退款");
+                helper.setVisible(R.id.tv_caozuo1, true);
+                helper.setVisible(R.id.tv_caozuo, true);
+                helper.setText(R.id.tv_caozuo, "联系卖家");
+
                 //helper.setText(R.id.tv_caozuo2, "联系买家");
                 break;
             case "6":
@@ -106,9 +110,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListModel.DataBean, 
             case "8":
             case "9":
                 helper.setText(R.id.tv_yipingjia, "退款中");
-
                 helper.setText(R.id.tv_caozuo, "申请退款");
-
                 helper.setVisible(R.id.tv_caozuo, false);
                 helper.setText(R.id.tv_caozuo1, "再次购买");
 

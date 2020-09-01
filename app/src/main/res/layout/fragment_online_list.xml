@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="车联网"
+            android:text="设备列表"
             android:textColor="#ff111111"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -28,12 +28,13 @@
 
         <ImageView
             android:id="@+id/iv_add"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
-            android:src="@mipmap/chelianwang_tianjai" />
+            android:padding="5dp"
+            android:src="@mipmap/shebei_nav_icon_add" />
 
     </RelativeLayout>
 

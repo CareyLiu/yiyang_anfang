@@ -73,6 +73,7 @@ import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.basicmvp.BaseFragment;
@@ -268,6 +269,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
     HomeZiYingAdapter homeZiYingAdapter;
     RecyclerView rlvRemen;
     HomeReMenAdapter homeReMenAdapter;
+    private ImageView iv_home_xiaoxi;
 
     @Override
     protected void initLogic() {
@@ -278,6 +280,8 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
     protected int getLayoutRes() {
         return R.layout.layout_homefragment_new;
     }
+
+    LottieAnimationView animationView;
 
     @Override
     protected void initView(View view) {
@@ -301,7 +305,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         ziYingZhiGon = view.findViewById(R.id.iv_ziying);
         reMenShangPin = view.findViewById(R.id.iv_remen);
         ivGouwuche = view.findViewById(R.id.iv_gouwuche);
-        LottieAnimationView animationView = view.findViewById(R.id.animation_view);
+        animationView = view.findViewById(R.id.animation_view);
         animationView.setAnimation("freec3_data.json");
         animationView.setImageAssetsFolder("gifs/");
         animationView.loop(true);
@@ -426,7 +430,17 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         });
         smartRefreshLayout.setEnableLoadMore(false);
         unbinder = ButterKnife.bind(this, view);
+        iv_home_xiaoxi = view.findViewById(R.id.iv_home_xiaoxi);
 
+        iv_home_xiaoxi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Notice n = new Notice();
+                n.type = ConstanceValue.MSG_GOTOXIAOXI;
+                //  n.content = message.toString();
+                RxBus.getDefault().sendRx(n);
+            }
+        });
 
 //        header = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home_header, (ViewGroup) Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), false);
 //        footer = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home_footer, (ViewGroup) getActivity().findViewById(android.R.id.content), false);
@@ -822,9 +836,11 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                         if (!response.body().data.get(0).getBuy_state().equals("1")) {
                             ivDaLiBao.setVisibility(View.GONE);
                             ll_shagnchengzhuanqu.setVisibility(View.VISIBLE);
+                            animationView.setVisibility(View.GONE);
                         } else {
                             ll_shagnchengzhuanqu.setVisibility(View.GONE);
                             ivDaLiBao.setVisibility(View.VISIBLE);
+                            animationView.setVisibility(View.VISIBLE);
                         }
 
                         RoundedCorners roundedCorners = new RoundedCorners(1);

@@ -81,7 +81,7 @@
                 android:layout_marginTop="8dp"
                 android:text="套餐详情"
                 android:textColor="#ff0b0b0b"
-                android:textSize="19sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="@+id/tv_name"
                 app:layout_constraintTop_toBottomOf="@+id/iv_image" />
@@ -108,13 +108,14 @@
                 android:layout_marginTop="24dp"
                 android:text="温馨提示"
                 android:textColor="#ff0b0b0b"
-                android:textSize="19sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="@+id/ll_taocan_details"
                 app:layout_constraintTop_toBottomOf="@+id/ll_taocan_details" />
 
 
             <LinearLayout
+
                 android:id="@+id/ll_wenxin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -130,20 +131,20 @@
                 android:layout_marginTop="14dp"
                 android:text="店家介绍"
                 android:textColor="#ff0b0b0b"
-                android:textSize="19sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="@+id/ll_wenxin"
                 app:layout_constraintTop_toBottomOf="@+id/ll_wenxin" />
 
 
             <ImageView
+
                 android:id="@+id/iv_shop_image"
                 android:layout_width="77dp"
                 android:layout_height="77dp"
                 android:layout_marginTop="12dp"
                 app:layout_constraintLeft_toLeftOf="@+id/tv_dianjia_jiashao"
-                app:layout_constraintTop_toBottomOf="@+id/tv_dianjia_jiashao"
-                tools:background="@color/blue" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_dianjia_jiashao" />
 
             <TextView
                 android:id="@+id/tv_dianjia"
@@ -172,9 +173,11 @@
 
             <TextView
                 android:id="@+id/tv_shop_addr"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:text="电缆街42号"
                 android:textColor="#ff666666"
                 android:textSize="12sp"
@@ -188,7 +191,7 @@
                 android:layout_marginTop="24dp"
                 android:text="用户评价"
                 android:textColor="#ff0b0b0b"
-                android:textSize="19sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="@+id/iv_shop_image"
                 app:layout_constraintTop_toBottomOf="@+id/iv_shop_image" />

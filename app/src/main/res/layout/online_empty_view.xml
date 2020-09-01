@@ -9,20 +9,20 @@
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/iv_none"
-            android:layout_width="221dp"
-            android:layout_height="221dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@mipmap/zhikong_car_none" />
+            android:src="@mipmap/shebeilibiao_pic_none" />
 
         <TextView
-            android:textColor="@color/black_111111"
+            android:textColor="#FF666666"
             android:textSize="16sp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/iv_none"
-            android:text="暂无车辆" />
+            android:text="暂无设备" />
 
     </RelativeLayout>
 

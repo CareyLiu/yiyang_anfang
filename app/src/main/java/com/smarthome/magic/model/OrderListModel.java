@@ -118,6 +118,7 @@ public class OrderListModel implements Serializable {
         private String disabled_cause;
         private String inst_name;
         private String total_money;
+        public String shop_type;//团购or订单
 
         public String getInstallation_type_id() {
             return installation_type_id;

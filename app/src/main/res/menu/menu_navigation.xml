@@ -15,7 +15,7 @@
     <item
         android:id="@+id/i_car_online"
         android:icon="@drawable/selector_play"
-        android:title="车联网" />
+        android:title="设备" />
     <item
         android:id="@+id/i_message"
         android:icon="@drawable/selector_message"

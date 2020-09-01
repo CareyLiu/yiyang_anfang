@@ -37,8 +37,10 @@ import com.smarthome.magic.activity.CarListActivity;
 import com.smarthome.magic.activity.DefaultX5WebViewActivity;
 import com.smarthome.magic.activity.dingdan.AccessActivity;
 import com.smarthome.magic.activity.dingdan.DaiFuKuanDingDanActivity;
+import com.smarthome.magic.activity.dingdan.DingDanShenQingTuikuanActivity;
 import com.smarthome.magic.activity.dingdan.OrderTuiKuanDetailsActivity;
 import com.smarthome.magic.activity.dingdan.ShenQingTuiKuanActivity;
+import com.smarthome.magic.activity.dingdan.TuanGouDingDanDetails;
 import com.smarthome.magic.activity.gouwuche.GouWuCheActivity;
 import com.smarthome.magic.activity.taokeshagncheng.QueRenDingDanActivity;
 import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallDetailsActivity;
@@ -73,6 +75,8 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.ButterKnife;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
@@ -279,13 +283,34 @@ public class OrderListFragment extends BaseFragment {
                 switch (view.getId()) {
 
                     case R.id.constrain:
-                        if (dataBean.getUser_pay_check().equals("8") || dataBean.getUser_pay_check().equals("9") || dataBean.getUser_pay_check().equals("10")) {
+                        /**
+                         * 订单类型：1.普通2.拼单 3.团购商品 4.非商品，直接付款
+                         */
+                        if (dataBean.getWares_type().equals("1")) {
 
-                            OrderTuiKuanDetailsActivity.actionStart(getActivity(), dataBean.getShop_form_id());
+                            if (dataBean.getUser_pay_check().equals("8") || dataBean.getUser_pay_check().equals("9") || dataBean.getUser_pay_check().equals("10")) {
 
-                        } else {
-                            DaiFuKuanDingDanActivity.actionStart(getActivity(), dataBean);
+                                OrderTuiKuanDetailsActivity.actionStart(getActivity(), dataBean.getShop_form_id());
+
+                            } else {
+                                DaiFuKuanDingDanActivity.actionStart(getActivity(), dataBean);
+                            }
+
+                        } else if (dataBean.getWares_type().equals("3")) {
+
+                            if (dataBean.getUser_pay_check().equals("8") || dataBean.getUser_pay_check().equals("9") || dataBean.getUser_pay_check().equals("10")) {
+
+                                OrderTuiKuanDetailsActivity.actionStart(getActivity(), dataBean.getShop_form_id());
+
+                            } else if (dataBean.getUser_pay_check().equals("11") || dataBean.getUser_pay_check().equals("7")) {
+                                DaiFuKuanDingDanActivity.actionStart(getActivity(), dataBean);
+
+                            } else {
+                                TuanGouDingDanDetails.actionStart(getActivity(), dataBean);
+                            }
+
                         }
+
                         break;
                     case R.id.tv_caozuo:
                         doCaoZuo(dataBean, position);
@@ -336,6 +361,16 @@ public class OrderListFragment extends BaseFragment {
                 break;
             case "5":
                 //helper.setText(R.id.tv_caozuo, "查看详情");
+                UIHelper.ToastMessage(getActivity(), "联系卖家");
+
+                Conversation.ConversationType conversationType = Conversation.ConversationType.PRIVATE;
+                String targetId = response.body().data.get(0).getInst_accid();
+                String instName = response.body().data.get(0).getInst_name();
+                Bundle bundle = new Bundle();
+                bundle.putString("dianpuming", instName);
+                bundle.putString("inst_accid", response.body().data.get(0).getInst_accid());
+                bundle.putString("shoptype","2");
+                RongIM.getInstance().startConversation(getActivity(), conversationType, targetId, instName, bundle);
 
                 break;
             case "6":
@@ -410,10 +445,12 @@ public class OrderListFragment extends BaseFragment {
                 DefaultX5WebViewActivity.actionStart(getActivity(), dataBean.getExpress_url());
                 //helper.setText(R.id.tv_caozuo1, "查看物流");
                 break;
-//            case "5":
+            case "5":
 //                helper.setText(R.id.tv_caozuo1, "申请退款");
 //
 //                break;
+                DingDanShenQingTuikuanActivity.actionStart(getActivity(), "我要退款(无需退货)", dataBean.getShop_form_id(), dataBean.getPay_money());
+                break;
             case "6":
 
                 // helper.setText(R.id.tv_caozuo1, "查看物流");
@@ -430,7 +467,16 @@ public class OrderListFragment extends BaseFragment {
             case "10":
             case "9":
                 getActivity().finish();
-                ZiJianShopMallDetailsActivity.actionStart(getActivity(), dataBean.getShop_product_id(), dataBean.getWares_id());
+                /**
+                 * 订单类型：1.普通2.拼单 3.团购商品 4.非商品，直接付款
+                 */
+                if (orderListAdapter.getData().get(position).getWares_type().equals("1")) {
+                    ZiJianShopMallDetailsActivity.actionStart(getActivity(), dataBean.getShop_product_id(), dataBean.getWares_id());
+                } else if (orderListAdapter.getData().get(position).getWares_type().equals("3")) {
+
+                }
+
+
                 // helper.setText(R.id.tv_caozuo1, "删除订单");
                 break;
 

@@ -22,6 +22,7 @@ import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.TuanGouShangPinDetailsModel;
+import com.smarthome.magic.util.GlideShowImageUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -174,10 +175,10 @@ public class TuanGouShangPinDetailsActivity extends AbTuanGouShangPinDetails {
                 llWenxin.addView(view);
             }
         }
-        Glide.with(TuanGouShangPinDetailsActivity.this).load(shopImage).into(ivShopImage);
+        Glide.with(TuanGouShangPinDetailsActivity.this).applyDefaultRequestOptions(GlideShowImageUtils.showZhengFangXing()).load(shopImage).into(ivShopImage);
         tvDianjia.setText(shopName);
         star.setRating(Float.parseFloat(shopStar));
-        tvShopAddr.setText(shopAddr);
+        tvShopAddr.setText(dataBean.getAddr());
 
         tvMoney.setText("¥" + dataBean.getShop_money_now());
         tvZuigaoMoney.setText("最高门市价¥" + dataBean.getShop_money_old());

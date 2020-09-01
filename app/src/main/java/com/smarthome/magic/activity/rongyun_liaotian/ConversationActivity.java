@@ -48,8 +48,9 @@ public class ConversationActivity extends BaseActivity {
         transaction.commit();
         String str = getIntent().getStringExtra("dianpuming");
         String inst_accid = getIntent().getStringExtra("inst_accid");
+        String shopType = getIntent().getStringExtra("shoptype");
         tv_title.setText(str);
-        getLiaoTian(mContext, inst_accid);
+        getLiaoTian(mContext, inst_accid, shopType);
 
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
@@ -118,12 +119,14 @@ public class ConversationActivity extends BaseActivity {
         });
     }
 
-    public void getLiaoTian(Context context, String inst_accid) {
+    public void getLiaoTian(Context context, String inst_accid, String shop_type) {
         Map<String, String> map = new HashMap<>();
         map.put("token", UserManager.getManager(context).getAppToken());
         map.put("code", "04187");
         map.put("key", Urls.key);
         map.put("accid", inst_accid);
+        map.put("shop_type", shop_type);
+
 
         Gson gson = new Gson();
         OkGo.<AppResponse<Object>>

@@ -142,6 +142,7 @@ public class ServiceConsultFragment extends BaseFragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("dianpuming", instName);
                 bundle.putString("inst_accid", of_user_accid);
+                bundle.putString("shoptype","1");
                 startConversation(getContext(), conversationType, of_user_accid, instName, bundle, service_form_id);
             }
         });

@@ -114,7 +114,7 @@
                 android:background="@drawable/background_radius_21_red"
                 android:gravity="center"
                 android:text="确定"
-                android:textColor="#ff333333"
+                android:textColor="@color/white"
                 android:textSize="15sp" />
 
 

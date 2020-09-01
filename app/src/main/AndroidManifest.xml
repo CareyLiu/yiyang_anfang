@@ -978,6 +978,11 @@
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
             android:theme="@android:style/Theme.Translucent" />
 
+        <activity
+            android:name=".activity.dingdan.TuanGouDingDanDetails"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="fullSensor"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
     </application>
 
 </manifest>

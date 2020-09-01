@@ -121,6 +121,61 @@ public class DingDanDetailsModel {
         private String inst_name;
         private String pay_code_state;
         private List<String> order_info_arr;
+        private List<TaocanListBean> taocan_list;
+
+        public List<TaocanListBean> getTaocan_list() {
+            return taocan_list;
+        }
+
+        public void setTaocan_list(List<TaocanListBean> taocan_list) {
+            this.taocan_list = taocan_list;
+        }
+
+        public static class TaocanListBean {
+            /**
+             * menu_detail_id : 40
+             * menu_pay : 28.00
+             * menu_text : 发文字呀
+             * menu_count : 1
+             */
+
+            private String menu_detail_id;
+            private String menu_pay;
+            private String menu_text;
+            private String menu_count;
+
+            public String getMenu_detail_id() {
+                return menu_detail_id;
+            }
+
+            public void setMenu_detail_id(String menu_detail_id) {
+                this.menu_detail_id = menu_detail_id;
+            }
+
+            public String getMenu_pay() {
+                return menu_pay;
+            }
+
+            public void setMenu_pay(String menu_pay) {
+                this.menu_pay = menu_pay;
+            }
+
+            public String getMenu_text() {
+                return menu_text;
+            }
+
+            public void setMenu_text(String menu_text) {
+                this.menu_text = menu_text;
+            }
+
+            public String getMenu_count() {
+                return menu_count;
+            }
+
+            public void setMenu_count(String menu_count) {
+                this.menu_count = menu_count;
+            }
+        }
 
         public String getShop_form_id() {
             return shop_form_id;

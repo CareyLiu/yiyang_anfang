@@ -165,6 +165,10 @@ public class HomeActivity extends BaseActivity {
                             playMusic(R.raw.ch_sound18);
                             break;
                     }
+                } else if (notice.type == ConstanceValue.MSG_GOTOXIAOXI) {
+
+
+                    mVp.setCurrentItem(3, false);
                 }
             }
         }));
@@ -173,6 +177,7 @@ public class HomeActivity extends BaseActivity {
 
     public MediaPlayer player;
     public AudioFocusManager audioFocusManage;
+    public int position;
 
     public void playMusic(int res) {
         boolean flag = false;
@@ -209,14 +214,14 @@ public class HomeActivity extends BaseActivity {
                 myCarCaoZuoDialog_notify.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        if (player!=null){
+                        if (player != null) {
                             player.stop();
                         }
                     }
                 });
 
 
-            }else {
+            } else {
                 flag = true;
             }
         }

@@ -415,6 +415,7 @@ public class ZiJianShopMallDetailsActivity extends BaseActivity implements Zijia
                 Bundle bundle = new Bundle();
                 bundle.putString("dianpuming", instName);
                 bundle.putString("inst_accid", response.body().data.get(0).getInst_accid());
+                bundle.putString("shoptype","1");
                 RongIM.getInstance().startConversation(mContext, conversationType, targetId, instName, bundle);
             }
         });
@@ -429,6 +430,7 @@ public class ZiJianShopMallDetailsActivity extends BaseActivity implements Zijia
                 Bundle bundle = new Bundle();
                 bundle.putString("dianpuming", instName);
                 bundle.putString("inst_accid", response.body().data.get(0).getInst_accid());
+                bundle.putString("shoptype","1");
                 RongIM.getInstance().startConversation(mContext, conversationType, targetId, instName, bundle);
             }
         });

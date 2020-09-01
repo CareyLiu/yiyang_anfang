@@ -122,12 +122,14 @@ public class TuanGouShengChengDingDanActivity extends AbTuanGouShengChengDingDan
 
     }
 
+
     @Override
     public int getContentViewResId() {
         return R.layout.activity_tuan_gou_sheng_cheng_ding_dan;
     }
 
     Response<AppResponse<TuanGouShengChengDingDanBean.DataBean>> response;
+
 
     @Override
     public void getNet() {

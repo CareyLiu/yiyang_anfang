@@ -36,7 +36,9 @@ public class TuanGouShangJiaListAdapter extends BaseQuickAdapter<TuanGouShangJia
         helper.setText(R.id.tv_shop_name, item.getInst_name());//店铺名
 //        helper.setText(R.id.star)
         AppCompatRatingBar appCompatRatingBar = helper.getView(R.id.star);
-        appCompatRatingBar.setRating(Float.parseFloat(item.getInst_number()));
+        if (!StringUtils.isEmpty(item.getInst_number())) {
+            appCompatRatingBar.setRating(Float.parseFloat(item.getInst_number()));
+        }
         if (!StringUtils.isEmpty(item.getValue_4_name())) {
             helper.setText(R.id.tv_zhekou, "享受" + item.getValue_4_name() + "优惠");
         } else {

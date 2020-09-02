@@ -19,6 +19,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
 import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.TuanGouShangPinDetailsModel;
@@ -177,7 +178,9 @@ public class TuanGouShangPinDetailsActivity extends AbTuanGouShangPinDetails {
         }
         Glide.with(TuanGouShangPinDetailsActivity.this).applyDefaultRequestOptions(GlideShowImageUtils.showZhengFangXing()).load(shopImage).into(ivShopImage);
         tvDianjia.setText(shopName);
-        star.setRating(Float.parseFloat(shopStar));
+        if (!StringUtils.isEmpty(shopStar)){
+            star.setRating(Float.parseFloat(shopStar));
+        }
         tvShopAddr.setText(dataBean.getAddr());
 
         tvMoney.setText("¥" + dataBean.getShop_money_now());

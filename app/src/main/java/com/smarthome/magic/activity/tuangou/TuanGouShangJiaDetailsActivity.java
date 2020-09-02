@@ -8,6 +8,7 @@ import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -156,7 +157,11 @@ public class TuanGouShangJiaDetailsActivity extends AbStracTuanGouShangJiaDetail
         storeListBean = response.body().data.get(0).getStoreList();
         //Glide.with(TuanGouShangJiaDetailsActivity.this).load(storeListBean.getInst_photo_url()).into(banner);
         tvShopName.setText(storeListBean.getInst_name());
-        ratingBar.setRating(Float.parseFloat(storeListBean.getInst_number()));
+        String inst_number = storeListBean.getInst_number();
+        if (!StringUtils.isEmpty(inst_number)){
+            ratingBar.setRating(Float.parseFloat(inst_number));
+        }
+
 
         tvRenJun.setText(storeListBean.getAverage_cost());
         tvAddr.setText(storeListBean.getAddr_all());

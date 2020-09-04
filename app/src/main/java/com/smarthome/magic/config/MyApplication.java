@@ -467,7 +467,7 @@ public class MyApplication extends MultiDexApplication {
                 AndMqtt.getInstance().init(this);
                 MqttConnect builder = new MqttConnect();
                 builder.setClientId(HardWareValue.CLIENT_ID + getUser_id())//连接服务器
-                        .setPort(9092)
+                        .setPort(9096)
                         .setAutoReconnect(true)
                         .setCleanSession(true)
                         .setKeepAlive(5)
@@ -475,7 +475,7 @@ public class MyApplication extends MultiDexApplication {
                         .setLastWill("K.", "wit/server/" + getUser_id(), 2, true)
                         .setUserName("witandroid")
                         .setUserPassword("aG678om34buysdi")
-                        .setServer("ws://mqtt.hljsdkj.com").setTimeout(1);
+                        .setServer("tcp://mqtt.hljsdkj.com").setTimeout(1);
 
                 AndMqtt.getInstance().setMessageListener(new MqttCallbackExtended() {
                     @Override

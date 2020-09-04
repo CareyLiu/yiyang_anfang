@@ -140,6 +140,7 @@
             <ImageView
                 android:id="@+id/zhen_shuinuan"
                 android:layout_width="81dp"
+                android:visibility="visible"
                 android:layout_height="81dp"
                 android:background="@mipmap/zhen_shuinuan"
                 app:layout_constraintLeft_toLeftOf="@+id/wendu_waiceng"

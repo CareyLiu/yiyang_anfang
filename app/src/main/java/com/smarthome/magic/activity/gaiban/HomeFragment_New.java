@@ -57,6 +57,7 @@ import com.smarthome.magic.activity.gouwuche.GouWuCheActivity;
 import com.smarthome.magic.activity.homepage.DaLiBaoActivity;
 import com.smarthome.magic.activity.jd_taobao_pinduoduo.TaoBao_Jd_PinDuoDuoActivity;
 import com.smarthome.magic.activity.saoma.ScanActivity;
+import com.smarthome.magic.activity.shuinuan.ShuinuanMainActivity;
 import com.smarthome.magic.activity.tuangou.TuanGouShangJiaListActivity;
 import com.smarthome.magic.activity.xin_tuanyou.TuanYouList;
 import com.smarthome.magic.activity.zijian_shangcheng.FenLeiThirdActivity;
@@ -544,8 +545,8 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                         } else if (intellectListBean.getId().equals("2")) {
                             startActivity(new Intent(getActivity(), CarListActivity.class).putExtra("type", "wind"));
                         } else if (intellectListBean.getId().equals("3")) {
-//                            UIHelper.ToastMessage(getActivity(), "开发中,敬请期待");
                             startActivity(new Intent(getActivity(), PlumbingHeaterActivity.class));
+//                            ShuinuanMainActivity.actionStart(getContext());
                         } else if (intellectListBean.getId().equals("4")) {//空调
                             startActivity(new Intent(getActivity(), AirConditionerActivity.class));
                         } else if (intellectListBean.getId().equals("5")) {//神灯控车

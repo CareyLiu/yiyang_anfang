@@ -1,6 +1,7 @@
 package com.smarthome.magic.activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -13,6 +14,7 @@ import com.jaeger.library.StatusBarUtil;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.chelianwang.ScanAddCarActivity;
 import com.smarthome.magic.activity.saoma.ScanActivity;
+import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.util.AppToast;
 
 import java.util.List;
@@ -31,9 +33,13 @@ public class BindBoxActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onCreate(Bundle savedInstanceStateundle) {
         super.onCreate(savedInstanceStateundle);
-        setContentView(R.layout.activity_bind_box);
-        StatusBarUtil.setLightMode(this);
         initView();
+    }
+
+
+    @Override
+    public int getContentViewResId() {
+        return R.layout.activity_bind_box;
     }
 
     private void initView() {
@@ -85,5 +91,37 @@ public class BindBoxActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         AppToast.makeShortToast(this, getString(R.string.get_error));
+    }
+
+    /**
+     * 用于其他Activty跳转到该Activity
+     *
+     * @param context
+     */
+    public static void actionStart(Context context) {
+        Intent intent = new Intent(context, BindBoxActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    @Override
+    protected void initToolbar() {
+        super.initToolbar();
+        tv_title.setText("绑定设备");
+        tv_title.setTextSize(17);
+        tv_title.setTextColor(getResources().getColor(R.color.black));
+        mToolbar.setNavigationIcon(R.mipmap.backbutton);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //imm.hideSoftInputFromWindow(findViewById(R.id.cl_layout).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public boolean showToolBar() {
+        return true;
     }
 }

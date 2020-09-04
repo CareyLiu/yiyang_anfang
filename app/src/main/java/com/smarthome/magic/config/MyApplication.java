@@ -67,6 +67,7 @@ import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Notify;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.AlarmClass;
+import com.smarthome.magic.util.DoMqttValue;
 import com.smarthome.magic.util.JinChengUtils;
 import com.smarthome.magic.util.SerializeUtil;
 import com.tencent.bugly.Bugly;
@@ -190,8 +191,11 @@ public class MyApplication extends MultiDexApplication {
         }
     };
 
+    DoMqttValue doMqttValue;
+
     public void onCreate() {
         super.onCreate();
+        doMqttValue = new DoMqttValue();
         context = getApplicationContext();
         initRongYun();
         initLifecycle();
@@ -208,14 +212,9 @@ public class MyApplication extends MultiDexApplication {
         strategy.setUploadProcess(processName == null || processName.equals(packageName));
 // 初始化Bugly
 
-        // CrashReport.initCrashReport(getApplicationContext());
 
         Bugly.init(getApplicationContext(), "9aef7d7467", false);
 
-
-        // startService(new Intent(context, HeaterMqttService.class));
-
-        //切换账号 重新定义功能
 
         CompositeSubscription _subscriptions = new CompositeSubscription();
         _subscriptions = RxUtils.getNewCompositeSubIfUnsubscribed(_subscriptions);
@@ -227,11 +226,6 @@ public class MyApplication extends MultiDexApplication {
                     // AndMqtt.getInstance().init(MyApplication.this);
                     if (AndMqtt.getInstance().isConneect()) {
 
-//                        try {
-//                            AndMqtt.getInstance().getMqttClient().disconnect();
-//                        } catch (MqttException e) {
-//                            e.printStackTrace();
-//                        }
                         AndMqtt.getInstance().unSubscribe(new MqttUnSubscribe().setTopic(CARBOX_JINGBAO), new IMqttActionListener() {
                             @Override
                             public void onSuccess(IMqttToken asyncActionToken) {
@@ -255,6 +249,8 @@ public class MyApplication extends MultiDexApplication {
                                 Log.i("Rair", "(MainActivity.java:98)-onFailure:-&gt;取消订阅失败");
                             }
                         });
+
+
                     }
                 } else if (message.type == ConstanceValue.MSG_CONNET_MQTT) {
 
@@ -410,42 +406,7 @@ public class MyApplication extends MultiDexApplication {
                 Log.i("rongYun", "融云连接成功");
                 PreferenceHelper.getInstance(getApplicationContext()).putString(AppConfig.RONGYUN_TOKEN, token);
 
-//                String content = "再来一次";
-//
-//                Conversation.ConversationType conversationType = Conversation.ConversationType.PRIVATE;
-//                String targetId = "jcz_sub_230";
-//
-//                TextMessage messageContent = TextMessage.obtain(content);
-//                Message message = Message.obtain(targetId, conversationType, messageContent);
-//                RongIM.getInstance().sendMessage(message, null, null, new IRongCallback.ISendMessageCallback() {
-//                    /**
-//                     * 消息发送前回调, 回调时消息已存储数据库
-//                     * @param message 已存库的消息体
-//                     */
-//                    @Override
-//                    public void onAttached(Message message) {
-//
-//                    }
-//
-//                    /**
-//                     * 消息发送成功。
-//                     * @param message 发送成功后的消息体
-//                     */
-//                    @Override
-//                    public void onSuccess(Message message) {
-//
-//                    }
-//
-//                    /**
-//                     * 消息发送失败
-//                     * @param message   发送失败的消息体
-//                     * @param errorCode 具体的错误
-//                     */
-//                    @Override
-//                    public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-//
-//                    }
-//                });
+
             }
 
             /**
@@ -485,9 +446,7 @@ public class MyApplication extends MultiDexApplication {
         return mCacheMap.remove(key);
     }
 
-
     public void setMqttConnect() {
-
         /**
          * 向客户订阅地址发送车辆时时数据 汽车盒子刚刚启动->接入互联网->订阅本身地址->自己给自己订阅的地址发送心跳,发送，自己接收到了g.说明自己和MQTT连接在线
          */
@@ -495,10 +454,8 @@ public class MyApplication extends MultiDexApplication {
         CARBOX_JINGBAO = "wit/app/" + getUser_id();
         Log.i("getInformation", "CARBOX_JINGBAO   " + CARBOX_JINGBAO);
 
-
         CARBOX_GETNOW = "wit/cbox/app/" + getServer_id() + getCcid();
         Log.i("getInformation", "CARBOX_GETNOW   " + CARBOX_GETNOW);
-
 
         CAR_NOTIFY = "wit/server/" + "01/" + getUser_id();
         Log.i("getInformation", "CAR_NOTIFY     " + CAR_NOTIFY);
@@ -510,15 +467,15 @@ public class MyApplication extends MultiDexApplication {
                 AndMqtt.getInstance().init(this);
                 MqttConnect builder = new MqttConnect();
                 builder.setClientId(HardWareValue.CLIENT_ID + getUser_id())//连接服务器
-                        .setPort(9096)
+                        .setPort(9092)
                         .setAutoReconnect(true)
                         .setCleanSession(true)
-                        .setKeepAlive(60)
+                        .setKeepAlive(5)
                         .setCleanSession(true)
                         .setLastWill("K.", "wit/server/" + getUser_id(), 2, true)
                         .setUserName("witandroid")
                         .setUserPassword("aG678om34buysdi")
-                        .setServer("tcp://mqtt.hljsdkj.com").setTimeout(1);
+                        .setServer("ws://mqtt.hljsdkj.com").setTimeout(1);
 
                 AndMqtt.getInstance().setMessageListener(new MqttCallbackExtended() {
                     @Override
@@ -530,7 +487,7 @@ public class MyApplication extends MultiDexApplication {
 
                     @Override
                     public void connectionLost(Throwable cause) {
-                        Log.i("Rair", "(MainActivity.java:34)-connectionLost:-&gt;连接丢失");
+                        Log.i("Rair", "(MainActivity.java:34)-connectionLost:-&gt;连接丢失" + cause.getMessage().toString());
                         //UIHelper.ToastMessage(context, "网络不稳定持续连接中", Toast.LENGTH_SHORT);
                         sendRx(ConstanceValue.MSG_MQTT_CONNECTLOST, "");
                     }
@@ -539,20 +496,15 @@ public class MyApplication extends MultiDexApplication {
                     public void messageArrived(String topic, MqttMessage message) throws Exception {
                         System.out.println("Rair-MqttMessage    " + "收到的消息的主题是   ： 订阅的主题：" + topic + "  收到的数据信息：  " + message.toString());
 
-
                         if (message.toString().contains("{")) {
                             //解析对象 code
-
                             Gson gson = new Gson();
-
                             CodeClass codeClass = gson.fromJson(message.toString(), CodeClass.class);
-
                             if (codeClass.code.equals("q")) {
                                 //q 是接受消息
-
                             } else if (codeClass.code.equals("o")) {
 
-
+                                //警报
                                 Notice n = new Notice();
                                 n.type = ConstanceValue.MSG_GUZHANG_SHOUYE;
                                 n.content = message.toString();
@@ -566,144 +518,10 @@ public class MyApplication extends MultiDexApplication {
                             }
 
                             //大水假数据
-                        } else if (topic.contains("zn/")) {//智能家居 主题
-                            String messageData = message.toString().substring(2, message.toString().length() - 1);
-
-
-                        } else if (message.toString().equals("j_s")) {
-                            Notice n = new Notice();
-                            n.type = ConstanceValue.MSG_SN_DATA;
-//                            n.content = message.toString();
-                            n.content = "j_s345611166666661102640265050070600017002310.";
-                            RxBus.getDefault().sendRx(n);
-                        } else if (message.toString().contains("j_s")) {
-                            Notice n = new Notice();
-                            n.type = ConstanceValue.MSG_SN_DATA;
-                            n.content = message.toString();
-                            RxBus.getDefault().sendRx(n);
-                        } else if (message.toString().contains("_")) {
-                            String messageData = message.toString().substring(2, message.toString().length() - 1);
-                            String[] arr = messageData.split("_");
-
-                            for (int i = 0; i < arr.length; i++) {
-                                if (arr[i].contains("g")) {
-                                    Notice n = new Notice();
-                                    n.type = ConstanceValue.MSG_CAR_J_G;
-                                    n.content = arr[i];
-                                    Log.i("g--n.content", n.content.toString());
-                                    RxBus.getDefault().sendRx(n);
-
-                                } else if (arr[i].contains("M")) {
-                                    Notice n = new Notice();
-                                    n.type = ConstanceValue.MSG_CAR_J_M;
-                                    n.content = arr[i];
-                                    RxBus.getDefault().sendRx(n);
-                                    Log.i("MSG_CAR_J_M", n.content.toString());
-
-                                } else if (arr[i].contains("h")) {
-                                    Notice n = new Notice();
-                                    n.type = ConstanceValue.MSG_CAR_h;
-                                    n.content = arr[i];
-                                    RxBus.getDefault().sendRx(n);
-                                    Log.i("MSG_CAR_J_M", n.content.toString());
-
-                                } else if (arr[i].contains("l")) {
-
-                                    Notice n = new Notice();
-                                    n.type = ConstanceValue.MSG_CAR_l;
-                                    n.content = arr[i];
-                                    RxBus.getDefault().sendRx(n);
-                                    Log.i("MSG_CAR_l", n.content.toString());
-
-                                } else if (arr[i].contains("m")) {
-
-                                    Notice n = new Notice();
-                                    n.type = ConstanceValue.MSG_CAR_l;
-                                    n.content = arr[i];
-                                    RxBus.getDefault().sendRx(n);
-                                    Log.i("MSG_CAR_l", n.content.toString());
-                                } else if (arr[i].contains("n")) {
-
-                                    Notice n = new Notice();
-                                    n.type = ConstanceValue.MSG_CAR_n;
-                                    n.content = arr[i];
-                                    RxBus.getDefault().sendRx(n);
-                                    Log.i("MSG_CAR_n", n.content.toString());
-                                } else if (arr[i].contains("p")) {
-
-                                    Notice n = new Notice();
-                                    n.type = ConstanceValue.MSG_CAR_p;
-                                    n.content = arr[i];
-                                    RxBus.getDefault().sendRx(n);
-                                    Log.i("MSG_CAR_p", n.content.toString());
-                                } else if (arr[i].contains("r")) {
-
-                                    Notice n = new Notice();
-                                    n.type = ConstanceValue.MSG_CAR_r;
-                                    n.content = arr[i];
-                                    RxBus.getDefault().sendRx(n);
-                                    Log.i("MSG_CAR_r", n.content.toString());
-
-                                } else if (arr[i].contains("s")) {
-
-                                    Notice n = new Notice();
-                                    n.type = ConstanceValue.MSG_CAR_s;
-                                    n.content = arr[i];
-                                    RxBus.getDefault().sendRx(n);
-                                    Log.i("MSG_CAR_s", n.content.toString());
-
-                                } else if (arr[i].contains("Z")) {
-
-                                    Notice n = new Notice();
-                                    n.type = ConstanceValue.MSG_CAR_Z;
-                                    n.content = arr[i];
-                                    RxBus.getDefault().sendRx(n);
-                                    Log.i("MSG_CAR_Z", n.content.toString());
-
-                                } else if (message.toString().contains("k")) {
-                                    Notice n = new Notice();
-                                    n.type = ConstanceValue.MSG_CAR_K;
-                                    n.content = message.toString();
-                                    RxBus.getDefault().sendRx(n);
-
-                                } else if (message.toString().contains("i")) {
-
-                                    Notice n = new Notice();
-                                    n.type = ConstanceValue.MSG_CAR_I;
-                                    n.content = message.toString();
-                                    RxBus.getDefault().sendRx(n);
-                                }
-                            }
-
-                        } else if (message.toString().equals("M691.")) { //清除故障成功
-                            Notice n = new Notice();
-                            n.type = ConstanceValue.MSG_CLEARGUZHANGSUCCESS;
-                            n.content = message.toString();
-                            RxBus.getDefault().sendRx(n);
-                        } else if (message.toString().contains("i")) {
-
-//                            Notice n = new Notice();
-//                            n.type = ConstanceValue.MSG_CAR_I;
-//                            n.content = message.toString();
-//                            RxBus.getDefault().sendRx(n);
-
-                        } else if (message.toString().equals("k5011.")) {
-                            Notice n = new Notice();
-                            n.type = ConstanceValue.MSG_CAR_HUI_FU_CHU_CHAGN;
-                            RxBus.getDefault().sendRx(n);
-
-                        } else if (message.toString().contains("h")) {//h是风油比
-                            Notice n = new Notice();
-                            n.type = ConstanceValue.MSG_CAR_FEGNYOUBI;
-                            n.content = message.toString();
-                            RxBus.getDefault().sendRx(n);
-                        } else if (message.toString().equals("M001.")) {
-                            Notice n = new Notice();
-                            n.type = ConstanceValue.MSG_CAR_J_G;
-//                            n.content = message.toString();
-                            n.content = "g0011108122015500026-02500041";
-                            RxBus.getDefault().sendRx(n);
+                        } else {
+                            doMqttValue.doValue(context, topic, message.toString());
                         }
+
                     }
 
 
@@ -775,32 +593,6 @@ public class MyApplication extends MultiDexApplication {
         AppConfig.getAppConfig(this).remove(key);
     }
 
-
-    public static String sHA1(Context context) {
-        try {
-            PackageInfo info = context.getPackageManager().getPackageInfo(
-                    context.getPackageName(), PackageManager.GET_SIGNATURES);
-            byte[] cert = info.signatures[0].toByteArray();
-            MessageDigest md = MessageDigest.getInstance("SHA1");
-            byte[] publicKey = md.digest(cert);
-            StringBuffer hexString = new StringBuffer();
-            for (int i = 0; i < publicKey.length; i++) {
-                String appendString = Integer.toHexString(0xFF & publicKey[i])
-                        .toUpperCase(Locale.US);
-                if (appendString.length() == 1)
-                    hexString.append("0");
-                hexString.append(appendString);
-                hexString.append(":");
-            }
-            String result = hexString.toString();
-            return result.substring(0, result.length() - 1);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     private void initLifecycle() {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {

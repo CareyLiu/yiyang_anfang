@@ -168,6 +168,12 @@ public class DiagnosisActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
+
+        if (!AndMqtt.getInstance().isConneect()) {
+            mTvTitle.setText("设备已离线，请检查设备");
+            return;
+        }
+
         final Animation animation = new AlphaAnimation(1, 0); // Change alpha from fully visible to invisible
         animation.setDuration(500); // duration - half a second
         animation.setInterpolator(new LinearInterpolator()); // do not alter animation rate
@@ -181,6 +187,7 @@ public class DiagnosisActivity extends BaseActivity {
         alarmClass = (AlarmClass) getIntent().getSerializableExtra("alarmClass");
         if (alarmClass != null) {
             Log.i("alarmClass", alarmClass.changjia_name + alarmClass.sell_phone);
+
             mTvTitle.setText("整机运转异常");
             layoutInfo.setVisibility(View.VISIBLE);
             layoutMessage.setVisibility(View.VISIBLE);
@@ -314,7 +321,7 @@ public class DiagnosisActivity extends BaseActivity {
                         } else {
 
                             //重新获取ccid
-                           // CAR_CTROL = "wit/cbox/hardware/" + MyApplication.getServer_id() + response.body().data.get(0).getCcid();
+                            // CAR_CTROL = "wit/cbox/hardware/" + MyApplication.getServer_id() + response.body().data.get(0).getCcid();
                             CARBOX_GETNOW = "wit/cbox/app/" + MyApplication.getServer_id() + response.body().data.get(0).getCcid();
 
                             AndMqtt.getInstance().subscribe(new MqttSubscribe()
@@ -434,7 +441,7 @@ public class DiagnosisActivity extends BaseActivity {
                         Bundle bundle = new Bundle();
                         bundle.putString("dianpuming", instName);
                         bundle.putString("inst_accid", targetId);
-                        bundle.putString("shoptype","1");
+                        bundle.putString("shoptype", "1");
                         RongIM.getInstance().startConversation(mContext, conversationType, targetId, instName, bundle);
                         dialog.dismiss();
                     }

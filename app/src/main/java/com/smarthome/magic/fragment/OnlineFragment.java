@@ -18,11 +18,14 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.BindBoxActivity;
 import com.smarthome.magic.activity.CarBrandActivity;
 import com.smarthome.magic.activity.WindHeaterActivity;
 import com.smarthome.magic.adapter.CarList1Adapter;
+import com.smarthome.magic.adapter.SheBeiListAdapter;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
@@ -30,7 +33,9 @@ import com.smarthome.magic.config.AppResponse;
 
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.TianJiaSheBeiDialog;
 import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.SheBeiModel;
 import com.smarthome.magic.model.SmartDevice_car_0364;
 import com.smarthome.magic.util.AlertUtil;
 
@@ -72,7 +77,8 @@ public class OnlineFragment extends BaseFragment implements Observer {
     LinearLayout rlMain;
     @BindView(R.id.srL_smart)
     SmartRefreshLayout srLSmart;
-
+    private SheBeiListAdapter sheBeiListAdapter;
+    private List<SheBeiModel> mDatas = new ArrayList<>();
 
     @Override
     protected void initLogic() {
@@ -88,47 +94,111 @@ public class OnlineFragment extends BaseFragment implements Observer {
     protected void initView(View view) {
         view.setClickable(true);// 防止点击穿透，底层的fragment响应上层点击触摸事件
         unbinder = ButterKnife.bind(this, view);
-        getData();
-        carListAdapter = new CarList1Adapter(carList);
+
+        sheBeiListAdapter = new SheBeiListAdapter(R.layout.item_shebei, R.layout.item_shebei_header, mDatas);
+
+//        carListAdapter = new CarList1Adapter(carList);
         mList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mList.setAdapter(carListAdapter);
-        getData();
-        carListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        mList.setAdapter(sheBeiListAdapter);
+
+        SheBeiModel sheBeiModel = new SheBeiModel(true, "风暖加热器");
+        SheBeiModel sheBeiModel1 = new SheBeiModel(false, "风暖加热器");
+        SheBeiModel sheBeiModel2 = new SheBeiModel(false, "风暖加热器");
+        SheBeiModel sheBeiModel3 = new SheBeiModel(false, "风暖加热器");
+        SheBeiModel sheBeiModel4 = new SheBeiModel(true, "水暖加热器");
+        SheBeiModel sheBeiModel5 = new SheBeiModel(false, "风暖加热器");
+        SheBeiModel sheBeiModel6 = new SheBeiModel(false, "风暖加热器");
+        SheBeiModel sheBeiModel7 = new SheBeiModel(false, "风暖加热器");
+        SheBeiModel sheBeiModel8 = new SheBeiModel(true, "驻车空调");
+        SheBeiModel sheBeiModel9 = new SheBeiModel(false, "风暖加热器");
+        SheBeiModel sheBeiModel10 = new SheBeiModel(false, "风暖加热器");
+
+        mDatas.add(sheBeiModel);
+        mDatas.add(sheBeiModel1);
+        mDatas.add(sheBeiModel2);
+        mDatas.add(sheBeiModel3);
+        mDatas.add(sheBeiModel4);
+        mDatas.add(sheBeiModel5);
+        mDatas.add(sheBeiModel6);
+        mDatas.add(sheBeiModel7);
+        mDatas.add(sheBeiModel8);
+        mDatas.add(sheBeiModel9);
+        mDatas.add(sheBeiModel10);
+
+        sheBeiListAdapter.notifyDataSetChanged();
+        sheBeiListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                PreferenceHelper.getInstance(getActivity()).putString("ccid", carList.get(position).getCcid());
-                PreferenceHelper.getInstance(getActivity()).putString("car_id", carList.get(position).getUser_car_id());
-                PreferenceHelper.getInstance(getActivity()).putString("atmos", carList.get(position).getZhu_apc());
-                PreferenceHelper.getInstance(getActivity()).putString("latitude", carList.get(position).getGaode_x());
-                PreferenceHelper.getInstance(getActivity()).putString("longitude", carList.get(position).getGaode_y());
-                PreferenceHelper.getInstance(getActivity()).putString("car_server_id", carList.get(position).getServer_id());
-                PreferenceHelper.getInstance(getActivity()).putString("car_number", carList.get(position).getPlate_number());
-                PreferenceHelper.getInstance(getActivity()).putString("name", carList.get(position).getCar_brand_name());
-
-
-                startActivity(new Intent(getActivity(), WindHeaterActivity.class));
-
-
-
-
-                CAR_CTROL = "wit/cbox/hardware/" + getServer_id() + getCcid();
-                Log.i("getInformation", "CAR_CTROL     " + CAR_CTROL);
-
-                CARBOX_GETNOW = "wit/cbox/app/" + getServer_id() + getCcid();
-                Log.i("getInformation", "CAR_CTROL     " + CARBOX_GETNOW);
-
-
-                /**
-                 * 向客户订阅地址发送车辆时时数据 汽车盒子刚刚启动->接入互联网->订阅本身地址->自己给自己订阅的地址发送心跳,发送，自己接收到了g.说明自己和MQTT连接在线
-                 */
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.constrain:
+                        UIHelper.ToastMessage(getActivity(), "点击了条目");
+                        break;
+                }
             }
         });
+
+
+        getSheBeiData();
+//        carListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                PreferenceHelper.getInstance(getActivity()).putString("ccid", carList.get(position).getCcid());
+//                PreferenceHelper.getInstance(getActivity()).putString("car_id", carList.get(position).getUser_car_id());
+//                PreferenceHelper.getInstance(getActivity()).putString("atmos", carList.get(position).getZhu_apc());
+//                PreferenceHelper.getInstance(getActivity()).putString("latitude", carList.get(position).getGaode_x());
+//                PreferenceHelper.getInstance(getActivity()).putString("longitude", carList.get(position).getGaode_y());
+//                PreferenceHelper.getInstance(getActivity()).putString("car_server_id", carList.get(position).getServer_id());
+//                PreferenceHelper.getInstance(getActivity()).putString("car_number", carList.get(position).getPlate_number());
+//                PreferenceHelper.getInstance(getActivity()).putString("name", carList.get(position).getCar_brand_name());
+//
+//
+//                startActivity(new Intent(getActivity(), WindHeaterActivity.class));
+//
+//
+//                CAR_CTROL = "wit/cbox/hardware/" + getServer_id() + getCcid();
+//                Log.i("getInformation", "CAR_CTROL     " + CAR_CTROL);
+//
+//                CARBOX_GETNOW = "wit/cbox/app/" + getServer_id() + getCcid();
+//                Log.i("getInformation", "CAR_CTROL     " + CARBOX_GETNOW);
+//
+//
+//                /**
+//                 * 向客户订阅地址发送车辆时时数据 汽车盒子刚刚启动->接入互联网->订阅本身地址->自己给自己订阅的地址发送心跳,发送，自己接收到了g.说明自己和MQTT连接在线
+//                 */
+//            }
+//        });
 
         ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CarBrandActivity.actionStart(getActivity());
+                //CarBrandActivity.actionStart(getActivity());
 
+                TianJiaSheBeiDialog tianJiaSheBeiDialog = new TianJiaSheBeiDialog(getActivity(), new TianJiaSheBeiDialog.OnDialogItemClickListener() {
+                    @Override
+                    public void clickFengNuan() {
+                        //  UIHelper.ToastMessage(getActivity(), "点击了风暖");
+                        BindBoxActivity.actionStart(getActivity());
+                    }
+
+                    @Override
+                    public void clickShuiNuan() {
+                        // UIHelper.ToastMessage(getActivity(), "点击了水暖");
+                        BindBoxActivity.actionStart(getActivity());
+                    }
+
+                    @Override
+                    public void clickKongTiao() {
+                        //UIHelper.ToastMessage(getActivity(), "点击了空调");
+                        BindBoxActivity.actionStart(getActivity());
+                    }
+
+                    @Override
+                    public void clickKongChe() {
+                        //UIHelper.ToastMessage(getActivity(), "点击了空调");
+                        BindBoxActivity.actionStart(getActivity());
+                    }
+                });
+                tianJiaSheBeiDialog.show();
             }
         });
 
@@ -148,9 +218,10 @@ public class OnlineFragment extends BaseFragment implements Observer {
         srLSmart.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                getData();
+                getSheBeiData();
             }
         });
+
 
     }
 
@@ -201,10 +272,74 @@ public class OnlineFragment extends BaseFragment implements Observer {
                         if (carList.size() == 0) {
                             View view = View.inflate(getActivity(), R.layout.online_empty_view, null);
                             carListAdapter.setHeaderView(view);
-                        }else {
+                        } else {
                             carListAdapter.removeAllHeaderView();
                         }
                         carListAdapter.notifyDataSetChanged();
+                    }
+
+
+                    @Override
+                    public void onError(Response<AppResponse<SmartDevice_car_0364.DataBean>> response) {
+                        AlertUtil.t(getActivity(), response.getException().getMessage());
+                    }
+                });
+
+//        OkHttpClient mOkHttpClient = new OkHttpClient();
+//        DataIn in = new DataIn();
+//        in.code = "03064";
+//        in.key = Urls.key;
+//        in.user_car_type = "1";
+//        in.token = UserManager.getManager(getActivity()).getAppToken();
+//        MediaType JSON = MediaType.parse("application/json;charset=utf-8");
+//        RequestBody body = RequestBody.create(JSON, new Gson().toJson(in));
+//        final Request request = new Request.Builder().url(Urls.SERVER_URL + "wit/app/user").post(body).build();
+//        Call call = mOkHttpClient.newCall(request);
+//        call.enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//                Gson gson = new Gson();
+//                SmartDevice_car_0364 bean = gson.fromJson(response.body().string(), SmartDevice_car_0364.class);
+//
+//
+//                carList.clear();
+//                carList.addAll(bean.getData());
+//
+//                getActivity().runOnUiThread(new Runnable() {
+//                    public void run() {
+//                        if (carList.size() == 0) {
+//                            View view = View.inflate(getActivity(), R.layout.online_empty_view, null);
+//                            carListAdapter.setHeaderView(view);
+//                        }
+//                        carListAdapter.notifyDataSetChanged();
+//                    }
+//                });
+//
+//            }
+//        });
+
+    }
+
+    public void getSheBeiData() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "03510");
+        map.put("key", Urls.key);
+        map.put("user_car_type", "1");
+        map.put("token", UserManager.getManager(getActivity()).getAppToken());
+        Gson gson = new Gson();
+        OkGo.<AppResponse<SmartDevice_car_0364.DataBean>>post(Urls.SERVER_URL + "wit/app/user")
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<SmartDevice_car_0364.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<SmartDevice_car_0364.DataBean>> response) {
+
+                        srLSmart.finishRefresh();
                     }
 
 

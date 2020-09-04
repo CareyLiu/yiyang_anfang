@@ -11,10 +11,14 @@ import com.rairmmd.andmqtt.MqttPublish;
 import com.smarthome.magic.R;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.config.PreferenceHelper;
+
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
+
 import java.math.BigDecimal;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -56,7 +60,10 @@ public class DeviceStateActivity extends BaseActivity {
         //查询时时数据
         //HeaterMqttService.mqttService.publish("N9.", HeaterMqttService.TOPIC_SERVER_ORDER, 2, false);
         //HeaterMqttService.handler = stateHandler;
-
+        if (!AndMqtt.getInstance().isConneect()) {
+            UIHelper.ToastMessage(DeviceStateActivity.this, "设备已离线，请检查设备后重新尝试");
+            return;
+        }
 
         String server_id = PreferenceHelper.getInstance(DeviceStateActivity.this).getString("server_id", "");
         String ccid = PreferenceHelper.getInstance(DeviceStateActivity.this).getString("ccid", "");
@@ -184,9 +191,7 @@ public class DeviceStateActivity extends BaseActivity {
     }
 
     public String noneZero(String str) {
-
         try {
-
             BigDecimal bigDecimal = new BigDecimal(str);
             if (bigDecimal.compareTo(BigDecimal.ZERO) == 0) {
                 return "0";
@@ -195,7 +200,6 @@ public class DeviceStateActivity extends BaseActivity {
         } catch (Exception e) {
 
         }
-
         int len = str.length();// 取得字符串的长度
         int index = 0;// 预定义第一个非零字符串的位置
 
@@ -208,8 +212,5 @@ public class DeviceStateActivity extends BaseActivity {
         }
         String strLast = str.substring(index, len);// 截取字符串
         return strLast;
-
     }
-
-
 }

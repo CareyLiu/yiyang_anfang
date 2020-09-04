@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -44,10 +45,18 @@ public class TianJiaSheBeiDialog extends Dialog {
         llZhuCheKongTiao = theView.findViewById(R.id.ll_zhuchekongtiao);
         llShouJiKongChe = theView.findViewById(R.id.ll_shoujikongche);
 
+        ImageView ivClose = theView.findViewById(R.id.iv_close);
+        ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+
         llFengNuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                listener.clickFengNuan();
 
             }
         });
@@ -56,19 +65,20 @@ public class TianJiaSheBeiDialog extends Dialog {
             @Override
             public void onClick(View v) {
 
+                listener.clickShuiNuan();
             }
         });
         llZhuCheKongTiao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                listener.clickKongTiao();
             }
         });
 
         llShouJiKongChe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                listener.clickKongChe();
             }
         });
         setContentView(theView);
@@ -77,11 +87,13 @@ public class TianJiaSheBeiDialog extends Dialog {
     private OnDialogItemClickListener listener;
 
     public interface OnDialogItemClickListener {
-        void butianClick();
+        void clickFengNuan();
 
-        void fenXiangClick();
+        void clickShuiNuan();
 
-        void quXiaoClick();
+        void clickKongTiao();
+
+        void clickKongChe();
     }
 
     @Override

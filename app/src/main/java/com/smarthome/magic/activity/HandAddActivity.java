@@ -40,7 +40,6 @@ import butterknife.OnClick;
 
 public class HandAddActivity extends BaseActivity implements View.OnClickListener {
 
-
     @BindView(R.id.et_number)
     EditText mEtNumber;
     @BindView(R.id.bt_submit)
@@ -62,7 +61,7 @@ public class HandAddActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void initToolbar() {
         super.initToolbar();
-        tv_title.setText("手动添加");
+        tv_title.setText("手动添加设备");
         tv_title.setTextSize(17);
         tv_title.setTextColor(getResources().getColor(R.color.black));
         mToolbar.setNavigationIcon(R.mipmap.backbutton);

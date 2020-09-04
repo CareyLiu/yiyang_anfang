@@ -151,9 +151,9 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         ButterKnife.bind(this);
         waitDialog = ProgressDialog.show(mContext, null, "网络状态不稳定,连接中···", true, true);
-
 
         initView();
         toolbar = findViewById(R.id.toolbar);
@@ -181,10 +181,13 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
         rbHeaterYbyMode.setOnLongClickListener(this);
         rbHeaterYtfMode.setOnLongClickListener(this);
         witMqttFormatService = new WitMqttFormatService();
+        for (int i =0;i<arcProgressBar.getCurrentProgerss();i++){
+            UIHelper.ToastMessage(mContext,"");
+        }
         car_server_id = PreferenceHelper.getInstance(mContext).getString("car_server_id", "");
         ccid = PreferenceHelper.getInstance(mContext).getString("ccid", "");
         of_user_id = PreferenceHelper.getInstance(mContext).getString("of_user_id", "");
-       setMqttZhiLing();
+        setMqttZhiLing();
 
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
@@ -366,23 +369,9 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                     showLoadSuccess();
                     //接收到信息
                     Log.i("msg_car_i", message.content.toString());
-
                     String message1 = message.content.toString();
-//                    ctsl = message1.substring(message1.indexOf("i") + 1, message1.indexOf("i") + 2);
-//                    jrs = message1.substring(message1.indexOf("i") + 2, message1.indexOf("i") + 3);
-//                    jqgl = message1.substring(message1.indexOf("i") + 3, message1.indexOf("i") + 4);
-//                    dfdy = message1.substring(message1.indexOf("i") + 4, message1.indexOf("i") + 5);
-//                    cgq = message1.substring(message1.indexOf("i") + 5, message1.indexOf("i") + 6);
-//                    dy = message1.substring(message1.indexOf("i") + 6, message1.indexOf("i") + 7);
                     version = message1.substring(message1.indexOf("i") + 7, message1.indexOf("i") + 11);
-                    //  Log.i("hostCanShu:", "磁铁数量:" + ctsl + " | 加热塞:" + jrs + " | 机器功率：" + jqgl + " | 大风大油：" + dfdy + " | 传感器:" + cgq + " | 电压:" + dy + " | 版本号：" + version);
 
-                    if (version != null) {
-                        if (version.equals("2019")) {
-
-
-                        }
-                    }
 
                     /**
                      *     int MSG_MQTT_CONNECTCOMPLETE = 0x10045;//连接完成
@@ -395,7 +384,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                     showLoadSuccess();
                     if (waitDialog.isShowing()) {
                         waitDialog.dismiss();
-                      //  setMqttZhiLing();
+                        //  setMqttZhiLing();
                     }
                     Log.i("rair", "complete");
 
@@ -462,6 +451,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
         for (int i = 0; i < btns.size(); i++) {
             btns.get(i).setOnLongClickListener(this);
         }
+
     }
 
     private int gearToValue(int gear) {
@@ -605,7 +595,6 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
     @Override
     protected void onResume() {
         super.onResume();
-
     }
 
     @SuppressLint("HandlerLeak")
@@ -614,15 +603,12 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case ConstantUtil.MSG_HEATER_ROGRESS_VALUE_CHANGE:
-
                         handleProgressMsg(msg);
-
                         break;
                 }
                 super.handleMessage(msg);
             }
         };
-
     }
 
     Integer myValue;
@@ -630,8 +616,6 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
     private void handleProgressMsg(Message msg) {
         Bundle b = msg.getData();
         progressValue = b.getInt("progress_value");
-
-
         //先判断到底是什么种类的，开机模式
 
         //空调 档位 水泵 预泵油  预通风
@@ -641,22 +625,14 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
          */
 
         String dangWeiValue = PreferenceHelper.getInstance(mContext).getString(STARTSHELVES, "1");
-
         if (dangWeiValue.equals("1")) {//档位相关
             Log.i("MyProgressValue", String.valueOf(progressValue));
             dangWeiMode(progressValue);
-
         } else if (dangWeiValue.equals("2")) {//档位相关
-
             Log.i("MyProgressValue", String.valueOf(progressValue));
-
             myValue = 14 + progressValue;
             Log.i("myValue", String.valueOf(myValue));
-
-
             if (myValue > 0 && myValue <= 9) {
-
-
             } else if (myValue > 9 && myValue < 20) {
 
                 String value = myValue.toString().substring(1, 2);
@@ -674,7 +650,6 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                     @Override
                     public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                         Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败" + exception.getMessage());
-
                     }
                 });
 
@@ -694,7 +669,6 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                     @Override
                     public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                         Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败" + exception.getMessage());
-
                     }
                 });
 
@@ -714,27 +688,17 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                     @Override
                     public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                         Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败" + exception.getMessage());
-
                     }
                 });
             }
-
-            //  tvYuShe_WenDu.setText("当前的预设温度为：" + myValue + "℃");
-
         } else if (dangWeiValue.equals("3")) {//关机
-
         } else if (dangWeiValue.equals("4")) {//档位相关
             dangWeiMode(progressValue);
-
         } else if (dangWeiValue.equals("6")) {//档位相关
             dangWeiMode(progressValue);
-
         } else if (dangWeiValue.equals("7")) {//档位相关
             dangWeiMode(progressValue);
-
         }
-
-
     }
 
     private void dangWeiMode(int progressValue) {
@@ -754,7 +718,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
         }
         //    HeaterMqttService.mqttService.publish("M62" + gear + ".", HeaterMqttService.TOPIC_SERVER_ORDER, 2, false);
         //String TOPIC_SERVER_ORDER = "wit/cbox/hardware/" + car_server_id + ccid;
-//同步更新 进度条进度，选中进度条之后 更新进度条
+        //同步更新 进度条进度，选中进度条之后 更新进度条
 
         AndMqtt.getInstance().publish(new MqttPublish()
                 .setMsg("M62" + gear + ".")
@@ -802,14 +766,17 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
         });
         valueAnimator.setDuration(1000);
         valueAnimator.start();
-
-
     }
-
 
     @Override
     public boolean onLongClick(View view) {
+        if (!AndMqtt.getInstance().isConneect()) {
+            UIHelper.ToastMessage(mContext, "设备已离线,请检查设备后重新尝试");
+            return true;
+        }
         switch (view.getId()) {
+
+
             case R.id.btn_heater_close:
 //                Log.d("isSub", "isSub==" + isSub);
                 if (arcProgressBar.getIsOpen()) {
@@ -886,7 +853,6 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.heater_menu_option, menu);
-
         return true;
     }
 
@@ -901,6 +867,10 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                 finish();
                 break;
             case R.id.action_settings:
+                if (!AndMqtt.getInstance().isConneect()) {
+                    UIHelper.ToastMessage(mContext, "设备已离线,暂不支持菜单功能，请检查后重新尝试");
+                    break;
+                }
                 if (drawer.isDrawerOpen(GravityCompat.END)) {
                     drawer.closeDrawers();
                 } else {
@@ -908,8 +878,6 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                 }
                 break;
         }
-
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -1124,7 +1092,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                 .setTopic(CAR_NOTIFY), new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("Rair", "(CAR_NOTIFY.java:79)-onSuccess:-&gt;发布成功"+ "k001 我是在类里面订阅的");
+                Log.i("Rair", "(CAR_NOTIFY.java:79)-onSuccess:-&gt;发布成功" + "k001 我是在类里面订阅的");
 
             }
 
@@ -1140,7 +1108,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                 .setQos(2), new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("Rair", "订阅成功 carbox_getnow:  " + CARBOX_GETNOW+" CARBOX_GETNOW 我是在类里面订阅的");
+                Log.i("Rair", "订阅成功 carbox_getnow:  " + CARBOX_GETNOW + " CARBOX_GETNOW 我是在类里面订阅的");
 
             }
 
@@ -1157,13 +1125,15 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                 .setQos(2), new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("Rair", " Rair用户订阅成功" + "wit/app/" + of_user_id+" CAR_CTROL 我是在类里面订阅的");
+                Log.i("Rair", " Rair用户订阅成功" + "wit/app/" + of_user_id + " CAR_CTROL 我是在类里面订阅的");
             }
 
             @Override
             public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                 Log.i("Rair", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
             }
+
+
         });
 
 
@@ -1174,7 +1144,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                 .setRetained(false), new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功"+" N9 我是在类里面订阅的");
+                Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功" + " N9 我是在类里面订阅的");
             }
 
             @Override
@@ -1194,7 +1164,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                 .setTopic(CAR_CTROL), new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("Rair", "(CAR_NOTIFY.java:79)-onSuccess:-&gt;发布成功"+"M512 我是在类里面订阅的");
+                Log.i("Rair", "(CAR_NOTIFY.java:79)-onSuccess:-&gt;发布成功" + "M512 我是在类里面订阅的");
 
             }
 

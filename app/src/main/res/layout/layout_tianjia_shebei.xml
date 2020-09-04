@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@drawable/white_top_7dp"
     android:orientation="vertical">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@drawable/white_radius_7dp">
+        android:layout_height="48dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -24,6 +23,7 @@
 
 
         <ImageView
+            android:id="@+id/iv_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

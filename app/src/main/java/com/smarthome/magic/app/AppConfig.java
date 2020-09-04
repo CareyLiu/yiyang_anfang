@@ -17,6 +17,8 @@ import java.util.Properties;
 @SuppressLint("NewApi")
 public class AppConfig {
 
+
+
     public static String DefaultCity = "哈尔滨市";
     public static boolean ADSTATE = true;
     public static String SCREEN = "-1";//检索预约

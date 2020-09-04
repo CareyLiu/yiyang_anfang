@@ -30,6 +30,7 @@ import com.smarthome.magic.adapter.NewsFragmentPagerAdapter;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
@@ -152,6 +153,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     }
 
     private void initMagicIndicator() {
+
         CommonNavigator commonNavigator = new CommonNavigator(getActivity());
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
             @Override

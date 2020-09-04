@@ -225,7 +225,7 @@ public class ScanAddCarActivity extends BaseActivity implements QRCodeView.Deleg
     @Override
     protected void initToolbar() {
         super.initToolbar();
-        tv_title.setText("扫一扫聚易佳收款码");
+        tv_title.setText("扫一扫添加设备");
         tv_title.setTextSize(17);
         tv_title.setTextColor(getResources().getColor(R.color.black));
         mToolbar.setNavigationIcon(R.mipmap.backbutton);

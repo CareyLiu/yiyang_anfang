@@ -10,6 +10,7 @@
     tools:context="com.smarthome.magic.activity.CarBrandActivity">
 
     <RelativeLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
@@ -47,12 +48,9 @@
 
         <RelativeLayout
             android:id="@+id/rl_scan_add"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/bg_shape_white">
+            android:layout_width="152dp"
+            android:layout_height="152dp"
+            android:background="@drawable/bg_white_8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -63,27 +61,26 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/scan" />
+                    android:src="@mipmap/tianjiashebei_icon_sao" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:text="@string/scan_add" />
+                    android:layout_marginTop="23dp"
+                    android:text="扫一扫添加"
+                    android:textColor="#ff666666"
+                    android:textSize="13sp" />
             </LinearLayout>
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rl_hand_add"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="15dp"
-            android:layout_weight="1"
-            android:background="@drawable/bg_shape_white">
+            android:layout_width="152dp"
+            android:layout_height="152dp"
+            android:layout_marginLeft="16dp"
+            android:background="@drawable/bg_white_8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -92,16 +89,18 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/hand_add" />
+                    android:src="@mipmap/tianjiashebei_icon_shuru" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_marginTop="23dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:text="@string/hand_add" />
+                    android:text="手动添加"
+                    android:textColor="#ff666666"
+                    android:textSize="13sp"
+                    />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

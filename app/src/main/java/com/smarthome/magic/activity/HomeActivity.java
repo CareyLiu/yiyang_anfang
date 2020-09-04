@@ -7,12 +7,14 @@ import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -84,6 +86,7 @@ public class HomeActivity extends BaseActivity {
 
     private SparseIntArray items;
     AlarmClass alarmClass;
+    private int i = 0;
 
     @Override
     public int getContentViewResId() {
@@ -166,18 +169,46 @@ public class HomeActivity extends BaseActivity {
                             break;
                     }
                 } else if (notice.type == ConstanceValue.MSG_GOTOXIAOXI) {
-
-
                     mVp.setCurrentItem(3, false);
+                } else if (notice.type == ConstanceValue.MSG_P) {
+                    handler.removeCallbacks(runnable);
                 }
             }
         }));
 
+
+        handler = new Handler();
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                //要做的事情
+                AndMqtt.getInstance().publish(new MqttPublish()
+                        .setMsg("O.")
+                        .setQos(2).setRetained(false)
+                        .setTopic(CAR_NOTIFY), new IMqttActionListener() {
+                    @Override
+                    public void onSuccess(IMqttToken asyncActionToken) {
+                        Log.i("Rair", "订阅O.成功");
+
+                    }
+
+                    @Override
+                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                        Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+                    }
+                });
+                handler.postDelayed(this, 5000);
+            }
+        };
+
+        handler.postDelayed(runnable, 5000);
     }
 
     public MediaPlayer player;
     public AudioFocusManager audioFocusManage;
     public int position;
+    Runnable runnable;
 
     public void playMusic(int res) {
         boolean flag = false;
@@ -413,32 +444,11 @@ public class HomeActivity extends BaseActivity {
     }
 
     private boolean flag = true;
+    Handler handler;
 
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
-
-        if (flag) {
-            if (AndMqtt.getInstance().isConneect()) {
-                //连接完成 订阅全局主题
-                AndMqtt.getInstance().publish(new MqttPublish()
-                        .setMsg("O.")
-                        .setQos(2).setRetained(false)
-                        .setTopic(CAR_NOTIFY), new IMqttActionListener() {
-                    @Override
-                    public void onSuccess(IMqttToken asyncActionToken) {
-                        Log.i("Rair", "订阅O.成功");
-                    }
-
-                    @Override
-                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                        Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
-                    }
-                });
-            }
-            flag = false;
-        }
-
 
     }
 

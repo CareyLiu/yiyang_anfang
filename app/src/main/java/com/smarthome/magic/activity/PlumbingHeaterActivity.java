@@ -42,6 +42,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 
 import com.smarthome.magic.config.PreferenceHelper;
@@ -116,9 +117,8 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
     TextView wendu2;
 
     @BindView(R.id.btn_heater_close)
-    ImageView btnHeaterClose;
-    //   @BindView(R.id.frameLayout)
-//    FrameLayout frameLayout;
+    ImageView btn_heater_close;
+
     @BindView(R.id.nav_view)
     NavigationView navView;
     @BindView(R.id.drawer_layout)
@@ -162,8 +162,8 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
         @SuppressLint("ResourceType") ColorStateList csl = getResources().getColorStateList(R.drawable.menu_item_color);
         navigationView.setItemTextColor(csl);
         initHandler();
-        //  arcProgressBar.setHandler(mHandler);
-        //   arcProgressBar.setOpen(true);
+//          arcProgressBar.setHandler(mHandler);
+//           arcProgressBar.setOpen(true);
         mZhenShuinuan = findViewById(R.id.zhen_shuinuan);
 
         //mZhenShuinuan.setPivotX(mZhenShuinuan.getWidth() / 2);
@@ -172,14 +172,14 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
 
         shuiwen1.setOnLongClickListener(this);
         wendu2.setOnLongClickListener(this);
-        btnHeaterClose.setOnClickListener(this);
+        btn_heater_close.setOnClickListener(this);
 
         registerKtMqtt();
         snedDefaultMqtt();
         getnotice();
 
 //        OkHttpClient mOkHttpClient = new OkHttpClient();
-//        DataIn in = new DataIn();
+//        DataIn in = new D ataIn();
 //        in.code = "03064";
 //        in.key = Urls.key;
 //        in.user_car_type = "1";
@@ -258,7 +258,6 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
                 Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
             }
         });
-
     }
 
     /**
@@ -283,31 +282,31 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
                     switch (state) {
                         case "0":
                             //待机中
-                            btnHeaterClose.setBackgroundResource(R.mipmap.car_open);
+                            btn_heater_close.setBackgroundResource(R.mipmap.car_open);
                             break;
                         case "1":
                             //开机中
-                            btnHeaterClose.setBackgroundResource(R.mipmap.car_open);
+                            btn_heater_close.setBackgroundResource(R.mipmap.car_open);
                             ivHeaterHost.setBackgroundResource(R.drawable.plumbing);
                             animationDrawable = (AnimationDrawable) ivHeaterHost.getBackground();
                             animationDrawable.start();
                             break;
                         case "2":
                             //加热中
-                            btnHeaterClose.setBackgroundResource(R.mipmap.car_open);
+                            btn_heater_close.setBackgroundResource(R.mipmap.car_open);
                             ivHeaterHost.setBackgroundResource(R.drawable.plumbing);
                             animationDrawable = (AnimationDrawable) ivHeaterHost.getBackground();
                             animationDrawable.start();
                             break;
                         case "3":
                             //关机中
-                            btnHeaterClose.setBackgroundResource(R.mipmap.car_close);
+                            btn_heater_close.setBackgroundResource(R.mipmap.car_close);
                             ivHeaterHost.setBackgroundResource(R.drawable.shuinuan_pic_gif_nor);
                             mZhenShuinuan.setRotation(-123);
                             break;
                         case "4":
                             //循环水
-                            btnHeaterClose.setBackgroundResource(R.mipmap.car_open);
+                            btn_heater_close.setBackgroundResource(R.mipmap.car_open);
                             ivHeaterHost.setBackgroundResource(R.drawable.plumbing);
                             animationDrawable = (AnimationDrawable) ivHeaterHost.getBackground();
                             animationDrawable.start();
@@ -402,7 +401,7 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
      * 设定80度
      */
     private void sendTemperature80() {
-        if (sn_state.equals("3")) {
+        if (StringUtils.isEmpty(sn_state)||sn_state.equals("3")) {
             Toast.makeText(context, "水暖已关机，请打开水暖发送指令", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -428,6 +427,11 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
      * 水暖加热器开关
      */
     private void ShuiNuanSwitch() {
+        if (StringUtils.isEmpty(sn_state)) {
+            AlertUtil.t(this, "服务器未开启");
+            return;
+        }
+
         int state = Integer.parseInt(sn_state);
         if (state == 1) {
             state = 3;
@@ -515,26 +519,17 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.heater_menu_option, menu);
-
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        //noinspection SimplifiableIfStatement
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
-//                moveTaskToBack(false);
-//                overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                 break;
             case R.id.action_settings:
                 if (drawer.isDrawerOpen(GravityCompat.END)) {
@@ -544,14 +539,11 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
                 }
                 break;
         }
-
-
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.nav_bluetooth:
                 //切换蓝牙模式
@@ -591,8 +583,6 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
                 //设置
                 break;
         }
-
-
         return false;
     }
 
@@ -622,10 +612,9 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
                 });
     }
 
-
     public void openMode(String temp, String gear) {
         //  arcProgressBar.setOpen(true);
-        btnHeaterClose.setBackground(getResources().getDrawable(R.drawable.bg_heater_close_btn_on));
+        btn_heater_close.setBackground(getResources().getDrawable(R.drawable.bg_heater_close_btn_on));
         //  tvWd.setText(temp);
         progressValue = Integer.parseInt(gear) * 100 / 5;
         valueAnimator = ValueAnimator.ofInt(0, progressValue);
@@ -640,9 +629,7 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
     }
 
     public void closeMode(String temp) {
-        //  arcProgressBar.setOpen(false);
-        // tvWd.setText(temp);
-        btnHeaterClose.setBackground(getResources().getDrawable(R.drawable.bg_heater_close_btn_off));
+        btn_heater_close.setBackground(getResources().getDrawable(R.drawable.bg_heater_close_btn_off));
         valueAnimator = ValueAnimator.ofInt(progressValue, 0);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -653,6 +640,4 @@ public class PlumbingHeaterActivity extends BaseActivity implements NavigationVi
         valueAnimator.setDuration(2000);
         valueAnimator.start();
     }
-
-
 }

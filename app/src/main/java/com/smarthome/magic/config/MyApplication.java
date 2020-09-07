@@ -521,12 +521,12 @@ public class MyApplication extends MultiDexApplication {
 
                         } else {
                             //大水假数据
-                            if (topic.contains("wh/hardware/")) {//从机器接收的数据
+                            if (topic.contains("wh/hardware/")) {//
                                 Notice n = new Notice();
                                 n.type = ConstanceValue.MSG_KT_DATA;
                                 n.content = message.toString();
                                 RxBus.getDefault().sendRx(n);
-                            } else if (topic.contains("wh/app")) {//自己接收自己发送的数据模拟
+                            } else if (topic.contains("wh/app")) {//
                                 Notice n = new Notice();
                                 n.type = ConstanceValue.MSG_SN_DATA;
                                 n.content = message.toString();

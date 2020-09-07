@@ -521,20 +521,8 @@ public class MyApplication extends MultiDexApplication {
                             n.type = ConstanceValue.MSG_P;
                             RxBus.getDefault().sendRx(n);
                         } else {
-                            //大水假数据
-                            if (topic.contains("wh/hardware/")) {//
-                                Notice n = new Notice();
-                                n.type = ConstanceValue.MSG_KT_DATA;
-                                n.content = message.toString();
-                                RxBus.getDefault().sendRx(n);
-                            } else if (topic.contains("wh/app")) {//
-                                Notice n = new Notice();
-                                n.type = ConstanceValue.MSG_SN_DATA;
-                                n.content = message.toString();
-                                RxBus.getDefault().sendRx(n);
-                            } else {
-                                doMqttValue.doValue(context, topic, message.toString());
-                            }
+                            doMqttValue.doValue(context, topic, message.toString());
+
                         }
                     }
 

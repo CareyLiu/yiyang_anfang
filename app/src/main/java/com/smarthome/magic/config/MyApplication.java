@@ -52,6 +52,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.aakefudan.chat.MyMessage;
 import com.smarthome.magic.aakefudan.chat.MyMessageItemProvider;
 import com.smarthome.magic.activity.DiagnosisActivity;
+import com.smarthome.magic.activity.shuinuan.ShuinuanMainActivity;
 import com.smarthome.magic.adapter.view.GlobalAdapter;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.AppManager;
@@ -517,9 +518,22 @@ public class MyApplication extends MultiDexApplication {
 
                             }
 
-                            //大水假数据
+
                         } else {
-                            doMqttValue.doValue(context, topic, message.toString());
+                            //大水假数据
+                            if (topic.contains("wh/hardware/")) {//从机器接收的数据
+                                Notice n = new Notice();
+                                n.type = ConstanceValue.MSG_KT_DATA;
+                                n.content = message.toString();
+                                RxBus.getDefault().sendRx(n);
+                            } else if (topic.contains("wh/app")) {//自己接收自己发送的数据模拟
+                                Notice n = new Notice();
+                                n.type = ConstanceValue.MSG_SN_DATA;
+                                n.content = message.toString();
+                                RxBus.getDefault().sendRx(n);
+                            } else {
+                                doMqttValue.doValue(context, topic, message.toString());
+                            }
                         }
 
                     }

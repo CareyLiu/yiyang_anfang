@@ -2,18 +2,16 @@ package com.smarthome.magic.activity.shuinuan;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CursorAdapter;
 import android.widget.LinearLayout;
-import android.widget.ThemedSpinnerAdapter;
-import android.widget.Toast;
 
+import com.gyf.barlibrary.ImmersionBar;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.AppointmentActivity;
+import com.smarthome.magic.activity.DriveinfoActivity;
 import com.smarthome.magic.activity.ServerPassWordActivity;
+import com.smarthome.magic.activity.UserInfoActivity;
 import com.smarthome.magic.app.BaseActivity;
 
 import butterknife.BindView;
@@ -22,34 +20,40 @@ import butterknife.OnClick;
 
 public class ShuinuanSetActivity extends BaseActivity {
 
-    @BindView(R.id.ll_shebeizhuangtai)
-    LinearLayout ll_shebeizhuangtai;
-    @BindView(R.id.ll_zhujicangshu)
-    LinearLayout ll_zhujicangshu;
-    @BindView(R.id.ll_fengyoubi)
-    LinearLayout ll_fengyoubi;
-    @BindView(R.id.ll_chuchangset)
-    LinearLayout ll_chuchangset;
+
+    @BindView(R.id.back)
+    LinearLayout back;
+    @BindView(R.id.item_host)
+    LinearLayout itemHost;
+    @BindView(R.id.item_ovner)
+    LinearLayout itemOvner;
+    @BindView(R.id.item_parts)
+    LinearLayout itemParts;
+    @BindView(R.id.item_ratio)
+    LinearLayout itemRatio;
+    @BindView(R.id.item_atmos)
+    LinearLayout itemAtmos;
+    @BindView(R.id.item_chuchangset)
+    LinearLayout itemChuchangset;
+    @BindView(R.id.item_dingshi)
+    LinearLayout itemDingshi;
 
     @Override
-    protected void initToolbar() {
-        super.initToolbar();
-        tv_title.setText("设置");
-        tv_title.setTextSize(17);
-        tv_title.setTextColor(getResources().getColor(R.color.black_111111));
-        mToolbar.setNavigationIcon(R.mipmap.img_back_black);
-        mToolbar.setBackgroundColor(Color.WHITE);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    public void initImmersion() {
+        mImmersionBar = ImmersionBar.with(this);
+        mImmersionBar.statusBarColor(R.color.transparent)
+                .statusBarDarkFont(false)
+                .transparentStatusBar()  //透明状态栏，不写默认透明色
+                .transparentNavigationBar()  //透明导航栏，不写默认黑色(设置此方法，fullScreen()方法自动为true)
+                .transparentBar()             //透明状态栏和导航栏，不写默认状态栏为透明色，导航栏为黑色（设置此方法，fullScreen()方法自动为true）
+                .statusBarColor(R.color.transparent)     //状态栏颜色，不写默认透明色
+                .navigationBarColor(R.color.white) //导航栏颜色，不写默认黑色
+                .barColor(R.color.transparent).init();
     }
 
     @Override
     public boolean showToolBar() {
-        return true;
+        return false;
     }
 
     @Override
@@ -70,19 +74,37 @@ public class ShuinuanSetActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.ll_shebeizhuangtai, R.id.ll_zhujicangshu, R.id.ll_fengyoubi, R.id.ll_chuchangset})
+    @OnClick({R.id.back, R.id.item_host, R.id.item_ovner, R.id.item_parts, R.id.item_ratio, R.id.item_atmos, R.id.item_chuchangset})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.ll_shebeizhuangtai:
+            case R.id.back:
+                finish();
+                break;
+            case R.id.item_host:
                 ServerPassWordActivity.actionStart(this, "host");
                 break;
-            case R.id.ll_zhujicangshu:
+            case R.id.item_ovner:
+                startActivity(new Intent(this, UserInfoActivity.class));
                 break;
-            case R.id.ll_fengyoubi:
+            case R.id.item_parts:
+                DriveinfoActivity.actionStart(this);
+                break;
+            case R.id.item_ratio:
                 ServerPassWordActivity.actionStart(this, "RatioActivity");
                 break;
-            case R.id.ll_chuchangset:
+            case R.id.item_atmos:
+                ServerPassWordActivity.actionStart(this, "AtmosActivity");
+                break;
+            case R.id.item_dingshi:
+                startActivity(new Intent(this, AppointmentActivity.class));
+                break;
+            case R.id.item_chuchangset:
+                ClickChuchang();
                 break;
         }
+    }
+
+    private void ClickChuchang() {
+
     }
 }

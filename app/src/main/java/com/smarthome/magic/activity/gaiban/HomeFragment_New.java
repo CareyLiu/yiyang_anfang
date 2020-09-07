@@ -545,8 +545,8 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                         } else if (intellectListBean.getId().equals("2")) {
                             startActivity(new Intent(getActivity(), CarListActivity.class).putExtra("type", "wind"));
                         } else if (intellectListBean.getId().equals("3")) {
-                            startActivity(new Intent(getActivity(), PlumbingHeaterActivity.class));
-//                            ShuinuanMainActivity.actionStart(getContext());
+//                            startActivity(new Intent(getActivity(), PlumbingHeaterActivity.class));
+                            ShuinuanMainActivity.actionStart(getContext());
                         } else if (intellectListBean.getId().equals("4")) {//空调
                             startActivity(new Intent(getActivity(), AirConditionerActivity.class));
                         } else if (intellectListBean.getId().equals("5")) {//神灯控车

@@ -147,16 +147,6 @@
         app:layout_constraintTop_toTopOf="@+id/iv_shuinuan_ceng" />
 
     <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="31dp"
-        android:background="@mipmap/car_open"
-        android:visibility="gone"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_shuiwen2" />
-
-    <ImageView
         android:id="@+id/btn_heater_close"
         android:layout_width="150dp"
         android:layout_height="150dp"

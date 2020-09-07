@@ -394,6 +394,20 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                         waitDialog.show();
                     }
                     Log.i("rair", "chonglian_failer");
+                } else if (message.type == ConstanceValue.MSG_K6111) {
+                    Handler handler = new Handler();
+                    Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            // TODO Auto-generated method stub
+                            //要做的事情
+                            lordingDialog.dismiss();
+                            handler.postDelayed(this, 2000);
+                        }
+                    };
+
+                    handler.postDelayed(runnable, 2000);
+                    lordingDialog.dismiss();
                 }
             }
         }));

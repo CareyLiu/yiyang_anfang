@@ -153,6 +153,11 @@ public class DoMqttValue {
 //                            n.content = message.toString();
                     n.content = "g0011108122015500026-02500041";
                     RxBus.getDefault().sendRx(n);
+                } else if (message.equals("k6111.")) {
+                    Notice n = new Notice();
+                    n.type = ConstanceValue.MSG_K6111;
+                    n.content = message.toString();
+                    RxBus.getDefault().sendRx(n);
                 }
                 break;
             case SHUINUAN:

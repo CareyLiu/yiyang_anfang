@@ -23,11 +23,14 @@ import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
 import com.rairmmd.andmqtt.MqttSubscribe;
 import com.smarthome.magic.R;
+import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.common.StringUtils;
+import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.util.AlertUtil;
+import com.smarthome.magic.util.DoMqttValue;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
@@ -114,6 +117,7 @@ public class ShuinuanMainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+        PreferenceHelper.getInstance(mContext).putString(App.CHOOSE_KONGZHI_XIANGMU, DoMqttValue.SHUINUAN);
         iv_shuinuan_zhen.setRotation(-123);
         registerKtMqtt();
         initHuidiao();
@@ -125,8 +129,10 @@ public class ShuinuanMainActivity extends BaseActivity {
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
             public void call(Notice message) {
-                String msg = message.content.toString();
-                getData(msg);
+                if (message.type == ConstanceValue.MSG_SN_DATA) {
+                    String msg = message.content.toString();
+                    getData(msg);
+                }
             }
         }));
     }

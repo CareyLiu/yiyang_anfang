@@ -48,8 +48,8 @@ public interface ConstanceValue {
 
     int MSG_PAY_SUCCESS_REFRESH_WODE = 0x10033;//支付成功刷新接口
 
-    int MSG_KT_DATA = 0x10034;//
-    int MSG_SN_DATA = 0x10035;//
+    int MSG_KT_DATA = 0x10034;//水暖加热器数据
+    int MSG_SN_DATA = 0x10035;//水暖加热器数据
     int MSG_DAILISHANG_TIXIAN = 0x10036;//提现
     int MSG_ADD_CHELIANG_SUCCESS = 0x10037;//添加车辆成功
 

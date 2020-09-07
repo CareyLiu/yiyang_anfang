@@ -522,7 +522,6 @@ public class MyApplication extends MultiDexApplication {
                             RxBus.getDefault().sendRx(n);
                         } else {
                             doMqttValue.doValue(context, topic, message.toString());
-
                         }
                     }
 

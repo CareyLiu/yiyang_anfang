@@ -131,13 +131,48 @@ public class ScanAddCarActivity extends BaseActivity implements QRCodeView.Deleg
         // mQRCodeView.startSpot();
         waitdialog.dismiss();
         if (result.length() == 24) {
-            requestData(result);
+            addSheBei(result);
         } else {
             UIHelper.ToastMessage(mContext, "您的车辆码不正确");
         }
 
 
     }
+
+    public void addSheBei(String ccid) {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "03509");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("ccid", ccid);
+
+        Gson gson = new Gson();
+        OkGo.<AppResponse<CarBrand.DataBean>>post(Urls.SERVER_URL + "wit/app/user")
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<CarBrand.DataBean>>() {
+                    @Override
+                    public void onSuccess(final Response<AppResponse<CarBrand.DataBean>> response) {
+                        UIHelper.ToastMessage(mContext, "添加成功");
+                        finish();
+//                        Notice notice = new Notice();
+//                        notice.type = ConstanceValue.MSG_ADD_CHELIANG_SUCCESS;
+//                        sendRx(notice);
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<CarBrand.DataBean>> response) {
+                        String str = response.getException().getMessage();
+                        //    Log.i("cuifahuo", str);
+                        String[] str1 = str.split("：");
+                        if (str1.length == 3) {
+                            UIHelper.ToastMessage(mContext, str1[2]);
+                        }
+
+                    }
+                });
+    }
+
 
     public void requestData(String ccid) {
         Map<String, String> map = new HashMap<>();
@@ -172,7 +207,6 @@ public class ScanAddCarActivity extends BaseActivity implements QRCodeView.Deleg
                     }
                 });
     }
-
 
     @Override
     public void onScanQRCodeOpenCameraError() {

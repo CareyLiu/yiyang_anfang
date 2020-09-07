@@ -86,4 +86,5 @@ public interface ConstanceValue {
     int MSG_GUZHANG_SHOUYE = 0x10056;//故障到首页
     int MSG_GOTOXIAOXI = 0x10057;//跳转到消息页
     int MSG_P = 0x10058;//接收到了p.
+    int MSG_ZHINENGJIAJU = 0x10059;//跳转到智能家居
 }

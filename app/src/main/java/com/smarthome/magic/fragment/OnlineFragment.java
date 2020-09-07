@@ -1,5 +1,6 @@
 package com.smarthome.magic.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
@@ -20,9 +21,11 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.BindBoxActivity;
 import com.smarthome.magic.activity.CarBrandActivity;
+import com.smarthome.magic.activity.CarListActivity;
 import com.smarthome.magic.activity.WindHeaterActivity;
 import com.smarthome.magic.adapter.CarList1Adapter;
 import com.smarthome.magic.adapter.SheBeiListAdapter;
+import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.UIHelper;
@@ -35,8 +38,10 @@ import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.TianJiaSheBeiDialog;
 import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.SheBeiLieBieListModel;
 import com.smarthome.magic.model.SheBeiModel;
 import com.smarthome.magic.model.SmartDevice_car_0364;
+import com.smarthome.magic.tools.NetworkUtils;
 import com.smarthome.magic.util.AlertUtil;
 
 import java.util.ArrayList;
@@ -101,29 +106,6 @@ public class OnlineFragment extends BaseFragment implements Observer {
         mList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mList.setAdapter(sheBeiListAdapter);
 
-        SheBeiModel sheBeiModel = new SheBeiModel(true, "风暖加热器");
-        SheBeiModel sheBeiModel1 = new SheBeiModel(false, "风暖加热器");
-        SheBeiModel sheBeiModel2 = new SheBeiModel(false, "风暖加热器");
-        SheBeiModel sheBeiModel3 = new SheBeiModel(false, "风暖加热器");
-        SheBeiModel sheBeiModel4 = new SheBeiModel(true, "水暖加热器");
-        SheBeiModel sheBeiModel5 = new SheBeiModel(false, "风暖加热器");
-        SheBeiModel sheBeiModel6 = new SheBeiModel(false, "风暖加热器");
-        SheBeiModel sheBeiModel7 = new SheBeiModel(false, "风暖加热器");
-        SheBeiModel sheBeiModel8 = new SheBeiModel(true, "驻车空调");
-        SheBeiModel sheBeiModel9 = new SheBeiModel(false, "风暖加热器");
-        SheBeiModel sheBeiModel10 = new SheBeiModel(false, "风暖加热器");
-
-        mDatas.add(sheBeiModel);
-        mDatas.add(sheBeiModel1);
-        mDatas.add(sheBeiModel2);
-        mDatas.add(sheBeiModel3);
-        mDatas.add(sheBeiModel4);
-        mDatas.add(sheBeiModel5);
-        mDatas.add(sheBeiModel6);
-        mDatas.add(sheBeiModel7);
-        mDatas.add(sheBeiModel8);
-        mDatas.add(sheBeiModel9);
-        mDatas.add(sheBeiModel10);
 
         sheBeiListAdapter.notifyDataSetChanged();
         sheBeiListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
@@ -131,7 +113,24 @@ public class OnlineFragment extends BaseFragment implements Observer {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.constrain:
-                        UIHelper.ToastMessage(getActivity(), "点击了条目");
+                        if (mDatas.get(position).device_name.contains("风暖")) {
+                            PreferenceHelper.getInstance(getActivity()).putString("ccid", mDatas.get(position).ccid);
+                            int i = mDatas.get(position).ccid.length() - 1;
+                            String str = String.valueOf(mDatas.get(position).ccid.charAt(i));
+                            Log.i("serverId", str);
+                            PreferenceHelper.getInstance(getActivity()).putString("car_server_id", str+"/");
+                            if (NetworkUtils.isConnected(getActivity())) {
+                                Activity currentActivity = AppManager.getAppManager().currentActivity();
+                                if (currentActivity != null) {
+                                    startActivity(new Intent(getActivity(), WindHeaterActivity.class));
+                                }
+                            } else {
+                                UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
+                            }
+                        } else {
+                            // UIHelper.ToastMessage(getActivity(),"getActivity");
+                        }
+
                         break;
                 }
             }
@@ -178,6 +177,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
                     public void clickFengNuan() {
                         //  UIHelper.ToastMessage(getActivity(), "点击了风暖");
                         BindBoxActivity.actionStart(getActivity());
+
                     }
 
                     @Override
@@ -322,7 +322,6 @@ public class OnlineFragment extends BaseFragment implements Observer {
 //
 //            }
 //        });
-
     }
 
     public void getSheBeiData() {
@@ -332,19 +331,45 @@ public class OnlineFragment extends BaseFragment implements Observer {
         map.put("user_car_type", "1");
         map.put("token", UserManager.getManager(getActivity()).getAppToken());
         Gson gson = new Gson();
-        OkGo.<AppResponse<SmartDevice_car_0364.DataBean>>post(Urls.SERVER_URL + "wit/app/user")
+        OkGo.<AppResponse<SheBeiLieBieListModel.DataBean>>post(Urls.SERVER_URL + "wit/app/user")
                 .tag(this)//
                 .upJson(gson.toJson(map))
-                .execute(new JsonCallback<AppResponse<SmartDevice_car_0364.DataBean>>() {
+                .execute(new JsonCallback<AppResponse<SheBeiLieBieListModel.DataBean>>() {
                     @Override
-                    public void onSuccess(Response<AppResponse<SmartDevice_car_0364.DataBean>> response) {
+                    public void onSuccess(Response<AppResponse<SheBeiLieBieListModel.DataBean>> response) {
+                        mDatas.clear();
+                        for (int i = 0; i < response.body().data.size(); i++) {
+                            SheBeiModel sheBeiModel = new SheBeiModel(true, response.body().data.get(i).getControl_device_name());
+                            // Log.i("name", response.body().data.get(i).getControl_device_name());
+                            mDatas.add(sheBeiModel);
+                            for (int j = 0; j < response.body().data.get(i).getControl_device_list().size(); j++) {
+                                // Log.i("name--shebei", response.body().data.get(i).getControl_device_list().get(j).getDevice_name());
+                                SheBeiModel sheBeiModel1 = new SheBeiModel(false, response.body().data.get(i).getControl_device_name());
+                                SheBeiLieBieListModel.DataBean.ControlDeviceListBean bean = response.body().data.get(i).getControl_device_list().get(j);
+                                sheBeiModel1.ccid = bean.getCcid();
+                                sheBeiModel1.device_img_url = bean.getDevice_img_url();
+                                sheBeiModel1.device_name = bean.getDevice_name();
+                                sheBeiModel1.validity_state = bean.getValidity_state();
+                                sheBeiModel1.validity_term = bean.getValidity_term();
+                                sheBeiModel1.validity_time = bean.getValidity_time();
+                                mDatas.add(sheBeiModel1);
+                            }
+                        }
 
+                        if (mDatas.size() == 0) {
+                            View view = View.inflate(getActivity(), R.layout.online_empty_view, null);
+                            sheBeiListAdapter.setHeaderView(view);
+                        } else {
+                            sheBeiListAdapter.removeAllHeaderView();
+                        }
+                        sheBeiListAdapter.setNewData(mDatas);
+                        sheBeiListAdapter.notifyDataSetChanged();
                         srLSmart.finishRefresh();
                     }
 
 
                     @Override
-                    public void onError(Response<AppResponse<SmartDevice_car_0364.DataBean>> response) {
+                    public void onError(Response<AppResponse<SheBeiLieBieListModel.DataBean>> response) {
                         AlertUtil.t(getActivity(), response.getException().getMessage());
                     }
                 });

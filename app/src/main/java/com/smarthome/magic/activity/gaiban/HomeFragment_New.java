@@ -50,6 +50,7 @@ import com.smarthome.magic.activity.AirConditionerActivity;
 import com.smarthome.magic.activity.CarListActivity;
 import com.smarthome.magic.activity.DefaultX5WebView_HaveNameActivity;
 import com.smarthome.magic.activity.PlumbingHeaterActivity;
+import com.smarthome.magic.activity.SheBeiLieBiaoActivity;
 import com.smarthome.magic.activity.TuanYouWebView;
 import com.smarthome.magic.activity.WebViewActivity;
 import com.smarthome.magic.activity.fenxiang_tuisong.HuoDongTanCengActivity;
@@ -541,14 +542,25 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                          */
                         Home.DataBean.IntellectListBean intellectListBean = (Home.DataBean.IntellectListBean) adapter.getData().get(position);
                         if (intellectListBean.getId().equals("1")) {
-                            UIHelper.ToastMessage(getActivity(), "开发中,敬请期待");
+                            //UIHelper.ToastMessage(getActivity(), "开发中,敬请期待");
+                            Notice n = new Notice();
+                            n.type = ConstanceValue.MSG_ZHINENGJIAJU;
+                            RxBus.getDefault().sendRx(n);
                         } else if (intellectListBean.getId().equals("2")) {
+
+                            SheBeiLieBiaoActivity.actionStart(getActivity(),intellectListBean.device_type);
                             startActivity(new Intent(getActivity(), CarListActivity.class).putExtra("type", "wind"));
+
                         } else if (intellectListBean.getId().equals("3")) {
+                            SheBeiLieBiaoActivity.actionStart(getActivity(),intellectListBean.device_type);
+
+                            //startActivity(new Intent(getActivity(), PlumbingHeaterActivity.class));
+//                            ShuinuanMainActivity.actionStart(getContext());
 //                            startActivity(new Intent(getActivity(), PlumbingHeaterActivity.class));
                             ShuinuanMainActivity.actionStart(getContext());
                         } else if (intellectListBean.getId().equals("4")) {//空调
-                            startActivity(new Intent(getActivity(), AirConditionerActivity.class));
+                            SheBeiLieBiaoActivity.actionStart(getActivity(),intellectListBean.device_type);
+                           // startActivity(new Intent(getActivity(), AirConditionerActivity.class));
                         } else if (intellectListBean.getId().equals("5")) {//神灯控车
                             UIHelper.ToastMessage(getActivity(), "开发中,敬请期待");
                         }

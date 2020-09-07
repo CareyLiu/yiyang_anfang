@@ -172,6 +172,8 @@ public class HomeActivity extends BaseActivity {
                     mVp.setCurrentItem(3, false);
                 } else if (notice.type == ConstanceValue.MSG_P) {
                     handler.removeCallbacks(runnable);
+                } else if (notice.type == ConstanceValue.MSG_ZHINENGJIAJU) {
+                    mVp.setCurrentItem(1, false);
                 }
             }
         }));

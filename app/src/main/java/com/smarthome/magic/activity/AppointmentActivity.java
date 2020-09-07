@@ -1,4 +1,4 @@
-    package com.smarthome.magic.activity;
+package com.smarthome.magic.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -57,11 +57,9 @@ public class AppointmentActivity extends BaseActivity {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
                 // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
-
             }
         })
                 .setLayoutRes(R.layout.pickerview_custom_time, new CustomListener() {
-
                     @Override
                     public void customLayout(View v) {
 
@@ -121,5 +119,10 @@ public class AppointmentActivity extends BaseActivity {
                 break;
 
         }
+    }
+
+    //设置定时
+    public void setDingShi() {
+
     }
 }

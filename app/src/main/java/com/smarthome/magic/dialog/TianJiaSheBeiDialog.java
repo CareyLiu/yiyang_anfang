@@ -57,7 +57,7 @@ public class TianJiaSheBeiDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 listener.clickFengNuan();
-
+dismiss();
             }
         });
 
@@ -66,12 +66,14 @@ public class TianJiaSheBeiDialog extends Dialog {
             public void onClick(View v) {
 
                 listener.clickShuiNuan();
+                dismiss();
             }
         });
         llZhuCheKongTiao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.clickKongTiao();
+                dismiss();
             }
         });
 
@@ -79,6 +81,7 @@ public class TianJiaSheBeiDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 listener.clickKongChe();
+                dismiss();
             }
         });
         setContentView(theView);

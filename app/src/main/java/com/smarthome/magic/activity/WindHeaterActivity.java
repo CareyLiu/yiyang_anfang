@@ -2,28 +2,18 @@ package com.smarthome.magic.activity;
 
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-
-import androidx.annotation.RequiresApi;
-
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.widget.Toolbar;
-
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -31,7 +21,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.percentlayout.widget.PercentRelativeLayout;
+
 import com.bumptech.glide.Glide;
+import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -40,27 +36,21 @@ import com.rairmmd.andmqtt.MqttPublish;
 import com.rairmmd.andmqtt.MqttSubscribe;
 import com.rairmmd.andmqtt.MqttUnSubscribe;
 import com.smarthome.magic.R;
-import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.BaseActivity;
-import com.smarthome.magic.app.ConfigValue;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
-
-import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.LordingDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.CarDetails;
-import com.smarthome.magic.model.HostModel;
-import com.smarthome.magic.model.SerializableMap;
-import com.smarthome.magic.service.HeaterMqttService;
 import com.smarthome.magic.service.WitMqttFormatService;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.ConstantUtil;
-import com.smarthome.magic.util.DialogManager;
+import com.smarthome.magic.util.DoMqttValue;
 import com.smarthome.magic.view.ArcProgressBar;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -96,10 +86,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
     public static Handler stateHandler;
     @BindView(R.id.iv_heater_host)
     RelativeLayout ivHeaterHost;
-    @BindView(R.id.iv_heater_impeller)
-    ImageView ivHeaterImpeller;
-    @BindView(R.id.iv_heater_fire)
-    ImageView ivHeaterFire;
+
 
     @BindView(R.id.arcProgressBar)
     ArcProgressBar arcProgressBar;
@@ -109,6 +96,18 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
     TextView mToolbarTitle;
     @BindView(R.id.tv_wd)
     TextView mTvWd;
+    @BindView(R.id.iv_guanji)
+    ImageView ivGuanji;
+    @BindView(R.id.iv_kaiji)
+    ImageView ivKaiji;
+    @BindView(R.id.pl_temperature)
+    PercentRelativeLayout plTemperature;
+    @BindView(R.id.frameLayout)
+    FrameLayout frameLayout;
+    @BindView(R.id.nav_view)
+    NavigationView navView;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
     private int progressValue;
     DrawerLayout drawer;
     WitMqttFormatService witMqttFormatService;
@@ -141,6 +140,8 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
     Toolbar toolbar;
     String version;
 
+    private LordingDialog lordingDialog;
+
     @Override
     public int getContentViewResId() {
         return R.layout.activity_wind_heater;
@@ -151,10 +152,11 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PreferenceHelper.getInstance(mContext).putString(DoMqttValue.FENGNUAN, DoMqttValue.FENGNUAN);
 
         ButterKnife.bind(this);
         waitDialog = ProgressDialog.show(mContext, null, "网络状态不稳定,连接中···", true, true);
-
+        lordingDialog = new LordingDialog(mContext);
         initView();
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -170,8 +172,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
         tvBrandName = navigationView.getHeaderView(0).findViewById(R.id.tv_brand_name);
         tvCarNumber = navigationView.getHeaderView(0).findViewById(R.id.tv_car_number);
         mToolbarTitle.setText("风暖加热器");
-        ivHeaterFire.setVisibility(View.GONE);
-        ivHeaterImpeller.setVisibility(View.GONE);
+
         initHandler();
         arcProgressBar.setHandler(mHandler);
         btnHeaterClose.setOnLongClickListener(this);
@@ -181,9 +182,6 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
         rbHeaterYbyMode.setOnLongClickListener(this);
         rbHeaterYtfMode.setOnLongClickListener(this);
         witMqttFormatService = new WitMqttFormatService();
-        for (int i =0;i<arcProgressBar.getCurrentProgerss();i++){
-            UIHelper.ToastMessage(mContext,"");
-        }
         car_server_id = PreferenceHelper.getInstance(mContext).getString("car_server_id", "");
         ccid = PreferenceHelper.getInstance(mContext).getString("ccid", "");
         of_user_id = PreferenceHelper.getInstance(mContext).getString("of_user_id", "");
@@ -257,24 +255,6 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                             openMode(Integer.parseInt(oper_dang));
                             switchModel(rbHeaterGearMode, 1);
                             button = rbHeaterGearMode;
-                            //档位开机
-//                            if (oper_dang.equals("1")) {
-//                                // handleProgressMsg(message1);
-//                                openMode(Integer.parseInt(oper_dang));
-//                            } else if (oper_dang.equals("2")) {
-//                                // handleProgressMsg(message1);
-//                                openMode(Integer.parseInt(oper_dang));
-//                            } else if (oper_dang.equals("3")) {
-//                                //handleProgressMsg(message1);
-//                                openMode(Integer.parseInt(oper_dang));
-//                            } else if (oper_dang.equals("4")) {
-//
-//                                //handleProgressMsg(message1);
-//                                openMode(Integer.parseInt(oper_dang));
-//                            } else if (oper_dang.equals("5")) {
-//                                //  handleProgressMsg(message1);
-//                                openMode(Integer.parseInt(oper_dang));
-//                            }
 
                             if (oper_dang != null) {
                                 openMode(Integer.parseInt(oper_dang));
@@ -417,28 +397,15 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                 }
             }
         }));
+        Glide.with(mContext).asGif().load(R.drawable.fengnuan_kaiji).into(ivKaiji);
+
+        ivKaiji.setVisibility(View.GONE);
+        ivGuanji.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void initImmersion() {
         mImmersionBar.with(this).titleBar(toolbar).init();
-    }
-
-    /**
-     * 将一个整形化为十六进制，并以字符串的形式返回
-     */
-    private final static String[] hexArray = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
-
-    public String byteToHex(int n) {
-        if (n < 0) {
-            n = n + 256;
-        }
-        int d1 = n / 16;
-        int d2 = n % 16;
-
-        Log.i("windheter1", String.valueOf(d1));
-        Log.i("windheter2", String.valueOf(d2));
-        return hexArray[d1] + hexArray[d2];
     }
 
     public void initView() {
@@ -573,7 +540,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                 });
 
             } else {
-                AlertUtil.t(WindHeaterActivity.this, "请先关机，再切换模式");
+                //AlertUtil.t(WindHeaterActivity.this, "请先关机，再切换模式");
             }
         }
     }
@@ -775,13 +742,9 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
             return true;
         }
         switch (view.getId()) {
-
-
             case R.id.btn_heater_close:
 //                Log.d("isSub", "isSub==" + isSub);
                 if (arcProgressBar.getIsOpen()) {
-                    //关机
-                    //HeaterMqttService.mqttService.publish("M613.", CAR_CTROL, 2, false);
                     AndMqtt.getInstance().publish(new MqttPublish()
                             .setMsg("M613.")
                             .setQos(2).setRetained(false)
@@ -790,16 +753,15 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                         public void onSuccess(IMqttToken asyncActionToken) {
                             Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
                             UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
-                            showLoading();
+
                         }
 
                         @Override
                         public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                             Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
-                            UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送失败", Toast.LENGTH_SHORT);
+                            UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送失败，请检查是否连接网络", Toast.LENGTH_SHORT);
                         }
                     });
-
                 } else {
                     //开机
                     //根据用户选择的模式开机
@@ -814,8 +776,9 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                         @Override
                         public void onSuccess(IMqttToken asyncActionToken) {
                             Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
-                            UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
-                            showLoading();
+                            //UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
+                            lordingDialog.setTextMsg("正在开机中请稍后");
+                            lordingDialog.show();
                         }
 
                         @Override
@@ -960,19 +923,13 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
 
     public void openKongTiaoMode(int value) {
         arcProgressBar.setOpen(true);
-        ivHeaterFire.setVisibility(View.VISIBLE);
-        ivHeaterImpeller.setVisibility(View.VISIBLE);
+
+        //加载gif图 -- 开火了
+
+        ivKaiji.setVisibility(View.VISIBLE);
+        ivGuanji.setVisibility(View.GONE);
         //    btnHeaterClose.setBackground(getResources().getDrawable(R.drawable.bg_heater_close_btn_on));
         btnHeaterClose.setSelected(true);
-
-        //    myValue = (progressValue * 17) / 100 + 15;
-
-
-//        progressValue = ((value - 15) * 100) / 18;
-//        if (progressValue > 100) {
-//            progressValue = 100;
-//        }
-
 
         if (value > 32) {
             value = 32;
@@ -997,18 +954,16 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
 
     public void openMode(int value) {
         arcProgressBar.setOpen(true);
-        ivHeaterFire.setVisibility(View.VISIBLE);
-        ivHeaterImpeller.setVisibility(View.VISIBLE);
+
+        //加载gif  -- 开关可见
+
+
+        ivKaiji.setVisibility(View.VISIBLE);
+        ivGuanji.setVisibility(View.GONE);
+
         //    btnHeaterClose.setBackground(getResources().getDrawable(R.drawable.bg_heater_close_btn_on));
         btnHeaterClose.setSelected(true);
 
-        //    myValue = (progressValue * 17) / 100 + 15;
-
-
-//        progressValue = ((value - 15) * 100) / 18;
-//        if (progressValue > 100) {
-//            progressValue = 100;
-//        }
 
         int dangValue = 3;
 
@@ -1044,8 +999,12 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
 
     public void closeMode(int value) {
         arcProgressBar.setOpen(false);
-        ivHeaterFire.setVisibility(View.GONE);
-        ivHeaterImpeller.setVisibility(View.GONE);
+
+        // 展示图片 不是gif
+
+
+        ivKaiji.setVisibility(View.GONE);
+        ivGuanji.setVisibility(View.VISIBLE);
         //   btnHeaterClose.setBackground(getResources().getDrawable(R.drawable.bg_heater_close_btn_off));
         btnHeaterClose.setSelected(false);
         valueAnimator = ValueAnimator.ofInt(arcProgressBar.getCurrentProgerss(), value);
@@ -1154,8 +1113,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
         });
 
         //查询车辆详情数据
-        requestData();
-
+        // requestData();
 
         // HeaterMqttService.mqttService.publish("M512.", HeaterMqttService.TOPIC_SERVER_ORDER, 2, false);
         AndMqtt.getInstance().publish(new MqttPublish()
@@ -1165,7 +1123,6 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
                 Log.i("Rair", "(CAR_NOTIFY.java:79)-onSuccess:-&gt;发布成功" + "M512 我是在类里面订阅的");
-
             }
 
             @Override

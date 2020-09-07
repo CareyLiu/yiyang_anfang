@@ -62,56 +62,34 @@
                     android:layout_height="match_parent"
                     android:fitsSystemWindows="true">
 
-                    <androidx.percentlayout.widget.PercentRelativeLayout
-                        android:id="@+id/top_layout"
+                    <RelativeLayout
+                        android:id="@+id/iv_heater_host"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        app:layout_heightPercent="25%">
+                        android:layout_height="wrap_content">
 
-                        <androidx.percentlayout.widget.PercentRelativeLayout
-                            android:id="@+id/fl_host"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true">
+                        <ImageView
 
-                            <RelativeLayout
-                                android:id="@+id/iv_heater_host"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="false"
-                                android:layout_alignParentLeft="false"
-                                android:layout_alignParentTop="false"
-                                android:background="@drawable/iv_heater_normal">
+                            android:id="@+id/iv_guanji"
+                            android:layout_width="150dp"
+                            android:layout_height="112dp"
+                            android:layout_centerHorizontal="true"
+                            android:src="@mipmap/fegnnuan_guanji" />
 
-                                <ImageView
-                                    android:id="@+id/iv_heater_fire"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="false"
-                                    android:layout_alignParentRight="false"
-                                    android:layout_alignParentBottom="false"
-                                    android:layout_marginLeft="85dp"
-                                    android:layout_marginTop="15dp"
-                                    android:background="@drawable/tween_heeater_fire_8" />
+                        <ImageView
+                            android:id="@+id/iv_kaiji"
+                            android:layout_width="150dp"
+                            android:layout_height="112dp"
+                            android:layout_centerHorizontal="true" />
 
-                                <ImageView
-                                    android:id="@+id/iv_heater_impeller"
-                                    android:layout_width="28dp"
-                                    android:layout_height="42dp"
-                                    android:layout_centerVertical="false"
-                                    android:layout_marginTop="20dp"
-                                    android:background="@drawable/anim_heater_impeller_rotating" />
-                            </RelativeLayout>
+                    </RelativeLayout>
 
-                        </androidx.percentlayout.widget.PercentRelativeLayout>
-                    </androidx.percentlayout.widget.PercentRelativeLayout>
 
                     <androidx.percentlayout.widget.PercentRelativeLayout
                         android:id="@+id/pl_temperature"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_below="@+id/top_layout"
-                        app:layout_heightPercent="35%">
+                        android:layout_below="@+id/iv_heater_host"
+                        app:layout_heightPercent="45%">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -127,12 +105,14 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/text_heater_set_temperature"
                                 android:textColor="@color/white"
-                                android:textSize="15sp" />
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
 
                             <RadioGroup
                                 android:id="@+id/rg_magnet"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
                                 android:layout_marginEnd="10dp"
                                 android:layout_marginRight="10dp"
                                 android:gravity="center"
@@ -142,61 +122,61 @@
                                     android:id="@+id/rb_heater_air_mode"
                                     android:layout_width="match_parent"
                                     android:layout_height="30dp"
-                                    android:layout_marginTop="15dp"
-                                    android:layout_weight="1"
+                                    android:layout_marginTop="7dp"
                                     android:background="@drawable/select_model"
                                     android:button="@null"
                                     android:gravity="center"
                                     android:text="空调模式"
-                                    android:textColor="@color/white" />
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp" />
 
                                 <RadioButton
                                     android:id="@+id/rb_heater_gear_mode"
                                     android:layout_width="match_parent"
                                     android:layout_height="30dp"
-                                    android:layout_marginTop="15dp"
-                                    android:layout_weight="1"
+                                    android:layout_marginTop="7dp"
                                     android:background="@drawable/select_model"
                                     android:button="@null"
                                     android:gravity="center"
                                     android:text="档位模式"
-                                    android:textColor="@color/white" />
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp" />
 
                                 <RadioButton
                                     android:id="@+id/rb_heater_pump_mode"
                                     android:layout_width="match_parent"
                                     android:layout_height="30dp"
-                                    android:layout_marginTop="15dp"
-                                    android:layout_weight="1"
+                                    android:layout_marginTop="7dp"
                                     android:background="@drawable/select_model"
                                     android:button="@null"
                                     android:gravity="center"
                                     android:text="水泵模式"
-                                    android:textColor="@color/white" />
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp" />
 
                                 <RadioButton
                                     android:id="@+id/rb_heater_yby_mode"
                                     android:layout_width="match_parent"
                                     android:layout_height="30dp"
-                                    android:layout_marginTop="15dp"
-                                    android:layout_weight="1"
+                                    android:layout_marginTop="7dp"
                                     android:background="@drawable/select_model"
                                     android:button="@null"
                                     android:gravity="center"
                                     android:text="预泵油"
-                                    android:textColor="@color/white" />
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp" />
 
                                 <RadioButton
                                     android:id="@+id/rb_heater_ytf_mode"
                                     android:layout_width="match_parent"
                                     android:layout_height="30dp"
-                                    android:layout_marginTop="15dp"
-                                    android:layout_weight="1"
+                                    android:layout_marginTop="7dp"
                                     android:background="@drawable/select_model"
                                     android:button="@null"
                                     android:gravity="center"
                                     android:text="预通风"
-                                    android:textColor="@color/white" />
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp" />
 
                             </RadioGroup>
 

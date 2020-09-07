@@ -519,11 +519,13 @@
     <color name="E21838">#E21838</color>
     <color name="color_loading_status">#ffffff</color>
     <color name="color_FFFC0100">#FFFC0100</color>
-
+    <color name="gray_999999">#999999</color>
 
     <!--  八紫主颜色  -->
     <color name="bazi_main">#6666CC</color>
 
     <!--  客户端主颜色  -->
     <color name="text_red">#FC0100</color>
+
+
 </resources>

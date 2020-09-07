@@ -471,7 +471,7 @@ public class MyApplication extends MultiDexApplication {
                         .setPort(9096)
                         .setAutoReconnect(true)
                         .setCleanSession(true)
-                        .setKeepAlive(5)
+                        .setKeepAlive(60)
                         .setCleanSession(true)
                         .setLastWill("K.", "wit/server/" + getUser_id(), 2, true)
                         .setUserName("witandroid")
@@ -496,7 +496,6 @@ public class MyApplication extends MultiDexApplication {
                     @Override
                     public void messageArrived(String topic, MqttMessage message) throws Exception {
                         System.out.println("Rair-MqttMessage    " + "收到的消息的主题是   ： 订阅的主题：" + topic + "  收到的数据信息：  " + message.toString());
-
                         if (message.toString().contains("{")) {
                             //解析对象 code
                             Gson gson = new Gson();
@@ -515,10 +514,12 @@ public class MyApplication extends MultiDexApplication {
                                 n1.type = ConstanceValue.MSG_GUZHANG;
                                 n1.content = message.toString();
                                 RxBus.getDefault().sendRx(n1);
-
                             }
 
-
+                        } else if (message.toString().contains("p.")) {
+                            Notice n = new Notice();
+                            n.type = ConstanceValue.MSG_P;
+                            RxBus.getDefault().sendRx(n);
                         } else {
                             //大水假数据
                             if (topic.contains("wh/hardware/")) {//从机器接收的数据
@@ -535,9 +536,7 @@ public class MyApplication extends MultiDexApplication {
                                 doMqttValue.doValue(context, topic, message.toString());
                             }
                         }
-
                     }
-
 
                     @Override
                     public void deliveryComplete(IMqttDeliveryToken token) {

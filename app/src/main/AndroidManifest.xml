@@ -997,6 +997,12 @@
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="fullSensor"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity
+            android:name=".activity.SheBeiLieBiaoActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="fullSensor"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
     </application>
 
 </manifest>

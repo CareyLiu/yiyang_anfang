@@ -82,7 +82,6 @@ public abstract class BaseActivity<T extends BasicPresenter, E extends BasicMode
 
     }
 
-    MyApplication app;
 
     @Override
     protected void onPause() {

@@ -14,6 +14,7 @@ public class DoMqttValue {
     public Context context;//上下文
     public String message;//消息
 
+
     public static final String ZHINENGJIAJU = "ZHINENGJIAJU";
     public static final String FENGNUAN = "FENGNUAN";
     public static final String SHUINUAN = "SHUINUAN";
@@ -23,10 +24,8 @@ public class DoMqttValue {
 
     public void doValue(Context context, String topic, String message) {
         //控制硬件项目  1. 智能家居 2.风暖加热器 3.水暖加热器 4.驻车空调 5.神灯控车
-        String chooseXiangMu = PreferenceHelper.getInstance(context).getString(App.CHOOSE_KONGZHI_XIANGMU, "wu");
-        if (chooseXiangMu.equals("wu")) {//没有选择具体的项目 不执行
-            return;
-        }
+        String chooseXiangMu = PreferenceHelper.getInstance(context).getString(App.CHOOSE_KONGZHI_XIANGMU, "0");
+        Log.i("chooseXiangMu", chooseXiangMu);
         switch (chooseXiangMu) {
             case ZHINENGJIAJU:
                 break;
@@ -156,8 +155,10 @@ public class DoMqttValue {
                 } else if (message.equals("k6111.")) {
                     Notice n = new Notice();
                     n.type = ConstanceValue.MSG_K6111;
-                    n.content = message.toString();
                     RxBus.getDefault().sendRx(n);
+                }else if (message.equals("k6131.")){
+
+
                 }
                 break;
             case SHUINUAN:

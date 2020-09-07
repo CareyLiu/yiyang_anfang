@@ -36,6 +36,7 @@ import com.rairmmd.andmqtt.MqttPublish;
 import com.rairmmd.andmqtt.MqttSubscribe;
 import com.rairmmd.andmqtt.MqttUnSubscribe;
 import com.smarthome.magic.R;
+import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
@@ -152,7 +153,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PreferenceHelper.getInstance(mContext).putString(DoMqttValue.FENGNUAN, DoMqttValue.FENGNUAN);
+        PreferenceHelper.getInstance(mContext).putString(App.CHOOSE_KONGZHI_XIANGMU, DoMqttValue.FENGNUAN);
 
         ButterKnife.bind(this);
         waitDialog = ProgressDialog.show(mContext, null, "网络状态不稳定,连接中···", true, true);
@@ -407,7 +408,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                     };
 
                     handler.postDelayed(runnable, 2000);
-                    lordingDialog.dismiss();
+
                 }
             }
         }));

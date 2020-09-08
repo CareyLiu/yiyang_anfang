@@ -38,6 +38,7 @@ import com.rairmmd.andmqtt.MqttUnSubscribe;
 import com.smarthome.magic.R;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.app.ConfigValue;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.UIHelper;
@@ -52,6 +53,7 @@ import com.smarthome.magic.service.WitMqttFormatService;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.ConstantUtil;
 import com.smarthome.magic.util.DoMqttValue;
+import com.smarthome.magic.util.SoundPoolUtils;
 import com.smarthome.magic.view.ArcProgressBar;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -281,7 +283,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                         case "3":
                             showLoadSuccess();
                             closeMode(0);
-                            AlertUtil.t(WindHeaterActivity.this, "当前设备已关机");
+                            //  AlertUtil.t(WindHeaterActivity.this, "当前设备已关机");
                             tvYuShe_WenDu.setText("长按选择开机模式");
                             break;
                         case "4"://水泵开机
@@ -397,17 +399,70 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                     Log.i("rair", "chonglian_failer");
                 } else if (message.type == ConstanceValue.MSG_K6111) {
                     Handler handler = new Handler();
-                    Runnable runnable = new Runnable() {
+                    handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            // TODO Auto-generated method stub
-                            //要做的事情
                             lordingDialog.dismiss();
-                            handler.postDelayed(this, 2000);
+                            SoundPoolUtils.soundPool(mContext, R.raw.yikaiji);
                         }
-                    };
+                    }, ConfigValue.YANCHI);//3秒后执行Runnable中的run方法
 
-                    handler.postDelayed(runnable, 2000);
+                } else if (message.type == ConstanceValue.MSG_K6131) {
+
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            SoundPoolUtils.soundPool(mContext, R.raw.yiguanji);
+                            lordingDialog.dismiss();
+                        }
+                    }, ConfigValue.YANCHI);//3秒后执行Runnable中的run方法
+
+                } else if (message.type == ConstanceValue.MSG_K6121) {
+
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            SoundPoolUtils.soundPool(mContext, R.raw.yikaiji);
+                            lordingDialog.dismiss();
+                        }
+                    }, ConfigValue.YANCHI);//3秒后执行Runnable中的run方法
+                } else if (message.type == ConstanceValue.MSG_K6141) {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            SoundPoolUtils.soundPool(mContext, R.raw.yikaiji);
+                            lordingDialog.dismiss();
+                        }
+                    }, ConfigValue.YANCHI);//3秒后执行Runnable中的run方法
+                } else if (message.type == ConstanceValue.MSG_K6161) {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            SoundPoolUtils.soundPool(mContext, R.raw.yikaiji);
+                            lordingDialog.dismiss();
+                        }
+                    }, ConfigValue.YANCHI);//3秒后执行Runnable中的run方法
+                } else if (message.type == ConstanceValue.MSG_K6171) {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            SoundPoolUtils.soundPool(mContext, R.raw.yikaiji);
+                            lordingDialog.dismiss();
+                        }
+                    }, ConfigValue.YANCHI);//3秒后执行Runnable中的run方法
+                } else if (message.type == ConstanceValue.MSG_ZHILINGMA) {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            lordingDialog.dismiss();
+                        }
+                    }, ConfigValue.YANCHI);//3秒后执行Runnable中的run方法
 
                 }
             }
@@ -523,8 +578,37 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
-                    UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
-                    showLoading();
+                    //UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
+
+
+                    switch (model) {
+                        //档位模式
+                        case 1:
+                            SoundPoolUtils.soundPool(mContext, R.raw.guanjizhong);
+                            lordingDialog.setTextMsg("正在关机，请稍后");
+                            lordingDialog.show();
+                            break;
+                        case 7:
+                            SoundPoolUtils.soundPool(mContext, R.raw.guanjizhong);
+                            lordingDialog.setTextMsg("正在关机，请稍后");
+                            lordingDialog.show();
+                            break;
+                        case 6:
+                            SoundPoolUtils.soundPool(mContext, R.raw.guanjizhong);
+                            lordingDialog.setTextMsg("正在关机，请稍后");
+                            lordingDialog.show();
+                            break;
+                        case 4:
+                            SoundPoolUtils.soundPool(mContext, R.raw.guanjizhong);
+                            lordingDialog.setTextMsg("正在关机，请稍后");
+                            lordingDialog.show();
+                            break;
+                        case 2:
+                            SoundPoolUtils.soundPool(mContext, R.raw.guanjizhong);
+                            lordingDialog.setTextMsg("正在关机，请稍后");
+                            lordingDialog.show();
+                            break;
+                    }
                 }
 
                 @Override
@@ -543,8 +627,35 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                     @Override
                     public void onSuccess(IMqttToken asyncActionToken) {
                         Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
-                        UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
-                        showLoading();
+
+                        switch (model) {
+                            //档位模式
+                            case 1:
+                                SoundPoolUtils.soundPool(mContext, R.raw.dangwei);
+                                lordingDialog.setTextMsg("正在以档位模式开机，请稍后");
+                                lordingDialog.show();
+                                break;
+                            case 2:
+                                SoundPoolUtils.soundPool(mContext, R.raw.kongtiao);
+                                lordingDialog.setTextMsg("正在以空调模式开机，请稍后");
+                                lordingDialog.show();
+                                break;
+                            case 4:
+                                SoundPoolUtils.soundPool(mContext, R.raw.shuibeng);
+                                lordingDialog.setTextMsg("正在以水泵模式开机，请稍后");
+                                lordingDialog.show();
+                                break;
+                            case 6:
+                                SoundPoolUtils.soundPool(mContext, R.raw.yubengyou);
+                                lordingDialog.setTextMsg("正在以预泵油模式开机，请稍后");
+                                lordingDialog.show();
+                                break;
+                            case 7:
+                                SoundPoolUtils.soundPool(mContext, R.raw.yutongfeng);
+                                lordingDialog.setTextMsg("正在以预通风模式开机，请稍后");
+                                lordingDialog.show();
+                                break;
+                        }
                     }
 
                     @Override
@@ -556,6 +667,15 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
 
             } else {
                 //AlertUtil.t(WindHeaterActivity.this, "请先关机，再切换模式");
+                lordingDialog.setTextMsg("检测到加热器运行中,请关机后切换模式重新尝试");
+                lordingDialog.show();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        lordingDialog.dismiss();
+                    }
+                }, 2500);//3秒后执行Runnable中的run方法
             }
         }
     }
@@ -607,16 +727,15 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
          */
 
         String dangWeiValue = PreferenceHelper.getInstance(mContext).getString(STARTSHELVES, "1");
-        if (dangWeiValue.equals("1")) {//档位相关
+        if (dangWeiValue.equals("1")) {//档位开机
             Log.i("MyProgressValue", String.valueOf(progressValue));
             dangWeiMode(progressValue);
-        } else if (dangWeiValue.equals("2")) {//档位相关
+        } else if (dangWeiValue.equals("2")) {//空调开机
             Log.i("MyProgressValue", String.valueOf(progressValue));
             myValue = 14 + progressValue;
             Log.i("myValue", String.valueOf(myValue));
             if (myValue > 0 && myValue <= 9) {
             } else if (myValue > 9 && myValue < 20) {
-
                 String value = myValue.toString().substring(1, 2);
                 Log.i("myValue", value);
                 AndMqtt.getInstance().publish(new MqttPublish()
@@ -626,7 +745,9 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                     @Override
                     public void onSuccess(IMqttToken asyncActionToken) {
                         Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
-                        showLoading();
+                        PreferenceHelper.getInstance(mContext).putString(ConfigValue.ZHILINGMA, "k66" + value + "1.");
+                        lordingDialog.setTextMsg("温度调节中,请稍后");
+                        lordingDialog.show();
                     }
 
                     @Override
@@ -645,7 +766,9 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                     @Override
                     public void onSuccess(IMqttToken asyncActionToken) {
                         Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
-                        showLoading();
+                        PreferenceHelper.getInstance(mContext).putString(ConfigValue.ZHILINGMA, "k67" + value + "1.");
+                        lordingDialog.setTextMsg("温度调节中,请稍后");
+                        lordingDialog.show();
                     }
 
                     @Override
@@ -653,7 +776,6 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                         Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败" + exception.getMessage());
                     }
                 });
-
             } else if (myValue > 20 && myValue <= 32) {
                 String value = myValue.toString().substring(1, 2);
                 Log.i("myValue", value);
@@ -664,7 +786,9 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                     @Override
                     public void onSuccess(IMqttToken asyncActionToken) {
                         Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
-                        showLoading();
+                        PreferenceHelper.getInstance(mContext).putString(ConfigValue.ZHILINGMA, "k68" + value + "1.");
+                        lordingDialog.setTextMsg("温度调节中,请稍后");
+                        lordingDialog.show();
                     }
 
                     @Override
@@ -674,11 +798,11 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                 });
             }
         } else if (dangWeiValue.equals("3")) {//关机
-        } else if (dangWeiValue.equals("4")) {//档位相关
+        } else if (dangWeiValue.equals("4")) {//水泵模式
             dangWeiMode(progressValue);
-        } else if (dangWeiValue.equals("6")) {//档位相关
+        } else if (dangWeiValue.equals("6")) {//预泵油
             dangWeiMode(progressValue);
-        } else if (dangWeiValue.equals("7")) {//档位相关
+        } else if (dangWeiValue.equals("7")) {//预通风
             dangWeiMode(progressValue);
         }
     }
@@ -709,7 +833,9 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
                 Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
-                showLoading();
+                lordingDialog.setTextMsg("档位切换中,请稍后...");
+                lordingDialog.show();
+                PreferenceHelper.getInstance(mContext).putString(ConfigValue.ZHILINGMA, "k62" + gear + "1.");
             }
 
             @Override
@@ -750,6 +876,8 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
         valueAnimator.start();
     }
 
+    String value = "";
+
     @Override
     public boolean onLongClick(View view) {
         if (!AndMqtt.getInstance().isConneect()) {
@@ -767,8 +895,11 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                         @Override
                         public void onSuccess(IMqttToken asyncActionToken) {
                             Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
-                            UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
+                            //  UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
+                            lordingDialog.setTextMsg("正在关机请稍后...");
+                            lordingDialog.show();
 
+                            SoundPoolUtils.soundPool(mContext, R.raw.guanjizhong);
                         }
 
                         @Override
@@ -784,6 +915,32 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                     //关机
                     //  HeaterMqttService.mqttService.publish("M61", CAR_CTROL, 2, false);
                     Log.i("Rair", "主题：" + CAR_CTROL + "  " + "M61" + PreferenceHelper.getInstance(this).getString(STARTSHELVES, "1") + ".");
+
+                    String str = PreferenceHelper.getInstance(this).getString(STARTSHELVES, "1");
+
+                    //   1.风暖档位开机 2.风暖空调开机 3.关机
+                    //   4.风暖水泵开机 6.预泵油7.预通风
+
+
+                    switch (str) {
+                        case "1":
+                            value = "档位模式";
+                            break;
+                        case "2":
+                            value = "空调模式";
+                            break;
+                        case "4":
+                            value = "水泵模式";
+                            break;
+                        case "6":
+                            value = "预泵油模式";
+                            break;
+                        case "7":
+                            value = "预通风模式";
+                            break;
+
+                    }
+
                     AndMqtt.getInstance().publish(new MqttPublish()
                             .setMsg("M61" + PreferenceHelper.getInstance(this).getString(STARTSHELVES, "1") + ".")
                             .setQos(2).setRetained(false)
@@ -792,8 +949,9 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                         public void onSuccess(IMqttToken asyncActionToken) {
                             Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
                             //UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
-                            lordingDialog.setTextMsg("正在开机中请稍后");
+                            lordingDialog.setTextMsg("正在以" + value + "开机请稍后...");
                             lordingDialog.show();
+                            SoundPoolUtils.soundPool(mContext, R.raw.kaijizhong);
                         }
 
                         @Override
@@ -877,7 +1035,8 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                 break;
             case R.id.nav_timing:
                 //定时
-                startActivity(new Intent(this, AppointmentActivity.class));
+                //startActivity(new Intent(this, AppointmentActivity.class));
+                AppointmentActivity.actionStart(mContext, ccid);
                 break;
             case R.id.nav_record:
                 //维修记录

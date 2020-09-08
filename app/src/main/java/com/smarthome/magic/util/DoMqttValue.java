@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.smarthome.magic.app.App;
+import com.smarthome.magic.app.ConfigValue;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
@@ -26,6 +27,9 @@ public class DoMqttValue {
         //控制硬件项目  1. 智能家居 2.风暖加热器 3.水暖加热器 4.驻车空调 5.神灯控车
         String chooseXiangMu = PreferenceHelper.getInstance(context).getString(App.CHOOSE_KONGZHI_XIANGMU, "0");
         Log.i("chooseXiangMu", chooseXiangMu);
+        String zhiLingMa = PreferenceHelper.getInstance(context).getString(ConfigValue.ZHILINGMA, "");
+        Log.i("zhiLingMa", zhiLingMa);
+
         switch (chooseXiangMu) {
             case ZHINENGJIAJU:
                 break;
@@ -152,13 +156,34 @@ public class DoMqttValue {
 //                            n.content = message.toString();
                     n.content = "g0011108122015500026-02500041";
                     RxBus.getDefault().sendRx(n);
-                } else if (message.equals("k6111.")) {
+                } else if (message.equals("k6111.")) {//档位模式
                     Notice n = new Notice();
                     n.type = ConstanceValue.MSG_K6111;
                     RxBus.getDefault().sendRx(n);
-                } else if (message.equals("k6131.")) {
-
-
+                } else if (message.equals("k6131.")) {//关机
+                    Notice n = new Notice();
+                    n.type = ConstanceValue.MSG_K6131;
+                    RxBus.getDefault().sendRx(n);
+                } else if (message.equals("k6121.")) {//空调模式
+                    Notice n = new Notice();
+                    n.type = ConstanceValue.MSG_K6121;
+                    RxBus.getDefault().sendRx(n);
+                } else if (message.equals("k6141.")) {
+                    Notice n = new Notice();
+                    n.type = ConstanceValue.MSG_K6141;
+                    RxBus.getDefault().sendRx(n);
+                } else if (message.equals("k6161.")) {
+                    Notice n = new Notice();
+                    n.type = ConstanceValue.MSG_K6161;
+                    RxBus.getDefault().sendRx(n);
+                } else if (message.equals("k6171.")) {
+                    Notice n = new Notice();
+                    n.type = ConstanceValue.MSG_K6171;
+                    RxBus.getDefault().sendRx(n);
+                } else if (message.equals(zhiLingMa)) {
+                    Notice n = new Notice();
+                    n.type = ConstanceValue.MSG_ZHILINGMA;
+                    RxBus.getDefault().sendRx(n);
                 }
                 break;
             case SHUINUAN:

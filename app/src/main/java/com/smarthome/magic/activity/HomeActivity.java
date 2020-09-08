@@ -56,6 +56,7 @@ import com.smarthome.magic.fragment.ZhiNengJiaJuFragment;
 import com.smarthome.magic.model.AlarmClass;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.AppToast;
+import com.smarthome.magic.util.SoundPoolUtils;
 import com.smarthome.magic.view.NoScrollViewPager;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -123,18 +124,19 @@ public class HomeActivity extends BaseActivity {
                     Gson gson = new Gson();
                     alarmClass = gson.fromJson(message.toString(), AlarmClass.class);
                     Log.i("alarmClass", alarmClass.changjia_name + alarmClass.sell_phone);
-
-                    if (player != null) {
-                        player.stop();
-                        player.release();
-                        audioFocusManage.releaseTheAudioFocus();
-                        player = null;
-                    }
+//
+//                    if (player != null) {
+//                        player.stop();
+//                        player.release();
+//                        audioFocusManage.releaseTheAudioFocus();
+//                        player = null;
+//                    }
 
 
                     switch (alarmClass.sound) {
 
                         case "chSound1.mp3":
+                            // SoundPoolUtils.soundPool(mContext,R.raw.ch_sound1);
                             playMusic(R.raw.ch_sound1);
                             break;
                         case "chSound2.mp3":
@@ -222,19 +224,18 @@ public class HomeActivity extends BaseActivity {
                     @Override
                     public void clickLeft() {
                         // player.stop();
-                        if (player != null && player.isPlaying()) {
-                            player.stop();
-                            //audioFocusManage.releaseTheAudioFocus();
+                        if (SoundPoolUtils.soundPool != null) {
+                            SoundPoolUtils.soundPool.release();
                         }
+
                     }
 
                     @Override
                     public void clickRight() {
                         DiagnosisActivity.actionStart(HomeActivity.this, alarmClass);
-
-                        if (player != null && player.isPlaying()) {
-                            player.stop();
-                            //audioFocusManage.releaseTheAudioFocus();
+                        //SoundPoolUtils.soundPool.release();
+                        if (SoundPoolUtils.soundPool != null) {
+                            SoundPoolUtils.soundPool.release();
                         }
 
                     }
@@ -247,8 +248,8 @@ public class HomeActivity extends BaseActivity {
                 myCarCaoZuoDialog_notify.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        if (player != null) {
-                            player.stop();
+                        if (SoundPoolUtils.soundPool != null) {
+                            SoundPoolUtils.soundPool.release();
                         }
                     }
                 });
@@ -263,35 +264,7 @@ public class HomeActivity extends BaseActivity {
             return;
         }
 
-        player = MediaPlayer.create(HomeActivity.this, res);
-        audioFocusManage = new AudioFocusManager();
-        if (audioFocusManage != null) {
-            //请求语音播放焦点
-            int requestCode = audioFocusManage.requestTheAudioFocus(new AudioFocusManager.AudioListener() {
-                @Override
-                public void start() {
-                    player.start();//播放音频的方法
-                }
-
-                @Override
-                public void pause() {
-                    player.stop();
-                    audioFocusManage.releaseTheAudioFocus();
-                }
-            });
-            if (requestCode == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-                player.start();//播放音频的方法
-            }
-//            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-//                @Override
-//                public void onCompletion(MediaPlayer mediaPlayer) {
-//                    audioFocusManage.releaseTheAudioFocus();
-//
-//
-//                }
-//            });
-
-        }
+        SoundPoolUtils.soundPool(mContext, res);
 
     }
 

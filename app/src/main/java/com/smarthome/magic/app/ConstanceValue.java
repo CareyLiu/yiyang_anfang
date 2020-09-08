@@ -87,5 +87,15 @@ public interface ConstanceValue {
     int MSG_GOTOXIAOXI = 0x10057;//跳转到消息页
     int MSG_P = 0x10058;//接收到了p.
     int MSG_ZHINENGJIAJU = 0x10059;//跳转到智能家居
-    int MSG_K6111 = 0x10060;//接收到了开机指令
+
+
+    int MSG_K6111 = 0x10060;//接收到了档位开机指令
+    int MSG_K6131 = 0x10061;//接收到关机指令
+    int MSG_K6121 = 0x10062;//接收到了空调开机
+    int MSG_K6141 = 0x10063;//接收到了水泵模式
+    int MSG_K6161 = 0x10064;//接收到了预泵油模式
+    int MSG_K6171 = 0x10065;//接收到了预通风模式
+
+    int MSG_ZHILINGMA = 0x10066;//指令码
+
 }

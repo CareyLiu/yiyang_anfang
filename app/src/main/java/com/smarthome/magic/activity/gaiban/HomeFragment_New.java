@@ -184,6 +184,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getYaoQingNet(getActivity());
         //初始化定位
         initLocation();
         startLocation();
@@ -657,6 +658,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         //设置图片加载器
         banner.setImageLoader(new Radius_GlideImageLoader());
         getData();
+        ///getYaoQingNet(getActivity());
         //   getNet();
         hotLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override

@@ -9,10 +9,12 @@
             android:icon="@drawable/nav_state"
             android:title="切换至蓝牙模式" />
         <item
+ android:visible="false"
             android:id="@+id/nav_trajectory"
             android:icon="@drawable/nav_trajectory"
             android:title="历史轨迹" />
         <item
+            android:visible="false"
             android:id="@+id/nav_location"
             android:icon="@drawable/nav_location"
             android:title="定位" />
@@ -33,6 +35,7 @@
             android:icon="@drawable/nav_report"
             android:title="故障报警" />
         <item
+            android:visible="false"
             android:id="@+id/nav_corral"
             android:icon="@drawable/nav_location"
             android:title="地理围栏" />

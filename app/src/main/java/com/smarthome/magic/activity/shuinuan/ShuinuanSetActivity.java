@@ -8,10 +8,7 @@ import android.widget.LinearLayout;
 
 import com.gyf.barlibrary.ImmersionBar;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.AppointmentActivity;
-import com.smarthome.magic.activity.DriveinfoActivity;
-import com.smarthome.magic.activity.ServerPassWordActivity;
-import com.smarthome.magic.activity.UserInfoActivity;
+import com.smarthome.magic.activity.HeaterSettingActivity;
 import com.smarthome.magic.app.BaseActivity;
 
 import butterknife.BindView;
@@ -23,20 +20,14 @@ public class ShuinuanSetActivity extends BaseActivity {
 
     @BindView(R.id.back)
     LinearLayout back;
+    @BindView(R.id.item_state)
+    LinearLayout item_state;
     @BindView(R.id.item_host)
-    LinearLayout itemHost;
-    @BindView(R.id.item_ovner)
-    LinearLayout itemOvner;
-    @BindView(R.id.item_parts)
-    LinearLayout itemParts;
+    LinearLayout item_host;
     @BindView(R.id.item_ratio)
-    LinearLayout itemRatio;
-    @BindView(R.id.item_atmos)
-    LinearLayout itemAtmos;
-    @BindView(R.id.item_chuchangset)
-    LinearLayout itemChuchangset;
-    @BindView(R.id.item_dingshi)
-    LinearLayout itemDingshi;
+    LinearLayout item_ratio;
+    @BindView(R.id.item_set)
+    LinearLayout item_set;
 
     @Override
     public void initImmersion() {
@@ -58,7 +49,7 @@ public class ShuinuanSetActivity extends BaseActivity {
 
     @Override
     public int getContentViewResId() {
-        return R.layout.activity_shuinuan_set;
+        return R.layout.activity_shuinuan_set_new;
     }
 
     public static void actionStart(Context context) {
@@ -74,37 +65,24 @@ public class ShuinuanSetActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.back, R.id.item_host, R.id.item_ovner, R.id.item_parts, R.id.item_ratio, R.id.item_atmos, R.id.item_chuchangset})
+    @OnClick({R.id.back, R.id.item_state, R.id.item_host, R.id.item_ratio, R.id.item_set})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back:
                 finish();
                 break;
+            case R.id.item_state:
+                ShuinuanStateActivity.actionStart(mContext);
+                break;
             case R.id.item_host:
-                ServerPassWordActivity.actionStart(this, "host");
-                break;
-            case R.id.item_ovner:
-                startActivity(new Intent(this, UserInfoActivity.class));
-                break;
-            case R.id.item_parts:
-                DriveinfoActivity.actionStart(this);
+                ShuinuanHostActivity.actionStart(mContext);
                 break;
             case R.id.item_ratio:
-                ServerPassWordActivity.actionStart(this, "RatioActivity");
+                ShuinuanFengyoubiActivity.actionStart(mContext);
                 break;
-            case R.id.item_atmos:
-                ServerPassWordActivity.actionStart(this, "AtmosActivity");
-                break;
-            case R.id.item_dingshi:
-                startActivity(new Intent(this, AppointmentActivity.class));
-                break;
-            case R.id.item_chuchangset:
-                ClickChuchang();
+            case R.id.item_set:
+                startActivity(new Intent(this, HeaterSettingActivity.class));
                 break;
         }
-    }
-
-    private void ClickChuchang() {
-
     }
 }

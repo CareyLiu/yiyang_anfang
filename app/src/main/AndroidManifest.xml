@@ -585,6 +585,27 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
+        <!--    水暖主机参数    -->
+        <activity
+            android:name=".activity.shuinuan.ShuinuanHostActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
+        <!--    水暖风油比参数    -->
+        <activity
+            android:name=".activity.shuinuan.ShuinuanFengyoubiActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
+        <!--    水暖设备状态   -->
+        <activity
+            android:name=".activity.shuinuan.ShuinuanStateActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
         <!-- 八紫首页 -->
         <activity
             android:name=".activity.wode_page.bazinew.BazismMainActivity"

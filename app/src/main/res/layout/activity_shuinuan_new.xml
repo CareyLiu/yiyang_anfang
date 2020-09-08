@@ -41,11 +41,11 @@
             android:layout_centerVertical="true">
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_centerInParent="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/rc_icon_video_play" />
+                android:src="@mipmap/navigatio_gengduo_white" />
         </RelativeLayout>
     </RelativeLayout>
 

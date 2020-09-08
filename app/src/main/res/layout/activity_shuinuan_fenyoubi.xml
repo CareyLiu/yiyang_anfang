@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true">
+
+            <LinearLayout
+                android:id="@+id/back"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/backbutton" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="风油比参数"
+            android:textAllCaps="false"
+            android:textColor="@color/black_333333"
+            android:textSize="17dp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/split" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="20dp"
+            android:text="1档"
+            android:textColor="@color/black_333333"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="风机转速(1100~2400)"
+                android:textColor="@color/black_333333"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+
+            <EditText
+                android:id="@+id/ed_fengjizhuansu1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical|right"
+                android:hint="0"
+                android:textColor="@color/black_333333"
+                android:textColorHint="@color/black_333333"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/split" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="油泵频率(0.60~2.20)"
+                android:textColor="@color/black_333333"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+
+            <EditText
+                android:id="@+id/ed_youbengpinlv1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical|right"
+                android:hint="0"
+                android:textColor="@color/black_333333"
+                android:textColorHint="@color/black_333333"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="20dp"
+            android:text="2档"
+            android:textColor="@color/black_333333"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="15dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="风机转速(1800~3000)"
+                android:textColor="@color/black_333333"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/ed_fengjizhuansu2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical|right"
+                android:hint="0"
+                android:textColor="@color/black_333333"
+                android:textColorHint="@color/black_333333"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/split" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="油泵频率(1.00~3.20)"
+                android:textColor="@color/black_333333"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+
+            <EditText
+                android:id="@+id/ed_youbengpinlv2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical|right"
+                android:hint="0"
+                android:textColor="@color/black_333333"
+                android:textColorHint="@color/black_333333"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="15dp">
+
+            <TextView
+                android:id="@+id/bt_quxiao"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/shuinuan_button"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="#666666"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/bt_ok"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/shuinuan_button"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="#0F85FF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/bt_huifu"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/bazi_dangan"
+            android:gravity="center"
+            android:text="将风油比参数恢复为出厂设置"
+            android:textColor="@color/black_666666"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>

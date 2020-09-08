@@ -281,7 +281,7 @@ public class AppointmentActivity extends BaseActivity {
                     @Override
                     public void onSuccess(final Response<AppResponse> response) {
 
-                        UIHelper.ToastMessage(mContext,"设置成功");
+                        UIHelper.ToastMessage(mContext,response.body().msg);
                     }
 
                     @Override

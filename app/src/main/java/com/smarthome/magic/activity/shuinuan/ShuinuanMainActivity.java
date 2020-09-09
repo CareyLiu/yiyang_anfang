@@ -23,6 +23,7 @@ import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
 import com.rairmmd.andmqtt.MqttSubscribe;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.wode_page.bazinew.YanpanActivity;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
@@ -36,6 +37,8 @@ import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,7 +48,7 @@ import rx.functions.Action1;
 
 import static com.smarthome.magic.config.MyApplication.CAR_NOTIFY;
 
-public class ShuinuanMainActivity extends BaseActivity {
+public class ShuinuanMainActivity extends ShuinuanBaseActivity {
 
     @BindView(R.id.iv_heater_host)
     RelativeLayout iv_heater_host;
@@ -70,9 +73,6 @@ public class ShuinuanMainActivity extends BaseActivity {
     @BindView(R.id.rl_set)
     RelativeLayout rl_set;
 
-    public static final String SN_Send = "wh/hardware/11111111111111111111111";
-    public static final String SN_Accept = "wh/app/11111111111111111111111";
-
     private String sn_state;     //水暖状态
     private String yushewendu;      //预设温度
 
@@ -82,6 +82,9 @@ public class ShuinuanMainActivity extends BaseActivity {
 
     private boolean isDingcheng = false;
     private String dataMsg = "j_s312022202531234502640265100100010018002310.";
+    private boolean isKaiji;
+    private boolean iskaijiDianhou;
+    private GuzhangDialog guzhangDialog;
 
     @Override
     public boolean showToolBar() {
@@ -117,12 +120,31 @@ public class ShuinuanMainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
-        PreferenceHelper.getInstance(mContext).putString(App.CHOOSE_KONGZHI_XIANGMU, DoMqttValue.SHUINUAN);
-        iv_shuinuan_zhen.setRotation(-123);
-        registerKtMqtt();
+        init();
         initHuidiao();
-        initDialog();
-        showDialog("设备连接中...");
+        registerKtMqtt();
+        initGuzhangDialog();
+    }
+
+    private void initGuzhangDialog() {
+        guzhangDialog = new GuzhangDialog(mContext, new GuzhangDialog.Guzhang() {
+            @Override
+            public void onClickConfirm(View v, GuzhangDialog dialog) {
+
+            }
+
+            @Override
+            public void onDismiss(GuzhangDialog dialog) {
+
+            }
+        });
+    }
+
+    private void init() {
+        iv_shuinuan_zhen.setRotation(-123);
+        PreferenceHelper.getInstance(mContext).putString(App.CHOOSE_KONGZHI_XIANGMU, DoMqttValue.SHUINUAN);
+        isKaiji = false;
+        iskaijiDianhou = false;
     }
 
     private void initHuidiao() {
@@ -141,6 +163,9 @@ public class ShuinuanMainActivity extends BaseActivity {
         Log.i("水暖加热器返回的数据是", msg);
         if (msg.contains("j_s")) {
             dialog.dismiss();
+            if (iskaijiDianhou == isKaiji) {
+                dialogClick.dismiss();
+            }
             sn_state = msg.substring(3, 4);//水暖状态
             String syscTime = msg.substring(4, 7);//加热剩余时长
             String shuibeng_state = msg.substring(7, 8);//水泵状态  1.工作中2.待机中
@@ -158,7 +183,6 @@ public class ShuinuanMainActivity extends BaseActivity {
             String zongTime = msg.substring(40, 45);//总时长 （小时）
 
             switch (sn_state) {
-                case "0"://待机中
                 case "1"://开机中
                 case "2"://加热中
                 case "4"://循环水
@@ -166,15 +190,18 @@ public class ShuinuanMainActivity extends BaseActivity {
                     iv_heater_host.setBackgroundResource(R.drawable.plumbing);
                     animationDrawable = (AnimationDrawable) iv_heater_host.getBackground();
                     animationDrawable.start();
+                    isKaiji = true;
                     break;
+                case "0"://待机中
                 case "3"://关机中
                     btn_heater_close.setBackgroundResource(R.mipmap.car_close);
                     iv_heater_host.setBackgroundResource(R.drawable.shuinuan_pic_gif_nor);
                     iv_shuinuan_zhen.setRotation(-123);
+                    isKaiji = false;
                     break;
             }
 
-            if (!sn_state.equals("3")) {//开机状态显示当前设置问题
+            if (isKaiji) {//开机状态显示当前设置问题
                 if (yushewendu.equals("60")) {
                     tv_shuiwen1.setBackgroundResource(R.mipmap.sheding_button_sel);
                     tv_shuiwen2.setBackgroundResource(R.mipmap.sheding_button_nor);
@@ -190,6 +217,7 @@ public class ShuinuanMainActivity extends BaseActivity {
                 iv_shuinuan_zhen.setRotation(-123);
                 String format = new BigDecimal(yushewendu).toString();
                 float wenduNow = Float.valueOf(format);
+
                 float zhizhen = iv_shuinuan_zhen.getRotation();
                 iv_shuinuan_zhen.setRotation(zhizhen + wenduNow * wenduxishu);
             } else {
@@ -201,7 +229,6 @@ public class ShuinuanMainActivity extends BaseActivity {
             if (code.equals("01")) {
                 String zhuantai = msg.substring(5, 6);
                 if (zhuantai.equals("1")) {
-//                    sendSwichMoni(zhuantai);
                     Log.i("操作成功", "");
                 } else {
                     Log.i("操作失败", "");
@@ -212,22 +239,126 @@ public class ShuinuanMainActivity extends BaseActivity {
         } else if (msg.contains("M_s")) {
             String code = msg.substring(3, 5);
             if (code.equals("01")) {
-                String zhuantai = msg.substring(5, 6);
-                sendSwichMoni(zhuantai);
+
             } else if (code.equals("02")) {
 
             }
         } else if (msg.contains("N_s")) {
-            sendJs();
+
+        } else if (msg.contains("r_s")) {
+            String dianya = msg.substring(3, 4);//电压	0.正常1.过高2.过低3.故障
+            String youbeng = msg.substring(4, 5);//油泵	0.正常1.开路2.短路3.故障
+            String shuibeng = msg.substring(5, 6);//水泵	0.正常1.开路2.短路3.过流4.堵转5.故障
+            String chushuiko = msg.substring(6, 7);//出水口	0.正常1.开路2.短路3.高温4.故障
+            String rushuiko = msg.substring(7, 8);//入水口	0.正常1.开路2.短路3.高温4.故障
+            String wensheng = msg.substring(8, 9);//温升	0.正常1.异常
+            String fengji = msg.substring(9, 10);//风机	0.正常1.开路2.短路3.过流4.堵转5.故障
+            String chufengko = msg.substring(10, 11);//出风口	0.正常1.开路2.短路3.高温4.故障
+            String dianhuosai = msg.substring(11, 12);//点火塞	0.正常1.开路2.短路3.故障
+            String houyan = msg.substring(12, 13);//火焰	0.正常1.熄火
+            String dianhuo = msg.substring(13, 14);//点火	0.正常1.失败
+
+
+            List<String> guzhangs = new ArrayList<>();
+
+            if (dianya.equals("1")) {
+                guzhangs.add("故障报警：电压过高");
+            } else if (dianya.equals("2")) {
+                guzhangs.add("故障报警：电压过低");
+            } else if (dianya.equals("3")) {
+                guzhangs.add("故障报警：电压故障");
+            }
+
+            if (youbeng.equals("1")) {
+                guzhangs.add("故障报警：油泵开路");
+            } else if (youbeng.equals("2")) {
+                guzhangs.add("故障报警：油泵短路");
+            } else if (youbeng.equals("3")) {
+                guzhangs.add("故障报警：油泵故障");
+            }
+
+            if (shuibeng.equals("1")) {
+                guzhangs.add("故障报警：水泵开路");
+            } else if (shuibeng.equals("2")) {
+                guzhangs.add("故障报警：水泵短路");
+            } else if (shuibeng.equals("3")) {
+                guzhangs.add("故障报警：水泵过流");
+            } else if (shuibeng.equals("4")) {
+                guzhangs.add("故障报警：水泵堵转");
+            } else if (shuibeng.equals("5")) {
+                guzhangs.add("故障报警：水泵故障");
+            }
+
+            if (chushuiko.equals("1")) {
+                guzhangs.add("故障报警：出水口开路");
+            } else if (chushuiko.equals("2")) {
+                guzhangs.add("故障报警：出水口短路");
+            } else if (chushuiko.equals("3")) {
+                guzhangs.add("故障报警：出水口高温");
+            } else if (chushuiko.equals("4")) {
+                guzhangs.add("故障报警：出水口故障");
+            }
+
+            if (rushuiko.equals("1")) {
+                guzhangs.add("故障报警：入水口开路");
+            } else if (rushuiko.equals("2")) {
+                guzhangs.add("故障报警：入水口短路");
+            } else if (rushuiko.equals("3")) {
+                guzhangs.add("故障报警：入水口高温");
+            } else if (rushuiko.equals("4")) {
+                guzhangs.add("故障报警：入水口故障");
+            }
+
+            if (wensheng.equals("1")) {
+                guzhangs.add("故障报警：升温异常");
+            }
+
+            if (fengji.equals("1")) {
+                guzhangs.add("故障报警：风机开路");
+            } else if (fengji.equals("2")) {
+                guzhangs.add("故障报警：风机短路");
+            } else if (fengji.equals("3")) {
+                guzhangs.add("故障报警：风机过流");
+            } else if (fengji.equals("4")) {
+                guzhangs.add("故障报警：风机堵转");
+            } else if (fengji.equals("5")) {
+                guzhangs.add("故障报警：风机故障");
+            }
+
+            if (chufengko.equals("1")) {
+                guzhangs.add("故障报警：出风口开路");
+            } else if (chufengko.equals("2")) {
+                guzhangs.add("故障报警：出风口短路");
+            } else if (chufengko.equals("3")) {
+                guzhangs.add("故障报警：出风口高温");
+            } else if (chufengko.equals("4")) {
+                guzhangs.add("故障报警：出风口故障");
+            }
+
+            if (dianhuosai.equals("1")) {
+                guzhangs.add("故障报警：点火塞开路");
+            } else if (dianhuosai.equals("2")) {
+                guzhangs.add("故障报警：点火塞短路");
+            } else if (dianhuosai.equals("3")) {
+                guzhangs.add("故障报警：点火塞故障");
+            }
+
+            if (houyan.equals("1")) {
+                guzhangs.add("故障报警：火焰熄火");
+            }
+
+            if (dianhuo.equals("1")) {
+                guzhangs.add("故障报警：点火失败");
+            }
+
+            if (guzhangs.size()>0){
+                showguzhangla(guzhangs);
+            }
         }
     }
 
-    private void getDataMoni(String msg) {
-        Log.i("发送的获取模拟数据", msg);
-
-    }
-
     private void registerKtMqtt() {
+        showDialog("设备连接中...");
         //注册水暖加热器订阅
         AndMqtt.getInstance().subscribe(new MqttSubscribe()
                 .setTopic(SN_Send)
@@ -321,26 +452,35 @@ public class ShuinuanMainActivity extends BaseActivity {
         }
     }
 
+    private void showguzhangla( List<String> strings ) {
+        if (guzhangDialog != null && !guzhangDialog.isShowing()) {
+            guzhangDialog.showDD(strings);
+        }
+    }
+
 
     /**
      * 水暖加热器开关
      */
     private void sendSwich() {
-        if (TextUtils.isEmpty(sn_state)) {
+        if (TextUtils.isEmpty(sn_state) || TextUtils.isEmpty(yushewendu)) {
             AlertUtil.t(this, "水暖服务器未连接，请重新连接服务器");
             return;
         }
 
-        showDialog("发送指令中...");
+        showDialogClick("发送指令中...");
 
-        int state = Integer.parseInt(sn_state);
-        if (state == 1) {
-            state = 2;
+        String data;
+        if (isKaiji) {
+            iskaijiDianhou = false;
+            data = "M_s012.";
         } else {
-            state = 1;
+            iskaijiDianhou = true;
+            data = "M_s0110000" + yushewendu + ".";
         }
 
-        String data = "M_s01" + state + "0200" + yushewendu + ".";
+        initHandler();
+
         Log.i("发送的数据是多少", data);
         AndMqtt.getInstance().publish(new MqttPublish()
                 .setMsg(data)
@@ -358,45 +498,25 @@ public class ShuinuanMainActivity extends BaseActivity {
         });
     }
 
-
-    /**
-     * 模拟水暖加热器开关
-     */
-    private void sendSwichMoni(String zhuantai) {
-        if (zhuantai.equals("1")) {
-            dataMsg = "j_s11202220253123450264026510010001001" + yushewendu + "02310.";
-        } else {
-            dataMsg = "j_s31202220253123450264026510010001001" + yushewendu + "02310.";
-        }
-
-        getNs();
-    }
-
-
     /**
      * 模拟设定60度
      */
     private void sendTemperature60() {
-        if (TextUtils.isEmpty(sn_state)) {
+        if (TextUtils.isEmpty(sn_state) || TextUtils.isEmpty(yushewendu)) {
             AlertUtil.t(this, "水暖服务器未连接，请重新连接服务器");
             return;
         }
 
-        if (!sn_state.equals("3")) {
+        if (isKaiji) {
             return;
         }
 
-        showDialog("发送指令中...");
-
-        int state = Integer.parseInt(sn_state);
-        if (state == 1) {
-            state = 2;
-        } else {
-            state = 1;
-        }
+        iskaijiDianhou = true;
+        showDialogClick("发送指令中...");
+        initHandler();
 
         yushewendu = "60";
-        String data = "M_s01" + state + "0200" + yushewendu + ".";
+        String data = "M_s0110000" + yushewendu + ".";
         AndMqtt.getInstance().publish(new MqttPublish()
                 .setMsg(data)
                 .setQos(2).setRetained(false)
@@ -417,26 +537,20 @@ public class ShuinuanMainActivity extends BaseActivity {
      * 模拟设定80度
      */
     private void sendTemperature80() {
-        if (TextUtils.isEmpty(sn_state)) {
+        if (TextUtils.isEmpty(sn_state) || TextUtils.isEmpty(yushewendu)) {
             AlertUtil.t(this, "水暖服务器未连接，请重新连接服务器");
             return;
         }
 
-        if (!sn_state.equals("3")) {
+        if (isKaiji) {
             return;
         }
 
-        showDialog("发送指令中...");
-
-        int state = Integer.parseInt(sn_state);
-        if (state == 1) {
-            state = 2;
-        } else {
-            state = 1;
-        }
-
+        showDialogClick("发送指令中...");
+        initHandler();
+        iskaijiDianhou = true;
         yushewendu = "80";
-        String data = "M_s01" + state + "0200" + yushewendu + ".";
+        String data = "M_s0110000" + yushewendu + ".";
         AndMqtt.getInstance().publish(new MqttPublish()
                 .setMsg(data)
                 .setQos(2).setRetained(false)
@@ -453,28 +567,23 @@ public class ShuinuanMainActivity extends BaseActivity {
         });
     }
 
-    private ProgressDialog dialog;
-
-    private void initDialog() {
-        dialog = new ProgressDialog(mContext);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setCancelable(false);
-
+    private void initHandler() {
+        Message message = handler.obtainMessage(1);
+        handler.sendMessageDelayed(message, 5000);
     }
 
-    private void showDialog(String msg) {
-        dialog.setMessage(msg);
-        dialog.show();
-    }
-
-    private int getInt(String content) {
-        try {
-            return Integer.parseInt(content);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
+    private Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    if (iskaijiDianhou != isKaiji) {
+                        initHandler();
+                        getNs();
+                    }
+                    break;
+            }
+            super.handleMessage(msg);
         }
-    }
+    };
+
 }

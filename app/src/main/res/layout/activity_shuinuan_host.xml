@@ -180,18 +180,19 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="机器功率"
+                    android:text="机器功率(0-99Kw)"
                     android:textColor="@color/black_333333"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
-                <EditText
+                <TextView
                     android:id="@+id/ed_jiqigonglv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|right"
                     android:hint="请输入机器功率"
+                    android:inputType="numberDecimal"
                     android:paddingHorizontal="5dp"
                     android:textColor="@color/gray_999999"
                     android:textColorHint="@color/gray_999999"
@@ -267,18 +268,19 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="油泵容积值"
+                    android:text="油泵容积值(16-70)"
                     android:textColor="@color/black_333333"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
-                <EditText
+                <TextView
                     android:id="@+id/ed_youbengrongjizhi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|right"
                     android:hint="请输入油泵容积值"
+                    android:inputType="number"
                     android:paddingHorizontal="5dp"
                     android:textColor="@color/gray_999999"
                     android:textColorHint="@color/gray_999999"
@@ -304,18 +306,19 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="过压值(V)"
+                    android:text="过压值(0-99V)"
                     android:textColor="@color/black_333333"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
-                <EditText
+                <TextView
                     android:id="@+id/ed_guoyazhi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|right"
                     android:hint="请输入过压值"
+                    android:inputType="numberDecimal"
                     android:paddingHorizontal="5dp"
                     android:textColor="@color/gray_999999"
                     android:textColorHint="@color/gray_999999"
@@ -347,18 +350,19 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="过压值报警时间(S)"
+                    android:text="过压值报警时间(0-99S)"
                     android:textColor="@color/black_333333"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
-                <EditText
+                <TextView
                     android:id="@+id/ed_guoyazhi_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|right"
                     android:hint="请输入过压值报警时间"
+                    android:inputType="number"
                     android:paddingHorizontal="5dp"
                     android:textColor="@color/gray_999999"
                     android:textColorHint="@color/gray_999999"
@@ -384,18 +388,19 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="欠压值(V)"
+                    android:text="欠压值(0-99V)"
                     android:textColor="@color/black_333333"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
-                <EditText
+                <TextView
                     android:id="@+id/ed_qianya"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|right"
                     android:hint="请输入欠压值"
+                    android:inputType="numberDecimal"
                     android:paddingHorizontal="5dp"
                     android:textColor="@color/gray_999999"
                     android:textColorHint="@color/gray_999999"
@@ -427,18 +432,19 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="欠压值报警时间(S)"
+                    android:text="欠压值报警时间(0-99S)"
                     android:textColor="@color/black_333333"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
-                <EditText
+                <TextView
                     android:id="@+id/ed_qianya_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|right"
                     android:hint="请输入欠压值报警时间"
+                    android:inputType="number"
                     android:paddingHorizontal="5dp"
                     android:textColor="@color/gray_999999"
                     android:textColorHint="@color/gray_999999"

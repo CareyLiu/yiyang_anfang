@@ -15,7 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ShuinuanFengyoubiActivity extends BaseActivity {
+public class ShuinuanFengyoubiActivity extends ShuinuanBaseActivity {
 
     @BindView(R.id.back)
     LinearLayout back;

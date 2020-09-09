@@ -63,6 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginBottom="10dp"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="15dp">
 
@@ -89,6 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginBottom="10dp"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="15dp">
 
@@ -96,7 +98,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="预设温度"
+                    android:text="当前温度"
                     android:textColor="@color/black_333333"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -115,6 +117,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginBottom="10dp"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="15dp">
 
@@ -142,6 +145,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginBottom="10dp"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="15dp">
 
@@ -168,6 +172,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginBottom="10dp"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="15dp">
 
@@ -194,6 +199,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginBottom="10dp"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="15dp">
 

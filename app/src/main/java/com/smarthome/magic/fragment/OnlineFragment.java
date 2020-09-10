@@ -23,6 +23,7 @@ import com.smarthome.magic.activity.BindBoxActivity;
 import com.smarthome.magic.activity.CarBrandActivity;
 import com.smarthome.magic.activity.CarListActivity;
 import com.smarthome.magic.activity.WindHeaterActivity;
+import com.smarthome.magic.activity.shuinuan.ShuinuanMainActivity;
 import com.smarthome.magic.adapter.CarList1Adapter;
 import com.smarthome.magic.adapter.SheBeiListAdapter;
 import com.smarthome.magic.app.AppManager;
@@ -113,7 +114,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.constrain:
-                        if (mDatas.get(position).device_name.contains("风暖")) {
+                        if (mDatas.get(position).device_type.equals("1")) {
                             PreferenceHelper.getInstance(getActivity()).putString("ccid", mDatas.get(position).ccid);
                             int i = mDatas.get(position).ccid.length() - 1;
                             String str = String.valueOf(mDatas.get(position).ccid.charAt(i));
@@ -127,29 +128,20 @@ public class OnlineFragment extends BaseFragment implements Observer {
                             } else {
                                 UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
                             }
-                        } else {
-                            // UIHelper.ToastMessage(getActivity(),"getActivity");
+                        } else if (mDatas.get(position).device_type.equals("6")) {
+                            String ccid = mDatas.get(position).ccid;
+                            int pos = ccid.length() - 1;
+                            String count = String.valueOf(ccid.charAt(pos)) + "/";
+
+                            if (NetworkUtils.isConnected(getActivity())) {
+                                Activity currentActivity = AppManager.getAppManager().currentActivity();
+                                if (currentActivity != null) {
+                                    ShuinuanMainActivity.actionStart(getActivity(), ccid, count);
+                                }
+                            } else {
+                                UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
+                            }
                         }
-
-
-//                        if (mDatas.get(position).device_name.contains("风暖")) {
-//                            PreferenceHelper.getInstance(getActivity()).putString("ccid", "aaaaaaaaaaaaaaaa90020018");
-//                            int i = mDatas.get(position).ccid.length() - 1;
-//                            String str = String.valueOf(mDatas.get(position).ccid.charAt(i));
-//                            Log.i("serverId", str);
-//                            PreferenceHelper.getInstance(getActivity()).putString("car_server_id", "8" + "/");
-//                            if (NetworkUtils.isConnected(getActivity())) {
-//                                Activity currentActivity = AppManager.getAppManager().currentActivity();
-//                                if (currentActivity != null) {
-//                                    startActivity(new Intent(getActivity(), WindHeaterActivity.class));
-//                                }
-//                            } else {
-//                                UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
-//                            }
-//                        } else {
-//                            // UIHelper.ToastMessage(getActivity(),"getActivity");
-//                        }
-
 
                         break;
                 }

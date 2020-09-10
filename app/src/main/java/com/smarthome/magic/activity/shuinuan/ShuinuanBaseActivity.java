@@ -11,8 +11,8 @@ import androidx.annotation.Nullable;
 
 public class ShuinuanBaseActivity extends BaseActivity {
 
-    public static final String SN_Send = "wh/hardware/8/aaaaaaaaaaaaaaaa20040018";
-    public static final String SN_Accept = "wh/app/8/aaaaaaaaaaaaaaaa20040018";
+    public String SN_Send = "wh/hardware/8/aaaaaaaaaaaaaaaa20040018";
+    public String SN_Accept = "wh/app/8/aaaaaaaaaaaaaaaa20040018";
 
 
     @Override

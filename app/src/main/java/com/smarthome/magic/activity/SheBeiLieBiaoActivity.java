@@ -16,6 +16,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.shuinuan.ShuinuanMainActivity;
 import com.smarthome.magic.adapter.SheBeiListAdapter;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.BaseActivity;
@@ -65,7 +66,7 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.constrain:
-                        if (mDatas.get(position).device_name.contains("风暖")) {
+                        if (mDatas.get(position).device_type.equals("1")) {
                             PreferenceHelper.getInstance(mContext).putString("ccid", mDatas.get(position).ccid);
                             int i = mDatas.get(position).ccid.length() - 1;
                             String str = String.valueOf(mDatas.get(position).ccid.charAt(i));
@@ -79,8 +80,19 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
                             } else {
                                 UIHelper.ToastMessage(mContext, "请连接网络后重新尝试");
                             }
-                        } else {
-                            // UIHelper.ToastMessage(getActivity(),"getActivity");
+                        } else if (mDatas.get(position).device_type.equals("6")) {
+                            String ccid = mDatas.get(position).ccid;
+                            int pos = ccid.length() - 1;
+                            String count = String.valueOf(ccid.charAt(pos)) + "/";
+
+                            if (NetworkUtils.isConnected(mContext)) {
+                                Activity currentActivity = AppManager.getAppManager().currentActivity();
+                                if (currentActivity != null) {
+                                    ShuinuanMainActivity.actionStart(mContext, ccid, count);
+                                }
+                            } else {
+                                UIHelper.ToastMessage(mContext, "请连接网络后重新尝试");
+                            }
                         }
 
                         break;

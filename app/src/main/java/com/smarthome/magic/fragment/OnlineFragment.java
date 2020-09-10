@@ -142,7 +142,6 @@ public class OnlineFragment extends BaseFragment implements Observer {
                                 UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
                             }
                         }
-
                         break;
                 }
             }

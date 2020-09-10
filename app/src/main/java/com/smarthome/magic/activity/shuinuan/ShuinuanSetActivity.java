@@ -3,34 +3,25 @@ package com.smarthome.magic.activity.shuinuan;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.gyf.barlibrary.ImmersionBar;
 import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.HeaterSettingActivity;
-import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuo_Base;
-import com.smarthome.magic.util.AlertUtil;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
-
-import java.math.BigDecimal;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-
-import static com.smarthome.magic.config.MyApplication.CAR_CTROL;
 
 public class ShuinuanSetActivity extends ShuinuanBaseActivity {
     @BindView(R.id.back)
@@ -43,6 +34,8 @@ public class ShuinuanSetActivity extends ShuinuanBaseActivity {
     LinearLayout item_ratio;
     @BindView(R.id.item_set)
     LinearLayout item_set;
+    @BindView(R.id.item_jiebang)
+    LinearLayout item_jiebang;
 
     @Override
     public boolean showToolBar() {
@@ -102,7 +95,7 @@ public class ShuinuanSetActivity extends ShuinuanBaseActivity {
         }
     }
 
-    @OnClick({R.id.back, R.id.item_state, R.id.item_host, R.id.item_ratio, R.id.item_set})
+    @OnClick({R.id.back, R.id.item_state, R.id.item_host, R.id.item_ratio, R.id.item_set, R.id.item_jiebang})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -119,6 +112,9 @@ public class ShuinuanSetActivity extends ShuinuanBaseActivity {
                 break;
             case R.id.item_set:
                 huifuchuchang();
+                break;
+            case R.id.item_jiebang:
+                ShuinuanJieActivity.actionStart(mContext);
                 break;
         }
     }

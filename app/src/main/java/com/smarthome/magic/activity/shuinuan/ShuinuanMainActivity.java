@@ -32,6 +32,7 @@ import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.DoMqttValue;
+import com.smarthome.magic.util.SoundPoolUtils;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
@@ -96,9 +97,11 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
         return R.layout.activity_shuinuan_new;
     }
 
-    public static void actionStart(Context context) {
+    public static void actionStart(Context context, String ccid, String count) {
         Intent intent = new Intent(context, ShuinuanMainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("ccid", ccid);
+        intent.putExtra("count", count);
         context.startActivity(intent);
     }
 
@@ -141,10 +144,20 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
     }
 
     private void init() {
+        PreferenceHelper.getInstance(mContext).putString("ccid", "aaaaaaaaaaaaaaaa20040018");
         iv_shuinuan_zhen.setRotation(-123);
         PreferenceHelper.getInstance(mContext).putString(App.CHOOSE_KONGZHI_XIANGMU, DoMqttValue.SHUINUAN);
         isKaiji = false;
         iskaijiDianhou = false;
+
+
+        String ccid = getIntent().getStringExtra("ccid");
+        String count = getIntent().getStringExtra("count");
+
+        if (!StringUtils.isEmpty(ccid)) {
+            SN_Send = "wh/hardware/" + count + ccid;
+            SN_Accept = "wh/app/" + count + ccid;
+        }
     }
 
     private void initHuidiao() {
@@ -351,7 +364,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
                 guzhangs.add("故障报警：点火失败");
             }
 
-            if (guzhangs.size()>0){
+            if (guzhangs.size() > 0) {
                 showguzhangla(guzhangs);
             }
         }
@@ -452,7 +465,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
         }
     }
 
-    private void showguzhangla( List<String> strings ) {
+    private void showguzhangla(List<String> strings) {
         if (guzhangDialog != null && !guzhangDialog.isShowing()) {
             guzhangDialog.showDD(strings);
         }
@@ -467,8 +480,6 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
             AlertUtil.t(this, "水暖服务器未连接，请重新连接服务器");
             return;
         }
-
-        showDialogClick("发送指令中...");
 
         String data;
         if (isKaiji) {

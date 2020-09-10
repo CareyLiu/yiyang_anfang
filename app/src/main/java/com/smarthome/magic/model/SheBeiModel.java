@@ -21,6 +21,7 @@ public class SheBeiModel extends SectionEntity {
     public String validity_time;
     public String device_img_url;
     public String device_name;
+    public String device_type;
 
 
 }

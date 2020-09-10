@@ -141,4 +141,28 @@
             android:layout_height="20dp"
             android:src="@drawable/push_gray" />
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/item_jiebang"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="15dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="解绑设备"
+            android:textColor="@color/black_333333"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="20dp"
+            android:src="@drawable/push_gray" />
+    </LinearLayout>
 </LinearLayout>

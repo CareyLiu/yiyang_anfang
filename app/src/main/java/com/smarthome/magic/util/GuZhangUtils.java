@@ -24,8 +24,8 @@ public class GuZhangUtils {
                 break;
             case "2":
 
-                // 05	风暖加热器：点火塞开路或短路
-                playMusic(context, R.raw.ch_sound5);
+                //  08	风暖加热器：风机传感器开路或短路
+                playMusic(context, R.raw.ch_sound8);
                 break;
             case "3":
                 //  08	风暖加热器：风机传感器开路或短路
@@ -80,10 +80,7 @@ public class GuZhangUtils {
                 //10	风暖加热器：点火失败故障
                 playMusic(context, R.raw.falaer_19);
                 break;
-
         }
-
-
     }
 
     public static void playMusic(Context context, int res) {
@@ -179,11 +176,6 @@ public class GuZhangUtils {
             case "18":
                 playMusic(context, R.raw.ch_sound18);
                 break;
-
-
-
         }
-
-
     }
 }

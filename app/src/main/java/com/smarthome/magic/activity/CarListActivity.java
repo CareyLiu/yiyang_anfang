@@ -94,10 +94,24 @@ public class CarListActivity extends BaseActivity {
 
                 switch (getIntent().getStringExtra("type")) {
                     case "wind":
+//                        if (NetworkUtils.isConnected(mContext)) {
+//                            Activity currentActivity = AppManager.getAppManager().currentActivity();
+//                            if (currentActivity != null) {
+//                                startActivity(new Intent(CarListActivity.this, WindHeaterActivity.class));
+//                            }
+//                        } else {
+//                            UIHelper.ToastMessage(mContext, "请连接网络后重新尝试");
+//                        }
+
+                        PreferenceHelper.getInstance(mContext).putString("ccid", "aaaaaaaaaaaaaaaa90020018");
+                        //   int i = mDatas.get(position).ccid.length() - 1;
+                        //  String str = String.valueOf(mDatas.get(position).ccid.charAt(i));
+                        // Log.i("serverId", str);
+                        PreferenceHelper.getInstance(mContext).putString("car_server_id", "8" + "/");
                         if (NetworkUtils.isConnected(mContext)) {
                             Activity currentActivity = AppManager.getAppManager().currentActivity();
                             if (currentActivity != null) {
-                                startActivity(new Intent(CarListActivity.this, WindHeaterActivity.class));
+                                startActivity(new Intent(mContext, WindHeaterActivity.class));
                             }
                         } else {
                             UIHelper.ToastMessage(mContext, "请连接网络后重新尝试");

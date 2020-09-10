@@ -29,6 +29,7 @@ import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.DingShiResultModel;
 import com.smarthome.magic.util.AlertUtil;
 
 import java.util.Date;
@@ -121,6 +122,10 @@ public class AppointmentActivity extends BaseActivity {
                             public void onItemSelected(int index) {
                                 Log.i("min_min", String.valueOf(index));
                                 chooseMin = String.valueOf(index);
+
+                                if (chooseMin.length() == 1) {
+                                    chooseMin = "0" + chooseMin;
+                                }
                             }
                         });
 
@@ -130,6 +135,9 @@ public class AppointmentActivity extends BaseActivity {
                             public void onItemSelected(int index) {
                                 Log.i("hour_hour", String.valueOf(index));
                                 chooseHour = String.valueOf(index);
+                                if (chooseHour.length() == 1) {
+                                    chooseHour = "0" + chooseHour;
+                                }
                             }
                         });
 
@@ -183,6 +191,8 @@ public class AppointmentActivity extends BaseActivity {
                 .setOutSideCancelable(false)
                 .build();
         pvTime.show();
+
+        chaXunDingShi(ccid);
 
     }
 
@@ -311,5 +321,104 @@ public class AppointmentActivity extends BaseActivity {
     @Override
     public boolean showToolBar() {
         return false;
+    }
+
+    String weekTimes;
+    String jinriShijian;
+
+    public void chaXunDingShi(String ccid) {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "03201");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(this).getAppToken());
+        map.put("ccid", ccid);
+        Gson gson = new Gson();
+        OkGo.<AppResponse<DingShiResultModel.DataBean>>post(Urls.DINGSHI)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<DingShiResultModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(final Response<AppResponse<DingShiResultModel.DataBean>> response) {
+
+                        UIHelper.ToastMessage(mContext, response.body().msg);
+                        weekTimes = response.body().data.get(0).getWeeks_time();
+                        jinriShijian = response.body().data.get(0).getShifen_time();
+
+                        if (weekTimes.length() == 7) {
+                            String zhoutian = String.valueOf(weekTimes.charAt(0));
+                            String zhouyi = String.valueOf(weekTimes.charAt(1));
+                            String zhouer = String.valueOf(weekTimes.charAt(2));
+                            String zhousan = String.valueOf(weekTimes.charAt(3));
+                            String zhousi = String.valueOf(weekTimes.charAt(4));
+                            String zhouwu = String.valueOf(weekTimes.charAt(5));
+                            String zhouliu = String.valueOf(weekTimes.charAt(6));
+
+                            Log.i("weekTimes", "zhoutian:  " + zhoutian);
+                            Log.i("weekTimes", "zhouyi:  " + zhouyi);
+                            Log.i("weekTimes", "zhouer:  " + zhouer);
+                            Log.i("weekTimes", "zhousan:  " + zhousan);
+                            Log.i("weekTimes", "zhousi:  " + zhousi);
+                            Log.i("weekTimes", "zhouwu:  " + zhouwu);
+                            Log.i("weekTimes", "zhouliu:  " + zhouliu);
+
+
+                            if (zhoutian.equals("1")) {
+                                cbSunday.setChecked(true);
+                            } else {
+                                cbSunday.setChecked(false);
+                            }
+
+                            if (zhouyi.equals("1")) {
+                                cbMonday.setChecked(true);
+                            } else {
+                                cbMonday.setChecked(false);
+                            }
+
+                            if (zhouer.equals("1")) {
+                                cbTuesday.setChecked(true);
+                            } else {
+                                cbTuesday.setChecked(false);
+                            }
+
+                            if (zhousan.equals("1")) {
+                                cbWednesday.setChecked(true);
+                            } else {
+                                cbWednesday.setChecked(false);
+                            }
+
+                            if (zhousi.equals("1")) {
+                                cbThursday.setChecked(true);
+                            } else {
+                                cbThursday.setChecked(false);
+                            }
+
+                            if (zhouwu.equals("1")) {
+                                cbFriday.setChecked(true);
+                            } else {
+                                cbFriday.setChecked(false);
+                            }
+
+                            if (zhouliu.equals("1")) {
+                                cbSaturday.setChecked(true);
+                            } else {
+                                cbSaturday.setChecked(false);
+                            }
+
+                        }
+
+                        String[] shijian = jinriShijian.split(":");
+                        int xiaoshi = Integer.parseInt(shijian[0]);
+                        int fenzhong = Integer.parseInt(shijian[1]);
+                        hour.setCurrentItem(xiaoshi);
+                        min.setCurrentItem(fenzhong);
+
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<DingShiResultModel.DataBean>> response) {
+                        AlertUtil.t(AppointmentActivity.this, response.getException().getMessage());
+                    }
+                });
+
     }
 }

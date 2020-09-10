@@ -380,35 +380,16 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                     zhu_car_stoppage_no = 0 <= zhu_car_stoppage_no.indexOf("a") ? "" : String.valueOf(Integer.parseInt(zhu_car_stoppage_no));
 
                     if (!StringUtils.isEmpty(zhu_car_stoppage_no)) {
-                        if (myCarCaoZuoDialog_notify!=null&&myCarCaoZuoDialog_notify.isShowing()) {
-                            return;
-                        }
                         Activity currentActivity = AppManager.getAppManager().currentActivity();
                         if (currentActivity != null) {
                             if (!currentActivity.getClass().getSimpleName().equals(DiagnosisActivity.class.getSimpleName())) {
-                                myCarCaoZuoDialog_notify = new MyCarCaoZuoDialog_Notify(getAppContext(), new MyCarCaoZuoDialog_Notify.OnDialogItemClickListener() {
-                                    @Override
-                                    public void clickLeft() {
-                                        // player.stop();
 
-                                    }
-
-                                    @Override
-                                    public void clickRight() {
-                                        DiagnosisActivity.actionStart(mContext);
-                                        //SoundPoolUtils.soundPool.release();
-
-                                    }
+                                if (!myCarCaoZuoDialog_notify.isShowing()) {
+                                    myCarCaoZuoDialog_notify.show();
                                 }
-                                );
-
-                                myCarCaoZuoDialog_notify.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG);
-                                myCarCaoZuoDialog_notify.show();
-
 
                             }
                         }
-                    } else {
 
                     }
                     if (messageData.length() >= 38) {
@@ -570,6 +551,25 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
 
         ivKaiji.setVisibility(View.GONE);
         ivGuanji.setVisibility(View.VISIBLE);
+
+
+        myCarCaoZuoDialog_notify = new MyCarCaoZuoDialog_Notify(getAppContext(), new MyCarCaoZuoDialog_Notify.OnDialogItemClickListener() {
+            @Override
+            public void clickLeft() {
+                // player.stop();
+
+            }
+
+            @Override
+            public void clickRight() {
+                DiagnosisActivity.actionStart(mContext);
+                //SoundPoolUtils.soundPool.release();
+
+            }
+        }
+        );
+
+        myCarCaoZuoDialog_notify.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG);
     }
 
     @Override

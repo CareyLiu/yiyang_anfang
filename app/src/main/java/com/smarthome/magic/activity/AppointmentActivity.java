@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
@@ -28,10 +29,8 @@ import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
-import com.smarthome.magic.model.CarDetails;
 import com.smarthome.magic.util.AlertUtil;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -66,6 +65,8 @@ public class AppointmentActivity extends BaseActivity {
     RelativeLayout rlMain;
     @BindView(R.id.btn_setting)
     Button btnSetting;
+    @BindView(R.id.ll_main)
+    LinearLayout llMain;
 
     private String ccid;
     private TimePickerView pvDate, pvTime;
@@ -80,9 +81,9 @@ public class AppointmentActivity extends BaseActivity {
 
     @Override
     public void initImmersion() {
-        //super.initImmersion();
+        // super.initImmersion();
         mImmersionBar = ImmersionBar.with(this);
-        mImmersionBar.titleBar(R.id.rl_main).init();
+        mImmersionBar.titleBar(rlMain).init();
 
     }
 
@@ -155,7 +156,6 @@ public class AppointmentActivity extends BaseActivity {
         chooseHour = String.valueOf(hour.getCurrentItem());
 
 
-
         pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
@@ -225,6 +225,7 @@ public class AppointmentActivity extends BaseActivity {
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("ccid", ccid);
+        map.put("type", "1");
 
         String str = null;
 
@@ -281,7 +282,7 @@ public class AppointmentActivity extends BaseActivity {
                     @Override
                     public void onSuccess(final Response<AppResponse> response) {
 
-                        UIHelper.ToastMessage(mContext,response.body().msg);
+                        UIHelper.ToastMessage(mContext, response.body().msg);
                     }
 
                     @Override
@@ -291,5 +292,24 @@ public class AppointmentActivity extends BaseActivity {
                 });
     }
 
+    @Override
+    protected void initToolbar() {
+        super.initToolbar();
+        tv_title.setText("预约加热时间");
+        tv_title.setTextSize(17);
+        tv_title.setTextColor(getResources().getColor(R.color.white));
+        mToolbar.setNavigationIcon(R.mipmap.back_white);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //imm.hideSoftInputFromWindow(findViewById(R.id.cl_layout).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                finish();
+            }
+        });
+    }
 
+    @Override
+    public boolean showToolBar() {
+        return false;
+    }
 }

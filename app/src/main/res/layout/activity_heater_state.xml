@@ -104,8 +104,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_select"
                     android:gravity="center"
-                    android:textColor="@color/white"
-                    android:text="0.0V" />
+                    android:text="0.0V"
+                    android:textColor="@color/white" />
 
 
             </LinearLayout>
@@ -137,8 +137,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_select"
                     android:gravity="center"
-                    android:textColor="@color/white"
-                    android:text="0rpm" />
+                    android:text="0rpm"
+                    android:textColor="@color/white" />
 
 
             </LinearLayout>
@@ -170,8 +170,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_select"
                     android:gravity="center"
-                    android:textColor="@color/white"
-                    android:text="0hz" />
+                    android:text="0hz"
+                    android:textColor="@color/white" />
 
 
             </LinearLayout>
@@ -203,8 +203,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_select"
                     android:gravity="center"
-                    android:textColor="@color/white"
-                    android:text="0℃" />
+                    android:text="0℃"
+                    android:textColor="@color/white" />
 
 
             </LinearLayout>
@@ -236,8 +236,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_select"
                     android:gravity="center"
-                    android:textColor="@color/white"
-                    android:text="0°C" />
+                    android:text="0°C"
+                    android:textColor="@color/white" />
 
 
             </LinearLayout>
@@ -269,8 +269,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_select"
                     android:gravity="center"
-                    android:textColor="@color/white"
-                    android:text="无" />
+                    android:text="无"
+                    android:textColor="@color/white" />
 
 
             </LinearLayout>
@@ -302,8 +302,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_select"
                     android:gravity="center"
-                    android:textColor="@color/white"
-                    android:text="0.0W" />
+                    android:text="0.0W"
+                    android:textColor="@color/white" />
 
 
             </LinearLayout>
@@ -336,8 +336,110 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_select"
                     android:gravity="center"
-                    android:textColor="@color/white"
-                    android:text="0.0h" />
+                    android:text="0.0h"
+                    android:textColor="@color/white" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/shebeizhuangtai_grey_bg"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="大气压"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tv_daqiya"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_select"
+                    android:gravity="center"
+                    android:text="0.0h"
+                    android:textColor="@color/white" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/shebeizhuangtai_grey_bg"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="海拔高度"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tv_haibagaodu"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_select"
+                    android:gravity="center"
+                    android:text="0.0h"
+                    android:textColor="@color/white" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/shebeizhuangtai_grey_bg"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="含氧量"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tv_hanyangliang"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_select"
+                    android:gravity="center"
+                    android:text="0.0h"
+                    android:textColor="@color/white" />
 
 
             </LinearLayout>

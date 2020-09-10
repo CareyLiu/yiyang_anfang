@@ -120,7 +120,7 @@
 
                                 <RadioButton
                                     android:id="@+id/rb_heater_air_mode"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="100dp"
                                     android:layout_height="30dp"
                                     android:layout_marginTop="7dp"
                                     android:background="@drawable/select_model"
@@ -132,7 +132,7 @@
 
                                 <RadioButton
                                     android:id="@+id/rb_heater_gear_mode"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="100dp"
                                     android:layout_height="30dp"
                                     android:layout_marginTop="7dp"
                                     android:background="@drawable/select_model"
@@ -143,20 +143,8 @@
                                     android:textSize="15sp" />
 
                                 <RadioButton
-                                    android:id="@+id/rb_heater_pump_mode"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="30dp"
-                                    android:layout_marginTop="7dp"
-                                    android:background="@drawable/select_model"
-                                    android:button="@null"
-                                    android:gravity="center"
-                                    android:text="水泵模式"
-                                    android:textColor="@color/white"
-                                    android:textSize="15sp" />
-
-                                <RadioButton
                                     android:id="@+id/rb_heater_yby_mode"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="100dp"
                                     android:layout_height="30dp"
                                     android:layout_marginTop="7dp"
                                     android:background="@drawable/select_model"
@@ -168,7 +156,7 @@
 
                                 <RadioButton
                                     android:id="@+id/rb_heater_ytf_mode"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="100dp"
                                     android:layout_height="30dp"
                                     android:layout_marginTop="7dp"
                                     android:background="@drawable/select_model"
@@ -180,8 +168,23 @@
 
                             </RadioGroup>
 
+                            <RadioButton
+                                android:id="@+id/rb_heater_pump_mode"
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="7dp"
+                                android:layout_marginRight="4.5dp"
+
+                                android:background="@drawable/select_model"
+                                android:button="@null"
+                                android:gravity="center"
+                                android:text="水泵模式"
+                                android:textColor="@color/white"
+                                android:textSize="15sp" />
 
                         </LinearLayout>
+
 
                         <LinearLayout
                             android:layout_width="wrap_content"

@@ -74,7 +74,9 @@ public class MyCarCaoZuoDialog_Success extends Dialog {
         tvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.clickRight();
+                if (listener!=null){
+                    listener.clickRight();
+                }
                 dismiss();
             }
         });

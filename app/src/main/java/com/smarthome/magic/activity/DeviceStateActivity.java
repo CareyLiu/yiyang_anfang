@@ -50,6 +50,12 @@ public class DeviceStateActivity extends BaseActivity {
     @BindView(R.id.tv_duration)
     TextView tvDuration;
     public static Handler stateHandler;
+    @BindView(R.id.tv_daqiya)
+    TextView tvDaqiya;
+    @BindView(R.id.tv_haibagaodu)
+    TextView tvHaibagaodu;
+    @BindView(R.id.tv_hanyangliang)
+    TextView tvHanyangliang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,12 +142,34 @@ public class DeviceStateActivity extends BaseActivity {
                     try {
                         worktime = messageData.substring(38, 44);        // 风暖加热器:工作时长(小时)
 
+                    } catch (Exception e) {
+                    }
+
+
+                    // 定制故障码
+                    if (messageData.length() >= 46) {
                         // 驻车加热器故障码->01至18	2	其它公司用
                         String zhu_car_stoppage_no_o = messageData.substring(44, 46);
                         zhu_car_stoppage_no_o = 0 <= zhu_car_stoppage_no_o.indexOf("a") ? "" : String.valueOf(Integer.parseInt(zhu_car_stoppage_no_o));
-
-                    } catch (Exception e) {
                     }
+                    // 大气压 3位
+                    if (messageData.length() >= 49) {
+                        String daQiYa = messageData.substring(46, 49);
+                        tvDaqiya.setText(daQiYa);
+                    }
+                    // 海拔高度 4位
+                    if (messageData.length() >= 53) {
+                        String haiBaGaoDu = messageData.substring(49, 53);
+                        tvHaibagaodu.setText(haiBaGaoDu);
+                    }
+
+                    // 含氧量 3位
+                    if (messageData.length() >= 56) {
+                        String hanYangLiang = messageData.substring(53, 56);
+                        tvHanyangliang.setText(hanYangLiang);
+                    }
+
+
                     //加载实时数据
                     tvDeviceVoltage.setText(noneZero(machine_voltage) + "V");
                     tvDuration.setText(noneZero(worktime) + "h");

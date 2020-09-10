@@ -2,7 +2,9 @@ package com.smarthome.magic.activity;
 
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -37,16 +40,19 @@ import com.rairmmd.andmqtt.MqttSubscribe;
 import com.rairmmd.andmqtt.MqttUnSubscribe;
 import com.smarthome.magic.R;
 import com.smarthome.magic.app.App;
+import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConfigValue;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.LordingDialog;
+import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Notify;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.CarDetails;
 import com.smarthome.magic.service.WitMqttFormatService;
@@ -80,6 +86,7 @@ import static com.smarthome.magic.app.ConstanceValue.MSG_MQTT_CONNECT_CHONGLIAN_
 import static com.smarthome.magic.config.MyApplication.CARBOX_GETNOW;
 import static com.smarthome.magic.config.MyApplication.CAR_CTROL;
 import static com.smarthome.magic.config.MyApplication.CAR_NOTIFY;
+import static com.smarthome.magic.config.MyApplication.getAppContext;
 
 
 public class WindHeaterActivity extends BaseActivity implements View.OnLongClickListener, NavigationView.OnNavigationItemSelectedListener {
@@ -142,8 +149,10 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
     public String of_user_id;
     Toolbar toolbar;
     String version;
+    boolean flag = true;//是否有水泵模式
 
     private LordingDialog lordingDialog;
+    MyCarCaoZuoDialog_Notify myCarCaoZuoDialog_notify;
 
     @Override
     public int getContentViewResId() {
@@ -287,28 +296,28 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                             tvYuShe_WenDu.setText("长按选择开机模式");
                             break;
                         case "4"://水泵开机
-                            showLoadSuccess();
-                            boolean flag = true;
-                            if (version != null) {
-                                if (version.equals("2019")) {
-                                    flag = false;
-
-                                }
-                            }
-
-                            if (flag) {
-                                tvYuShe_WenDu.setText("当前的挡位为：" + oper_dang + "挡");
-                                PreferenceHelper.getInstance(mContext).putString(STARTSHELVES, "4");
-                                button = rbHeaterPumpMode;
-
-                                switchModel(rbHeaterPumpMode, 4);
-                                //档位开机
-                                if (oper_dang != null) {
-                                    openMode(Integer.parseInt(oper_dang));
-                                }
-                            } else {
-                                UIHelper.ToastMessage(WindHeaterActivity.this, "2019款机型不支持水泵模式", Toast.LENGTH_SHORT);
-                            }
+                            //showLoadSuccess();
+//
+//                            if (version != null) {
+//                                if (version.equals("2019")) {
+//                                    flag = false;
+//
+//                                }
+//                            }
+//
+//                            if (flag) {
+//                                tvYuShe_WenDu.setText("当前的挡位为：" + oper_dang + "挡");
+//                                PreferenceHelper.getInstance(mContext).putString(STARTSHELVES, "4");
+//                                button = rbHeaterPumpMode;
+//
+//                                switchModel(rbHeaterPumpMode, 4);
+//                                //档位开机
+//                                if (oper_dang != null) {
+//                                    openMode(Integer.parseInt(oper_dang));
+//                                }
+//                            } else {
+//                                UIHelper.ToastMessage(WindHeaterActivity.this, "不支持水泵模式", Toast.LENGTH_SHORT);
+//                            }
 
 
                             break;
@@ -338,13 +347,103 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
 
                             break;
                         case "9":
-                            showLoadSuccess();
-                            AlertUtil.t(WindHeaterActivity.this, "正在关机，请稍候");
+                            mTvWd.setText("00");
+                            // showLoadSuccess();
+                            //  AlertUtil.t(WindHeaterActivity.this, "正在关机，请稍候");
                             break;
                     }
                     // 驻车加热器:当前温度	3	是
                     String oper_wendu = messageData.substring(4, 6);
-                    mTvWd.setText(oper_wendu);
+                    oper_wendu += "0".equals(messageData.substring(6, 7)) ? "" : "." + messageData.substring(6, 7);
+
+                    // 水暖加热器:尾气温度 例如:-03	3	是
+                    String zhu_shui_tail_gas = messageData.substring(7, 10);
+                    // 驻车加热器:电压->0253 = 25.3	4	是
+                    String machine_voltage = messageData.substring(10, 13) + "." + messageData.substring(13, 14);
+                    // 驻车加热器:风机转速->13245	5	是
+                    String revolution = messageData.substring(14, 19);
+                    // 驻车加热器:加热塞功率->0264=26.4	4	是
+                    String power = messageData.substring(19, 23);
+                    // 驻车加热器:油泵频率->0265=26.5	4	是
+                    String frequency = messageData.substring(23, 27);
+                    frequency = frequency.substring(0, 3) + "." + frequency.substring(3);
+                    // 驻车加热器:入风口温度->例如:-026	4	是
+                    String in_temperature = messageData.substring(27, 31);
+                    // 驻车加热器:出风口温度->0128	4	是
+                    String out_temperature = messageData.substring(31, 35);
+
+                    String wendu = out_temperature.substring(2, 4);
+                    mTvWd.setText(wendu);
+
+                    // 驻车加热器故障码->01至18	2	 标准故障码
+                    String zhu_car_stoppage_no = messageData.substring(35, 37);
+                    zhu_car_stoppage_no = 0 <= zhu_car_stoppage_no.indexOf("a") ? "" : String.valueOf(Integer.parseInt(zhu_car_stoppage_no));
+
+                    if (!StringUtils.isEmpty(zhu_car_stoppage_no)) {
+                        if (myCarCaoZuoDialog_notify!=null&&myCarCaoZuoDialog_notify.isShowing()) {
+                            return;
+                        }
+                        Activity currentActivity = AppManager.getAppManager().currentActivity();
+                        if (currentActivity != null) {
+                            if (!currentActivity.getClass().getSimpleName().equals(DiagnosisActivity.class.getSimpleName())) {
+                                myCarCaoZuoDialog_notify = new MyCarCaoZuoDialog_Notify(getAppContext(), new MyCarCaoZuoDialog_Notify.OnDialogItemClickListener() {
+                                    @Override
+                                    public void clickLeft() {
+                                        // player.stop();
+
+                                    }
+
+                                    @Override
+                                    public void clickRight() {
+                                        DiagnosisActivity.actionStart(mContext);
+                                        //SoundPoolUtils.soundPool.release();
+
+                                    }
+                                }
+                                );
+
+                                myCarCaoZuoDialog_notify.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG);
+                                myCarCaoZuoDialog_notify.show();
+
+
+                            }
+                        }
+                    } else {
+
+                    }
+                    if (messageData.length() >= 38) {
+                        // 水泵状态   0 关  1 开 a 无水泵
+                        String shuiBengZhuangTai = messageData.substring(37, 38);
+
+                        switch (shuiBengZhuangTai) {
+                            case "0"://0关
+                                rbHeaterPumpMode.setChecked(false);
+                                break;
+                            case "1"://1开
+                                rbHeaterPumpMode.setChecked(true);
+                                break;
+                            case "a"://无
+                                flag = false;
+                                rbHeaterPumpMode.setVisibility(View.GONE);
+                                break;
+                        }
+                    }
+
+
+                    String worktime = "1";
+
+                    if (messageData.length() >= 44) {
+                        worktime = messageData.substring(38, 44);        // 风暖加热器:工作时长(小时)
+                    }
+
+                    if (messageData.length() >= 46) {
+                        // 驻车加热器故障码->01至18	2	其它公司用
+                        String zhu_car_stoppage_no_o = messageData.substring(44, 46);
+                        zhu_car_stoppage_no_o = 0 <= zhu_car_stoppage_no_o.indexOf("a") ? "" : String.valueOf(Integer.parseInt(zhu_car_stoppage_no_o));
+
+
+                    }
+
 
                 } else if (message.type == ConstanceValue.MSG_CAR_K) {
                     showLoadSuccess();
@@ -571,6 +670,32 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
      **/
     public void heaterSwitch(RadioButton button, int model) {
         if (button != null && button.isChecked()) {
+
+            if (model == 4) {
+
+                AndMqtt.getInstance().publish(new MqttPublish()
+                        .setMsg("M712.")
+                        .setQos(2).setRetained(false)
+                        .setTopic(CAR_CTROL), new IMqttActionListener() {
+                    @Override
+                    public void onSuccess(IMqttToken asyncActionToken) {
+                        Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
+                        //UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
+                        PreferenceHelper.getInstance(mContext).putString(ConfigValue.ZHILINGMA, "k71" + "2" + "1.");
+                        lordingDialog.setTextMsg("正在关闭水泵循环，请稍后");
+                        lordingDialog.show();
+                    }
+
+                    @Override
+                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                        Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+                        UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送失败", Toast.LENGTH_SHORT);
+                    }
+                });
+
+                return;
+            }
+
             AndMqtt.getInstance().publish(new MqttPublish()
                     .setMsg("M613.")
                     .setQos(2).setRetained(false)
@@ -584,25 +709,8 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                     switch (model) {
                         //档位模式
                         case 1:
-                            SoundPoolUtils.soundPool(mContext, R.raw.guanjizhong);
-                            lordingDialog.setTextMsg("正在关机，请稍后");
-                            lordingDialog.show();
-                            break;
                         case 7:
-                            SoundPoolUtils.soundPool(mContext, R.raw.guanjizhong);
-                            lordingDialog.setTextMsg("正在关机，请稍后");
-                            lordingDialog.show();
-                            break;
                         case 6:
-                            SoundPoolUtils.soundPool(mContext, R.raw.guanjizhong);
-                            lordingDialog.setTextMsg("正在关机，请稍后");
-                            lordingDialog.show();
-                            break;
-                        case 4:
-                            SoundPoolUtils.soundPool(mContext, R.raw.guanjizhong);
-                            lordingDialog.setTextMsg("正在关机，请稍后");
-                            lordingDialog.show();
-                            break;
                         case 2:
                             SoundPoolUtils.soundPool(mContext, R.raw.guanjizhong);
                             lordingDialog.setTextMsg("正在关机，请稍后");
@@ -619,6 +727,31 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
             });
         } else {
             if (!arcProgressBar.getIsOpen()) {
+
+                if (model == 4) {
+
+                    AndMqtt.getInstance().publish(new MqttPublish()
+                            .setMsg("M711.")
+                            .setQos(2).setRetained(false)
+                            .setTopic(CAR_CTROL), new IMqttActionListener() {
+                        @Override
+                        public void onSuccess(IMqttToken asyncActionToken) {
+                            Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
+                            //UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
+                            // SoundPoolUtils.soundPool(mContext, R.raw.guanjizhong);
+                            PreferenceHelper.getInstance(mContext).putString(ConfigValue.ZHILINGMA, "k71" + "1" + "1.");
+                            lordingDialog.setTextMsg("正在开启水泵循环，请稍后");
+                            lordingDialog.show();
+                        }
+
+                        @Override
+                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                            Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+                            UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送失败", Toast.LENGTH_SHORT);
+                        }
+                    });
+                    return;
+                }
 
                 AndMqtt.getInstance().publish(new MqttPublish()
                         .setMsg("M61" + model + ".")
@@ -971,7 +1104,8 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                 heaterSwitch(rbHeaterGearMode, 1);
                 break;
             case R.id.rb_heater_pump_mode://水泵模式
-                heaterSwitch(rbHeaterPumpMode, 4);
+                //heaterSwitch(rbHeaterPumpMode, 4);
+                setShuiBeng(rbHeaterPumpMode, 4);
                 break;
             case R.id.rb_heater_yby_mode://预泵油
                 heaterSwitch(rbHeaterYbyMode, 6);
@@ -1304,6 +1438,117 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                 Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
             }
         });
+    }
+
+    public void playMusic(int res) {
+        boolean flag = false;
+
+        Activity currentActivity = AppManager.getAppManager().currentActivity();
+        if (currentActivity != null) {
+            if (!currentActivity.getClass().getSimpleName().equals(DiagnosisActivity.class.getSimpleName())) {
+                MyCarCaoZuoDialog_Notify myCarCaoZuoDialog_notify = new MyCarCaoZuoDialog_Notify(getAppContext(), new MyCarCaoZuoDialog_Notify.OnDialogItemClickListener() {
+                    @Override
+                    public void clickLeft() {
+                        // player.stop();
+                        if (SoundPoolUtils.soundPool != null) {
+                            SoundPoolUtils.soundPool.release();
+                        }
+
+                    }
+
+                    @Override
+                    public void clickRight() {
+                        DiagnosisActivity.actionStart(mContext);
+                        //SoundPoolUtils.soundPool.release();
+                        if (SoundPoolUtils.soundPool != null) {
+                            SoundPoolUtils.soundPool.release();
+                        }
+
+                    }
+                }
+                );
+
+                myCarCaoZuoDialog_notify.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG);
+                myCarCaoZuoDialog_notify.show();
+                myCarCaoZuoDialog_notify.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        if (SoundPoolUtils.soundPool != null) {
+                            SoundPoolUtils.soundPool.release();
+                        }
+                    }
+                });
+
+            } else {
+                flag = true;
+            }
+        }
+
+        if (flag) {
+            return;
+        }
+        SoundPoolUtils.soundPool(mContext, res);
+
+    }
+
+
+    /**
+     * 向汽车盒子发送命令开启或关闭驻车加热器
+     *
+     * @param button 用户当前按下的按钮
+     * @param model  用户选择的开机模式常量
+     **/
+    public void setShuiBeng(RadioButton button, int model) {
+        if (button != null && button.isChecked()) {
+
+            if (model == 4) {
+                AndMqtt.getInstance().publish(new MqttPublish()
+                        .setMsg("M712.")
+                        .setQos(2).setRetained(false)
+                        .setTopic(CAR_CTROL), new IMqttActionListener() {
+                    @Override
+                    public void onSuccess(IMqttToken asyncActionToken) {
+                        Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
+                        //UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
+                        PreferenceHelper.getInstance(mContext).putString(ConfigValue.ZHILINGMA, "k71" + "2" + "1.");
+                        lordingDialog.setTextMsg("正在关闭水泵循环，请稍后");
+                        lordingDialog.show();
+                    }
+
+                    @Override
+                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                        Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+                        UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送失败", Toast.LENGTH_SHORT);
+                    }
+                });
+
+                return;
+            }
+        } else {
+            if (model == 4) {
+                AndMqtt.getInstance().publish(new MqttPublish()
+                        .setMsg("M711.")
+                        .setQos(2).setRetained(false)
+                        .setTopic(CAR_CTROL), new IMqttActionListener() {
+                    @Override
+                    public void onSuccess(IMqttToken asyncActionToken) {
+                        Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
+                        //UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
+                        PreferenceHelper.getInstance(mContext).putString(ConfigValue.ZHILINGMA, "k71" + "1" + "1.");
+                        lordingDialog.setTextMsg("正在开启水泵循环，请稍后");
+                        lordingDialog.show();
+                    }
+
+                    @Override
+                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                        Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+                        UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送失败", Toast.LENGTH_SHORT);
+                    }
+                });
+                return;
+            }
+
+        }
     }
 
 }

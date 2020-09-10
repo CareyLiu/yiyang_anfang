@@ -107,11 +107,11 @@ public class DoMqttValue {
 
                         } else if (arr[i].contains("Z")) {
 
-                            Notice n = new Notice();
-                            n.type = ConstanceValue.MSG_CAR_Z;
-                            n.content = arr[i];
-                            RxBus.getDefault().sendRx(n);
-                            Log.i("MSG_CAR_Z", n.content.toString());
+//                            Notice n = new Notice();
+//                            n.type = ConstanceValue.MSG_CAR_Z;
+//                            n.content = arr[i];
+//                            RxBus.getDefault().sendRx(n);
+//                            Log.i("MSG_CAR_Z", n.content.toString());
 
                         } else if (message.toString().contains("k")) {
                             Notice n = new Notice();

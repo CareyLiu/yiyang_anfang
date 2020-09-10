@@ -71,6 +71,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 import static com.smarthome.magic.config.MyApplication.CAR_NOTIFY;
+import static com.smarthome.magic.config.MyApplication.getAppContext;
 
 
 public class HomeActivity extends BaseActivity {
@@ -220,7 +221,7 @@ public class HomeActivity extends BaseActivity {
         Activity currentActivity = AppManager.getAppManager().currentActivity();
         if (currentActivity != null) {
             if (!currentActivity.getClass().getSimpleName().equals(DiagnosisActivity.class.getSimpleName())) {
-                MyCarCaoZuoDialog_Notify myCarCaoZuoDialog_notify = new MyCarCaoZuoDialog_Notify(HomeActivity.this, new MyCarCaoZuoDialog_Notify.OnDialogItemClickListener() {
+                MyCarCaoZuoDialog_Notify myCarCaoZuoDialog_notify = new MyCarCaoZuoDialog_Notify(getAppContext(), new MyCarCaoZuoDialog_Notify.OnDialogItemClickListener() {
                     @Override
                     public void clickLeft() {
                         // player.stop();
@@ -244,7 +245,6 @@ public class HomeActivity extends BaseActivity {
 
                 myCarCaoZuoDialog_notify.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG);
                 myCarCaoZuoDialog_notify.show();
-
                 myCarCaoZuoDialog_notify.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
@@ -253,7 +253,6 @@ public class HomeActivity extends BaseActivity {
                         }
                     }
                 });
-
 
             } else {
                 flag = true;
@@ -453,6 +452,8 @@ public class HomeActivity extends BaseActivity {
     public static HomeActivity getInstance() {
         return new HomeActivity();
     }
+
+
 
 
 }

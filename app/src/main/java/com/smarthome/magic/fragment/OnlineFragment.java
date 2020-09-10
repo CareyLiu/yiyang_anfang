@@ -118,7 +118,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
                             int i = mDatas.get(position).ccid.length() - 1;
                             String str = String.valueOf(mDatas.get(position).ccid.charAt(i));
                             Log.i("serverId", str);
-                            PreferenceHelper.getInstance(getActivity()).putString("car_server_id", str+"/");
+                            PreferenceHelper.getInstance(getActivity()).putString("car_server_id", str + "/");
                             if (NetworkUtils.isConnected(getActivity())) {
                                 Activity currentActivity = AppManager.getAppManager().currentActivity();
                                 if (currentActivity != null) {
@@ -130,6 +130,26 @@ public class OnlineFragment extends BaseFragment implements Observer {
                         } else {
                             // UIHelper.ToastMessage(getActivity(),"getActivity");
                         }
+
+
+//                        if (mDatas.get(position).device_name.contains("风暖")) {
+//                            PreferenceHelper.getInstance(getActivity()).putString("ccid", "aaaaaaaaaaaaaaaa90020018");
+//                            int i = mDatas.get(position).ccid.length() - 1;
+//                            String str = String.valueOf(mDatas.get(position).ccid.charAt(i));
+//                            Log.i("serverId", str);
+//                            PreferenceHelper.getInstance(getActivity()).putString("car_server_id", "8" + "/");
+//                            if (NetworkUtils.isConnected(getActivity())) {
+//                                Activity currentActivity = AppManager.getAppManager().currentActivity();
+//                                if (currentActivity != null) {
+//                                    startActivity(new Intent(getActivity(), WindHeaterActivity.class));
+//                                }
+//                            } else {
+//                                UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
+//                            }
+//                        } else {
+//                            // UIHelper.ToastMessage(getActivity(),"getActivity");
+//                        }
+
 
                         break;
                 }

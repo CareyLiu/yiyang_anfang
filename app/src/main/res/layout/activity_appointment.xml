@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/bg_heater"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_heater"
+    android:id="@+id/ll_main"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -11,7 +12,8 @@
     <RelativeLayout
         android:id="@+id/rl_main"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:visibility="visible">
 
         <RelativeLayout
             android:id="@+id/rl_back"
@@ -27,15 +29,14 @@
         </RelativeLayout>
 
         <TextView
-            android:layout_centerVertical="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:gravity="center"
             android:text="预约加热时间"
-            android:textSize="18sp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textSize="18sp" />
     </RelativeLayout>
-
 
 
     <FrameLayout
@@ -46,10 +47,11 @@
 
 
     </FrameLayout>
+
     <LinearLayout
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:gravity="center|top"
         android:orientation="horizontal">
 
@@ -78,6 +80,7 @@
             android:gravity="center"
             android:text="一"
             android:textColor="@color/white" />
+
         <CheckBox
             android:id="@+id/cb_tuesday"
             android:layout_width="40dp"
@@ -138,21 +141,22 @@
             android:text="六"
             android:textColor="@color/white" />
     </LinearLayout>
+
     <TextView
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="预约加热时长"
         android:textColor="@color/white"
-        android:layout_marginTop="15dp"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:visibility="gone" />
 
     <FrameLayout
-        android:visibility="gone"
         android:id="@+id/fl_time"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
     </FrameLayout>
 

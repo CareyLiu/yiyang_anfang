@@ -2,7 +2,7 @@ package com.smarthome.magic.model;
 
 import java.util.List;
 
-public class SheBeiLieBieListModel  {
+public class SheBeiLieBieListModel {
     /**
      * msg_code : 0000
      * msg : ok
@@ -44,6 +44,7 @@ public class SheBeiLieBieListModel  {
          */
 
         private String control_device_name;
+        public String control_type_id;
         private List<ControlDeviceListBean> control_device_list;
 
         public String getControl_device_name() {
@@ -78,6 +79,7 @@ public class SheBeiLieBieListModel  {
             private String validity_time;
             private String device_img_url;
             private String device_name;
+            public String control_type_id;
 
             public String getCcid() {
                 return ccid;

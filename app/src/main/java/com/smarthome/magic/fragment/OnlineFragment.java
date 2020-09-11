@@ -363,6 +363,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
                                 sheBeiModel1.validity_state = bean.getValidity_state();
                                 sheBeiModel1.validity_term = bean.getValidity_term();
                                 sheBeiModel1.validity_time = bean.getValidity_time();
+                                sheBeiModel1.device_type = response.body().data.get(i).control_type_id;
                                 mDatas.add(sheBeiModel1);
                             }
                         }

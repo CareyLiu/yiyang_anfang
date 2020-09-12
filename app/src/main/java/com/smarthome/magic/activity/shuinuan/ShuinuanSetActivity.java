@@ -14,6 +14,7 @@ import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuo_Base;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
@@ -126,18 +127,25 @@ public class ShuinuanSetActivity extends ShuinuanBaseActivity {
     }
 
     private void huifuchuchang() {
-        MyCarCaoZuoDialog_CaoZuo_Base base = new MyCarCaoZuoDialog_CaoZuo_Base(this, "恢复出厂", "是否执行恢复出厂", new MyCarCaoZuoDialog_CaoZuo_Base.OnDialogItemClickListener() {
+        TishiDialog tishiDialog=new TishiDialog(mContext, TishiDialog.TYPE_CAOZUO, new TishiDialog.TishiDialogListener() {
             @Override
-            public void clickLeft() {
+            public void onClickCancel(View v, TishiDialog dialog) {
 
             }
 
             @Override
-            public void clickRight() {
+            public void onClickConfirm(View v, TishiDialog dialog) {
                 sendHuifu();
             }
+
+            @Override
+            public void onDismiss(TishiDialog dialog) {
+
+            }
         });
-        base.show();
+        tishiDialog.setTextTitle("恢复出厂");
+        tishiDialog.setTextContent("是否执行恢复出厂");
+        tishiDialog.show();
     }
 
     /**

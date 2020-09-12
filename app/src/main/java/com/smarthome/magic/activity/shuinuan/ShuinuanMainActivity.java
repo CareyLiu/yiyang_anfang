@@ -358,7 +358,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
             }
 
             if (dianhuo.equals("1")) {
-                guzhangs.add("故障报警：点火失败");
+                guzhangs.add("故障报警  ：点火失败");
             }
 
             if (guzhangs.size() > 0) {

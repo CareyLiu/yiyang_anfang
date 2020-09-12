@@ -94,6 +94,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 
+import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
@@ -196,6 +197,9 @@ public class MyApplication extends MultiDexApplication {
 
     public void onCreate() {
         super.onCreate();
+        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);
+
         doMqttValue = new DoMqttValue();
         context = getApplicationContext();
         initRongYun();

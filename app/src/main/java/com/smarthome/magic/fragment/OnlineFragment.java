@@ -249,6 +249,15 @@ public class OnlineFragment extends BaseFragment implements Observer {
 
 
     @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+
+      //  Log.i("supportVisible", "visible");
+
+        getSheBeiData();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
@@ -279,6 +288,9 @@ public class OnlineFragment extends BaseFragment implements Observer {
                         srLSmart.finishRefresh();
                         carList.clear();
                         carList.addAll(response.body().data);
+                        if (carListAdapter!=null){
+                            return;
+                        }
 
                         if (carList.size() == 0) {
                             View view = View.inflate(getActivity(), R.layout.online_empty_view, null);

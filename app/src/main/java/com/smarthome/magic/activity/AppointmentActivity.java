@@ -26,6 +26,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
@@ -278,6 +279,8 @@ public class AppointmentActivity extends BaseActivity {
             str = str + "0";
         }
 
+
+
         str = str + chooseHour;
         str = str + chooseMin;
         map.put("time", str);
@@ -406,11 +409,13 @@ public class AppointmentActivity extends BaseActivity {
 
                         }
 
-                        String[] shijian = jinriShijian.split(":");
-                        int xiaoshi = Integer.parseInt(shijian[0]);
-                        int fenzhong = Integer.parseInt(shijian[1]);
-                        hour.setCurrentItem(xiaoshi);
-                        min.setCurrentItem(fenzhong);
+                        if (!StringUtils.isEmpty(jinriShijian)){
+                            String[] shijian = jinriShijian.split(":");
+                            int xiaoshi = Integer.parseInt(shijian[0]);
+                            int fenzhong = Integer.parseInt(shijian[1]);
+                            hour.setCurrentItem(xiaoshi);
+                            min.setCurrentItem(fenzhong);
+                        }
 
                     }
 

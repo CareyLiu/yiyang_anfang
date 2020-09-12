@@ -66,7 +66,7 @@ public class BindBoxActivity extends BaseActivity implements View.OnClickListene
                 } else {
                     EasyPermissions.requestPermissions(this, getString(R.string.xjqx), 0, Manifest.permission.CAMERA);
                 }
-                finish();
+               // finish();
                 break;
             case R.id.rl_hand_add:
                 finish();

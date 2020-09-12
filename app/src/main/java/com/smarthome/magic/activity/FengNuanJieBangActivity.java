@@ -111,7 +111,7 @@ public class FengNuanJieBangActivity extends ShuinuanBaseActivity {
 
 
         Map<String, String> map = new HashMap<>();
-        map.put("code", "00001");
+        map.put("code", "03202");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("ccid", ccid);
@@ -126,6 +126,8 @@ public class FengNuanJieBangActivity extends ShuinuanBaseActivity {
                     @Override
                     public void onSuccess(Response<AppResponse<Message.DataBean>> response) {
 
+                        UIHelper.ToastMessage(mContext, "解绑成功");
+                        finish();
                     }
 
                     @Override
@@ -133,9 +135,9 @@ public class FengNuanJieBangActivity extends ShuinuanBaseActivity {
                         String msg = response.getException().getMessage();
                         String[] msgToast = msg.split("：");
                         if (msgToast.length == 3) {
-                            AlertUtil.t(mContext,msgToast[2]);
-                        }else {
-                            AlertUtil.t(mContext,"网络异常");
+                            AlertUtil.t(mContext, msgToast[2]);
+                        } else {
+                            AlertUtil.t(mContext, "网络异常");
                         }
                     }
                 });
@@ -170,9 +172,9 @@ public class FengNuanJieBangActivity extends ShuinuanBaseActivity {
                         String msg = response.getException().getMessage();
                         String[] msgToast = msg.split("：");
                         if (msgToast.length == 3) {
-                            AlertUtil.t(mContext,msgToast[2]);
-                        }else {
-                            AlertUtil.t(mContext,"网络异常");
+                            AlertUtil.t(mContext, msgToast[2]);
+                        } else {
+                            AlertUtil.t(mContext, "网络异常");
                         }
                     }
                 });

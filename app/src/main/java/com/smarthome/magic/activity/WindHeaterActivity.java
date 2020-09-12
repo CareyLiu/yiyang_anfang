@@ -399,9 +399,11 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                         switch (shuiBengZhuangTai) {
                             case "0"://0关
                                 rbHeaterPumpMode.setChecked(false);
+                                rbHeaterPumpMode.setVisibility(View.VISIBLE);
                                 break;
                             case "1"://1开
                                 rbHeaterPumpMode.setChecked(true);
+                                rbHeaterPumpMode.setVisibility(View.VISIBLE);
                                 break;
                             case "a"://无
                                 flag = false;
@@ -1189,6 +1191,10 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                 //地理围栏
                 startActivity(new Intent(this, WebViewActivity.class).
                         putExtra("url", PreferenceHelper.getInstance(this).getString("fence_url", "")).putExtra("title", "地理围栏"));
+                break;
+
+            case R.id.fengnuan_jiebang:
+                FengNuanJieBangActivity.actionStart(mContext);
                 break;
             case R.id.nav_setting:
                 startActivity(new Intent(this, HeaterSettingActivity.class));

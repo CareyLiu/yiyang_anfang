@@ -132,7 +132,8 @@ public class OnlineFragment extends BaseFragment implements Observer {
                             String ccid = mDatas.get(position).ccid;
                             int pos = ccid.length() - 1;
                             String count = String.valueOf(ccid.charAt(pos)) + "/";
-
+                            PreferenceHelper.getInstance(getContext()).putString("ccid", mDatas.get(position).ccid);
+                            PreferenceHelper.getInstance(getContext()).putString("car_server_id", count);
                             if (NetworkUtils.isConnected(getActivity())) {
                                 Activity currentActivity = AppManager.getAppManager().currentActivity();
                                 if (currentActivity != null) {

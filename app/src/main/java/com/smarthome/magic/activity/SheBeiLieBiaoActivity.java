@@ -84,7 +84,8 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
                             String ccid = mDatas.get(position).ccid;
                             int pos = ccid.length() - 1;
                             String count = String.valueOf(ccid.charAt(pos)) + "/";
-
+                            PreferenceHelper.getInstance(mContext).putString("ccid", mDatas.get(position).ccid);
+                            PreferenceHelper.getInstance(mContext).putString("car_server_id", count);
                             if (NetworkUtils.isConnected(mContext)) {
                                 Activity currentActivity = AppManager.getAppManager().currentActivity();
                                 if (currentActivity != null) {

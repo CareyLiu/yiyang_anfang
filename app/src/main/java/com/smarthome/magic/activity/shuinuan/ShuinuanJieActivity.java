@@ -50,7 +50,6 @@ public class ShuinuanJieActivity extends ShuinuanBaseActivity {
     TextView tv_yzm;
     @BindView(R.id.bt_ok)
     Button bt_ok;
-
     private TimeCount timeCount;
     private String user_phone;
     private String smsId;
@@ -76,11 +75,9 @@ public class ShuinuanJieActivity extends ShuinuanBaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
-
         user_phone = PreferenceHelper.getInstance(mContext).getString("user_phone", "");
         tv_phone.setText(user_phone);
         timeCount = new TimeCount(60000, 1000, tv_yzm);
-
     }
 
     @OnClick({R.id.tv_yzm, R.id.bt_ok, R.id.back})
@@ -95,7 +92,6 @@ public class ShuinuanJieActivity extends ShuinuanBaseActivity {
             case R.id.back:
                 finish();
                 break;
-
         }
     }
 
@@ -113,11 +109,10 @@ public class ShuinuanJieActivity extends ShuinuanBaseActivity {
             return;
         }
 
-        String ccid = PreferenceHelper.getInstance(this).getString("ccid", "");
-
+        String ccid = PreferenceHelper.getInstance(this)    .getString("ccid", "");
 
         Map<String, String> map = new HashMap<>();
-        map.put("code", "00001");
+        map.put("code", "03202");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("ccid", ccid);
@@ -131,7 +126,8 @@ public class ShuinuanJieActivity extends ShuinuanBaseActivity {
                 .execute(new JsonCallback<AppResponse<Message.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<Message.DataBean>> response) {
-
+                        AlertUtil.t(mContext, "解绑成功");
+                        finish();
                     }
 
                     @Override
@@ -139,9 +135,9 @@ public class ShuinuanJieActivity extends ShuinuanBaseActivity {
                         String msg = response.getException().getMessage();
                         String[] msgToast = msg.split("：");
                         if (msgToast.length == 3) {
-                            AlertUtil.t(mContext,msgToast[2]);
-                        }else {
-                            AlertUtil.t(mContext,"网络异常");
+                            AlertUtil.t(mContext, msgToast[2]);
+                        } else {
+                            AlertUtil.t(mContext, "网络异常");
                         }
                     }
                 });
@@ -176,9 +172,9 @@ public class ShuinuanJieActivity extends ShuinuanBaseActivity {
                         String msg = response.getException().getMessage();
                         String[] msgToast = msg.split("：");
                         if (msgToast.length == 3) {
-                            AlertUtil.t(mContext,msgToast[2]);
-                        }else {
-                            AlertUtil.t(mContext,"网络异常");
+                            AlertUtil.t(mContext, msgToast[2]);
+                        } else {
+                            AlertUtil.t(mContext, "网络异常");
                         }
                     }
                 });

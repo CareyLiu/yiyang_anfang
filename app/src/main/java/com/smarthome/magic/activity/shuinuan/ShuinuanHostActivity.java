@@ -16,6 +16,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.common.StringUtils;
+import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuo_Base;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
@@ -106,7 +107,6 @@ public class ShuinuanHostActivity extends ShuinuanBaseActivity {
         }));
     }
 
-
     private void getData(String msg) {
         Log.i("水暖加热器返回的数据是", msg);
         if (msg.contains("i_s")) {
@@ -185,8 +185,8 @@ public class ShuinuanHostActivity extends ShuinuanBaseActivity {
                 clickSetHoset();
                 break;
             case R.id.bt_huifu:
+                huifuchuchang();
                 break;
-
             case R.id.ed_jiqigonglv:
                 clickJiqigonglv();
                 break;
@@ -557,5 +557,41 @@ public class ShuinuanHostActivity extends ShuinuanBaseActivity {
                 tvCixianquan4.setTextColor(Color.parseColor("#0F85FF"));
                 break;
         }
+    }
+
+    private void huifuchuchang() {
+        MyCarCaoZuoDialog_CaoZuo_Base base = new MyCarCaoZuoDialog_CaoZuo_Base(this, "恢复出厂", "主机参数是否恢复出厂设置", new MyCarCaoZuoDialog_CaoZuo_Base.OnDialogItemClickListener() {
+            @Override
+            public void clickLeft() {
+
+            }
+
+            @Override
+            public void clickRight() {
+                sendHuifu();
+            }
+        });
+        base.show();
+    }
+
+    /**
+     * 恢复出厂设置
+     */
+    private void sendHuifu() {
+        String data = "M_s101";
+        AndMqtt.getInstance().publish(new MqttPublish()
+                .setMsg(data)
+                .setQos(2).setRetained(false)
+                .setTopic(SN_Send), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+            }
+        });
     }
 }

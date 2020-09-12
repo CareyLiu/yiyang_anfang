@@ -12,6 +12,7 @@ import com.rairmmd.andmqtt.MqttPublish;
 import com.smarthome.magic.R;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuo_Base;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -36,6 +37,8 @@ public class ShuinuanSetActivity extends ShuinuanBaseActivity {
     LinearLayout item_set;
     @BindView(R.id.item_jiebang)
     LinearLayout item_jiebang;
+    @BindView(R.id.item_dingshi)
+    LinearLayout item_dingshi;
 
     @Override
     public boolean showToolBar() {
@@ -95,7 +98,7 @@ public class ShuinuanSetActivity extends ShuinuanBaseActivity {
         }
     }
 
-    @OnClick({R.id.back, R.id.item_state, R.id.item_host, R.id.item_ratio, R.id.item_set, R.id.item_jiebang})
+    @OnClick({R.id.back, R.id.item_state, R.id.item_host, R.id.item_ratio, R.id.item_set, R.id.item_jiebang, R.id.item_dingshi})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -115,6 +118,9 @@ public class ShuinuanSetActivity extends ShuinuanBaseActivity {
                 break;
             case R.id.item_jiebang:
                 ShuinuanJieActivity.actionStart(mContext);
+                break;
+            case R.id.item_dingshi:
+                ShuinuandingshiActivity.actionStart(mContext, PreferenceHelper.getInstance(this)    .getString("ccid", ""));
                 break;
         }
     }
@@ -154,6 +160,4 @@ public class ShuinuanSetActivity extends ShuinuanBaseActivity {
             }
         });
     }
-
-    public static final String SN_Send = "wh/hardware/11111111111111111111111";
 }

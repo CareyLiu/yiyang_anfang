@@ -47,8 +47,6 @@ import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-import static com.smarthome.magic.config.MyApplication.CAR_NOTIFY;
-
 public class ShuinuanMainActivity extends ShuinuanBaseActivity {
 
     @BindView(R.id.iv_heater_host)
@@ -150,8 +148,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
         isKaiji = false;
         iskaijiDianhou = false;
 
-
-        String ccid = getIntent().getStringExtra("ccid");
+        ccid = getIntent().getStringExtra("ccid");
         String count = getIntent().getStringExtra("count");
 
         if (!StringUtils.isEmpty(ccid)) {
@@ -471,7 +468,6 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
         }
     }
 
-
     /**
      * 水暖加热器开关
      */
@@ -528,7 +524,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
 
         yushewendu = "60";
         String data = "M_s0110000" + yushewendu + ".";
-        AndMqtt.getInstance().publish(new MqttPublish()
+            AndMqtt.getInstance().publish(new MqttPublish()
                 .setMsg(data)
                 .setQos(2).setRetained(false)
                 .setTopic(SN_Send), new IMqttActionListener() {

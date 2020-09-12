@@ -623,6 +623,13 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
+        <!--    水暖定时    -->
+        <activity
+            android:name=".activity.shuinuan.ShuinuandingshiActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
         <!--    水暖风油比参数    -->
         <activity
             android:name=".activity.shuinuan.ShuinuanFengyoubiActivity"

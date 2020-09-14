@@ -30,6 +30,7 @@ import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.PreferenceHelper;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.DoMqttValue;
 import com.smarthome.magic.util.SoundPoolUtils;
@@ -172,10 +173,10 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
     private void getData(String msg) {
         Log.i("水暖加热器返回的数据是", msg);
         if (msg.contains("j_s")) {
-            dialog.dismiss();
-            if (iskaijiDianhou == isKaiji) {
-                dialogClick.dismiss();
-            }
+//            dialog.dismiss();
+//            if (iskaijiDianhou == isKaiji) {
+//                dialogClick.dismiss();
+//            }
             sn_state = msg.substring(3, 4);//水暖状态
             String syscTime = msg.substring(4, 7);//加热剩余时长
             String shuibeng_state = msg.substring(7, 8);//水泵状态  1.工作中2.待机中
@@ -369,6 +370,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
 
     private void registerKtMqtt() {
         showDialog("设备连接中...");
+        initHandlerStart();
         //注册水暖加热器订阅
         AndMqtt.getInstance().subscribe(new MqttSubscribe()
                 .setTopic(SN_Send)
@@ -420,23 +422,6 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
         });
     }
 
-    private void sendJs() {
-        AndMqtt.getInstance().publish(new MqttPublish()
-                .setMsg(dataMsg)
-                .setQos(2).setRetained(false)
-                .setTopic(SN_Accept), new IMqttActionListener() {
-            @Override
-            public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("水暖加热器把实时数据发给了app端", "");
-            }
-
-            @Override
-            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-
-            }
-        });
-    }
-
     @OnClick({R.id.iv_heater_host, R.id.tv_lianjie_ccid, R.id.tv_shuiwen1, R.id.tv_shuiwen2, R.id.btn_heater_close, R.id.rl_back, R.id.rl_set})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -472,6 +457,9 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
      * 水暖加热器开关
      */
     private void sendSwich() {
+        sn_state = "0";
+        yushewendu = "80";
+
         if (TextUtils.isEmpty(sn_state) || TextUtils.isEmpty(yushewendu)) {
             AlertUtil.t(this, "水暖服务器未连接，请重新连接服务器");
             return;
@@ -486,6 +474,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
             data = "M_s0110000" + yushewendu + ".";
         }
 
+        showDialog("发送指令中...");
         initHandler();
 
         Log.i("发送的数据是多少", data);
@@ -524,7 +513,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
 
         yushewendu = "60";
         String data = "M_s0110000" + yushewendu + ".";
-            AndMqtt.getInstance().publish(new MqttPublish()
+        AndMqtt.getInstance().publish(new MqttPublish()
                 .setMsg(data)
                 .setQos(2).setRetained(false)
                 .setTopic(SN_Send), new IMqttActionListener() {
@@ -576,21 +565,84 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
 
     private void initHandler() {
         Message message = handler.obtainMessage(1);
-        handler.sendMessageDelayed(message, 5000);
+        handler.sendMessageDelayed(message, 1000);
     }
 
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
+                    time++;
                     if (iskaijiDianhou != isKaiji) {
-                        initHandler();
-                        getNs();
+                        if (time >= 30) {
+                            showTishiDialog();
+                        } else {
+                            initHandler();
+                        }
+                    } else {
+                        dialog.dismiss();
+                        time = 0;
                     }
+                    Log.i("计时是多少啊啊啊", "" + time);
                     break;
             }
             super.handleMessage(msg);
         }
     };
 
+    private int time = 0;
+
+    private void initHandlerStart() {
+        Message message = handlerStart.obtainMessage(1);
+        handlerStart.sendMessageDelayed(message, 1000);
+    }
+
+    private Handler handlerStart = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    time++;
+                    if (TextUtils.isEmpty(sn_state) || TextUtils.isEmpty(yushewendu)) {
+                        if (time >= 30) {
+                            showTishiDialog();
+                        } else {
+                            initHandlerStart();
+                        }
+                    } else {
+                        dialog.dismiss();
+                        time = 0;
+                    }
+                    Log.i("计时是多少啊啊啊", "" + time);
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
+
+    private void showTishiDialog() {
+        time = 0;
+        dialog.dismiss();
+        TishiDialog tishiDialog = new TishiDialog(mContext, TishiDialog.TYPE_CAOZUO, new TishiDialog.TishiDialogListener() {
+            @Override
+            public void onClickCancel(View v, TishiDialog dialog) {
+                finish();
+            }
+
+            @Override
+            public void onClickConfirm(View v, TishiDialog dialog) {
+                registerKtMqtt();
+            }
+
+            @Override
+            public void onDismiss(TishiDialog dialog) {
+
+            }
+        });
+
+        tishiDialog.setTextTitle("提示");
+        tishiDialog.setTextContent("服务器断开，是否重新连接");
+        tishiDialog.setTextConfirm("重新连接");
+        tishiDialog.setTextCancel("关闭页面");
+        tishiDialog.show();
+    }
 }

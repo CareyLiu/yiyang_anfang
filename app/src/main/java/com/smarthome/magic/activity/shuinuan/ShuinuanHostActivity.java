@@ -17,9 +17,12 @@ import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuo_Base;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
+
+import java.text.Format;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -110,22 +113,69 @@ public class ShuinuanHostActivity extends ShuinuanBaseActivity {
     private void getData(String msg) {
         Log.i("水暖加热器返回的数据是", msg);
         if (msg.contains("i_s")) {
-            citienum = msg.substring(3, 4);//磁铁数量  0：无1：单磁铁2：双磁铁3：三磁铁4：四磁铁
-            jiaresai = msg.substring(4, 5);//加热塞  0：京瓷 1：利麦
-            jiqigonglv = msg.substring(5, 8);//机器功率  020=2kw   037=3.7kw  170=17kw
-            dianya = msg.substring(8, 9);//电压  0：12V  1：24V  9：自动
-            rongjizhi = msg.substring(9, 11);//油泵容积值  16-70
-            guoyazhi = msg.substring(11, 14);//过压值  135=13.5V
-            guoyatime = msg.substring(14, 16);//过压报警时间  10=10秒
-            qianyazhi = msg.substring(16, 19);//欠压值  135=13.5V
-            qianyatime = msg.substring(19, 21);//欠压报警时间  10=10秒
+            dialog.dismiss();
+            String substring = msg.substring(3, msg.length() - 2);
+            btHuifu.setText(msg);
+            if (substring.contains("a")) {
+                showNodata();
+            } else {
+                citienum = msg.substring(3, 4);//磁铁数量  0：无1：单磁铁2：双磁铁3：三磁铁4：四磁铁
+                jiaresai = msg.substring(4, 5);//加热塞  0：京瓷 1：利麦
+                jiqigonglv = msg.substring(5, 8);//机器功率  020=2kw   037=3.7kw  170=17kw
+                dianya = msg.substring(8, 9);//电压  0：12V  1：24V  9：自动
+                rongjizhi = msg.substring(9, 11);//油泵容积值  16-70
+                guoyazhi = msg.substring(11, 14);//过压值  135=13.5V
+                guoyatime = msg.substring(14, 16);//过压报警时间  10=10秒
+                qianyazhi = msg.substring(16, 19);//欠压值  135=13.5V
+                qianyatime = msg.substring(19, 21);//欠压报警时间  10=10秒
+
+                clickCixianquan(citienum);
+                clickJiaresai(jiaresai);
+                edJiqigonglv.setText(formatNum(getFloat(jiqigonglv) / 10));
+                clickDianya(dianya);
+                edYoubengrongjizhi.setText(rongjizhi);
+
+                edGuoyazhi.setText(formatNum(getFloat(guoyazhi) / 10));
+                edGuoyazhiTime.setText(guoyatime);
+                edQianya.setText(formatNum(getFloat(qianyazhi) / 10));
+                edQianyaTime.setText(qianyatime);
+            }
+        } else if (msg.contains("k_s")) {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+                chenggong();
+            }
         }
+    }
+
+    private void showNodata() {
+        TishiDialog dialog = new TishiDialog(mContext, TishiDialog.TYPE_FAILED, new TishiDialog.TishiDialogListener() {
+            @Override
+            public void onClickCancel(View v, TishiDialog dialog) {
+
+            }
+
+            @Override
+            public void onClickConfirm(View v, TishiDialog dialog) {
+
+            }
+
+            @Override
+            public void onDismiss(TishiDialog dialog) {
+
+            }
+        });
+        dialog.setTextTitle("提示");
+        dialog.setTextContent("暂无主机参数信息");
+        dialog.setTextConfirm("关闭");
+        dialog.show();
     }
 
 
     private void getHost() {
-//        showDialog("连接中...");
+        showDialog("连接中...");
         //向水暖加热器发送获取主机参数
+        Log.i("LKjfdslkfsd    ", SN_Send);
         AndMqtt.getInstance().publish(new MqttPublish()
                 .setMsg("M_s112.")
                 .setQos(2).setRetained(false)
@@ -137,7 +187,7 @@ public class ShuinuanHostActivity extends ShuinuanBaseActivity {
 
             @Override
             public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-
+                Log.i("app端向水暖加热器获取主机参数", "记得是弗兰克斯戴假发的");
             }
         });
     }
@@ -497,44 +547,69 @@ public class ShuinuanHostActivity extends ShuinuanBaseActivity {
             qianyatime = "0" + qianyatime;
         }
 
-        Log.e(" 所有的数据是 ","M_s"+citienum+jiaresai+jiqigonglv+dianya+rongjizhi+guoyazhi+guoyatime+qianyazhi+qianyatime+".");
+        String host = "M_s13" + citienum + jiaresai + jiqigonglv + dianya + rongjizhi + guoyazhi + guoyatime + qianyazhi + qianyatime + ".";
+
+        Log.e(" 所有的数据是 ", host);
+
+        TishiDialog tishiDialog = new TishiDialog(mContext, TishiDialog.TYPE_CAOZUO, new TishiDialog.TishiDialogListener() {
+            @Override
+            public void onClickCancel(View v, TishiDialog dialog) {
+
+            }
+
+            @Override
+            public void onClickConfirm(View v, TishiDialog dialog) {
+                showDialog("发送中...");
+                sendHost(host);
+            }
+
+            @Override
+            public void onDismiss(TishiDialog dialog) {
+
+            }
+        });
+        tishiDialog.setTextTitle("提示");
+        tishiDialog.setTextContent("是否设置主机参数");
+        tishiDialog.show();
     }
 
 
     private void clickDianya(String type) {
-        dianya = type;
         tvDianya12v.setTextColor(Color.parseColor("#999999"));
         tvDianya24v.setTextColor(Color.parseColor("#999999"));
         tvDianyaZidong.setTextColor(Color.parseColor("#999999"));
         switch (type) {
             case "0":
                 tvDianya12v.setTextColor(Color.parseColor("#0F85FF"));
+                dianya = type;
                 break;
             case "1":
                 tvDianya24v.setTextColor(Color.parseColor("#0F85FF"));
+                dianya = type;
                 break;
             case "9":
                 tvDianyaZidong.setTextColor(Color.parseColor("#0F85FF"));
+                dianya = type;
                 break;
         }
     }
 
     private void clickJiaresai(String type) {
-        jiaresai = type;
         tvJiaresaiJingci.setTextColor(Color.parseColor("#999999"));
         tvJiaresaiLimai.setTextColor(Color.parseColor("#999999"));
         switch (type) {
             case "0":
+                jiaresai = type;
                 tvJiaresaiJingci.setTextColor(Color.parseColor("#0F85FF"));
                 break;
             case "1":
+                jiaresai = type;
                 tvJiaresaiLimai.setTextColor(Color.parseColor("#0F85FF"));
                 break;
         }
     }
 
     private void clickCixianquan(String type) {
-        citienum = type;
         tvCixianquan0.setTextColor(Color.parseColor("#999999"));
         tvCixianquan1.setTextColor(Color.parseColor("#999999"));
         tvCixianquan2.setTextColor(Color.parseColor("#999999"));
@@ -543,35 +618,66 @@ public class ShuinuanHostActivity extends ShuinuanBaseActivity {
         switch (type) {
             case "0":
                 tvCixianquan0.setTextColor(Color.parseColor("#0F85FF"));
+                citienum = type;
                 break;
             case "1":
                 tvCixianquan1.setTextColor(Color.parseColor("#0F85FF"));
+                citienum = type;
                 break;
             case "2":
                 tvCixianquan2.setTextColor(Color.parseColor("#0F85FF"));
+                citienum = type;
                 break;
             case "3":
                 tvCixianquan3.setTextColor(Color.parseColor("#0F85FF"));
+                citienum = type;
                 break;
             case "4":
                 tvCixianquan4.setTextColor(Color.parseColor("#0F85FF"));
+                citienum = type;
                 break;
         }
     }
 
-    private void huifuchuchang() {
-        MyCarCaoZuoDialog_CaoZuo_Base base = new MyCarCaoZuoDialog_CaoZuo_Base(this, "恢复出厂", "主机参数是否恢复出厂设置", new MyCarCaoZuoDialog_CaoZuo_Base.OnDialogItemClickListener() {
+    private void sendHost(String host) {
+        AndMqtt.getInstance().publish(new MqttPublish()
+                .setMsg(host)
+                .setQos(2).setRetained(false)
+                .setTopic(SN_Send), new IMqttActionListener() {
             @Override
-            public void clickLeft() {
-
+            public void onSuccess(IMqttToken asyncActionToken) {
+                dialog.dismiss();
+                chenggong();
             }
 
             @Override
-            public void clickRight() {
-                sendHuifu();
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
             }
         });
-        base.show();
+    }
+
+    private void huifuchuchang() {
+        TishiDialog tishiDialog = new TishiDialog(mContext, TishiDialog.TYPE_CAOZUO, new TishiDialog.TishiDialogListener() {
+            @Override
+            public void onClickCancel(View v, TishiDialog dialog) {
+
+            }
+
+            @Override
+            public void onClickConfirm(View v, TishiDialog dialog) {
+                showDialog("发送中...");
+                sendHuifu();
+            }
+
+            @Override
+            public void onDismiss(TishiDialog dialog) {
+
+            }
+        });
+        tishiDialog.setTextTitle("恢复出厂");
+        tishiDialog.setTextContent("是否执行恢复出厂");
+        tishiDialog.show();
     }
 
     /**
@@ -594,4 +700,6 @@ public class ShuinuanHostActivity extends ShuinuanBaseActivity {
             }
         });
     }
+
+
 }

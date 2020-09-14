@@ -114,7 +114,7 @@ public class ShuinuanStateActivity extends ShuinuanBaseActivity {
                     tv_jiareji_state.setText("关机");
                     break;
             }
-            tv_dangqianwendu.setText(yushewendu + "℃");
+            tv_dangqianwendu.setText(chushuikowendu + "℃");
             tv_yushe_wendu.setText(yushewendu + "℃");
             tv_dianya.setText(dianyan + "V");
             tv_time.setText(zongTime + "H");

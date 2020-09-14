@@ -26,6 +26,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
@@ -218,7 +219,6 @@ public class ShuinuandingshiActivity extends BaseActivity {
      * @param context
      */
     public static void actionStart(Context context, String str) {
-
         Intent intent = new Intent(context, ShuinuandingshiActivity.class);
         intent.putExtra("ccid", str);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -228,8 +228,6 @@ public class ShuinuandingshiActivity extends BaseActivity {
 
     //设置定时
     public void setDingShi(String ccid) {
-
-
         Map<String, String> map = new HashMap<>();
         map.put("code", "03200");
         map.put("key", Urls.key);
@@ -339,8 +337,7 @@ public class ShuinuandingshiActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse<DingShiResultModel.DataBean>>() {
                     @Override
                     public void onSuccess(final Response<AppResponse<DingShiResultModel.DataBean>> response) {
-
-                        UIHelper.ToastMessage(mContext, response.body().msg);
+//                        UIHelper.ToastMessage(mContext, response.body().msg);
                         weekTimes = response.body().data.get(0).getWeeks_time();
                         jinriShijian = response.body().data.get(0).getShifen_time();
 
@@ -406,12 +403,15 @@ public class ShuinuandingshiActivity extends BaseActivity {
 
                         }
 
-                        String[] shijian = jinriShijian.split(":");
-                        int xiaoshi = Integer.parseInt(shijian[0]);
-                        int fenzhong = Integer.parseInt(shijian[1]);
-                        hour.setCurrentItem(xiaoshi);
-                        min.setCurrentItem(fenzhong);
-
+                        if (!StringUtils.isEmpty(jinriShijian)) {
+                            String[] shijian = jinriShijian.split(":");
+                            if (shijian.length>=2){
+                                int xiaoshi = Integer.parseInt(shijian[0]);
+                                int fenzhong = Integer.parseInt(shijian[1]);
+                                hour.setCurrentItem(xiaoshi);
+                                min.setCurrentItem(fenzhong);
+                            }
+                        }
                     }
 
                     @Override

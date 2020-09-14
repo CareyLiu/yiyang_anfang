@@ -1,31 +1,24 @@
 package com.smarthome.magic.activity.shuinuan;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gyf.barlibrary.ImmersionBar;
 import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
 import com.rairmmd.andmqtt.MqttSubscribe;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.wode_page.bazinew.YanpanActivity;
 import com.smarthome.magic.app.App;
-import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.common.StringUtils;
@@ -33,7 +26,6 @@ import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.DoMqttValue;
-import com.smarthome.magic.util.SoundPoolUtils;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
@@ -72,6 +64,8 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
     RelativeLayout rl_back;
     @BindView(R.id.rl_set)
     RelativeLayout rl_set;
+    @BindView(R.id.tv_ddd)
+    TextView tvDdd;
 
     private String sn_state;     //水暖状态
     private String yushewendu;      //预设温度
@@ -132,11 +126,29 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
         guzhangDialog = new GuzhangDialog(mContext, new GuzhangDialog.Guzhang() {
             @Override
             public void onClickConfirm(View v, GuzhangDialog dialog) {
-
+                dealGuzhang();
             }
 
             @Override
             public void onDismiss(GuzhangDialog dialog) {
+
+            }
+        });
+    }
+
+    private void dealGuzhang() {
+        String data = "M_s071";
+        AndMqtt.getInstance().publish(new MqttPublish()
+                .setMsg(data)
+                .setQos(2).setRetained(false)
+                .setTopic(SN_Send), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
 
             }
         });
@@ -192,6 +204,27 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
             String danqiandangwei = msg.substring(37, 38);// 1.一档2.二档（注：用*占位）
             yushewendu = msg.substring(38, 40);//预设温度（℃） 预设温度（℃）
             String zongTime = msg.substring(40, 45);//总时长 （小时）
+            String daqiya = msg.substring(45, 48);//大气压
+            String haibagaodu = msg.substring(48, 52);//海拔高度
+            String hanyangliang = msg.substring(52, 55);//含氧量
+            String xinhaoqiangdu = msg.substring(55, 57);//信号强度
+
+            String num = "水暖状态" + sn_state + "  加热剩余时长" + syscTime + "  水泵状态" + shuibeng_state + "  油泵状态" + youbeng_state
+                    + "  风机状态" + fengji_state
+                    + "  电压" + dianyan
+                    + "  风机转速" + fengjizhuansu
+                    + "  加热塞功率" + jairesaigonglv
+                    + "  油泵频率" + youbenggonglv
+                    + "    入水口温度" + rushukowendu
+                    + "    出水口温度" + chushuikowendu
+                    + "    尾气温度" + weiqiwendu
+                    + "    尾气温度" + weiqiwendu
+                    + "  一档二挡" + danqiandangwei
+                    + "  总时长" + zongTime + "   大气压" + daqiya + "    海拔高度" + haibagaodu + "  含氧量" + hanyangliang
+                    + "  信号强度" + xinhaoqiangdu;
+
+            tvDdd.setText(msg + "      " + num);
+
 
             switch (sn_state) {
                 case "1"://开机中
@@ -644,5 +677,19 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
         tishiDialog.setTextConfirm("重新连接");
         tishiDialog.setTextCancel("关闭页面");
         tishiDialog.show();
+    }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        showTishiDialog();
+//    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeMessages(1);
+        handlerStart.removeMessages(1);
     }
 }

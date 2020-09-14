@@ -2,18 +2,22 @@ package com.smarthome.magic.activity.shuinuan;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 
 import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.util.AlertUtil;
+
+import java.text.DecimalFormat;
 
 import androidx.annotation.Nullable;
 
 public class ShuinuanBaseActivity extends BaseActivity {
 
-    public String SN_Send = "wh/hardware/8/aaaaaaaaaaaaaaaa20040018";
-    public String SN_Accept = "wh/app/8/aaaaaaaaaaaaaaaa20040018";
-    public String ccid="aaaaaaaaaaaaaaaa20040018";
+    public static String SN_Send = "wh/hardware/8/aaaaaaaaaaaaaaaa20040018";
+    public static String SN_Accept = "wh/app/8/aaaaaaaaaaaaaaaa20040018";
+    public static String ccid = "aaaaaaaaaaaaaaaa20040018";
 
 
     @Override
@@ -76,4 +80,28 @@ public class ShuinuanBaseActivity extends BaseActivity {
         AlertUtil.t(this, msg);
     }
 
+    public String formatNum(float num) {
+        String format = new DecimalFormat("#.#").format(num);
+        return format;
+    }
+
+    public void chenggong() {
+        TishiDialog dialog = new TishiDialog(mContext, TishiDialog.TYPE_SUCESS, new TishiDialog.TishiDialogListener() {
+            @Override
+            public void onClickCancel(View v, TishiDialog dialog) {
+
+            }
+
+            @Override
+            public void onClickConfirm(View v, TishiDialog dialog) {
+
+            }
+
+            @Override
+            public void onDismiss(TishiDialog dialog) {
+
+            }
+        });
+        dialog.show();
+    }
 }

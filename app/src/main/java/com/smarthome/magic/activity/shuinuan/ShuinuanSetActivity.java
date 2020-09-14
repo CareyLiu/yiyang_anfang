@@ -121,13 +121,13 @@ public class ShuinuanSetActivity extends ShuinuanBaseActivity {
                 ShuinuanJieActivity.actionStart(mContext);
                 break;
             case R.id.item_dingshi:
-                ShuinuandingshiActivity.actionStart(mContext, PreferenceHelper.getInstance(this)    .getString("ccid", ""));
+                ShuinuandingshiActivity.actionStart(mContext, ccid);
                 break;
         }
     }
 
     private void huifuchuchang() {
-        TishiDialog tishiDialog=new TishiDialog(mContext, TishiDialog.TYPE_CAOZUO, new TishiDialog.TishiDialogListener() {
+        TishiDialog tishiDialog = new TishiDialog(mContext, TishiDialog.TYPE_CAOZUO, new TishiDialog.TishiDialogListener() {
             @Override
             public void onClickCancel(View v, TishiDialog dialog) {
 
@@ -135,6 +135,7 @@ public class ShuinuanSetActivity extends ShuinuanBaseActivity {
 
             @Override
             public void onClickConfirm(View v, TishiDialog dialog) {
+                showDialog("发送中...");
                 sendHuifu();
             }
 
@@ -159,7 +160,8 @@ public class ShuinuanSetActivity extends ShuinuanBaseActivity {
                 .setTopic(SN_Send), new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
-
+                dialog.dismiss();
+                chenggong();
             }
 
             @Override

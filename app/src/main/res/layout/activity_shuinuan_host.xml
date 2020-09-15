@@ -466,7 +466,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="30dp"
                 android:orientation="horizontal"
-                android:paddingHorizontal="15dp">
+                android:paddingHorizontal="15dp"
+                android:visibility="invisible">
 
                 <TextView
                     android:id="@+id/bt_quxiao"

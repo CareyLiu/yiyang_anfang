@@ -115,7 +115,6 @@ public class ShuinuanHostActivity extends ShuinuanBaseActivity {
         if (msg.contains("i_s")) {
             dialog.dismiss();
             String substring = msg.substring(3, msg.length() - 2);
-            btHuifu.setText(msg);
             if (substring.contains("a")) {
                 showNodata();
             } else {

@@ -14,6 +14,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuo_Base;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
@@ -82,14 +83,43 @@ public class ShuinuanFengyoubiActivity extends ShuinuanBaseActivity {
 
     private void getData(String msg) {
         Log.i("水暖加热器返回的数据是", msg);
+
+        dialog.dismiss();
+        if (msg.contains("a")) {
+            showNodata();
+        }
+
         if (msg.contains("h_s")) {
 
         }
     }
 
+    private void showNodata() {
+        TishiDialog dialog = new TishiDialog(mContext, TishiDialog.TYPE_FAILED, new TishiDialog.TishiDialogListener() {
+            @Override
+            public void onClickCancel(View v, TishiDialog dialog) {
+
+            }
+
+            @Override
+            public void onClickConfirm(View v, TishiDialog dialog) {
+
+            }
+
+            @Override
+            public void onDismiss(TishiDialog dialog) {
+
+            }
+        });
+        dialog.setTextTitle("提示");
+        dialog.setTextContent("暂无风油比参数信息");
+        dialog.setTextConfirm("关闭");
+        dialog.show();
+    }
+
+
     private void getHost() {
-//        showDialog("连接中...");
-        //向水暖加热器发送获取风油比参数
+        showDialog("连接中...");
         AndMqtt.getInstance().publish(new MqttPublish()
                 .setMsg("M_s111.")
                 .setQos(2).setRetained(false)
@@ -106,20 +136,6 @@ public class ShuinuanFengyoubiActivity extends ShuinuanBaseActivity {
         });
     }
 
-    private void huifuchuchang() {
-        MyCarCaoZuoDialog_CaoZuo_Base base = new MyCarCaoZuoDialog_CaoZuo_Base(this, "恢复出厂", "风油比参数是否恢复出厂设置", new MyCarCaoZuoDialog_CaoZuo_Base.OnDialogItemClickListener() {
-            @Override
-            public void clickLeft() {
-
-            }
-
-            @Override
-            public void clickRight() {
-                sendHuifu();
-            }
-        });
-        base.show();
-    }
 
     /**
      * 恢复出厂设置
@@ -132,7 +148,7 @@ public class ShuinuanFengyoubiActivity extends ShuinuanBaseActivity {
                 .setTopic(SN_Send), new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
-
+                dialog.dismiss();
             }
 
             @Override
@@ -164,5 +180,29 @@ public class ShuinuanFengyoubiActivity extends ShuinuanBaseActivity {
                 huifuchuchang();
                 break;
         }
+    }
+
+
+    private void huifuchuchang() {
+        TishiDialog tishiDialog = new TishiDialog(mContext, TishiDialog.TYPE_CAOZUO, new TishiDialog.TishiDialogListener() {
+            @Override
+            public void onClickCancel(View v, TishiDialog dialog) {
+
+            }
+
+            @Override
+            public void onClickConfirm(View v, TishiDialog dialog) {
+                showDialog("发送中...");
+                sendHuifu();
+            }
+
+            @Override
+            public void onDismiss(TishiDialog dialog) {
+
+            }
+        });
+        tishiDialog.setTextTitle("恢复出厂");
+        tishiDialog.setTextContent("是否执行恢复出厂");
+        tishiDialog.show();
     }
 }

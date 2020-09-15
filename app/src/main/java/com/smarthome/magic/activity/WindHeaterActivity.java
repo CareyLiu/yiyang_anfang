@@ -49,6 +49,7 @@ import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.LordingDialog;
@@ -662,6 +663,25 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                 Log.i("Rair", "(MainActivity.java:98)-onFailure:-&gt;取消订阅失败");
             }
         });
+
+
+        for (int i = 0; i < MyApplication.mqttDingyue.size(); i++) {
+            if (MyApplication.mqttDingyue.get(i).equals(CAR_NOTIFY)) {
+                MyApplication.mqttDingyue.remove(i);
+            }
+        }
+
+        for (int i = 0; i < MyApplication.mqttDingyue.size(); i++) {
+            if (MyApplication.mqttDingyue.get(i).equals(CARBOX_GETNOW)) {
+                MyApplication.mqttDingyue.remove(i);
+            }
+        }
+
+        for (int i = 0; i < MyApplication.mqttDingyue.size(); i++) {
+            if (MyApplication.mqttDingyue.get(i).equals(CAR_CTROL)) {
+                MyApplication.mqttDingyue.remove(i);
+            }
+        }
     }
 
     /**
@@ -1349,7 +1369,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
                 Log.i("Rair", "notify:  " + CAR_NOTIFY + "CAR_NOTIFY 我是在类里面订阅的");
-
+                MyApplication.mqttDingyue.add(CAR_NOTIFY);
             }
 
             @Override
@@ -1382,7 +1402,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
                 Log.i("Rair", "订阅成功 carbox_getnow:  " + CARBOX_GETNOW + " CARBOX_GETNOW 我是在类里面订阅的");
-
+                MyApplication.mqttDingyue.add(CARBOX_GETNOW);
             }
 
             @Override
@@ -1399,6 +1419,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
                 Log.i("Rair", " Rair用户订阅成功" + "wit/app/" + of_user_id + " CAR_CTROL 我是在类里面订阅的");
+                MyApplication.mqttDingyue.add(CAR_CTROL);
             }
 
             @Override

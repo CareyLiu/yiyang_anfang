@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.LocusId;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -85,6 +86,7 @@ import org.jaaksi.pickerview.util.Util;
 import org.jaaksi.pickerview.widget.DefaultCenterDecoration;
 import org.jaaksi.pickerview.widget.PickerView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -120,6 +122,8 @@ public class MyApplication extends MultiDexApplication {
 
     public Activity activity_main;
 
+
+    public static List<String> mqttDingyue = new ArrayList<>();
 
     public static String getServer_id() {
         car_server_id = PreferenceHelper.getInstance(context).getString("car_server_id", "");
@@ -197,7 +201,7 @@ public class MyApplication extends MultiDexApplication {
 
     public void onCreate() {
         super.onCreate();
-        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+        JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);
 
         doMqttValue = new DoMqttValue();
@@ -488,6 +492,39 @@ public class MyApplication extends MultiDexApplication {
                         Log.i("Rair", "(MainActivity.java:29)-connectComplete:-&gt;连接完成");
                         sendRx(ConstanceValue.MSG_MQTT_CONNECTCOMPLETE, "");
 
+
+                        AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                                .setTopic(CARBOX_JINGBAO)
+                                .setQos(2), new IMqttActionListener() {
+                            @Override
+                            public void onSuccess(IMqttToken asyncActionToken) {
+                                Log.i("Rair", "自动连接 成功" + CARBOX_JINGBAO);
+                            }
+
+                            @Override
+                            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                                Log.i("Rair", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
+                            }
+                        });
+
+
+                        Log.i("我重连了啊啊啊的大小", mqttDingyue.size() + "");
+                        for (int i = 0; i < mqttDingyue.size(); i++) {
+                            Log.i("我重连了啊啊啊", mqttDingyue.get(i));
+                            AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                                    .setTopic(mqttDingyue.get(i))
+                                    .setQos(2), new IMqttActionListener() {
+                                @Override
+                                public void onSuccess(IMqttToken asyncActionToken) {
+
+                                }
+
+                                @Override
+                                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                                }
+                            });
+                        }
                     }
 
                     @Override
@@ -539,23 +576,7 @@ public class MyApplication extends MultiDexApplication {
                         , new IMqttActionListener() {
                             @Override
                             public void onSuccess(IMqttToken asyncActionToken) {
-
                                 Log.i("Rair", "(MainActivity.java:51)-onSuccess:-&gt;连接成功");
-
-                                AndMqtt.getInstance().subscribe(new MqttSubscribe()
-                                        .setTopic(CARBOX_JINGBAO)
-                                        .setQos(2), new IMqttActionListener() {
-                                    @Override
-                                    public void onSuccess(IMqttToken asyncActionToken) {
-                                        Log.i("Rair", "自动连接 成功" + CARBOX_JINGBAO);
-                                    }
-
-                                    @Override
-                                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                                        Log.i("Rair", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
-                                    }
-                                });
-
                                 sendRx(ConstanceValue.MSG_MQTT_CONNECT_CHONGLIAN_ONSUCCESS, "");
 
                             }

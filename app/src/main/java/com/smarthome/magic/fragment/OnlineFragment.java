@@ -114,8 +114,14 @@ public class OnlineFragment extends BaseFragment implements Observer {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.constrain:
+                        if (mDatas.get(position).validity_state.equals("2")) {
+                            UIHelper.ToastMessage(getActivity(), "当前设备已过期");
+                            return;
+                        }
                         if (mDatas.get(position).device_type.equals("1")) {
-                            PreferenceHelper.getInstance(getActivity()).putString("ccid", "aaaaaaaaaaaaaaaa90020018");
+                            // mDatas.get(position).ccid = "aaaaaaaaaaaaaaaa90020018";
+
+                            PreferenceHelper.getInstance(getActivity()).putString("ccid", mDatas.get(position).ccid);
                             int i = mDatas.get(position).ccid.length() - 1;
                             String str = String.valueOf(mDatas.get(position).ccid.charAt(i));
                             Log.i("serverId", str);
@@ -253,7 +259,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
     public void onSupportVisible() {
         super.onSupportVisible();
 
-      //  Log.i("supportVisible", "visible");
+        //  Log.i("supportVisible", "visible");
 
         getSheBeiData();
     }
@@ -289,7 +295,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
                         srLSmart.finishRefresh();
                         carList.clear();
                         carList.addAll(response.body().data);
-                        if (carListAdapter!=null){
+                        if (carListAdapter != null) {
                             return;
                         }
 

@@ -376,7 +376,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                             jiGeXinHao = "四格信号";
                         }
 
-                        UIHelper.ToastMessage(mContext, jiGeXinHao);
+                        //UIHelper.ToastMessage(mContext, jiGeXinHao);
                     }
 
 

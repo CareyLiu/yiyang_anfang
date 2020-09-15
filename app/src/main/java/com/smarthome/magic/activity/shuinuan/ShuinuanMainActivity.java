@@ -17,11 +17,14 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
 import com.rairmmd.andmqtt.MqttSubscribe;
+import com.rairmmd.andmqtt.MqttUnSubscribe;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.WindHeaterActivity;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.common.StringUtils;
+import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.util.AlertUtil;
@@ -40,7 +43,7 @@ import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-public class ShuinuanMainActivity extends ShuinuanBaseActivity {
+public class ShuinuanMainActivity extends ShuinuanBaseActivity implements View.OnLongClickListener {
 
     @BindView(R.id.iv_heater_host)
     RelativeLayout iv_heater_host;
@@ -74,8 +77,6 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
 
     private AnimationDrawable animationDrawable;
 
-    private boolean isDingcheng = false;
-    private String dataMsg = "j_s312022202531234502640265100100010018002310.";
     private boolean isKaiji;
     private boolean iskaijiDianhou;
     private GuzhangDialog guzhangDialog;
@@ -167,7 +168,14 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
         if (!StringUtils.isEmpty(ccid)) {
             SN_Send = "wh/hardware/" + count + ccid;
             SN_Accept = "wh/app/" + count + ccid;
+
+            MyApplication.mqttDingyue.add(SN_Send);
+            MyApplication.mqttDingyue.add(SN_Accept);
         }
+
+        tv_shuiwen1.setOnLongClickListener(this);
+        tv_shuiwen2.setOnLongClickListener(this);
+        btn_heater_close.setOnLongClickListener(this);
     }
 
     private void initHuidiao() {
@@ -185,10 +193,6 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
     private void getData(String msg) {
         Log.i("水暖加热器返回的数据是", msg);
         if (msg.contains("j_s")) {
-//            dialog.dismiss();
-//            if (iskaijiDianhou == isKaiji) {
-//                dialogClick.dismiss();
-//            }
             sn_state = msg.substring(3, 4);//水暖状态
             String syscTime = msg.substring(4, 7);//加热剩余时长
             String shuibeng_state = msg.substring(7, 8);//水泵状态  1.工作中2.待机中
@@ -404,6 +408,10 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
     private void registerKtMqtt() {
         showDialog("设备连接中...");
         initHandlerStart();
+        getNs();
+    }
+
+    private void getNs() {
         //注册水暖加热器订阅
         AndMqtt.getInstance().subscribe(new MqttSubscribe()
                 .setTopic(SN_Send)
@@ -434,10 +442,6 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
             }
         });
 
-        getNs();
-    }
-
-    private void getNs() {
         //向水暖加热器发送获取实时数据
         AndMqtt.getInstance().publish(new MqttPublish()
                 .setMsg("N_s.")
@@ -455,21 +459,12 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
         });
     }
 
-    @OnClick({R.id.iv_heater_host, R.id.tv_lianjie_ccid, R.id.tv_shuiwen1, R.id.tv_shuiwen2, R.id.btn_heater_close, R.id.rl_back, R.id.rl_set})
+    @OnClick({R.id.iv_heater_host, R.id.tv_lianjie_ccid, R.id.rl_back, R.id.rl_set})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_heater_host:
                 break;
             case R.id.tv_lianjie_ccid:
-                break;
-            case R.id.tv_shuiwen1:
-                sendTemperature60();
-                break;
-            case R.id.tv_shuiwen2:
-                sendTemperature80();
-                break;
-            case R.id.btn_heater_close:
-                sendSwich();
                 break;
             case R.id.rl_back:
                 finish();
@@ -607,16 +602,16 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
                 case 1:
                     time++;
                     if (iskaijiDianhou != isKaiji) {
-                        if (time >= 30) {
+                        if (time >= 60) {
                             showTishiDialog();
                         } else {
                             initHandler();
+                            getNs();
                         }
                     } else {
                         dialog.dismiss();
                         time = 0;
                     }
-                    Log.i("计时是多少啊啊啊", "" + time);
                     break;
             }
             super.handleMessage(msg);
@@ -679,17 +674,63 @@ public class ShuinuanMainActivity extends ShuinuanBaseActivity {
         tishiDialog.show();
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        showTishiDialog();
-//    }
-
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         handler.removeMessages(1);
         handlerStart.removeMessages(1);
+
+        AndMqtt.getInstance().unSubscribe(new MqttUnSubscribe().setTopic(SN_Send), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+            }
+        });
+
+        AndMqtt.getInstance().unSubscribe(new MqttUnSubscribe().setTopic(SN_Accept), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+            }
+        });
+
+        for (int i = 0; i < MyApplication.mqttDingyue.size(); i++) {
+            if (MyApplication.mqttDingyue.get(i).equals(SN_Send)) {
+                MyApplication.mqttDingyue.remove(i);
+            }
+        }
+
+        for (int i = 0; i < MyApplication.mqttDingyue.size(); i++) {
+            if (MyApplication.mqttDingyue.get(i).equals(SN_Accept)) {
+                MyApplication.mqttDingyue.remove(i);
+            }
+        }
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_shuiwen1:
+                sendTemperature60();
+                break;
+            case R.id.tv_shuiwen2:
+                sendTemperature80();
+                break;
+            case R.id.btn_heater_close:
+                sendSwich();
+                break;
+        }
+
+        return false;
     }
 }

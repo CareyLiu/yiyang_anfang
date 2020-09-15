@@ -67,6 +67,7 @@
         android:textColor="#ffffffff"
         android:textSize="13sp"
         android:textStyle="bold"
+        android:visibility="invisible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_heater_host" />
@@ -151,11 +152,11 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="31dp"
-        android:background="@mipmap/car_close"
-        android:clickable="true"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_shuiwen2" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_shuiwen2"
+        android:background="@mipmap/car_close"
+        android:clickable="true" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -170,7 +171,8 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textColor="@color/white"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:visibility="gone" />
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

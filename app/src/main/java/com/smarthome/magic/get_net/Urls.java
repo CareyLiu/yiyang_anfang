@@ -29,4 +29,5 @@ public class Urls {
     public static String PAYSUCCESS = SERVER_URL + "msg/pay/create/ok";//支付成功
     public static String DINGSHI = SERVER_URL + "fn/common";//定时
 
+
 }

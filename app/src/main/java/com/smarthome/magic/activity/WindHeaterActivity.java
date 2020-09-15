@@ -10,6 +10,7 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Contacts;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -357,7 +358,27 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                     oper_wendu += "0".equals(messageData.substring(6, 7)) ? "" : "." + messageData.substring(6, 7);
 
                     // 水暖加热器:尾气温度 例如:-03	3	是
-                    String zhu_shui_tail_gas = messageData.substring(7, 10);
+                    String xinhaoQiangDu = messageData.substring(7, 9);
+                    String jiGeXinHao = "没有接到信号";
+                    if (!StringUtils.isEmpty(xinhaoQiangDu)) {
+                        int xinhao = Integer.valueOf(xinhaoQiangDu);
+
+                        if (xinhao < 15) {
+                            jiGeXinHao = "无信号";
+                        } else if (xinhao >= 15 && xinhao < -19) {
+                            jiGeXinHao = "一格信号";
+                        } else if (xinhao >= 20 && xinhao <= 25) {
+                            jiGeXinHao = "两格信号";
+                        } else if (xinhao >= 26 && xinhao <= 30) {
+                            jiGeXinHao = "三格信号";
+                        } else if (xinhao >= 30 && xinhao <= 35) {
+                            jiGeXinHao = "四格信号";
+                        }
+
+                        UIHelper.ToastMessage(mContext, jiGeXinHao);
+                    }
+
+
                     // 驻车加热器:电压->0253 = 25.3	4	是
                     String machine_voltage = messageData.substring(10, 13) + "." + messageData.substring(13, 14);
                     // 驻车加热器:风机转速->13245	5	是
@@ -566,6 +587,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
             public void clickRight() {
                 DiagnosisActivity.actionStart(mContext);
                 //SoundPoolUtils.soundPool.release();
+                myCarCaoZuoDialog_notify.dismiss();
 
             }
         }

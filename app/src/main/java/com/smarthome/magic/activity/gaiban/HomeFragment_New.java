@@ -550,7 +550,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                         } else if (intellectListBean.getId().equals("2")) {
 
                             SheBeiLieBiaoActivity.actionStart(getActivity(), intellectListBean.device_type);
-                            startActivity(new Intent(getActivity(), CarListActivity.class).putExtra("type", "wind"));
+                            // startActivity(new Intent(getActivity(), CarListActivity.class).putExtra("type", "wind"));
 
                         } else if (intellectListBean.getId().equals("3")) {
                             SheBeiLieBiaoActivity.actionStart(getActivity(),intellectListBean.device_type);

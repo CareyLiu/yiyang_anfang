@@ -1391,6 +1391,8 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
                 Log.i("Rair", "notify:  " + CAR_NOTIFY + "CAR_NOTIFY 我是在类里面订阅的");
+
+
                 MyApplication.mqttDingyue.add(CAR_NOTIFY);
             }
 

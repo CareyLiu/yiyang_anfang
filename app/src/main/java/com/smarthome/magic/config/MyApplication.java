@@ -37,6 +37,7 @@ import com.alibaba.baichuan.android.trade.AlibcTradeSDK;
 import com.alibaba.baichuan.android.trade.callback.AlibcTradeInitCallback;
 
 import com.billy.android.loading.Gloading;
+import com.bulong.rudeness.RudenessScreenHelper;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
@@ -201,9 +202,12 @@ public class MyApplication extends MultiDexApplication {
 
     public void onCreate() {
         super.onCreate();
-        JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
-        JPushInterface.init(this);
+        //设计图标注的宽度
+        int designWidth = 360;
+        new RudenessScreenHelper(this, designWidth).activate();
 
+        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);
         doMqttValue = new DoMqttValue();
         context = getApplicationContext();
         initRongYun();
@@ -577,7 +581,22 @@ public class MyApplication extends MultiDexApplication {
                             @Override
                             public void onSuccess(IMqttToken asyncActionToken) {
                                 Log.i("Rair", "(MainActivity.java:51)-onSuccess:-&gt;连接成功");
-                                sendRx(ConstanceValue.MSG_MQTT_CONNECT_CHONGLIAN_ONSUCCESS, "");
+
+                                AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                                        .setTopic(CARBOX_JINGBAO)
+                                        .setQos(2), new IMqttActionListener() {
+                                    @Override
+                                    public void onSuccess(IMqttToken asyncActionToken) {
+                                        Log.i("Rair", "自动连接 成功" + CARBOX_JINGBAO);
+                                    }
+
+                                    @Override
+                                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                                        Log.i("Rair", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
+                                    }
+                                });
+
+                             sendRx(ConstanceValue.MSG_MQTT_CONNECT_CHONGLIAN_ONSUCCESS, "");
 
                             }
 

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#01212B"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="603pt">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="603pt"
+            android:src="@mipmap/fengnuan_back">
+
+        </ImageView>
+
+        <RelativeLayout
+            android:layout_width="487pt"
+            android:layout_height="409pt"
+            android:layout_marginTop="13pt"
+            android:background="@mipmap/dipan">
+
+            <ImageView
+                android:layout_width="365pt"
+                android:layout_height="252pt"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="57pt"
+                android:src="@mipmap/fegnnuan_guanji" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_click_shebeima"
+            android:layout_width="167pt"
+            android:layout_height="66pt"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="34pt"
+            android:layout_marginRight="17pt"
+            android:background="@mipmap/fengnuan_button_shebeima"
+            android:orientation="vertical" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_click_shebeima"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="43pt"
+            android:layout_marginRight="25pt">
+
+            <LinearLayout
+                android:id="@+id/ll_dingshi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="30pt"
+                    android:layout_height="30pt"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/fengnuan_icon_dingshi" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12pt"
+                    android:text="定时"
+                    android:textColor="#23CEFD"
+                    android:textSize="26pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="34pt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_dingshi"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="30pt"
+                    android:layout_height="30pt"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/fengnuan_icon_dingshi" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12pt"
+                    android:text="定时"
+                    android:textColor="#23CEFD"
+                    android:textSize="26pt" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

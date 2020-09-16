@@ -1,5 +1,6 @@
 package com.smarthome.magic.activity;
 
+import android.app.Notification;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -49,15 +50,19 @@ import com.smarthome.magic.util.TimeCount;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.utils.NotificationUtil;
 import io.rong.imlib.NativeObject;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
@@ -302,9 +307,16 @@ public class LoginActivity extends BaseActivity {
                             LoginActivity.this.response = response;
                             //保存用户手机号码
                             PreferenceHelper.getInstance(LoginActivity.this).putString("user_phone", mEtPhone.getText().toString() + "");
+
+                            String accid = LoginActivity.this.response.body().data.get(0).getAccid();
+                            JPushInterface.setAlias(mContext, 0, accid);
+                            Set<String> tags = new HashSet<>();
+                            tags.add(accid);
+                            JPushInterface.setTags(mContext, 0, tags);
+
                             if (response.body().data.size() == 1) {
                                 //如果登录角色数量<=1则直接登录
-                               // response.body().data.get(0).invitation_code_state = "2";
+                                // response.body().data.get(0).invitation_code_state = "2";
                                 UserManager.getManager(LoginActivity.this).saveUser(LoginActivity.this.response.body().data.get(0));
                                 if (response.body().data.get(0).getPower_state().equals("1")) {
 

@@ -1081,6 +1081,12 @@
                 <category android:name="com.smarthome.magic" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".activity.FengNuanActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="fullSensor"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
     </application>
 
 </manifest>

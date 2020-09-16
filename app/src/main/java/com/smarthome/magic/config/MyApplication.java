@@ -203,7 +203,7 @@ public class MyApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         //设计图标注的宽度
-        int designWidth = 360;
+        int designWidth = 720;
         new RudenessScreenHelper(this, designWidth).activate();
 
         JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志

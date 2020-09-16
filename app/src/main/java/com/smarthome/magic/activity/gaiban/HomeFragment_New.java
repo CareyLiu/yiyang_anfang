@@ -49,6 +49,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.AirConditionerActivity;
 import com.smarthome.magic.activity.CarListActivity;
 import com.smarthome.magic.activity.DefaultX5WebView_HaveNameActivity;
+import com.smarthome.magic.activity.FengNuanActivity;
 import com.smarthome.magic.activity.PlumbingHeaterActivity;
 import com.smarthome.magic.activity.SheBeiLieBiaoActivity;
 import com.smarthome.magic.activity.TuanYouWebView;
@@ -549,11 +550,13 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                             RxBus.getDefault().sendRx(n);
                         } else if (intellectListBean.getId().equals("2")) {
 
+
                             SheBeiLieBiaoActivity.actionStart(getActivity(), intellectListBean.device_type);
+                            FengNuanActivity.actionStart(getActivity());
                             // startActivity(new Intent(getActivity(), CarListActivity.class).putExtra("type", "wind"));
 
                         } else if (intellectListBean.getId().equals("3")) {
-                            SheBeiLieBiaoActivity.actionStart(getActivity(),intellectListBean.device_type);
+                            SheBeiLieBiaoActivity.actionStart(getActivity(), intellectListBean.device_type);
 //                            startActivity(new Intent(getActivity(), PlumbingHeaterActivity.class));
 //                            ShuinuanMainActivity.actionStart(getContext(), "", "");
                         } else if (intellectListBean.getId().equals("4")) {//空调

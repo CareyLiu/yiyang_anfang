@@ -9,6 +9,7 @@
         android:normalScreens="true"
         android:resizeable="true"
         android:smallScreens="true" />
+
     <uses-permission android:name="com.smarthome.magic.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于进行网络定位 -->
@@ -67,7 +68,7 @@
         <service
             android:name="cn.jpush.android.service.PushService"
             android:enabled="true"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTER" />
                 <action android:name="cn.jpush.android.intent.REPORT" />
@@ -81,9 +82,13 @@
         <!-- 例如: -->
         <!-- 发到 Google Play 的 APK 可以设置为 google-play; -->
         <!-- 发到其他市场的 APK 可以设置为 xxx-market。 -->
-        <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
         <!-- Required. AppKey copied from Portal -->
-        <meta-data android:name="JPUSH_APPKEY" android:value="02c5d1167fe464e61186e333"/>
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="02c5d1167fe464e61186e333" />
 
 
         <meta-data
@@ -1081,6 +1086,13 @@
                 <category android:name="com.smarthome.magic" />
             </intent-filter>
         </receiver>
+
+
+        <!-- since 3.0.9 Required SDK 核心功能-->
+        <provider
+            android:name="cn.jpush.android.service.DataProvider"
+            android:authorities="com.smarthome.magic.DataProvider"
+            android:exported="false" />
 
         <activity
             android:name=".activity.FengNuanActivity"

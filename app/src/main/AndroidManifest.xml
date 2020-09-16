@@ -1087,6 +1087,7 @@
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+
     </application>
 
 </manifest>

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:background="#01212B"
     android:orientation="vertical">
 
@@ -45,11 +47,11 @@
 
 
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ll_click_shebeima"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="43pt"
+            android:layout_marginTop="37pt"
             android:layout_marginRight="25pt">
 
             <LinearLayout
@@ -75,32 +77,298 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="34pt"
+                android:id="@+id/ll_xinhao"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ll_dingshi"
                 android:layout_alignParentRight="true"
+                android:layout_marginTop="30pt"
                 android:gravity="center_vertical">
 
                 <ImageView
                     android:layout_width="30pt"
                     android:layout_height="30pt"
                     android:layout_gravity="center_vertical"
-                    android:src="@mipmap/fengnuan_icon_dingshi" />
+                    android:src="@mipmap/fengnuan_icon_signal4" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12pt"
-                    android:text="定时"
+                    android:layout_marginBottom="1pt"
+                    android:text="在线"
                     android:textColor="#23CEFD"
                     android:textSize="26pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_fuwu_tianshu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_xinhao"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="30pt"
+                android:gravity="center_vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="剩余服务天数：100"
+                    android:textColor="#23CEFD"
+                    android:textSize="26pt" />
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_fuwu_tianshu"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="30pt"
+                android:gravity="center_vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="设备状态：空调模式"
+                    android:textColor="#ffffffff"
+                    android:textSize="27pt"
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </RelativeLayout>
 
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="111pt"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="19pt">
+
+
+            <ImageView
+                android:id="@+id/iv_dangweimoshi"
+                android:layout_width="307pt"
+                android:layout_height="111pt"
+                android:src="@mipmap/fengnuan_button_dangwei_nor">
+
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/iv_kongtiaomoshi"
+                android:layout_width="307pt"
+                android:layout_height="111pt"
+                android:layout_marginLeft="30pt"
+                android:src="@mipmap/fengnuan_button_kongtiao_sel">
+
+            </ImageView>
+
+
+        </LinearLayout>
+
+
     </RelativeLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/ll_gongneng"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24pt"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="200pt"
+                android:layout_height="75pt"
+                android:background="@mipmap/fengnuan_pic_switch_smal"
+                android:gravity="center"
+                android:text="水泵"
+                android:textColor="#00FFFF"
+                android:textSize="31pt" />
+
+            <TextView
+                android:layout_width="200pt"
+                android:layout_height="75pt"
+                android:layout_marginLeft="24pt"
+                android:background="@mipmap/fengnuan_pic_switch_smal"
+                android:gravity="center"
+                android:text="水泵"
+                android:textColor="#999999"
+                android:textSize="31pt" />
+
+            <TextView
+                android:layout_width="200pt"
+                android:layout_height="75pt"
+                android:layout_marginLeft="24pt"
+                android:background="@mipmap/fengnuan_pic_switch_smal"
+                android:gravity="center"
+                android:text="水泵"
+                android:textColor="#999999"
+                android:textSize="31pt" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_wendu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60pt"
+            android:gravity="center_horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/ll_gongneng">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="31dp"
+                    android:layout_height="31dp"
+                    android:src="@mipmap/fengnuan_pic_wendu_small" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12pt"
+                    android:text="当前温度:29℃"
+                    android:textColor="#ffffffff"
+                    android:textSize="31pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="112pt"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="31dp"
+                    android:layout_height="31dp"
+                    android:src="@mipmap/fengnuan_pic_wendu_small" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12pt"
+                    android:text="设定温度:29℃"
+                    android:textColor="#ffffffff"
+                    android:textSize="31pt" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <SeekBar
+            android:maxHeight="12pt"
+            android:minHeight="12pt"
+            android:id="@+id/seekBar1"
+            android:layout_width="614pt"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="31pt"
+            android:background="@color/transparent"
+            android:max="100"
+            android:progress="50"
+            android:progressDrawable="@drawable/seekbar_img"
+            android:secondaryProgress="100"
+            android:thumb="@drawable/shape_seekbar_btn"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_wendu" />
+
+
+        <TextView
+            android:id="@+id/tv_zuidiwendu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="41pt"
+            android:layout_marginTop="12pt"
+            android:text="0℃"
+            android:textColor="#ffffffff"
+            android:textSize="27pt"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/seekBar1" />
+
+        <TextView
+            android:id="@+id/tv_zuigaowendu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12pt"
+            android:layout_marginRight="41pt"
+            android:text="32℃"
+            android:textColor="#ffffffff"
+            android:textSize="27pt"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/seekBar1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="211pt"
+            android:layout_marginHorizontal="25pt"
+            android:layout_marginTop="46pt"
+            android:background="@mipmap/fengnuan_bg_shuju"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/tv_zuidiwendu">
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </LinearLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </LinearLayout>

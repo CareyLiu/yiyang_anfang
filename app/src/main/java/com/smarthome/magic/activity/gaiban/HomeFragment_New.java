@@ -550,9 +550,9 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                             RxBus.getDefault().sendRx(n);
                         } else if (intellectListBean.getId().equals("2")) {
 
-
+                          //  PreferenceHelper.getInstance(getActivity()).putString("ccid", "aaaaaaaaaaaaaaaa90070018");
                             SheBeiLieBiaoActivity.actionStart(getActivity(), intellectListBean.device_type);
-                            FengNuanActivity.actionStart(getActivity());
+                            //FengNuanActivity.actionStart(getActivity());
                             // startActivity(new Intent(getActivity(), CarListActivity.class).putExtra("type", "wind"));
 
                         } else if (intellectListBean.getId().equals("3")) {

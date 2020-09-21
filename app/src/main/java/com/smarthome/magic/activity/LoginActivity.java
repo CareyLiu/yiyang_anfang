@@ -1,5 +1,6 @@
 package com.smarthome.magic.activity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -41,6 +42,9 @@ import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.BuTianYaoQingMaDialog;
+import com.smarthome.magic.dialog.FuWuDialog;
+import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuoTIshi;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.LoginUser;
 import com.smarthome.magic.model.Message;
@@ -101,6 +105,7 @@ public class LoginActivity extends BaseActivity {
     private TimeCount timeCount;
     private String req_type = "2";
     private String smsId;
+    FuWuDialog fuWuDialog;
 
     public static List<LoginUser.DataBean> userlist = new ArrayList<>();
     Response<AppResponse<LoginUser.DataBean>> response;
@@ -146,6 +151,40 @@ public class LoginActivity extends BaseActivity {
                 DefaultX5WebViewActivity.actionStart(LoginActivity.this, "https://shop.hljsdkj.com/shop_new/privacy_clause");
             }
         });
+
+
+        fuWuDialog = new FuWuDialog(mContext, new FuWuDialog.FuWuDiaLogClikListener() {
+            @Override
+            public void onClickCancel() {
+
+                AppManager.getAppManager().AppExit(mContext);
+
+            }
+
+            @Override
+            public void onClickConfirm() {
+
+                fuWuDialog.dismiss();
+            }
+
+            @Override
+            public void onDismiss(FuWuDialog dialog) {
+
+            }
+
+            @Override
+            public void fuwu() {
+                DefaultX5WebViewActivity.actionStart(LoginActivity.this, "https://shop.hljsdkj.com/shop_new/user_agreement");
+            }
+
+            @Override
+            public void yinsixieyi() {
+                DefaultX5WebViewActivity.actionStart(LoginActivity.this, "https://shop.hljsdkj.com/shop_new/privacy_clause");
+            }
+        });
+
+        fuWuDialog.setCancelable(false);
+        fuWuDialog.show();
 
 
     }
@@ -304,7 +343,7 @@ public class LoginActivity extends BaseActivity {
                             PreferenceHelper.getInstance(LoginActivity.this).putString("user_phone", mEtPhone.getText().toString() + "");
                             if (response.body().data.size() == 1) {
                                 //如果登录角色数量<=1则直接登录
-                               // response.body().data.get(0).invitation_code_state = "2";
+                                // response.body().data.get(0).invitation_code_state = "2";
                                 UserManager.getManager(LoginActivity.this).saveUser(LoginActivity.this.response.body().data.get(0));
                                 if (response.body().data.get(0).getPower_state().equals("1")) {
 

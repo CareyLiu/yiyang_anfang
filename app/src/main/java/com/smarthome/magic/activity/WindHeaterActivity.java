@@ -649,7 +649,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        PreferenceHelper.getInstance(mContext).removeKey(App.CHOOSE_KONGZHI_XIANGMU);
         AndMqtt.getInstance().unSubscribe(new MqttUnSubscribe().setTopic(CAR_NOTIFY), new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {

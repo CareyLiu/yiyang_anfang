@@ -97,5 +97,7 @@ public interface ConstanceValue {
     int MSG_K6171 = 0x10065;//接收到了预通风模式
 
     int MSG_ZHILINGMA = 0x10066;//指令码
-
+    int MSG_LOGIN = 0x10067;//登录
+    int MSG_JIEBANG = 0x10068;//解绑设备
+    int MSG_SHUA = 0x10069;//设备刷新
 }

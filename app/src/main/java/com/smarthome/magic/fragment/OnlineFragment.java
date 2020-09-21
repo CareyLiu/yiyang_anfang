@@ -22,6 +22,8 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.BindBoxActivity;
 import com.smarthome.magic.activity.CarBrandActivity;
 import com.smarthome.magic.activity.CarListActivity;
+import com.smarthome.magic.activity.FengNuanActivity;
+import com.smarthome.magic.activity.FengnuandishiActivity;
 import com.smarthome.magic.activity.WindHeaterActivity;
 import com.smarthome.magic.activity.shuinuan.ShuinuanMainActivity;
 import com.smarthome.magic.adapter.CarList1Adapter;
@@ -35,6 +37,7 @@ import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 
+import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.TianJiaSheBeiDialog;
@@ -119,9 +122,9 @@ public class OnlineFragment extends BaseFragment implements Observer {
                             return;
                         }
                         if (mDatas.get(position).device_type.equals("1")) {
-                            // mDatas.get(position).ccid = "aaaaaaaaaaaaaaaa90020018";
-
                             PreferenceHelper.getInstance(getActivity()).putString("ccid", mDatas.get(position).ccid);
+
+                            MyApplication.CARBOX_GETNOW = "wit/cbox/app/" + getServer_id() + getCcid();
                             int i = mDatas.get(position).ccid.length() - 1;
                             String str = String.valueOf(mDatas.get(position).ccid.charAt(i));
                             Log.i("serverId", str);
@@ -129,7 +132,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
                             if (NetworkUtils.isConnected(getActivity())) {
                                 Activity currentActivity = AppManager.getAppManager().currentActivity();
                                 if (currentActivity != null) {
-                                    startActivity(new Intent(getActivity(), WindHeaterActivity.class));
+                                    FengNuanActivity.actionStart(getActivity());
                                 }
                             } else {
                                 UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");

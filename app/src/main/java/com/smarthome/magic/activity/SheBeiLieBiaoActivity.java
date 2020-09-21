@@ -24,6 +24,7 @@ import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
@@ -39,6 +40,9 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+
+import static com.smarthome.magic.config.MyApplication.getCcid;
+import static com.smarthome.magic.config.MyApplication.getServer_id;
 
 public class SheBeiLieBiaoActivity extends BaseActivity {
     @BindView(R.id.rlv_list)
@@ -59,6 +63,8 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
         rlvList.setLayoutManager(new LinearLayoutManager(mContext));
         rlvList.setAdapter(sheBeiListAdapter);
 
+        srLSmart.setEnableLoadMore(false);
+
 
         sheBeiListAdapter.notifyDataSetChanged();
         sheBeiListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
@@ -68,6 +74,8 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
                     case R.id.constrain:
                         if (mDatas.get(position).device_type.equals("1")) {
                             PreferenceHelper.getInstance(mContext).putString("ccid", mDatas.get(position).ccid);
+
+                            MyApplication.CARBOX_GETNOW = "wit/cbox/app/" + getServer_id() + getCcid();
                             int i = mDatas.get(position).ccid.length() - 1;
                             String str = String.valueOf(mDatas.get(position).ccid.charAt(i));
                             Log.i("serverId", str);
@@ -75,7 +83,7 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
                             if (NetworkUtils.isConnected(mContext)) {
                                 Activity currentActivity = AppManager.getAppManager().currentActivity();
                                 if (currentActivity != null) {
-                                    startActivity(new Intent(mContext, WindHeaterActivity.class));
+                                    FengNuanActivity.actionStart(mContext);
                                 }
                             } else {
                                 UIHelper.ToastMessage(mContext, "请连接网络后重新尝试");

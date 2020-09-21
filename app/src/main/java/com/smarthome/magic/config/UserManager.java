@@ -6,7 +6,13 @@ package com.smarthome.magic.config;
 import android.content.Context;
 import android.util.Log;
 
+import com.smarthome.magic.activity.LoginActivity;
 import com.smarthome.magic.model.LoginUser;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import cn.jpush.android.api.JPushInterface;
 
 
 /**
@@ -46,11 +52,11 @@ public class UserManager {
     }
 
 
-    public String getUserName(){
+    public String getUserName() {
         return PreferenceHelper.getInstance(mContext).getString("user_name", "");
     }
 
-    public String getRongYun(){
+    public String getRongYun() {
         return PreferenceHelper.getInstance(mContext).getString("token_rong", "");
     }
 
@@ -67,7 +73,7 @@ public class UserManager {
             PreferenceHelper.getInstance(mContext).putString("server_id", user.getServer_id());
             PreferenceHelper.getInstance(mContext).putString("power_state", user.getPower_state());
 
-          //  Log.i("server_id1", PreferenceHelper.getInstance(mContext).getString("server_id", user.getServer_id()));
+            //  Log.i("server_id1", PreferenceHelper.getInstance(mContext).getString("server_id", user.getServer_id()));
         }
 
 
@@ -77,6 +83,12 @@ public class UserManager {
      * 删除用户信息
      */
     public void removeUser() {
+        String accid = PreferenceHelper.getInstance(mContext).getString("accid", "");
+        JPushInterface.deleteAlias(mContext, 0);
+        Set<String> tags = new HashSet<>();
+        tags.add(accid);
+        JPushInterface.deleteTags(mContext, 0, tags);
+
         PreferenceHelper.getInstance(mContext).removeKey("of_user_id");
         PreferenceHelper.getInstance(mContext).removeKey("app_token");
         PreferenceHelper.getInstance(mContext).removeKey("user_name");

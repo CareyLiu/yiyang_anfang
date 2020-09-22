@@ -41,7 +41,7 @@ public class TishiDialog extends Dialog implements View.OnClickListener {
     }
 
     private void init() {
-        setContentView(R.layout.dialog_tishi_new);
+        setContentView(R.layout.dialog_tishi);
         setCanceledOnTouchOutside(true);
         setCancelable(true);
 

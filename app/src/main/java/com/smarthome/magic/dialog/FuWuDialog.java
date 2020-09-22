@@ -37,7 +37,7 @@ public class FuWuDialog extends Dialog implements View.OnClickListener {
     }
 
     private void init() {
-        setContentView(R.layout.dialog_tishi);
+        setContentView(R.layout.dialog_tishi_new);
         setCanceledOnTouchOutside(true);
         setCancelable(true);
         tv_cancel = findViewById(R.id.tv_cancel);

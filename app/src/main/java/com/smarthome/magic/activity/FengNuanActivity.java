@@ -883,7 +883,10 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                     if (!StringUtils.isEmpty(xinhaoQiangDu)) {
                         int xinhao = Integer.valueOf(xinhaoQiangDu);
 
-                        if (xinhao < 15) {
+                        if (xinhaoQiangDu.equals("aa")) {
+                            jiGeXinHao = "两格信号";
+                            ivXinhao.setBackgroundResource(R.mipmap.fengnuan_icon_signal2);
+                        }else if (xinhao < 15) {
                             jiGeXinHao = "无信号";
                             ivXinhao.setBackgroundResource(R.mipmap.fengnuan_icon_signal_no);
                             tvZaixian.setText("离线");
@@ -1225,6 +1228,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
         PreferenceHelper.getInstance(mContext).removeKey(App.CHOOSE_KONGZHI_XIANGMU);
         AndMqtt.getInstance().unSubscribe(new MqttUnSubscribe().setTopic(CAR_NOTIFY), new IMqttActionListener() {
             @Override

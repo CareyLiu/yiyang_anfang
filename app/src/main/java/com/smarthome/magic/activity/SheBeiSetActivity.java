@@ -7,15 +7,17 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-
 import com.gyf.barlibrary.ImmersionBar;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.shuinuan.ShuinuanHostNewActivity;
+import com.smarthome.magic.activity.shuinuan.ShuinuanZhuangtaiActivity;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.config.PreferenceHelper;
 
+
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -33,10 +35,32 @@ public class SheBeiSetActivity extends BaseActivity {
     RelativeLayout rlGuzhang;
     @BindView(R.id.tv_shebeima)
     TextView tvShebeima;
+    @BindView(R.id.rl_zhujicanshu)
+    RelativeLayout rlZhujicanshu;
+    private String ccid;
+
+    public static final int TYPE_FENGNUAN = 1;
+    public static final int TYPE_SHUINUAN = 2;
+    private int type;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        type = getIntent().getIntExtra("type", 0);
+
+        if (type == TYPE_SHUINUAN) {
+            rlGuzhang.setVisibility(View.GONE);
+            rlZhujicanshu.setVisibility(View.VISIBLE);
+        } else if (type == TYPE_FENGNUAN) {
+            rlGuzhang.setVisibility(View.VISIBLE);
+            rlZhujicanshu.setVisibility(View.GONE);
+        }
+
+
+        ccid = PreferenceHelper.getInstance(this).getString("ccid", "");
+        tvShebeima.setText(ccid);
 
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
@@ -56,7 +80,11 @@ public class SheBeiSetActivity extends BaseActivity {
         rlJiareqicanshu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JiaReQiCanShuActivity.actionStart(mContext);
+                if (type == TYPE_SHUINUAN) {
+                    ShuinuanZhuangtaiActivity.actionStart(mContext);
+                } else if (type == TYPE_FENGNUAN) {
+                    JiaReQiCanShuActivity.actionStart(mContext);
+                }
             }
         });
         rlJiebangshebei.setOnClickListener(new View.OnClickListener() {
@@ -79,8 +107,12 @@ public class SheBeiSetActivity extends BaseActivity {
             }
         });
 
-        String ccid = PreferenceHelper.getInstance(mContext).getString("ccid", "");
-        tvShebeima.setText(ccid);
+        rlZhujicanshu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShuinuanHostNewActivity.actionStart(mContext);
+            }
+        });
     }
 
     @Override
@@ -91,9 +123,10 @@ public class SheBeiSetActivity extends BaseActivity {
     /**
      * 用于其他Activty跳转到该Activity
      */
-    public static void actionStart(Context context) {
+    public static void actionStart(Context context, int type) {
         Intent intent = new Intent(context, SheBeiSetActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("type", type);
         context.startActivity(intent);
     }
 

@@ -16,7 +16,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.shuinuan.ShuinuanMainActivity;
+import com.smarthome.magic.activity.shuinuan.ShuinuanMainNewActivity;
 import com.smarthome.magic.adapter.SheBeiListAdapter;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.BaseActivity;
@@ -28,7 +28,6 @@ import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
-import com.smarthome.magic.model.AlarmClass;
 import com.smarthome.magic.model.SheBeiLieBieListModel;
 import com.smarthome.magic.model.SheBeiModel;
 import com.smarthome.magic.tools.NetworkUtils;
@@ -97,7 +96,7 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
                             if (NetworkUtils.isConnected(mContext)) {
                                 Activity currentActivity = AppManager.getAppManager().currentActivity();
                                 if (currentActivity != null) {
-                                    ShuinuanMainActivity.actionStart(mContext, ccid, count);
+                                    ShuinuanMainNewActivity.actionStart(mContext, ccid, count);
                                 }
                             } else {
                                 UIHelper.ToastMessage(mContext, "请连接网络后重新尝试");

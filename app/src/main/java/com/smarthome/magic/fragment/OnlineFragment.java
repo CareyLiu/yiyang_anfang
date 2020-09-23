@@ -1,7 +1,6 @@
 package com.smarthome.magic.fragment;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,12 +19,8 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.BindBoxActivity;
-import com.smarthome.magic.activity.CarBrandActivity;
-import com.smarthome.magic.activity.CarListActivity;
 import com.smarthome.magic.activity.FengNuanActivity;
-import com.smarthome.magic.activity.FengnuandishiActivity;
-import com.smarthome.magic.activity.WindHeaterActivity;
-import com.smarthome.magic.activity.shuinuan.ShuinuanMainActivity;
+import com.smarthome.magic.activity.shuinuan.ShuinuanMainNewActivity;
 import com.smarthome.magic.adapter.CarList1Adapter;
 import com.smarthome.magic.adapter.SheBeiListAdapter;
 import com.smarthome.magic.app.AppManager;
@@ -61,9 +56,6 @@ import butterknife.Unbinder;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-import static com.smarthome.magic.config.MyApplication.CARBOX_GETNOW;
-import static com.smarthome.magic.config.MyApplication.CAR_CTROL;
-import static com.smarthome.magic.config.MyApplication.CAR_NOTIFY;
 import static com.smarthome.magic.config.MyApplication.getCcid;
 import static com.smarthome.magic.config.MyApplication.getServer_id;
 
@@ -146,7 +138,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
                             if (NetworkUtils.isConnected(getActivity())) {
                                 Activity currentActivity = AppManager.getAppManager().currentActivity();
                                 if (currentActivity != null) {
-                                    ShuinuanMainActivity.actionStart(getActivity(), ccid, count);
+                                    ShuinuanMainNewActivity.actionStart(getActivity(), ccid, count);
                                 }
                             } else {
                                 UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");

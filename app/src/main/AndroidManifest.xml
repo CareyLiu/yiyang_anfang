@@ -199,11 +199,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.CarListActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
             android:name=".activity.HeaterSettingActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
@@ -280,11 +275,6 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activity.DeviceStateActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.PlumbingHeaterActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
@@ -602,49 +592,22 @@
 
         <!--    水暖主页    -->
         <activity
-            android:name=".activity.shuinuan.ShuinuanMainActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-
-        <!--    水暖设置    -->
-        <activity
-            android:name=".activity.shuinuan.ShuinuanSetActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-
-        <!--    水暖解绑    -->
-        <activity
-            android:name=".activity.shuinuan.ShuinuanJieActivity"
+            android:name=".activity.shuinuan.ShuinuanMainNewActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
         <!--    水暖主机参数    -->
         <activity
-            android:name=".activity.shuinuan.ShuinuanHostActivity"
+            android:name=".activity.shuinuan.ShuinuanHostNewActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
-        <!--    水暖定时    -->
-        <activity
-            android:name=".activity.shuinuan.ShuinuandingshiActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-
-        <!--    水暖风油比参数    -->
-        <activity
-            android:name=".activity.shuinuan.ShuinuanFengyoubiActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
 
         <!--    水暖设备状态   -->
         <activity
-            android:name=".activity.shuinuan.ShuinuanStateActivity"
+            android:name=".activity.shuinuan.ShuinuanZhuangtaiActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />

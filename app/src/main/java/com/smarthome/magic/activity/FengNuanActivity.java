@@ -910,7 +910,9 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
                     // 驻车加热器:电压->0253 = 25.3	4	是
                     String machine_voltage = messageData.substring(10, 13) + "." + messageData.substring(13, 14);
-                    tvDianya.setText(machine_voltage + "V");
+
+                    String quLingDianYa = machine_voltage.replaceAll("^(0+)", "");
+                    tvDianya.setText(quLingDianYa + "V");
                     // 驻车加热器:风机转速->13245	5	是
                     String revolution = messageData.substring(14, 19);
                     // 驻车加热器:加热塞功率->0264=26.4	4	是

@@ -157,39 +157,44 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
+        String str = PreferenceHelper.getInstance(this).getString(AppConfig.TANCHUFUWUTANKUANG, "");
 
-        fuWuDialog = new FuWuDialog(mContext, new FuWuDialog.FuWuDiaLogClikListener() {
-            @Override
-            public void onClickCancel() {
+        if (StringUtils.isEmpty(str)) {
+            fuWuDialog = new FuWuDialog(mContext, new FuWuDialog.FuWuDiaLogClikListener() {
+                @Override
+                public void onClickCancel() {
 
-                AppManager.getAppManager().AppExit(mContext);
+//                AppManager.getAppManager().AppExit(mContext);
+                    fuWuDialog.dismiss();
 
-            }
+                }
 
-            @Override
-            public void onClickConfirm() {
+                @Override
+                public void onClickConfirm() {
 
-                fuWuDialog.dismiss();
-            }
+                    fuWuDialog.dismiss();
+                }
 
-            @Override
-            public void onDismiss(FuWuDialog dialog) {
+                @Override
+                public void onDismiss(FuWuDialog dialog) {
 
-            }
+                }
 
-            @Override
-            public void fuwu() {
-                DefaultX5WebViewActivity.actionStart(LoginActivity.this, "https://shop.hljsdkj.com/shop_new/user_agreement");
-            }
+                @Override
+                public void fuwu() {
+                    DefaultX5WebViewActivity.actionStart(LoginActivity.this, "https://shop.hljsdkj.com/shop_new/user_agreement");
+                }
 
-            @Override
-            public void yinsixieyi() {
-                DefaultX5WebViewActivity.actionStart(LoginActivity.this, "https://shop.hljsdkj.com/shop_new/privacy_clause");
-            }
-        });
+                @Override
+                public void yinsixieyi() {
+                    DefaultX5WebViewActivity.actionStart(LoginActivity.this, "https://shop.hljsdkj.com/shop_new/privacy_clause");
+                }
+            });
 
-        fuWuDialog.setCancelable(false);
-        fuWuDialog.show();
+            fuWuDialog.setCancelable(false);
+            fuWuDialog.show();
+            PreferenceHelper.getInstance(this).putString(AppConfig.TANCHUFUWUTANKUANG, "1");
+        }
 
 
     }

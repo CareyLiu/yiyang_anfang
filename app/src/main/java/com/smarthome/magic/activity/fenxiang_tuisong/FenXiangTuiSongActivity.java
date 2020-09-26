@@ -44,7 +44,6 @@ import io.rong.message.utils.BitmapUtil;
 
 
 import static com.smarthome.magic.config.Wetch_S.APP_ID;
-import static com.tencent.bugly.Bugly.applicationContext;
 
 public class FenXiangTuiSongActivity extends BaseActivity {
 

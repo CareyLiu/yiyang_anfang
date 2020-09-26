@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -154,9 +155,10 @@ public class FengnuandishiActivity extends BaseActivity {
             str = str + "0";
         }
 
+
         str = str + chooseHour + chooseMin;
         map.put("time", str);
-
+        Log.i("日期", str);
         Gson gson = new Gson();
         OkGo.<AppResponse>post(Urls.DINGSHI)
                 .tag(this)//
@@ -165,7 +167,8 @@ public class FengnuandishiActivity extends BaseActivity {
                     @Override
                     public void onSuccess(final Response<AppResponse> response) {
                         //Y.t(response.body().msg);
-                        UIHelper.ToastMessage(mContext, response.body().msg);
+                        //UIHelper.ToastMessage(mContext, response.body().msg);
+                        UIHelper.ToastMessage(mContext, "定时成功");
                     }
 
                     @Override

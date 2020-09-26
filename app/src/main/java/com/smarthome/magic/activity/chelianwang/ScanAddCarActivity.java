@@ -26,6 +26,7 @@ import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.BangdingFailDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.CarBrand;
 import com.smarthome.magic.util.AlertUtil;
@@ -162,51 +163,21 @@ public class ScanAddCarActivity extends BaseActivity implements QRCodeView.Deleg
 
                     @Override
                     public void onError(Response<AppResponse<CarBrand.DataBean>> response) {
-                        String str = response.getException().getMessage();
-                        //    Log.i("cuifahuo", str);
-                        String[] str1 = str.split("：");
-                        if (str1.length == 3) {
-                            UIHelper.ToastMessage(mContext, str1[2]);
+                        String msg = response.getException().getMessage();
+                        String[] msgToast = msg.split("：");
+                        if (msgToast.length == 3) {
+                            msg = msgToast[2];
+                        } else {
+                            msg = "网络异常";
                         }
 
+                        BangdingFailDialog dialog = new BangdingFailDialog(mContext);
+                        dialog.setTextContent(msg);
+                        dialog.show();
                     }
                 });
     }
 
-
-    public void requestData(String ccid) {
-        Map<String, String> map = new HashMap<>();
-        map.put("code", "03105");
-        map.put("key", Urls.key);
-        map.put("token", UserManager.getManager(mContext).getAppToken());
-        map.put("user_car_type", "1");
-        map.put("ccid", ccid);
-        map.put("car_brand_id_one", PreferenceHelper.getInstance(mContext).getString("brand_id", ""));
-        map.put("car_brand_name_one", PreferenceHelper.getInstance(mContext).getString("brand_name", ""));
-        map.put("car_brand_url_one", PreferenceHelper.getInstance(mContext).getString("brand_pic", ""));
-        map.put("car_brand_id_two", PreferenceHelper.getInstance(mContext).getString("mode_id", ""));
-        map.put("car_brand_name_two", PreferenceHelper.getInstance(mContext).getString("mode_name", ""));
-        map.put("car_brand_url_two", PreferenceHelper.getInstance(mContext).getString("mode_pic", ""));
-        Gson gson = new Gson();
-        OkGo.<AppResponse<CarBrand.DataBean>>post(Urls.SERVER_URL + "wit/app/user")
-                .tag(this)//
-                .upJson(gson.toJson(map))
-                .execute(new JsonCallback<AppResponse<CarBrand.DataBean>>() {
-                    @Override
-                    public void onSuccess(final Response<AppResponse<CarBrand.DataBean>> response) {
-                        UIHelper.ToastMessage(mContext, "添加成功");
-                        finish();
-                        Notice notice = new Notice();
-                        notice.type = ConstanceValue.MSG_ADD_CHELIANG_SUCCESS;
-                        sendRx(notice);
-                    }
-
-                    @Override
-                    public void onError(Response<AppResponse<CarBrand.DataBean>> response) {
-
-                    }
-                });
-    }
 
     @Override
     public void onScanQRCodeOpenCameraError() {

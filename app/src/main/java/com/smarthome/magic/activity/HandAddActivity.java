@@ -24,6 +24,7 @@ import com.smarthome.magic.config.AppResponse;
 
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.BangdingFailDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.CarBrand;
 import com.smarthome.magic.util.AlertUtil;
@@ -123,14 +124,17 @@ public class HandAddActivity extends BaseActivity implements View.OnClickListene
 
                     @Override
                     public void onError(Response<AppResponse<CarBrand.DataBean>> response) {
-                        String str = response.getException().getMessage();
-                        //    Log.i("cuifahuo", str);
-                        String[] str1 = str.split("：");
-
-                        if (str1.length == 3) {
-                            UIHelper.ToastMessage(mContext, str1[2]);
+                        String msg = response.getException().getMessage();
+                        String[] msgToast = msg.split("：");
+                        if (msgToast.length == 3) {
+                            msg = msgToast[2];
+                        } else {
+                            msg = "网络异常";
                         }
 
+                        BangdingFailDialog dialog = new BangdingFailDialog(mContext);
+                        dialog.setTextContent(msg);
+                        dialog.show();
                     }
                 });
     }

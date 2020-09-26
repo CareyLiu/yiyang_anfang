@@ -41,7 +41,7 @@ import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-public class ShuinuanMainNewActivity extends ShuinuanBaseNewActivity implements View.OnLongClickListener {
+public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements View.OnLongClickListener {
 
     @BindView(R.id.rl_back)
     RelativeLayout rl_back;
@@ -131,7 +131,7 @@ public class ShuinuanMainNewActivity extends ShuinuanBaseNewActivity implements 
      * 用于其他Activty跳转到该Activity
      */
     public static void actionStart(Context context, String ccid, String car_server_id) {
-        Intent intent = new Intent(context, ShuinuanMainNewActivity.class);
+        Intent intent = new Intent(context, ShuinuanMainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("ccid", ccid);
         intent.putExtra("car_server_id", car_server_id);
@@ -213,14 +213,6 @@ public class ShuinuanMainNewActivity extends ShuinuanBaseNewActivity implements 
             String haibagaodu = msg.substring(48, 52);//海拔高度
             String hanyangliang = msg.substring(52, 55);//含氧量
 
-            String xinhaoStr = msg.substring(55, 57);
-            int xinhao;
-            if (xinhaoStr.equals("aa")) {
-                xinhao = 22;
-            } else {
-                xinhao = Y.getInt(xinhaoStr);//信号强度
-            }
-
             if (isFirst) {
                 isFirst = false;
                 if (sn_state.equals("0") || sn_state.equals("3")) {
@@ -231,6 +223,27 @@ public class ShuinuanMainNewActivity extends ShuinuanBaseNewActivity implements 
                     if (youbeng_state.equals("1")) {
                         youbengIson = true;
                     }
+                }
+            }
+
+            String xinhaoStr = msg.substring(55, 57);
+            if (xinhaoStr.equals("aa")) {
+                iv_xinhao.setImageResource(R.mipmap.fengnuan_icon_signal2);
+                tv_zaixian.setText("在线");
+            } else {
+                int xinhao = Y.getInt(xinhaoStr);//信号强度
+                if (xinhao >= 15 && xinhao <= 19) {
+                    iv_xinhao.setImageResource(R.mipmap.fengnuan_icon_signal2);
+                    tv_zaixian.setText("在线");
+                } else if (xinhao >= 20 && xinhao <= 25) {
+                    iv_xinhao.setImageResource(R.mipmap.fengnuan_icon_signal3);
+                    tv_zaixian.setText("在线");
+                } else if (xinhao >= 26 && xinhao <= 35) {
+                    iv_xinhao.setImageResource(R.mipmap.fengnuan_icon_signal4);
+                    tv_zaixian.setText("在线");
+                } else {
+                    iv_xinhao.setImageResource(R.mipmap.fengnuan_icon_signal1);
+                    tv_zaixian.setText("在线");
                 }
             }
 
@@ -246,7 +259,7 @@ public class ShuinuanMainNewActivity extends ShuinuanBaseNewActivity implements 
                     + "    尾气温度" + weiqiwendu
                     + "  一档二挡" + danqiandangwei
                     + "  总时长" + zongTime + "   大气压" + daqiya + "    海拔高度" + haibagaodu + "  含氧量" + hanyangliang
-                    + "  信号强度" + xinhao;
+                    + "  信号强度" + xinhaoStr;
             Y.e(num);
             tv_dianya.setText(dianyan + "v");
             tv_jinshuikou_wendu.setText(rushukowendu + "℃");
@@ -258,22 +271,6 @@ public class ShuinuanMainNewActivity extends ShuinuanBaseNewActivity implements 
             tv_wendu_yushe.setText("设定温度:" + yushewendu + "℃");
             tv_wendu_dangqian.setText("当前温度:" + chushuikowendu + "℃");
 
-            if (xinhao < 15) {
-                iv_xinhao.setImageResource(R.mipmap.fengnuan_icon_signal_no);
-                tv_zaixian.setText("信号弱");
-            } else if (xinhao >= 15 && xinhao < -19) {
-                iv_xinhao.setImageResource(R.mipmap.fengnuan_icon_signal1);
-                tv_zaixian.setText("在线");
-            } else if (xinhao >= 20 && xinhao <= 25) {
-                iv_xinhao.setImageResource(R.mipmap.fengnuan_icon_signal2);
-                tv_zaixian.setText("在线");
-            } else if (xinhao >= 26 && xinhao <= 30) {
-                iv_xinhao.setImageResource(R.mipmap.fengnuan_icon_signal3);
-                tv_zaixian.setText("在线");
-            } else if (xinhao >= 30 && xinhao <= 35) {
-                iv_xinhao.setImageResource(R.mipmap.fengnuan_icon_signal4);
-                tv_zaixian.setText("在线");
-            }
 
             isZaixian = true;
 
@@ -315,7 +312,6 @@ public class ShuinuanMainNewActivity extends ShuinuanBaseNewActivity implements 
                     rv_shuinuan_guanji.setSelected(false);
                     isKaiji = true;
                     tv_shebei_state.setText("加热器状态：循环水");
-
                     iv_heater_host.setBackgroundResource(R.drawable.shuinuan_kaiji);
                     animationDrawable = (AnimationDrawable) iv_heater_host.getBackground();
                     animationDrawable.start();
@@ -743,7 +739,7 @@ public class ShuinuanMainNewActivity extends ShuinuanBaseNewActivity implements 
         TishiDialog tishiDialog = new TishiDialog(mContext, TishiDialog.TYPE_CAOZUO, new TishiDialog.TishiDialogListener() {
             @Override
             public void onClickCancel(View v, TishiDialog dialog) {
-                finish();
+
             }
 
             @Override
@@ -756,7 +752,6 @@ public class ShuinuanMainNewActivity extends ShuinuanBaseNewActivity implements 
 
             }
         });
-
         tishiDialog.setTextTitle("提示");
         tishiDialog.setTextContent(msg);
         tishiDialog.setTextConfirm("重试");
@@ -771,7 +766,7 @@ public class ShuinuanMainNewActivity extends ShuinuanBaseNewActivity implements 
         TishiDialog tishiDialog = new TishiDialog(mContext, TishiDialog.TYPE_CAOZUO, new TishiDialog.TishiDialogListener() {
             @Override
             public void onClickCancel(View v, TishiDialog dialog) {
-                finish();
+
             }
 
             @Override

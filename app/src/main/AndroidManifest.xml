@@ -592,7 +592,7 @@
 
         <!--    水暖主页    -->
         <activity
-            android:name=".activity.shuinuan.ShuinuanMainNewActivity"
+            android:name=".activity.shuinuan.ShuinuanMainActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />

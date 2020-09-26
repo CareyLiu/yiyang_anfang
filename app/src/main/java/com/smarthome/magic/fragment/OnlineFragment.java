@@ -20,7 +20,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.BindBoxActivity;
 import com.smarthome.magic.activity.FengNuanActivity;
-import com.smarthome.magic.activity.shuinuan.ShuinuanMainNewActivity;
+import com.smarthome.magic.activity.shuinuan.ShuinuanMainActivity;
 import com.smarthome.magic.adapter.CarList1Adapter;
 import com.smarthome.magic.adapter.SheBeiListAdapter;
 import com.smarthome.magic.app.AppManager;
@@ -138,7 +138,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
                             if (NetworkUtils.isConnected(getActivity())) {
                                 Activity currentActivity = AppManager.getAppManager().currentActivity();
                                 if (currentActivity != null) {
-                                    ShuinuanMainNewActivity.actionStart(getActivity(), ccid, count);
+                                    ShuinuanMainActivity.actionStart(getActivity(), ccid, count);
                                 }
                             } else {
                                 UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");

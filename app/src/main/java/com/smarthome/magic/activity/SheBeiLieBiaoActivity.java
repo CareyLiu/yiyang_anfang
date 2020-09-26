@@ -16,7 +16,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.shuinuan.ShuinuanMainNewActivity;
+import com.smarthome.magic.activity.shuinuan.ShuinuanMainActivity;
 import com.smarthome.magic.adapter.SheBeiListAdapter;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.BaseActivity;
@@ -96,7 +96,7 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
                             if (NetworkUtils.isConnected(mContext)) {
                                 Activity currentActivity = AppManager.getAppManager().currentActivity();
                                 if (currentActivity != null) {
-                                    ShuinuanMainNewActivity.actionStart(mContext, ccid, count);
+                                    ShuinuanMainActivity.actionStart(mContext, ccid, count);
                                 }
                             } else {
                                 UIHelper.ToastMessage(mContext, "请连接网络后重新尝试");

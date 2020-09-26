@@ -27,6 +27,7 @@ import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.BangdingFailDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.SheBeiLieBieListModel;
 import com.smarthome.magic.model.SheBeiModel;
@@ -51,6 +52,8 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
     private SheBeiListAdapter sheBeiListAdapter;
     private List<SheBeiModel> mDatas = new ArrayList<>();
     private String device_type;
+    private String mqtt_connect_state;
+    private String mqtt_connect_prompt;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,41 +72,47 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
         sheBeiListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                switch (view.getId()) {
-                    case R.id.constrain:
-                        if (mDatas.get(position).device_type.equals("1")) {
-                            PreferenceHelper.getInstance(mContext).putString("ccid", mDatas.get(position).ccid);
+                if (mqtt_connect_state.equals("1")){
+                    switch (view.getId()) {
+                        case R.id.constrain:
+                            if (mDatas.get(position).device_type.equals("1")) {
+                                PreferenceHelper.getInstance(mContext).putString("ccid", mDatas.get(position).ccid);
 
-                            MyApplication.CARBOX_GETNOW = "wit/cbox/app/" + getServer_id() + getCcid();
-                            int i = mDatas.get(position).ccid.length() - 1;
-                            String str = String.valueOf(mDatas.get(position).ccid.charAt(i));
-                            Log.i("serverId", str);
-                            PreferenceHelper.getInstance(mContext).putString("car_server_id", str + "/");
-                            if (NetworkUtils.isConnected(mContext)) {
-                                Activity currentActivity = AppManager.getAppManager().currentActivity();
-                                if (currentActivity != null) {
-                                    FengNuanActivity.actionStart(mContext);
+                                MyApplication.CARBOX_GETNOW = "wit/cbox/app/" + getServer_id() + getCcid();
+                                int i = mDatas.get(position).ccid.length() - 1;
+                                String str = String.valueOf(mDatas.get(position).ccid.charAt(i));
+                                Log.i("serverId", str);
+                                PreferenceHelper.getInstance(mContext).putString("car_server_id", str + "/");
+                                if (NetworkUtils.isConnected(mContext)) {
+                                    Activity currentActivity = AppManager.getAppManager().currentActivity();
+                                    if (currentActivity != null) {
+                                        FengNuanActivity.actionStart(mContext);
+                                    }
+                                } else {
+                                    UIHelper.ToastMessage(mContext, "请连接网络后重新尝试");
                                 }
-                            } else {
-                                UIHelper.ToastMessage(mContext, "请连接网络后重新尝试");
-                            }
-                        } else if (mDatas.get(position).device_type.equals("6")) {
-                            String ccid = mDatas.get(position).ccid;
-                            int pos = ccid.length() - 1;
-                            String count = String.valueOf(ccid.charAt(pos)) + "/";
-                            PreferenceHelper.getInstance(mContext).putString("ccid", mDatas.get(position).ccid);
-                            PreferenceHelper.getInstance(mContext).putString("car_server_id", count);
-                            if (NetworkUtils.isConnected(mContext)) {
-                                Activity currentActivity = AppManager.getAppManager().currentActivity();
-                                if (currentActivity != null) {
-                                    ShuinuanMainActivity.actionStart(mContext, ccid, count);
+                            } else if (mDatas.get(position).device_type.equals("6")) {
+                                String ccid = mDatas.get(position).ccid;
+                                int pos = ccid.length() - 1;
+                                String count = String.valueOf(ccid.charAt(pos)) + "/";
+                                PreferenceHelper.getInstance(mContext).putString("ccid", mDatas.get(position).ccid);
+                                PreferenceHelper.getInstance(mContext).putString("car_server_id", count);
+                                if (NetworkUtils.isConnected(mContext)) {
+                                    Activity currentActivity = AppManager.getAppManager().currentActivity();
+                                    if (currentActivity != null) {
+                                        ShuinuanMainActivity.actionStart(mContext, ccid, count);
+                                    }
+                                } else {
+                                    UIHelper.ToastMessage(mContext, "请连接网络后重新尝试");
                                 }
-                            } else {
-                                UIHelper.ToastMessage(mContext, "请连接网络后重新尝试");
                             }
-                        }
 
-                        break;
+                            break;
+                    }
+                }else {
+                    BangdingFailDialog dialog = new BangdingFailDialog(mContext);
+                    dialog.setTextContent(mqtt_connect_prompt);
+                    dialog.show();
                 }
             }
         });
@@ -129,6 +138,8 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse<SheBeiLieBieListModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<SheBeiLieBieListModel.DataBean>> response) {
+                        mqtt_connect_state = response.body().mqtt_connect_state;
+                        mqtt_connect_prompt = response.body().mqtt_connect_prompt;
                         mDatas.clear();
                         for (int i = 0; i < response.body().data.size(); i++) {
                             SheBeiModel sheBeiModel = new SheBeiModel(true, response.body().data.get(i).getControl_device_name());
@@ -144,7 +155,7 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
                                 sheBeiModel1.validity_state = bean.getValidity_state();
                                 sheBeiModel1.validity_term = bean.getValidity_term();
                                 sheBeiModel1.validity_time = bean.getValidity_time();
-                                sheBeiModel1.device_type = response.body().data.get(i).control_type_id;
+                                sheBeiModel1.device_type = response.body().data.get(i).getControl_type_id();
                                 mDatas.add(sheBeiModel1);
                             }
                         }

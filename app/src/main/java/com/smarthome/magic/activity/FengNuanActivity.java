@@ -1,5 +1,5 @@
-package com.smarthome.magic.activity;
 
+package com.smarthome.magic.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -19,19 +19,26 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
+import com.googlecode.mp4parser.boxes.mp4.objectdescriptors.AudioSpecificConfig;
 import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
 import com.rairmmd.andmqtt.MqttSubscribe;
 import com.rairmmd.andmqtt.MqttUnSubscribe;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.DiagnosisActivity;
+import com.smarthome.magic.activity.FengnuandishiActivity;
+import com.smarthome.magic.activity.SheBeiSetActivity;
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConfigValue;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
@@ -44,7 +51,10 @@ import com.smarthome.magic.util.SoundPoolUtils;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
+
 import java.math.BigDecimal;
+import java.util.WeakHashMap;
+
 import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -142,7 +152,10 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
     private String firstSetKongTiao = "0";
     TishiDialog tishiDialog;
 
-    private String whatUWant = "aaa";//你想要的操作命令   1.档位模式开机 2.档位模式关机 3.空调模式开机 4.空调模式关机 5开启预通风模式 6关闭预通风 7开启泵油 8关闭泵油 9开启水泵 10 关闭水泵
+
+    //你想要的操作命令   1.档位模式开机 2.档位模式关机 3.空调模式开机 4.空调模式关机 5开启预通风模式 6关闭预通风 7开启泵油 8关闭泵油 9开启水泵 10 关闭水泵,11判断是否在线
+    private String whatUWant = "aaa";
+
 
     private final String DANGWEIKAIJI = "1";
     private final String DANGWEIGUANJI = "2";
@@ -154,16 +167,31 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
     private final String BENGYOUGUANJI = "8";
     private final String SHUIBENGKAIJI = "9";
     private final String SHUIBENGGUANJI = "10";
+    private final String PANDUANZAIXIANZHUAGNTAI = "11";//判断是否在线
+    N9Thread n9Thread = null;
+    DangWeiGuanJiThread dangWeiGuanJiThread = null;//档位关机
+    DangWeiKaiJiThread dangWeiKaiJiThread = null;//档位开机
+    KongTiaoKaiJiThread kongTiaoKaiJiThread = null;//空调开机
+    KongTiaoGuanJiThread kongTiaoGuanJiThread = null;//空调关机
 
+    String dangQianDangWei = "3";//默认3挡
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_JIEBANG) {
+                    finish();
+                }
+            }
+        }));
 
         ivShezhi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SheBeiSetActivity.actionStart(mContext,SheBeiSetActivity.TYPE_FENGNUAN);
+                SheBeiSetActivity.actionStart(mContext, SheBeiSetActivity.TYPE_FENGNUAN);
             }
         });
         llDingshi.setOnClickListener(new View.OnClickListener() {
@@ -233,7 +261,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
         getTongZhi();
 
-       // String value = PreferenceHelper.getInstance(mContext).getString(STARTSHELVES, "1");
+        String value = PreferenceHelper.getInstance(mContext).getString(STARTSHELVES, "1");
 //        if (value.equals("1")) {//档位
 //            ivDangweimoshi.setBackgroundResource(R.mipmap.fengnuan_button_dangwei_sel);
 //            ivKongtiaomoshi.setBackgroundResource(R.mipmap.fengnuan_button_kongtiao_nor);
@@ -312,6 +340,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                             seekBar1.setProgress(80);
                             qieHuanDangWei(4);
                         } else {
+                            seekBar1.setProgress(100);
                             qieHuanDangWei(5);
                         }
                     }
@@ -348,7 +377,11 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                     UIHelper.ToastMessage(mContext, "无水泵功能");
                     return;
                 }
+
                 if (shuiBengValue.equals("0")) {
+                    whatUWant = SHUIBENGKAIJI;
+                    lordingDialog.setTextMsg("正在开启水泵循环，请稍后");
+                    lordingDialog.show();
                     AndMqtt.getInstance().publish(new MqttPublish()
                             .setMsg("M711.")
                             .setQos(2).setRetained(false)
@@ -357,9 +390,9 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                         public void onSuccess(IMqttToken asyncActionToken) {
                             Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
                             //UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
-                            PreferenceHelper.getInstance(mContext).putString(ConfigValue.ZHILINGMA, "k71" + "1" + "1.");
-                            lordingDialog.setTextMsg("正在开启水泵循环，请稍后");
-                            lordingDialog.show();
+                            //PreferenceHelper.getInstance(mContext).putString(ConfigValue.ZHILINGMA, "k71" + "1" + "1.");
+
+
                         }
 
                         @Override
@@ -369,7 +402,9 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                         }
                     });
                 } else {
-
+                    whatUWant = SHUIBENGGUANJI;
+                    lordingDialog.setTextMsg("正在关闭水泵循环，请稍后");
+                    lordingDialog.show();
                     AndMqtt.getInstance().publish(new MqttPublish()
                             .setMsg("M712.")
                             .setQos(2).setRetained(false)
@@ -379,8 +414,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                             Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
                             //UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
                             PreferenceHelper.getInstance(mContext).putString(ConfigValue.ZHILINGMA, "k71" + "2" + "1.");
-                            lordingDialog.setTextMsg("正在关闭水泵循环，请稍后");
-                            lordingDialog.show();
+
                         }
 
                         @Override
@@ -535,6 +569,8 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
             }
         });
+
+
     }
 
     private void getTongZhi() {
@@ -579,6 +615,15 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                     }
                 } else if (message.type == ConstanceValue.MSG_CAR_J_M) {
                     lordingDialog.dismiss();
+
+                    if (whatUWant.equals(PANDUANZAIXIANZHUAGNTAI)) {
+                        whatUWant = "";
+                        tvZaixian.setText("在线");
+
+                        Notice n = new Notice();
+                        n.type = ConstanceValue.MSG_N9_LIANJIE;
+                        RxBus.getDefault().sendRx(n);
+                    }
                     //接收到信息
                     Log.i("msg_car_j_m", message.content.toString());
 
@@ -586,6 +631,8 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                     Log.i("msg_car_j_m_data", messageData);
                     // 驻车加热器:当前档位1至5档	1	是
                     String oper_dang = messageData.substring(0, 1);
+
+                    dangQianDangWei = oper_dang;
                     if (0 <= oper_dang.indexOf("a")) {
                         oper_dang = "";
                     } else {
@@ -686,6 +733,13 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                                 lordingDialog.dismiss();
                                 SoundPoolUtils.soundPool(mContext, R.raw.yikaiji);
                                 whatUWant = "";
+                                if (kongTiaoKaiJiThread != null) {
+                                    kongTiaoKaiJiThread.interrupt();
+                                }
+
+                                if (tishiDialog != null) {
+                                    tishiDialog.dismiss();
+                                }
                             }
                             break;
                         case "3":
@@ -713,16 +767,25 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                                 lordingDialog.dismiss();
                                 SoundPoolUtils.soundPool(mContext, R.raw.yiguanji);
                                 whatUWant = "";
+                                if (dangWeiGuanJiThread != null) {
+                                    dangWeiGuanJiThread.interrupt();
+                                }
                             } else if (whatUWant.equals(KONGTIAOGUANJI)) {
                                 lordingDialog.dismiss();
                                 SoundPoolUtils.soundPool(mContext, R.raw.yiguanji);
                                 whatUWant = "";
+                                if (kongTiaoGuanJiThread != null) {
+                                    kongTiaoGuanJiThread.interrupt();
+                                }
                             } else if (whatUWant.equals(BENGYOUGUANJI)) {
                                 tishiDialog.dismiss();
                                 whatUWant = "";
                             } else if (whatUWant.equals(YUTONGFENGGUANJI)) {
                                 whatUWant = "";
                                 tishiDialog.dismiss();
+                            } else if (whatUWant.equals(SHUIBENGGUANJI)) {
+                                whatUWant = "";
+                                lordingDialog.dismiss();
                             }
 
                             break;
@@ -730,7 +793,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                             //  tvShebeizhuangtai.setText("设备状态：水泵循环");
 //                            tvShuibeng.setTextColor(mContext.getResources().getColor(R.color.blue00fff));
 //                            tvShuibeng.setText("水泵已开机");
-
+                            lordingDialog.dismiss();
 
                             break;
                         case "6":
@@ -881,26 +944,19 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                     String xinhaoQiangDu = messageData.substring(7, 9);
                     String jiGeXinHao = "没有接到信号";
                     if (!StringUtils.isEmpty(xinhaoQiangDu)) {
-                        int xinhao = Integer.valueOf(xinhaoQiangDu);
 
-                        if (xinhaoQiangDu.equals("aa")) {
-                            jiGeXinHao = "两格信号";
-                            ivXinhao.setBackgroundResource(R.mipmap.fengnuan_icon_signal2);
-                        }else if (xinhao < 15) {
-                            jiGeXinHao = "无信号";
-                            ivXinhao.setBackgroundResource(R.mipmap.fengnuan_icon_signal_no);
-                            tvZaixian.setText("离线");
-                        } else if (xinhao >= 15 && xinhao < -19) {
+                        int xinhao = Y.getInt(xinhaoQiangDu);
+                        if (xinhao >= 0 && xinhao <= 14) {
                             jiGeXinHao = "一格信号";
                             ivXinhao.setBackgroundResource(R.mipmap.fengnuan_icon_signal1);
-                        } else if (xinhao >= 20 && xinhao <= 25) {
+                        } else if (xinhao >= 15 && xinhao <= 19) {
                             jiGeXinHao = "两格信号";
                             ivXinhao.setBackgroundResource(R.mipmap.fengnuan_icon_signal2);
-                        } else if (xinhao >= 26 && xinhao <= 30) {
+                        } else if (xinhao >= 20 && xinhao <= 25) {
                             jiGeXinHao = "三格信号";
                             ivXinhao.setBackgroundResource(R.mipmap.fengnuan_icon_signal3);
-                        } else if (xinhao >= 30 && xinhao <= 35) {
-                            jiGeXinHao = "四格信号";
+                        } else if (xinhao >= 26 && xinhao <= 35) {
+                            jiGeXinHao = "三格信号";
                             ivXinhao.setBackgroundResource(R.mipmap.fengnuan_icon_signal4);
                         }
 
@@ -910,9 +966,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
                     // 驻车加热器:电压->0253 = 25.3	4	是
                     String machine_voltage = messageData.substring(10, 13) + "." + messageData.substring(13, 14);
-
-                    String quLingDianYa = machine_voltage.replaceAll("^(0+)", "");
-                    tvDianya.setText(quLingDianYa + "V");
+                    tvDianya.setText(machine_voltage + "V");
                     // 驻车加热器:风机转速->13245	5	是
                     String revolution = messageData.substring(14, 19);
                     // 驻车加热器:加热塞功率->0264=26.4	4	是
@@ -960,6 +1014,11 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 //                                rbHeaterPumpMode.setVisibility(View.VISIBLE);
                                 tvShuibeng.setTextColor(mContext.getResources().getColor(R.color.white));
                                 shuiBengValue = "0";
+                                if (whatUWant.equals(SHUIBENGGUANJI)) {
+                                    whatUWant = "";
+                                    lordingDialog.dismiss();
+                                }
+
                                 break;
                             case "1"://1开
 //                                rbHeaterPumpMode.setChecked(true);
@@ -969,6 +1028,12 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                                 if (kongTiaoMoshiValue.equals("0") && dangWeiMoShiValue.equals("0") && tongFengValue.equals("0") && bengYouValue.equals("0")) {
                                     tvShebeizhuangtai.setText("设备状态：" + "水泵模式");
                                 }
+
+                                if (whatUWant.equals(SHUIBENGKAIJI)) {
+                                    whatUWant = "";
+                                    lordingDialog.dismiss();
+                                }
+
 
                                 break;
                             case "a"://无
@@ -1098,6 +1163,193 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                         }
                     }, ConfigValue.YANCHI);//3秒后执行Runnable中的run方法
 
+                } else if (message.type == ConstanceValue.MSG_N9_WEILIANJIE) {
+
+
+                    TishiDialog tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                        @Override
+                        public void onClickCancel(View v, TishiDialog dialog) {
+                            whatUWant = "";
+                            lordingDialog.dismiss();
+                        }
+
+                        @Override
+                        public void onClickConfirm(View v, TishiDialog dialog) {
+                            whatUWant = PANDUANZAIXIANZHUAGNTAI;
+
+                            if (n9Thread != null) {
+                                whatUWant = PANDUANZAIXIANZHUAGNTAI;
+                                n9Thread.interrupt();
+                                n9Thread = new N9Thread();
+                                n9Thread.start();
+                            }
+
+                        }
+
+                        @Override
+                        public void onDismiss(TishiDialog dialog) {
+
+                        }
+                    });
+
+                    tishiDialog.setTextTitle("离线");
+                    tishiDialog.setTextContent("设备无法通讯，请检查您的网络是否畅通或加热器是否通电，是否重连？");
+                    tishiDialog.setTextConfirm("重连");
+                    tishiDialog.setTextCancel("取消");
+                    tishiDialog.show();
+
+                    tvZaixian.setText("离线");
+
+                    whatUWant = "";
+                    n9Thread.interrupt();
+
+                } else if (message.type == ConstanceValue.MSG_N9_LIANJIE) {
+
+                } else if (message.type == ConstanceValue.MSG_DANGWEIGUANJI) {
+                    lordingDialog.dismiss();
+                    tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                        @Override
+                        public void onClickCancel(View v, TishiDialog dialog) {
+                            tishiDialog.dismiss();
+                        }
+
+                        @Override
+                        public void onClickConfirm(View v, TishiDialog dialog) {
+
+                            finish();
+                        }
+
+                        @Override
+                        public void onDismiss(TishiDialog dialog) {
+
+                        }
+                    });
+
+                    tishiDialog.setTextTitle("离线");
+                    tishiDialog.setTextContent("检查您的网络是否畅通或加热器是否在线，并退出当前页重新尝试");
+                    tishiDialog.setCancelable(false);
+                    FengNuanActivity.this.tishiDialog.setTextConfirm("退出重试");
+                    tishiDialog.setTextCancel("取消");
+
+                    tishiDialog.show();
+
+                    tvZaixian.setText("离线");
+
+
+                    whatUWant = "";
+                    if (dangWeiGuanJiThread != null) {
+                        dangWeiGuanJiThread.interrupt();
+                    }
+
+                } else if (message.type == ConstanceValue.MSG_DANGWEIKAIJI) {
+                    lordingDialog.dismiss();
+
+                    tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                        @Override
+                        public void onClickCancel(View v, TishiDialog dialog) {
+                            tishiDialog.dismiss();
+                        }
+
+                        @Override
+                        public void onClickConfirm(View v, TishiDialog dialog) {
+                            finish();
+
+                        }
+
+                        @Override
+                        public void onDismiss(TishiDialog dialog) {
+
+                        }
+                    });
+
+                    tishiDialog.setTextTitle("离线");
+                    tishiDialog.setTextContent("检查您的网络是否畅通或加热器是否在线，并退出当前页重新尝试");
+                    tishiDialog.setCancelable(false);
+                    FengNuanActivity.this.tishiDialog.setTextConfirm("退出重试");
+                    tishiDialog.setTextCancel("取消");
+
+                    tishiDialog.show();
+
+                    tvZaixian.setText("离线");
+
+
+                    whatUWant = "";
+                    if (dangWeiKaiJiThread != null) {
+                        dangWeiKaiJiThread.interrupt();
+                    }
+                } else if (message.type == ConstanceValue.MSG_KONGTIAOKAIJI) {
+
+                    lordingDialog.dismiss();
+
+                    tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                        @Override
+                        public void onClickCancel(View v, TishiDialog dialog) {
+                            tishiDialog.dismiss();
+                        }
+
+                        @Override
+                        public void onClickConfirm(View v, TishiDialog dialog) {
+                            finish();
+
+                        }
+
+                        @Override
+                        public void onDismiss(TishiDialog dialog) {
+
+                        }
+                    });
+
+                    tishiDialog.setTextTitle("离线");
+                    tishiDialog.setTextContent("检查您的网络是否畅通或加热器是否在线，并退出当前页重新尝试");
+                    tishiDialog.setCancelable(false);
+                    FengNuanActivity.this.tishiDialog.setTextConfirm("退出重试");
+                    tishiDialog.setTextCancel("取消");
+
+                    tishiDialog.show();
+
+                    tvZaixian.setText("离线");
+
+
+                    whatUWant = "";
+                    if (dangWeiKaiJiThread != null) {
+                        dangWeiKaiJiThread.interrupt();
+                    }
+                } else if (message.type == ConstanceValue.MSG_KONGTIAOGUANJI) {
+                    lordingDialog.dismiss();
+
+                    tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                        @Override
+                        public void onClickCancel(View v, TishiDialog dialog) {
+                            tishiDialog.dismiss();
+                        }
+
+                        @Override
+                        public void onClickConfirm(View v, TishiDialog dialog) {
+                            finish();
+
+                        }
+
+                        @Override
+                        public void onDismiss(TishiDialog dialog) {
+
+                        }
+                    });
+
+                    tishiDialog.setTextTitle("离线");
+                    tishiDialog.setTextContent("检查您的网络是否畅通或加热器是否在线，并退出当前页重新尝试");
+                    tishiDialog.setCancelable(false);
+                    FengNuanActivity.this.tishiDialog.setTextConfirm("退出重试");
+                    tishiDialog.setTextCancel("取消");
+
+                    tishiDialog.show();
+
+                    tvZaixian.setText("离线");
+
+
+                    whatUWant = "";
+                    if (kongTiaoGuanJiThread != null) {
+                        kongTiaoGuanJiThread.interrupt();
+                    }
                 }
             }
         }));
@@ -1118,6 +1370,8 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
+
+    private Handler handler;
 
     public void setMqttZhiLing() {
 
@@ -1190,22 +1444,12 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
         });
 
+        whatUWant = PANDUANZAIXIANZHUAGNTAI;
 
-        AndMqtt.getInstance().publish(new MqttPublish()
-                .setMsg("N9.")
-                .setQos(2)
-                .setTopic(CAR_CTROL)
-                .setRetained(false), new IMqttActionListener() {
-            @Override
-            public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功" + " N9 我是在类里面订阅的");
-            }
 
-            @Override
-            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
-            }
-        });
+        n9Thread = new N9Thread();
+        n9Thread.start();
+
 
         //查询车辆详情数据
         // requestData();
@@ -1230,6 +1474,25 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        whatUWant = "";
+        if (n9Thread != null) {
+            n9Thread.interrupt();
+        }
+        if (dangWeiGuanJiThread != null) {
+            dangWeiGuanJiThread.interrupt();
+        }
+
+        if (dangWeiKaiJiThread != null) {
+            dangWeiKaiJiThread.interrupt();
+        }
+
+        if (kongTiaoKaiJiThread != null) {
+            kongTiaoKaiJiThread.interrupt();
+        }
+        if (kongTiaoGuanJiThread != null) {
+            kongTiaoGuanJiThread.interrupt();
+        }
 
         PreferenceHelper.getInstance(mContext).removeKey(App.CHOOSE_KONGZHI_XIANGMU);
         AndMqtt.getInstance().unSubscribe(new MqttUnSubscribe().setTopic(CAR_NOTIFY), new IMqttActionListener() {
@@ -1298,49 +1561,16 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                     return false;
                 }
                 if (dangWeiMoShiValue.equals("0")) {
-                    AndMqtt.getInstance().publish(new MqttPublish()
-                            .setMsg("M61" + "1" + ".")
-                            .setQos(2).setRetained(false)
-                            .setTopic(CAR_CTROL), new IMqttActionListener() {
-                        @Override
-                        public void onSuccess(IMqttToken asyncActionToken) {
-                            Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
-                            //UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
-                            lordingDialog.setTextMsg("正在以" + "档位模式" + "开机请稍后...");
-                            lordingDialog.show();
-                            SoundPoolUtils.soundPool(mContext, R.raw.dangwei);
-                            whatUWant = DANGWEIKAIJI;
-                        }
-
-                        @Override
-                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                            Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
-                            UIHelper.ToastMessage(mContext, "指令发送失败", Toast.LENGTH_SHORT);
-                        }
-                    });
+                    whatUWant = DANGWEIKAIJI;
+                    dangWeiKaiJiThread = new DangWeiKaiJiThread();
+                    dangWeiKaiJiThread.start();
 
                 } else if (dangWeiMoShiValue.equals("1")) {
+                    whatUWant = DANGWEIGUANJI;
 
-                    AndMqtt.getInstance().publish(new MqttPublish()
-                            .setMsg("M613.")
-                            .setQos(2).setRetained(false)
-                            .setTopic(CAR_CTROL), new IMqttActionListener() {
-                        @Override
-                        public void onSuccess(IMqttToken asyncActionToken) {
-                            Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
-                            //  UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
-                            lordingDialog.setTextMsg("正在关机请稍后...");
-                            lordingDialog.show();
-                            whatUWant = DANGWEIGUANJI;
-                            SoundPoolUtils.soundPool(mContext, R.raw.guanjizhong);
-                        }
+                    dangWeiGuanJiThread = new DangWeiGuanJiThread();
+                    dangWeiGuanJiThread.start();
 
-                        @Override
-                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                            Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
-                            UIHelper.ToastMessage(mContext, "指令发送失败，请检查是否连接网络", Toast.LENGTH_SHORT);
-                        }
-                    });
                 }
                 break;
             case R.id.iv_kongtiaomoshi:
@@ -1349,49 +1579,17 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                     return false;
                 }
                 if (kongTiaoMoshiValue.equals("0")) {
-                    AndMqtt.getInstance().publish(new MqttPublish()
-                            .setMsg("M61" + "2" + ".")
-                            .setQos(2).setRetained(false)
-                            .setTopic(CAR_CTROL), new IMqttActionListener() {
-                        @Override
-                        public void onSuccess(IMqttToken asyncActionToken) {
-                            Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
-                            //UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
-                            lordingDialog.setTextMsg("正在以" + "空调模式" + "开机请稍后...");
-                            lordingDialog.show();
-                            SoundPoolUtils.soundPool(mContext, R.raw.kongtiao);
-                            whatUWant = KONGTIAOKAIJI;
-                        }
-
-                        @Override
-                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                            Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
-                            UIHelper.ToastMessage(mContext, "指令发送失败", Toast.LENGTH_SHORT);
-                        }
-                    });
+                    whatUWant = KONGTIAOKAIJI;
+                    kongTiaoKaiJiThread = new KongTiaoKaiJiThread();
+                    kongTiaoKaiJiThread.start();
 
                 } else if (kongTiaoMoshiValue.equals("1")) {
 
-                    AndMqtt.getInstance().publish(new MqttPublish()
-                            .setMsg("M613.")
-                            .setQos(2).setRetained(false)
-                            .setTopic(CAR_CTROL), new IMqttActionListener() {
-                        @Override
-                        public void onSuccess(IMqttToken asyncActionToken) {
-                            Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
-                            //  UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
-                            lordingDialog.setTextMsg("正在关机请稍后...");
-                            lordingDialog.show();
-                            whatUWant = KONGTIAOGUANJI;
-                            SoundPoolUtils.soundPool(mContext, R.raw.guanjizhong);
-                        }
+                    whatUWant = KONGTIAOGUANJI;
+                    kongTiaoGuanJiThread = new KongTiaoGuanJiThread();
+                    kongTiaoGuanJiThread.start();
 
-                        @Override
-                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                            Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
-                            UIHelper.ToastMessage(mContext, "指令发送失败，请检查是否连接网络", Toast.LENGTH_SHORT);
-                        }
-                    });
+
                 }
 
                 break;
@@ -1402,6 +1600,10 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
     }
 
     private void qieHuanDangWei(int dangValue) {
+
+        if (dangQianDangWei.equals(String.valueOf(dangValue))) {
+            return;
+        }
         tvShedingWenduOrDangwei.setText("设定挡位：" + String.valueOf(dangValue) + "挡");
 
         AndMqtt.getInstance().publish(new MqttPublish()
@@ -1508,6 +1710,268 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                     Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败" + exception.getMessage());
                 }
             });
+        }
+    }
+
+
+    private class N9Thread extends Thread {
+        private int i = 0;
+
+        public void run() {
+            while (whatUWant.equals(PANDUANZAIXIANZHUAGNTAI)) {
+
+                try {
+                    if (i == 3) {
+
+                        whatUWant = "";
+                        Notice n = new Notice();
+                        n.type = ConstanceValue.MSG_N9_WEILIANJIE;
+                        RxBus.getDefault().sendRx(n);
+
+                    }
+                    AndMqtt.getInstance().publish(new MqttPublish()
+                            .setMsg("N9.")
+                            .setQos(2)
+                            .setTopic(CAR_CTROL)
+                            .setRetained(false), new IMqttActionListener() {
+                        @Override
+                        public void onSuccess(IMqttToken asyncActionToken) {
+                            Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功" + " N9 我是在类里面订阅的");
+
+
+                           // UIHelper.ToastMessage(mContext, "第" + String.valueOf(i) + "次发送");
+                            i = i + 1;
+
+
+                        }
+
+                        @Override
+                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                            Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+                        }
+                    });
+
+                    Thread.sleep(5000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    break;
+
+                }
+            }
+        }
+    }
+
+    private class DangWeiGuanJiThread extends Thread {
+        private int i = 0;
+
+        public void run() {
+            while (whatUWant.equals(DANGWEIGUANJI)) {
+
+                try {
+                    if (i == 3) {
+
+                        whatUWant = "";
+                        Notice n = new Notice();
+                        n.type = ConstanceValue.MSG_DANGWEIGUANJI;
+                        RxBus.getDefault().sendRx(n);
+
+                    }
+
+                    AndMqtt.getInstance().publish(new MqttPublish()
+                            .setMsg("M613.")
+                            .setQos(2).setRetained(false)
+                            .setTopic(CAR_CTROL), new IMqttActionListener() {
+                        @Override
+                        public void onSuccess(IMqttToken asyncActionToken) {
+                            Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
+                            //  UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
+
+
+                            if (i == 0) {
+                                lordingDialog.setTextMsg("正在关机请稍后...");
+                                lordingDialog.show();
+                                SoundPoolUtils.soundPool(mContext, R.raw.guanjizhong);
+                            }
+                           // UIHelper.ToastMessage(mContext, "第" + String.valueOf(i) + "次发送");
+                            i = i + 1;
+
+                        }
+
+                        @Override
+                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                            Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+                            UIHelper.ToastMessage(mContext, "指令发送失败，请检查是否连接网络", Toast.LENGTH_SHORT);
+                        }
+                    });
+
+
+                    Thread.sleep(5000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    break;
+
+                }
+            }
+        }
+    }
+
+
+    private class DangWeiKaiJiThread extends Thread {
+        private int i = 0;
+
+        public void run() {
+            while (whatUWant.equals(DANGWEIKAIJI)) {
+
+                try {
+                    if (i == 3) {
+
+                        whatUWant = "";
+                        Notice n = new Notice();
+                        n.type = ConstanceValue.MSG_DANGWEIKAIJI;
+                        RxBus.getDefault().sendRx(n);
+
+                    }
+                    AndMqtt.getInstance().publish(new MqttPublish()
+                            .setMsg("M61" + "1" + ".")
+                            .setQos(2).setRetained(false)
+                            .setTopic(CAR_CTROL), new IMqttActionListener() {
+                        @Override
+                        public void onSuccess(IMqttToken asyncActionToken) {
+                            Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
+                            //UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
+
+                            if (i == 0) {
+                                lordingDialog.setTextMsg("正在以" + "档位模式" + "开机请稍后...");
+                                lordingDialog.show();
+                                SoundPoolUtils.soundPool(mContext, R.raw.dangwei);
+                            }
+
+                           // UIHelper.ToastMessage(mContext, "第" + String.valueOf(i) + "次发送");
+                            i = i + 1;
+
+
+                        }
+
+                        @Override
+                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                            Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+                            UIHelper.ToastMessage(mContext, "指令发送失败", Toast.LENGTH_SHORT);
+                        }
+                    });
+                    Thread.sleep(5000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    break;
+
+                }
+            }
+        }
+    }
+
+
+    private class KongTiaoKaiJiThread extends Thread {
+        private int i = 0;
+
+        public void run() {
+            while (whatUWant.equals(KONGTIAOKAIJI)) {
+
+                try {
+                    if (i == 3) {
+
+                        whatUWant = "";
+                        Notice n = new Notice();
+                        n.type = ConstanceValue.MSG_KONGTIAOKAIJI;
+                        RxBus.getDefault().sendRx(n);
+
+                    }
+                    AndMqtt.getInstance().publish(new MqttPublish()
+                            .setMsg("M61" + "2" + ".")
+                            .setQos(2).setRetained(false)
+                            .setTopic(CAR_CTROL), new IMqttActionListener() {
+                        @Override
+                        public void onSuccess(IMqttToken asyncActionToken) {
+                            Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
+                            //UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
+
+                            if (i == 0) {
+                                lordingDialog.setTextMsg("正在以" + "空调模式" + "开机请稍后...");
+                                lordingDialog.show();
+                                SoundPoolUtils.soundPool(mContext, R.raw.kongtiao);
+                            }
+
+                           // UIHelper.ToastMessage(mContext, "第" + String.valueOf(i) + "次发送");
+                            i = i + 1;
+
+
+                        }
+
+                        @Override
+                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                            Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+                            UIHelper.ToastMessage(mContext, "指令发送失败", Toast.LENGTH_SHORT);
+                        }
+                    });
+                    Thread.sleep(5000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    break;
+
+                }
+            }
+        }
+    }
+
+
+    private class KongTiaoGuanJiThread extends Thread {
+        private int i = 0;
+
+        public void run() {
+            while (whatUWant.equals(KONGTIAOGUANJI)) {
+
+                try {
+                    if (i == 3) {
+
+                        whatUWant = "";
+                        Notice n = new Notice();
+                        n.type = ConstanceValue.MSG_KONGTIAOGUANJI;
+                        RxBus.getDefault().sendRx(n);
+
+                    }
+                    AndMqtt.getInstance().publish(new MqttPublish()
+                            .setMsg("M613.")
+                            .setQos(2).setRetained(false)
+                            .setTopic(CAR_CTROL), new IMqttActionListener() {
+                        @Override
+                        public void onSuccess(IMqttToken asyncActionToken) {
+                            Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
+                            //  UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
+
+
+                            if (i == 0) {
+                                lordingDialog.setTextMsg("正在关机请稍后...");
+                                lordingDialog.show();
+                                whatUWant = KONGTIAOGUANJI;
+                                SoundPoolUtils.soundPool(mContext, R.raw.guanjizhong);
+
+                            }
+
+                            i = i + 1;
+                           // UIHelper.ToastMessage(mContext, "第" + String.valueOf(i) + "次发送");
+                        }
+
+                        @Override
+                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                            Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+                            UIHelper.ToastMessage(mContext, "指令发送失败，请检查是否连接网络", Toast.LENGTH_SHORT);
+                        }
+                    });
+                    Thread.sleep(5000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    break;
+
+                }
+            }
         }
     }
 }

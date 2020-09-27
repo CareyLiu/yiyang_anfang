@@ -134,10 +134,16 @@ public class ScanAddCarActivity extends BaseActivity implements QRCodeView.Deleg
         if (result.length() == 24) {
             addSheBei(result);
         } else {
-            UIHelper.ToastMessage(mContext, "您的车辆码不正确");
+            BangdingFailDialog dialog = new BangdingFailDialog(mContext);
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    finish();
+                }
+            });
+            dialog.setTextContent("您的设备码不正确");
+            dialog.show();
         }
-
-
     }
 
     public void addSheBei(String ccid) {
@@ -172,6 +178,12 @@ public class ScanAddCarActivity extends BaseActivity implements QRCodeView.Deleg
                         }
 
                         BangdingFailDialog dialog = new BangdingFailDialog(mContext);
+                        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialog) {
+                                finish();
+                            }
+                        });
                         dialog.setTextContent(msg);
                         dialog.show();
                     }

@@ -1,7 +1,9 @@
 package com.smarthome.magic.util;
 
 import android.os.CountDownTimer;
+
 import androidx.core.content.ContextCompat;
+
 import android.widget.TextView;
 
 import com.smarthome.magic.R;
@@ -15,16 +17,25 @@ import com.smarthome.magic.service.HeaterMqttService;
 //计时器
 public class TimeCount extends CountDownTimer {
     private TextView view;
+    private int colorId;
+
     public TimeCount(long millisInFuture, long countDownInterval, TextView view) {
         super(millisInFuture, countDownInterval);
-        this.view= view;
+        this.view = view;
+        colorId = R.color.app_bg;
+    }
+
+    public TimeCount(long millisInFuture, long countDownInterval, TextView view, int type) {
+        super(millisInFuture, countDownInterval);
+        this.view = view;
+        colorId = R.color.white;
     }
 
     @Override
     public void onFinish() {// 计时完毕
         view.setClickable(true);
         view.setText(R.string.get_code);
-        view.setTextColor(ContextCompat.getColor(MyApplication.context, R.color.app_bg));
+        view.setTextColor(ContextCompat.getColor(MyApplication.context, colorId));
         view.setTextSize(14);
     }
 
@@ -33,7 +44,7 @@ public class TimeCount extends CountDownTimer {
         view.setClickable(false);
         view.setTextSize(12);
         view.setText(millisUntilFinished / 1000 + "s后重新发送");
-        view.setTextColor(ContextCompat.getColor(MyApplication.context,R.color.app_bg));
+        view.setTextColor(ContextCompat.getColor(MyApplication.context, colorId));
 
     }
 

@@ -26,6 +26,7 @@ import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.Message;
+import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.TimeCount;
 
 
@@ -85,7 +86,7 @@ public class FengnuanJieActivity extends ShuinuanBaseActivity {
         user_phone = PreferenceHelper.getInstance(mContext).getString("user_phone", "");
         ccid = PreferenceHelper.getInstance(this).getString("ccid", "");
         tv_shebeima.setText(ccid);
-        timeCount = new TimeCount(60000, 1000, tv_send_code);
+        timeCount = new TimeCount(60000, 1000, tv_send_code,1);
     }
 
     private void jiebang() {
@@ -137,7 +138,7 @@ public class FengnuanJieActivity extends ShuinuanBaseActivity {
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("user_phone", user_phone);
-        map.put("mod_id", "0334");
+        map.put("mod_id", "0326");
         Gson gson = new Gson();
         OkGo.<AppResponse<Message.DataBean>>post(Urls.SERVER_URL + "msg")
                 .tag(this)//
@@ -157,6 +158,13 @@ public class FengnuanJieActivity extends ShuinuanBaseActivity {
                         timeCount.cancel();
                         timeCount.onFinish();
 
+                        String msg = response.getException().getMessage();
+                        String[] msgToast = msg.split("：");
+                        if (msgToast.length == 3) {
+                            AlertUtil.t(mContext, msgToast[2]);
+                        } else {
+                            AlertUtil.t(mContext, "网络异常");
+                        }
                     }
                 });
     }

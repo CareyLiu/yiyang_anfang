@@ -290,7 +290,6 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                             }
                         }
 
-
                     }
                 });
     }

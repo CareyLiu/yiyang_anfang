@@ -119,8 +119,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
                            }
                            if (mDatas.get(position).device_type.equals("1")) {
                                PreferenceHelper.getInstance(getActivity()).putString("ccid", mDatas.get(position).ccid);
-
-                               MyApplication.CARBOX_GETNOW = "wit/cbox/app/" + getServer_id() + getCcid();
+                               MyApplication.CARBOX_GETNOW = "wit/cbox/app/" + getServer_id() + mDatas.get(position).ccid;
                                int i = mDatas.get(position).ccid.length() - 1;
                                String str = String.valueOf(mDatas.get(position).ccid.charAt(i));
                                Log.i("serverId", str);

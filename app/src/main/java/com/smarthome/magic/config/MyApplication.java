@@ -184,7 +184,7 @@ public class MyApplication extends MultiDexApplication {
         int designWidth = 720;
         new RudenessScreenHelper(this, designWidth).activate();
 
-        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+        JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);
         doMqttValue = new DoMqttValue();
         context = getApplicationContext();
@@ -457,7 +457,7 @@ public class MyApplication extends MultiDexApplication {
             if (isAppProcess()) {
                 AndMqtt.getInstance().init(this);
                 MqttConnect builder = new MqttConnect();
-                builder.setClientId(HardWareValue.CLIENT_ID + getUser_id())//连接服务器
+                builder.setClientId(HardWareValue.CLIENT_ID + getUser_id() + System.currentTimeMillis())//连接服务器
                         .setPort(9096)
                         .setAutoReconnect(true)
                         .setCleanSession(true)
@@ -574,7 +574,7 @@ public class MyApplication extends MultiDexApplication {
                                     }
                                 });
 
-                             sendRx(ConstanceValue.MSG_MQTT_CONNECT_CHONGLIAN_ONSUCCESS, "");
+                                sendRx(ConstanceValue.MSG_MQTT_CONNECT_CHONGLIAN_ONSUCCESS, "");
 
                             }
 

@@ -113,7 +113,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="40dp"
-                        android:src="@mipmap/undraw_conference_uo36"></ImageView>
+                        android:src="@mipmap/chuanyi_pic_caishen_1"></ImageView>
                 </LinearLayout>
 
                 <LinearLayout

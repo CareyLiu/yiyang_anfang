@@ -39,6 +39,7 @@ import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.BuTianYaoQingMaDialog;
 import com.smarthome.magic.dialog.FuWuDialog;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.LoginUser;
 import com.smarthome.magic.model.Message;

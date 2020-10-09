@@ -1,5 +1,7 @@
 package com.smarthome.magic.activity.wode_page.bazinew;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -8,24 +10,42 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.shuinuan.Y;
+import com.smarthome.magic.activity.wode_page.bazinew.adapter.CiVpAdapter;
 import com.smarthome.magic.activity.wode_page.bazinew.adapter.JiexiAdapter;
 import com.smarthome.magic.activity.wode_page.bazinew.base.BaziBaseActivity;
 import com.smarthome.magic.activity.wode_page.bazinew.model.JiexiModel;
 import com.smarthome.magic.activity.wode_page.bazinew.utils.BaziCode;
+import com.smarthome.magic.activity.wode_page.bazinew.view.JiexiFragment;
+import com.smarthome.magic.adapter.NewsFragmentPagerAdapter;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.view.CustomViewPager;
+import com.smarthome.magic.view.magicindicator.MagicIndicator;
+import com.smarthome.magic.view.magicindicator.ViewPagerHelper;
+import com.smarthome.magic.view.magicindicator.buildins.commonnavigator.CommonNavigator;
+import com.smarthome.magic.view.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
+import com.smarthome.magic.view.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
+import com.smarthome.magic.view.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
+import com.smarthome.magic.view.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
+import com.smarthome.magic.view.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
+import com.smarthome.magic.view.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import androidx.fragment.app.Fragment;
 
 public class JiexiDetailsActivity extends BaziBaseActivity {
 
@@ -41,6 +61,8 @@ public class JiexiDetailsActivity extends BaziBaseActivity {
     LinearLayout ll_jiesuo;
     @BindView(R.id.rv_title)
     RecyclerView rv_title;
+    @BindView(R.id.vpg_content)
+    CustomViewPager vpg_content;
 
     private int jiexi;
     private String mingpan_id;
@@ -67,10 +89,23 @@ public class JiexiDetailsActivity extends BaziBaseActivity {
         init();
     }
 
+    private void initVpg() {
+        List<Fragment> fragments = new ArrayList<>();
+        for (int i = 0; i < titles.length; i++) {
+            String data = getData(i);
+            JiexiFragment fragment = new JiexiFragment(data, titles[i]);
+//            JiexiFragment fragment = new JiexiFragment();
+            fragments.add(fragment);
+        }
+        vpg_content.setAdapter(new CiVpAdapter(getSupportFragmentManager(), fragments, mContext));
+        vpg_content.setOffscreenPageLimit(titles.length);
+
+        initMagicIndicator1(titles);
+    }
+
     private void init() {
         jiexi = getIntent().getIntExtra("jiexi", 0);
         mingpan_id = getIntent().getStringExtra("mingpan_id");
-
 
         adapter = new JiexiAdapter(titles, this);
         rv_title.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
@@ -83,7 +118,7 @@ public class JiexiDetailsActivity extends BaziBaseActivity {
             }
         });
 
-        setView(jiexi);
+//        setView(jiexi);
         getNet();
     }
 
@@ -104,14 +139,28 @@ public class JiexiDetailsActivity extends BaziBaseActivity {
                         List<JiexiModel.DataBean> data = response.body().data;
                         if (data != null && data.size() > 0) {
                             dataBean = data.get(0);
-                            setView(jiexi);
 
                             tv_name_sex.setText(dataBean.getName() + "  " + dataBean.getSex());
                             tv_birthday.setText(dataBean.getBirthday_type() + "：" + dataBean.getBirthday());
 
                             tv_content.setVisibility(View.VISIBLE);
                             ll_jiesuo.setVisibility(View.GONE);
+
+                            initVpg();
+                            setView(jiexi);
                         }
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<JiexiModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showLoading();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        showLoadSuccess();
                     }
                 });
     }
@@ -160,9 +209,97 @@ public class JiexiDetailsActivity extends BaziBaseActivity {
     }
 
 
+    private String getData(int jiexi) {
+        String text = "";
+        if (dataBean != null) {
+            switch (jiexi) {
+                case BaziCode.ll_tab_minggong:
+                    text = dataBean.getMinggong();
+                    break;
+                case BaziCode.ll_tab_fuqi:
+                    text = dataBean.getFuqi();
+                    break;
+                case BaziCode.ll_tab_fumu:
+                    text = dataBean.getFumu();
+                    break;
+                case BaziCode.ll_tab_xiongdi:
+                    text = dataBean.getXiongdi();
+                    break;
+                case BaziCode.ll_tab_caibo:
+                    text = dataBean.getCaibo();
+                    break;
+                case BaziCode.ll_tab_jie:
+                    text = dataBean.getJie();
+                    break;
+                case BaziCode.ll_tab_fude:
+                    text = dataBean.getFude();
+                    break;
+                case BaziCode.ll_tab_zinv:
+                    text = dataBean.getZinv();
+                    break;
+                case BaziCode.ll_tab_tianzhai:
+                    text = dataBean.getTianzhai();
+                    break;
+                case BaziCode.ll_tab_guanlu:
+                    text = dataBean.getGuanlu();
+                    break;
+                case BaziCode.ll_tab_puyi:
+                    text = dataBean.getPuyi();
+                    break;
+                case BaziCode.ll_tab_qianyi:
+                    text = dataBean.getQianyi();
+                    break;
+            }
+        }
+
+        return text;
+    }
+
     private void setView(int jiexi) {
         tv_yunshi.setText(titles[jiexi]);
         adapter.setCount(jiexi);
         setData(jiexi);
+
+        vpg_content.setCurrentItem(jiexi);
+    }
+
+
+    private void initMagicIndicator1(final String[] titles) {
+        MagicIndicator magicIndicator = findViewById(R.id.magic_indicator4);
+        CommonNavigator commonNavigator = new CommonNavigator(mContext);
+        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
+            @Override
+            public int getCount() {
+                return titles == null ? 0 : titles.length;
+            }
+
+            @Override
+            public IPagerTitleView getTitleView(Context context, final int index) {
+                SimplePagerTitleView simplePagerTitleView = new ColorTransitionPagerTitleView(context);
+                simplePagerTitleView.setTextSize(17);
+                simplePagerTitleView.setNormalColor(mContext.getResources().getColor(R.color.black_111111));
+                simplePagerTitleView.setSelectedColor(magicIndicator.getResources().getColor(R.color.black_111111));
+                simplePagerTitleView.setText(titles[index]);
+                //   App.scaleScreenHelper.loadViewSize(simplePagerTitleView, 35);
+                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setView(index);
+                    }
+                });
+                return simplePagerTitleView;
+            }
+
+            @Override
+            public IPagerIndicator getIndicator(Context context) {
+                LinePagerIndicator linePagerIndicator = new LinePagerIndicator(context);
+                linePagerIndicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
+                linePagerIndicator.setColors(Color.parseColor("#6666D3"));
+                return linePagerIndicator;
+            }
+        });
+//        commonNavigator.setAdjustMode(true);
+        magicIndicator.setNavigator(commonNavigator);
+        ViewPagerHelper.bind(magicIndicator, vpg_content);
     }
 }

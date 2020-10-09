@@ -100,16 +100,20 @@ public class BaziPayActivity extends BaziBaseActivity {
         payType = getIntent().getIntExtra("payType", 0);
         mingpan_id = getIntent().getStringExtra("mingpan_id");
 
-        if (payType==1){
-            time = getIntent().getStringExtra("time");
-        }else {
-            time=TimeUtils.getCurrentTime();
-        }
+        time = getIntent().getStringExtra("time");
 
         if (payType == 1) {
             operate_id = "4";
             tv_type.setText("流日运势单次支付");
             tv_money.setText("￥1元");
+        } else if (payType == 101) {
+            operate_id = "4";
+            tv_type.setText("穿衣指数单次支付");
+            tv_money.setText("￥1元");
+        }else if (payType == 102) {
+            operate_id = "0";
+            tv_type.setText("穿衣指数包年支付");
+            tv_money.setText("￥100元");
         } else {
             operate_id = "0";
             tv_type.setText("八紫流年盘包年会员");

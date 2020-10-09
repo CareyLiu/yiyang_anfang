@@ -1,10 +1,6 @@
 package com.smarthome.magic.activity;
 
-import android.app.Dialog;
-import android.app.Notification;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.method.HideReturnsTransformationMethod;
@@ -27,7 +23,7 @@ import com.jakewharton.rxbinding.view.RxView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.wode_page.TuiGuangMaActivity;
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.BaseActivity;
@@ -39,13 +35,10 @@ import com.smarthome.magic.callback.DialogCallback;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
-
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.BuTianYaoQingMaDialog;
 import com.smarthome.magic.dialog.FuWuDialog;
-import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuoTIshi;
-import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.LoginUser;
 import com.smarthome.magic.model.Message;
@@ -63,49 +56,40 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
-import io.rong.imkit.utils.NotificationUtil;
-import io.rong.imlib.NativeObject;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.UserInfo;
 import rx.functions.Action1;
 
 import static com.smarthome.magic.get_net.Urls.SERVER_URL;
 
 
 public class LoginActivity extends BaseActivity {
-    ProgressDialog progressDialog;
-    private static final String TAG = "LoginActivity";
-    @BindView(R.id.et_phone)
+    @BindView(R.id.iv_icon)
+    ImageView ivIcon;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.ed_phone)
     EditText mEtPhone;
-    @BindView(R.id.et_pwd_code)
+    @BindView(R.id.ed_pwd)
     EditText mEtPwdCode;
     @BindView(R.id.get_code)
-    LinearLayout mGetCode;
-    @BindView(R.id.tv_switch)
-    TextView mTvSwitch;
-    @BindView(R.id.bt_login)
-    Button mBtLogin;
-    @BindView(R.id.tv_get_code)
     TextView mTvGetCode;
-    @BindView(R.id.imageView3)
-    ImageView imageView3;
-    @BindView(R.id.imageView4)
-    ImageView imageView4;
-    @BindView(R.id.view)
-    ImageView view;
-    @BindView(R.id.imageView7)
-    ImageView imageView7;
-    @BindView(R.id.imageView10)
-    ImageView imageView10;
+    @BindView(R.id.ll_pwd)
+    LinearLayout llPwd;
+    @BindView(R.id.tv_switch)
+    TextView tv_switch;
+    @BindView(R.id.tv_zhaohui)
+    TextView tvZhaohui;
+    @BindView(R.id.ll_qiehuan)
+    LinearLayout llQiehuan;
+    @BindView(R.id.bt_login)
+    Button btLogin;
     @BindView(R.id.tv_yinsi)
     TextView tvYinsi;
-    @BindView(R.id.tv_yonghushiyong)
+    @BindView(R.id.tv_yonghu)
     TextView tvYonghushiyong;
-    @BindView(R.id.imageView9)
-    ImageView imageView9;
+
     private boolean isExit;
     private TimeCount timeCount;
     private String req_type = "2";
@@ -117,7 +101,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public int getContentViewResId() {
-        return R.layout.activity_login;
+        return R.layout.act_login;
     }
 
     @Override
@@ -162,8 +146,6 @@ public class LoginActivity extends BaseActivity {
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-
-
                         get_code();
                     }
                 });
@@ -188,10 +170,7 @@ public class LoginActivity extends BaseActivity {
             fuWuDialog = new FuWuDialog(mContext, new FuWuDialog.FuWuDiaLogClikListener() {
                 @Override
                 public void onClickCancel() {
-
-//                AppManager.getAppManager().AppExit(mContext);
                     fuWuDialog.dismiss();
-
                 }
 
                 @Override
@@ -252,13 +231,11 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.tv_get_code, R.id.tv_switch, R.id.bt_login})
+    @OnClick({R.id.tv_switch, R.id.bt_login,R.id.tv_zhaohui})
     public void onClick(View v) {
         switch (v.getId()) {
-            default:
-                break;
-            case R.id.tv_get_code:
-
+            case R.id.tv_zhaohui:
+                LoginYzmActivity.actionStart(this);
                 break;
             case R.id.tv_switch:
                 String items[] = {getString(R.string.sms_login), getString(R.string.pwd_login)};
@@ -269,13 +246,13 @@ public class LoginActivity extends BaseActivity {
                     public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
                         switch (position) {
                             case 0:
-                                mGetCode.setVisibility(View.VISIBLE);
+                                mTvGetCode.setVisibility(View.VISIBLE);
                                 mEtPwdCode.setHint("请输入验证码");
                                 mEtPwdCode.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                                 req_type = "2";
                                 break;
                             case 1:
-                                mGetCode.setVisibility(View.GONE);
+                                mTvGetCode.setVisibility(View.GONE);
                                 mEtPwdCode.setHint("请输入登录密码");
                                 mEtPwdCode.setTransformationMethod(PasswordTransformationMethod.getInstance());
                                 req_type = "1";
@@ -288,7 +265,6 @@ public class LoginActivity extends BaseActivity {
 
                 break;
             case R.id.bt_login:
-//                startActivity(new Intent(LoginActivity.this,HomeActivity.class));
                 beforehand_login();
                 break;
         }
@@ -313,14 +289,13 @@ public class LoginActivity extends BaseActivity {
             map.put("user_phone", mEtPhone.getText().toString());
             map.put("mod_id", "0315");
             Gson gson = new Gson();
-            OkGo.<AppResponse<Message.DataBean>>post(Urls.SERVER_URL + "msg")
+            OkGo.<AppResponse<Message.DataBean>>post(SERVER_URL + "msg")
                     .tag(this)//
                     .upJson(gson.toJson(map))
                     .execute(new JsonCallback<AppResponse<Message.DataBean>>() {
                         @Override
                         public void onSuccess(Response<AppResponse<Message.DataBean>> response) {
-                            //           UIHelper.ToastMessage(LoginActivity.this, response.body().msg);
-                            UIHelper.ToastMessage(LoginActivity.this, "验证码获取成功");
+                            Y.t("验证码获取成功");
                             timeCount.start();
                             if (response.body().data.size() > 0)
                                 smsId = response.body().data.get(0).getSms_id();
@@ -328,13 +303,12 @@ public class LoginActivity extends BaseActivity {
 
                         @Override
                         public void onError(Response<AppResponse<Message.DataBean>> response) {
-                            AlertUtil.t(LoginActivity.this, response.getException().getMessage());
+                            Y.tError(response);
                             timeCount.cancel();
                             timeCount.onFinish();
                         }
                     });
         }
-
     }
 
     /**
@@ -348,10 +322,7 @@ public class LoginActivity extends BaseActivity {
             map.put("code", "00050");
             map.put("key", Urls.key);
             map.put("req_type", req_type);
-
-            //map.put("phone_model", SystemUtils.getSystemModel());
             map.put("user_phone", mEtPhone.getText().toString());
-            // map.put("user_pwd", mEtPwdCode.getText().toString());
             map.put("log_type", "1");
             switch (req_type) {
                 case "1"://密码登录
@@ -455,16 +426,13 @@ public class LoginActivity extends BaseActivity {
 
                         @Override
                         public void onError(Response<AppResponse<LoginUser.DataBean>> response) {
-                            AlertUtil.t(LoginActivity.this, response.getException().getMessage());
+                            Y.tError(response);
                         }
                     });
         }
-
     }
 
-
     public void connectRongYun(String token) {
-
         RongIM.connect(token, new RongIMClient.ConnectCallbackEx() {
             /**
              * 数据库回调.
@@ -500,50 +468,9 @@ public class LoginActivity extends BaseActivity {
              */
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
-                Log.i("rongYun", "融云连接失败");
+
             }
         });
-
-    }
-
-    /**
-     * §6.5	车主端，代理商端，维修端，商家端四端合一登陆
-     */
-    private void login() {
-
-        Map<String, String> map = new HashMap<>();
-        map.put("code", "00051");
-        map.put("key", Urls.key);
-        map.put("subsystem_id", "");
-        map.put("user_id_key", UserManager.getManager(this).getUserIdKey());
-        map.put("power_state", UserManager.getManager(this).getPowerState());
-        Gson gson = new Gson();
-        OkGo.<AppResponse<LoginUser.DataBean>>post(SERVER_URL + "index/login")
-                .tag(this)//
-                .upJson(gson.toJson(map))
-                .execute(new JsonCallback<AppResponse<LoginUser.DataBean>>() {
-                    @Override
-                    public void onSuccess(Response<AppResponse<LoginUser.DataBean>> response) {
-                        if (response.body().data.size() > 0)
-                            UserManager.getManager(LoginActivity.this).saveUser(response.body().data.get(0));
-
-//                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-
-                        //重连mqtt
-                        Notice n = new Notice();
-                        n.type = ConstanceValue.MSG_CONNET_MQTT;
-                        RxBus.getDefault().sendRx(n);
-                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-
-                    }
-
-                    @Override
-                    public void onError(Response<AppResponse<LoginUser.DataBean>> response) {
-                        AlertUtil.t(LoginActivity.this, response.getException().getMessage());
-                    }
-                });
-
-
     }
 
     private void getNet_butian(String et) {
@@ -551,13 +478,9 @@ public class LoginActivity extends BaseActivity {
         map.put("code", "04343");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
-        // map.put("shop_product_id", productId);
-        //map.put("wares_id", warseId);
         map.put("invitation_code", et);
-
-        Log.i("taoken_gg", UserManager.getManager(mContext).getAppToken());
         Gson gson = new Gson();
-        OkGo.<AppResponse<Object>>post(Urls.SERVER_URL + "shop_new/app/user")
+        OkGo.<AppResponse<Object>>post(SERVER_URL + "shop_new/app/user")
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<Object>>() {
@@ -577,7 +500,7 @@ public class LoginActivity extends BaseActivity {
 
                     @Override
                     public void onError(Response<AppResponse<Object>> response) {
-                        AlertUtil.t(mContext, response.getException().getMessage());
+                        Y.tError(response);
 
                         UserManager.getManager(LoginActivity.this).saveUser(LoginActivity.this.response.body().data.get(0));
                         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
@@ -590,6 +513,4 @@ public class LoginActivity extends BaseActivity {
                     }
                 });
     }
-
-
 }

@@ -14,6 +14,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.ShuinuanBaseActivity;
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
@@ -132,13 +133,7 @@ public class FengNuanJieBangActivity extends ShuinuanBaseActivity {
 
                     @Override
                     public void onError(Response<AppResponse<Message.DataBean>> response) {
-                        String msg = response.getException().getMessage();
-                        String[] msgToast = msg.split("：");
-                        if (msgToast.length == 3) {
-                            AlertUtil.t(mContext, msgToast[2]);
-                        } else {
-                            AlertUtil.t(mContext, "网络异常");
-                        }
+                        Y.tError(response);
                     }
                 });
 
@@ -169,13 +164,7 @@ public class FengNuanJieBangActivity extends ShuinuanBaseActivity {
                         timeCount.cancel();
                         timeCount.onFinish();
 
-                        String msg = response.getException().getMessage();
-                        String[] msgToast = msg.split("：");
-                        if (msgToast.length == 3) {
-                            AlertUtil.t(mContext, msgToast[2]);
-                        } else {
-                            AlertUtil.t(mContext, "网络异常");
-                        }
+                        Y.tError(response);
                     }
                 });
     }

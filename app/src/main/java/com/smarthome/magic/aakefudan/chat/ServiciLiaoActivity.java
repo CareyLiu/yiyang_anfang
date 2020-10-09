@@ -40,6 +40,7 @@ import com.lzy.okgo.request.base.Request;
 import com.smarthome.magic.R;
 import com.smarthome.magic.aakefudan.adapter.XiuliAdapter;
 import com.smarthome.magic.aakefudan.model.ZixunModel;
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
@@ -244,10 +245,7 @@ public class ServiciLiaoActivity extends BaseActivity implements View.OnClickLis
                     @Override
                     public void onError(Response<AppResponse<ZixunModel.DataBean>> response) {
                         String msg = response.getException().getMessage();
-                        String[] msgToast = msg.split("：");
-                        if (msgToast.length == 3) {
-                            AlertUtil.t(mContext, msgToast[2]);
-                        }
+                        Y.tError(response);
                     }
 
                     @Override
@@ -340,11 +338,7 @@ public class ServiciLiaoActivity extends BaseActivity implements View.OnClickLis
 
                             @Override
                             public void onError(Response<AppResponse<ZixunModel.DataBean>> response) {
-                                String msg = response.getException().getMessage();
-                                String[] msgToast = msg.split("：");
-                                if (msgToast.length == 3) {
-                                    AlertUtil.t(mContext, msgToast[2]);
-                                }
+                                Y.tError(response);
                             }
 
                             @Override

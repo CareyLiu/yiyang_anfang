@@ -6,4 +6,4 @@
     android:includeFontPadding="false"
     android:text="命们"
     android:textColor="#D7183D"
-    android:textSize="12sp"></TextView>
+    android:textSize="30pt"></TextView>

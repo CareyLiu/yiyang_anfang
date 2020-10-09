@@ -17,6 +17,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.wode_page.bazinew.base.BaziBaseActivity;
 import com.smarthome.magic.activity.wode_page.bazinew.model.DanganModel;
 import com.smarthome.magic.activity.wode_page.bazinew.adapter.DananguanliAdapter;
@@ -105,6 +106,8 @@ public class DanganguanliActivity extends BaziBaseActivity {
                         Intent intent = new Intent(DanganguanliActivity.this, YunshiChuanyiActivity.class);
                         intent.putExtra("mingpan_id", dataBean.getMingpan_id());
                         intent.putExtra("code", code);
+                        intent.putExtra("name_text", dataBean.getName() + "   " + dataBean.getSex_text());
+                        intent.putExtra("birthday_text", dataBean.getLunar_birthday());
                         startActivity(intent);
                     }
                 }
@@ -125,31 +128,9 @@ public class DanganguanliActivity extends BaziBaseActivity {
     }
 
     private void getMingPan(String mingpan_id) {
-        Map<String, String> map = new HashMap<>();
-        map.put("code", "11014");
-        map.put("key", Urls.key);
-        map.put("token", UserManager.getManager(this).getAppToken());
-        map.put("mingpan_id", mingpan_id);
-        Gson gson = new Gson();
-        Log.e("map_data", gson.toJson(map));
-        OkGo.<AppResponse<PaipanModel.DataBean>>post(Urls.BAZIAPP)
-                .tag(this)//
-                .upJson(gson.toJson(map))
-                .execute(new JsonCallback<AppResponse<PaipanModel.DataBean>>() {
-                    @Override
-                    public void onSuccess(Response<AppResponse<PaipanModel.DataBean>> response) {
-                        showLoadSuccess();
-                        Intent intent = new Intent(DanganguanliActivity.this, MingpanActivity.class);
-                        intent.putExtra("model", response.body().data.get(0));
-                        startActivity(intent);
-                    }
-
-                    @Override
-                    public void onStart(Request<AppResponse<PaipanModel.DataBean>, ? extends Request> request) {
-                        super.onStart(request);
-                        showLoading();
-                    }
-                });
+        Intent intent = new Intent(DanganguanliActivity.this, MingpanActivity.class);
+        intent.putExtra("mingpan_id", mingpan_id);
+        startActivity(intent);
     }
 
     private void initSM() {
@@ -191,6 +172,12 @@ public class DanganguanliActivity extends BaziBaseActivity {
 
                         list = response.body().data;
                         adapter.setList(list);
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<DanganModel.DataBean>> response) {
+                        super.onError(response);
+                        Y.tError(response);
                     }
                 });
     }

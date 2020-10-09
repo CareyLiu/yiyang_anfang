@@ -28,6 +28,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.wode_page.bazinew.base.BaziBaseActivity;
 import com.smarthome.magic.activity.wode_page.bazinew.model.DanganModel;
 import com.smarthome.magic.activity.wode_page.bazinew.model.PaipanModel;
@@ -330,15 +331,26 @@ public class DanganEditActivity extends BaziBaseActivity {
                         showLoadSuccess();
                         PaipanModel.DataBean dataBean = response.body().data.get(0);
                         Intent intent = new Intent(DanganEditActivity.this, MingpanActivity.class);
-                        intent.putExtra("model", dataBean);
+                        intent.putExtra("mingpan_id", dataBean.getMingpan_id());
                         startActivity(intent);
-                        finish();
                     }
 
                     @Override
                     public void onStart(Request<AppResponse<PaipanModel.DataBean>, ? extends Request> request) {
                         super.onStart(request);
                         showLoading();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        showLoadSuccess();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<PaipanModel.DataBean>> response) {
+                        super.onError(response);
+                        Y.tError(response);
                     }
                 });
     }
@@ -363,7 +375,6 @@ public class DanganEditActivity extends BaziBaseActivity {
                     }
                 });
     }
-
 
 
     private BaseAnimatorSet mBasIn = new BounceBottomEnter();

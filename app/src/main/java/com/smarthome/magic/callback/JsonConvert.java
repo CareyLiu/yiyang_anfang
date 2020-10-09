@@ -153,7 +153,7 @@ public class JsonConvert<T> implements Converter<T> {
                 }
                 else {
                     //直接将服务端的错误信息抛出，onError中可以获取
-                    throw new IllegalStateException("错误代码：" + msg_code + "，错误信息：" + appResponse.msg);
+                    throw new IllegalStateException( appResponse.msg);
                 }
             }
         }

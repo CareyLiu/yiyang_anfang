@@ -535,12 +535,12 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                         } else if (intellectListBean.getId().equals("2")) {
 
                           //  PreferenceHelper.getInstance(getActivity()).putString("ccid", "aaaaaaaaaaaaaaaa90070018");
-                            SheBeiLieBiaoActivity.actionStart(getActivity(), intellectListBean.device_type);
+                            SheBeiLieBiaoActivity.actionStart(getActivity(), "1");
                             //FengNuanActivity.actionStart(getActivity());
                             // startActivity(new Intent(getActivity(), CarListActivity.class).putExtra("type", "wind"));
 
                         } else if (intellectListBean.getId().equals("3")) {
-                            SheBeiLieBiaoActivity.actionStart(getActivity(), intellectListBean.device_type);
+                            SheBeiLieBiaoActivity.actionStart(getActivity(), "6");
 //                            startActivity(new Intent(getActivity(), PlumbingHeaterActivity.class));
 //                            ShuinuanMainActivity.actionStart(getContext(), "", "");
                         } else if (intellectListBean.getId().equals("4")) {//空调

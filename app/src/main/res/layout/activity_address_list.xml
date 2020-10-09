@@ -39,11 +39,16 @@
             android:layout_marginRight="10dp"
             android:gravity="center"
             android:text="添加新地址"
-            android:textColor="@color/app_bg" />
+            android:textColor="#FC0100" />
 
 
     </RelativeLayout>
 
+
+    <View
+        android:background="@color/grayfff5f5f5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
 
     <com.github.jdsjlzx.recyclerview.LRecyclerView
         android:id="@+id/list"

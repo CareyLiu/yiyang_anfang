@@ -22,6 +22,7 @@ import androidx.multidex.MultiDexApplication;
 
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
 
 import com.alibaba.baichuan.android.trade.AlibcTradeSDK;
 import com.alibaba.baichuan.android.trade.callback.AlibcTradeInitCallback;
@@ -43,6 +44,8 @@ import com.rairmmd.andmqtt.MqttUnSubscribe;
 import com.smarthome.magic.R;
 import com.smarthome.magic.aakefudan.chat.MyMessage;
 import com.smarthome.magic.aakefudan.chat.MyMessageItemProvider;
+import com.smarthome.magic.activity.LoginActivity;
+import com.smarthome.magic.activity.WelcomeActivity;
 import com.smarthome.magic.adapter.view.GlobalAdapter;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.CodeClass;
@@ -53,6 +56,7 @@ import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.RxUtils;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.util.DoMqttValue;
 import com.smarthome.magic.util.JinChengUtils;
@@ -247,6 +251,8 @@ public class MyApplication extends MultiDexApplication {
 
                     setMqttConnect();
 
+                }else if (message.type ==ConstanceValue.MSG_RONGYUN_CHONGZHI){
+                    initRongYun();
                 }
             }
         }));
@@ -299,7 +305,7 @@ public class MyApplication extends MultiDexApplication {
 
         String rongYunToken = PreferenceHelper.getInstance(getApplicationContext()).getString("token_rong", "");
         if (!StringUtils.isEmpty(rongYunToken)) {
-            connectRongYun(rongYunToken);
+           connectRongYun(rongYunToken);
 
             RongIM.setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageWrapperListener() {
                 /**
@@ -354,6 +360,16 @@ public class MyApplication extends MultiDexApplication {
                 public void onChanged(ConnectionStatus status) {
 
                     Log.i("rongyun", status.getMessage());
+
+                    if (status.getValue() == 3) {
+
+                        Intent intent = new Intent(getAppContext(), LoginActivity.class);
+                        intent.putExtra("token_guoqi", "token_guoqi");
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
+                        startActivity(intent);
+
+                    }
+
                     Notice notice = new Notice();
                     notice.type = ConstanceValue.MSG_RONGYUN_STATE;
                     // notice.content = status.

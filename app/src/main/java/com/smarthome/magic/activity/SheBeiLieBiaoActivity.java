@@ -72,21 +72,22 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
         sheBeiListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (mqtt_connect_state.equals("1")){
+                if (mqtt_connect_state.equals("1")) {
                     switch (view.getId()) {
                         case R.id.constrain:
                             if (mDatas.get(position).device_type.equals("1")) {
-                                PreferenceHelper.getInstance(mContext).putString("ccid", mDatas.get(position).ccid);
 
-                                MyApplication.CARBOX_GETNOW = "wit/cbox/app/" + getServer_id() + getCcid();
                                 int i = mDatas.get(position).ccid.length() - 1;
                                 String str = String.valueOf(mDatas.get(position).ccid.charAt(i));
                                 Log.i("serverId", str);
                                 PreferenceHelper.getInstance(mContext).putString("car_server_id", str + "/");
+                                PreferenceHelper.getInstance(mContext).putString("ccid", mDatas.get(position).ccid);
+                                String getNow = "wit/cbox/app/" + str+"/"+ mDatas.get(position).ccid;
+                                Log.i("getnow", MyApplication.CARBOX_GETNOW);
                                 if (NetworkUtils.isConnected(mContext)) {
                                     Activity currentActivity = AppManager.getAppManager().currentActivity();
                                     if (currentActivity != null) {
-                                        FengNuanActivity.actionStart(mContext);
+                                        FengNuanActivity.actionStart(mContext, getNow);
                                     }
                                 } else {
                                     UIHelper.ToastMessage(mContext, "请连接网络后重新尝试");
@@ -109,7 +110,7 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
 
                             break;
                     }
-                }else {
+                } else {
                     BangdingFailDialog dialog = new BangdingFailDialog(mContext);
                     dialog.setTextContent(mqtt_connect_prompt);
                     dialog.show();

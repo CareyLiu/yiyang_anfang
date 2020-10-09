@@ -110,50 +110,53 @@ public class OnlineFragment extends BaseFragment implements Observer {
         sheBeiListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-               if (mqtt_connect_state.equals("1")){
-                   switch (view.getId()) {
-                       case R.id.constrain:
-                           if (mDatas.get(position).validity_state.equals("2")) {
-                               UIHelper.ToastMessage(getActivity(), "当前设备已过期");
-                               return;
-                           }
-                           if (mDatas.get(position).device_type.equals("1")) {
-                               PreferenceHelper.getInstance(getActivity()).putString("ccid", mDatas.get(position).ccid);
-                               MyApplication.CARBOX_GETNOW = "wit/cbox/app/" + getServer_id() + mDatas.get(position).ccid;
-                               int i = mDatas.get(position).ccid.length() - 1;
-                               String str = String.valueOf(mDatas.get(position).ccid.charAt(i));
-                               Log.i("serverId", str);
-                               PreferenceHelper.getInstance(getActivity()).putString("car_server_id", str + "/");
-                               if (NetworkUtils.isConnected(getActivity())) {
-                                   Activity currentActivity = AppManager.getAppManager().currentActivity();
-                                   if (currentActivity != null) {
-                                       FengNuanActivity.actionStart(getActivity());
-                                   }
-                               } else {
-                                   UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
-                               }
-                           } else if (mDatas.get(position).device_type.equals("6")) {
-                               String ccid = mDatas.get(position).ccid;
-                               int pos = ccid.length() - 1;
-                               String count = String.valueOf(ccid.charAt(pos)) + "/";
-                               PreferenceHelper.getInstance(getContext()).putString("ccid", mDatas.get(position).ccid);
-                               PreferenceHelper.getInstance(getContext()).putString("car_server_id", count);
-                               if (NetworkUtils.isConnected(getActivity())) {
-                                   Activity currentActivity = AppManager.getAppManager().currentActivity();
-                                   if (currentActivity != null) {
-                                       ShuinuanMainActivity.actionStart(getActivity(), ccid, count);
-                                   }
-                               } else {
-                                   UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
-                               }
-                           }
-                           break;
-                   }
-               }else {
-                   BangdingFailDialog dialog = new BangdingFailDialog(getContext());
-                   dialog.setTextContent(mqtt_connect_prompt);
-                   dialog.show();
-               }
+                if (mqtt_connect_state.equals("1")) {
+                    switch (view.getId()) {
+                        case R.id.constrain:
+                            if (mDatas.get(position).validity_state.equals("2")) {
+                                UIHelper.ToastMessage(getActivity(), "当前设备已过期");
+                                return;
+                            }
+                            if (mDatas.get(position).device_type.equals("1")) {
+
+                                int i = mDatas.get(position).ccid.length() - 1;
+                                String str = String.valueOf(mDatas.get(position).ccid.charAt(i));
+                                Log.i("serverId", str);
+                                PreferenceHelper.getInstance(getActivity()).putString("car_server_id", str + "/");
+
+                                PreferenceHelper.getInstance(getActivity()).putString("ccid", mDatas.get(position).ccid);
+                                MyApplication.CARBOX_GETNOW = "wit/cbox/app/" + getServer_id() + mDatas.get(position).ccid;
+
+                                if (NetworkUtils.isConnected(getActivity())) {
+                                    Activity currentActivity = AppManager.getAppManager().currentActivity();
+                                    if (currentActivity != null) {
+                                        FengNuanActivity.actionStart(getActivity(), MyApplication.CARBOX_GETNOW);
+                                    }
+                                } else {
+                                    UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
+                                }
+                            } else if (mDatas.get(position).device_type.equals("6")) {
+                                String ccid = mDatas.get(position).ccid;
+                                int pos = ccid.length() - 1;
+                                String count = String.valueOf(ccid.charAt(pos)) + "/";
+                                PreferenceHelper.getInstance(getContext()).putString("ccid", mDatas.get(position).ccid);
+                                PreferenceHelper.getInstance(getContext()).putString("car_server_id", count);
+                                if (NetworkUtils.isConnected(getActivity())) {
+                                    Activity currentActivity = AppManager.getAppManager().currentActivity();
+                                    if (currentActivity != null) {
+                                        ShuinuanMainActivity.actionStart(getActivity(), ccid, count);
+                                    }
+                                } else {
+                                    UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
+                                }
+                            }
+                            break;
+                    }
+                } else {
+                    BangdingFailDialog dialog = new BangdingFailDialog(getContext());
+                    dialog.setTextContent(mqtt_connect_prompt);
+                    dialog.show();
+                }
             }
         });
 
@@ -193,33 +196,34 @@ public class OnlineFragment extends BaseFragment implements Observer {
             public void onClick(View v) {
                 //CarBrandActivity.actionStart(getActivity());
 
-                TianJiaSheBeiDialog tianJiaSheBeiDialog = new TianJiaSheBeiDialog(getActivity(), new TianJiaSheBeiDialog.OnDialogItemClickListener() {
-                    @Override
-                    public void clickFengNuan() {
-                        //  UIHelper.ToastMessage(getActivity(), "点击了风暖");
-                        BindBoxActivity.actionStart(getActivity());
-
-                    }
-
-                    @Override
-                    public void clickShuiNuan() {
-                        // UIHelper.ToastMessage(getActivity(), "点击了水暖");
-                        BindBoxActivity.actionStart(getActivity());
-                    }
-
-                    @Override
-                    public void clickKongTiao() {
-                        //UIHelper.ToastMessage(getActivity(), "点击了空调");
-                        BindBoxActivity.actionStart(getActivity());
-                    }
-
-                    @Override
-                    public void clickKongChe() {
-                        //UIHelper.ToastMessage(getActivity(), "点击了空调");
-                        BindBoxActivity.actionStart(getActivity());
-                    }
-                });
-                tianJiaSheBeiDialog.show();
+//                TianJiaSheBeiDialog tianJiaSheBeiDialog = new TianJiaSheBeiDialog(getActivity(), new TianJiaSheBeiDialog.OnDialogItemClickListener() {
+//                    @Override
+//                    public void clickFengNuan() {
+//                        //  UIHelper.ToastMessage(getActivity(), "点击了风暖");
+//                        BindBoxActivity.actionStart(getActivity());
+//
+//                    }
+//
+//                    @Override
+//                    public void clickShuiNuan() {
+//                        // UIHelper.ToastMessage(getActivity(), "点击了水暖");
+//                        BindBoxActivity.actionStart(getActivity());
+//                    }
+//
+//                    @Override
+//                    public void clickKongTiao() {
+//                        //UIHelper.ToastMessage(getActivity(), "点击了空调");
+//                        BindBoxActivity.actionStart(getActivity());
+//                    }
+//
+//                    @Override
+//                    public void clickKongChe() {
+//                        //UIHelper.ToastMessage(getActivity(), "点击了空调");
+//                        BindBoxActivity.actionStart(getActivity());
+//                    }
+//                });
+//                tianJiaSheBeiDialog.show();
+                BindBoxActivity.actionStart(getActivity());
             }
         });
 

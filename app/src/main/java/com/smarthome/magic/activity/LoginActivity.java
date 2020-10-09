@@ -132,6 +132,31 @@ public class LoginActivity extends BaseActivity {
         StatusBarUtil.setLightMode(this);
         timeCount = new TimeCount(60000, 1000, mTvGetCode);
         mEtPhone.setText(PreferenceHelper.getInstance(this).getString("user_phone", ""));
+        String strToken = getIntent().getStringExtra("token_guoqi");
+        if (strToken != null) {
+            TishiDialog tishiDialog = new TishiDialog(LoginActivity.this, 3, new TishiDialog.TishiDialogListener() {
+                @Override
+                public void onClickCancel(View v, TishiDialog dialog) {
+
+                }
+
+                @Override
+                public void onClickConfirm(View v, TishiDialog dialog) {
+
+                }
+
+                @Override
+                public void onDismiss(TishiDialog dialog) {
+
+                }
+            });
+            tishiDialog.setTextCancel("");
+            tishiDialog.setTextConfirm("知道了");
+            tishiDialog.setTextContent("您的账号近期在其他设备登录，如非本人操作，请及时修改密码");
+            tishiDialog.show();
+        }
+
+
         RxView.clicks(mTvGetCode)
                 .throttleFirst(2, TimeUnit.SECONDS)
                 .subscribe(new Action1<Void>() {
@@ -221,7 +246,7 @@ public class LoginActivity extends BaseActivity {
                 return true;
             }
             // finish();
-            AppManager.getAppManager().AppExit(this);
+            AppManager.getAppManager().finishAllActivity();
         }
         return super.onKeyDown(keyCode, event);
 
@@ -421,7 +446,10 @@ public class LoginActivity extends BaseActivity {
 
                             String rongYunTouken = UserManager.getManager(mContext).getRongYun();
                             if (!StringUtils.isEmpty(rongYunTouken)) {
-                                connectRongYun(response.body().data.get(0).getToken_rong());
+                                //connectRongYun(response.body().data.get(0).getToken_rong());
+                                Notice notice = new Notice();
+                                notice.type = ConstanceValue.MSG_RONGYUN_CHONGZHI;
+                                RxBus.getDefault().sendRx(notice);
                             }
                         }
 

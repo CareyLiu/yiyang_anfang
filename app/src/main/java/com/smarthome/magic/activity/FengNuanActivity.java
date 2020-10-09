@@ -59,10 +59,11 @@ import static com.smarthome.magic.app.ConstanceValue.MSG_MQTT_CONNECTCOMPLETE;
 import static com.smarthome.magic.app.ConstanceValue.MSG_MQTT_CONNECTLOST;
 import static com.smarthome.magic.app.ConstanceValue.MSG_MQTT_CONNECT_CHONGLIAN_ONFAILE;
 import static com.smarthome.magic.app.ConstanceValue.MSG_MQTT_CONNECT_CHONGLIAN_ONSUCCESS;
-import static com.smarthome.magic.config.MyApplication.CARBOX_GETNOW;
 import static com.smarthome.magic.config.MyApplication.CAR_CTROL;
 import static com.smarthome.magic.config.MyApplication.CAR_NOTIFY;
 import static com.smarthome.magic.config.MyApplication.getAppContext;
+import static com.smarthome.magic.config.MyApplication.getCcid;
+import static com.smarthome.magic.config.MyApplication.getServer_id;
 
 
 public class FengNuanActivity extends BaseActivity implements View.OnLongClickListener {
@@ -172,10 +173,13 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
     BengYouKaiJiThread bengYouKaiJiThread = null;// 泵油开机
     BengYouGuanJiThread bengYouGuanJiThread = null;//泵油关机
     String dangQianDangWei = "3";//默认3挡
+    private String getNow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getNow = getIntent().getStringExtra("getNow");
+        CAR_CTROL = "wit/cbox/hardware/" + getServer_id() + getCcid();
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
             public void call(Notice message) {
@@ -709,6 +713,9 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                             } else if (whatUWant.equals(BENGYOUGUANJI)) {
                                 tishiDialog.dismiss();
                                 whatUWant = "";
+                                if (bengYouGuanJiThread != null) {
+                                    bengYouGuanJiThread.interrupt();
+                                }
                             } else if (whatUWant.equals(YUTONGFENGGUANJI)) {
                                 whatUWant = "";
                                 if (yuTongFengGuanJiThread != null) {
@@ -718,9 +725,6 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                             } else if (whatUWant.equals(SHUIBENGGUANJI)) {
                                 whatUWant = "";
                                 lordingDialog.dismiss();
-                            } else if (whatUWant.equals(BENGYOUGUANJI)) {
-                                whatUWant = "";
-                                tishiDialog.dismiss();
                             }
 
                             break;
@@ -1444,9 +1448,10 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
      *
      * @param context
      */
-    public static void actionStart(Context context) {
+    public static void actionStart(Context context, String getNow) {
         Intent intent = new Intent(context, FengNuanActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("getNow", getNow);
         context.startActivity(intent);
     }
 
@@ -1490,12 +1495,12 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
         //获得车辆的实时数据和基本信息
         AndMqtt.getInstance().subscribe(new MqttSubscribe()
-                .setTopic(CARBOX_GETNOW)
+                .setTopic(getNow)
                 .setQos(2), new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("Rair", "订阅成功 carbox_getnow:  " + CARBOX_GETNOW + " CARBOX_GETNOW 我是在类里面订阅的");
-                MyApplication.mqttDingyue.add(CARBOX_GETNOW);
+                Log.i("Rair", "订阅成功 getNow:  " + getNow + " getNow 我是在类里面订阅的");
+                MyApplication.mqttDingyue.add(getNow);
             }
 
             @Override
@@ -1618,7 +1623,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
             }
         });
 
-        AndMqtt.getInstance().unSubscribe(new MqttUnSubscribe().setTopic(CARBOX_GETNOW), new IMqttActionListener() {
+        AndMqtt.getInstance().unSubscribe(new MqttUnSubscribe().setTopic(getNow), new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
                 Log.i("Rair", "(MainActivity.java:93)-onSuccess:-&gt;取消订阅成功");
@@ -1650,7 +1655,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
         }
 
         for (int i = 0; i < MyApplication.mqttDingyue.size(); i++) {
-            if (MyApplication.mqttDingyue.get(i).equals(CARBOX_GETNOW)) {
+            if (MyApplication.mqttDingyue.get(i).equals(getNow)) {
                 MyApplication.mqttDingyue.remove(i);
             }
         }

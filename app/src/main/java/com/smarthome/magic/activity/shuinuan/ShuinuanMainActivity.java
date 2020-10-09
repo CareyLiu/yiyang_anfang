@@ -9,6 +9,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -28,11 +29,14 @@ import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.util.DoMqttValue;
+import com.smarthome.magic.util.SoundPoolUtils;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -95,6 +99,8 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     TextView tv_daqiya;
     @BindView(R.id.iv_heater_host)
     ImageView iv_heater_host;
+//    @BindView(R.id.ll_content)
+//    LinearLayout ll_content;
 
     private String sn_state;     //水暖状态
     private String yushewendu;      //预设温度
@@ -105,14 +111,20 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     private String shuibeng_state;
     private String youbeng_state;
     private boolean youbengIson;
+    private boolean youbengIsdianhou;
     private boolean shubengIson;
-    private boolean isFirst = true;
+    private boolean shoubengisdianhou;
     private boolean isZaixian = false;
     private int zhilingma;
     private final int zhiling_kaiji = 1;
     private final int zhiling_guanji = 2;
     private final int zhiling_shuibeng = 3;
     private final int zhiling_youbeng = 4;
+    private long nowTime;
+    private long lastTime;
+    private long chazhi;
+    private String xinhaoStr;
+    private boolean isFirst;
 
 
     @Override
@@ -172,6 +184,8 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
 
         MyApplication.mqttDingyue.add(SN_Send);
         MyApplication.mqttDingyue.add(SN_Accept);
+
+        isFirst = true;
     }
 
     /**
@@ -190,7 +204,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     }
 
     private void getData(String msg) {
-        Log.i("水暖加热器返回的数据是", msg);
+        Log.e("水暖加热器返回的数据是", msg);
         if (msg.contains("j_s")) {
             sn_state = msg.substring(3, 4);//水暖状态
             String syscTime = msg.substring(4, 7);//加热剩余时长
@@ -213,20 +227,22 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
             String haibagaodu = msg.substring(48, 52);//海拔高度
             String hanyangliang = msg.substring(52, 55);//含氧量
 
-            if (isFirst) {
-                isFirst = false;
-                if (sn_state.equals("0") || sn_state.equals("3")) {
-                    if (shuibeng_state.equals("1")) {
-                        shubengIson = true;
-                    }
 
-                    if (youbeng_state.equals("1")) {
-                        youbengIson = true;
-                    }
+            if (sn_state.equals("0") || sn_state.equals("3")) {
+                if (shuibeng_state.equals("1") && youbeng_state.equals("2")) {
+                    shubengIson = true;
+                } else {
+                    shubengIson = false;
+                }
+
+                if (youbeng_state.equals("1") && shuibeng_state.equals("2")) {
+                    youbengIson = true;
+                } else {
+                    youbengIson = false;
                 }
             }
 
-            String xinhaoStr = msg.substring(55, 57);
+            xinhaoStr = msg.substring(55, 57);
             if (xinhaoStr.equals("aa")) {
                 iv_xinhao.setImageResource(R.mipmap.fengnuan_icon_signal2);
                 tv_zaixian.setText("在线");
@@ -246,6 +262,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                     tv_zaixian.setText("在线");
                 }
             }
+
 
             String num = "水暖状态" + sn_state + "  加热剩余时长" + syscTime + "  水泵状态" + shuibeng_state + "  油泵状态" + youbeng_state
                     + "  风机状态" + fengji_state
@@ -267,11 +284,8 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
             tv_haibagaodu.setText(haibagaodu + "m");
             tv_hanyangliang.setText(hanyangliang + "kg/cm3");
             tv_daqiya.setText(daqiya + "kpa");
-
             tv_wendu_yushe.setText("设定温度:" + yushewendu + "℃");
             tv_wendu_dangqian.setText("当前温度:" + chushuikowendu + "℃");
-
-
             isZaixian = true;
 
             switch (sn_state) {
@@ -283,8 +297,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                     rv_shuinuan_kaiji.setSelected(true);
                     rv_shuinuan_guanji.setSelected(false);
                     isKaiji = true;
-                    tv_shebei_state.setText("加热器状态：开机中");
-
+                    tv_shebei_state.setText("加热器状态：开机");
                     iv_heater_host.setBackgroundResource(R.drawable.shuinuan_kaiji);
                     animationDrawable = (AnimationDrawable) iv_heater_host.getBackground();
                     animationDrawable.start();
@@ -298,7 +311,6 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                     rv_shuinuan_guanji.setSelected(false);
                     isKaiji = true;
                     tv_shebei_state.setText("加热器状态：加热中");
-
                     iv_heater_host.setBackgroundResource(R.drawable.shuinuan_kaiji);
                     animationDrawable = (AnimationDrawable) iv_heater_host.getBackground();
                     animationDrawable.start();
@@ -325,25 +337,8 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                     rv_shuinuan_kaiji.setSelected(false);
                     rv_shuinuan_guanji.setSelected(true);
                     isKaiji = false;
-                    tv_shebei_state.setText("加热器状态：关机中");
-
+                    tv_shebei_state.setText("加热器状态：关机");
                     iv_heater_host.setBackgroundResource(R.drawable.shuinuan_guanji);
-
-                    if (shubengIson) {
-                        if (shuibeng_state.equals("1")) {
-                            tv_shebei_state.setText("加热器状态：水泵模式");
-                        }
-                    } else {
-                        shuibeng_state = "2";
-                    }
-
-                    if (youbengIson) {
-                        if (youbeng_state.equals("1")) {
-                            tv_shebei_state.setText("加热器状态：油泵模式");
-                        }
-                    } else {
-                        youbeng_state = "2";
-                    }
                     break;
             }
 
@@ -594,6 +589,26 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
 
             }
         });
+
+
+        if (isFirst) {
+            //向水暖加热器发送获取实时数据
+            AndMqtt.getInstance().publish(new MqttPublish()
+                    .setMsg("X_s.")
+                    .setQos(2).setRetained(false)
+                    .setTopic(SN_Send), new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Log.i("app端向水暖加热器请求实时数据", "");
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                }
+            });
+            isFirst = false;
+        }
     }
 
     private int time = 0;
@@ -652,6 +667,12 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                             initHandlerClick();
                         }
                     } else {
+                        if (iskaijiDianhou) {
+                            SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_end_on);
+                        } else {
+                            SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_end_off);
+                        }
+
                         dismissProgressDialog();
                         time = 0;
                     }
@@ -659,71 +680,113 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                     break;
                 case 3:
                     time++;
-                    if (shubengIson) {
-                        if (shuibeng_state.equals("1")) {
-                            dismissProgressDialog();
-                            time = 0;
+//                    if (shubengIson) {
+//                        if (shuibeng_state.equals("1")) {
+//                            dismissProgressDialog();
+//                            time = 0;
+//                        } else {
+//                            if (time >= 60) {
+//                                shubengIson = false;
+//                                showZhiling();
+//                            } else {
+//                                if (time == 4 || time == 24 || time == 44) {
+//                                    getNs();
+//                                }
+//                                initHandlerShuibeng();
+//                            }
+//                        }
+//                    } else {
+//                        if (shuibeng_state.equals("2")) {
+//                            dismissProgressDialog();
+//                            time = 0;
+//                        } else {
+//                            if (time >= 60) {
+//                                shubengIson = true;
+//                                showZhiling();
+//                            } else {
+//                                if (time == 4 || time == 24 || time == 44) {
+//                                    getNs();
+//                                }
+//                                initHandlerShuibeng();
+//                            }
+//                        }
+//                    }
+
+                    if (shoubengisdianhou != shubengIson) {
+                        if (time >= 60) {
+                            shoubengisdianhou = !shoubengisdianhou;
+                            showZhiling();
                         } else {
-                            if (time >= 60) {
-                                shubengIson = false;
-                                showZhiling();
-                            } else {
-                                if (time == 4 || time == 24 || time == 44) {
-                                    getNs();
-                                }
-                                initHandlerShuibeng();
+                            if (time == 4 || time == 24 || time == 44) {
+                                getNs();
                             }
+                            initHandlerShuibeng();
                         }
                     } else {
-                        if (shuibeng_state.equals("2")) {
-                            dismissProgressDialog();
-                            time = 0;
+                        if (shoubengisdianhou) {
+                            SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_shuibeng_on_a);
                         } else {
-                            if (time >= 60) {
-                                shubengIson = true;
-                                showZhiling();
-                            } else {
-                                if (time == 4 || time == 24 || time == 44) {
-                                    getNs();
-                                }
-                                initHandlerShuibeng();
-                            }
+                            SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_shuibeng_off_a);
                         }
+
+                        dismissProgressDialog();
+                        time = 0;
                     }
-                    Y.i("水泵的计时是多少啊啊啊" + time);
+                    Y.i("水泵的计时是多少啊啊啊" + time + "   " + shubengIson);
                     break;
                 case 4:
                     time++;
-                    if (youbengIson) {
-                        if (youbeng_state.equals("1")) {
-                            dismissProgressDialog();
-                            time = 0;
+//                    if (youbengIson) {
+//                        if (youbeng_state.equals("1")) {
+//                            dismissProgressDialog();
+//                            time = 0;
+//                        } else {
+//                            if (time >= 60) {
+//                                youbengIson = false;
+//                                showZhiling();
+//                            } else {
+//                                if (time == 4 || time == 24 || time == 44) {
+//                                    getNs();
+//                                }
+//                                initHandlerYoubeng();
+//                            }
+//                        }
+//                    } else {
+//                        if (youbeng_state.equals("2")) {
+//                            dismissProgressDialog();
+//                            time = 0;
+//                        } else {
+//                            if (time >= 60) {
+//                                youbengIson = true;
+//                                showZhiling();
+//                            } else {
+//                                if (time == 4 || time == 24 || time == 44) {
+//                                    getNs();
+//                                }
+//                                initHandlerYoubeng();
+//                            }
+//                        }
+//                    }
+
+                    if (youbengIsdianhou != youbengIson) {
+                        if (time >= 60) {
+                            youbengIsdianhou = !youbengIsdianhou;
+                            showZhiling();
                         } else {
-                            if (time >= 60) {
-                                youbengIson = false;
-                                showZhiling();
-                            } else {
-                                if (time == 4 || time == 24 || time == 44) {
-                                    getNs();
-                                }
-                                initHandlerYoubeng();
+                            if (time == 4 || time == 24 || time == 44) {
+                                getNs();
                             }
+                            initHandlerYoubeng();
                         }
                     } else {
-                        if (youbeng_state.equals("2")) {
-                            dismissProgressDialog();
-                            time = 0;
+                        if (youbengIsdianhou) {
+                            SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_youbeng_on_a);
                         } else {
-                            if (time >= 60) {
-                                youbengIson = true;
-                                showZhiling();
-                            } else {
-                                if (time == 4 || time == 24 || time == 44) {
-                                    getNs();
-                                }
-                                initHandlerYoubeng();
-                            }
+                            SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_youbeng_off_a);
                         }
+
+                        dismissProgressDialog();
+                        time = 0;
                     }
                     Y.i("油泵的计时是多少啊啊啊" + time);
                     break;
@@ -733,6 +796,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     };
 
     private void showTishiDialog(String msg) {
+        tv_zaixian.setText("离线");
         isZaixian = false;
         time = 0;
         dismissProgressDialog();
@@ -760,6 +824,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     }
 
     private void showZhiling() {
+        tv_zaixian.setText("离线");
         time = 0;
         dismissProgressDialog();
         isZaixian = false;
@@ -918,10 +983,10 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
         showProgressDialog("发送指令中...");
         initHandlerYoubeng();
         zhilingma = zhiling_youbeng;
-        if (youbengIson) {
-            youbengIson = false;
+        if (youbeng_state.equals("1")) {
+            youbengIsdianhou = false;
             String data = "M_s052.";
-
+            SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_youbeng_off);
             AndMqtt.getInstance().publish(new MqttPublish()
                     .setMsg(data)
                     .setQos(2).setRetained(false)
@@ -937,8 +1002,9 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                 }
             });
         } else {
-            youbengIson = true;
+            youbengIsdianhou = true;
             String data = "M_s051.";
+            SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_youbeng_on);
             AndMqtt.getInstance().publish(new MqttPublish()
                     .setMsg(data)
                     .setQos(2).setRetained(false)
@@ -968,9 +1034,10 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
         showProgressDialog("发送指令中...");
         initHandlerShuibeng();
         zhilingma = zhiling_shuibeng;
-        if (shubengIson) {
-            shubengIson = false;
+        if (shuibeng_state.equals("1")) {
+            shoubengisdianhou = false;
             String data = "M_s022.";
+            SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_shuibeng_off);
             AndMqtt.getInstance().publish(new MqttPublish()
                     .setMsg(data)
                     .setQos(2).setRetained(false)
@@ -986,8 +1053,9 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                 }
             });
         } else {
-            shubengIson = true;
+            shoubengisdianhou = true;
             String data = "M_s021.";
+            SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_shuibeng_on);
             AndMqtt.getInstance().publish(new MqttPublish()
                     .setMsg(data)
                     .setQos(2).setRetained(false)
@@ -1015,7 +1083,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
 
         iskaijiDianhou = false;
         zhilingma = zhiling_guanji;
-
+        SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_start_off);
         String data = "M_s012.";
         AndMqtt.getInstance().publish(new MqttPublish()
                 .setMsg(data)
@@ -1056,6 +1124,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
         zhilingma = zhiling_kaiji;
 
         String data = "M_s011000080.";
+        SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_start_on);
         AndMqtt.getInstance().publish(new MqttPublish()
                 .setMsg(data)
                 .setQos(2).setRetained(false)
@@ -1070,5 +1139,12 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
 
             }
         });
+    }
+
+
+    public static String getTime(long seconds) {
+        String format = "HH:mm:ss";
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        return sdf.format(new Date(seconds));
     }
 }

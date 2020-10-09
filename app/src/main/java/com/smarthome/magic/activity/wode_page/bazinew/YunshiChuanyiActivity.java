@@ -2,6 +2,7 @@ package com.smarthome.magic.activity.wode_page.bazinew;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -79,6 +80,8 @@ public class YunshiChuanyiActivity extends BaziBaseActivity {
     private TimePickerView timePicker;
     private YuZhiFuModel.DataBean dataBean;
     private IWXAPI api;
+    private String name_text;
+    private String birthday_text;
 
     @Override
     public int getContentViewResId() {
@@ -102,6 +105,11 @@ public class YunshiChuanyiActivity extends BaziBaseActivity {
     private void init() {
         code = getIntent().getIntExtra("code", 0);
         mingpan_id = getIntent().getStringExtra("mingpan_id");
+
+        name_text = getIntent().getStringExtra("name_text");
+        birthday_text = getIntent().getStringExtra("birthday_text");
+        tv_name_sex.setText(name_text);
+        tv_birthday.setText(birthday_text);
 
         tv_title.setText("穿衣指数");
         tv_yunshi.setText("穿衣指数");
@@ -149,16 +157,15 @@ public class YunshiChuanyiActivity extends BaziBaseActivity {
                         List<YunshiModel.DataBean> data = response.body().data;
                         if (data != null && data.size() > 0) {
                             YunshiModel.DataBean bean = data.get(0);
-                            tv_name_sex.setText(bean.getName() + "  " + bean.getSex());
-                            tv_birthday.setText(bean.getBirthday());
+//                            tv_name_sex.setText(bean.getName() + "  " + bean.getSex());
+//                            tv_birthday.setText(bean.getBirthday());
                             tv_data_jiexi.setText(bean.getTime_text());
-
                             String lock = bean.getLock();
-                            if ("1".equals(lock)) {
+                            if (TextUtils.isEmpty(lock) || "1".equals(lock)) {
                                 ll_data.setVisibility(View.VISIBLE);
                                 ll_jiesuo.setVisibility(View.GONE);
                                 tv_content.setText(bean.getEx_dress());
-                                tv_yunshi.setText("财神方位："+bean.getEx_caishenwei());
+                                tv_yunshi.setText("财神方位：" + bean.getEx_caishenwei());
                             } else {
                                 ll_data.setVisibility(View.GONE);
                                 ll_jiesuo.setVisibility(View.VISIBLE);
@@ -212,7 +219,7 @@ public class YunshiChuanyiActivity extends BaziBaseActivity {
             public void payCi() {
                 Intent intent = new Intent(YunshiChuanyiActivity.this, BaziPayActivity.class);
                 intent.putExtra("mingpan_id", mingpan_id);
-                intent.putExtra("payType", 1);
+                intent.putExtra("payType", 101);
                 intent.putExtra("time", tv_select_data.getText().toString());
                 startActivityForResult(intent, 100);
             }
@@ -221,8 +228,8 @@ public class YunshiChuanyiActivity extends BaziBaseActivity {
             public void payNian() {
                 Intent intent = new Intent(YunshiChuanyiActivity.this, BaziPayActivity.class);
                 intent.putExtra("mingpan_id", mingpan_id);
-                intent.putExtra("payType", 100);
-                intent.putExtra("time", "");
+                intent.putExtra("payType", 102);
+                intent.putExtra("time", tv_select_data.getText().toString());
                 startActivityForResult(intent, 100);
             }
         });

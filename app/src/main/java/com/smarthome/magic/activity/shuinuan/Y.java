@@ -55,14 +55,7 @@ public class Y {
     }
 
     public static void tError(Response response) {
-        String msg = response.getException().getMessage();
-        String[] msgToast = msg.split("：");
-        if (msgToast.length == 3) {
-            Y.t(msgToast[2]);
-        } else {
-            Y.t("网络异常");
-        }
-        ;
+        t(response.getException().getMessage());
     }
 
     public static Resources getResources() {

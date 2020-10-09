@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -219,7 +220,7 @@ public class YunshiActivity extends BaziBaseActivity {
     }
 
     private void clickJiesuo() {
-        if (code == BaziCode.ST_nian || code == BaziCode.ST_yue) {
+        if (code == BaziCode.ST_nian) {
             JiesuoDialog dialog = new JiesuoDialog(this, 0);
             dialog.setPayClick(new JiesuoDialog.JieSuoPayClick() {
                 @Override
@@ -227,7 +228,7 @@ public class YunshiActivity extends BaziBaseActivity {
                     Intent intent = new Intent(YunshiActivity.this, BaziPayActivity.class);
                     intent.putExtra("mingpan_id", mingpan_id);
                     intent.putExtra("payType", 1);
-                    intent.putExtra("time", tv_select_data.getText().toString());
+                    intent.putExtra("time", tv_select_data.getText().toString()+"-01-01");
                     startActivityForResult(intent, 100);
                 }
 
@@ -236,7 +237,29 @@ public class YunshiActivity extends BaziBaseActivity {
                     Intent intent = new Intent(YunshiActivity.this, BaziPayActivity.class);
                     intent.putExtra("mingpan_id", mingpan_id);
                     intent.putExtra("payType", 100);
-                    intent.putExtra("time", tv_select_data.getText().toString());
+                    intent.putExtra("time", tv_select_data.getText().toString()+"-01-01");
+                    startActivityForResult(intent, 100);
+                }
+            });
+            dialog.show();
+        }else if (code == BaziCode.ST_yue) {
+            JiesuoDialog dialog = new JiesuoDialog(this, 1);
+            dialog.setPayClick(new JiesuoDialog.JieSuoPayClick() {
+                @Override
+                public void payCi() {
+                    Intent intent = new Intent(YunshiActivity.this, BaziPayActivity.class);
+                    intent.putExtra("mingpan_id", mingpan_id);
+                    intent.putExtra("payType", 1);
+                    intent.putExtra("time", tv_select_data.getText().toString()+"-01");
+                    startActivityForResult(intent, 100);
+                }
+
+                @Override
+                public void payNian() {
+                    Intent intent = new Intent(YunshiActivity.this, BaziPayActivity.class);
+                    intent.putExtra("mingpan_id", mingpan_id);
+                    intent.putExtra("payType", 100);
+                    intent.putExtra("time", tv_select_data.getText().toString()+"-01");
                     startActivityForResult(intent, 100);
                 }
             });
@@ -418,5 +441,13 @@ public class YunshiActivity extends BaziBaseActivity {
         }
 
         getNet();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && requestCode == 100) {
+            getNet();
+        }
     }
 }

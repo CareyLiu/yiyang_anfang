@@ -37,7 +37,7 @@
             android:layout_above="@+id/tv_data"
             android:layout_centerHorizontal="true"
             android:gravity="center_horizontal|bottom"
-            android:minHeight="60dp">
+            android:minHeight="150pt">
 
             <View
                 android:layout_width="0dp"
@@ -52,7 +52,7 @@
                 android:gravity="bottom"
                 android:text="命宫"
                 android:textColor="#AB3B53"
-                android:textSize="12sp" />
+                android:textSize="30pt" />
 
             <TextView
                 android:id="@+id/tv_left2"
@@ -62,7 +62,7 @@
                 android:gravity="bottom"
                 android:text="命宫"
                 android:textColor="#A8B33F"
-                android:textSize="12sp"
+                android:textSize="30pt"
                 android:visibility="gone" />
 
             <TextView
@@ -73,7 +73,7 @@
                 android:gravity="bottom"
                 android:text="命宫"
                 android:textColor="#008310"
-                android:textSize="12sp"
+                android:textSize="30pt"
                 android:visibility="gone" />
 
             <View
@@ -93,7 +93,7 @@
                     android:layout_height="wrap_content"
                     android:text="115-113"
                     android:textColor="#000000"
-                    android:textSize="10sp" />
+                    android:textSize="25pt" />
 
                 <TextView
                     android:id="@+id/tv_minggong"
@@ -101,7 +101,7 @@
                     android:layout_height="wrap_content"
                     android:text="命宫"
                     android:textColor="#FC0400"
-                    android:textSize="13sp" />
+                    android:textSize="32pt" />
             </LinearLayout>
 
             <View
@@ -117,7 +117,7 @@
                 android:gravity="bottom"
                 android:text="命宫工"
                 android:textColor="#FF9600"
-                android:textSize="12sp"
+                android:textSize="30pt"
                 android:visibility="gone" />
 
             <TextView
@@ -128,7 +128,7 @@
                 android:gravity="bottom"
                 android:text="命宫"
                 android:textColor="#20B780"
-                android:textSize="12sp"
+                android:textSize="30pt"
                 android:visibility="gone" />
 
             <TextView
@@ -139,7 +139,7 @@
                 android:gravity="bottom"
                 android:text="命宫"
                 android:textColor="#D7183D"
-                android:textSize="12sp" />
+                android:textSize="30pt" />
 
             <View
                 android:layout_width="0dp"
@@ -159,6 +159,6 @@
             android:paddingRight="3dp"
             android:text="1 12 13 13 13 13 13"
             android:textColor="#666666"
-            android:textSize="12sp" />
+            android:textSize="24pt" />
     </RelativeLayout>
 </RelativeLayout>

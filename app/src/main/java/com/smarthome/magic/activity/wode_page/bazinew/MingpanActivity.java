@@ -3,20 +3,32 @@ package com.smarthome.magic.activity.wode_page.bazinew;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.wode_page.bazinew.base.BaziBaseActivity;
 import com.smarthome.magic.activity.wode_page.bazinew.model.PaipanDetailsModes;
 import com.smarthome.magic.activity.wode_page.bazinew.model.PaipanModel;
 import com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView;
+import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,7 +87,7 @@ public class MingpanActivity extends BaziBaseActivity {
     @BindView(R.id.tv_liudou)
     TextView tv_liudou;
     @BindView(R.id.ll_main)
-    LinearLayout ll_main;
+    ScrollView ll_main;
     @BindView(R.id.ming_main)
     BaziMingpanView ming_main;
     @BindView(R.id.iv_line)
@@ -103,6 +115,7 @@ public class MingpanActivity extends BaziBaseActivity {
 
     private PaipanModel.DataBean model;
     private List<PaipanDetailsModes> panModes = new ArrayList<>();
+    private String mingpan_id;
 
     @Override
     public int getContentViewResId() {
@@ -134,9 +147,8 @@ public class MingpanActivity extends BaziBaseActivity {
     }
 
     private void init() {
-        model = (PaipanModel.DataBean) getIntent().getSerializableExtra("model");
-        setData();
-        setMing();
+        mingpan_id = getIntent().getStringExtra("mingpan_id");
+        getMingPan(mingpan_id);
     }
 
     private void setData() {
@@ -151,12 +163,12 @@ public class MingpanActivity extends BaziBaseActivity {
         tv_yangli.setText(ziwei.getSolar_birthday());
         tv_yili.setText(ziwei.getLunar_birthday());
 
-        tv_mingju.setText(ziwei.getWuXingJu() + "    (" + ziwei.getMingJuNaYin() + ")");
+        tv_mingju.setText(ziwei.getWuXingJu() + "  (" + ziwei.getMingJuNaYin() + ")");
         tv_mingzhu.setText(ziwei.getMingZhu());
         tv_shenzhu.setText(ziwei.getShenZhu());
         tv_zidou.setText(ziwei.getZiDou());
         tv_liudou.setText(ziwei.getLiuDou());
-        tv_shengnian.setText(bulunBaZi.get(0) + "    (" + ziwei.getShengNianNaYin() + ")");
+        tv_shengnian.setText(bulunBaZi.get(0) + "  (" + ziwei.getShengNianNaYin() + ")");
 
         tv_bulun1.setText(bulunBaZi.get(0));
         tv_bulun2.setText(bulunBaZi.get(1));
@@ -321,4 +333,31 @@ public class MingpanActivity extends BaziBaseActivity {
     }
 
 
+    private void getMingPan(String mingpan_id) {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "11014");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(this).getAppToken());
+        map.put("mingpan_id", mingpan_id);
+        Gson gson = new Gson();
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<PaipanModel.DataBean>>post(Urls.BAZIAPP)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<PaipanModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<PaipanModel.DataBean>> response) {
+                        showLoadSuccess();
+                        model = response.body().data.get(0);
+                        setData();
+                        setMing();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<PaipanModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showLoading();
+                    }
+                });
+    }
 }

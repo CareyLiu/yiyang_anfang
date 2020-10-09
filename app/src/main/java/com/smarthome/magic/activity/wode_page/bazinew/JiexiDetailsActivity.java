@@ -13,19 +13,24 @@ import com.smarthome.magic.activity.wode_page.bazinew.adapter.JiexiAdapter;
 import com.smarthome.magic.activity.wode_page.bazinew.base.BaziBaseActivity;
 import com.smarthome.magic.activity.wode_page.bazinew.model.JiexiModel;
 import com.smarthome.magic.activity.wode_page.bazinew.utils.BaziCode;
+import com.smarthome.magic.activity.wode_page.bazinew.view.JiexiFragment;
+import com.smarthome.magic.adapter.NewsFragmentPagerAdapter;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import androidx.fragment.app.Fragment;
 
 public class JiexiDetailsActivity extends BaziBaseActivity {
 
@@ -41,6 +46,8 @@ public class JiexiDetailsActivity extends BaziBaseActivity {
     LinearLayout ll_jiesuo;
     @BindView(R.id.rv_title)
     RecyclerView rv_title;
+    @BindView(R.id.vpg_content)
+    ViewPager vpg_content;
 
     private int jiexi;
     private String mingpan_id;
@@ -65,12 +72,22 @@ public class JiexiDetailsActivity extends BaziBaseActivity {
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
         init();
+        initVpg();
+    }
+
+    private void initVpg() {
+        ArrayList<Fragment> messageListFragments = new ArrayList<>();
+        for (int i = 0; i < titles.length; i++) {
+            JiexiFragment fragment = new JiexiFragment();
+            messageListFragments.add(fragment);
+        }
+        NewsFragmentPagerAdapter mAdapetr = new NewsFragmentPagerAdapter(getSupportFragmentManager(), messageListFragments);
+        vpg_content.setAdapter(mAdapetr);
     }
 
     private void init() {
         jiexi = getIntent().getIntExtra("jiexi", 0);
         mingpan_id = getIntent().getStringExtra("mingpan_id");
-
 
         adapter = new JiexiAdapter(titles, this);
         rv_title.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
@@ -159,6 +176,52 @@ public class JiexiDetailsActivity extends BaziBaseActivity {
         }
     }
 
+
+    private String getData(int jiexi) {
+        String text = "";
+        if (dataBean != null) {
+            switch (jiexi) {
+                case BaziCode.ll_tab_minggong:
+                    text = dataBean.getMinggong();
+                    break;
+                case BaziCode.ll_tab_fuqi:
+                    text = dataBean.getFuqi();
+                    break;
+                case BaziCode.ll_tab_fumu:
+                    text = dataBean.getFumu();
+                    break;
+                case BaziCode.ll_tab_xiongdi:
+                    text = dataBean.getXiongdi();
+                    break;
+                case BaziCode.ll_tab_caibo:
+                    text = dataBean.getCaibo();
+                    break;
+                case BaziCode.ll_tab_jie:
+                    text = dataBean.getJie();
+                    break;
+                case BaziCode.ll_tab_fude:
+                    text = dataBean.getFude();
+                    break;
+                case BaziCode.ll_tab_zinv:
+                    text = dataBean.getZinv();
+                    break;
+                case BaziCode.ll_tab_tianzhai:
+                    text = dataBean.getTianzhai();
+                    break;
+                case BaziCode.ll_tab_guanlu:
+                    text = dataBean.getGuanlu();
+                    break;
+                case BaziCode.ll_tab_puyi:
+                    text = dataBean.getPuyi();
+                    break;
+                case BaziCode.ll_tab_qianyi:
+                    text = dataBean.getQianyi();
+                    break;
+            }
+        }
+
+        return text;
+    }
 
     private void setView(int jiexi) {
         tv_yunshi.setText(titles[jiexi]);

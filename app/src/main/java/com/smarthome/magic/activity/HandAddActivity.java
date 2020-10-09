@@ -13,6 +13,7 @@ import com.jaeger.library.StatusBarUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
@@ -125,12 +126,7 @@ public class HandAddActivity extends BaseActivity implements View.OnClickListene
                     @Override
                     public void onError(Response<AppResponse<CarBrand.DataBean>> response) {
                         String msg = response.getException().getMessage();
-                        String[] msgToast = msg.split("：");
-                        if (msgToast.length == 3) {
-                            msg = msgToast[2];
-                        } else {
-                            msg = "网络异常";
-                        }
+                        Y.tError(response);
 
                         BangdingFailDialog dialog = new BangdingFailDialog(mContext);
                         dialog.setTextContent(msg);

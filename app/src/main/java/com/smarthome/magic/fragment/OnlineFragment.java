@@ -144,7 +144,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
                                 if (NetworkUtils.isConnected(getActivity())) {
                                     Activity currentActivity = AppManager.getAppManager().currentActivity();
                                     if (currentActivity != null) {
-                                        ShuinuanMainActivity.actionStart(getActivity(), ccid, count);
+                                        ShuinuanMainActivity.actionStart(getActivity(), ccid, count,mDatas.get(pos).validity_time);
                                     }
                                 } else {
                                     UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");

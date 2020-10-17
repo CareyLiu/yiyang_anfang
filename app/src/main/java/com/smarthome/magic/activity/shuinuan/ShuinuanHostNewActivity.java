@@ -1,5 +1,6 @@
 package com.smarthome.magic.activity.shuinuan;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -24,6 +25,7 @@ import com.smarthome.magic.dialog.newdia.TishiDialog;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -112,6 +114,7 @@ public class ShuinuanHostNewActivity extends ShuinuanBaseNewActivity {
         }));
     }
 
+    @SuppressLint("SetTextI18n")
     private void getData(String msg) {
         Y.e("获取的数据是" + msg);
         if (msg.contains("i_s")) {
@@ -179,7 +182,7 @@ public class ShuinuanHostNewActivity extends ShuinuanBaseNewActivity {
 
     private void initHandlerStart() {
         Message message = handlerStart.obtainMessage(1);
-        handlerStart.sendMessageDelayed(message, 250);
+        handlerStart.sendMessageDelayed(message, 1000);
     }
 
     private void getHost() {
@@ -220,7 +223,7 @@ public class ShuinuanHostNewActivity extends ShuinuanBaseNewActivity {
                 .setTopic(SN_Send), new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("app端向水暖加热器请求主机参数", "");
+
             }
 
             @Override
@@ -232,26 +235,23 @@ public class ShuinuanHostNewActivity extends ShuinuanBaseNewActivity {
 
     private int time = 0;
 
-    private Handler handlerStart = new Handler() {
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 1:
-                    time++;
-                    if (time >= 60) {
-                        showTishiDialog();
-                    } else {
-                        if (time == 4 || time == 24 || time == 44) {
-                            getHost();
-                        }
-                        initHandlerStart();
+    private Handler handlerStart = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(@NonNull Message msg) {
+            if (msg.what == 1) {
+                time++;
+                if (time >= 20) {
+                    showTishiDialog();
+                } else {
+                    if (time == 5 || time == 10 || time == 15) {
+                        getHost();
                     }
-                    Y.i("计时是多少啊啊啊" + time);
-                    break;
-
+                    initHandlerStart();
+                }
             }
-            super.handleMessage(msg);
+            return false;
         }
-    };
+    });
 
     private void showTishiDialog() {
         time = 0;

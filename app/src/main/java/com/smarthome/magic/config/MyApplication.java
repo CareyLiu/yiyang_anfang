@@ -54,6 +54,7 @@ import com.smarthome.magic.app.HardWareValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.RxUtils;
+import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
@@ -251,7 +252,7 @@ public class MyApplication extends MultiDexApplication {
 
                     setMqttConnect();
 
-                }else if (message.type ==ConstanceValue.MSG_RONGYUN_CHONGZHI){
+                } else if (message.type == ConstanceValue.MSG_RONGYUN_CHONGZHI) {
                     initRongYun();
                 }
             }
@@ -305,7 +306,7 @@ public class MyApplication extends MultiDexApplication {
 
         String rongYunToken = PreferenceHelper.getInstance(getApplicationContext()).getString("token_rong", "");
         if (!StringUtils.isEmpty(rongYunToken)) {
-           connectRongYun(rongYunToken);
+            connectRongYun(rongYunToken);
 
             RongIM.setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageWrapperListener() {
                 /**
@@ -360,12 +361,11 @@ public class MyApplication extends MultiDexApplication {
                 public void onChanged(ConnectionStatus status) {
 
                     Log.i("rongyun", status.getMessage());
-
                     if (status.getValue() == 3) {
 
                         Intent intent = new Intent(getAppContext(), LoginActivity.class);
                         intent.putExtra("token_guoqi", "token_guoqi");
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
 
                     }
@@ -506,9 +506,9 @@ public class MyApplication extends MultiDexApplication {
                         });
 
 
-                        Log.i("我重连了啊啊啊的大小", mqttDingyue.size() + "");
+                        Log.i("rair", "重新订阅数组个数" + mqttDingyue.size() + "");
                         for (int i = 0; i < mqttDingyue.size(); i++) {
-                            Log.i("我重连了啊啊啊", mqttDingyue.get(i));
+                            Log.i("rair", "重新订阅主题：" + mqttDingyue.get(i));
                             AndMqtt.getInstance().subscribe(new MqttSubscribe()
                                     .setTopic(mqttDingyue.get(i))
                                     .setQos(2), new IMqttActionListener() {

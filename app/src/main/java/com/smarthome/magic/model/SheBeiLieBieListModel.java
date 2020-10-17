@@ -129,6 +129,7 @@ public class SheBeiLieBieListModel {
             private String plate_number;
             private String validity_term;
             private String validity_time;
+            public String sim_ccid_save_type;
 
             public String getAvailable_check() {
                 return available_check;

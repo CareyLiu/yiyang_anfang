@@ -82,12 +82,11 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
                                 Log.i("serverId", str);
                                 PreferenceHelper.getInstance(mContext).putString("car_server_id", str + "/");
                                 PreferenceHelper.getInstance(mContext).putString("ccid", mDatas.get(position).ccid);
-                                String getNow = "wit/cbox/app/" + str+"/"+ mDatas.get(position).ccid;
                                 Log.i("getnow", MyApplication.CARBOX_GETNOW);
                                 if (NetworkUtils.isConnected(mContext)) {
                                     Activity currentActivity = AppManager.getAppManager().currentActivity();
                                     if (currentActivity != null) {
-                                        FengNuanActivity.actionStart(mContext, getNow);
+                                        FengNuanActivity.actionStart(mContext, mDatas.get(position).sim_ccid_save_type);
                                     }
                                 } else {
                                     UIHelper.ToastMessage(mContext, "请连接网络后重新尝试");
@@ -157,6 +156,7 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
                                 sheBeiModel1.validity_term = bean.getValidity_term();
                                 sheBeiModel1.validity_time = bean.getValidity_time();
                                 sheBeiModel1.device_type = response.body().data.get(i).getControl_type_id();
+                                sheBeiModel1.sim_ccid_save_type = bean.sim_ccid_save_type;
                                 mDatas.add(sheBeiModel1);
                             }
                         }

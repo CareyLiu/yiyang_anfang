@@ -264,6 +264,10 @@ public class TuanGouDingDanDetails extends BaseActivity {
                                 }
                                 break;
 
+                            case "6"://待评价
+
+
+                                break;
 
                         }
                     }

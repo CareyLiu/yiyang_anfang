@@ -118,7 +118,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
                                 return;
                             }
                             if (mDatas.get(position).device_type.equals("1")) {
-
+                                //mDatas.get(position).ccid = "aaaaaaaaaaaaaaaa90010028";
                                 int i = mDatas.get(position).ccid.length() - 1;
                                 String str = String.valueOf(mDatas.get(position).ccid.charAt(i));
                                 Log.i("serverId", str);
@@ -130,7 +130,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
                                 if (NetworkUtils.isConnected(getActivity())) {
                                     Activity currentActivity = AppManager.getAppManager().currentActivity();
                                     if (currentActivity != null) {
-                                        FengNuanActivity.actionStart(getActivity(), MyApplication.CARBOX_GETNOW);
+                                        FengNuanActivity.actionStart(getActivity(),mDatas.get(position).sim_ccid_save_type);
                                     }
                                 } else {
                                     UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
@@ -392,6 +392,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
                                 sheBeiModel1.validity_term = bean.getValidity_term();
                                 sheBeiModel1.validity_time = bean.getValidity_time();
                                 sheBeiModel1.device_type = response.body().data.get(i).getControl_type_id();
+                                sheBeiModel1.sim_ccid_save_type = bean.sim_ccid_save_type;
                                 mDatas.add(sheBeiModel1);
                             }
                         }

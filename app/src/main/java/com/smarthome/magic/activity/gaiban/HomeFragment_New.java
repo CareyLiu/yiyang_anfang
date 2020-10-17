@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +28,8 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.location.AMapLocationQualityReport;
+import com.amap.api.maps.CoordinateConverter;
+import com.amap.api.maps.model.LatLng;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
@@ -37,6 +40,7 @@ import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -75,12 +79,14 @@ import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.Radius_GlideImageLoader;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.LordingDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.Home;
 import com.smarthome.magic.model.TuiGuangMaModel;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.GlideShowImageUtils;
 import com.smarthome.magic.util.GridAverageUIDecoration;
+import com.smarthome.magic.util.OpenLocalMapUtil;
 import com.smarthome.magic.util.Utils;
 import com.smarthome.magic.view.ObservableScrollView;
 import com.tbruyelle.rxpermissions.RxPermissions;
@@ -173,6 +179,36 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         //初始化定位
         initLocation();
         startLocation();
+
+
+        LatLng latLng = new LatLng(45.662479, 126.611618);//2.5KM
+        //LatLng latLng = new LatLng(45.666843, 126.609619);  //146米
+        //LatLng latLng = new LatLng(45.662479, 126.611618);//2.5KM
+        //LatLng latLng = new LatLng(45.667294, 126.614937);//300米
+//        CoordinateConverter converter = new CoordinateConverter(getActivity());
+//// CoordType.GPS 待转换坐标类型
+//        converter.from(CoordinateConverter.CoordType.GPS);
+//// 转换
+//        converter.coord(latLng);
+//// 获取转换之后的高德坐标
+//        LatLng result = converter.convert();
+//
+//        Log.i("result_location", result.latitude + "");
+//        Log.i("result_location", result.longitude + "");
+
+        //高德地图
+
+
+//        UIHelper.ToastMessage(getActivity(), "即将为您打开高德地图", Toast.LENGTH_SHORT);
+//        //起点
+//        String qiDianLo = PreferenceHelper.getInstance(getActivity()).getString(JINGDU, "0X11");
+//        String qiDianLa = PreferenceHelper.getInstance(getActivity()).getString(WEIDU, "0X11");
+//        String uri = OpenLocalMapUtil.getGdMapUri("聚易佳", String.valueOf(qiDianLa), String.valueOf(qiDianLo),
+//                "当前位置", String.valueOf(latLng.latitude), String.valueOf(latLng.longitude), "");
+//        Intent intent = new Intent(Intent.ACTION_VIEW);
+//        intent.setPackage("com.autonavi.minimap");
+//        intent.setData(Uri.parse(uri));
+//        getActivity().startActivity(intent); //启动调用
     }
 //
 //    public void getNet_check() {
@@ -534,7 +570,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                             RxBus.getDefault().sendRx(n);
                         } else if (intellectListBean.getId().equals("2")) {
 
-                          //  PreferenceHelper.getInstance(getActivity()).putString("ccid", "aaaaaaaaaaaaaaaa90070018");
+                            //  PreferenceHelper.getInstance(getActivity()).putString("ccid", "aaaaaaaaaaaaaaaa90070018");
                             SheBeiLieBiaoActivity.actionStart(getActivity(), "1");
                             //FengNuanActivity.actionStart(getActivity());
                             // startActivity(new Intent(getActivity(), CarListActivity.class).putExtra("type", "wind"));
@@ -741,6 +777,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
 
     private String JiaMiToken;
     public static List<String> items = new ArrayList<>();
+    LordingDialog lordingDialog;
 
     public void getData() {
         Map<String, String> map = new HashMap<>();
@@ -897,6 +934,8 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                             return;
                         }
                         setHuoDong(response.body().data.get(0).getActivity());
+
+
                     }
 
                     @Override
@@ -904,7 +943,23 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
 
                         AlertUtil.t(getActivity(), response.getException().getMessage());
                     }
+
+                    @Override
+                    public void onStart(Request<AppResponse<Home.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        lordingDialog = new LordingDialog(getActivity());
+                        lordingDialog.setTextMsg("正在加载请稍后...");
+                        lordingDialog.show();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        lordingDialog.dismiss();
+                    }
                 });
+
+
     }
 
     // public String shiFouYanzheng;

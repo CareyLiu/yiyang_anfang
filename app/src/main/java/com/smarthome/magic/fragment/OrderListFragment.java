@@ -293,7 +293,6 @@ public class OrderListFragment extends BaseFragment {
                             }
 
                         } else if (dataBean.getWares_type().equals("3")) {
-
                             if (dataBean.getUser_pay_check().equals("8") || dataBean.getUser_pay_check().equals("9") || dataBean.getUser_pay_check().equals("10")) {
 
                                 OrderTuiKuanDetailsActivity.actionStart(getActivity(), dataBean.getShop_form_id());
@@ -302,7 +301,8 @@ public class OrderListFragment extends BaseFragment {
                                 DaiFuKuanDingDanActivity.actionStart(getActivity(), dataBean);
 
                             } else {
-                                TuanGouDingDanDetails.actionStart(getActivity(), dataBean);
+
+                                DaiFuKuanDingDanActivity.actionStart(getActivity(), dataBean);
                             }
 
                         }

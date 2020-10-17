@@ -73,10 +73,14 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if (mqtt_connect_state.equals("1")) {
+                    if (mDatas.get(position).validity_state.equals("2")) {
+                        UIHelper.ToastMessage(mContext, "当前设备已过期");
+                        return;
+                    }
+
                     switch (view.getId()) {
                         case R.id.constrain:
                             if (mDatas.get(position).device_type.equals("1")) {
-
                                 int i = mDatas.get(position).ccid.length() - 1;
                                 String str = String.valueOf(mDatas.get(position).ccid.charAt(i));
                                 Log.i("serverId", str);
@@ -100,7 +104,7 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
                                 if (NetworkUtils.isConnected(mContext)) {
                                     Activity currentActivity = AppManager.getAppManager().currentActivity();
                                     if (currentActivity != null) {
-                                        ShuinuanMainActivity.actionStart(mContext, ccid, count,mDatas.get(position).validity_time);
+                                        ShuinuanMainActivity.actionStart(mContext, ccid, count, mDatas.get(position).validity_time);
                                     }
                                 } else {
                                     UIHelper.ToastMessage(mContext, "请连接网络后重新尝试");

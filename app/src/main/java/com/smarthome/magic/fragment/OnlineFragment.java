@@ -111,12 +111,12 @@ public class OnlineFragment extends BaseFragment implements Observer {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if (mqtt_connect_state.equals("1")) {
+                    if (mDatas.get(position).validity_state.equals("2")) {
+                        UIHelper.ToastMessage(getActivity(), "当前设备已过期");
+                        return;
+                    }
                     switch (view.getId()) {
                         case R.id.constrain:
-                            if (mDatas.get(position).validity_state.equals("2")) {
-                                UIHelper.ToastMessage(getActivity(), "当前设备已过期");
-                                return;
-                            }
                             if (mDatas.get(position).device_type.equals("1")) {
                                 //mDatas.get(position).ccid = "aaaaaaaaaaaaaaaa90010028";
                                 int i = mDatas.get(position).ccid.length() - 1;

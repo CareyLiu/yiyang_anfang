@@ -115,4 +115,6 @@ public interface ConstanceValue {
     int MSG_BEGNYOUKAIJI = 0x10080;//泵油开机
     int MSG_BENGYOUGUANJI = 0x10081;//泵油关机
     int MSG_RONGYUN_CHONGZHI = 0x10082;//重置融云
+
+    int MSG_GONGXIANG_PEOPLE = 0x10083;//共享成员
 }

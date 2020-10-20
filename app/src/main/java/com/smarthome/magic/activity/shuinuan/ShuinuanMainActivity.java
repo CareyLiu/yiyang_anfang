@@ -34,11 +34,10 @@ import com.smarthome.magic.util.SoundPoolUtils;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -63,6 +62,8 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     TextView tv_fuwutianshushengyu;
     @BindView(R.id.tv_shebei_state)
     TextView tv_shebei_state;
+    @BindView(R.id.tv_shebei_youxiaoqi)
+    TextView tv_shebei_youxiaoqi;
     @BindView(R.id.iv_shuinuan_kaijie)
     ImageView iv_shuinuan_kaijie;
     @BindView(R.id.tv_shuinuan_kaiji)
@@ -99,8 +100,6 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     TextView tv_daqiya;
     @BindView(R.id.iv_heater_host)
     ImageView iv_heater_host;
-//    @BindView(R.id.ll_content)
-//    LinearLayout ll_content;
 
     private String sn_state;     //水暖状态
     private String yushewendu;      //预设温度
@@ -115,16 +114,37 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     private boolean shubengIson;
     private boolean shoubengisdianhou;
     private boolean isZaixian = false;
-    private int zhilingma;
-    private final int zhiling_kaiji = 1;
-    private final int zhiling_guanji = 2;
-    private final int zhiling_shuibeng = 3;
-    private final int zhiling_youbeng = 4;
-    private long nowTime;
-    private long lastTime;
-    private long chazhi;
     private String xinhaoStr;
     private boolean isFirst;
+    private boolean isOnActivity;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isOnActivity = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isOnActivity = false;
+    }
+
+    private Handler handlerTime10 = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(@NonNull Message msg) {
+            switch (msg.what) {
+                case 1:
+                    if (isOnActivity) {
+                        getNsData();
+                        Y.e("我执行了一次查询实时数据啦");
+                    }
+                    initHandlerNS();
+                    break;
+            }
+            return false;
+        }
+    });
 
 
     @Override
@@ -142,11 +162,12 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     /**
      * 用于其他Activty跳转到该Activity
      */
-    public static void actionStart(Context context, String ccid, String car_server_id) {
+    public static void actionStart(Context context, String ccid, String car_server_id, String time) {
         Intent intent = new Intent(context, ShuinuanMainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("ccid", ccid);
         intent.putExtra("car_server_id", car_server_id);
+        intent.putExtra("time", time);
         context.startActivity(intent);
     }
 
@@ -177,6 +198,8 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
      * 初始化Ccid
      */
     private void initCcid() {
+        String time = getIntent().getStringExtra("time");
+        tv_shebei_youxiaoqi.setText("有效期至:" + time);
         String car_server_id = getIntent().getStringExtra("car_server_id");
         ccid = getIntent().getStringExtra("ccid");
         SN_Send = "wh/hardware/" + car_server_id + ccid;
@@ -198,6 +221,8 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                 if (message.type == ConstanceValue.MSG_SN_DATA) {
                     String msg = message.content.toString();
                     getData(msg);
+                } else if (message.type == ConstanceValue.MSG_JIEBANG) {
+                    finish();
                 }
             }
         }));
@@ -227,6 +252,8 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
             String haibagaodu = msg.substring(48, 52);//海拔高度
             String hanyangliang = msg.substring(52, 55);//含氧量
 
+            firstCaozuo(msg);
+
 
             if (sn_state.equals("0") || sn_state.equals("3")) {
                 if (shuibeng_state.equals("1") && youbeng_state.equals("2")) {
@@ -245,24 +272,18 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
             xinhaoStr = msg.substring(55, 57);
             if (xinhaoStr.equals("aa")) {
                 iv_xinhao.setImageResource(R.mipmap.fengnuan_icon_signal2);
-                tv_zaixian.setText("在线");
             } else {
                 int xinhao = Y.getInt(xinhaoStr);//信号强度
                 if (xinhao >= 15 && xinhao <= 19) {
                     iv_xinhao.setImageResource(R.mipmap.fengnuan_icon_signal2);
-                    tv_zaixian.setText("在线");
                 } else if (xinhao >= 20 && xinhao <= 25) {
                     iv_xinhao.setImageResource(R.mipmap.fengnuan_icon_signal3);
-                    tv_zaixian.setText("在线");
                 } else if (xinhao >= 26 && xinhao <= 35) {
                     iv_xinhao.setImageResource(R.mipmap.fengnuan_icon_signal4);
-                    tv_zaixian.setText("在线");
                 } else {
                     iv_xinhao.setImageResource(R.mipmap.fengnuan_icon_signal1);
-                    tv_zaixian.setText("在线");
                 }
             }
-
 
             String num = "水暖状态" + sn_state + "  加热剩余时长" + syscTime + "  水泵状态" + shuibeng_state + "  油泵状态" + youbeng_state
                     + "  风机状态" + fengji_state
@@ -386,7 +407,6 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
             if (!isZaixian) {
                 isZaixian = true;
                 iv_xinhao.setImageResource(R.mipmap.fengnuan_icon_signal1);
-                tv_zaixian.setText("在线");
             }
         } else if (msg.contains("r_s")) {
             String dianya = msg.substring(3, 4);//电压	0.正常1.过高2.过低3.故障
@@ -499,6 +519,67 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
         }
     }
 
+    private void firstCaozuo(String msg) {
+        if (isFirst) {
+            //向水暖加热器发送获取实时数据
+            AndMqtt.getInstance().publish(new MqttPublish()
+                    .setMsg("X_s.")
+                    .setQos(2).setRetained(false)
+                    .setTopic(SN_Send), new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Y.i("app端向水暖加热器请求实时数据");
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                }
+            });
+
+            AndMqtt.getInstance().publish(new MqttPublish()
+                    .setMsg("Y_s.")
+                    .setQos(2).setRetained(false)
+                    .setTopic(SN_Send), new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Y.i("查询一次经纬度");
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                }
+            });
+
+            AndMqtt.getInstance().publish(new MqttPublish()
+                    .setMsg("Z_s.")
+                    .setQos(2).setRetained(false)
+                    .setTopic(SN_Send), new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Y.i("查询故障/报警");
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                }
+            });
+
+
+            if (msg.length() != 58) {
+                initHandlerNS();
+            }
+            isFirst = false;
+        }
+    }
+
+    private void initHandlerNS() {
+        Message message = handlerTime10.obtainMessage(1);
+        handlerTime10.sendMessageDelayed(message, 10000);
+    }
+
     private void showguzhangla(List<String> strings) {
         if (guzhangDialog == null) {
             guzhangDialog = new GuzhangDialog(mContext, new GuzhangDialog.Guzhang() {
@@ -544,7 +625,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     }
 
     private void getNs() {
-        //注册水暖加热器订阅
+//        //注册水暖加热器订阅
         AndMqtt.getInstance().subscribe(new MqttSubscribe()
                 .setTopic(SN_Send)
                 .setQos(2), new IMqttActionListener() {
@@ -573,7 +654,10 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
 
             }
         });
+        getNsData();
+    }
 
+    private void getNsData() {
         //向水暖加热器发送获取实时数据
         AndMqtt.getInstance().publish(new MqttPublish()
                 .setMsg("N_s.")
@@ -589,61 +673,42 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
 
             }
         });
-
-
-        if (isFirst) {
-            //向水暖加热器发送获取实时数据
-            AndMqtt.getInstance().publish(new MqttPublish()
-                    .setMsg("X_s.")
-                    .setQos(2).setRetained(false)
-                    .setTopic(SN_Send), new IMqttActionListener() {
-                @Override
-                public void onSuccess(IMqttToken asyncActionToken) {
-                    Log.i("app端向水暖加热器请求实时数据", "");
-                }
-
-                @Override
-                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-
-                }
-            });
-            isFirst = false;
-        }
     }
 
     private int time = 0;
 
     private void initHandlerStart() {
         Message message = handlerStart.obtainMessage(1);
-        handlerStart.sendMessageDelayed(message, 250);
+        handlerStart.sendMessageDelayed(message, 1000);
     }
 
     private void initHandlerClick() {
         Message message = handlerStart.obtainMessage(2);
-        handlerStart.sendMessageDelayed(message, 250);
+        handlerStart.sendMessageDelayed(message, 1000);
     }
 
     private void initHandlerShuibeng() {
         Message message = handlerStart.obtainMessage(3);
-        handlerStart.sendMessageDelayed(message, 250);
+        handlerStart.sendMessageDelayed(message, 1000);
     }
 
     private void initHandlerYoubeng() {
         Message message = handlerStart.obtainMessage(4);
-        handlerStart.sendMessageDelayed(message, 250);
+        handlerStart.sendMessageDelayed(message, 1000);
     }
 
 
-    private Handler handlerStart = new Handler() {
-        public void handleMessage(Message msg) {
+    private Handler handlerStart = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(@NonNull Message msg) {
+            time++;
             switch (msg.what) {
                 case 1:
-                    time++;
                     if (!isZaixian) {
-                        if (time >= 60) {
-                            showTishiDialog("水暖服务器连接失败，是否重新连结");
+                        if (time >= 30) {
+                            showTishiDialog();
                         } else {
-                            if (time == 4 || time == 24 || time == 44) {
+                            if (time == 5 || time == 10 || time == 15 || time == 20 || time == 25) {
                                 getNs();
                             }
                             initHandlerStart();
@@ -652,16 +717,14 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                         dismissProgressDialog();
                         time = 0;
                     }
-                    Y.i("计时是多少啊啊啊" + time);
                     break;
                 case 2:
-                    time++;
                     if (iskaijiDianhou != isKaiji) {
-                        if (time >= 60) {
+                        if (time >= 30) {
                             iskaijiDianhou = !iskaijiDianhou;
                             showZhiling();
                         } else {
-                            if (time == 4 || time == 24 || time == 44) {
+                            if (time == 5 || time == 10 || time == 15 || time == 20 || time == 25) {
                                 getNs();
                             }
                             initHandlerClick();
@@ -676,48 +739,14 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                         dismissProgressDialog();
                         time = 0;
                     }
-                    Y.i("计时是多少啊啊啊" + time);
                     break;
                 case 3:
-                    time++;
-//                    if (shubengIson) {
-//                        if (shuibeng_state.equals("1")) {
-//                            dismissProgressDialog();
-//                            time = 0;
-//                        } else {
-//                            if (time >= 60) {
-//                                shubengIson = false;
-//                                showZhiling();
-//                            } else {
-//                                if (time == 4 || time == 24 || time == 44) {
-//                                    getNs();
-//                                }
-//                                initHandlerShuibeng();
-//                            }
-//                        }
-//                    } else {
-//                        if (shuibeng_state.equals("2")) {
-//                            dismissProgressDialog();
-//                            time = 0;
-//                        } else {
-//                            if (time >= 60) {
-//                                shubengIson = true;
-//                                showZhiling();
-//                            } else {
-//                                if (time == 4 || time == 24 || time == 44) {
-//                                    getNs();
-//                                }
-//                                initHandlerShuibeng();
-//                            }
-//                        }
-//                    }
-
                     if (shoubengisdianhou != shubengIson) {
-                        if (time >= 60) {
+                        if (time >= 30) {
                             shoubengisdianhou = !shoubengisdianhou;
                             showZhiling();
                         } else {
-                            if (time == 4 || time == 24 || time == 44) {
+                            if (time == 5 || time == 10 || time == 15 || time == 20 || time == 25) {
                                 getNs();
                             }
                             initHandlerShuibeng();
@@ -732,48 +761,14 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                         dismissProgressDialog();
                         time = 0;
                     }
-                    Y.i("水泵的计时是多少啊啊啊" + time + "   " + shubengIson);
                     break;
                 case 4:
-                    time++;
-//                    if (youbengIson) {
-//                        if (youbeng_state.equals("1")) {
-//                            dismissProgressDialog();
-//                            time = 0;
-//                        } else {
-//                            if (time >= 60) {
-//                                youbengIson = false;
-//                                showZhiling();
-//                            } else {
-//                                if (time == 4 || time == 24 || time == 44) {
-//                                    getNs();
-//                                }
-//                                initHandlerYoubeng();
-//                            }
-//                        }
-//                    } else {
-//                        if (youbeng_state.equals("2")) {
-//                            dismissProgressDialog();
-//                            time = 0;
-//                        } else {
-//                            if (time >= 60) {
-//                                youbengIson = true;
-//                                showZhiling();
-//                            } else {
-//                                if (time == 4 || time == 24 || time == 44) {
-//                                    getNs();
-//                                }
-//                                initHandlerYoubeng();
-//                            }
-//                        }
-//                    }
-
                     if (youbengIsdianhou != youbengIson) {
-                        if (time >= 60) {
+                        if (time >= 30) {
                             youbengIsdianhou = !youbengIsdianhou;
                             showZhiling();
                         } else {
-                            if (time == 4 || time == 24 || time == 44) {
+                            if (time == 5 || time == 10 || time == 15 || time == 20 || time == 25) {
                                 getNs();
                             }
                             initHandlerYoubeng();
@@ -788,15 +783,14 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                         dismissProgressDialog();
                         time = 0;
                     }
-                    Y.i("油泵的计时是多少啊啊啊" + time);
                     break;
             }
-            super.handleMessage(msg);
+            Y.e(msg.what + "  的时间时多少啊  " + time);
+            return false;
         }
-    };
+    });
 
-    private void showTishiDialog(String msg) {
-        tv_zaixian.setText("离线");
+    private void showTishiDialog() {
         isZaixian = false;
         time = 0;
         dismissProgressDialog();
@@ -816,50 +810,50 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
 
             }
         });
-        tishiDialog.setTextTitle("提示");
-        tishiDialog.setTextContent(msg);
+        tishiDialog.setTextTitle("提示：网络信号异常");
+        tishiDialog.setTextContent("请检查设备情况。1:设备是否接通电源 2:设备信号灯是否闪烁 3:设备是否有损坏 4:手机是否开启网络，如已确认以上问题，请重新尝试。");
         tishiDialog.setTextConfirm("重试");
-        tishiDialog.setTextCancel("关闭");
+        tishiDialog.setTextCancel("忽略");
         tishiDialog.show();
     }
 
     private void showZhiling() {
-        tv_zaixian.setText("离线");
-        time = 0;
-        dismissProgressDialog();
-        isZaixian = false;
-        TishiDialog tishiDialog = new TishiDialog(mContext, TishiDialog.TYPE_CAOZUO, new TishiDialog.TishiDialogListener() {
-            @Override
-            public void onClickCancel(View v, TishiDialog dialog) {
-
-            }
-
-            @Override
-            public void onClickConfirm(View v, TishiDialog dialog) {
-                getNs();
-
-                if (zhilingma == zhiling_kaiji) {
-                    kaiji();
-                } else if (zhilingma == zhiling_guanji) {
-                    guanji();
-                } else if (zhilingma == zhiling_shuibeng) {
-                    shuibeng();
-                } else if (zhilingma == zhiling_youbeng) {
-                    youbeng();
-                }
-            }
-
-            @Override
-            public void onDismiss(TishiDialog dialog) {
-
-            }
-        });
-
-        tishiDialog.setTextTitle("提示");
-        tishiDialog.setTextContent("指令发送失败，是否重新发送？");
-        tishiDialog.setTextConfirm("重试");
-        tishiDialog.setTextCancel("关闭");
-        tishiDialog.show();
+        showTishiDialog();
+//        time = 0;
+//        dismissProgressDialog();
+//        isZaixian = false;
+//        TishiDialog tishiDialog = new TishiDialog(mContext, TishiDialog.TYPE_CAOZUO, new TishiDialog.TishiDialogListener() {
+//            @Override
+//            public void onClickCancel(View v, TishiDialog dialog) {
+//
+//            }
+//
+//            @Override
+//            public void onClickConfirm(View v, TishiDialog dialog) {
+//                getNs();
+//
+//                if (zhilingma == zhiling_kaiji) {
+//                    kaiji();
+//                } else if (zhilingma == zhiling_guanji) {
+//                    guanji();
+//                } else if (zhilingma == zhiling_shuibeng) {
+//                    shuibeng();
+//                } else if (zhilingma == zhiling_youbeng) {
+//                    youbeng();
+//                }
+//            }
+//
+//            @Override
+//            public void onDismiss(TishiDialog dialog) {
+//
+//            }
+//        });
+//
+//        tishiDialog.setTextTitle("提示");
+//        tishiDialog.setTextContent("指令发送失败，是否重新发送？");
+//        tishiDialog.setTextConfirm("重试");
+//        tishiDialog.setTextCancel("关闭");
+//        tishiDialog.show();
     }
 
 
@@ -909,6 +903,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
         handlerStart.removeMessages(2);
         handlerStart.removeMessages(3);
         handlerStart.removeMessages(4);
+        handlerTime10.removeMessages(1);
 
         AndMqtt.getInstance().unSubscribe(new MqttUnSubscribe().setTopic(SN_Send), new IMqttActionListener() {
             @Override
@@ -950,7 +945,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     @Override
     public boolean onLongClick(View v) {
         if (!isZaixian) {
-            showTishiDialog("水暖服务器未连接，请连接服务器");
+            showTishiDialog();
             return false;
         } else {
             switch (v.getId()) {
@@ -982,7 +977,6 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
 
         showProgressDialog("发送指令中...");
         initHandlerYoubeng();
-        zhilingma = zhiling_youbeng;
         if (youbeng_state.equals("1")) {
             youbengIsdianhou = false;
             String data = "M_s052.";
@@ -1033,7 +1027,6 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
 
         showProgressDialog("发送指令中...");
         initHandlerShuibeng();
-        zhilingma = zhiling_shuibeng;
         if (shuibeng_state.equals("1")) {
             shoubengisdianhou = false;
             String data = "M_s022.";
@@ -1082,7 +1075,6 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
         initHandlerClick();
 
         iskaijiDianhou = false;
-        zhilingma = zhiling_guanji;
         SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_start_off);
         String data = "M_s012.";
         AndMqtt.getInstance().publish(new MqttPublish()
@@ -1121,8 +1113,6 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
         initHandlerClick();
 
         iskaijiDianhou = true;
-        zhilingma = zhiling_kaiji;
-
         String data = "M_s011000080.";
         SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_start_on);
         AndMqtt.getInstance().publish(new MqttPublish()
@@ -1139,12 +1129,5 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
 
             }
         });
-    }
-
-
-    public static String getTime(long seconds) {
-        String format = "HH:mm:ss";
-        SimpleDateFormat sdf = new SimpleDateFormat(format);
-        return sdf.format(new Date(seconds));
     }
 }

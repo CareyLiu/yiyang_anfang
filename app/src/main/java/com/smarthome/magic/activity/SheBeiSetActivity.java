@@ -7,22 +7,39 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.shuinuan.ShuinuanBaseNewActivity;
 import com.smarthome.magic.activity.shuinuan.ShuinuanHostNewActivity;
 import com.smarthome.magic.activity.shuinuan.ShuinuanZhuangtaiActivity;
+import com.smarthome.magic.activity.shuinuan.Y;
+import com.smarthome.magic.activity.shuinuan.gongxiang.GongxiangActivity;
+import com.smarthome.magic.activity.shuinuan.gongxiang.GongxiangModel;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.RxBus;
+import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
+import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
+import com.smarthome.magic.get_net.Urls;
 
+
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-public class SheBeiSetActivity extends BaseActivity {
+public class SheBeiSetActivity extends ShuinuanBaseNewActivity {
     @BindView(R.id.rl_dingshi)
     RelativeLayout rlDingshi;
     @BindView(R.id.rl_jiareqicanshu)
@@ -37,6 +54,10 @@ public class SheBeiSetActivity extends BaseActivity {
     TextView tvShebeima;
     @BindView(R.id.rl_zhujicanshu)
     RelativeLayout rlZhujicanshu;
+    @BindView(R.id.rl_gongxiang)
+    RelativeLayout rlGongxiang;
+    @BindView(R.id.rl_gongxiang_jie)
+    RelativeLayout rlGongxiangJie;
     private String ccid;
 
     public static final int TYPE_FENGNUAN = 1;
@@ -58,6 +79,16 @@ public class SheBeiSetActivity extends BaseActivity {
             rlZhujicanshu.setVisibility(View.GONE);
         }
 
+        String share_type = PreferenceHelper.getInstance(mContext).getString("share_type", "");
+        if (share_type.equals("2")) {
+            rlGongxiang.setVisibility(View.GONE);
+            rlJiebangshebei.setVisibility(View.GONE);
+            rlGongxiangJie.setVisibility(View.VISIBLE);
+        } else {
+            rlGongxiang.setVisibility(View.VISIBLE);
+            rlJiebangshebei.setVisibility(View.VISIBLE);
+            rlGongxiangJie.setVisibility(View.GONE);
+        }
 
         ccid = PreferenceHelper.getInstance(this).getString("ccid", "");
         tvShebeima.setText(ccid);
@@ -111,6 +142,71 @@ public class SheBeiSetActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 ShuinuanHostNewActivity.actionStart(mContext);
+            }
+        });
+
+        rlGongxiang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GongxiangActivity.actionStart(mContext, ccid);
+            }
+        });
+
+        rlGongxiangJie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TishiDialog dialog = new TishiDialog(mContext, TishiDialog.TYPE_CAOZUO, new TishiDialog.TishiDialogListener() {
+                    @Override
+                    public void onClickCancel(View v, TishiDialog dialog) {
+
+                    }
+
+                    @Override
+                    public void onClickConfirm(View v, TishiDialog dialog) {
+                        Map<String, String> map = new HashMap<>();
+                        map.put("code", "03514");
+                        map.put("key", Urls.key);
+                        map.put("token", UserManager.getManager(mContext).getAppToken());
+                        map.put("ccid", ccid);
+                        Gson gson = new Gson();
+                        OkGo.<AppResponse<GongxiangModel.DataBean>>post(Urls.SERVER_URL + "wit/app/user")
+                                .tag(this)//
+                                .upJson(gson.toJson(map))
+                                .execute(new JsonCallback<AppResponse<GongxiangModel.DataBean>>() {
+                                    @Override
+                                    public void onSuccess(final Response<AppResponse<GongxiangModel.DataBean>> response) {
+                                        Y.t("退出成功");
+                                        Notice n = new Notice();
+                                        n.type = ConstanceValue.MSG_JIEBANG;
+                                        RxBus.getDefault().sendRx(n);
+                                    }
+
+                                    @Override
+                                    public void onError(Response<AppResponse<GongxiangModel.DataBean>> response) {
+                                        Y.tError(response);
+                                    }
+
+                                    @Override
+                                    public void onFinish() {
+                                        super.onFinish();
+                                        dismissProgressDialog();
+                                    }
+
+                                    @Override
+                                    public void onStart(Request<AppResponse<GongxiangModel.DataBean>, ? extends Request> request) {
+                                        super.onStart(request);
+                                        showProgressDialog();
+                                    }
+                                });
+                    }
+
+                    @Override
+                    public void onDismiss(TishiDialog dialog) {
+
+                    }
+                });
+                dialog.setTextContent("是否退出该共享设备");
+                dialog.show();
             }
         });
     }

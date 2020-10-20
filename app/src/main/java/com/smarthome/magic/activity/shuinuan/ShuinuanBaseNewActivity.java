@@ -22,26 +22,6 @@ public class ShuinuanBaseNewActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
     }
 
-    public void chenggong() {
-        TishiDialog dialog = new TishiDialog(mContext, TishiDialog.TYPE_SUCESS, new TishiDialog.TishiDialogListener() {
-            @Override
-            public void onClickCancel(View v, TishiDialog dialog) {
-
-            }
-
-            @Override
-            public void onClickConfirm(View v, TishiDialog dialog) {
-
-            }
-
-            @Override
-            public void onDismiss(TishiDialog dialog) {
-
-            }
-        });
-        dialog.show();
-    }
-
     private LordingDialog lordingDialog;
 
     public void showProgressDialog() {

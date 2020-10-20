@@ -71,8 +71,6 @@ import static com.smarthome.magic.config.MyApplication.CAR_NOTIFY;
 import static com.smarthome.magic.config.MyApplication.getAppContext;
 
 
-
-
 public class FengNuanActivity extends BaseActivity implements View.OnLongClickListener {
     ProgressDialog waitDialog;
     @BindView(R.id.iv_kaiji)

@@ -300,7 +300,7 @@ dependencies {
     //3D地图so及jar
     implementation 'com.amap.api:map2d:latest.integration'
 
-    implementation 'com.blankj:utilcode:1.22.10'
+    implementation 'com.blankj:utilcode:1.29.0'
     implementation 'com.orhanobut:logger:2.2.0'
 
     implementation 'cn.jiguang.sdk:jpush:3.7.0'  // 此处以JPush 3.7.0 版本为例。

@@ -26,12 +26,14 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.DefaultX5WebView_HaveNameActivity;
 import com.smarthome.magic.adapter.xin_tuanyou.KMAdapter;
 import com.smarthome.magic.adapter.xin_tuanyou.PaiXuAdapter;
 import com.smarthome.magic.adapter.xin_tuanyou.PinPaiAdapter;
 import com.smarthome.magic.adapter.xin_tuanyou.XinTuanYouHomeListAdapter;
 import com.smarthome.magic.adapter.xin_tuanyou.YouHaoAdapter;
 import com.smarthome.magic.app.App;
+import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
@@ -39,6 +41,7 @@ import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 
 import com.smarthome.magic.config.PreferenceHelper;
+import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.JiaYouFirstModel;
 import com.smarthome.magic.model.OilArrayBean;
@@ -210,7 +213,9 @@ public class TuanYouList extends BaseActivity {
         ivOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIHelper.ToastMessage(TuanYouList.this, "订单页面");
+                //UIHelper.ToastMessage(TuanYouList.this, "订单页面");
+                String url = "https://shop.hljsdkj.com/bdjy/orderList?token="+ UserManager.getManager(TuanYouList.this).getAppToken();
+                DefaultX5WebView_HaveNameActivity.actionStart(TuanYouList.this,url,"加油订单");
             }
         });
 

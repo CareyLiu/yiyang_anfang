@@ -626,8 +626,7 @@ public class YouZhanDetailsActivity extends BaseActivity {
         } else {// 未安装
             Toast.makeText(YouZhanDetailsActivity.this, "您尚未安装百度地图", Toast.LENGTH_LONG)
                     .show();
-            Uri uri = Uri
-                    .parse("market://details?id=com.baidu.BaiduMap");
+            Uri uri = Uri.parse("market://details?id=com.baidu.BaiduMap");
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             YouZhanDetailsActivity.this.startActivity(intent);
         }

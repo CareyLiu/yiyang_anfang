@@ -1,11 +1,8 @@
 package com.smarthome.magic.activity.gaiban;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,8 +25,6 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.location.AMapLocationQualityReport;
-import com.amap.api.maps.CoordinateConverter;
-import com.amap.api.maps.model.LatLng;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
@@ -46,6 +41,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.zckt.AirConditionerActivity;
 import com.smarthome.magic.activity.DefaultX5WebView_HaveNameActivity;
 import com.smarthome.magic.activity.SheBeiLieBiaoActivity;
 import com.smarthome.magic.activity.TuanYouWebView;
@@ -86,7 +82,6 @@ import com.smarthome.magic.model.TuiGuangMaModel;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.GlideShowImageUtils;
 import com.smarthome.magic.util.GridAverageUIDecoration;
-import com.smarthome.magic.util.OpenLocalMapUtil;
 import com.smarthome.magic.util.Utils;
 import com.smarthome.magic.view.ObservableScrollView;
 import com.tbruyelle.rxpermissions.RxPermissions;
@@ -162,11 +157,6 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
 
     ImageView ziYingZhiGon;
     ImageView reMenShangPin;
-    ImageView ivJd;
-    LocationManager locationManager;
-    ProgressDialog progressDialog;
-
-
     ConstraintLayout ll_shagnchengzhuanqu;
 
     private String rimenOrZiYing = "0"; //0 自营直供 1 热门商品
@@ -179,115 +169,11 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         //初始化定位
         initLocation();
         startLocation();
-
-
-        LatLng latLng = new LatLng(45.662479, 126.611618);//2.5KM
-        //LatLng latLng = new LatLng(45.666843, 126.609619);  //146米
-        //LatLng latLng = new LatLng(45.662479, 126.611618);//2.5KM
-        //LatLng latLng = new LatLng(45.667294, 126.614937);//300米
-//        CoordinateConverter converter = new CoordinateConverter(getActivity());
-//// CoordType.GPS 待转换坐标类型
-//        converter.from(CoordinateConverter.CoordType.GPS);
-//// 转换
-//        converter.coord(latLng);
-//// 获取转换之后的高德坐标
-//        LatLng result = converter.convert();
-//
-//        Log.i("result_location", result.latitude + "");
-//        Log.i("result_location", result.longitude + "");
-
-        //高德地图
-
-
-//        UIHelper.ToastMessage(getActivity(), "即将为您打开高德地图", Toast.LENGTH_SHORT);
-//        //起点
-//        String qiDianLo = PreferenceHelper.getInstance(getActivity()).getString(JINGDU, "0X11");
-//        String qiDianLa = PreferenceHelper.getInstance(getActivity()).getString(WEIDU, "0X11");
-//        String uri = OpenLocalMapUtil.getGdMapUri("聚易佳", String.valueOf(qiDianLa), String.valueOf(qiDianLo),
-//                "当前位置", String.valueOf(latLng.latitude), String.valueOf(latLng.longitude), "");
-//        Intent intent = new Intent(Intent.ACTION_VIEW);
-//        intent.setPackage("com.autonavi.minimap");
-//        intent.setData(Uri.parse(uri));
-//        getActivity().startActivity(intent); //启动调用
     }
-//
-//    public void getNet_check() {
-//
-//        Map<String, String> map = new HashMap<>();
-//        map.put("code", "00002");
-//        map.put("key", Urls.key);
-//        map.put("version_no", getAppVersionName(getActivity()));
-//        map.put("version_type", "6");
-//        map.put("version_code", getAppVersionCode(getActivity()));
-//        Gson gson = new Gson();
-//        OkGo.<AppResponse<CheckModel.DataBean>>post("https://jy.hljsdkj.com/msg")
-//                .tag(this)//
-//                .upJson(gson.toJson(map))
-//                .execute(new JsonCallback<AppResponse<CheckModel.DataBean>>() {
-//                    @Override
-//                    public void onSuccess(final Response<AppResponse<CheckModel.DataBean>> response) {
-//                        /**
-//                         * update : Yes
-//                         * new_version : xxxxx
-//                         * apk_url : http://cdn.the.url.of.apk/or/patch
-//                         * update_log : xxxx
-//                         * delta : false
-//                         * new_md5 : xxxxxxxxxxxxxx
-//                         * target_size : 601132
-//                         */
-//
-//                        Log.i("check_up", new Gson().toJson(response.body()));
-//
-//                        if (response.body().data.get(0).getIsnew().equals("2")) {
-//                            UpdateManager.getUpdateManager().checkAppUpdate(getActivity(), false, response.body().data.get(0));
-//
-//                        }
-//
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Response<AppResponse<CheckModel.DataBean>> response) {
-//                        AlertUtil.t(getActivity(), response.getException().getMessage());
-//                    }
-//                });
-//    }
-
-
-//    private String getAppVersionName(Context context) {
-//        String versionName = "";
-//        try {
-//            PackageManager packageManager = context.getPackageManager();
-//            PackageInfo packageInfo = packageManager.getPackageInfo("com.smarthome.magic", 0);
-//            versionName = packageInfo.versionName;
-//            if (TextUtils.isEmpty(versionName)) {
-//                return "";
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return versionName;
-//    }
-//
-//    private String getAppVersionCode(Context context) {
-//        String versionName = "";
-//        try {
-//            PackageManager packageManager = context.getPackageManager();
-//            PackageInfo packageInfo = packageManager.getPackageInfo("com.smarthome.magic", 0);
-//            versionName = String.valueOf(packageInfo.versionCode);
-//            if (TextUtils.isEmpty(versionName)) {
-//                return "";
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return versionName;
-//    }
 
     SmartRefreshLayout smartRefreshLayout;
     ObservableScrollView nestedScrollView;
     RelativeLayout rl_bottom;
-
 
     RecyclerView rlv_ziYing;
     HomeZiYingAdapter homeZiYingAdapter;
@@ -309,7 +195,6 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
 
     @Override
     protected void initView(View view) {
-
         nestedScrollView = view.findViewById(R.id.scrollView);
         topPanel = view.findViewById(R.id.topPanel);
         middlePanel = view.findViewById(R.id.middlePanel);
@@ -564,24 +449,15 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                          */
                         Home.DataBean.IntellectListBean intellectListBean = (Home.DataBean.IntellectListBean) adapter.getData().get(position);
                         if (intellectListBean.getId().equals("1")) {
-                            //UIHelper.ToastMessage(getActivity(), "开发中,敬请期待");
                             Notice n = new Notice();
                             n.type = ConstanceValue.MSG_ZHINENGJIAJU;
                             RxBus.getDefault().sendRx(n);
                         } else if (intellectListBean.getId().equals("2")) {
-
-                            //  PreferenceHelper.getInstance(getActivity()).putString("ccid", "aaaaaaaaaaaaaaaa90070018");
                             SheBeiLieBiaoActivity.actionStart(getActivity(), "1");
-                            //FengNuanActivity.actionStart(getActivity());
-                            // startActivity(new Intent(getActivity(), CarListActivity.class).putExtra("type", "wind"));
-
                         } else if (intellectListBean.getId().equals("3")) {
                             SheBeiLieBiaoActivity.actionStart(getActivity(), "6");
-//                            startActivity(new Intent(getActivity(), PlumbingHeaterActivity.class));
-//                            ShuinuanMainActivity.actionStart(getContext(), "", "");
                         } else if (intellectListBean.getId().equals("4")) {//空调
-                            SheBeiLieBiaoActivity.actionStart(getActivity(), intellectListBean.device_type);
-                            // startActivity(new Intent(getActivity(), AirConditionerActivity.class));
+                            SheBeiLieBiaoActivity.actionStart(getActivity(), "5");
                         } else if (intellectListBean.getId().equals("5")) {//神灯控车
                             UIHelper.ToastMessage(getActivity(), "开发中,敬请期待");
                         }
@@ -607,36 +483,22 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                             String jingdu = PreferenceHelper.getInstance(getActivity()).getString(JINGDU, "0X11");
                             String weidu = PreferenceHelper.getInstance(getActivity()).getString(WEIDU, "0X11");
                             if (!jingdu.equals("0X11")) {
-                                String str = chiHeWanLeListAdapter.getData().get(position).getHref_url() + "?i=" + JiaMiToken +
-                                        "&" + "gps_x=" + weidu + "&" + "gps_y=" + jingdu;
+                                String str = chiHeWanLeListAdapter.getData().get(position).getHref_url() + "?i=" + JiaMiToken + "&" + "gps_x=" + weidu + "&" + "gps_y=" + jingdu;
                                 TuanYouWebView.actionStart(getActivity(), str);
-                                Log.i("loadUrl", "tuanyou address" + str);
-
                             } else {
                                 choosePostion = position;
                                 if (chiHeWanLeListAdapter.getData().get(position).getId().equals("6")) {
-                                    String str = chiHeWanLeListAdapter.getData().get(position).getHref_url() + "?i=" + JiaMiToken +
-                                            "&" + "gps_x=45.666043" + "&" + "gps_y=126.605713";
+                                    String str = chiHeWanLeListAdapter.getData().get(position).getHref_url() + "?i=" + JiaMiToken + "&" + "gps_x=45.666043" + "&" + "gps_y=126.605713";
                                     TuanYouWebView.actionStart(getActivity(), str);
-                                    Log.i("loadUrl", "tuanyou address" + str);
-
                                     Toast.makeText(getActivity(), "该应用需要赋予定位的权限！", Toast.LENGTH_LONG).show();
                                 }
                             }
                         } else if (chiHeWanLeListAdapter.getData().get(position).getId().equals("11")) {
-                            //               TuanGouShangJiaListActivity.actionStart(getActivity(), chiHeWanLeListAdapter.getData().get(position).getId());
-                            //UIHelper.ToastMessage(getActivity(), "开发中,敬请期待");
-
                             TuanYouList.actionStart(getActivity());
                         } else if (chiHeWanLeListAdapter.getData().get(position).getId().equals("14")) {
-                            //               TuanGouShangJiaListActivity.actionStart(getActivity(), chiHeWanLeListAdapter.getData().get(position).getId());
-                            //UIHelper.ToastMessage(getActivity(), "开发中,敬请期待");
-
                             DefaultX5WebView_HaveNameActivity.actionStart(getActivity(), chiHeWanLeListAdapter.getData().get(position).getHref_url(), chiHeWanLeListAdapter.getData().get(position).getName());
-                            //TuanYouList.actionStart(getActivity());
                         } else {
                             TuanGouShangJiaListActivity.actionStart(getActivity(), chiHeWanLeListAdapter.getData().get(position).getId());
-
                         }
                 }
             }
@@ -750,28 +612,11 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_tianmao_or_taobao:
-                //TaokeListActivity.actionStart(getActivity());
-                //     TaoKeHomeActivity.actionStart(getActivity());
                 TaoBao_Jd_PinDuoDuoActivity.actionStart(getActivity(), taobaoPicture, jingdongPicture, pinduoduoPicture);
                 break;
-            //   case R.id.wind_heater: 风暖
-            //      startActivity(new Intent(getActivity(), CarListActivity.class).putExtra("type", "wind"));
-            //      break;
-            //   case R.id.hydronic: 水暖
-            //      startActivity(new Intent(getActivity(), CarListActivity.class).putExtra("type", "plumbing"));
-            //     break;
-            // case R.id.start_engine:启动发动机
-            //      startActivity(new Intent(getActivity(), CarListActivity.class).putExtra("type", "control"));
-            //       break;
-            //   case R.id.vehicle_info://车辆信息
-            //     break;
             case R.id.iv_dalibao:
                 DaLiBaoActivity.actionStart(getActivity());
                 break;
-
-//            case R.id.iv_jd:
-//                JDWebView.actionStart(getActivity());
-//                break;
         }
     }
 
@@ -837,21 +682,13 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                             banner.setOnBannerListener(new OnBannerListener() {
                                 @Override
                                 public void OnBannerClick(int position) {
-
                                     if (response.body().data.get(0).getBannerList().get(position).getRotation_img_type().equals("1")) {
-
-
                                         ZiJianShopMallDetailsActivity.actionStart(getActivity(), response.body().data.get(0).getBannerList().get(position).getShop_product_id(), response.body().data.get(0).getBannerList().get(position).getWares_id());
-
                                     } else if (response.body().data.get(0).getBannerList().get(position).getRotation_img_type().equals("2")) {
                                         startActivity(new Intent(getActivity(), WebViewActivity.class).putExtra("url", response.body().data.get(0).getBannerList().get(position).getHtml_url()));
-
                                     } else if (response.body().data.get(0).getBannerList().get(position).getRotation_img_type().equals("3")) {
-
                                         DaLiBaoActivity.actionStart(getActivity());
-
                                     }
-
                                 }
                             });
                         }

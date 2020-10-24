@@ -190,9 +190,19 @@ public class DoMqttValue {
                 shuiNuan(topic, message);
                 break;
             case KONGTIAO:
+                kongtiao(topic, message);
                 break;
             case KONGCHE:
                 break;
+        }
+    }
+
+    private void kongtiao(String topic, String message) {
+        if (topic.contains("zckt")) {
+            Notice n = new Notice();
+            n.type = ConstanceValue.MSG_ZCKT;
+            n.content = message.toString();
+            RxBus.getDefault().sendRx(n);
         }
     }
 

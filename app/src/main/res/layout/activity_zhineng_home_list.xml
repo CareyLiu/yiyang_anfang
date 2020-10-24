@@ -7,7 +7,7 @@
     android:background="@mipmap/img_change_family"
     android:descendantFocusability="blocksDescendants"
     android:orientation="vertical"
-    tools:context=".activity.AirConditionerActivity">
+    tools:context=".activity.zckt.AirConditionerActivity">
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/srL_smart"

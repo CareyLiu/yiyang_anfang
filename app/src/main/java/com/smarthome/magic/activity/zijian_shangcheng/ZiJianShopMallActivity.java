@@ -209,10 +209,7 @@ public class ZiJianShopMallActivity extends BaseActivity implements ZiJianHomeIn
             banner.setOnBannerListener(new OnBannerListener() {
                 @Override
                 public void OnBannerClick(int position) {
-                   // startActivity(new Intent(ZiJianShopMallActivity.this, WebViewActivity.class).putExtra("url", response.body().data.get(0).getBannerList().get(position).getHtml_url()));
-                  //  DefaultX5WebViewActivity.actionStart(ZiJianShopMallActivity.this, response.body().data.get(0).getBannerList().get(position).getHtml_url());
                     startActivity(new Intent(ZiJianShopMallActivity.this, WebViewActivity.class).putExtra("url", response.body().data.get(0).getBannerList().get(position).getHtml_url()));
-
                 }
             });
         }
@@ -226,7 +223,6 @@ public class ZiJianShopMallActivity extends BaseActivity implements ZiJianHomeIn
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvcList.setLayoutManager(gridLayoutManager);
-
 
         //  taoKeListAdapter = new TaoKeListAdapter(R.layout.layout_taokeshop, dataBeanList);
         ziJian_headerAdapter.openLoadAnimation();//默认为渐显效果

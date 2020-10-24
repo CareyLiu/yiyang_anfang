@@ -87,6 +87,7 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
                                 Log.i("serverId", str);
                                 PreferenceHelper.getInstance(mContext).putString("car_server_id", str + "/");
                                 PreferenceHelper.getInstance(mContext).putString("ccid", mDatas.get(position).ccid);
+                                PreferenceHelper.getInstance(mContext).putString("share_type", mDatas.get(position).share_type);
                                 Log.i("getnow", MyApplication.CARBOX_GETNOW);
                                 if (NetworkUtils.isConnected(mContext)) {
                                     Activity currentActivity = AppManager.getAppManager().currentActivity();
@@ -102,6 +103,7 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
                                 String count = String.valueOf(ccid.charAt(pos)) + "/";
                                 PreferenceHelper.getInstance(mContext).putString("ccid", mDatas.get(position).ccid);
                                 PreferenceHelper.getInstance(mContext).putString("car_server_id", count);
+                                PreferenceHelper.getInstance(mContext).putString("share_type", mDatas.get(position).share_type);
                                 if (NetworkUtils.isConnected(mContext)) {
                                     Activity currentActivity = AppManager.getAppManager().currentActivity();
                                     if (currentActivity != null) {
@@ -113,6 +115,7 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
                             }else if (mDatas.get(position).device_type.equals("5")) {
                                 String ccid = mDatas.get(position).ccid;
                                 PreferenceHelper.getInstance(mContext).putString("ccid", mDatas.get(position).ccid);
+                                PreferenceHelper.getInstance(mContext).putString("share_type", mDatas.get(position).share_type);
                                 if (NetworkUtils.isConnected(mContext)) {
                                     Activity currentActivity = AppManager.getAppManager().currentActivity();
                                     if (currentActivity != null) {

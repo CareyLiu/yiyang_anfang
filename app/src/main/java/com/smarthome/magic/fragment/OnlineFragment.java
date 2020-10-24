@@ -124,8 +124,9 @@ public class OnlineFragment extends BaseFragment implements Observer {
                                 String str = String.valueOf(mDatas.get(position).ccid.charAt(i));
                                 Log.i("serverId", str);
                                 PreferenceHelper.getInstance(getActivity()).putString("car_server_id", str + "/");
-
+                                PreferenceHelper.getInstance(getContext()).putString("share_type", mDatas.get(position).share_type);
                                 PreferenceHelper.getInstance(getActivity()).putString("ccid", mDatas.get(position).ccid);
+                                PreferenceHelper.getInstance(getContext()).putString("share_type", mDatas.get(position).share_type);
                                 MyApplication.CARBOX_GETNOW = "wit/cbox/app/" + getServer_id() + mDatas.get(position).ccid;
 
                                 if (NetworkUtils.isConnected(getActivity())) {
@@ -142,6 +143,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
                                 String count = String.valueOf(ccid.charAt(pos)) + "/";
                                 PreferenceHelper.getInstance(getContext()).putString("ccid", mDatas.get(position).ccid);
                                 PreferenceHelper.getInstance(getContext()).putString("car_server_id", count);
+                                PreferenceHelper.getInstance(getContext()).putString("share_type", mDatas.get(position).share_type);
                                 if (NetworkUtils.isConnected(getActivity())) {
                                     Activity currentActivity = AppManager.getAppManager().currentActivity();
                                     if (currentActivity != null) {
@@ -153,6 +155,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
                             } else if (mDatas.get(position).device_type.equals("5")) {
                                 String ccid = mDatas.get(position).ccid;
                                 PreferenceHelper.getInstance(getContext()).putString("ccid", mDatas.get(position).ccid);
+                                PreferenceHelper.getInstance(getContext()).putString("share_type", mDatas.get(position).share_type);
                                 if (NetworkUtils.isConnected(getActivity())) {
                                     Activity currentActivity = AppManager.getAppManager().currentActivity();
                                     if (currentActivity != null) {

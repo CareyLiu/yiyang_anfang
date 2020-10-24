@@ -150,6 +150,8 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
         viewPagerAdapter = new NewsFragmentPagerAdapter(getActivity().getSupportFragmentManager(), fragmentList);
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setCurrentItem(0);
+
+        initData();
     }
 
     private void initMagicIndicator() {
@@ -201,7 +203,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
         ll_checkhome.setOnClickListener(this);
         initViewpager();
         initMagicIndicator();
-        initData();
+
 
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override

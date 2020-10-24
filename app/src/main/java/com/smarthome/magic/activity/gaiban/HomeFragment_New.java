@@ -708,10 +708,10 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
 
                         if (!response.body().data.get(0).getBuy_state().equals("1")) {
                             ivDaLiBao.setVisibility(View.GONE);
-                            ll_shagnchengzhuanqu.setVisibility(View.VISIBLE);
+//                            ll_shagnchengzhuanqu.setVisibility(View.VISIBLE);
                             animationView.setVisibility(View.GONE);
                         } else {
-                            ll_shagnchengzhuanqu.setVisibility(View.GONE);
+                            //   ll_shagnchengzhuanqu.setVisibility(View.GONE);
                             ivDaLiBao.setVisibility(View.VISIBLE);
                             animationView.setVisibility(View.VISIBLE);
                         }
@@ -722,7 +722,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                         Glide.with(getActivity()).applyDefaultRequestOptions(GlideShowImageUtils.showBannerCelve()).load(response.body().data.get(0).getGift_img()).into(ivDaLiBao);
 
 
-                        Glide.with(getActivity()).applyDefaultRequestOptions(options).load(response.body().data.get(0).getWaresTypeList().get(0).getImg_url()).into(ivZiJian);
+                      //  Glide.with(getActivity()).applyDefaultRequestOptions(options).load(response.body().data.get(0).getWaresTypeList().get(0).getImg_url()).into(ivZiJian);
 
 
                         Glide.with(getActivity()).applyDefaultRequestOptions(options).load(response.body().data.get(0).getWaresTypeList().get(1).getImg_url()).into(ziYingZhiGon);
@@ -731,7 +731,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                         //   Glide.with(getActivity()).load(response.body().data.get(0).getTao_shop_img()).into(tianMaoOrTaoBao);
                         //     Glide.with(getActivity()).load(response.body().data.get(0).getJindong_shop_img()).into(ivJd);
 
-                        Glide.with(getActivity()).applyDefaultRequestOptions(GlideShowImageUtils.showZhengFangXing()).load(response.body().data.get(0).getWaresTypeList().get(2).getImg_url()).into(tianMaoOrTaoBao);
+                      //  Glide.with(getActivity()).applyDefaultRequestOptions(GlideShowImageUtils.showZhengFangXing()).load(response.body().data.get(0).getWaresTypeList().get(2).getImg_url()).into(tianMaoOrTaoBao);
 //                        tianMaoOrTaoBao.setOnClickListener(new View.OnClickListener() {
 //                            @Override
 //                            public void onClick(View v) {

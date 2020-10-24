@@ -248,6 +248,7 @@ public class TuanYouList extends BaseActivity {
         }
 
         kmAdapter = new KMAdapter(R.layout.item_km, diatance_list);
+
         rlvKmList.setLayoutManager(new GridLayoutManager(this, 4));
         //rlvKmList.addItemDecoration(new FourLieDecoration(this));
         rlvKmList.addItemDecoration(new GridSectionAverageUItemDecoration(10, 0, 20, 15));

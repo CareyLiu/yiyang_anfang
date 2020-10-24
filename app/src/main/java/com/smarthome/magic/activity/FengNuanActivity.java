@@ -17,20 +17,19 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
-import com.googlecode.mp4parser.boxes.mp4.objectdescriptors.AudioSpecificConfig;
 import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
 import com.rairmmd.andmqtt.MqttSubscribe;
 import com.rairmmd.andmqtt.MqttUnSubscribe;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.DiagnosisActivity;
-import com.smarthome.magic.activity.FengnuandishiActivity;
-import com.smarthome.magic.activity.SheBeiSetActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.AppManager;
@@ -48,12 +47,10 @@ import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.util.DoMqttValue;
 import com.smarthome.magic.util.SoundPoolUtils;
 
-
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 
 import java.math.BigDecimal;
-import java.util.WeakHashMap;
 
 import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
@@ -135,6 +132,8 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
     TextView tvDaqiya;
     @BindView(R.id.iv_shezhi)
     ImageView ivShezhi;
+    @BindView(R.id.smartRefreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
     private LordingDialog lordingDialog;
     public String car_server_id;
     public String ccid;
@@ -507,8 +506,31 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
             }
         });
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                if (!AndMqtt.getInstance().isConneect()) {
+                    UIHelper.ToastMessage(mContext, "请检查网络后重新尝试");
+                    return;
+                }
+                AndMqtt.getInstance().publish(new MqttPublish()
+                        .setMsg("N.")
+                        .setQos(2)
+                        .setTopic(CAR_CTROL)
+                        .setRetained(false), new IMqttActionListener() {
+                    @Override
+                    public void onSuccess(IMqttToken asyncActionToken) {
+                        //Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功" + " N9 我是在类里面订阅的");
+                        Log.i("xunhuancishu", "循环发送第" + xunHuanCiShu + "次");
+                    }
 
-
+                    @Override
+                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                        //Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+                    }
+                });
+            }
+        });
     }
 
     boolean flag = true;
@@ -554,7 +576,15 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                         }
                     }
                 } else if (message.type == ConstanceValue.MSG_CAR_J_M) {
+                    if (smartRefreshLayout!=null){
+                        smartRefreshLayout.finishRefresh();
+                    }
 
+                    if (lordingDialog!=null){
+                        if (lordingDialog.isShowing()){
+                            lordingDialog.dismiss();
+                        }
+                    }
                     if (flag) {
 
                         if (simKaIdFlag.equals("2")) {

@@ -9,7 +9,6 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -19,6 +18,9 @@ import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
 import com.rairmmd.andmqtt.MqttSubscribe;
 import com.rairmmd.andmqtt.MqttUnSubscribe;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.SheBeiSetActivity;
 import com.smarthome.magic.activity.shuinuan.dialog.GuzhangDialog;
@@ -101,6 +103,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     @BindView(R.id.iv_heater_host)
     ImageView iv_heater_host;
 
+    private SmartRefreshLayout smartRefreshLayout;
     private String sn_state;     //水暖状态
     private String yushewendu;      //预设温度
     private boolean isKaiji;
@@ -180,6 +183,20 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
         initCcid();
         initHuidiao();
         registerKtMqtt();
+        initSM();
+    }
+
+    private void initSM() {
+        smartRefreshLayout = findViewById(R.id.smartRefreshLayout);
+        smartRefreshLayout.setEnableLoadMore(false);
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                isZaixian = false;
+                registerKtMqtt();
+                smartRefreshLayout.finishRefresh();
+            }
+        });
     }
 
     private void init() {
@@ -404,10 +421,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
 
             }
         } else if (msg.contains("g_s.")) {
-            if (!isZaixian) {
-                isZaixian = true;
-                iv_xinhao.setImageResource(R.mipmap.fengnuan_icon_signal1);
-            }
+            isZaixian = true;
         } else if (msg.contains("r_s")) {
             String dianya = msg.substring(3, 4);//电压	0.正常1.过高2.过低3.故障
             String youbeng = msg.substring(4, 5);//油泵	0.正常1.开路2.短路3.故障

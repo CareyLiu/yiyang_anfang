@@ -117,4 +117,6 @@ public interface ConstanceValue {
     int MSG_RONGYUN_CHONGZHI = 0x10082;//重置融云
 
     int MSG_GONGXIANG_PEOPLE = 0x10083;//共享成员
+
+    int MSG_ZCKT = 0x10084;//空调
 }

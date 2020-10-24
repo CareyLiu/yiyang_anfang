@@ -21,6 +21,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.BindBoxActivity;
 import com.smarthome.magic.activity.FengNuanActivity;
 import com.smarthome.magic.activity.shuinuan.ShuinuanMainActivity;
+import com.smarthome.magic.activity.zckt.AirConditionerActivity;
 import com.smarthome.magic.adapter.CarList1Adapter;
 import com.smarthome.magic.adapter.SheBeiListAdapter;
 import com.smarthome.magic.app.AppManager;
@@ -130,7 +131,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
                                 if (NetworkUtils.isConnected(getActivity())) {
                                     Activity currentActivity = AppManager.getAppManager().currentActivity();
                                     if (currentActivity != null) {
-                                        FengNuanActivity.actionStart(getActivity(),mDatas.get(position).sim_ccid_save_type);
+                                        FengNuanActivity.actionStart(getActivity(), mDatas.get(position).sim_ccid_save_type);
                                     }
                                 } else {
                                     UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
@@ -144,7 +145,18 @@ public class OnlineFragment extends BaseFragment implements Observer {
                                 if (NetworkUtils.isConnected(getActivity())) {
                                     Activity currentActivity = AppManager.getAppManager().currentActivity();
                                     if (currentActivity != null) {
-                                        ShuinuanMainActivity.actionStart(getActivity(), ccid, count,mDatas.get(pos).validity_time);
+                                        ShuinuanMainActivity.actionStart(getActivity(), ccid, count, mDatas.get(pos).validity_time);
+                                    }
+                                } else {
+                                    UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
+                                }
+                            } else if (mDatas.get(position).device_type.equals("5")) {
+                                String ccid = mDatas.get(position).ccid;
+                                PreferenceHelper.getInstance(getContext()).putString("ccid", mDatas.get(position).ccid);
+                                if (NetworkUtils.isConnected(getActivity())) {
+                                    Activity currentActivity = AppManager.getAppManager().currentActivity();
+                                    if (currentActivity != null) {
+                                        AirConditionerActivity.actionStart(getActivity(), ccid);
                                     }
                                 } else {
                                     UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");

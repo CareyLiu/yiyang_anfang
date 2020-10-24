@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -511,7 +513,6 @@ public class TuanYouList extends BaseActivity {
                 }
             }
         });
-
     }
 
     @Override
@@ -544,11 +545,10 @@ public class TuanYouList extends BaseActivity {
                     case R.id.constrain:
                         YouZhanDetailsActivity.actionStart(TuanYouList.this, xinTuanYouHomeListAdapter.getData().get(position).getInst_id(), oil_list.get(position).getOilType(), oil_list.get(position).getOilNo(), oil_list.get(position).getDistance());
                         break;
-
                     case R.id.iv_daohang:
-
-                        checkGaodeMap(PreferenceHelper.getInstance(TuanYouList.this).getString(App.JINGDU, "0"),
-                                PreferenceHelper.getInstance(TuanYouList.this).getString(App.WEIDU, "0"), xinTuanYouHomeListAdapter.getData().get(position).getAddr());
+                        String jingdu = PreferenceHelper.getInstance(TuanYouList.this).getString(App.JINGDU, "0");
+                        String weidu = PreferenceHelper.getInstance(TuanYouList.this).getString(App.WEIDU, "0");
+                        checkGaodeMap(jingdu, weidu, xinTuanYouHomeListAdapter.getData().get(position).getAddr());
                         break;
                 }
             }

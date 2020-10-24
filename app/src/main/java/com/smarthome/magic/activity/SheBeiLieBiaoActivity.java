@@ -17,6 +17,7 @@ import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.ShuinuanMainActivity;
+import com.smarthome.magic.activity.zckt.AirConditionerActivity;
 import com.smarthome.magic.adapter.SheBeiListAdapter;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.BaseActivity;
@@ -105,6 +106,17 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
                                     Activity currentActivity = AppManager.getAppManager().currentActivity();
                                     if (currentActivity != null) {
                                         ShuinuanMainActivity.actionStart(mContext, ccid, count, mDatas.get(position).validity_time);
+                                    }
+                                } else {
+                                    UIHelper.ToastMessage(mContext, "请连接网络后重新尝试");
+                                }
+                            }else if (mDatas.get(position).device_type.equals("5")) {
+                                String ccid = mDatas.get(position).ccid;
+                                PreferenceHelper.getInstance(mContext).putString("ccid", mDatas.get(position).ccid);
+                                if (NetworkUtils.isConnected(mContext)) {
+                                    Activity currentActivity = AppManager.getAppManager().currentActivity();
+                                    if (currentActivity != null) {
+                                        AirConditionerActivity.actionStart(mContext, ccid);
                                     }
                                 } else {
                                     UIHelper.ToastMessage(mContext, "请连接网络后重新尝试");

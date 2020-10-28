@@ -99,14 +99,9 @@ public class OnlineFragment extends BaseFragment implements Observer {
     protected void initView(View view) {
         view.setClickable(true);// 防止点击穿透，底层的fragment响应上层点击触摸事件
         unbinder = ButterKnife.bind(this, view);
-
         sheBeiListAdapter = new SheBeiListAdapter(R.layout.item_shebei, R.layout.item_shebei_header, mDatas);
-
-//        carListAdapter = new CarList1Adapter(carList);
         mList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mList.setAdapter(sheBeiListAdapter);
-
-
         sheBeiListAdapter.notifyDataSetChanged();
         sheBeiListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
@@ -147,7 +142,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
                                 if (NetworkUtils.isConnected(getActivity())) {
                                     Activity currentActivity = AppManager.getAppManager().currentActivity();
                                     if (currentActivity != null) {
-                                        ShuinuanMainActivity.actionStart(getActivity(), ccid, count, mDatas.get(pos).validity_time);
+                                        ShuinuanMainActivity.actionStart(getActivity(), ccid, count, mDatas.get(position).validity_time);
                                     }
                                 } else {
                                     UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");

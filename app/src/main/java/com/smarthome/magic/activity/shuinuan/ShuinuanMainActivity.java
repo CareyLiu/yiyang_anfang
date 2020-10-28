@@ -219,6 +219,13 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
         tv_shebei_youxiaoqi.setText("有效期至:" + time);
         String car_server_id = getIntent().getStringExtra("car_server_id");
         ccid = getIntent().getStringExtra("ccid");
+//        ccid = "aaaaaaaaaaaaaa0070040018";
+//        ccid = "aaaaaaaaaaaaaa0290040018";
+//        ccid = "aaaaaaaaaaaaaa0300040018";
+//        ccid = "aaaaaaaaaaaaaa0310040018";
+//        ccid = "aaaaaaaaaaaaaa0420040018";
+//        ccid = "aaaaaaaaaaaaaa0440040018";
+//        ccid = "aaaaaaaaaaaaaa0680040018";
         SN_Send = "wh/hardware/" + car_server_id + ccid;
         SN_Accept = "wh/app/" + car_server_id + ccid;
 
@@ -248,6 +255,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     private void getData(String msg) {
         Log.e("水暖加热器返回的数据是", msg);
         if (msg.contains("j_s")) {
+            tv_zaixian.setText("在线");
             sn_state = msg.substring(3, 4);//水暖状态
             String syscTime = msg.substring(4, 7);//加热剩余时长
             //水泵状态  1.工作中2.待机中
@@ -551,35 +559,35 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                 }
             });
 
-            AndMqtt.getInstance().publish(new MqttPublish()
-                    .setMsg("Y_s.")
-                    .setQos(2).setRetained(false)
-                    .setTopic(SN_Send), new IMqttActionListener() {
-                @Override
-                public void onSuccess(IMqttToken asyncActionToken) {
-                    Y.i("查询一次经纬度");
-                }
-
-                @Override
-                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-
-                }
-            });
-
-            AndMqtt.getInstance().publish(new MqttPublish()
-                    .setMsg("Z_s.")
-                    .setQos(2).setRetained(false)
-                    .setTopic(SN_Send), new IMqttActionListener() {
-                @Override
-                public void onSuccess(IMqttToken asyncActionToken) {
-                    Y.i("查询故障/报警");
-                }
-
-                @Override
-                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-
-                }
-            });
+//            AndMqtt.getInstance().publish(new MqttPublish()
+//                    .setMsg("Y_s.")
+//                    .setQos(2).setRetained(false)
+//                    .setTopic(SN_Send), new IMqttActionListener() {
+//                @Override
+//                public void onSuccess(IMqttToken asyncActionToken) {
+//                    Y.i("查询一次经纬度");
+//                }
+//
+//                @Override
+//                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+//
+//                }
+//            });
+//
+//                    AndMqtt.getInstance().publish(new MqttPublish()
+//                            .setMsg("Z_s.")
+//                            .setQos(2).setRetained(false)
+//                            .setTopic(SN_Send), new IMqttActionListener() {
+//                        @Override
+//                        public void onSuccess(IMqttToken asyncActionToken) {
+//                            Y.i("查询故障/报警");
+//                        }
+//
+//                        @Override
+//                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+//
+//                }
+//            });
 
 
             if (msg.length() != 58) {

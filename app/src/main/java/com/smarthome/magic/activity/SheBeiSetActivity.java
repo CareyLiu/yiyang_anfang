@@ -62,6 +62,7 @@ public class SheBeiSetActivity extends ShuinuanBaseNewActivity {
 
     public static final int TYPE_FENGNUAN = 1;
     public static final int TYPE_SHUINUAN = 2;
+    public static final int TYPE_KONGTISO = 3;
     private int type;
 
 
@@ -77,6 +78,11 @@ public class SheBeiSetActivity extends ShuinuanBaseNewActivity {
         } else if (type == TYPE_FENGNUAN) {
             rlGuzhang.setVisibility(View.VISIBLE);
             rlZhujicanshu.setVisibility(View.GONE);
+        } else if (type == TYPE_KONGTISO) {
+            rlGuzhang.setVisibility(View.GONE);
+            rlZhujicanshu.setVisibility(View.GONE);
+            rlJiareqicanshu.setVisibility(View.GONE);
+            rlDingshi.setVisibility(View.GONE);
         }
 
         String share_type = PreferenceHelper.getInstance(mContext).getString("share_type", "");

@@ -21,7 +21,9 @@ import com.flyco.roundview.RoundTextView;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.BaseActivity;
@@ -51,9 +53,6 @@ import rx.functions.Action1;
 
 public class TuanGouMaiDanZhiFuActivity extends BaseActivity {
 
-
-    String pay_id = "2";//支付方式-- 1 支付宝 2 微信
-    String payType = "4";//1 支付宝 4 微信
     @BindView(R.id.view_weixin)
     View viewWeixin;
     @BindView(R.id.view_zhifubao)
@@ -75,37 +74,64 @@ public class TuanGouMaiDanZhiFuActivity extends BaseActivity {
 
     private String appId;//支付id 给支付宝
     private IWXAPI api;
+    private String pay_id = "2";//支付方式-- 1 支付宝 2 微信
+    private String payType = "4";//1 支付宝 4 微信
 
-    //private String war_id;
-
-    private String inst_id;
     private String jine;
-
+    private String inst_id;
     private String diYongQuanID;
+    private String userHongBao;//0什么也没用  1 没用 2用了
+
+    private YuZhiFuModel.DataBean dataBean;
+    private String formId;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initData();
+        initHuidiao();
+    }
 
-
+    private void initData() {
         inst_id = getIntent().getStringExtra("inst_id");
         jine = getIntent().getStringExtra("jine");
-        //  id = getIntent().getStringExtra("id");
         userHongBao = getIntent().getStringExtra("userHongBao");
-        diYongQuanID = getIntent().getStringExtra("diYongQuanId");
-        //number = getIntent().getStringExtra("count");
-        //war_id = getIntent().getStringExtra("war_id");
-        //   } else {
-        //      UIHelper.ToastMessage(DaLiBaoZhiFuActivity.this, "请联网后重新尝试");
-        //  }
+        diYongQuanID = getIntent().getStringExtra("diYongQuanID");
 
+        frtvPay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getNet();
+            }
+        });
 
+        viewWeixin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pay_id = "2";//支付方式-- 1 支付宝 2 微信
+                payType = "4";//1 支付宝 4 微信
+                ivZhifubaoChoose.setVisibility(View.INVISIBLE);
+                ivWeixinChoose.setVisibility(View.VISIBLE);
+            }
+        });
+
+        viewZhifubao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pay_id = "1";//支付方式-- 1 支付宝 2 微信
+                payType = "1";//1 支付宝 4 微信
+                ivZhifubaoChoose.setVisibility(View.VISIBLE);
+                ivWeixinChoose.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+
+    private void initHuidiao() {
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
             public void call(Notice message) {
                 if (message.type == ConstanceValue.MSG_TUANGOUPAY) {
-                    // MyCarCaoZuoDialog_Success myCarCaoZuoDialog_success = new MyCarCaoZuoDialog_Success(DaLiBaoZhiFuActivity.this, "支付成功", "恭喜您支付成功");
-                    // myCarCaoZuoDialog_success.show();
                     UIHelper.ToastMessage(TuanGouMaiDanZhiFuActivity.this, "支付成功");
                     PaySuccessUtils.getNet(TuanGouMaiDanZhiFuActivity.this, formId);
                     finish();
@@ -116,49 +142,6 @@ public class TuanGouMaiDanZhiFuActivity extends BaseActivity {
                 }
             }
         }));
-
-        getNet();
-        frtvPay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PreferenceHelper.getInstance(TuanGouMaiDanZhiFuActivity.this).putString(App.MAIDAN_PAY, "MAIDAN");
-                if (pay_id.equals("2")) {
-                    //     finish();
-                    goToWeChatPay(dataBean);
-
-                } else if (pay_id.equals("1")) {
-                    payV2(appId);//这里填写后台返回的支付信息
-                }
-            }
-        });
-
-        viewWeixin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                pay_id = "2";//支付方式-- 1 支付宝 2 微信
-                payType = "4";//1 支付宝 4 微信
-
-                //  ivIcon1.setBackgroundResource(R.mipmap.dingdan_icon_duihao);
-                ivZhifubaoChoose.setVisibility(View.INVISIBLE);
-                ivWeixinChoose.setVisibility(View.VISIBLE);
-                getNet();
-            }
-        });
-
-        viewZhifubao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                pay_id = "1";//支付方式-- 1 支付宝 2 微信
-                payType = "1";//1 支付宝 4 微信
-
-                ivZhifubaoChoose.setVisibility(View.VISIBLE);
-                ivWeixinChoose.setVisibility(View.INVISIBLE);
-                //ivWeixinChoose.setBackgroundResource(R.mipmap.dingdan_icon_duihao);
-                getNet();
-            }
-        });
     }
 
     @Override
@@ -213,20 +196,15 @@ public class TuanGouMaiDanZhiFuActivity extends BaseActivity {
 
     /**
      * 微信支付
-     *
-     * @param out
      */
     private void goToWeChatPay(YuZhiFuModel.DataBean out) {
         api.registerApp(out.getPay().getAppid());
-
         if (api == null) {
-
             UIHelper.ToastMessage(TuanGouMaiDanZhiFuActivity.this, "创建订单失败");
             return;
         }
 
         PayReq req = new PayReq();
-
         req.appId = out.getPay().getAppid();
         req.partnerId = out.getPay().getPartnerid();
         req.prepayId = out.getPay().getPrepayid();
@@ -234,13 +212,10 @@ public class TuanGouMaiDanZhiFuActivity extends BaseActivity {
         req.nonceStr = out.getPay().getNoncestr();
         req.sign = out.getPay().getSign();
         req.packageValue = out.getPay().getPackageX();
-
         api.sendReq(req);
     }
 
-
     private static final int SDK_PAY_FLAG = 1;
-    private String orderId;
 
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
@@ -256,26 +231,12 @@ public class TuanGouMaiDanZhiFuActivity extends BaseActivity {
                     String resultStatus = payResult.getResultStatus();
                     // 判断resultStatus 为9000则代表支付成功
                     if (TextUtils.equals(resultStatus, "9000")) {
-//                        Notice n = new Notice();
-//                        n.type = ConstanceValue.MSG_DALIBAO_SUCCESS;
-//                        //  n.content = message.toString();
-//                        RxBus.getDefault().sendRx(n);
-//                        finish();
-                        // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-                        //   Toast.makeText(DaLiBaoZhiFuActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-                        //   finish();
-                        // 通过商品购买正常确认订单支付回调  包括常规商品 大礼包  抢货拼手快商品
-
-                        // MyCarCaoZuoDialog_Success dialog_success = new MyCarCaoZuoDialog_Success(DaLiBaoZhiFuActivity.this, "支付成功", "恭喜您支付成功");
-                        // dialog_success.show();
-
                         finish();
                         PaySuccessUtils.getNet(TuanGouMaiDanZhiFuActivity.this, formId);
                         AppManager.getAppManager().finishActivity(TuanGouMaiDanDingDanActivity.class);
                         AppManager.getAppManager().finishActivity(TuanGouMaiDanActivity.class);
                         AppManager.getAppManager().finishActivity(TuanGouShangJiaDetailsActivity.class);
                         UIHelper.ToastMessage(TuanGouMaiDanZhiFuActivity.this, "支付成功", Toast.LENGTH_SHORT);
-
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         Toast.makeText(TuanGouMaiDanZhiFuActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
@@ -290,12 +251,8 @@ public class TuanGouMaiDanZhiFuActivity extends BaseActivity {
 
     };
 
-    //微信支付
-
     /**
      * 用于其他Activty跳转到该Activity
-     *
-     * @param context
      */
     public static void actionStart(Context context, String inst_id, String jine, String userHongBao, String diYongQuanID) {
         Intent intent = new Intent(context, TuanGouMaiDanZhiFuActivity.class);
@@ -304,23 +261,12 @@ public class TuanGouMaiDanZhiFuActivity extends BaseActivity {
         intent.putExtra("jine", jine);
         intent.putExtra("userHongBao", userHongBao);
         intent.putExtra("diYongQuanID", diYongQuanID);
-
         context.startActivity(intent);
     }
 
-    YuZhiFuModel.DataBean dataBean;
-
-    private String number;
-    private String id;
-    private String userHongBao;//1 没用 2用了
-    private String formId;
-
     private void getNet() {
-
         if (pay_id.equals("1")) {//1支付宝
-
             //获得后台的支付信息\
-
             /**
              * {
              *   "key":"20180305124455yu",
@@ -330,7 +276,6 @@ public class TuanGouMaiDanZhiFuActivity extends BaseActivity {
              *  "pay_id":"1"
              * }
              */
-
             Map<String, String> map = new HashMap<>();
             map.put("key", Urls.key);
             map.put("token", UserManager.getManager(TuanGouMaiDanZhiFuActivity.this).getAppToken());
@@ -338,35 +283,13 @@ public class TuanGouMaiDanZhiFuActivity extends BaseActivity {
             map.put("operate_type", "29");
             map.put("pay_id", pay_id);
             map.put("pay_type", payType);
-            // map.put("shop_count", number);
-            //map.put("wares_id", war_id);
-            //map.put("deduction_type", userHongBao);
-
             map.put("inst_id", inst_id);
             map.put("non_deduction_money", jine);
-
             if (!StringUtils.isEmpty(diYongQuanID)) {
                 map.put("user_agio_id", diYongQuanID);
             } else {
                 map.put("deduction_type", userHongBao);
             }
-
-//        NetUtils<Object> netUtils = new NetUtils<>();
-//        netUtils.requestData(map, Urls.DALIBAO_PAY, DaLiBaoZhiFuActivity.this, new JsonCallback<AppResponse<Object>>() {
-//            @Override
-//            public void onSuccess(Response<AppResponse<Object>> response) {
-//
-//            }
-//
-//            @Override
-//            public void onError(Response<AppResponse<Object>> response) {
-//                super.onError(response);
-//                //UIHelper.ToastMessage(DaLiBaoZhiFuActivity.this, response.message());
-//            }
-//        });
-
-
-            // if (NetworkUtils.isNetAvailable(DaLiBaoZhiFuActivity.this)) {
             Gson gson = new Gson();
             OkGo.<AppResponse<YuZhiFuModel_AliPay.DataBean>>post(Urls.DALIBAO_PAY)
                     .tag(TuanGouMaiDanZhiFuActivity.this)//
@@ -374,21 +297,26 @@ public class TuanGouMaiDanZhiFuActivity extends BaseActivity {
                     .execute(new JsonCallback<AppResponse<YuZhiFuModel_AliPay.DataBean>>() {
                         @Override
                         public void onSuccess(Response<AppResponse<YuZhiFuModel_AliPay.DataBean>> response) {
-
                             appId = response.body().data.get(0).getPay();
                             formId = response.body().data.get(0).getOut_trade_no();
+                            dismissProgressDialog();
+                            pay();
+                        }
+
+                        @Override
+                        public void onStart(Request<AppResponse<YuZhiFuModel_AliPay.DataBean>, ? extends Request> request) {
+                            super.onStart(request);
+                            showProgressDialog();
                         }
 
                         @Override
                         public void onError(Response<AppResponse<YuZhiFuModel_AliPay.DataBean>> response) {
                             super.onError(response);
+                            Y.tError(response);
+                            dismissProgressDialog();
                         }
                     });
-
-        } else {//2微信
-
-            //获得后台的支付信息\
-
+        } else {
             /**
              * {
              *   "key":"20180305124455yu",
@@ -398,7 +326,6 @@ public class TuanGouMaiDanZhiFuActivity extends BaseActivity {
              *  "pay_id":"1"
              * }
              */
-
             Map<String, String> map = new HashMap<>();
             map.put("key", Urls.key);
             map.put("token", UserManager.getManager(TuanGouMaiDanZhiFuActivity.this).getAppToken());
@@ -406,26 +333,15 @@ public class TuanGouMaiDanZhiFuActivity extends BaseActivity {
             map.put("operate_type", "29");
             map.put("pay_id", pay_id);
             map.put("pay_type", payType);
-
             map.put("inst_id", inst_id);
             map.put("non_deduction_money", jine);
             map.put("deduction_type", userHongBao);
-//        NetUtils<Object> netUtils = new NetUtils<>();
-//        netUtils.requestData(map, Urls.DALIBAO_PAY, DaLiBaoZhiFuActivity.this, new JsonCallback<AppResponse<Object>>() {
-//            @Override
-//            public void onSuccess(Response<AppResponse<Object>> response) {
-//
-//            }
-//
-//            @Override
-//            public void onError(Response<AppResponse<Object>> response) {
-//                super.onError(response);
-//                //UIHelper.ToastMessage(DaLiBaoZhiFuActivity.this, response.message());
-//            }
-//        });
 
-
-            // if (NetworkUtils.isNetAvailable(DaLiBaoZhiFuActivity.this)) {
+            if (!StringUtils.isEmpty(diYongQuanID)) {
+                map.put("user_agio_id", diYongQuanID);
+            } else {
+                map.put("deduction_type", userHongBao);
+            }
             Gson gson = new Gson();
             OkGo.<AppResponse<YuZhiFuModel.DataBean>>post(Urls.DALIBAO_PAY)
                     .tag(TuanGouMaiDanZhiFuActivity.this)//
@@ -433,20 +349,35 @@ public class TuanGouMaiDanZhiFuActivity extends BaseActivity {
                     .execute(new JsonCallback<AppResponse<YuZhiFuModel.DataBean>>() {
                         @Override
                         public void onSuccess(Response<AppResponse<YuZhiFuModel.DataBean>> response) {
-
-                            //   appId = response.body().data.get(0).getPay().getAppid();
                             dataBean = response.body().data.get(0);
                             api = WXAPIFactory.createWXAPI(TuanGouMaiDanZhiFuActivity.this, dataBean.getPay().getAppid());
                             formId = response.body().data.get(0).getPay().getOut_trade_no();
+                            dismissProgressDialog();
+                            pay();
                         }
 
                         @Override
                         public void onError(Response<AppResponse<YuZhiFuModel.DataBean>> response) {
                             super.onError(response);
+                            Y.tError(response);
+                            dismissProgressDialog();
+                        }
+
+                        @Override
+                        public void onStart(Request<AppResponse<YuZhiFuModel.DataBean>, ? extends Request> request) {
+                            super.onStart(request);
+                            showProgressDialog();
                         }
                     });
-
         }
+    }
 
+    private void pay() {
+        PreferenceHelper.getInstance(TuanGouMaiDanZhiFuActivity.this).putString(App.MAIDAN_PAY, "MAIDAN");
+        if (pay_id.equals("2")) {
+            goToWeChatPay(dataBean);
+        } else if (pay_id.equals("1")) {
+            payV2(appId);//这里填写后台返回的支付信息
+        }
     }
 }

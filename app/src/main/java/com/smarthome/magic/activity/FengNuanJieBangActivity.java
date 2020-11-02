@@ -13,8 +13,8 @@ import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.shuinuan.ShuinuanBaseActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
+import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
@@ -23,7 +23,6 @@ import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.Message;
-import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.TimeCount;
 
 import java.util.HashMap;
@@ -33,7 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class FengNuanJieBangActivity extends ShuinuanBaseActivity {
+public class FengNuanJieBangActivity extends BaseActivity {
 
     @BindView(R.id.back)
     LinearLayout back;

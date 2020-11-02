@@ -119,4 +119,6 @@ public interface ConstanceValue {
     int MSG_GONGXIANG_PEOPLE = 0x10083;//共享成员
 
     int MSG_ZCKT = 0x10084;//空调
+
+    int MSG_KAQUAN_DUIHUAN = 0x10085;//卡券兑换
 }

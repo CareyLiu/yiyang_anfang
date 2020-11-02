@@ -21,31 +21,4 @@ public class ShuinuanBaseNewActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
-    private LordingDialog lordingDialog;
-
-    public void showProgressDialog() {
-        showProgressDialog("");
-    }
-
-    public void showProgressDialog(String msg) {
-        if (lordingDialog == null) {
-            lordingDialog = new LordingDialog(mContext);
-        }
-        lordingDialog.setTextMsg(msg);
-
-        if (!lordingDialog.isShowing()) {
-            lordingDialog.show();
-        }
-    }
-
-    public void dismissProgressDialog() {
-        if (lordingDialog != null) {
-            try {
-                lordingDialog.dismiss();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }

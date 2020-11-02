@@ -56,22 +56,22 @@ import static com.smarthome.magic.get_net.Urls.LIBAOLIST;
 
 public class TuanGouShangJiaDetailsActivity extends AbStracTuanGouShangJiaDetails {
 
-    private String inst_id;
-    String shangJiaId;
-    Response<AppResponse<TuanGouShangJiaDetailsModel.DataBean>> response;
-    TuanGouShangJiaDetailsAdapter tuanGouShangJiaDetailsAdapter;
     @BindView(R.id.rlv_list)
     RecyclerView rlvList;
 
-    List<TuanGouShangJiaDetailsModel.DataBean.FavourableListBean> favourableListBeans = new ArrayList<>();
-    List<TuanGouShangJiaDetailsModel.DataBean.HighScoreListBean> highScoreListBeans = new ArrayList<>();
+    private List<TuanGouShangJiaDetailsModel.DataBean.FavourableListBean> favourableListBeans = new ArrayList<>();
+    private List<TuanGouShangJiaDetailsModel.DataBean.HighScoreListBean> highScoreListBeans = new ArrayList<>();
 
     private String typeID;
+    private String inst_id;
+    private String shangJiaId;
+    private Response<AppResponse<TuanGouShangJiaDetailsModel.DataBean>> response;
+    private TuanGouShangJiaDetailsAdapter tuanGouShangJiaDetailsAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_tuan_gou_shang_jia_details);
         shangJiaId = getIntent().getStringExtra("shangJiaID");
         typeID = getIntent().getStringExtra("typeID");
         getNet();
@@ -99,10 +99,7 @@ public class TuanGouShangJiaDetailsActivity extends AbStracTuanGouShangJiaDetail
         Map<String, String> map = new HashMap<>();
         map.put("code", "08012");
         map.put("key", Urls.key);
-        //map.put("token", UserManager.getManager(TuanGouShangJiaDetailsActivity.this).getAppToken());
         map.put("inst_id", shangJiaId);
-        // map.put("x", PreferenceHelper.getInstance(TuanGouShangJiaDetailsActivity.this).getString(App.WEIDU, ""));
-        //  map.put("y", PreferenceHelper.getInstance(TuanGouShangJiaDetailsActivity.this).getString(App.JINGDU, ""));
         Gson gson = new Gson();
         OkGo.<AppResponse<TuanGouShangJiaDetailsModel.DataBean>>post(LIBAOLIST)
                 .tag(this)//
@@ -158,14 +155,13 @@ public class TuanGouShangJiaDetailsActivity extends AbStracTuanGouShangJiaDetail
         //Glide.with(TuanGouShangJiaDetailsActivity.this).load(storeListBean.getInst_photo_url()).into(banner);
         tvShopName.setText(storeListBean.getInst_name());
         String inst_number = storeListBean.getInst_number();
-        if (!StringUtils.isEmpty(inst_number)){
+        if (!StringUtils.isEmpty(inst_number)) {
             ratingBar.setRating(Float.parseFloat(inst_number));
         }
 
 
         tvRenJun.setText(storeListBean.getAverage_cost());
         tvAddr.setText(storeListBean.getAddr_all());
-
 
 
         ArrayList<String> items = new ArrayList<>();
@@ -184,7 +180,7 @@ public class TuanGouShangJiaDetailsActivity extends AbStracTuanGouShangJiaDetail
                 @Override
                 public void OnBannerClick(int position) {
 
-                    ImageShowActivity.actionStart(TuanGouShangJiaDetailsActivity.this,items);
+                    ImageShowActivity.actionStart(TuanGouShangJiaDetailsActivity.this, items);
 
                 }
             });

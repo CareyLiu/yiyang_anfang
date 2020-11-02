@@ -172,7 +172,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
-                    android:text="暂无可用"
+                    android:text="暂无可用红包"
                     android:textColor="#ff666666"
                     android:textSize="13sp" />
 

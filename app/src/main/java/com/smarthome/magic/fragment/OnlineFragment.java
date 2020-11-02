@@ -117,11 +117,10 @@ public class OnlineFragment extends BaseFragment implements Observer {
                                 //mDatas.get(position).ccid = "aaaaaaaaaaaaaaaa90010028";
                                 int i = mDatas.get(position).ccid.length() - 1;
                                 String str = String.valueOf(mDatas.get(position).ccid.charAt(i));
-                                Log.i("serverId", str);
                                 PreferenceHelper.getInstance(getActivity()).putString("car_server_id", str + "/");
                                 PreferenceHelper.getInstance(getContext()).putString("share_type", mDatas.get(position).share_type);
                                 PreferenceHelper.getInstance(getActivity()).putString("ccid", mDatas.get(position).ccid);
-                                PreferenceHelper.getInstance(getContext()).putString("share_type", mDatas.get(position).share_type);
+                                PreferenceHelper.getInstance(getContext()).putString("sim_ccid_save_type", mDatas.get(position).sim_ccid_save_type);
                                 MyApplication.CARBOX_GETNOW = "wit/cbox/app/" + getServer_id() + mDatas.get(position).ccid;
 
                                 if (NetworkUtils.isConnected(getActivity())) {
@@ -139,6 +138,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
                                 PreferenceHelper.getInstance(getContext()).putString("ccid", mDatas.get(position).ccid);
                                 PreferenceHelper.getInstance(getContext()).putString("car_server_id", count);
                                 PreferenceHelper.getInstance(getContext()).putString("share_type", mDatas.get(position).share_type);
+                                PreferenceHelper.getInstance(getContext()).putString("sim_ccid_save_type", mDatas.get(position).sim_ccid_save_type);
                                 if (NetworkUtils.isConnected(getActivity())) {
                                     Activity currentActivity = AppManager.getAppManager().currentActivity();
                                     if (currentActivity != null) {
@@ -151,6 +151,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
                                 String ccid = mDatas.get(position).ccid;
                                 PreferenceHelper.getInstance(getContext()).putString("ccid", mDatas.get(position).ccid);
                                 PreferenceHelper.getInstance(getContext()).putString("share_type", mDatas.get(position).share_type);
+                                PreferenceHelper.getInstance(getContext()).putString("sim_ccid_save_type", mDatas.get(position).sim_ccid_save_type);
                                 if (NetworkUtils.isConnected(getActivity())) {
                                     Activity currentActivity = AppManager.getAppManager().currentActivity();
                                     if (currentActivity != null) {

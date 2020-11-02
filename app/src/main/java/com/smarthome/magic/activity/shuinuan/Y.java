@@ -8,11 +8,13 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.config.MyApplication;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 /**
@@ -131,6 +133,14 @@ public class Y {
     public static String getMoney(float money) {
         String format = new DecimalFormat("#.##").format(money);
         return format;
+    }
+
+    /**
+     * 获取Money
+     */
+    public static BigDecimal getMoneyB(String money) {
+        BigDecimal bigDecimal = new BigDecimal(money);
+        return bigDecimal;
     }
 
 
@@ -254,5 +264,21 @@ public class Y {
             }
         }
         return result;
+    }
+
+    /**
+     * 隐藏输入法
+     *
+     * @param view
+     */
+    public static void hideInputMethod(View view) {
+        hideInputMethod(view, MyApplication.getAppContext());
+    }
+
+    public static void hideInputMethod(View view, Context context) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm.isActive()) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

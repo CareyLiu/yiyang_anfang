@@ -3,17 +3,17 @@ package com.smarthome.magic.activity.tuangou;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.homepage.DaLiBaoErJiActivity;
 import com.smarthome.magic.adapter.tuangou.TuanGouYouHuiJuanAdapter;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
@@ -24,13 +24,15 @@ import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.TuanGouYouHuiJuanModel;
-import com.smarthome.magic.model.YuZhiFuModel_AliPay;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -38,25 +40,43 @@ public class TuanGouDiYongQuanActivity extends BaseActivity {
 
     @BindView(R.id.rlv_list)
     RecyclerView rlvList;
+    @BindView(R.id.smartRefreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
+
+    private List<TuanGouYouHuiJuanModel.DataBean> dataBeans = new ArrayList<>();
+    private TuanGouYouHuiJuanAdapter tuanGouYouHuiJuanAdapter;
+
+    private String inst_id;
+    private String money;
+    private String shop_type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        inst_id = getIntent().getStringExtra("inst_id");
         money = getIntent().getStringExtra("money");
+        inst_id = getIntent().getStringExtra("inst_id");
         shop_type = getIntent().getStringExtra("shop_type");
+        initSM();
+        initAdapter();
         getNet();
+    }
+
+    private void initSM() {
+        smartRefreshLayout.setEnableLoadMore(false);
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getNet();
+            }
+        });
     }
 
     @Override
     public int getContentViewResId() {
-        return R.layout.activity_tuan_gou_di_yong_quan;
+        return R.layout.activity_kaquan_main;
     }
 
-    private String inst_id;
-    private String money;
-    private String shop_type;
 
     public void getNet() {
         Map<String, String> map = new HashMap<>();
@@ -73,13 +93,21 @@ public class TuanGouDiYongQuanActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse<TuanGouYouHuiJuanModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<TuanGouYouHuiJuanModel.DataBean>> response) {
-                        dataBeans.addAll(response.body().data);
-                        setRlvList();
+                        dataBeans = response.body().data;
+                        tuanGouYouHuiJuanAdapter.setNewData(dataBeans);
+                        tuanGouYouHuiJuanAdapter.notifyDataSetChanged();
                     }
 
                     @Override
-                    public void onError(Response<AppResponse<TuanGouYouHuiJuanModel.DataBean>> response) {
-                        super.onError(response);
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<TuanGouYouHuiJuanModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showProgressDialog();
                     }
                 });
 
@@ -100,7 +128,6 @@ public class TuanGouDiYongQuanActivity extends BaseActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //imm.hideSoftInputFromWindow(findViewById(R.id.cl_layout).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 finish();
             }
         });
@@ -120,15 +147,12 @@ public class TuanGouDiYongQuanActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
-    TuanGouYouHuiJuanAdapter tuanGouYouHuiJuanAdapter;
-    List<TuanGouYouHuiJuanModel.DataBean> dataBeans = new ArrayList<>();
 
-    public void setRlvList() {
+    public void initAdapter() {
+        tuanGouYouHuiJuanAdapter = new TuanGouYouHuiJuanAdapter(R.layout.item_diyongquan_new, dataBeans);
         rlvList.setLayoutManager(new LinearLayoutManager(TuanGouDiYongQuanActivity.this));
-        tuanGouYouHuiJuanAdapter = new TuanGouYouHuiJuanAdapter(R.layout.item_diyongquan, dataBeans);
         rlvList.setAdapter(tuanGouYouHuiJuanAdapter);
-        tuanGouYouHuiJuanAdapter.setNewData(dataBeans);
-        tuanGouYouHuiJuanAdapter.notifyDataSetChanged();
+        tuanGouYouHuiJuanAdapter.setXianBtn(true);
         tuanGouYouHuiJuanAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -136,8 +160,7 @@ public class TuanGouDiYongQuanActivity extends BaseActivity {
                     case R.id.constrain:
                         Notice n1 = new Notice();
                         n1.type = ConstanceValue.MSG_DIYONGQUAN;
-
-                        n1.content = tuanGouYouHuiJuanAdapter.getData().get(position).getAgio_moneys() + "," + tuanGouYouHuiJuanAdapter.getData().get(position).getUser_agio_id();
+                        n1.content = tuanGouYouHuiJuanAdapter.getData().get(position).getAgio_money() + "," + tuanGouYouHuiJuanAdapter.getData().get(position).getUser_agio_id();
                         RxBus.getDefault().sendRx(n1);
                         finish();
                         break;

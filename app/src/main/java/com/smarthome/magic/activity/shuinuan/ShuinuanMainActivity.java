@@ -120,6 +120,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     private String xinhaoStr;
     private boolean isFirst;
     private boolean isOnActivity;
+    private String sim_ccid_save_type;
 
     @Override
     protected void onResume() {
@@ -232,6 +233,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
         MyApplication.mqttDingyue.add(SN_Send);
         MyApplication.mqttDingyue.add(SN_Accept);
 
+        sim_ccid_save_type = PreferenceHelper.getInstance(mContext).getString("sim_ccid_save_type", "0");
         isFirst = true;
     }
 
@@ -544,13 +546,30 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     private void firstCaozuo(String msg) {
         if (isFirst) {
             //向水暖加热器发送获取实时数据
+            if (!sim_ccid_save_type.equals("1")) {
+                AndMqtt.getInstance().publish(new MqttPublish()
+                        .setMsg("X_s.")
+                        .setQos(2).setRetained(false)
+                        .setTopic(SN_Send), new IMqttActionListener() {
+                    @Override
+                    public void onSuccess(IMqttToken asyncActionToken) {
+                        Y.i("查询一次卡号");
+                    }
+
+                    @Override
+                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                    }
+                });
+            }
+
             AndMqtt.getInstance().publish(new MqttPublish()
-                    .setMsg("X_s.")
+                    .setMsg("Y_s.")
                     .setQos(2).setRetained(false)
                     .setTopic(SN_Send), new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    Y.i("app端向水暖加热器请求实时数据");
+                    Y.i("查询一次经纬度");
                 }
 
                 @Override
@@ -558,21 +577,6 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
 
                 }
             });
-
-//            AndMqtt.getInstance().publish(new MqttPublish()
-//                    .setMsg("Y_s.")
-//                    .setQos(2).setRetained(false)
-//                    .setTopic(SN_Send), new IMqttActionListener() {
-//                @Override
-//                public void onSuccess(IMqttToken asyncActionToken) {
-//                    Y.i("查询一次经纬度");
-//                }
-//
-//                @Override
-//                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-//
-//                }
-//            });
 //
 //                    AndMqtt.getInstance().publish(new MqttPublish()
 //                            .setMsg("Z_s.")

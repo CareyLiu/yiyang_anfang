@@ -205,7 +205,6 @@ public class ServiciLiaoActivity extends BaseActivity implements View.OnClickLis
         String str = getIntent().getStringExtra("dianpuming");
         String inst_accid = getIntent().getStringExtra("inst_accid");
         tv_title_name.setText(str);
-        getLiaoTian(mContext, service_form_id);
 
         rl_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,7 +216,7 @@ public class ServiciLiaoActivity extends BaseActivity implements View.OnClickLis
         rl_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showZixun();
+                getLiaoTian(mContext, service_form_id);
             }
         });
     }
@@ -240,6 +239,7 @@ public class ServiciLiaoActivity extends BaseActivity implements View.OnClickLis
                     public void onSuccess(Response<AppResponse<ZixunModel.DataBean>> response) {
                         zixunModel = response.body().data.get(0);
                         weixiuList = zixunModel.getList();
+                        showZixun();
                     }
 
                     @Override
@@ -627,16 +627,20 @@ public class ServiciLiaoActivity extends BaseActivity implements View.OnClickLis
                 }
             }
 
-            String x_begin = zixunModel.getX_begin();
-            String y_begin = zixunModel.getY_begin();
-            Double x = Double.valueOf(x_begin);
-            Double y = Double.valueOf(y_begin);
-            LatLng carMarker = new LatLng(x, y);
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(new CameraPosition(carMarker, 15, 0, 30));
-            aMap.moveCamera(cameraUpdate);
+            try {
+                String x_begin = zixunModel.getX_begin();
+                String y_begin = zixunModel.getY_begin();
+                Double x = Double.valueOf(x_begin);
+                Double y = Double.valueOf(y_begin);
+                LatLng carMarker = new LatLng(x, y);
+                CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(new CameraPosition(carMarker, 15, 0, 30));
+                aMap.moveCamera(cameraUpdate);
 
-            BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.car_master_weizhi));
-            com.amap.api.maps2d.model.Marker marker = aMap.addMarker(new MarkerOptions().position(carMarker).icon(bitmapDescriptor).title(zixunModel.getCar_user_name()));
+                BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.car_master_weizhi));
+                com.amap.api.maps2d.model.Marker marker = aMap.addMarker(new MarkerOptions().position(carMarker).icon(bitmapDescriptor).title(zixunModel.getCar_user_name()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         mMapView.onCreate(savedInstanceState);
         aMap.setOnMarkerClickListener(mMarkerListener);

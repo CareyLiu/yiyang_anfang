@@ -9,7 +9,6 @@
         android:layout_width="283dp"
         android:layout_height="wrap_content"
         android:background="@drawable/white_radius_7dp"
-
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">

@@ -547,8 +547,24 @@
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <!--     优惠券列表    -->
         <activity
             android:name=".activity.tuangou.KaQuanActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <!--     优惠券赠送    -->
+        <activity
+            android:name=".activity.tuangou.KaquanZengActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <!--     优惠券兑换    -->
+        <activity
+            android:name=".activity.tuangou.KaquanDuihuanActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />

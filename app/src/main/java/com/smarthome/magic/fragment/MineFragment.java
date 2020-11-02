@@ -513,11 +513,10 @@ public class MineFragment extends BaseFragment implements Observer {
             case R.id.ll_zhanghujifen://账户积分
                 break;
             case R.id.ll_kaquan://卡券
-                if (tvKajuanNumber.getText().toString().equals("0")) {
-                    return;
-                }
+//                if (tvKajuanNumber.getText().toString().equals("0")) {
+//                    return;
+//                }
                 KaQuanActivity.actionStart(getActivity());
-                //   UIHelper.ToastMessage(getActivity(), "点击了卡券");
                 break;
             case R.id.ll_shoucangjia:
                 if (tvShoucangjiaNumber.getText().toString().equals("0")) {
@@ -531,8 +530,6 @@ public class MineFragment extends BaseFragment implements Observer {
                     DefaultX5WebViewActivity.actionStart(getActivity(), agentUrl);
                 }
                 break;
-
         }
     }
-
 }

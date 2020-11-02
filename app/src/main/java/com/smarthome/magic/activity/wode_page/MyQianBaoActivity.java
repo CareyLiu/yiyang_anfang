@@ -109,24 +109,18 @@ public class MyQianBaoActivity extends BaseActivity {
         llTixian.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (StringUtils.isEmpty(response.body().data.get(0).getMoney_use())) {
                     response.body().data.get(0).setMoney_use("0.00");
                 }
                 BigDecimal bigDecimal = new BigDecimal(response.body().data.get(0).getMoney_use());
-
                 if (bigDecimal.compareTo(BigDecimal.ZERO) == 1) {
                     //跳正常页面
                     showWeiXinOrZhiFuBaoSelect();
                 } else {
                     UIHelper.ToastMessage(MyQianBaoActivity.this, "当前金额为0，不可提现");
                 }
-
-                // showWeiXinOrZhiFuBaoSelect();
-
             }
         });
-
     }
 
     @Override
@@ -135,12 +129,10 @@ public class MyQianBaoActivity extends BaseActivity {
         getNet();
     }
 
-
     @Override
     public int getContentViewResId() {
         return R.layout.activity_my_qian_bao;
     }
-
 
     public void getNet() {
         //访问网络获取数据 下面的列表数据
@@ -148,7 +140,6 @@ public class MyQianBaoActivity extends BaseActivity {
         map.put("code", "04203");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(MyQianBaoActivity.this).getAppToken());
-
         Gson gson = new Gson();
         Log.e("map_data", gson.toJson(map));
         OkGo.<AppResponse<MyQianBaoModel.DataBean>>post(HOME_PICTURE_HOME)
@@ -172,9 +163,7 @@ public class MyQianBaoActivity extends BaseActivity {
         map.put("code", "04141");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(MyQianBaoActivity.this).getAppToken());
-
         Gson gson = new Gson();
-        Log.e("map_data", gson.toJson(map));
         OkGo.<AppResponse<MyQianBaoXianFeiMingXiModel.DataBean>>post(HOME_PICTURE_HOME)
                 .tag(this)//
                 .upJson(gson.toJson(map))
@@ -228,7 +217,6 @@ public class MyQianBaoActivity extends BaseActivity {
      * 两个按钮的 dialog
      */
     private void showTwo() {
-
         builder = new AlertDialog.Builder(this).setIcon(R.mipmap.logi_icon).setTitle("账号绑定")
                 .setMessage("是否前去绑定支付宝账号").setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
@@ -254,7 +242,6 @@ public class MyQianBaoActivity extends BaseActivity {
      * 单选 dialog
      */
     private void showWeiXinOrZhiFuBaoSelect() {
-
         //默认选中第一个
         final String[] items = {"微信", "支付宝"};
         builder = new AlertDialog.Builder(this).setIcon(R.mipmap.ic_launcher).setTitle("选择您的提现方式")
@@ -262,31 +249,24 @@ public class MyQianBaoActivity extends BaseActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         choice = i;
-
-
                     }
                 }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (choice == 0) {//微信
-
                             String weixinPay = PreferenceHelper.getInstance(mContext).getString(App.CUNCHUBIND_WEIXINPAY, "0x11");
                             if (weixinPay.equals("1")) {
                                 TiXianActivity.actionStart(MyQianBaoActivity.this, response.body().data.get(0).getMoney_use(), "0", "2");
                             } else {
                                 PhoneCheckActivity.actionStart_WeiBind(mContext, "0320", true);
                             }
-
                         } else {//支付宝
                             String checkAliPay = PreferenceHelper.getInstance(MyQianBaoActivity.this).getString(App.CUNCHUBIND_ALIPAY, "0x11");
                             if (checkAliPay.equals("1")) {//已经设置
-
                                 TiXianActivity.actionStart(MyQianBaoActivity.this, response.body().data.get(0).getMoney_use(), "0", "1");
-
                             } else {//2 未设置
                                 showTwo();
                             }
-
                         }
                     }
                 });

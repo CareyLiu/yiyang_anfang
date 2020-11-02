@@ -1,12 +1,14 @@
 package com.smarthome.magic.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class TuanGouYouHuiJuanModel {
+public class TuanGouYouHuiJuanModel implements Serializable {
+
     /**
      * msg_code : 0000
      * msg : ok
-     * data : [{"user_agio_id":"447","of_user_id":"379","create_time":"2020-04-08","agio_detail":"麦香村西饼屋专享","residue_times":"10","usable_times":"10","inst_agio_id":"33","agio_title":"40元美食免费券","inst_id":"263","agio_state":"1","user_time":"2019-12-10","agio_moneys":"40"},{"user_agio_id":"446","of_user_id":"379","create_time":"2020-04-08","agio_detail":"麦香村西饼屋专享","residue_times":"30","usable_times":"30","inst_agio_id":"32","agio_title":"20元美食免费券","inst_id":"263","agio_state":"1","user_time":"2019-11-30","agio_moneys":"20"},{"user_agio_id":"445","of_user_id":"379","create_time":"2020-04-08","agio_detail":"麦香村西饼屋专享","residue_times":"60","usable_times":"60","inst_agio_id":"31","agio_title":"50元美食优惠券","inst_id":"263","agio_state":"1","user_time":"2020-12-22","agio_moneys":"50"},{"user_agio_id":"444","of_user_id":"379","create_time":"2020-04-08","agio_detail":"麦香村西饼屋专享","residue_times":"30","usable_times":"30","inst_agio_id":"30","agio_title":"30元美食免费券","inst_id":"263","agio_state":"1","user_time":"2019-11-12","agio_moneys":"30"}]
+     * data : [{"ticket_type":"2","of_user_id":"2223","agio_order":"2","create_time":"2020-08-02","agio_detail":"美食专享","residue_times":"1","usable_times":"1","agio_state":"1","ticket_user_type":"1","user_agio_id":"535","inst_state":"1","agio_money":"200.00","inst_agio_id":"50","agio_title":"200元美食券","inst_id":"0","user_time":"2020-12-22","validity_time":"2020-12-22"},{"ticket_type":"2","of_user_id":"2223","agio_order":"2","create_time":"2020-08-02","agio_detail":"美食专享","residue_times":"1","usable_times":"1","agio_state":"1","ticket_user_type":"1","user_agio_id":"534","inst_state":"1","agio_money":"200.00","inst_agio_id":"50","agio_title":"200元美食券","inst_id":"0","user_time":"2020-12-22","validity_time":"2020-12-22"},{"ticket_type":"2","of_user_id":"2223","agio_order":"2","create_time":"2020-08-02","agio_detail":"美食专享","residue_times":"1","usable_times":"1","agio_state":"1","ticket_user_type":"1","user_agio_id":"533","inst_state":"1","agio_money":"200.00","inst_agio_id":"50","agio_title":"200元美食券","inst_id":"0","user_time":"2020-12-22","validity_time":"2020-12-22"},{"ticket_type":"1","of_user_id":"2223","agio_order":"2","create_time":"2020-05-12","agio_detail":"呼兰河口湿地专享","residue_times":"60","usable_times":"60","agio_state":"1","ticket_user_type":"5","user_agio_id":"505","inst_state":"1","agio_money":"40.00","inst_agio_id":"36","agio_title":"40元景区免费券","inst_id":"310","user_time":"2020-12-22","validity_time":"2020-12-22"},{"ticket_type":"1","of_user_id":"2223","agio_order":"1","create_time":"2020-05-12","agio_detail":"呼兰河口湿地专享","residue_times":"30","usable_times":"30","agio_state":"1","ticket_user_type":"5","user_agio_id":"504","inst_state":"1","agio_money":"20.00","inst_agio_id":"35","agio_title":"20元景区免费券","inst_id":"310","user_time":"2020-12-22","validity_time":"2020-12-22"},{"ticket_type":"1","of_user_id":"2223","agio_order":"4","create_time":"2020-05-12","agio_detail":"麦克比火锅专享","residue_times":"30","usable_times":"30","agio_state":"1","ticket_user_type":"1","user_agio_id":"503","inst_state":"1","agio_money":"25.00","inst_agio_id":"34","agio_title":"25元美食美食券","inst_id":"258","user_time":"2020-11-12","validity_time":"2020-11-12"},{"ticket_type":"1","of_user_id":"2223","agio_order":"3","create_time":"2020-05-12","agio_detail":"麦香村西饼屋专享","residue_times":"10","usable_times":"10","agio_state":"1","ticket_user_type":"1","user_agio_id":"502","inst_state":"1","agio_money":"40.00","inst_agio_id":"33","agio_title":"40元美食免费券","inst_id":"263","user_time":"2019-12-10","validity_time":"2019-12-10"},{"ticket_type":"1","of_user_id":"2223","agio_order":"2","create_time":"2020-05-12","agio_detail":"麦香村西饼屋专享","residue_times":"30","usable_times":"30","agio_state":"1","ticket_user_type":"1","user_agio_id":"501","inst_state":"1","agio_money":"20.00","inst_agio_id":"32","agio_title":"20元美食免费券","inst_id":"263","user_time":"2019-11-30","validity_time":"2019-11-30"},{"ticket_type":"1","of_user_id":"2223","agio_order":"1","create_time":"2020-05-12","agio_detail":"麦香村西饼屋专享","residue_times":"60","usable_times":"60","agio_state":"1","ticket_user_type":"1","user_agio_id":"500","inst_state":"1","agio_money":"50.00","inst_agio_id":"31","agio_title":"50元美食优惠券","inst_id":"263","user_time":"2020-12-22","validity_time":"2020-12-22"},{"ticket_type":"1","of_user_id":"2223","agio_order":"1","create_time":"2020-05-12","agio_detail":"麦香村西饼屋专享","residue_times":"30","usable_times":"30","agio_state":"1","ticket_user_type":"1","user_agio_id":"499","inst_state":"1","agio_money":"30.00","inst_agio_id":"30","agio_title":"30元美食免费券","inst_id":"263","user_time":"2019-11-12","validity_time":"2019-11-12"}]
      */
 
     private String msg_code;
@@ -37,41 +39,51 @@ public class TuanGouYouHuiJuanModel {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         /**
-         * user_agio_id : 447
-         * of_user_id : 379
-         * create_time : 2020-04-08
-         * agio_detail : 麦香村西饼屋专享
-         * residue_times : 10
-         * usable_times : 10
-         * inst_agio_id : 33
-         * agio_title : 40元美食免费券
-         * inst_id : 263
+         * ticket_type : 2
+         * of_user_id : 2223
+         * agio_order : 2
+         * create_time : 2020-08-02
+         * agio_detail : 美食专享
+         * residue_times : 1
+         * usable_times : 1
          * agio_state : 1
-         * user_time : 2019-12-10
-         * agio_moneys : 40
+         * ticket_user_type : 1
+         * user_agio_id : 535
+         * inst_state : 1
+         * agio_money : 200.00
+         * inst_agio_id : 50
+         * agio_title : 200元美食券
+         * inst_id : 0
+         * user_time : 2020-12-22
+         * validity_time : 2020-12-22
          */
 
-        private String user_agio_id;
+        private String ticket_type;
         private String of_user_id;
+        private String agio_order;
         private String create_time;
         private String agio_detail;
         private String residue_times;
         private String usable_times;
+        private String agio_state;
+        private String ticket_user_type;
+        private String user_agio_id;
+        private String inst_state;
+        private String agio_money;
         private String inst_agio_id;
         private String agio_title;
         private String inst_id;
-        private String agio_state;
         private String user_time;
-        private String agio_moneys;
+        private String validity_time;
 
-        public String getUser_agio_id() {
-            return user_agio_id;
+        public String getTicket_type() {
+            return ticket_type;
         }
 
-        public void setUser_agio_id(String user_agio_id) {
-            this.user_agio_id = user_agio_id;
+        public void setTicket_type(String ticket_type) {
+            this.ticket_type = ticket_type;
         }
 
         public String getOf_user_id() {
@@ -80,6 +92,14 @@ public class TuanGouYouHuiJuanModel {
 
         public void setOf_user_id(String of_user_id) {
             this.of_user_id = of_user_id;
+        }
+
+        public String getAgio_order() {
+            return agio_order;
+        }
+
+        public void setAgio_order(String agio_order) {
+            this.agio_order = agio_order;
         }
 
         public String getCreate_time() {
@@ -114,6 +134,46 @@ public class TuanGouYouHuiJuanModel {
             this.usable_times = usable_times;
         }
 
+        public String getAgio_state() {
+            return agio_state;
+        }
+
+        public void setAgio_state(String agio_state) {
+            this.agio_state = agio_state;
+        }
+
+        public String getTicket_user_type() {
+            return ticket_user_type;
+        }
+
+        public void setTicket_user_type(String ticket_user_type) {
+            this.ticket_user_type = ticket_user_type;
+        }
+
+        public String getUser_agio_id() {
+            return user_agio_id;
+        }
+
+        public void setUser_agio_id(String user_agio_id) {
+            this.user_agio_id = user_agio_id;
+        }
+
+        public String getInst_state() {
+            return inst_state;
+        }
+
+        public void setInst_state(String inst_state) {
+            this.inst_state = inst_state;
+        }
+
+        public String getAgio_money() {
+            return agio_money;
+        }
+
+        public void setAgio_money(String agio_money) {
+            this.agio_money = agio_money;
+        }
+
         public String getInst_agio_id() {
             return inst_agio_id;
         }
@@ -138,14 +198,6 @@ public class TuanGouYouHuiJuanModel {
             this.inst_id = inst_id;
         }
 
-        public String getAgio_state() {
-            return agio_state;
-        }
-
-        public void setAgio_state(String agio_state) {
-            this.agio_state = agio_state;
-        }
-
         public String getUser_time() {
             return user_time;
         }
@@ -154,12 +206,12 @@ public class TuanGouYouHuiJuanModel {
             this.user_time = user_time;
         }
 
-        public String getAgio_moneys() {
-            return agio_moneys;
+        public String getValidity_time() {
+            return validity_time;
         }
 
-        public void setAgio_moneys(String agio_moneys) {
-            this.agio_moneys = agio_moneys;
+        public void setValidity_time(String validity_time) {
+            this.validity_time = validity_time;
         }
     }
 }

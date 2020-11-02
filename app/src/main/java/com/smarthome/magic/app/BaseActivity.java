@@ -14,6 +14,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.basicmvp.BasicModel;
 import com.smarthome.magic.basicmvp.BasicPresenter;
 import com.smarthome.magic.config.MyApplication;
+import com.smarthome.magic.dialog.LordingDialog;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -196,4 +197,32 @@ public abstract class BaseActivity<T extends BasicPresenter, E extends BasicMode
      *                             }
      *                         });
      */
+
+
+    private LordingDialog lordingDialog;
+
+    public void showProgressDialog() {
+        showProgressDialog("");
+    }
+
+    public void showProgressDialog(String msg) {
+        if (lordingDialog == null) {
+            lordingDialog = new LordingDialog(mContext);
+        }
+        lordingDialog.setTextMsg(msg);
+
+        if (!lordingDialog.isShowing()) {
+            lordingDialog.show();
+        }
+    }
+
+    public void dismissProgressDialog() {
+        if (lordingDialog != null) {
+            try {
+                lordingDialog.dismiss();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

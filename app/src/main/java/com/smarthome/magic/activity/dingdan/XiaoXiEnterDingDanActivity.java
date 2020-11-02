@@ -695,7 +695,7 @@ public class XiaoXiEnterDingDanActivity extends BaseActivity {
                                 tvQuxiaodingdan.setText("取消订单");
 
                                 conlayout1.setBackgroundResource(R.mipmap.qianbaobeijing);
-                                tvDingdanZhuangtai.setText("等待付款");
+                                tvDingdanZhuangtai.setText(dataBean.getUser_pay_check_name());
 
                                 if (dataBean.getOperate_type().equals("29")) {
                                     constrain2.setVisibility(View.GONE);
@@ -711,23 +711,23 @@ public class XiaoXiEnterDingDanActivity extends BaseActivity {
                                 tvQuxiaodingdan.setVisibility(View.VISIBLE);
                                 tvGoPay.setVisibility(View.VISIBLE);
                                 tvGoPay.setText("去支付");
-                                tvQuxiaodingdan.setText("取消订单");
+                                tvQuxiaodingdan.setText(dataBean.getUser_pay_check_name());
                                 conlayout1.setBackgroundResource(R.mipmap.wodedingdan_daifahuo);
                                 break;
                             case "4":
-                                tvDingdanZhuangtai.setText("已发货");
+                                tvDingdanZhuangtai.setText(dataBean.getUser_pay_check_name());
 
                                 conlayout1.setBackgroundResource(R.mipmap.order_yifahuo);
                                 break;
                             case "5":
 
                                 conlayout1.setBackgroundResource(R.mipmap.daishiyong);
-                                tvDingdanZhuangtai.setText("到店消费");
+                                tvDingdanZhuangtai.setText(dataBean.getUser_pay_check_name());
                                 break;
                             case "6":
                                 constrain2.setVisibility(View.GONE);
                                 conlayout1.setBackgroundResource(R.mipmap.jiaoyichenggong);
-                                tvDingdanZhuangtai.setText("待评价");
+                                tvDingdanZhuangtai.setText(dataBean.getUser_pay_check_name());
                                 if (dataBean.getWares_type().equals("3")) {
                                     clErweima.setVisibility(View.VISIBLE);
                                     constrain2.setVisibility(View.VISIBLE);
@@ -739,22 +739,29 @@ public class XiaoXiEnterDingDanActivity extends BaseActivity {
                                 tvDingdanZhuangtai.setText("订单已完成");
                                 break;
                             case "8":
-                                tvDingdanZhuangtai.setText("申请退款中");
+                                tvDingdanZhuangtai.setText(dataBean.getUser_pay_check_name());
                                 break;
                             case "9":
-                                tvDingdanZhuangtai.setText("退款中");
+                                tvDingdanZhuangtai.setText(dataBean.getUser_pay_check_name());
                                 break;
                             case "10":
-                                tvDingdanZhuangtai.setText("退货/退款中");
+                                tvDingdanZhuangtai.setText(dataBean.getUser_pay_check_name());
                                 break;
                             case "11":
                                 //订单失效
                                 constrain2.setVisibility(View.GONE);
-                                tvDingdanZhuangtai.setText("订单失效");
+                                tvDingdanZhuangtai.setText(dataBean.getUser_pay_check_name());
                                 conlayout1.setBackgroundResource(R.mipmap.dingdan_details_x);
                                 tvQuxiaodingdan.setVisibility(View.VISIBLE);
                                 tvQuxiaodingdan.setText("删除订单");
 
+                                break;
+                            case "99":
+                                constrain2.setVisibility(View.GONE);
+                                tvDingdanZhuangtai.setText(dataBean.getUser_pay_check_name());
+                                conlayout1.setBackgroundResource(R.mipmap.dingdan_details_x);
+                                tvQuxiaodingdan.setVisibility(View.VISIBLE);
+                                tvQuxiaodingdan.setText("删除订单");
                                 break;
 
                         }

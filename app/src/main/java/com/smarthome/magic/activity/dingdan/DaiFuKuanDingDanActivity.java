@@ -723,6 +723,7 @@ public class DaiFuKuanDingDanActivity extends BaseActivity {
 
                         tvQuxiaodingdan.setVisibility(View.GONE);
                         tvGoPay.setVisibility(View.GONE);
+                        //conlayout1.setBackgroundResource(0);
                         switch (dataBean.getUser_pay_check()) {
 
                             case "1":
@@ -791,9 +792,16 @@ public class DaiFuKuanDingDanActivity extends BaseActivity {
                                 conlayout1.setBackgroundResource(R.mipmap.dingdan_details_x);
                                 tvQuxiaodingdan.setVisibility(View.VISIBLE);
                                 tvQuxiaodingdan.setText("删除订单");
-
                                 break;
 
+                            case "99":
+                                constrain2.setVisibility(View.GONE);
+                                tvDingdanZhuangtai.setText("订单失效");
+                                conlayout1.setBackgroundResource(R.mipmap.dingdan_details_x);
+                                tvQuxiaodingdan.setVisibility(View.VISIBLE);
+                                tvQuxiaodingdan.setText("删除订单");
+
+                                break;
                         }
 
 

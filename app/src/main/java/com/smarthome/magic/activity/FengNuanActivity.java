@@ -506,6 +506,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
             }
         });
+        smartRefreshLayout.setEnableLoadMore(false);
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -886,7 +887,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                                 tishiDialog.setDismissAfterClick(false);
                                 tishiDialog.setTextContent("正在泵油");
                                 tishiDialog.setTextConfirm("停止泵油");
-                                tishiDialog.setCancelable(false);
+                                tishiDialog.setCancelable(true);
                                 tishiDialog.show();
                                 whatUWant = "";
 
@@ -943,7 +944,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                                 tishiDialog.setDismissAfterClick(false);
                                 tishiDialog.setTextContent("正在通风");
                                 tishiDialog.setTextConfirm("开启中");
-                                tishiDialog.setCancelable(false);
+                                tishiDialog.setCancelable(true);
                                 tishiDialog.show();
 
                                 whatUWant = "";
@@ -1025,23 +1026,23 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                                 if (!myCarCaoZuoDialog_notify.isShowing()) {
                                     myCarCaoZuoDialog_notify.show();
 
-                                    AndMqtt.getInstance().publish(new MqttPublish()
-                                            .setMsg("M692.")
-                                            .setQos(2).setRetained(false)
-                                            .setTopic(CAR_CTROL), new IMqttActionListener() {
-                                        @Override
-                                        public void onSuccess(IMqttToken asyncActionToken) {
-                                            Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
-                                            //  UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
-
-                                        }
-
-                                        @Override
-                                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                                            Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
-                                            UIHelper.ToastMessage(mContext, "指令发送失败，请检查是否连接网络", Toast.LENGTH_SHORT);
-                                        }
-                                    });
+//                                    AndMqtt.getInstance().publish(new MqttPublish()
+//                                            .setMsg("M692.")
+//                                            .setQos(2).setRetained(false)
+//                                            .setTopic(CAR_CTROL), new IMqttActionListener() {
+//                                        @Override
+//                                        public void onSuccess(IMqttToken asyncActionToken) {
+//                                            Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
+//                                            //  UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
+//
+//                                        }
+//
+//                                        @Override
+//                                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+//                                            Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+//                                            UIHelper.ToastMessage(mContext, "指令发送失败，请检查是否连接网络", Toast.LENGTH_SHORT);
+//                                        }
+//                                    });
                                 }
 
                             }

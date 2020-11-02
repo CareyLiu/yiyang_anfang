@@ -422,6 +422,7 @@ public class LoginActivity extends BaseActivity {
                                 Notice notice = new Notice();
                                 notice.type = ConstanceValue.MSG_RONGYUN_CHONGZHI;
                                 RxBus.getDefault().sendRx(notice);
+                                
                             }
                         }
 

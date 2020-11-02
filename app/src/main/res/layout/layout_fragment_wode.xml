@@ -848,6 +848,7 @@
 
                         <ImageView
 
+                            android:visibility="invisible"
                             android:id="@+id/iv_bazism"
                             android:layout_width="31dp"
                             android:layout_height="31dp"
@@ -901,6 +902,7 @@
 
                         <TextView
 
+                            android:visibility="invisible"
                             android:id="@+id/tv_bazism"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

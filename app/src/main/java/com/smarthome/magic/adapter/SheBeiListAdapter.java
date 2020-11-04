@@ -38,7 +38,6 @@ public class SheBeiListAdapter extends BaseSectionQuickAdapter<SheBeiModel, Base
     @Override
     protected void convert(BaseViewHolder helper, SheBeiModel item) {
         helper.addOnClickListener(R.id.constrain);
-        helper.setText(R.id.tv_name, item.device_name);
         helper.setText(R.id.tv_ccid, "ccid: " + item.ccid);
         helper.setText(R.id.tv_youxiaoqi, "设备有效期至：" + item.validity_time);
         helper.setText(R.id.tv_shiyong_zhuangtai, item.validity_term);
@@ -51,6 +50,12 @@ public class SheBeiListAdapter extends BaseSectionQuickAdapter<SheBeiModel, Base
             helper.getView(R.id.tv_shiyong_zhuangtai).setBackgroundResource(R.drawable.bg_shebei_shiyongzhuangtai_gray);
             TextView tv = (TextView) helper.getView(R.id.tv_shiyong_zhuangtai);
             tv.setTextColor(mContext.getResources().getColor(R.color.gray_999999));
+        }
+
+        if (item.share_type.equals("2")){
+            helper.setText(R.id.tv_name, item.device_name+"(共享)");
+        }else {
+            helper.setText(R.id.tv_name, item.device_name);
         }
     }
 }

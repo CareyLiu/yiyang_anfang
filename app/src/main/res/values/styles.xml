@@ -213,7 +213,7 @@
     <!-- 自定义给店铺列表评分的星星 room_rating_bar-->
     <style name="storeRatingBarPink1" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/custom4_ratingbar_nearby_store_list</item>
-        <item name="android:minHeight">22dp</item>
+        <item name="android:minHeight">25dp</item>
         <item name="android:maxHeight">25dp</item>
     </style>
 
@@ -243,8 +243,4 @@
     <style name="dialogBaseBlur" parent="dialog">
         <item name="android:backgroundDimEnabled">true</item>
     </style>
-
-
-
-
 </resources>

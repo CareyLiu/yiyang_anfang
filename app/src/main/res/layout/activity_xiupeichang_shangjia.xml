@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="524pt">
+
+                <com.youth.banner.Banner
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/tv_yingye_time"
+                    android:layout_width="261pt"
+                    android:layout_height="46pt"
+                    android:layout_gravity="bottom"
+                    android:background="#80111111"
+                    android:gravity="center"
+                    android:text="营业时间00:00-00:00"
+                    android:textColor="@color/white"
+                    android:textSize="23pt" />
+            </FrameLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="223pt"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30pt"
+                    android:layout_marginLeft="29pt"
+                    android:layout_marginTop="22pt"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="汽车修配厂"
+                    android:textColor="@color/black_333333"
+                    android:textSize="29pt"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatRatingBar
+                    android:id="@+id/rating_bar"
+                    style="@style/storeRatingBarPink1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="22pt"
+                    android:layout_marginTop="68pt"
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:stepSize="0.5" />
+
+                <LinearLayout
+                    android:id="@+id/ll_lianxi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="58pt"
+                    android:layout_marginRight="32pt"
+                    android:layout_toLeftOf="@+id/ll_daohang"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="46pt"
+                        android:layout_height="46pt"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/xiupeichang_icon_dianhua" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="29pt"
+                        android:layout_marginTop="12pt"
+                        android:includeFontPadding="false"
+                        android:text="联系商家"
+                        android:textColor="@color/black_333333"
+                        android:textSize="29pt" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_daohang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="58pt"
+                    android:layout_marginRight="35pt"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="46pt"
+                        android:layout_height="46pt"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/xiupeichang_icon_daohang" />
+
+                    <TextView
+                        android:id="@+id/tv_juli"
+                        android:layout_width="wrap_content"
+                        android:layout_height="29pt"
+                        android:layout_marginTop="12pt"
+                        android:includeFontPadding="false"
+                        android:text="0km"
+                        android:textColor="@color/black_333333"
+                        android:textSize="29pt" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30pt"
+                    android:layout_marginLeft="29pt"
+                    android:layout_marginTop="116pt"
+                    android:layout_marginRight="24pt"
+                    android:layout_toLeftOf="@+id/ll_lianxi"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:text="黑龙江省哈尔滨市南岗区电缆街219号"
+                    android:textColor="@color/black_666666"
+                    android:textSize="27pt" />
+
+                <LinearLayout
+                    android:id="@+id/ll_tag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="29pt"
+                    android:layout_marginTop="162pt"
+                    android:orientation="horizontal" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#EEEEEE" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="104pt"
+                android:layout_marginBottom="23pt"
+                android:background="@color/white"
+                android:paddingLeft="29pt">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="31pt"
+                    android:layout_marginTop="19pt"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="买单"
+                    android:textColor="@color/black_333333"
+                    android:textSize="30pt"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="24pt"
+                    android:layout_marginTop="65pt"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="手机买单更方便"
+                    android:textColor="@color/black_666666"
+                    android:textSize="23pt" />
+
+                <TextView
+                    android:id="@+id/bt_maidan"
+                    android:layout_width="108pt"
+                    android:layout_height="61pt"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="29pt"
+                    android:background="@drawable/a_xiupeichang_button"
+                    android:gravity="center"
+                    android:text="买单"
+                    android:textColor="@color/white"
+                    android:textSize="28pt"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="96pt"
+                android:background="@color/white">
+
+                <RelativeLayout
+                    android:id="@+id/rl_select_fuwu"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_select_fuwu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36pt"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="服务"
+                        android:textColor="@color/text_red"
+                        android:textSize="35pt"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:id="@+id/vv_select_fuwu"
+                        android:layout_width="65pt"
+                        android:layout_height="8pt"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/a_xiupeichang_button" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_select_pingjia"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_select_pingjia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36pt"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="评价"
+                        android:textColor="@color/black_333333"
+                        android:textSize="35pt"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:id="@+id/vv_select_pingjia"
+                        android:layout_width="65pt"
+                        android:layout_height="8pt"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/a_xiupeichang_button"
+                        android:visibility="invisible" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#EEEEEE" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_fuwu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_pingjia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

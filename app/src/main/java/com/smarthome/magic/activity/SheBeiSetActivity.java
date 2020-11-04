@@ -19,7 +19,7 @@ import com.smarthome.magic.activity.shuinuan.ShuinuanZhuangtaiActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.shuinuan.gongxiang.GongxiangActivity;
 import com.smarthome.magic.activity.shuinuan.gongxiang.GongxiangModel;
-import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.activity.zckt.ZcktStateActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
@@ -29,7 +29,6 @@ import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
-
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,6 +57,8 @@ public class SheBeiSetActivity extends ShuinuanBaseNewActivity {
     RelativeLayout rlGongxiang;
     @BindView(R.id.rl_gongxiang_jie)
     RelativeLayout rlGongxiangJie;
+    @BindView(R.id.rl_kongtiao_state)
+    RelativeLayout rlKongtiaoState;
     private String ccid;
 
     public static final int TYPE_FENGNUAN = 1;
@@ -75,14 +76,16 @@ public class SheBeiSetActivity extends ShuinuanBaseNewActivity {
         if (type == TYPE_SHUINUAN) {
             rlGuzhang.setVisibility(View.GONE);
             rlZhujicanshu.setVisibility(View.VISIBLE);
+            rlKongtiaoState.setVisibility(View.GONE);
         } else if (type == TYPE_FENGNUAN) {
             rlGuzhang.setVisibility(View.VISIBLE);
             rlZhujicanshu.setVisibility(View.GONE);
+            rlKongtiaoState.setVisibility(View.GONE);
         } else if (type == TYPE_KONGTISO) {
             rlGuzhang.setVisibility(View.GONE);
             rlZhujicanshu.setVisibility(View.GONE);
             rlJiareqicanshu.setVisibility(View.GONE);
-            rlDingshi.setVisibility(View.GONE);
+            rlKongtiaoState.setVisibility(View.VISIBLE);
         }
 
         String share_type = PreferenceHelper.getInstance(mContext).getString("share_type", "");
@@ -141,6 +144,13 @@ public class SheBeiSetActivity extends ShuinuanBaseNewActivity {
             @Override
             public void onClick(View v) {
                 DiagnosisActivity.actionStart(mContext);
+            }
+        });
+
+        rlKongtiaoState.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ZcktStateActivity.actionStart(mContext);
             }
         });
 

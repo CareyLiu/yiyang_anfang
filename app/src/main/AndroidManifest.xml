@@ -881,11 +881,29 @@
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
+
+        <!--    空调    -->
         <activity
             android:name=".activity.zckt.AirConditionerActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <!--    空调状态页    -->
+        <activity
+            android:name=".activity.zckt.ZcktStateActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+
+        <!--    修配厂商家页    -->
+        <activity
+            android:name=".activity.xiupeichang.XiupeichangShangActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
         <activity
             android:name=".activity.ZhiNengHomeListActivity"
             android:configChanges="locale|keyboardHidden|orientation"

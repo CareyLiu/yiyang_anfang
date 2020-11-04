@@ -107,13 +107,6 @@ public class OnlineFragment extends BaseFragment implements Observer {
         sheBeiListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (true) {
-                    XiupeichangShangActivity.actionStart(getActivity());
-
-                    return;
-                }
-
-
                 if (mqtt_connect_state.equals("1")) {
                     if (mDatas.get(position).validity_state.equals("2")) {
                         UIHelper.ToastMessage(getActivity(), "当前设备已过期");

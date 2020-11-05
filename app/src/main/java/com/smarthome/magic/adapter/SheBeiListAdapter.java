@@ -1,5 +1,6 @@
 package com.smarthome.magic.adapter;
 
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -7,6 +8,7 @@ import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseSectionQuickAdapter;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseViewHolder;
@@ -52,10 +54,12 @@ public class SheBeiListAdapter extends BaseSectionQuickAdapter<SheBeiModel, Base
             tv.setTextColor(mContext.getResources().getColor(R.color.gray_999999));
         }
 
-        if (item.share_type.equals("2")){
-            helper.setText(R.id.tv_name, item.device_name+"(共享)");
-        }else {
-            helper.setText(R.id.tv_name, item.device_name);
+        if (!TextUtils.isEmpty(item.share_type)) {
+            if (item.share_type.equals("2")) {
+                helper.setText(R.id.tv_name, item.device_name + "(共享)");
+            } else {
+                helper.setText(R.id.tv_name, item.device_name);
+            }
         }
     }
 }

@@ -179,6 +179,7 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
                                 sheBeiModel1.validity_time = bean.getValidity_time();
                                 sheBeiModel1.device_type = response.body().data.get(i).getControl_type_id();
                                 sheBeiModel1.sim_ccid_save_type = bean.sim_ccid_save_type;
+                                sheBeiModel1.share_type = bean.getShare_type();
                                 mDatas.add(sheBeiModel1);
                             }
                         }

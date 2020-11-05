@@ -21,6 +21,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.BindBoxActivity;
 import com.smarthome.magic.activity.FengNuanActivity;
 import com.smarthome.magic.activity.shuinuan.ShuinuanMainActivity;
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.xiupeichang.XiupeichangShangActivity;
 import com.smarthome.magic.activity.zckt.AirConditionerActivity;
 import com.smarthome.magic.adapter.CarList1Adapter;
@@ -404,6 +405,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
                                 sheBeiModel1.validity_time = bean.getValidity_time();
                                 sheBeiModel1.device_type = response.body().data.get(i).getControl_type_id();
                                 sheBeiModel1.sim_ccid_save_type = bean.sim_ccid_save_type;
+                                sheBeiModel1.share_type = bean.getShare_type();
                                 mDatas.add(sheBeiModel1);
                             }
                         }

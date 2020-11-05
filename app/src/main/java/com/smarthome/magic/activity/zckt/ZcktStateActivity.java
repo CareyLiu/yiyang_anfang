@@ -257,9 +257,9 @@ public class ZcktStateActivity extends BaseActivity {
             String kt_lamp = msg.substring(30, 31);
 
             if (fengmenMode.equals("4")) {
-                switch_button.setImageResource(R.mipmap.swich_on);
+                switch_button.setImageResource(R.mipmap.switch_open);
             } else {
-                switch_button.setImageResource(R.mipmap.swich_off);
+                switch_button.setImageResource(R.mipmap.switch_close);
             }
         }
     }
@@ -311,9 +311,9 @@ public class ZcktStateActivity extends BaseActivity {
                         if (time >= 30) {
                             showTishiDialog();
                             if (fengmenMode.equals("4")) {
-                                switch_button.setImageResource(R.mipmap.swich_on);
+                                switch_button.setImageResource(R.mipmap.switch_open);
                             } else {
-                                switch_button.setImageResource(R.mipmap.swich_off);
+                                switch_button.setImageResource(R.mipmap.switch_close);
                             }
                         } else {
                             if (time == 5 || time == 10 || time == 15 || time == 20 || time == 25) {

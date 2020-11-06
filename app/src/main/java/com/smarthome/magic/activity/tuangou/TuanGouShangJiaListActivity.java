@@ -24,6 +24,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.WebViewActivity;
 import com.smarthome.magic.activity.xin_tuanyou.TuanYouList;
+import com.smarthome.magic.activity.xiupeichang.XiupeichangShangActivity;
 import com.smarthome.magic.adapter.TuanGouShangJiaHeaderListAdapter;
 import com.smarthome.magic.adapter.tuangou.TuanGouShangJiaListAdapter;
 import com.smarthome.magic.app.UIHelper;
@@ -566,7 +567,11 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
 
                 switch (view.getId()) {
                     case R.id.constrain:
-                        TuanGouShangJiaDetailsActivity.actionStart(TuanGouShangJiaListActivity.this, tuanGouShangJiaListAdapter.getData().get(position).getInst_id(), type);
+                        if (type.equals("7")){
+                            XiupeichangShangActivity.actionStart(mContext,tuanGouShangJiaListAdapter.getData().get(position).getInst_id());
+                        }else {
+                            TuanGouShangJiaDetailsActivity.actionStart(TuanGouShangJiaListActivity.this, tuanGouShangJiaListAdapter.getData().get(position).getInst_id(), type);
+                        }
                         break;
                 }
             }

@@ -20,5 +20,10 @@ public class GlideShowImageUtils {
         return requestOptions;
     }
 
-
+    public static RequestOptions showFace() {
+        RequestOptions requestOptions = new RequestOptions()
+                .placeholder(R.mipmap.home_pic_touxiang_man)
+                .error(R.mipmap.home_pic_touxiang_man);
+        return requestOptions;
+    }
 }

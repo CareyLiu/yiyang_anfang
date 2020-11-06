@@ -65,7 +65,8 @@ public class TuanGouMaiDanActivity extends BaseActivity {
                 if (etJine.getText().toString().equals("0")) {
                     UIHelper.ToastMessage(TuanGouMaiDanActivity.this, "输入金额不能为0");
                 } else {
-                    TuanGouMaiDanDingDanActivity.actionStart(TuanGouMaiDanActivity.this, etJine.getText().toString().trim(), inst_id,typeID);
+                    TuanGouMaiDanDingDanActivity.actionStart(TuanGouMaiDanActivity.this, etJine.getText().toString().trim(), inst_id, typeID);
+                    finish();
                 }
             }
         });

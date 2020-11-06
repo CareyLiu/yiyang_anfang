@@ -17,6 +17,8 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
+import com.smarthome.magic.app.ConstanceValue;
+import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
@@ -30,6 +32,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 import static com.smarthome.magic.get_net.Urls.HOME_PICTURE_HOME;
 
@@ -104,6 +108,8 @@ public class TuanGouShengChengDingDanActivity extends AbTuanGouShengChengDingDan
     private String diYongQuanID;
     private String available_balance;//红包金额
     private int count;
+    private BigDecimal finalDecimal;
+    private BigDecimal hongBao;
 
 
     @Override
@@ -111,6 +117,26 @@ public class TuanGouShengChengDingDanActivity extends AbTuanGouShengChengDingDan
         super.onCreate(savedInstanceState);
         init();
         getNet();
+        initHuidiao();
+    }
+
+    private void initHuidiao() {
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_DIYONGQUAN) {
+                    String content = (String) message.content;
+                    String[] split = content.split(",");
+                    diYongQuan = split[0];
+                    diYongQuanID = split[1];
+                    tvZanwu.setText("抵用券减" + diYongQuan + "元");
+                    userHongBao = "1";
+                    BigDecimal available_balanceB = Y.getMoneyB(diYongQuan);
+                    tvMoney.setText("¥" + finalDecimal.subtract(available_balanceB).toString());
+                    rtvJine.setText("¥" + finalDecimal.subtract(available_balanceB).toString() + "生成订单");
+                }
+            }
+        }));
     }
 
     private void init() {
@@ -121,12 +147,21 @@ public class TuanGouShengChengDingDanActivity extends AbTuanGouShengChengDingDan
         image = getIntent().getStringExtra("image");
         shopType = getIntent().getStringExtra("shopType");
 
+        String strPhone = PreferenceHelper.getInstance(mContext).getString("user_phone", "");
+        tvShoujihaoNumber.setText(strPhone);
+
+        tvJine.setText(money);
+        hongBao = new BigDecimal("0");
         shuLiangBigDecimal = new BigDecimal("1");
         danjiaBigDecimal = new BigDecimal(money);
+        finalDecimal = danjiaBigDecimal.multiply(shuLiangBigDecimal);
+
+        tvXiaojiPrice.setText(finalDecimal.toString() + "");
+        tvMoney.setText("¥" + finalDecimal.toString());
+        rtvJine.setText("¥" + finalDecimal.toString() + "生成订单");
 
         Glide.with(TuanGouShengChengDingDanActivity.this).load(image).into(ivImage);
         tvName.setText(tvName1);
-
 
         rtvJine.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,6 +200,21 @@ public class TuanGouShengChengDingDanActivity extends AbTuanGouShengChengDingDan
             public void onClick(View v) {
                 shuLiangBigDecimal = new BigDecimal(tvGeshu.getText().toString().trim());
                 setJiSuanShuLiang(shuLiangBigDecimal, danjiaBigDecimal, "0");
+            }
+        });
+
+        rl2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (count > 0) {
+                    if (userHongBao.equals("2")) {
+                        Y.t("使用余额抵扣时,无法使用抵用券");
+                    } else {
+                        TuanGouDiYongQuanActivity.actionStart(mContext, inst_id, money, shopType);
+                    }
+                } else {
+                    Y.t("暂无可用红包");
+                }
             }
         });
     }
@@ -212,32 +262,34 @@ public class TuanGouShengChengDingDanActivity extends AbTuanGouShengChengDingDan
             tvZanwu.setText("暂无可用红包");
         }
 
-        String strPhone = PreferenceHelper.getInstance(TuanGouShengChengDingDanActivity.this).getString("user_phone", "");
-        tvShoujihaoNumber.setText(strPhone);
-
         if (TextUtils.isEmpty(available_balance)) {
             available_balance = "0.00";
         }
         tvDikoujine.setText(available_balance);
 
-        BigDecimal hongBao = new BigDecimal(available_balance);
+        hongBao = new BigDecimal(available_balance);
         if (hongBao.compareTo(BigDecimal.ZERO) == 0) {
             userHongBao = "0";//什么也不用
             ivChoose.setVisibility(View.INVISIBLE);
             tvDanqianDikou.setVisibility(View.GONE);
             tvDikoujine.setVisibility(View.GONE);
+            rtvJine.setText("¥" + finalDecimal.toString() + "生成订单");
+            tvMoney.setText("¥" + finalDecimal.toString());
         } else {
             userHongBao = "2";//用红包
             ivChoose.setVisibility(View.VISIBLE);
             tvDanqianDikou.setVisibility(View.VISIBLE);
             tvDikoujine.setVisibility(View.VISIBLE);
-//            moneyShiji = moneyZong.subtract(available_balanceB);
-//            setMoney();
-        }
 
-        tvXiaojiPrice.setText("¥ " + money);
-        tvMoney.setText("¥" + money);
-        tvJine.setText("¥" + money);
+            BigDecimal subtract = finalDecimal.subtract(hongBao);
+            if (subtract.intValue() <= 0) {
+                tvMoney.setText("¥0.01");
+                rtvJine.setText("¥0.01生成订单");
+            } else {
+                tvMoney.setText("¥" + finalDecimal.subtract(hongBao).toString());
+                rtvJine.setText("¥" + finalDecimal.subtract(hongBao).toString() + "生成订单");
+            }
+        }
     }
 
     /**
@@ -284,7 +336,6 @@ public class TuanGouShengChengDingDanActivity extends AbTuanGouShengChengDingDan
     private BigDecimal danjiaBigDecimal;
 
     private void setJiSuanShuLiang(BigDecimal shuLiangBigDecimal, BigDecimal danjiaBigDecimal, String type) {
-        BigDecimal finalDecimal = new BigDecimal("0");
         if (type.equals("0")) {
             if (shuLiangBigDecimal.compareTo(new BigDecimal("1")) == 0) {
                 Y.t("最小购买数量为1");
@@ -301,7 +352,14 @@ public class TuanGouShengChengDingDanActivity extends AbTuanGouShengChengDingDan
         }
 
         tvXiaojiPrice.setText(finalDecimal.toString() + "");
-        tvMoney.setText("¥" + finalDecimal.toString());
-        rtvJine.setText("¥" + finalDecimal.toString() + "生成订单");
+
+        BigDecimal subtract = finalDecimal.subtract(hongBao);
+        if (subtract.intValue() <= 0) {
+            tvMoney.setText("¥0.01");
+            rtvJine.setText("¥0.01生成订单");
+        } else {
+            tvMoney.setText("¥" + finalDecimal.subtract(hongBao).toString());
+            rtvJine.setText("¥" + finalDecimal.subtract(hongBao).toString() + "生成订单");
+        }
     }
 }

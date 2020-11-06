@@ -102,6 +102,7 @@ public class TuanGouDiYongQuanActivity extends BaseActivity {
                     public void onFinish() {
                         super.onFinish();
                         dismissProgressDialog();
+                        smartRefreshLayout.finishRefresh();
                     }
 
                     @Override

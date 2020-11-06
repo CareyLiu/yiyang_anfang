@@ -161,17 +161,15 @@ public class TuanGouMaiDanDingDanActivity extends AbTuanGouShengChengDingDan {
         rtv_jine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (userHongBao.equals("1")) {
-                    Y.e("风口浪尖的法律开始的地方是  " + diYongQuan + "  " + userHongBao);
                     TuanGouMaiDanZhiFuActivity.actionStart(TuanGouMaiDanDingDanActivity.this, inst_id, money, "1", diYongQuanID);
                 } else if (userHongBao.equals("2")) {
-                    Y.e("风口浪尖的法律开始的地方是fdf sd  " + diYongQuan + "  " + userHongBao);
                     TuanGouMaiDanZhiFuActivity.actionStart(TuanGouMaiDanDingDanActivity.this, inst_id, money, "2", "");
                 } else {
-                    Y.e("法大师傅大师傅 房贷 sd  " + diYongQuan + "  " + userHongBao);
                     TuanGouMaiDanZhiFuActivity.actionStart(TuanGouMaiDanDingDanActivity.this, inst_id, money, "1", "");
                 }
+
+                finish();
             }
         });
 
@@ -223,7 +221,7 @@ public class TuanGouMaiDanDingDanActivity extends AbTuanGouShengChengDingDan {
     }
 
     private void setMoney() {
-        if (moneyShiji.compareTo(BigDecimal.ZERO) == 0) {
+        if (moneyShiji.intValue() <= 0) {
             moneyShiji = new BigDecimal("0.01");
             tvMoney.setText("¥" + moneyShiji.toString());
         } else {

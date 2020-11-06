@@ -3,30 +3,69 @@ package com.smarthome.magic.activity.xiupeichang;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.amap.api.maps2d.model.LatLng;
+import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.ActionSheetDialog;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.SheBeiSetActivity;
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuangou.TuanGouMaiDanActivity;
+import com.smarthome.magic.activity.tuangou.TuanGouShangJiaDetailsActivity;
+import com.smarthome.magic.activity.tuangou.TuanGouShangPinDetailsActivity;
+import com.smarthome.magic.activity.tuangou.TuanGouShengChengDingDanActivity;
 import com.smarthome.magic.activity.xiupeichang.adapter.XiupeichangFuwuAdapter;
 import com.smarthome.magic.activity.xiupeichang.adapter.XiupeichangPingjiaAdapter;
+import com.smarthome.magic.activity.xiupeichang.model.XpcDetailsModel;
+import com.smarthome.magic.activity.xiupeichang.model.XpcFuwuModel;
+import com.smarthome.magic.activity.xiupeichang.model.XpcPingjiaModel;
 import com.smarthome.magic.activity.xiupeichang.view.XiupeichangTagsView;
 import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.app.UIHelper;
+import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
+import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.MyApplication;
+import com.smarthome.magic.config.PreferenceHelper;
+import com.smarthome.magic.config.Radius_GlideImageLoader;
+import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.TuanGouShangJiaListBean;
+import com.smarthome.magic.util.NavigationUtils;
 import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.smarthome.magic.app.App.JINGDU;
+import static com.smarthome.magic.app.App.WEIDU;
+import static com.smarthome.magic.get_net.Urls.LIBAOLIST;
 
 public class XiupeichangShangActivity extends BaseActivity {
 
@@ -67,6 +106,23 @@ public class XiupeichangShangActivity extends BaseActivity {
     RecyclerView rv_fuwu;
     @BindView(R.id.rv_pingjia)
     RecyclerView rv_pingjia;
+    @BindView(R.id.smartRefreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
+
+    private String inst_id;
+    private int page_num_fuwu;
+    private int page_num_pingjia;
+    private boolean isFuwu;
+    private XpcDetailsModel.DataBean detailsModel;
+    private String inst_phone;
+    private String lat_x;
+    private String lon_y;
+
+    private List<XpcFuwuModel.DataBean> fuwuModels = new ArrayList<>();
+    private XiupeichangFuwuAdapter fuwuAdapter;
+    private List<XpcPingjiaModel.DataBean> pingjiaModels = new ArrayList<>();
+    private XiupeichangPingjiaAdapter pingjiaAdapter;
+    private String inst_name;
 
     @Override
     public int getContentViewResId() {
@@ -93,7 +149,6 @@ public class XiupeichangShangActivity extends BaseActivity {
         });
     }
 
-
     @Override
     public void initImmersion() {
         mImmersionBar.with(this).statusBarColor(R.color.white).init();
@@ -102,23 +157,221 @@ public class XiupeichangShangActivity extends BaseActivity {
     /**
      * 用于其他Activty跳转到该Activity
      */
-    public static void actionStart(Context context) {
+    public static void actionStart(Context context, String inst_id) {
         Intent intent = new Intent(context, XiupeichangShangActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("inst_id", inst_id);
         context.startActivity(intent);
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initData();
         initAdapter();
+        initSM();
         addTag();
+        getNet();
+    }
+
+    private void initSM() {
+        smartRefreshLayout.setEnableLoadMore(true);
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getNet();
+            }
+        });
+        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                if (isFuwu) {
+                    lordFuwu();
+                } else {
+                    lordPingjia();
+                }
+            }
+        });
+    }
+
+    private void initData() {
+        inst_id = getIntent().getStringExtra("inst_id");
+        inst_id = "229";
+        page_num_fuwu = 0;
+        page_num_pingjia = 0;
+        isFuwu = true;
+    }
+
+    private void getNet() {
+        getShangpinDetails();
+        if (isFuwu) {
+            getFuwu();
+        } else {
+            getPingjia();
+        }
+    }
+
+    private void getPingjia() {
+        page_num_pingjia = 0;
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "08034");
+        map.put("key", Urls.key);
+        map.put("inst_id", inst_id);
+        map.put("page_num", page_num_pingjia + "");
+
+        Gson gson = new Gson();
+        OkGo.<AppResponse<XpcPingjiaModel.DataBean>>post(LIBAOLIST)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<XpcPingjiaModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<XpcPingjiaModel.DataBean>> response) {
+                        pingjiaModels = response.body().data;
+                        pingjiaAdapter.setNewData(pingjiaModels);
+                        pingjiaAdapter.notifyDataSetChanged();
+                    }
+                });
+    }
+
+    private void lordPingjia() {
+        page_num_pingjia++;
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "08034");
+        map.put("key", Urls.key);
+        map.put("inst_id", inst_id);
+        map.put("page_num", page_num_pingjia + "");
+        Gson gson = new Gson();
+        OkGo.<AppResponse<XpcPingjiaModel.DataBean>>post(LIBAOLIST)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<XpcPingjiaModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<XpcPingjiaModel.DataBean>> response) {
+                        List<XpcPingjiaModel.DataBean> data = response.body().data;
+                        pingjiaModels.addAll(data);
+                        pingjiaAdapter.setNewData(pingjiaModels);
+                        pingjiaAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        smartRefreshLayout.finishLoadMore();
+                    }
+                });
+    }
+
+    private void getFuwu() {
+        page_num_fuwu = 0;
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "08033");
+        map.put("key", Urls.key);
+        map.put("inst_id", inst_id);
+        map.put("page_num", page_num_fuwu + "");
+        Gson gson = new Gson();
+        OkGo.<AppResponse<XpcFuwuModel.DataBean>>post(LIBAOLIST)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<XpcFuwuModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<XpcFuwuModel.DataBean>> response) {
+                        fuwuModels = response.body().data;
+                        fuwuAdapter.setNewData(fuwuModels);
+                        fuwuAdapter.notifyDataSetChanged();
+                    }
+                });
+    }
+
+    private void lordFuwu() {
+        page_num_fuwu++;
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "08033");
+        map.put("key", Urls.key);
+        map.put("inst_id", inst_id);
+        map.put("page_num", page_num_fuwu + "");
+        Gson gson = new Gson();
+        OkGo.<AppResponse<XpcFuwuModel.DataBean>>post(LIBAOLIST)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<XpcFuwuModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<XpcFuwuModel.DataBean>> response) {
+                        List<XpcFuwuModel.DataBean> data = response.body().data;
+                        fuwuModels.addAll(data);
+                        fuwuAdapter.setNewData(fuwuModels);
+                        fuwuAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        smartRefreshLayout.finishLoadMore();
+                    }
+                });
+    }
+
+    private void getShangpinDetails() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "08032");
+        map.put("key", Urls.key);
+        map.put("y", PreferenceHelper.getInstance(mContext).getString(JINGDU, "0X11"));
+        map.put("x", PreferenceHelper.getInstance(mContext).getString(WEIDU, "0X11"));
+        map.put("inst_id", inst_id);
+
+        Gson gson = new Gson();
+        OkGo.<AppResponse<XpcDetailsModel.DataBean>>post(LIBAOLIST)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<XpcDetailsModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<XpcDetailsModel.DataBean>> response) {
+                        detailsModel = response.body().data.get(0);
+                        rating_bar.setNumStars(Y.getInt(detailsModel.getInst_number()));
+                        inst_name = detailsModel.getInst_name();
+                        tv_name.setText(inst_name);
+                        tv_address.setText(detailsModel.getAddr_all());
+                        tv_juli.setText(detailsModel.getMeter());
+                        inst_phone = detailsModel.getInst_phone();
+                        lat_x = detailsModel.getX();
+                        lon_y = detailsModel.getY();
+                        tv_yingye_time.setText("营业时间" + detailsModel.getTime());
+
+                        List<XpcDetailsModel.DataBean.LunboListBean> lunboList = detailsModel.getLunboList();
+                        List<String> imgs = new ArrayList<>();
+                        for (int i = 0; i < lunboList.size(); i++) {
+                            imgs.add(lunboList.get(i).getImg_url());
+                        }
+                        banner.setImageLoader(new Radius_GlideImageLoader());
+                        banner.setImages(imgs);
+                        //banner设置方法全部调用完毕时最后调用
+                        banner.start();
+                        banner.setOnBannerListener(new OnBannerListener() {
+                            @Override
+                            public void OnBannerClick(int position) {
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<XpcDetailsModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showProgressDialog();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
+                        smartRefreshLayout.finishRefresh();
+                    }
+                });
     }
 
     private void addTag() {
         List<String> tags = new ArrayList<>();
+        tags.add("修配门店");
         tags.add("8.5折优惠");
-        tags.add("美食优惠");
 
         ll_tag.removeAllViews();
         for (int i = 0; i < tags.size(); i++) {
@@ -129,30 +382,35 @@ public class XiupeichangShangActivity extends BaseActivity {
     }
 
     private void initAdapter() {
-        List<String> strings = new ArrayList<>();
-        strings.add("");
-        strings.add("");
-        strings.add("");
-        strings.add("");
-        XiupeichangFuwuAdapter fuwuAdapter = new XiupeichangFuwuAdapter(R.layout.item_xiupeichang_fuwu, strings);
+        fuwuAdapter = new XiupeichangFuwuAdapter(R.layout.item_xiupeichang_fuwu, fuwuModels);
         rv_fuwu.setLayoutManager(new LinearLayoutManager(mContext));
         rv_fuwu.setAdapter(fuwuAdapter);
+        fuwuAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (fuwuModels != null && fuwuModels.size() > position) {
+                    XpcFuwuModel.DataBean dataBean = fuwuModels.get(position);
+                    String inst_id = dataBean.getInst_id();
+                    String wares_id = dataBean.getWares_id();
+                    String shop_money_now = dataBean.getShop_money_now();
+                    String img_url = dataBean.getImg_url();
+                    String shop_title = dataBean.getShop_title();
+                    TuanGouShengChengDingDanActivity.actionStart(mContext, inst_id, shop_money_now,img_url, shop_title, "7", wares_id);
+                }
+            }
+        });
 
-        List<String> stringsP = new ArrayList<>();
-        stringsP.add("");
-        stringsP.add("");
-        stringsP.add("");
-        stringsP.add("");
-        XiupeichangPingjiaAdapter pingjiaAdapter = new XiupeichangPingjiaAdapter(R.layout.item_xiupeichang_pingjia, stringsP);
+
+        pingjiaAdapter = new XiupeichangPingjiaAdapter(R.layout.item_xiupeichang_pingjia, pingjiaModels);
         rv_pingjia.setLayoutManager(new LinearLayoutManager(mContext));
         rv_pingjia.setAdapter(pingjiaAdapter);
     }
 
-    @OnClick({R.id.bt_maidan, R.id.rl_select_fuwu, R.id.rl_select_pingjia})
+    @OnClick({R.id.bt_maidan, R.id.rl_select_fuwu, R.id.rl_select_pingjia, R.id.ll_lianxi, R.id.ll_daohang})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bt_maidan:
-                TuanGouMaiDanActivity.actionStart(mContext, "1", "1");
+                TuanGouMaiDanActivity.actionStart(mContext, inst_id, "7");
                 break;
             case R.id.rl_select_fuwu:
                 clickFuwu();
@@ -160,10 +418,67 @@ public class XiupeichangShangActivity extends BaseActivity {
             case R.id.rl_select_pingjia:
                 clickPingjia();
                 break;
+            case R.id.ll_lianxi:
+                clickLianxi();
+                break;
+            case R.id.ll_daohang:
+                clickDaohang();
+                break;
         }
     }
 
+    private void clickDaohang() {
+        if (TextUtils.isEmpty(lat_x) || TextUtils.isEmpty(lon_y)) {
+            return;
+        }
+
+        String items[] = {"高德地图导航", "百度地图导航"};
+        final ActionSheetDialog dialog = new ActionSheetDialog(this, items, null);
+        dialog.isTitleShow(false).show();
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        try {
+                            Double x = Double.valueOf(lat_x);
+                            Double y = Double.valueOf(lon_y);
+                            LatLng latLng = new LatLng(x, y);
+                            NavigationUtils.Navigation(latLng);
+                        } catch (Exception e) {
+                            UIHelper.ToastMessage(MyApplication.getApp().getApplicationContext(), "请下载高德地图后重新尝试", Toast.LENGTH_SHORT);
+                        }
+                        break;
+                    case 1:
+                        try {
+                            Double x = Double.valueOf(lat_x);
+                            Double y = Double.valueOf(lon_y);
+                            LatLng latLng = new LatLng(x, y);
+                        } catch (Exception e) {
+                            UIHelper.ToastMessage(MyApplication.getApp().getApplicationContext(), "请下载百度地图后重新尝试", Toast.LENGTH_SHORT);
+                        }
+                        break;
+                }
+                dialog.dismiss();
+            }
+        });
+    }
+
+    private void clickLianxi() {
+        if (TextUtils.isEmpty(inst_phone)) {
+            Y.t("暂无商家联系方式");
+            return;
+        }
+
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        Uri data = Uri.parse("tel:" + inst_phone);
+        intent.setData(data);
+        startActivity(intent);
+    }
+
     private void clickFuwu() {
+        isFuwu = true;
+
         vv_select_fuwu.setVisibility(View.VISIBLE);
         vv_select_pingjia.setVisibility(View.INVISIBLE);
 
@@ -172,9 +487,13 @@ public class XiupeichangShangActivity extends BaseActivity {
 
         rv_fuwu.setVisibility(View.VISIBLE);
         rv_pingjia.setVisibility(View.GONE);
+
+        getFuwu();
     }
 
     private void clickPingjia() {
+        isFuwu = false;
+
         vv_select_fuwu.setVisibility(View.INVISIBLE);
         vv_select_pingjia.setVisibility(View.VISIBLE);
 
@@ -183,5 +502,7 @@ public class XiupeichangShangActivity extends BaseActivity {
 
         rv_fuwu.setVisibility(View.GONE);
         rv_pingjia.setVisibility(View.VISIBLE);
+
+        getPingjia();
     }
 }

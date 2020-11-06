@@ -200,7 +200,6 @@ public class TuanGouShangJiaDetailsActivity extends AbStracTuanGouShangJiaDetail
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.rtv_qianggou:
-
                         TuanGouShangPinDetailsActivity.actionStart(TuanGouShangJiaDetailsActivity.this, tuanGouShangJiaDetailsAdapter.getData().get(position).getInst_id(), tuanGouShangJiaDetailsAdapter.getData().get(position).getWares_id(), storeListBean.getInst_name(), storeListBean.getInst_photo_url(), storeListBean.getInst_number(), storeListBean.getAddr_all());
                         break;
                 }

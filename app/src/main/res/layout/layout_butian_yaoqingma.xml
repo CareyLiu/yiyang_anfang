@@ -78,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
-                android:text="自营商品仅输码后才可购买噢"
+                android:text="输入好友邀请码，好友可获得高额返现红包"
                 android:textColor="#ff666666"
                 android:textSize="13sp" />
 
@@ -100,7 +100,7 @@
                 android:layout_height="42dp"
                 android:background="@drawable/background_radius_21_f5"
                 android:gravity="center"
-                android:text="取消"
+                android:text="忽略"
                 android:textColor="#ff333333"
                 android:textSize="15sp" />
 

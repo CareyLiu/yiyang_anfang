@@ -282,6 +282,7 @@ public class TuanGouShangJiaListBean {
             private String img_url;
             private String href_url;
             private String three_img_id;
+            public boolean chooseFlag = false;
 
             public String getItem_id() {
                 return item_id;

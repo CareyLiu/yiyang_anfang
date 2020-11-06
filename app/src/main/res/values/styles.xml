@@ -209,6 +209,13 @@
 
     </style>
 
+    <style name="storeRatingBarOranger_choose1" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/ratingbar_my_storelist_pink</item>
+        <item name="android:minHeight">15dp</item>
+        <item name="android:maxHeight">15dp</item>
+
+    </style>
+
 
     <!-- 自定义给店铺列表评分的星星 room_rating_bar-->
     <style name="storeRatingBarPink1" parent="@android:style/Widget.RatingBar">

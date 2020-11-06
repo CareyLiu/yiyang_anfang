@@ -290,12 +290,27 @@
                         </ImageView>
                     </LinearLayout>
 
+                    <RelativeLayout
+                        android:id="@+id/rl_xiupeichang"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_dalibao">
+
+                        <ImageView
+                            android:id="@+id/iv_xiupeichang"
+                            android:layout_centerInParent="true"
+                            android:src="@mipmap/xiupeichagn_pic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
 
                     <RelativeLayout
                         android:id="@+id/rl_zijian"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@+id/iv_dalibao">
+                        app:layout_constraintTop_toBottomOf="@+id/rl_xiupeichang">
 
                         <ImageView
                             android:id="@+id/iv_zijian"

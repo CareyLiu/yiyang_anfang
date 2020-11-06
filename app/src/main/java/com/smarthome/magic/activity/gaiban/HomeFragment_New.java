@@ -41,6 +41,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.xiupeichang.XiuPeiChangHomeActivity;
 import com.smarthome.magic.activity.zckt.AirConditionerActivity;
 import com.smarthome.magic.activity.DefaultX5WebView_HaveNameActivity;
 import com.smarthome.magic.activity.SheBeiLieBiaoActivity;
@@ -137,6 +138,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
     private LinearLayout llBackground_Top, llBackground_Middle;
     private TextView tvZiYingTop, tvRemTop, tvZiYingZhiGongTop, tvReMenShangPinTop;
     private TextView tvZiYingMiddle, tvReMenMiddle, tvZiYingZhiGongMiddle, tvReMenShangPinMiddle;
+    private RelativeLayout rlXiuPeiChang;
 
 
     private View viewLineTop, viewLineMiddle, remenViewLineTop;
@@ -263,6 +265,15 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         // viewLineMiddle = middlePanel.findViewById(R.id.view_line);
         rlvRemen = view.findViewById(R.id.rlv_remen);
         remenViewLineTop = topPanel.findViewById(R.id.view_line_remen);
+        rlXiuPeiChang = view.findViewById(R.id.rl_xiupeichang);
+        rlXiuPeiChang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //UIHelper.ToastMessage(getActivity(), "点击了修配厂");
+                //XiuPeiChangHomeActivity.actionStart(getActivity());
+                TuanGouShangJiaListActivity.actionStart(getActivity(),"7");
+            }
+        });
         clZiYing_Top.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

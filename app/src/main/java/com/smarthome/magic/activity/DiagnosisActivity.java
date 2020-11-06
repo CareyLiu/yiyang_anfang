@@ -23,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
@@ -38,6 +39,7 @@ import com.rairmmd.andmqtt.MqttPublish;
 import com.rairmmd.andmqtt.MqttSubscribe;
 import com.rairmmd.andmqtt.MqttUnSubscribe;
 import com.smarthome.magic.R;
+import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
@@ -48,6 +50,7 @@ import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.LordingDialog;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuoTIshi_Clear;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Delete;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Success;
@@ -58,6 +61,7 @@ import com.smarthome.magic.model.ServiceModel;
 import com.smarthome.magic.service.HeaterMqttService;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.ConstantUtil;
+import com.smarthome.magic.util.DoMqttValue;
 import com.smarthome.magic.view.CustomBaseDialog;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -117,16 +121,17 @@ public class DiagnosisActivity extends BaseActivity {
     Button btnClean;
     @BindView(R.id.rl_back)
     RelativeLayout rlBack;
-    @BindView(R.id.rl_consult)
-    RelativeLayout rlConsult;
-    @BindView(R.id.rl_title)
-    RelativeLayout rl_title;
+
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
     private CustomBaseDialog dialog;
     private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
     private List<ServiceModel.DataBean> list = new ArrayList<>();
     AlarmClass alarmClass;
+
+    String whatUWant = "";
+
+    private LordingDialog lordingDialog;
 
     @Override
     public int getContentViewResId() {
@@ -156,23 +161,18 @@ public class DiagnosisActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
-    @Override
-    public void initImmersion() {
-        super.initImmersion();
-        //  mImmersionBar.with(this).titleBar(rl_title).transparentStatusBar().init();
-        mImmersionBar.with(this).statusBarColor(R.color.blue_3a96e9).init();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-
+        PreferenceHelper.getInstance(mContext).putString(App.CHOOSE_KONGZHI_XIANGMU, DoMqttValue.FENGNUAN);
 
         if (!AndMqtt.getInstance().isConneect()) {
             mTvTitle.setText("设备已离线，请检查设备");
             return;
         }
+
 
         final Animation animation = new AlphaAnimation(1, 0); // Change alpha from fully visible to invisible
         animation.setDuration(500); // duration - half a second
@@ -183,13 +183,13 @@ public class DiagnosisActivity extends BaseActivity {
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
         // requestData();
-        requestData2();
+        // requestData2();
         alarmClass = (AlarmClass) getIntent().getSerializableExtra("alarmClass");
         if (alarmClass != null) {
             Log.i("alarmClass", alarmClass.changjia_name + alarmClass.sell_phone);
 
             mTvTitle.setText("整机运转异常");
-            layoutInfo.setVisibility(View.VISIBLE);
+            layoutInfo.setVisibility(View.GONE);
             layoutMessage.setVisibility(View.VISIBLE);
             btnClean.setVisibility(View.VISIBLE);
             mTvMessage.setText(alarmClass.failure_name);
@@ -198,6 +198,22 @@ public class DiagnosisActivity extends BaseActivity {
             mTvFactory.setText(alarmClass.changjia_name);
             mTvPhone.setText(alarmClass.sell_phone);
             mTvType.setText(alarmClass.xinghao);
+
+            CARBOX_GETNOW = "wit/cbox/app/" + MyApplication.getServer_id() + alarmClass.ccid;
+            CAR_CTROL = "wit/cbox/hardware/" + MyApplication.getServer_id() + alarmClass.ccid;
+            AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                    .setTopic(CARBOX_GETNOW)
+                    .setQos(2), new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Log.i("Rair", "(MainActivity.java:63)-onSuccess:-&gt;订阅成功" + CARBOX_GETNOW);
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                    Log.i("Rair", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
+                }
+            });
 
         } else {
             requestData();
@@ -212,7 +228,7 @@ public class DiagnosisActivity extends BaseActivity {
                         AlarmClass alarmClass = gson.fromJson(message.content.toString(), AlarmClass.class);
                         Log.i("alarmClass", alarmClass.changjia_name + alarmClass.sell_phone);
                         mTvTitle.setText("整机运转异常");
-                        layoutInfo.setVisibility(View.VISIBLE);
+                        layoutInfo.setVisibility(View.GONE);
                         layoutMessage.setVisibility(View.VISIBLE);
                         btnClean.setVisibility(View.VISIBLE);
                         mTvMessage.setText(alarmClass.failure_name);
@@ -227,64 +243,76 @@ public class DiagnosisActivity extends BaseActivity {
                     } catch (Exception e) {
                         System.out.println("警报异常" + e.getMessage());
                     }
-//                    mTvVoltage.setText(alarmClass.);
-//                    mTvRate.setText(alarmClass.);
-
-                    // showDialog("是否清除故障");
-
-//                    MyCarCaoZuoDialog_CaoZuoTIshi_Clear clear = new MyCarCaoZuoDialog_CaoZuoTIshi_Clear(DiagnosisActivity.this, new MyCarCaoZuoDialog_CaoZuoTIshi_Clear.OnDialogItemClickListener() {
-//                        @Override
-//                        public void clickLeft() {
-//
-//                        }
-//
-//                        @Override
-//                        public void clickRight() {
-//                            AndMqtt.getInstance().publish(new MqttPublish()
-//                                    .setMsg("M691.").setRetained(false)
-//                                    .setQos(2)
-//                                    .setTopic(CAR_CTROL), new IMqttActionListener() {
-//                                @Override
-//                                public void onSuccess(IMqttToken asyncActionToken) {
-//                                    Log.i("Rair", "(清除故障 --- 发布成功");
-//                                    //      UIHelper.ToastMessage(DiagnosisActivity.this, "故障清除中，请稍候", Toast.LENGTH_SHORT);
-//                                    // dialog.dismiss();
-//                                    UIHelper.ToastMessage(DiagnosisActivity.this, "故障已清除", Toast.LENGTH_SHORT);
-//                                    //获得车辆的实时数据和基本信息
-//                                    finish();
-//
-//                                }
-//
-//                                @Override
-//                                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-//                                    Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
-//                                }
-//                            });
-//                        }
-//                    });
-//                    clear.show();
                 } else if (message.type == ConstanceValue.MSG_CLEARGUZHANGSUCCESS) {
-                    //清除故障
-//                    dialog.setTitle("成功");
-//                    dialog.setContent("清除故障成功");
-//                    dialog.setPic(getResources().getDrawable(R.drawable.chenggong));
-//                    dialog.setCancelClickListener(null);
-//                    dialog.setConfirmClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            dialog.dismiss();
-//                        }
-//                    });
-//
-//                    dialog.setUiBeforShow();
 
-                    MyCarCaoZuoDialog_Success dialog_success = new MyCarCaoZuoDialog_Success(DiagnosisActivity.this);
-                    dialog_success.show();
-                    layoutInfo.setVisibility(View.GONE);
-                    layoutMessage.setVisibility(View.GONE);
-                    btnClean.setVisibility(View.GONE);
-                    mTvTitle.setText("整机运转正常");
-                    UIHelper.ToastMessage(DiagnosisActivity.this, "故障已清除", Toast.LENGTH_LONG);
+
+                } else if (message.type == ConstanceValue.MSG_CAR_J_M) {
+                    //接收到信息
+                    Log.i("msg_car_j_m", message.content.toString());
+
+                    String messageData = message.content.toString().substring(1, message.content.toString().length() - 1);
+                    Log.i("msg_car_j_m_data", messageData);
+
+
+                    // 驻车加热器故障码->01至18	2	 标准故障码
+                    String zhu_car_stoppage_no = messageData.substring(35, 37);
+                    zhu_car_stoppage_no = 0 <= zhu_car_stoppage_no.indexOf("a") ? "" : String.valueOf(Integer.parseInt(zhu_car_stoppage_no));
+
+                    if (zhu_car_stoppage_no != null) {
+                        layoutMessage.setVisibility(View.VISIBLE);
+                        btnClean.setVisibility(View.VISIBLE);
+
+
+                        if (whatUWant.equals("qingchuguzhang") && StringUtils.isEmpty(zhu_car_stoppage_no)) {
+                            lordingDialog.dismiss();
+                            whatUWant = "";
+//                            MyCarCaoZuoDialog_Success dialog_success = new MyCarCaoZuoDialog_Success(DiagnosisActivity.this);
+//                            dialog_success.show();
+                            layoutInfo.setVisibility(View.GONE);
+                            layoutMessage.setVisibility(View.GONE);
+                            btnClean.setVisibility(View.GONE);
+                            mTvTitle.setText("整机运转正常");
+                            UIHelper.ToastMessage(DiagnosisActivity.this, "故障已清除", Toast.LENGTH_LONG);
+                            finish();
+                        }
+
+                        switch (zhu_car_stoppage_no) {
+
+                            case "1":
+                                mTvMessage.setText("电压过低或过高");
+                                break;
+                            case "2":
+                                mTvMessage.setText("油泵开路或短路");
+                                break;
+                            case "3":
+                                mTvMessage.setText("壳体温度传感器开路或短路");
+                                break;
+                            case "4":
+                                mTvMessage.setText("入风口传感器开路或短路");
+                                break;
+                            case "5":
+                                mTvMessage.setText("点火塞开路或短路");
+                                break;
+                            case "6":
+                                mTvMessage.setText("入风口传感器高温报警");
+                                break;
+                            case "8":
+                                mTvMessage.setText("风机传感器开路或短路");
+                                break;
+                            case "9":
+                                mTvMessage.setText("火焰熄灭故障");
+                                break;
+                            case "10":
+                                mTvMessage.setText("点火失败故障");
+                                break;
+                            case "11":
+                                mTvMessage.setText("壳体高温报警");
+                                break;
+                            case "18":
+                                mTvMessage.setText("晶屏与主机失联故障");
+                                break;
+                        }
+                    }
 
                 }
 
@@ -339,7 +367,7 @@ public class DiagnosisActivity extends BaseActivity {
                             });
 
                             mTvTitle.setText("整机运转异常");
-                            layoutInfo.setVisibility(View.VISIBLE);
+                            // layoutInfo.setVisibility(View.VISIBLE);
                             layoutMessage.setVisibility(View.VISIBLE);
                             btnClean.setVisibility(View.VISIBLE);
                             mTvMessage.setText(response.body().data.get(0).getFailure_name());
@@ -355,7 +383,7 @@ public class DiagnosisActivity extends BaseActivity {
 
                     @Override
                     public void onError(Response<AppResponse<HeaterDetails.DataBean>> response) {
-                        AlertUtil.t(DiagnosisActivity.this, response.getException().getMessage());
+                        UIHelper.ToastMessage(DiagnosisActivity.this, response.getException().getMessage());
                     }
                 });
     }
@@ -384,7 +412,7 @@ public class DiagnosisActivity extends BaseActivity {
 
                     @Override
                     public void onError(Response<AppResponse<ServiceModel.DataBean>> response) {
-                        AlertUtil.t(DiagnosisActivity.this, response.getException().getMessage());
+                        UIHelper.ToastMessage(DiagnosisActivity.this, response.getException().getMessage());
                     }
                 });
     }
@@ -405,47 +433,24 @@ public class DiagnosisActivity extends BaseActivity {
             }
         });
 
-//        AndMqtt.getInstance().unSubscribe(new MqttUnSubscribe().setTopic(CARBOX_GETNOW), new IMqttActionListener() {
-//            @Override
-//            public void onSuccess(IMqttToken asyncActionToken) {
-//                Log.i("Rair", "(MainActivity.java:93)-onSuccess:-&gt;取消订阅成功");
-//            }
-//
-//            @Override
-//            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-//                Log.i("Rair", "(MainActivity.java:98)-onFailure:-&gt;取消订阅失败");
-//            }
-//        });
+        AndMqtt.getInstance().unSubscribe(new MqttUnSubscribe().setTopic(CARBOX_GETNOW), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+                Log.i("Rair", "(MainActivity.java:93)-onSuccess:-&gt;取消订阅成功");
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                Log.i("Rair", "(MainActivity.java:98)-onFailure:-&gt;取消订阅失败");
+            }
+        });
     }
 
-    @OnClick({R.id.rl_back, R.id.rl_consult, R.id.btn_clean})
+    @OnClick({R.id.rl_back, R.id.btn_clean})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_back:
                 finish();
-                break;
-            case R.id.rl_consult:
-                final NormalListDialog dialog = new NormalListDialog(this, mMenuItems);
-                dialog.title("请选择")//
-                        .showAnim(mBasIn)//
-                        .dismissAnim(mBasOut)//
-                        .show();
-                dialog.setOnOperItemClickL(new OnOperItemClickL() {
-                    @Override
-                    public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        //此处title参数用来区分是车主端还是客服端
-                        ServiceModel.DataBean dataBean = list.get(position);
-                        Conversation.ConversationType conversationType = Conversation.ConversationType.PRIVATE;
-                        String targetId = dataBean.getSub_accid();
-                        String instName = dataBean.getSub_user_name();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("dianpuming", instName);
-                        bundle.putString("inst_accid", targetId);
-                        bundle.putString("shoptype", "1");
-                        RongIM.getInstance().startConversation(mContext, conversationType, targetId, instName, bundle);
-                        dialog.dismiss();
-                    }
-                });
                 break;
             case R.id.btn_clean:
                 MyCarCaoZuoDialog_CaoZuoTIshi_Clear clear = new MyCarCaoZuoDialog_CaoZuoTIshi_Clear(DiagnosisActivity.this, new MyCarCaoZuoDialog_CaoZuoTIshi_Clear.OnDialogItemClickListener() {
@@ -456,6 +461,12 @@ public class DiagnosisActivity extends BaseActivity {
 
                     @Override
                     public void clickRight() {
+
+                        lordingDialog = new LordingDialog(mContext);
+                        lordingDialog.setTextMsg("正在清除，请稍后");
+                        lordingDialog.show();
+
+
                         AndMqtt.getInstance().publish(new MqttPublish()
                                 .setMsg("M691.").setRetained(false)
                                 .setQos(2)
@@ -470,6 +481,7 @@ public class DiagnosisActivity extends BaseActivity {
                                 layoutInfo.setVisibility(View.GONE);
                                 layoutMessage.setVisibility(View.GONE);
                                 btnClean.setVisibility(View.GONE);
+                                whatUWant = "qingchuguzhang";
                                 //finish();
                             }
 
@@ -482,5 +494,11 @@ public class DiagnosisActivity extends BaseActivity {
                 });
                 clear.show();
         }
+    }
+
+    @Override
+    public void initImmersion() {
+        mImmersionBar = ImmersionBar.with(this);
+        mImmersionBar.init();
     }
 }

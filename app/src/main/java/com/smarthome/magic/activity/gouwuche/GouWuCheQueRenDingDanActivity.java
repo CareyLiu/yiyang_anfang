@@ -124,7 +124,13 @@ public class GouWuCheQueRenDingDanActivity extends BaseActivity implements QueRe
                 if (visibleOrGon) {
                     if (StringUtils.isEmpty(etYaoQingMa.getText().toString())) {
 
-                        UIHelper.ToastMessage(GouWuCheQueRenDingDanActivity.this, "请填写邀请码后再进行下单");
+                        //UIHelper.ToastMessage(GouWuCheQueRenDingDanActivity.this, "请填写邀请码后再进行下单");
+
+                        progressDialog.setMessage("正在校验并支付，请稍后...");
+                        progressDialog.show();
+                        //立即支付
+                        PreferenceHelper.getInstance(GouWuCheQueRenDingDanActivity.this).putString(App.ZIYING_PAY, "ZIYING_PAY");
+                        getWeiXinOrZhiFuBao();
                     } else {
                         getNet_butian(etYaoQingMa.getText().toString());
                     }

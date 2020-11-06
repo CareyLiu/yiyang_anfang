@@ -338,5 +338,5 @@
         android:textStyle="bold"
         app:rv_backgroundColor="#fffa7e00"
         app:rv_cornerRadius="@dimen/dp_10"
-        tools:text="生成订单" />
+        android:text="生成订单" />
 </RelativeLayout>

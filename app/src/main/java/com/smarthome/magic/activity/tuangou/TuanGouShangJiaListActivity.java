@@ -35,6 +35,7 @@ import com.smarthome.magic.config.GlideImageLoader;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.TuanGouShangJiaListBean;
+import com.smarthome.magic.util.GlideShowImageUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
@@ -89,6 +90,19 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
             @Override
             public void onClick(View v) {
                 constrain.setVisibility(View.GONE);
+
+                quanbuShow = false;
+                ivImage1.setBackgroundResource(R.mipmap.shangjia_icon_shouqi);
+                tvQuanBu.setTextColor(TuanGouShangJiaListActivity.this.getResources().getColor(R.color.black_666666));
+
+                zhinengpaixuShow = false;
+                ivImage2.setBackgroundResource(R.mipmap.shangjia_icon_shouqi);
+                tvZhiNengPaiXu.setTextColor(TuanGouShangJiaListActivity.this.getResources().getColor(R.color.black_666666));
+
+                shaixuanShow = false;
+                ivImage3.setBackgroundResource(R.mipmap.shangjia_icon_shouqi);
+                tvShaiXuan.setTextColor(TuanGouShangJiaListActivity.this.getResources().getColor(R.color.black_666666));
+
             }
         });
         srLSmart.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -106,6 +120,7 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                 getNet();
             }
         });
+
     }
 
     Banner banner;
@@ -158,8 +173,8 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                     meter = "";
                     item_id = ziJian_headerAdapter.getData().get(position).getHref_url();
                     three_img_id = ziJian_headerAdapter.getData().get(position).getThree_img_id();
-                    imgType = ziJian_headerAdapter.getData().get(position).getId();
-                    //image_type =
+                    //  imgType = ziJian_headerAdapter.getData().get(position).getId();
+                    imgType = type;
                     getNet_storeList();
                 }
             }
@@ -404,6 +419,7 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
 
                 if (quanbuShow) {
                     //   quanbuShow = !quanbuShow;
+
                     constrain.setVisibility(View.GONE);
                     quanbuShow = false;
                     ivImage1.setBackgroundResource(R.mipmap.shangjia_icon_shouqi);
@@ -427,27 +443,53 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                     constrain.getBackground().setAlpha(200);// 0~255透明度值
 
                     constrainXx.removeAllViews();
-
+                    List<TuanGouShangJiaListBean.DataBean.IconBean> iconListBeans1 = new ArrayList<>();
+                    TuanGouShangJiaListBean.DataBean.IconBean iconBean = new TuanGouShangJiaListBean.DataBean.IconBean();
+                    iconBean.setName("全部");
+                    iconListBeans1.add(iconBean);
                     for (int i = 0; i < iconListBeans.size(); i++) {
+                        iconListBeans1.add(iconListBeans.get(i));
+
+                    }
+                    for (int i = 0; i < iconListBeans1.size(); i++) {
                         View viewHortial = View.inflate(TuanGouShangJiaListActivity.this, R.layout.item_hortial_view, null);
                         TextView tvText = viewHortial.findViewById(R.id.tv_text);
-                        tvText.setText(iconListBeans.get(i).getName());
+                        tvText.setText(iconListBeans1.get(i).getName());
+
                         final int finalI = i;
                         viewHortial.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                pageNumber = "0";
-                                item_id = ziJian_headerAdapter.getData().get(finalI).getHref_url();
-                                three_img_id = ziJian_headerAdapter.getData().get(finalI).getThree_img_id();
-                                inst_id = "";
+                                tvQuanBu.setText(iconListBeans1.get(finalI).getName());
+                                if (iconListBeans1.get(finalI).getName().equals("全部")) {
+                                    pageNumber = "0";
+                                    item_id = "";
+                                    three_img_id = "";
+                                    inst_id = "";
+                                    imgType = type;
+                                } else {
+                                    pageNumber = "0";
+                                    item_id = iconListBeans1.get(finalI).getHref_url();
+                                    three_img_id = iconListBeans1.get(finalI).getThree_img_id();
+                                    inst_id = "";
+                                    imgType = type;
+                                }
 
 
                                 //image_type =
                                 getNet_storeList();
                                 constrain.setVisibility(View.GONE);
-                                quanbuShow = true;
+                                quanbuShow = false;
+                                ivImage1.setBackgroundResource(R.mipmap.shangjia_icon_shouqi);
+                                tvQuanBu.setTextColor(TuanGouShangJiaListActivity.this.getResources().getColor(R.color.black_666666));
+
                                 zhinengpaixuShow = false;
+                                ivImage2.setBackgroundResource(R.mipmap.shangjia_icon_shouqi);
+                                tvZhiNengPaiXu.setTextColor(TuanGouShangJiaListActivity.this.getResources().getColor(R.color.black_666666));
+
                                 shaixuanShow = false;
+                                ivImage3.setBackgroundResource(R.mipmap.shangjia_icon_shouqi);
+                                tvShaiXuan.setTextColor(TuanGouShangJiaListActivity.this.getResources().getColor(R.color.black_666666));
                             }
                         });
                         constrainXx.addView(viewHortial);
@@ -456,6 +498,7 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                 }
             }
         });
+
         tvShaiXuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -483,7 +526,19 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
 
                     quanbuShow = false;
                     zhinengpaixuShow = false;
-                    shaixuanShow = true;
+                    //shaixuanShow = true;
+
+                    quanbuShow = false;
+                    ivImage1.setBackgroundResource(R.mipmap.shangjia_icon_shouqi);
+                    tvQuanBu.setTextColor(TuanGouShangJiaListActivity.this.getResources().getColor(R.color.black_666666));
+
+                    zhinengpaixuShow = false;
+                    ivImage2.setBackgroundResource(R.mipmap.shangjia_icon_shouqi);
+                    tvZhiNengPaiXu.setTextColor(TuanGouShangJiaListActivity.this.getResources().getColor(R.color.black_666666));
+
+                    shaixuanShow = false;
+                    ivImage3.setBackgroundResource(R.mipmap.shangjia_icon_shouqi);
+                    tvShaiXuan.setTextColor(TuanGouShangJiaListActivity.this.getResources().getColor(R.color.black_666666));
                 }
             }
         });
@@ -542,14 +597,26 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
 
                                     order = "3";
                                 }
-
-
+                                imgType = type;
+                                tvZhiNengPaiXu.setText(listData.get(finalI));
                                 //image_type =
                                 getNet_storeList();
                                 constrain.setVisibility(View.GONE);
                                 quanbuShow = true;
                                 zhinengpaixuShow = false;
                                 shaixuanShow = false;
+
+                                quanbuShow = false;
+                                ivImage1.setBackgroundResource(R.mipmap.shangjia_icon_shouqi);
+                                tvQuanBu.setTextColor(TuanGouShangJiaListActivity.this.getResources().getColor(R.color.black_666666));
+
+                                zhinengpaixuShow = false;
+                                ivImage2.setBackgroundResource(R.mipmap.shangjia_icon_shouqi);
+                                tvZhiNengPaiXu.setTextColor(TuanGouShangJiaListActivity.this.getResources().getColor(R.color.black_666666));
+
+                                shaixuanShow = false;
+                                ivImage3.setBackgroundResource(R.mipmap.shangjia_icon_shouqi);
+                                tvShaiXuan.setTextColor(TuanGouShangJiaListActivity.this.getResources().getColor(R.color.black_666666));
                             }
                         });
                         constrainXx.addView(viewHortial);

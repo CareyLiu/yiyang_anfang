@@ -158,6 +158,10 @@ public class ZhiNengHomeBean {
                 device_ccid_up = in.readString();
             }
 
+            public DeviceBean() {
+
+            }
+
             public static final Creator<DeviceBean> CREATOR = new Creator<DeviceBean>() {
                 @Override
                 public DeviceBean createFromParcel(Parcel in) {

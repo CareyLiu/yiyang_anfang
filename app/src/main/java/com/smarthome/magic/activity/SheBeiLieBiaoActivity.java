@@ -122,7 +122,7 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
                                 if (NetworkUtils.isConnected(mContext)) {
                                     Activity currentActivity = AppManager.getAppManager().currentActivity();
                                     if (currentActivity != null) {
-                                        AirConditionerActivity.actionStart(mContext, ccid);
+                                        AirConditionerActivity.actionStart(mContext, ccid,"驻车空调");
                                     }
                                 } else {
                                     UIHelper.ToastMessage(mContext, "请连接网络后重新尝试");

@@ -114,7 +114,8 @@ public class ZhiNengDeviceFragment extends Fragment {
     public void onRefresh() {
         if (getArguments() != null) {
             List<ZhiNengHomeBean.DataBean.DeviceBean> device = getArguments().getParcelableArrayList("device");
-            if (device.size() > 0) {
+            String strPhone = PreferenceHelper.getInstance(getActivity()).getString("user_phone", "");
+            if (strPhone.equals("15114684672")||strPhone.equals("17645185187")) {
                 ZhiNengHomeBean.DataBean.DeviceBean kongtiaoBean = new ZhiNengHomeBean.DataBean.DeviceBean();
                 kongtiaoBean.setDevice_ccid("kkkkkkkkkkkkkkkk90120018");
                 kongtiaoBean.setDevice_name("智能空調");
@@ -126,7 +127,6 @@ public class ZhiNengDeviceFragment extends Fragment {
                 kongtiaoBean.setWork_state("3");
                 device.add(kongtiaoBean);
             }
-
             member_type = getArguments().getString("member_type");
             dataBean.clear();
             dataBean.addAll(device);

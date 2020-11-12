@@ -131,9 +131,15 @@ public class TuanGouShengChengDingDanActivity extends AbTuanGouShengChengDingDan
                     diYongQuanID = split[1];
                     tvZanwu.setText("抵用券减" + diYongQuan + "元");
                     userHongBao = "1";
-                    BigDecimal available_balanceB = Y.getMoneyB(diYongQuan);
-                    tvMoney.setText("¥" + finalDecimal.subtract(available_balanceB).toString());
-                    rtvJine.setText("¥" + finalDecimal.subtract(available_balanceB).toString() + "生成订单");
+                    BigDecimal available_balanceB = finalDecimal.subtract(Y.getMoneyB(diYongQuan));
+
+                    if (available_balanceB.intValue() <= 0) {
+                        tvMoney.setText("¥0.01");
+                        rtvJine.setText("¥0.01生成订单");
+                    } else {
+                        tvMoney.setText("¥" + available_balanceB.toString());
+                        rtvJine.setText("¥" + available_balanceB.toString() + "生成订单");
+                    }
                 }
             }
         }));

@@ -17,6 +17,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/ll_tou"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -93,199 +94,161 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/grayline_ececec" />
-
         <LinearLayout
-            android:id="@+id/ll_zonghe_xiaoliang"
+            android:id="@+id/rl_ll"
             android:layout_width="match_parent"
             android:layout_height="42dp"
-            android:layout_below="@+id/rl_main"
-            android:background="@color/white"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/rlv_list">
 
             <RelativeLayout
-                android:id="@+id/rl_1"
+                android:id="@+id/rl_quanbu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/tv_zonghe"
+                <LinearLayout
+                    android:id="@+id/ll_quanbu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="综合"
-                    android:textColor="#ffd61832"
-                    android:textSize="14sp" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
+                    <TextView
+                        android:id="@+id/tv_quanbu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="全部"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/dianpu_jiage_jiangxu" />
+
+                </LinearLayout>
 
             </RelativeLayout>
 
-
-            <View
-
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_marginVertical="10dp"
-                android:background="#ffcccccc" />
-
             <RelativeLayout
-                android:id="@+id/rl_2"
+                android:id="@+id/rl_zhinengpaixu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/tv_xiaoliang"
+                <LinearLayout
+                    android:id="@+id/ll_zhinengpaixu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="销量"
-                    android:textColor="#ff111111"
-                    android:textSize="14sp" />
+                    android:orientation="horizontal">
 
+                    <TextView
+                        android:id="@+id/tv_zhinengpaixu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="智能排序"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/dianpu_jiage_jiangxu" />
+
+                </LinearLayout>
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/rl_shaixuan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:id="@+id/ll_shaixuan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_shaixuan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="筛选"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/dianpu_jiage_jiangxu" />
+
+                </LinearLayout>
+            </RelativeLayout>
 
         </LinearLayout>
 
-        <View
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/srL_smart"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/grayline_ececec" />
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srlTextSizeTime="10sp"
+                app:srlTextSizeTitle="@dimen/sp_12" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/swipe_target"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
-        <RelativeLayout
+            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffeeeeee"
+                app:srlTextSizeTime="10sp"
+                app:srlTextSizeTitle="@dimen/sp_12" />
+
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constrain"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:background="#282828"
+            android:visibility="visible">
 
-            <com.scwang.smartrefresh.layout.SmartRefreshLayout
-                android:id="@+id/refreshLayout"
+            <LinearLayout
+                android:id="@+id/constrain_xx"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/grayf3f3f3">
-
-                <com.scwang.smartrefresh.layout.header.ClassicsHeader
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srlTextSizeTime="10sp"
-                    app:srlTextSizeTitle="@dimen/sp_12" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/swipe_target"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#ffeeeeee" />
-
-                <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#ffeeeeee"
-                    app:srlTextSizeTime="10sp"
-                    app:srlTextSizeTitle="@dimen/sp_12" />
-            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent">
 
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constrain"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#282828"
-                android:visibility="gone">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constrain_xx"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    app:layout_constraintTop_toTopOf="parent">
+            </LinearLayout>
 
 
-                    <TextView
-                        android:id="@+id/tv_zhekou"
-                        android:layout_width="match_parent"
-                        android:layout_height="42dp"
-                        android:layout_marginLeft="15dp"
-                        android:gravity="center_vertical"
-                        android:text="折扣"
-                        android:textColor="@color/black"
-                        android:textSize="13sp"
-                        android:visibility="gone"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <View
-                        android:id="@+id/view_1"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/grayline_ececec"
-                        android:visibility="gone"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_zhekou" />
-
-
-                    <TextView
-                        android:id="@+id/tv_jiagesheng"
-                        android:layout_width="match_parent"
-                        android:layout_height="42dp"
-                        android:layout_marginLeft="15dp"
-                        android:gravity="center_vertical"
-                        android:text="价格升序"
-                        android:textColor="@color/black"
-                        android:textSize="13sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_zhekou" />
-
-                    <View
-                        android:id="@+id/view_2"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/grayline_ececec"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_jiagesheng" />
-
-
-                    <TextView
-                        android:id="@+id/tv_jiagejiang"
-                        android:layout_width="match_parent"
-                        android:layout_height="42dp"
-                        android:layout_marginLeft="15dp"
-                        android:gravity="center_vertical"
-                        android:text="价格降序"
-                        android:textColor="@color/black"
-                        android:textSize="13sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_jiagesheng" />
-
-                    <View
-                        android:id="@+id/view_4"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/grayline_ececec"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_jiagejiang" />
-
-
-                    <TextView
-                        android:id="@+id/tv_xiaoliagnjiang"
-                        android:layout_width="match_parent"
-                        android:layout_height="42dp"
-                        android:layout_marginLeft="15dp"
-                        android:gravity="center_vertical"
-                        android:text="销量降序"
-                        android:textColor="@color/black"
-                        android:textSize="13sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view_4" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/grayline_ececec"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_zhekou" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </RelativeLayout>
     </LinearLayout>
 
 

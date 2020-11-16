@@ -24,6 +24,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.WebViewActivity;
 import com.smarthome.magic.activity.xin_tuanyou.TuanYouList;
+import com.smarthome.magic.activity.xiupeichang.XiuPeiChangSearchActivity;
 import com.smarthome.magic.activity.xiupeichang.XiupeichangShangActivity;
 import com.smarthome.magic.adapter.TuanGouShangJiaHeaderListAdapter;
 import com.smarthome.magic.adapter.tuangou.TuanGouShangJiaListAdapter;
@@ -634,9 +635,9 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
 
                 switch (view.getId()) {
                     case R.id.constrain:
-                        if (type.equals("7")){
-                            XiupeichangShangActivity.actionStart(mContext,tuanGouShangJiaListAdapter.getData().get(position).getInst_id());
-                        }else {
+                        if (type.equals("7")) {
+                            XiupeichangShangActivity.actionStart(mContext, tuanGouShangJiaListAdapter.getData().get(position).getInst_id());
+                        } else {
                             TuanGouShangJiaDetailsActivity.actionStart(TuanGouShangJiaListActivity.this, tuanGouShangJiaListAdapter.getData().get(position).getInst_id(), type);
                         }
                         break;
@@ -710,6 +711,14 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                 break;
             case "7":
                 strTitle = "修配厂";
+                iv_rightTitle.setVisibility(View.VISIBLE);
+                iv_rightTitle.setBackgroundResource(R.mipmap.dingdan_icon_sousuo);
+                iv_rightTitle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        XiuPeiChangSearchActivity.actionStart(mContext);
+                    }
+                });
                 break;
             case "8":
                 strTitle = "体检";
@@ -724,6 +733,7 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
         tv_title.setText(strTitle);
         tv_title.setTextSize(17);
         tv_title.setTextColor(getResources().getColor(R.color.black));
+
         mToolbar.setNavigationIcon(R.mipmap.backbutton);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

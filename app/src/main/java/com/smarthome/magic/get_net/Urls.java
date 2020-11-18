@@ -4,7 +4,7 @@ package com.smarthome.magic.get_net;
 public class Urls {
     public static String key = "20180305124455yu";//全局请求key
     public static String SERVER_URL = "https://shop.hljsdkj.com/";//基本地址
-//    public static String SERVER_URL = "https://test.hljsdkj.com/";//测试地址
+    //public static String SERVER_URL = "https://test.hljsdkj.com/";//测试地址
 
     public static String MESSAGE_URL = SERVER_URL + "wit/app/user";
     public static String HOME_PICTURE = SERVER_URL + "shop_new/app";

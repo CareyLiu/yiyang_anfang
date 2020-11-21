@@ -41,12 +41,13 @@ public class ZhiNengDeviceListAdapter extends BaseQuickAdapter<ZhiNengHomeBean.D
         } else {
             helper.getView(R.id.iv_switch).setVisibility(View.VISIBLE);
         }
-        
+
         if (item.getWork_state().equals("1")) {
             helper.setBackgroundRes(R.id.iv_switch, R.mipmap.img_device_switch_open);
         } else if (item.getWork_state().equals("2")) {
             helper.setBackgroundRes(R.id.iv_switch, R.mipmap.img_device_switch_close);
         }
         helper.addOnClickListener(R.id.ll_content);
+        helper.addOnClickListener(R.id.iv_switch);
     }
 }

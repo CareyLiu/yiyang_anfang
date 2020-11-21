@@ -10,6 +10,9 @@ import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.config.PreferenceHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DoMqttValue {
 
     public Context context;//上下文
@@ -32,6 +35,23 @@ public class DoMqttValue {
 
         switch (chooseXiangMu) {
             case ZHINENGJIAJU:
+                //  收到的数据信息：  i01082.
+                if (message.contains("i")) {
+                    String zhuangZhiId = message.substring(1, 5);
+                    String kaiGuanDengZhuangTai = message.substring(5, 6);
+
+//                    List<String> stringList = new ArrayList<>();
+//                    stringList.add(zhuangZhiId);
+//                    stringList.add(kaiGuanDengZhuangTai);
+//
+//                    Notice notice = new Notice();
+//                    notice.type = ConstanceValue.MSG_ZHINENGJIAJUKAIDENG;
+//                    notice.content = stringList;
+//                    Log.i("Rair", notice.content.toString());
+//                    RxBus.getDefault().sendRx(notice);
+                }
+
+
                 break;
             case FENGNUAN:
                 if (message.contains("_")) {
@@ -209,7 +229,7 @@ public class DoMqttValue {
 
     //水暖相关代码
     private void shuiNuan(String topic, String message) {
-        if (topic.contains("wh/app")||topic.contains("wh/hardware/")) {
+        if (topic.contains("wh/app") || topic.contains("wh/hardware/")) {
             Notice n = new Notice();
             n.type = ConstanceValue.MSG_SN_DATA;
             n.content = message.toString();

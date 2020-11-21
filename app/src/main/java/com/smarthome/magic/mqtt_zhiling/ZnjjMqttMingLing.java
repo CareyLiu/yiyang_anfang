@@ -1,24 +1,48 @@
 package com.smarthome.magic.mqtt_zhiling;
 
 import android.content.Context;
+import android.util.Log;
+
 import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
 import com.rairmmd.andmqtt.MqttSubscribe;
 import com.smarthome.magic.app.UIHelper;
+import com.smarthome.magic.config.MyApplication;
+
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttToken;
+
+import static com.smarthome.magic.config.MyApplication.CAR_NOTIFY;
 
 public class ZnjjMqttMingLing {
     private Context context;
     private String ccid;
     private String serverId;
     private String topic;
+    private String shishiTopic;//实时数据的topic
 
     public ZnjjMqttMingLing(Context context, String ccid, String serverId) {
         this.context = context;
         this.ccid = ccid;
         this.serverId = serverId;
 
-        topic = "zn/app/" + serverId + ccid;
+        topic = "zn/hardware/" + serverId + ccid;
+        Log.i("Rair", topic);
+
+        AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                .setTopic(topic)
+                .setQos(2), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+                Log.i("Rair", "订阅成功:" + topic);
+
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                Log.i("CAR_NOTIFY", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
+            }
+        });
     }
 
 
@@ -46,8 +70,9 @@ public class ZnjjMqttMingLing {
             return;
         }
 
-        String zhiLing = "M02" + zhuangZhiId + caoZuoFangShi + "2" + "*******.";
-
+        String zhiLing = "M02" + zhuangZhiId + caoZuoFangShi + "2" + ".";
+        Log.i("Rair", "M02  行为指令  " + "装置id: " + zhuangZhiId + " 操作方式：" + caoZuoFangShi + " 控制方式: 2");
+        Log.i("Rair", zhiLing);
         AndMqtt.getInstance().publish(new MqttPublish()
                 .setMsg(zhiLing)
                 .setQos(2).setRetained(false)
@@ -222,10 +247,16 @@ public class ZnjjMqttMingLing {
             UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
             return;
         }
-        topic = "zn/app/" + serverId + "/" + ccid;
-        AndMqtt.getInstance().subscribe(new MqttSubscribe()
-                .setTopic(topic)
-                .setQos(2), listener);
+        shishiTopic = "zn/hardware/" + serverId + "/" + ccid;
+        Log.i("Rair", "订阅实时数据" + shishiTopic);
+        AndMqtt.getInstance().publish(new MqttPublish()
+                .setMsg("N")
+                .setQos(2)
+                .setRetained(false)
+                .setTopic(shishiTopic), listener);
+//        AndMqtt.getInstance().subscribe(new MqttSubscribe()
+//                .setTopic(shishiTopic)
+//                .setQos(2), listener);
     }
 
     /**
@@ -238,10 +269,10 @@ public class ZnjjMqttMingLing {
             UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
             return;
         }
-        topic = "zn/app/" + serverId + "/" + ccid;
         AndMqtt.getInstance().subscribe(new MqttSubscribe()
-                .setTopic(topic)
+                .setTopic(shishiTopic)
                 .setQos(2), listener);
     }
+
 
 }

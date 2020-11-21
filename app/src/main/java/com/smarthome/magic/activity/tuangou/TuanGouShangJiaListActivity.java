@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -22,6 +23,8 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.DefaultX5WebView_HaveNameActivity;
+import com.smarthome.magic.activity.TuanYouWebView;
 import com.smarthome.magic.activity.WebViewActivity;
 import com.smarthome.magic.activity.xin_tuanyou.TuanYouList;
 import com.smarthome.magic.activity.xiupeichang.XiuPeiChangSearchActivity;
@@ -154,6 +157,7 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
     }
 
     TuanGouShangJiaHeaderListAdapter ziJian_headerAdapter;
+    int choosePostion;
 
     @Override
     public void getHortialList() {
@@ -163,20 +167,36 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
         ziJian_headerAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                TuanGouShangJiaListBean.DataBean.IconBean iconBean = ziJian_headerAdapter.getData().get(position);
 
 
-                if (ziJian_headerAdapter.getData().get(position).getId().equals("11")) {
-                    //本地加油
-                    TuanYouList.actionStart(TuanGouShangJiaListActivity.this);
-
+                if (ziJian_headerAdapter.getData().get(position).getId().equals("6")) {
+//                    String jingdu = PreferenceHelper.getInstance(mContext).getString(JINGDU, "0X11");
+//                    String weidu = PreferenceHelper.getInstance(mContext).getString(WEIDU, "0X11");
+//                    if (!jingdu.equals("0X11")) {
+//                        String str = ziJian_headerAdapter.getData().get(position).getHref_url() + "?i=" + JiaMiToken + "&" + "gps_x=" + weidu + "&" + "gps_y=" + jingdu;
+//                        TuanYouWebView.actionStart(getActivity(), str);
+//                    } else {
+//                        choosePostion = position;
+//                        if (ziJian_headerAdapter.getData().get(position).getId().equals("6")) {
+//                            String str = ziJian_headerAdapter.getData().get(position).getHref_url() + "?i=" + JiaMiToken + "&" + "gps_x=45.666043" + "&" + "gps_y=126.605713";
+//                            TuanYouWebView.actionStart(getActivity(), str);
+//                            Toast.makeText(getActivity(), "该应用需要赋予定位的权限！", Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+                } else if (ziJian_headerAdapter.getData().get(position).getId().equals("11")) {
+                    TuanYouList.actionStart(mContext);
+                } else if (iconBean.getId().equals("1") || iconBean.getId().equals("2") || iconBean.getId().equals("3") || iconBean.getId().equals("4")) {
+                    TuanGouShangJiaListActivity.actionStart(mContext, ziJian_headerAdapter.getData().get(position).getId());
                 } else {
                     inst_id = "";
                     meter = "";
                     item_id = ziJian_headerAdapter.getData().get(position).getHref_url();
                     three_img_id = ziJian_headerAdapter.getData().get(position).getThree_img_id();
-                    //  imgType = ziJian_headerAdapter.getData().get(position).getId();
-                    imgType = type;
+                    imgType = ziJian_headerAdapter.getData().get(position).getId();
+                    //imgType = type;
                     getNet_storeList();
+
                 }
             }
         });

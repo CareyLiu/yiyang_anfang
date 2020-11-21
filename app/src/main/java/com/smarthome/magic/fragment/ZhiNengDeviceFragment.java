@@ -3,6 +3,7 @@ package com.smarthome.magic.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,22 +23,32 @@ import com.smarthome.magic.activity.zhinengjiaju.peinet.PeiWangYinDaoPageActivit
 import com.smarthome.magic.activity.zhinengjiaju.peinet.v1.EspTouchActivity;
 import com.smarthome.magic.adapter.ZhiNengDeviceListAdapter;
 import com.smarthome.magic.app.AppManager;
+import com.smarthome.magic.app.ConstanceValue;
+import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
+import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.config.PreferenceHelper;
+import com.smarthome.magic.mqtt_zhiling.ZnjjMqttMingLing;
 import com.smarthome.magic.tools.NetworkUtils;
 import com.smarthome.magic.util.GridAverageUIDecoration;
 import com.smarthome.magic.util.GridSectionAverageGapItemDecoration;
 import com.smarthome.magic.model.ZhiNengHomeBean;
 import com.smarthome.magic.view.RecycleItemSpance;
 
+import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.jaaksi.pickerview.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
-public class ZhiNengDeviceFragment extends Fragment {
+
+public class ZhiNengDeviceFragment extends BaseFragment {
 
     private View viewLayout;
     private LinearLayout ll_content_bg;
@@ -45,7 +56,7 @@ public class ZhiNengDeviceFragment extends Fragment {
     private ZhiNengDeviceListAdapter zhiNengDeviceListAdapter;
     private List<ZhiNengHomeBean.DataBean.DeviceBean> dataBean = new ArrayList<>();
     private String member_type = "";
-
+    public ZnjjMqttMingLing mqttMingLing = null;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,13 +65,24 @@ public class ZhiNengDeviceFragment extends Fragment {
         return viewLayout;
     }
 
+    @Override
+    protected void initLogic() {
+
+    }
+
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.fragment_zhineng_device;
+    }
+
     public static ZhiNengDeviceFragment newInstance(Bundle bundle) {
         ZhiNengDeviceFragment fragment = new ZhiNengDeviceFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
 
-    private void initView(View view) {
+
+    public void initView(View view) {
         ll_content_bg = view.findViewById(R.id.ll_content_bg);
         recyclerView = view.findViewById(R.id.recyclerView);
 //        recyclerView.addItemDecoration(new RecycleItemSpance(20, 2));
@@ -86,36 +108,118 @@ public class ZhiNengDeviceFragment extends Fragment {
         zhiNengDeviceListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                ZhiNengHomeBean.DataBean.DeviceBean deviceBean = (ZhiNengHomeBean.DataBean.DeviceBean) adapter.getItem(position);
-                if (deviceBean.getDevice_type().equals("20")) {
-                    String ccid = deviceBean.getDevice_ccid();
-                    PreferenceHelper.getInstance(getContext()).putString("ccid", ccid);
-                    PreferenceHelper.getInstance(getContext()).putString("share_type", "1");
-                    PreferenceHelper.getInstance(getContext()).putString("sim_ccid_save_type", "1");
-                    if (NetworkUtils.isConnected(getActivity())) {
-                        Activity currentActivity = AppManager.getAppManager().currentActivity();
-                        if (currentActivity != null) {
-                            AirConditionerActivity.actionStart(getActivity(), ccid, "智能空调");
+                switch (view.getId()) {
+                    case R.id.iv_switch:
+
+                        ZhiNengHomeBean.DataBean.DeviceBean bean = (ZhiNengHomeBean.DataBean.DeviceBean) adapter.getData().get(position);
+                        mqttMingLing = new ZnjjMqttMingLing(getActivity(), bean.getDevice_ccid_up(), bean.getServer_id());
+                        if (bean.getWork_state().equals("1")){
+
+                            mqttMingLing.setAction(bean.getDevice_ccid(), "02", new IMqttActionListener() {
+                                @Override
+                                public void onSuccess(IMqttToken asyncActionToken) {
+                                    //UIHelper.ToastMessage(mContext, "当前装置开启");
+
+                                    List<String> stringList = new ArrayList<>();
+                                    stringList.add(bean.getDevice_ccid());
+                                    stringList.add("2");
+
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_ZHINENGJIAJUKAIDENG;
+                                    notice.content = stringList;
+                                    Log.i("Rair", notice.content.toString());
+                                    RxBus.getDefault().sendRx(notice);
+                                }
+
+                                @Override
+                                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                                    UIHelper.ToastMessage(getActivity(), "未发送指令");
+                                }
+                            });
+
                         }
-                    } else {
-                        UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
-                    }
-                } else {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("device_id", deviceBean.getDevice_id());
-                    bundle.putString("device_type", deviceBean.getDevice_type());
-                    bundle.putString("member_type", member_type);
-                    startActivity(new Intent(getActivity(), ZhiNengRoomDeviceDetailAutoActivity.class).putExtras(bundle));
+
+                        if (bean.getWork_state().equals("2")){
+
+                            mqttMingLing.setAction(bean.getDevice_ccid(), "01", new IMqttActionListener() {
+                                @Override
+                                public void onSuccess(IMqttToken asyncActionToken) {
+                                    //UIHelper.ToastMessage(mContext, "当前装置开启");
+
+                                    List<String> stringList = new ArrayList<>();
+                                    stringList.add(bean.getDevice_ccid());
+                                    stringList.add("1");
+
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_ZHINENGJIAJUKAIDENG;
+                                    notice.content = stringList;
+                                    Log.i("Rair", notice.content.toString());
+                                    RxBus.getDefault().sendRx(notice);
+                                }
+
+                                @Override
+                                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                                    UIHelper.ToastMessage(getActivity(), "未发送指令");
+                                }
+                            });
+
+                        }
+
+                        break;
+                    case R.id.ll_content:
+                        ZhiNengHomeBean.DataBean.DeviceBean deviceBean = (ZhiNengHomeBean.DataBean.DeviceBean) adapter.getItem(position);
+                        if (deviceBean.getDevice_type().equals("20")) {
+                            String ccid = deviceBean.getDevice_ccid();
+                            PreferenceHelper.getInstance(getContext()).putString("ccid", ccid);
+                            PreferenceHelper.getInstance(getContext()).putString("share_type", "1");
+                            PreferenceHelper.getInstance(getContext()).putString("sim_ccid_save_type", "1");
+                            if (NetworkUtils.isConnected(getActivity())) {
+                                Activity currentActivity = AppManager.getAppManager().currentActivity();
+                                if (currentActivity != null) {
+                                    AirConditionerActivity.actionStart(getActivity(), ccid, "智能空调");
+                                }
+                            } else {
+                                UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
+                            }
+                        } else {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("device_id", deviceBean.getDevice_id());
+                            bundle.putString("device_type", deviceBean.getDevice_type());
+                            bundle.putString("member_type", member_type);
+                            bundle.putString("work_state", deviceBean.getWork_state());
+                            startActivity(new Intent(getActivity(), ZhiNengRoomDeviceDetailAutoActivity.class).putExtras(bundle));
+                        }
+                        break;
                 }
+
             }
         });
+
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_ZHINENGJIAJUKAIDENG) {
+                    List<String> messageList = (List<String>) message.content;
+                    String zhuangZhiId = messageList.get(0);
+                    String kaiGuanDengZhuangTai = messageList.get(1);
+                    for (int i = 0; i < dataBean.size(); i++) {
+                        if (dataBean.get(i).getDevice_ccid().equals(zhuangZhiId)) {
+                            dataBean.get(i).setWork_state(kaiGuanDengZhuangTai);
+                        }
+                    }
+                    zhiNengDeviceListAdapter.notifyDataSetChanged();
+                }
+            }
+        }));
+
+
     }
 
     public void onRefresh() {
         if (getArguments() != null) {
             List<ZhiNengHomeBean.DataBean.DeviceBean> device = getArguments().getParcelableArrayList("device");
             String strPhone = PreferenceHelper.getInstance(getActivity()).getString("user_phone", "");
-            if (strPhone.equals("15114684672")||strPhone.equals("17645185187")) {
+            if (strPhone.equals("15114684672") || strPhone.equals("17645185187")) {
                 ZhiNengHomeBean.DataBean.DeviceBean kongtiaoBean = new ZhiNengHomeBean.DataBean.DeviceBean();
                 kongtiaoBean.setDevice_ccid("kkkkkkkkkkkkkkkk90120018");
                 kongtiaoBean.setDevice_name("智能空調");

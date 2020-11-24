@@ -8,6 +8,7 @@ import com.smarthome.magic.app.ConfigValue;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
+import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.config.PreferenceHelper;
 
 import java.util.ArrayList;
@@ -36,19 +37,20 @@ public class DoMqttValue {
         switch (chooseXiangMu) {
             case ZHINENGJIAJU:
                 //  收到的数据信息：  i01082.
+                //UIHelper.ToastMessage(context, "接收到的message信息： " + message);
                 if (message.contains("i")) {
                     String zhuangZhiId = message.substring(1, 5);
                     String kaiGuanDengZhuangTai = message.substring(5, 6);
 
-//                    List<String> stringList = new ArrayList<>();
-//                    stringList.add(zhuangZhiId);
-//                    stringList.add(kaiGuanDengZhuangTai);
-//
-//                    Notice notice = new Notice();
-//                    notice.type = ConstanceValue.MSG_ZHINENGJIAJUKAIDENG;
-//                    notice.content = stringList;
-//                    Log.i("Rair", notice.content.toString());
-//                    RxBus.getDefault().sendRx(notice);
+                    List<String> stringList = new ArrayList<>();
+                    stringList.add(zhuangZhiId);
+                    stringList.add(kaiGuanDengZhuangTai);
+
+                    Notice notice = new Notice();
+                    notice.type = ConstanceValue.MSG_ZHINENGJIAJUKAIDENG;
+                    notice.content = stringList;
+                    Log.i("Rair", notice.content.toString());
+                    RxBus.getDefault().sendRx(notice);
                 }
 
 

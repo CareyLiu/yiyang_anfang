@@ -119,10 +119,9 @@ public interface ConstanceValue {
     int MSG_GONGXIANG_PEOPLE = 0x10083;//共享成员
 
     int MSG_ZCKT = 0x10084;//空调
-
     int MSG_KAQUAN_DUIHUAN = 0x10085;//卡券兑换
-
     int MSG_ZHINENGJIAJUKAIDENG = 0x10086;//开灯
     int MSG_ZHINENGJIAJUGUANDENG = 0x10087;//关灯
+    int MSG_ZHINENGJIAJU_ZHUJI = 0x10088;//主机在线与离线
 
 }

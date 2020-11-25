@@ -109,6 +109,10 @@ public class XiupeichangShangActivity extends BaseActivity {
     NestedScrollView scrollView;
     @BindView(R.id.ll_maidan)
     RelativeLayout llMaidan;
+    @BindView(R.id.ll_fuwu_pingjia)
+    LinearLayout ll_fuwu_pingjia;
+    @BindView(R.id.ll_xiaohuoban_pingjia)
+    LinearLayout ll_xiaohuoban_pingjia;
 
     private String inst_id;
     private XpcDetailsModel.DataBean detailsModel;
@@ -243,6 +247,7 @@ public class XiupeichangShangActivity extends BaseActivity {
                         if (pingjiaModels.size() != 0) {
                             rv_pingjia.setVisibility(View.VISIBLE);
                             ll_pinglun.setVisibility(View.VISIBLE);
+                            ll_xiaohuoban_pingjia.setVisibility(View.VISIBLE);
 
                             XpcDetailsModel.DataBean.PinglunListBean pinglunListBean = pingjiaModels.get(pingjiaModels.size() - 1);
                             pinglunListBean.setHideLine(true);
@@ -253,6 +258,26 @@ public class XiupeichangShangActivity extends BaseActivity {
                         } else {
                             rv_pingjia.setVisibility(View.GONE);
                             ll_pinglun.setVisibility(View.GONE);
+                            ll_xiaohuoban_pingjia.setVisibility(View.GONE);
+                        }
+
+                        if (pingjiaModels.size() == 0 && fuwuModels.size() == 0) {
+                            ll_fuwu_pingjia.setVisibility(View.GONE);
+                        } else {
+                            ll_fuwu_pingjia.setVisibility(View.VISIBLE);
+                            if (fuwuModels.size() == 0) {
+                                rl_select_fuwu.setVisibility(View.GONE);
+                                rl_select_pingjia.setVisibility(View.VISIBLE);
+                                clickPingjia();
+                            } else if (pingjiaModels.size()==0){
+                                rl_select_fuwu.setVisibility(View.VISIBLE);
+                                rl_select_pingjia.setVisibility(View.GONE);
+                                clickFuwu();
+                            }else {
+                                rl_select_fuwu.setVisibility(View.VISIBLE);
+                                rl_select_pingjia.setVisibility(View.VISIBLE);
+                                clickFuwu();
+                            }
                         }
                     }
 

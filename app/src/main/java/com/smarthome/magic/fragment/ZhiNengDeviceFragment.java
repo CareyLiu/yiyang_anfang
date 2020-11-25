@@ -130,6 +130,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                                         @Override
                                         public void onSuccess(IMqttToken asyncActionToken) {
                                             //UIHelper.ToastMessage(mContext, "当前装置开启");
+
                                             List<String> stringList = new ArrayList<>();
                                             stringList.add(bean.getDevice_ccid());
                                             stringList.add("2");

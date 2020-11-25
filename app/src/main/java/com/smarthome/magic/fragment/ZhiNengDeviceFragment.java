@@ -16,12 +16,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.rairmmd.andmqtt.AndMqtt;
+import com.rairmmd.andmqtt.MqttPublish;
+import com.rairmmd.andmqtt.MqttSubscribe;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.ZhiNengChuangLianActivity;
 import com.smarthome.magic.activity.ZhiNengDianDengActivity;
 import com.smarthome.magic.activity.ZhiNengJiajuWeiYuAutoActivity;
 import com.smarthome.magic.activity.ZhiNengJiaoHuaAutoActivity;
 import com.smarthome.magic.activity.ZhiNengRoomDeviceDetailAutoActivity;
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.zckt.AirConditionerActivity;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.PeiWangYinDaoPageActivity;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.v1.EspTouchActivity;
@@ -115,63 +119,62 @@ public class ZhiNengDeviceFragment extends BaseFragment {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.iv_switch:
-
                         ZhiNengHomeBean.DataBean.DeviceBean bean = (ZhiNengHomeBean.DataBean.DeviceBean) adapter.getData().get(position);
-                        mqttMingLing = new ZnjjMqttMingLing(getActivity(), bean.getDevice_ccid_up(), bean.getServer_id());
-                        if (bean.getDevice_type().equals("01")) {
+                        if (bean.getDevice_type().equals("20")) {
+                            clickTongtiao(bean, position);
+                        } else {
+                            mqttMingLing = new ZnjjMqttMingLing(getActivity(), bean.getDevice_ccid_up(), bean.getServer_id());
+                            if (bean.getDevice_type().equals("01")) {
+                                if (bean.getWork_state().equals("1")) {
+                                    mqttMingLing.setAction(bean.getDevice_ccid(), "02", new IMqttActionListener() {
+                                        @Override
+                                        public void onSuccess(IMqttToken asyncActionToken) {
+                                            //UIHelper.ToastMessage(mContext, "当前装置开启");
+                                            List<String> stringList = new ArrayList<>();
+                                            stringList.add(bean.getDevice_ccid());
+                                            stringList.add("2");
 
-                            if (bean.getWork_state().equals("1")) {
+                                            Notice notice = new Notice();
+                                            notice.type = ConstanceValue.MSG_ZHINENGJIAJUKAIDENG;
+                                            notice.content = stringList;
+                                            Log.i("Rair", notice.content.toString());
+                                            RxBus.getDefault().sendRx(notice);
+                                        }
 
-                                mqttMingLing.setAction(bean.getDevice_ccid(), "02", new IMqttActionListener() {
-                                    @Override
-                                    public void onSuccess(IMqttToken asyncActionToken) {
-                                        //UIHelper.ToastMessage(mContext, "当前装置开启");
+                                        @Override
+                                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                                            UIHelper.ToastMessage(getActivity(), "未发送指令");
+                                        }
+                                    });
 
-                                        List<String> stringList = new ArrayList<>();
-                                        stringList.add(bean.getDevice_ccid());
-                                        stringList.add("2");
+                                }
 
-                                        Notice notice = new Notice();
-                                        notice.type = ConstanceValue.MSG_ZHINENGJIAJUKAIDENG;
-                                        notice.content = stringList;
-                                        Log.i("Rair", notice.content.toString());
-                                        RxBus.getDefault().sendRx(notice);
-                                    }
+                                if (bean.getWork_state().equals("2")) {
 
-                                    @Override
-                                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                                        UIHelper.ToastMessage(getActivity(), "未发送指令");
-                                    }
-                                });
+                                    mqttMingLing.setAction(bean.getDevice_ccid(), "01", new IMqttActionListener() {
+                                        @Override
+                                        public void onSuccess(IMqttToken asyncActionToken) {
+                                            //UIHelper.ToastMessage(mContext, "当前装置开启");
 
-                            }
+                                            List<String> stringList = new ArrayList<>();
+                                            stringList.add(bean.getDevice_ccid());
+                                            stringList.add("1");
 
-                            if (bean.getWork_state().equals("2")) {
+                                            Notice notice = new Notice();
+                                            notice.type = ConstanceValue.MSG_ZHINENGJIAJUKAIDENG;
+                                            notice.content = stringList;
+                                            Log.i("Rair", notice.content.toString());
+                                            RxBus.getDefault().sendRx(notice);
+                                        }
 
-                                mqttMingLing.setAction(bean.getDevice_ccid(), "01", new IMqttActionListener() {
-                                    @Override
-                                    public void onSuccess(IMqttToken asyncActionToken) {
-                                        //UIHelper.ToastMessage(mContext, "当前装置开启");
+                                        @Override
+                                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                                            UIHelper.ToastMessage(getActivity(), "未发送指令");
+                                        }
+                                    });
 
-                                        List<String> stringList = new ArrayList<>();
-                                        stringList.add(bean.getDevice_ccid());
-                                        stringList.add("1");
-
-                                        Notice notice = new Notice();
-                                        notice.type = ConstanceValue.MSG_ZHINENGJIAJUKAIDENG;
-                                        notice.content = stringList;
-                                        Log.i("Rair", notice.content.toString());
-                                        RxBus.getDefault().sendRx(notice);
-                                    }
-
-                                    @Override
-                                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                                        UIHelper.ToastMessage(getActivity(), "未发送指令");
-                                    }
-                                });
-
-                            }
-                        } else if (bean.getDevice_type().equals("16")) {
+                                }
+                            } else if (bean.getDevice_type().equals("16")) {
 //                            if (bean.getWork_state().equals("1")) {//开
 //                                mqttMingLing.setAction(bean.getDevice_ccid(), "02", new IMqttActionListener() {
 //                                    @Override
@@ -201,8 +204,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
 //                                    }
 //                                });
 //                            }
-
-
+                            }
                         }
                         break;
                     case R.id.ll_content:
@@ -262,6 +264,63 @@ public class ZhiNengDeviceFragment extends BaseFragment {
 
     }
 
+    private void clickTongtiao(ZhiNengHomeBean.DataBean.DeviceBean bean, int pos) {
+        String KT_ccid = bean.getDevice_ccid();
+        String KT_Send = "zckt/cbox/hardware/" + KT_ccid;
+
+        //注册向空调发送数据的主题
+        AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                .setTopic(KT_Send)
+                .setQos(2), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+            }
+        });
+
+        String work_state = bean.getWork_state();
+        if (work_state.equals("1")) {
+            AndMqtt.getInstance().publish(new MqttPublish()
+                    .setMsg("M030.")
+                    .setQos(2).setRetained(false)
+                    .setTopic(KT_Send), new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Y.t("关闭空调");
+                    bean.setWork_state("0");
+                    dataBean.set(pos, bean);
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                }
+            });
+        } else {
+            AndMqtt.getInstance().publish(new MqttPublish()
+                    .setMsg("M031.")
+                    .setQos(2).setRetained(false)
+                    .setTopic(KT_Send), new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Y.t("开启空调");
+                    bean.setWork_state("1");
+                    dataBean.set(pos, bean);
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                }
+            });
+        }
+    }
+
     public void onRefresh() {
         if (getArguments() != null) {
             List<ZhiNengHomeBean.DataBean.DeviceBean> device = getArguments().getParcelableArrayList("device");
@@ -275,7 +334,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                 kongtiaoBean.setOnline_state("1");
                 kongtiaoBean.setServer_id("8/");
                 kongtiaoBean.setRoom_name("默认房间");
-                kongtiaoBean.setWork_state("3");
+                kongtiaoBean.setWork_state("0");
                 device.add(kongtiaoBean);
             }
             member_type = getArguments().getString("member_type");

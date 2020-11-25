@@ -247,14 +247,10 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                                         public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                                         }
                                     });
-
                                 }
-
                             }
-                            break;
-
                         }
-
+                        break;
                     case R.id.ll_content:
                         ZhiNengHomeBean.DataBean.DeviceBean deviceBean = (ZhiNengHomeBean.DataBean.DeviceBean) adapter.getItem(position);
                         if (deviceBean.getDevice_type().equals("20")) {
@@ -339,8 +335,9 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     Y.t("关闭空调");
-                    bean.setWork_state("0");
+                    bean.setWork_state("2");
                     dataBean.set(pos, bean);
+                    zhiNengDeviceListAdapter.notifyDataSetChanged();
                 }
 
                 @Override
@@ -358,6 +355,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                     Y.t("开启空调");
                     bean.setWork_state("1");
                     dataBean.set(pos, bean);
+                    zhiNengDeviceListAdapter.notifyDataSetChanged();
                 }
 
                 @Override
@@ -381,7 +379,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                 kongtiaoBean.setOnline_state("1");
                 kongtiaoBean.setServer_id("8/");
                 kongtiaoBean.setRoom_name("默认房间");
-                kongtiaoBean.setWork_state("0");
+                kongtiaoBean.setWork_state("2");
                 device.add(kongtiaoBean);
             }
             member_type = getArguments().getString("member_type");

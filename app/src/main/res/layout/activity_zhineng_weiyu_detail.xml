@@ -86,11 +86,12 @@
                                 android:visibility="gone">
 
                                 <ImageView
+                                    android:id="@+id/iv_shebei_zaixianzhuangtai_img"
                                     android:layout_width="12dp"
-                                    android:layout_height="12dp"
-                                    android:background="@drawable/bg_zhineng_device_online" />
+                                    android:layout_height="12dp" />
 
                                 <TextView
+                                    android:id="@+id/tv_shebei_zaixian_huashu"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="5dp"

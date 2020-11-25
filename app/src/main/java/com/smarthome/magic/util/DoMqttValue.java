@@ -8,7 +8,6 @@ import com.smarthome.magic.app.ConfigValue;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
-import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.config.PreferenceHelper;
 
 import java.util.ArrayList;
@@ -47,7 +46,7 @@ public class DoMqttValue {
                     stringList.add(kaiGuanDengZhuangTai);
 
                     Notice notice = new Notice();
-                    notice.type = ConstanceValue.MSG_ZHINENGJIAJUKAIDENG;
+                    notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
                     notice.content = stringList;
                     Log.i("Rair", notice.content.toString());
                     RxBus.getDefault().sendRx(notice);

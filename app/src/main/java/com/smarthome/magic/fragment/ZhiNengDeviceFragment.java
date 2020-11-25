@@ -28,7 +28,6 @@ import com.smarthome.magic.activity.ZhiNengRoomDeviceDetailAutoActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.zckt.AirConditionerActivity;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.PeiWangYinDaoPageActivity;
-import com.smarthome.magic.activity.zhinengjiaju.peinet.v1.EspTouchActivity;
 import com.smarthome.magic.adapter.ZhiNengDeviceListAdapter;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.ConstanceValue;
@@ -41,13 +40,10 @@ import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.mqtt_zhiling.ZnjjMqttMingLing;
 import com.smarthome.magic.tools.NetworkUtils;
 import com.smarthome.magic.util.GridAverageUIDecoration;
-import com.smarthome.magic.util.GridSectionAverageGapItemDecoration;
 import com.smarthome.magic.model.ZhiNengHomeBean;
-import com.smarthome.magic.view.RecycleItemSpance;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
-import org.jaaksi.pickerview.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,7 +132,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                                             stringList.add("2");
 
                                             Notice notice = new Notice();
-                                            notice.type = ConstanceValue.MSG_ZHINENGJIAJUKAIDENG;
+                                            notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
                                             notice.content = stringList;
                                             Log.i("Rair", notice.content.toString());
                                             RxBus.getDefault().sendRx(notice);
@@ -162,7 +158,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                                             stringList.add("1");
 
                                             Notice notice = new Notice();
-                                            notice.type = ConstanceValue.MSG_ZHINENGJIAJUKAIDENG;
+                                            notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
                                             notice.content = stringList;
                                             Log.i("Rair", notice.content.toString());
                                             RxBus.getDefault().sendRx(notice);
@@ -205,9 +201,60 @@ public class ZhiNengDeviceFragment extends BaseFragment {
 //                                    }
 //                                });
 //                            }
+
+                            } else if (bean.getDevice_type().equals("03")) {
+                                if (bean.getWork_state().equals("1")) {
+                                    if (!AndMqtt.getInstance().isConneect()) {
+                                        UIHelper.ToastMessage(getActivity(), "请检查您的网络是否联网");
+                                    }
+                                    mqttMingLing.setWeiYuAction(bean.getDevice_ccid(), "01", "01", new IMqttActionListener() {
+                                        @Override
+                                        public void onSuccess(IMqttToken asyncActionToken) {
+                                            UIHelper.ToastMessage(getActivity(), "执行喂鱼");
+                                            List<String> stringList = new ArrayList<>();
+                                            stringList.add(bean.getDevice_ccid());
+                                            stringList.add("1");
+
+                                            Notice notice = new Notice();
+                                            notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
+                                            notice.content = stringList;
+                                            Log.i("Rair", notice.content.toString());
+                                            RxBus.getDefault().sendRx(notice);
+                                        }
+
+                                        @Override
+                                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                                        }
+                                    });
+                                } else if (bean.getWork_state().equals("2")) {
+                                    mqttMingLing.setWeiYuAction(bean.getDevice_ccid(), "02", "01", new IMqttActionListener() {
+                                        @Override
+                                        public void onSuccess(IMqttToken asyncActionToken) {
+                                            UIHelper.ToastMessage(getActivity(), "停止喂鱼");
+
+                                            List<String> stringList = new ArrayList<>();
+                                            stringList.add(bean.getDevice_ccid());
+                                            stringList.add("2");
+
+                                            Notice notice = new Notice();
+                                            notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
+                                            notice.content = stringList;
+                                            Log.i("Rair", notice.content.toString());
+                                            RxBus.getDefault().sendRx(notice);
+                                        }
+
+                                        @Override
+                                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                                        }
+                                    });
+
+                                }
+
                             }
+                            break;
+
                         }
-                        break;
+
                     case R.id.ll_content:
                         ZhiNengHomeBean.DataBean.DeviceBean deviceBean = (ZhiNengHomeBean.DataBean.DeviceBean) adapter.getItem(position);
                         if (deviceBean.getDevice_type().equals("20")) {
@@ -241,14 +288,13 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                         }
                         break;
                 }
-
             }
         });
 
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
             public void call(Notice message) {
-                if (message.type == ConstanceValue.MSG_ZHINENGJIAJUKAIDENG) {
+                if (message.type == ConstanceValue.MSG_SHEBEIZHUANGTAI) {
                     List<String> messageList = (List<String>) message.content;
                     String zhuangZhiId = messageList.get(0);
                     String kaiGuanDengZhuangTai = messageList.get(1);

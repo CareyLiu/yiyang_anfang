@@ -274,5 +274,55 @@ public class ZnjjMqttMingLing {
                 .setQos(2), listener);
     }
 
+    /**
+     * 取消订阅主机的实时信息
+     *
+     * @param listener
+     */
+    public void unSubscribeHardware(IMqttActionListener listener) {
+        if (!AndMqtt.getInstance().isConneect()) {
+            UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
+            return;
+        }
+        AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                .setTopic(topic)
+                .setQos(2), listener);
+    }
+
+    /**
+     * 控制装置 M020301011*******.
+     * M02 : 命令码
+     * 0301：装置id，见装置ID命名规则
+     * 01：打开；  02：关闭
+     * 1.语音控制（需返回语音结果）2.app控制
+     * *******：参数 （预留字段，如灯的颜色亮度等，目前用*占位）
+     * 浇花或者喂鱼 都传1
+     */
+
+    /**
+     * str 0 发送失败 1 发送成功
+     *
+     * @param zhuangZhiId   装置id
+     * @param caoZuoFangShi 方式 打开或关闭
+     * @return
+     */
+    public void setWeiYuAction(String zhuangZhiId, String caoZuoFangShi, String quanshu, IMqttActionListener listener) {
+
+        if (!AndMqtt.getInstance().isConneect()) {
+            UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
+            return;
+        }
+
+        if (quanshu == null) {
+            quanshu = "01";
+        }
+        String zhiLing = "M02" + zhuangZhiId + caoZuoFangShi + "2" + quanshu + "c" + ".";
+        Log.i("Rair", "M02  行为指令  " + "装置id: " + zhuangZhiId + " 操作方式：" + caoZuoFangShi + " 控制方式: 2");
+        Log.i("Rair", zhiLing);
+        AndMqtt.getInstance().publish(new MqttPublish()
+                .setMsg(zhiLing)
+                .setQos(2).setRetained(false)
+                .setTopic(topic), listener);
+    }
 
 }

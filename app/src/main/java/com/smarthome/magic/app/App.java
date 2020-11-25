@@ -69,7 +69,8 @@ public class App extends MultiDexApplication {
     public static final String DINGDANZHIFU = "0X1117";//我得订单列表里面调支付
     public static final String CUNCHUBIND_WEIXINPAY = "0X1118";//是否绑定过微信支付用于提现
     public static final String CUN_GEREN_TOUXIANG = "0X1119";//存储个人头像
-    public static final String CHOOSE_KONGZHI_XIANGMU="0X1120";//我选择硬件控制项目
+    public static final String CHOOSE_KONGZHI_XIANGMU = "0X1120";//我选择硬件控制项目
+    public static final String WEIYUQUANSHU = "0X1121";//喂鱼圈数
 
     //发送通知
     public static final int TOKEN_ERROR = 0x04;

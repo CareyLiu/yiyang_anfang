@@ -151,7 +151,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setCurrentItem(0);
 
-        initData();
+
     }
 
     private void initMagicIndicator() {
@@ -193,17 +193,12 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        srLSmart.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                getnet();
-            }
-        });
+
         srLSmart.setEnableLoadMore(false);
         ll_checkhome.setOnClickListener(this);
         initViewpager();
         initMagicIndicator();
-
+        initData();
 
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
@@ -216,9 +211,20 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                     // getnet();
                 } else if (message.type == ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN) {
                     getnet();
+                } else if (message.type == ConstanceValue.MSG_ZHINENGJIAJU_ZHUJI) {
+                    //刷新列表
+                    Log.i("设备离线", "设备离线刷新列表");
+                    getnet();
                 }
             }
         }));
+
+        srLSmart.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getnet();
+            }
+        });
     }
 
     @Override

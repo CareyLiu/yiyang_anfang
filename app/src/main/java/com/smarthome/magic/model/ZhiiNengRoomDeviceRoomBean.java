@@ -88,6 +88,7 @@ public class ZhiiNengRoomDeviceRoomBean {
         private String auto_state;
         private String family_name;
         private String device_ccid_up;
+        public String device_state;
 
         public String getRoom_id() {
             return room_id;

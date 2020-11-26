@@ -107,6 +107,10 @@ public class MyApplication extends MultiDexApplication {
     public Activity activity_main;
 
 
+    String daGeBenDi = "tcp://192.168.1.127";
+    String mqttUrl = "tcp://mqtt.hljsdkj.com";
+
+
     public static List<String> mqttDingyue = new ArrayList<>();
 
     public static String getServer_id() {
@@ -482,7 +486,7 @@ public class MyApplication extends MultiDexApplication {
                         .setLastWill("K.", "wit/server/" + getUser_id(), 2, true)
                         .setUserName("witandroid")
                         .setUserPassword("aG678om34buysdi")
-                        .setServer("tcp://mqtt.hljsdkj.com").setTimeout(1);
+                        .setServer(mqttUrl).setTimeout(1);
 
                 AndMqtt.getInstance().setMessageListener(new MqttCallbackExtended() {
                     @Override

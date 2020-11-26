@@ -28,11 +28,11 @@ public class ZhiNengDeviceListAdapter extends BaseQuickAdapter<ZhiNengHomeBean.D
         if (item.getOnline_state().equals("1")) {
             //设备在线
             helper.setBackgroundRes(R.id.iv_state, R.drawable.bg_zhineng_device_online);
-            helper.setText(R.id.tv_state, "在线");
+            helper.setText(R.id.tv_state, "设备在线");
         } else {
             //设备离线
             helper.setBackgroundRes(R.id.iv_state, R.drawable.bg_zhineng_device_offline);
-            helper.setText(R.id.tv_state, "离线");
+            helper.setText(R.id.tv_state, "设备离线");
         }
 
         if (item.getDevice_type().equals("11") || item.getDevice_type().equals("12") || item.getDevice_type().equals("13")
@@ -46,6 +46,11 @@ public class ZhiNengDeviceListAdapter extends BaseQuickAdapter<ZhiNengHomeBean.D
             helper.setBackgroundRes(R.id.iv_switch, R.mipmap.img_device_switch_open);
         } else if (item.getWork_state().equals("2")) {
             helper.setBackgroundRes(R.id.iv_switch, R.mipmap.img_device_switch_close);
+        } else if (item.getWork_state().equals("3")) {
+            //helper.setInVisible(R.id.iv_switch, false);
+            ImageView ivImage = helper.getView(R.id.iv_switch);
+            ivImage.setVisibility(View.INVISIBLE);
+
         }
         helper.addOnClickListener(R.id.ll_content);
         helper.addOnClickListener(R.id.iv_switch);

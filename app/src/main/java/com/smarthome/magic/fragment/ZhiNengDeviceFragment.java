@@ -22,6 +22,7 @@ import com.rairmmd.andmqtt.MqttSubscribe;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.ZhiNengChuangLianActivity;
 import com.smarthome.magic.activity.ZhiNengDianDengActivity;
+import com.smarthome.magic.activity.ZhiNengJiaJuChaZuoActivity;
 import com.smarthome.magic.activity.ZhiNengJiajuWeiYuAutoActivity;
 import com.smarthome.magic.activity.ZhiNengJiaoHuaAutoActivity;
 import com.smarthome.magic.activity.ZhiNengRoomDeviceDetailAutoActivity;
@@ -120,7 +121,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                             clickTongtiao(bean, position);
                         } else {
                             mqttMingLing = new ZnjjMqttMingLing(getActivity(), bean.getDevice_ccid_up(), bean.getServer_id());
-                            if (bean.getDevice_type().equals("01")) {
+                            if (bean.getDevice_type().equals("1")) {
                                 if (bean.getWork_state().equals("1")) {
                                     mqttMingLing.setAction(bean.getDevice_ccid(), "02", new IMqttActionListener() {
                                         @Override
@@ -171,89 +172,19 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                                     });
 
                                 }
-                            } else if (bean.getDevice_type().equals("16")) {
-//                            if (bean.getWork_state().equals("1")) {//开
-//                                mqttMingLing.setAction(bean.getDevice_ccid(), "02", new IMqttActionListener() {
-//                                    @Override
-//                                    public void onSuccess(IMqttToken asyncActionToken) {
-//                                        // UIHelper.ToastMessage(mContext, "执行成功");
-//
-//                                    }
-//
-//                                    @Override
-//                                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-//
-//                                    }
-//                                });
-//                            }
-//
-//                            if (bean.getWork_state().equals("2")) {//关
-//                                mqttMingLing.setAction(bean.getDevice_ccid(), "01", new IMqttActionListener() {
-//                                    @Override
-//                                    public void onSuccess(IMqttToken asyncActionToken) {
-//                                        // UIHelper.ToastMessage(mContext, "执行成功");
-//
-//                                    }
-//
-//                                    @Override
-//                                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-//
-//                                    }
-//                                });
-//                            }
-
-                            } else if (bean.getDevice_type().equals("03")) {
-                                if (bean.getWork_state().equals("1")) {
-                                    if (!AndMqtt.getInstance().isConneect()) {
-                                        UIHelper.ToastMessage(getActivity(), "请检查您的网络是否联网");
-                                    }
-                                    mqttMingLing.setWeiYuAction(bean.getDevice_ccid(), "01", "01", new IMqttActionListener() {
-                                        @Override
-                                        public void onSuccess(IMqttToken asyncActionToken) {
-                                            UIHelper.ToastMessage(getActivity(), "执行喂鱼");
-                                            List<String> stringList = new ArrayList<>();
-                                            stringList.add(bean.getDevice_ccid());
-                                            stringList.add("1");
-
-                                            Notice notice = new Notice();
-                                            notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
-                                            notice.content = stringList;
-                                            Log.i("Rair", notice.content.toString());
-                                            RxBus.getDefault().sendRx(notice);
-                                        }
-
-                                        @Override
-                                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                                        }
-                                    });
-                                } else if (bean.getWork_state().equals("2")) {
-                                    mqttMingLing.setWeiYuAction(bean.getDevice_ccid(), "02", "01", new IMqttActionListener() {
-                                        @Override
-                                        public void onSuccess(IMqttToken asyncActionToken) {
-                                            UIHelper.ToastMessage(getActivity(), "停止喂鱼");
-
-                                            List<String> stringList = new ArrayList<>();
-                                            stringList.add(bean.getDevice_ccid());
-                                            stringList.add("2");
-
-                                            Notice notice = new Notice();
-                                            notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
-                                            notice.content = stringList;
-                                            Log.i("Rair", notice.content.toString());
-                                            RxBus.getDefault().sendRx(notice);
-                                        }
-
-                                        @Override
-                                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                                        }
-                                    });
-                                }
                             }
+                            break;
+
                         }
-                        break;
+
                     case R.id.ll_content:
                         ZhiNengHomeBean.DataBean.DeviceBean deviceBean = (ZhiNengHomeBean.DataBean.DeviceBean) adapter.getItem(position);
-                        if (deviceBean.getDevice_type().equals("20")) {
+                        /**
+                         * 1.灯 2.插座 3.开关 4.喂鱼 5.浇花 6门锁 7.空调 8.车库门
+                         * 9.晾衣架 A.烟雾报警 B.门磁 C.漏水D.雷达 E紧急开关 F.窗帘 G.电视
+                         * Z.风水摆件
+                         */
+                        if (deviceBean.getDevice_type().equals("7")) {//空调
                             String ccid = deviceBean.getDevice_ccid();
                             PreferenceHelper.getInstance(getContext()).putString("ccid", ccid);
                             PreferenceHelper.getInstance(getContext()).putString("share_type", "1");
@@ -266,14 +197,21 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                             } else {
                                 UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
                             }
-                        } else if (deviceBean.getDevice_type().equals("16")) {
+                        } else if (deviceBean.getDevice_type().equals("F")) {//窗帘
                             ZhiNengChuangLianActivity.actionStart(getActivity(), deviceBean.getDevice_id());
-                        } else if (deviceBean.getDevice_type().equals("01")) {
+                        } else if (deviceBean.getDevice_type().equals("1")) {//灯
                             ZhiNengDianDengActivity.actionStart(getActivity(), deviceBean.getDevice_id(), deviceBean.getDevice_type());
-                        } else if (deviceBean.getDevice_type().equals("03")) {
+                        } else if (deviceBean.getDevice_type().equals("4")) {//喂鱼
                             ZhiNengJiajuWeiYuAutoActivity.actionStart(getActivity(), deviceBean.getDevice_id(), deviceBean.getDevice_type());
-                        } else if (deviceBean.getDevice_type().equals("04")) {
+                        } else if (deviceBean.getDevice_type().equals("5")) {//浇花
                             ZhiNengJiaoHuaAutoActivity.actionStart(getActivity(), deviceBean.getDevice_id(), deviceBean.getDevice_type());
+                        } else if (deviceBean.getDevice_type().equals("2")) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("device_id", deviceBean.getDevice_id());
+                            bundle.putString("device_type", deviceBean.getDevice_type());
+                            bundle.putString("member_type", member_type);
+                            bundle.putString("work_state", deviceBean.getWork_state());
+                            startActivity(new Intent(getActivity(), ZhiNengJiaJuChaZuoActivity.class).putExtras(bundle));
                         } else {
                             Bundle bundle = new Bundle();
                             bundle.putString("device_id", deviceBean.getDevice_id());

@@ -25,10 +25,10 @@
         android:layout_height="42dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="5dp"
         android:background="@mipmap/img_device_switch_close"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/iv_device" />
+        app:layout_constraintBottom_toBottomOf="@+id/rl_zaixian"
+        app:layout_constraintRight_toRightOf="parent" />
 
 
     <TextView
@@ -40,17 +40,16 @@
         android:text="自动浇花"
         android:textColor="#333333"
         android:textSize="14sp"
-        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="@id/iv_device"
         app:layout_constraintTop_toBottomOf="@+id/iv_device" />
 
 
     <RelativeLayout
-
         android:id="@+id/rl_zaixian"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_device"
         app:layout_constraintTop_toBottomOf="@+id/tv_device_name">
 
         <LinearLayout
@@ -58,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="12dp"
+
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -89,14 +88,14 @@
         android:text="默认房间"
         android:textColor="#999999"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/rl_zaixian"
-        app:layout_constraintRight_toRightOf="@+id/iv_switch"
-        app:layout_constraintTop_toTopOf="@+id/rl_zaixian" />
+        android:layout_marginRight="10dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_device" />
 
     <View
         android:layout_width="8dp"
         android:layout_height="8dp"
         android:layout_marginLeft="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_room_name" />
+        app:layout_constraintTop_toBottomOf="@+id/rl_zaixian" />
 </androidx.constraintlayout.widget.ConstraintLayout>

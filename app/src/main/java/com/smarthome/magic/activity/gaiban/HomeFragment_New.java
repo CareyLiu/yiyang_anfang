@@ -75,6 +75,7 @@ import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.Radius_GlideImageLoader;
+import com.smarthome.magic.config.Radius_XiuPeiChangImageLoader;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.LordingDialog;
 import com.smarthome.magic.get_net.Urls;
@@ -139,6 +140,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
     private TextView tvZiYingTop, tvRemTop, tvZiYingZhiGongTop, tvReMenShangPinTop;
     private TextView tvZiYingMiddle, tvReMenMiddle, tvZiYingZhiGongMiddle, tvReMenShangPinMiddle;
     private RelativeLayout rlXiuPeiChang;
+    private Banner bannerXiuPeiChang;
 
 
     private View viewLineTop, viewLineMiddle, remenViewLineTop;
@@ -217,6 +219,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         reMenShangPin = view.findViewById(R.id.iv_remen);
         ivGouwuche = view.findViewById(R.id.iv_gouwuche);
         animationView = view.findViewById(R.id.animation_view);
+        bannerXiuPeiChang = view.findViewById(R.id.banner_xiupeichang);
         animationView.setAnimation("freec3_data.json");
         animationView.setImageAssetsFolder("gifs/");
         animationView.loop(true);
@@ -271,7 +274,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
             public void onClick(View v) {
                 //UIHelper.ToastMessage(getActivity(), "点击了修配厂");
                 //XiuPeiChangHomeActivity.actionStart(getActivity());
-                TuanGouShangJiaListActivity.actionStart(getActivity(),"7");
+                TuanGouShangJiaListActivity.actionStart(getActivity(), "7");
             }
         });
         clZiYing_Top.setOnClickListener(new View.OnClickListener() {
@@ -550,6 +553,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
 
         //设置图片加载器
         banner.setImageLoader(new Radius_GlideImageLoader());
+        bannerXiuPeiChang.setImageLoader(new Radius_XiuPeiChangImageLoader());
         getData();
         ///getYaoQingNet(getActivity());
         //   getNet();
@@ -633,6 +637,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
 
     private String JiaMiToken;
     public static List<String> items = new ArrayList<>();
+    public static List<Object> items_xiupeichang = new ArrayList<>();
     LordingDialog lordingDialog;
 
     public void getData() {
@@ -700,6 +705,25 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                                     } else if (response.body().data.get(0).getBannerList().get(position).getRotation_img_type().equals("3")) {
                                         DaLiBaoActivity.actionStart(getActivity());
                                     }
+                                }
+                            });
+                        }
+
+
+                        items_xiupeichang = new ArrayList<>();
+
+                        items_xiupeichang.add(R.mipmap.banner_xiupeichang_1);
+                        items_xiupeichang.add(R.mipmap.banner_xiupeichang_2);
+
+                        if (bannerXiuPeiChang != null) {
+                            //设置图片集合
+                            bannerXiuPeiChang.setImages(items_xiupeichang);
+                            //banner设置方法全部调用完毕时最后调用
+                            bannerXiuPeiChang.start();
+                            bannerXiuPeiChang.setOnBannerListener(new OnBannerListener() {
+                                @Override
+                                public void OnBannerClick(int position) {
+                                    XiuPeiChangHomeActivity.actionStart(getActivity());
                                 }
                             });
                         }

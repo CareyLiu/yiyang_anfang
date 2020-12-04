@@ -109,6 +109,7 @@ public class MyApplication extends MultiDexApplication {
 
     String daGeBenDi = "tcp://192.168.1.127";
     String mqttUrl = "tcp://mqtt.hljsdkj.com";
+String ggwCeShi = "tcp://ggw.hljsdkj.com";
 
 
     public static List<String> mqttDingyue = new ArrayList<>();

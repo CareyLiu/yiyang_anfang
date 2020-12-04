@@ -221,10 +221,10 @@ public class TuanGouMaiDanDingDanActivity extends AbTuanGouShengChengDingDan {
     }
 
     private void setMoney() {
-        if (moneyShiji.intValue() <= 0) {
-            moneyShiji = new BigDecimal("0.01");
+        if (moneyShiji.compareTo(BigDecimal.ZERO) > 0) {
             tvMoney.setText("¥" + moneyShiji.toString());
         } else {
+            moneyShiji = new BigDecimal("0.01");
             tvMoney.setText("¥" + moneyShiji.toString());
         }
     }

@@ -235,7 +235,7 @@ public class TuanGouMaiDanZhiFuActivity extends BaseActivity {
                         PaySuccessUtils.getNet(TuanGouMaiDanZhiFuActivity.this, formId);
                         AppManager.getAppManager().finishActivity(TuanGouMaiDanDingDanActivity.class);
                         AppManager.getAppManager().finishActivity(TuanGouMaiDanActivity.class);
-                        AppManager.getAppManager().finishActivity(TuanGouShangJiaDetailsActivity.class);
+                        //AppManager.getAppManager().finishActivity(TuanGouShangJiaDetailsActivity.class);
                         UIHelper.ToastMessage(TuanGouMaiDanZhiFuActivity.this, "支付成功", Toast.LENGTH_SHORT);
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。

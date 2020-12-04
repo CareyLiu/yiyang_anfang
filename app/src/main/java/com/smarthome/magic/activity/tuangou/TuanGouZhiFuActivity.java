@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -14,36 +13,48 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alipay.sdk.app.PayTask;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.roundview.RoundTextView;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.smarthome.magic.R;
+import com.smarthome.magic.adapter.TuanGouZhiFuAdapter;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
-import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.LordingDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.YuZhiFuModel;
 import com.smarthome.magic.model.YuZhiFuModel_AliPay;
+import com.smarthome.magic.model.ZhiFuTypeModel;
 import com.smarthome.magic.pay_about.alipay.PayResult;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+
+import static com.smarthome.magic.get_net.Urls.HOME_PICTURE_HOME;
 
 public class TuanGouZhiFuActivity extends BaseActivity {
 
@@ -68,21 +79,29 @@ public class TuanGouZhiFuActivity extends BaseActivity {
     ImageView ivZhifubaoChoose;
     @BindView(R.id.frtv_pay)
     RoundTextView frtvPay;
+    @BindView(R.id.rlv_list)
+    RecyclerView rlvList;
 
     private String appId;//支付id 给支付宝
     private IWXAPI api;
 
     private String war_id;
+    TuanGouZhiFuAdapter tuanGouZhiFuAdapter;
+    List<ZhiFuTypeModel.DataBean> list;
+
+    LordingDialog lordingDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
+        lordingDialog = new LordingDialog(mContext);
         id = getIntent().getStringExtra("id");
         userHongBao = getIntent().getStringExtra("userHongBao");
         number = getIntent().getStringExtra("count");
         war_id = getIntent().getStringExtra("war_id");
+        list = new ArrayList<>();
         //   } else {
         //      UIHelper.ToastMessage(DaLiBaoZhiFuActivity.this, "请联网后重新尝试");
         //  }
@@ -107,6 +126,7 @@ public class TuanGouZhiFuActivity extends BaseActivity {
                 PreferenceHelper.getInstance(TuanGouZhiFuActivity.this).putString(App.TUANGOU_PAY, "tuangoupay");
                 if (pay_id.equals("2")) {
                     //     finish();
+
                     getNet();
 
 
@@ -117,38 +137,70 @@ public class TuanGouZhiFuActivity extends BaseActivity {
             }
         });
 
-        viewWeixin.setOnClickListener(new View.OnClickListener() {
+//        viewWeixin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                pay_id = "2";//支付方式-- 1 支付宝 2 微信
+//                payType = "4";//1 支付宝 4 微信
+//
+//                //  ivIcon1.setBackgroundResource(R.mipmap.dingdan_icon_duihao);
+//                ivZhifubaoChoose.setVisibility(View.INVISIBLE);
+//                ivWeixinChoose.setVisibility(View.VISIBLE);
+//
+//            }
+//        });
+//
+//        viewZhifubao.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                pay_id = "1";//支付方式-- 1 支付宝 2 微信
+//                payType = "1";//1 支付宝 4 微信
+//
+//                ivZhifubaoChoose.setVisibility(View.VISIBLE);
+//                ivWeixinChoose.setVisibility(View.INVISIBLE);
+//                //ivWeixinChoose.setBackgroundResource(R.mipmap.dingdan_icon_duihao);
+//
+//            }
+//        });
+        getZhiFuNet();
+
+        tuanGouZhiFuAdapter = new TuanGouZhiFuAdapter(R.layout.item_zhifutype, list);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rlvList.setLayoutManager(linearLayoutManager);
+        rlvList.setAdapter(tuanGouZhiFuAdapter);
+
+        tuanGouZhiFuAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.cl_main:
+                        pay_id = list.get(position).pay_id;
+                        payType = list.get(position).pay_type;
 
-                pay_id = "2";//支付方式-- 1 支付宝 2 微信
-                payType = "4";//1 支付宝 4 微信
+                        for (int i = 0; i < list.size(); i++) {
+                            if (i==position){
+                                list.get(position).choose = "1";
+                            }else {
+                                list.get(i).choose = "0";
+                            }
+                        }
 
-                //  ivIcon1.setBackgroundResource(R.mipmap.dingdan_icon_duihao);
-                ivZhifubaoChoose.setVisibility(View.INVISIBLE);
-                ivWeixinChoose.setVisibility(View.VISIBLE);
-
+                        tuanGouZhiFuAdapter.notifyDataSetChanged();
+                        break;
+                }
             }
         });
 
-        viewZhifubao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                pay_id = "1";//支付方式-- 1 支付宝 2 微信
-                payType = "1";//1 支付宝 4 微信
-
-                ivZhifubaoChoose.setVisibility(View.VISIBLE);
-                ivWeixinChoose.setVisibility(View.INVISIBLE);
-                //ivWeixinChoose.setBackgroundResource(R.mipmap.dingdan_icon_duihao);
-
-            }
-        });
     }
+
 
     @Override
     public int getContentViewResId() {
-        return R.layout.tuangou_zaixianfu_pay;
+        return R.layout.tuangou_choose_pay;
     }
 
     @Override
@@ -411,5 +463,51 @@ public class TuanGouZhiFuActivity extends BaseActivity {
 
         }
 
+    }
+
+    public void getZhiFuNet() {
+        //访问网络获取数据 下面的列表数据
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "04266");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(TuanGouZhiFuActivity.this).getAppToken());
+        map.put("inst_id", id);
+        Gson gson = new Gson();
+        OkGo.<AppResponse<ZhiFuTypeModel.DataBean>>post(HOME_PICTURE_HOME)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ZhiFuTypeModel.DataBean>>() {
+                    @Override
+                    public void onStart(Request<AppResponse<ZhiFuTypeModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        lordingDialog.setTextMsg("数据加载中，请稍后");
+                        lordingDialog.show();
+                    }
+
+                    @Override
+                    public void onSuccess(Response<AppResponse<ZhiFuTypeModel.DataBean>> response) {
+                        list.clear();
+                        list.addAll(response.body().data);
+
+                        for (int i = 0; i < list.size(); i++) {
+                            if (i == 0) {
+                                list.get(i).choose = "1";
+                            } else {
+                                list.get(i).choose = "0";
+                            }
+                        }
+                        tuanGouZhiFuAdapter.setNewData(list);
+
+                        pay_id = list.get(0).pay_id;
+                        payType = list.get(0).pay_type;
+                        lordingDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        lordingDialog.dismiss();
+                    }
+                });
     }
 }

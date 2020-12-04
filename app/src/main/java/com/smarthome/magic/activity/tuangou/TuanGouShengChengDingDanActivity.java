@@ -179,17 +179,34 @@ public class TuanGouShengChengDingDanActivity extends AbTuanGouShengChengDingDan
         rl3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                hongBao = new BigDecimal(available_balance);
+
                 if (userHongBao.equals("2")) {
                     ivChoose.setVisibility(View.INVISIBLE);
                     userHongBao = "1";//不用
-
+                    ivChoose.setVisibility(View.INVISIBLE);
                     tvDanqianDikou.setVisibility(View.GONE);
                     tvDikoujine.setVisibility(View.GONE);
+                    rtvJine.setText("¥" + finalDecimal.toString() + "生成订单");
+                    tvMoney.setText("¥" + finalDecimal.toString());
+                    hongBao = new BigDecimal("0");
                 } else {
+
+                    userHongBao = "2";//用红包
                     ivChoose.setVisibility(View.VISIBLE);
-                    userHongBao = "2";//用
                     tvDanqianDikou.setVisibility(View.VISIBLE);
                     tvDikoujine.setVisibility(View.VISIBLE);
+
+                    BigDecimal subtract = finalDecimal.subtract(hongBao);
+                    if (subtract.intValue() <= 0) {
+                        tvMoney.setText("¥0.01");
+                        rtvJine.setText("¥0.01生成订单");
+                    } else {
+                        tvMoney.setText("¥" + finalDecimal.subtract(hongBao).toString());
+                        rtvJine.setText("¥" + finalDecimal.subtract(hongBao).toString() + "生成订单");
+                    }
+
                 }
             }
         });
@@ -360,7 +377,7 @@ public class TuanGouShengChengDingDanActivity extends AbTuanGouShengChengDingDan
         tvXiaojiPrice.setText(finalDecimal.toString() + "");
 
         BigDecimal subtract = finalDecimal.subtract(hongBao);
-        if (subtract.intValue() <= 0) {
+        if (subtract.compareTo(BigDecimal.ONE)==0) {
             tvMoney.setText("¥0.01");
             rtvJine.setText("¥0.01生成订单");
         } else {

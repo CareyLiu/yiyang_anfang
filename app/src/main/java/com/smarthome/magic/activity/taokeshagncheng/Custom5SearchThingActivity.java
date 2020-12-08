@@ -3,11 +3,6 @@ package com.smarthome.magic.activity.taokeshagncheng;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -21,6 +16,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.baichuan.android.trade.AlibcTrade;
 import com.alibaba.baichuan.android.trade.callback.AlibcTradeCallback;
@@ -40,13 +41,9 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.zijian_shangcheng.FenLeiThirdFragment;
 import com.smarthome.magic.adapter.Custom5HistoryAdapter;
 import com.smarthome.magic.adapter.TaoKeListAdapter2;
 import com.smarthome.magic.app.BaseActivity;
-import com.smarthome.magic.app.ConstanceValue;
-import com.smarthome.magic.app.Notice;
-import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
@@ -445,7 +442,7 @@ public class Custom5SearchThingActivity extends BaseActivity {
 
     @Override
     public int getContentViewResId() {
-        return R.layout.activity_custom5_search_thing;
+        return R.layout.activity_custom5_search_only;
     }
 
     @OnClick({R.id.iv_cancel, R.id.iv_back})

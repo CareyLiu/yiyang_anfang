@@ -121,7 +121,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                 switch (view.getId()) {
                     case R.id.iv_switch:
                         ZhiNengHomeBean.DataBean.DeviceBean bean = (ZhiNengHomeBean.DataBean.DeviceBean) adapter.getData().get(position);
-                        if (bean.getDevice_type().equals("7")) {
+                        if (bean.getDevice_type().equals("20")) {
                             clickTongtiao(bean, position);
                         } else {
                             mqttMingLing = new ZnjjMqttMingLing(getActivity(), bean.getDevice_ccid_up(), bean.getServer_id());
@@ -206,15 +206,15 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                             }
                         } else if (deviceBean.getDevice_type().equals("18")) {//涂鸦摄像机
                             TuyaCameraActivity.actionStart(getActivity(),member_type,deviceBean.getDevice_id(),deviceBean.getTy_device_ccid(),deviceBean.getDevice_name());
-                        } else if (deviceBean.getDevice_type().equals("F")) {//窗帘
+                        } else if (deviceBean.getDevice_type().equals("16")) {//窗帘
                             ZhiNengChuangLianActivity.actionStart(getActivity(), deviceBean.getDevice_id());
-                        } else if (deviceBean.getDevice_type().equals("1")) {//灯
+                        } else if (deviceBean.getDevice_type().equals("01")) {//灯
                             ZhiNengDianDengActivity.actionStart(getActivity(), deviceBean.getDevice_id(), deviceBean.getDevice_type());
-                        } else if (deviceBean.getDevice_type().equals("4")) {//喂鱼
+                        } else if (deviceBean.getDevice_type().equals("03")) {//喂鱼
                             ZhiNengJiajuWeiYuAutoActivity.actionStart(getActivity(), deviceBean.getDevice_id(), deviceBean.getDevice_type());
-                        } else if (deviceBean.getDevice_type().equals("5")) {//浇花
+                        } else if (deviceBean.getDevice_type().equals("04")) {//浇花
                             ZhiNengJiaoHuaAutoActivity.actionStart(getActivity(), deviceBean.getDevice_id(), deviceBean.getDevice_type());
-                        } else if (deviceBean.getDevice_type().equals("2")) {
+                        } else if (deviceBean.getDevice_type().equals("02")) {
                             Bundle bundle = new Bundle();
                             bundle.putString("device_id", deviceBean.getDevice_id());
                             bundle.putString("device_type", deviceBean.getDevice_type());

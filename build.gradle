@@ -7,7 +7,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0'
+//        classpath 'com.android.tools.build:gradle:3.2.0'
+        classpath 'com.android.tools.build:gradle:3.6.3'
         // just for GCM.
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -35,7 +36,6 @@ allprojects {
         }
         maven { url "https://dl.bintray.com/rongcloud/maven" }
         maven { url "https://dl.bintray.com/jetbrains/anko" }
-
     }
 }
 

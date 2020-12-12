@@ -22,6 +22,7 @@ import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -33,17 +34,20 @@ import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.gaiban.HomeFragment_New;
+import com.smarthome.magic.activity.zhinengjiaju.function.MenCiActivity;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.config.AudioFocusManager;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Notify;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.fragment.MessagerFragment;
 import com.smarthome.magic.fragment.MineFragment;
 import com.smarthome.magic.fragment.OnlineFragment;
 import com.smarthome.magic.fragment.ZhiNengJiaJuFragment;
 import com.smarthome.magic.model.AlarmClass;
+import com.smarthome.magic.model.ZhiNengJiaJuNotifyJson;
 import com.smarthome.magic.util.AppToast;
 import com.smarthome.magic.util.SoundPoolUtils;
 import com.smarthome.magic.view.NoScrollViewPager;
@@ -78,6 +82,7 @@ public class HomeActivity extends BaseActivity {
     private SparseIntArray items;
     AlarmClass alarmClass;
     private int i = 0;
+    TishiDialog tishiDialog;
 
     @Override
     public int getContentViewResId() {
@@ -166,6 +171,32 @@ public class HomeActivity extends BaseActivity {
                     handler.removeCallbacks(runnable);
                 } else if (notice.type == ConstanceValue.MSG_ZHINENGJIAJU) {
                     mVp.setCurrentItem(1, false);
+                } else if (notice.type == ConstanceValue.MSG_ZHINENGJIAJU_MENCI) {
+                    if (tishiDialog != null && tishiDialog.isShowing()) {
+                        return;
+                    }
+                    ZhiNengJiaJuNotifyJson zhiNengJiaJuNotifyJson = new ZhiNengJiaJuNotifyJson();
+                    zhiNengJiaJuNotifyJson = (ZhiNengJiaJuNotifyJson) notice.content;
+                    ZhiNengJiaJuNotifyJson finalZhiNengJiaJuNotifyJson = zhiNengJiaJuNotifyJson;
+                    tishiDialog = new TishiDialog(mContext, 1, new TishiDialog.TishiDialogListener() {
+                        @Override
+                        public void onClickCancel(View v, TishiDialog dialog) {
+
+                        }
+
+                        @Override
+                        public void onClickConfirm(View v, TishiDialog dialog) {
+                            MenCiActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson.getDevice_id());
+                        }
+
+                        @Override
+                        public void onDismiss(TishiDialog dialog) {
+
+                        }
+                    });
+                    tishiDialog.setTextContent("您的家庭有人进入是否前去查看");
+
+                    tishiDialog.show();
                 }
             }
         }));
@@ -441,8 +472,6 @@ public class HomeActivity extends BaseActivity {
     public static HomeActivity getInstance() {
         return new HomeActivity();
     }
-
-
 
 
 }

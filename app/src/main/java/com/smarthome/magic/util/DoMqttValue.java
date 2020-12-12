@@ -38,18 +38,43 @@ public class DoMqttValue {
                 //  收到的数据信息：  i01082.
                 //UIHelper.ToastMessage(context, "接收到的message信息： " + message);
                 if (message.contains("i")) {
-                    String zhuangZhiId = message.substring(1, 5);
-                    String kaiGuanDengZhuangTai = message.substring(5, 6);
 
-                    List<String> stringList = new ArrayList<>();
-                    stringList.add(zhuangZhiId);
-                    stringList.add(kaiGuanDengZhuangTai);
+                    if (message.contains("_")) {
 
-                    Notice notice = new Notice();
-                    notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
-                    notice.content = stringList;
-                    Log.i("Rair", notice.content.toString());
-                    RxBus.getDefault().sendRx(notice);
+                        String[] messageSplit = message.split("_");
+
+                        for (int i = 0; i < messageSplit.length; i++) {
+
+                            String zhuangZhiId = messageSplit[i].substring(1, 9);
+                            String kaiGuanDengZhuangTai = messageSplit[i].substring(9, 10);
+
+                            List<String> stringList = new ArrayList<>();
+                            stringList.add(zhuangZhiId);
+                            stringList.add(kaiGuanDengZhuangTai);
+
+                            Notice notice = new Notice();
+                            notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
+                            notice.content = stringList;
+                            Log.i("Rair", notice.content.toString());
+                            RxBus.getDefault().sendRx(notice);
+
+                        }
+
+                    } else {
+                        String zhuangZhiId = message.substring(1, 9);
+                        String kaiGuanDengZhuangTai = message.substring(9, 10);
+
+                        List<String> stringList = new ArrayList<>();
+                        stringList.add(zhuangZhiId);
+                        stringList.add(kaiGuanDengZhuangTai);
+
+                        Notice notice = new Notice();
+                        notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
+                        notice.content = stringList;
+                        Log.i("Rair", notice.content.toString());
+                        RxBus.getDefault().sendRx(notice);
+                    }
+
                 }
 
 

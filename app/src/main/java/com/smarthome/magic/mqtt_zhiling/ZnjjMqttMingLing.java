@@ -325,4 +325,57 @@ public class ZnjjMqttMingLing {
                 .setTopic(topic), listener);
     }
 
+
+    /**
+     * app 通过订阅获得主机的实时信息
+     *
+     * @param listener
+     */
+    public void subscribeAppShiShiXinXi(IMqttActionListener listener) {
+        if (!AndMqtt.getInstance().isConneect()) {
+            UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
+            return;
+        }
+        shishiTopic = "zn/app/" + serverId  + ccid;
+        Log.i("Rair", "订阅实时数据" + shishiTopic);
+        AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                .setTopic(shishiTopic)
+                .setQos(2), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+                Log.i("Rair", "订阅成功:" + topic);
+
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                Log.i("CAR_NOTIFY", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
+            }
+        });
+//        AndMqtt.getInstance().subscribe(new MqttSubscribe()
+//                .setTopic(shishiTopic)
+//                .setQos(2), listener);
+    }
+
+    /**
+     * 取消订阅主机的实时信息
+     *
+     * @param listener
+     */
+    public void unSubscribeAppShiShiXinXi(IMqttActionListener listener) {
+        if (!AndMqtt.getInstance().isConneect()) {
+            UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
+            return;
+        }
+        AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                .setTopic(shishiTopic)
+                .setQos(2), listener);
+    }
+
+    // TODO: 2020/12/10 解析数据 i12010101197.
+    public  void jieXiZhuangZhi(String str){
+
+
+    }
+
 }

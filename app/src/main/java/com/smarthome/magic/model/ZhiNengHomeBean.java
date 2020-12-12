@@ -65,9 +65,18 @@ public class ZhiNengHomeBean {
         private String member_type;
         private String device_num;
         private String family_id;
+        private String ty_family_id;
         private String family_name;
         private ArrayList<DeviceBean> device;
         private ArrayList<RoomBean> room;
+
+        public String getTy_family_id() {
+            return ty_family_id;
+        }
+
+        public void setTy_family_id(String ty_family_id) {
+            this.ty_family_id = ty_family_id;
+        }
 
         public String getMember_type() {
             return member_type;
@@ -143,6 +152,17 @@ public class ZhiNengHomeBean {
             private String device_type;
             private String server_id;
             private String device_ccid_up;
+            /**
+             * ty_room_id :
+             * device_category : 01
+             * ty_device_ccid :
+             * ty_family_id :
+             */
+
+            private String ty_room_id;
+            private String device_category;
+            private String ty_device_ccid;
+            private String ty_family_id;
 
             protected DeviceBean(Parcel in) {
                 room_name = in.readString();
@@ -156,6 +176,10 @@ public class ZhiNengHomeBean {
                 device_type = in.readString();
                 server_id = in.readString();
                 device_ccid_up = in.readString();
+                ty_room_id = in.readString();
+                device_category = in.readString();
+                ty_device_ccid = in.readString();
+                ty_family_id = in.readString();
             }
 
             public DeviceBean() {
@@ -280,6 +304,42 @@ public class ZhiNengHomeBean {
                 dest.writeString(device_type);
                 dest.writeString(server_id);
                 dest.writeString(device_ccid_up);
+                dest.writeString(ty_room_id);
+                dest.writeString(device_category);
+                dest.writeString(ty_device_ccid);
+                dest.writeString(ty_family_id);
+            }
+
+            public String getTy_room_id() {
+                return ty_room_id;
+            }
+
+            public void setTy_room_id(String ty_room_id) {
+                this.ty_room_id = ty_room_id;
+            }
+
+            public String getDevice_category() {
+                return device_category;
+            }
+
+            public void setDevice_category(String device_category) {
+                this.device_category = device_category;
+            }
+
+            public String getTy_device_ccid() {
+                return ty_device_ccid;
+            }
+
+            public void setTy_device_ccid(String ty_device_ccid) {
+                this.ty_device_ccid = ty_device_ccid;
+            }
+
+            public String getTy_family_id() {
+                return ty_family_id;
+            }
+
+            public void setTy_family_id(String ty_family_id) {
+                this.ty_family_id = ty_family_id;
             }
         }
 

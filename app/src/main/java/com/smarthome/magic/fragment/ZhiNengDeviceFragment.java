@@ -26,6 +26,7 @@ import com.smarthome.magic.activity.ZhiNengJiajuWeiYuAutoActivity;
 import com.smarthome.magic.activity.ZhiNengJiaoHuaAutoActivity;
 import com.smarthome.magic.activity.ZhiNengRoomDeviceDetailAutoActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
+import com.smarthome.magic.activity.tuya_camera.camera.TuyaCameraActivity;
 import com.smarthome.magic.activity.zckt.AirConditionerActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.MenCiActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.MenSuoActivity;
@@ -65,6 +66,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
     private List<ZhiNengHomeBean.DataBean.DeviceBean> dataBean = new ArrayList<>();
     private String member_type = "";
     public ZnjjMqttMingLing mqttMingLing = null;
+    private String family_id;
 
     @Nullable
     @Override
@@ -89,7 +91,6 @@ public class ZhiNengDeviceFragment extends BaseFragment {
         fragment.setArguments(bundle);
         return fragment;
     }
-
 
     public void initView(View view) {
         ll_content_bg = view.findViewById(R.id.ll_content_bg);
@@ -120,7 +121,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                 switch (view.getId()) {
                     case R.id.iv_switch:
                         ZhiNengHomeBean.DataBean.DeviceBean bean = (ZhiNengHomeBean.DataBean.DeviceBean) adapter.getData().get(position);
-                        if (bean.getDevice_type().equals("20")) {
+                        if (bean.getDevice_type().equals("7")) {
                             clickTongtiao(bean, position);
                         } else {
                             mqttMingLing = new ZnjjMqttMingLing(getActivity(), bean.getDevice_ccid_up(), bean.getServer_id());
@@ -203,6 +204,8 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                             } else {
                                 UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
                             }
+                        } else if (deviceBean.getDevice_type().equals("18")) {//涂鸦摄像机
+                            TuyaCameraActivity.actionStart(getActivity(),member_type,deviceBean.getDevice_id(),deviceBean.getTy_device_ccid(),deviceBean.getDevice_name());
                         } else if (deviceBean.getDevice_type().equals("F")) {//窗帘
                             ZhiNengChuangLianActivity.actionStart(getActivity(), deviceBean.getDevice_id());
                         } else if (deviceBean.getDevice_type().equals("1")) {//灯
@@ -321,26 +324,26 @@ public class ZhiNengDeviceFragment extends BaseFragment {
     public void onRefresh() {
         if (getArguments() != null) {
             List<ZhiNengHomeBean.DataBean.DeviceBean> device = getArguments().getParcelableArrayList("device");
-            String strPhone = PreferenceHelper.getInstance(getActivity()).getString("user_phone", "");
-            if (strPhone.equals("15114684672") || strPhone.equals("17645185187")) {
-                ZhiNengHomeBean.DataBean.DeviceBean kongtiaoBean = new ZhiNengHomeBean.DataBean.DeviceBean();
-                kongtiaoBean.setDevice_ccid("kkkkkkkkkkkkkkkk90120018");
-                kongtiaoBean.setDevice_name("智能空調");
-                kongtiaoBean.setDevice_type("20");
-                kongtiaoBean.setDevice_type_pic("https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11711");
-                kongtiaoBean.setOnline_state("1");
-                kongtiaoBean.setServer_id("8/");
-                kongtiaoBean.setRoom_name("默认房间");
-                kongtiaoBean.setWork_state("2");
-                device.add(kongtiaoBean);
-            }
+//            String strPhone = PreferenceHelper.getInstance(getActivity()).getString("user_phone", "");
+//            if (strPhone.equals("15114684672") || strPhone.equals("17645185187")) {
+//                ZhiNengHomeBean.DataBean.DeviceBean kongtiaoBean = new ZhiNengHomeBean.DataBean.DeviceBean();
+//                kongtiaoBean.setDevice_ccid("kkkkkkkkkkkkkkkk90120018");
+//                kongtiaoBean.setDevice_name("智能空調");
+//                kongtiaoBean.setDevice_type("7");
+//                kongtiaoBean.setDevice_type_pic("https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11711");
+//                kongtiaoBean.setOnline_state("1");
+//                kongtiaoBean.setServer_id("8/");
+//                kongtiaoBean.setRoom_name("默认房间");
+//                kongtiaoBean.setWork_state("2");
+//                device.add(kongtiaoBean);
+//            }
             member_type = getArguments().getString("member_type");
+            family_id = getArguments().getString("family_id");
             dataBean.clear();
             dataBean.addAll(device);
             if (zhiNengDeviceListAdapter != null) {
                 zhiNengDeviceListAdapter.notifyDataSetChanged();
             }
-
         }
 
         if (recyclerView != null) {

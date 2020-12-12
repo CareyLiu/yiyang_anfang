@@ -1,6 +1,8 @@
 package com.smarthome.magic.app;
 
 
+import com.alibaba.fastjson.JSONObject;
+
 /**
  * 消息实体类
  * type消息类型
@@ -21,4 +23,9 @@ public class Notice {
 
     public Notice() {
     }
+
+    public String  devId;
+    public String  key;
+    public String  value;
+    public JSONObject jsonObject;
 }

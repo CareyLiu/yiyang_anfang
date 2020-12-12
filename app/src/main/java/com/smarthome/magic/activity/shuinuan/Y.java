@@ -89,6 +89,18 @@ public class Y {
         }
     }
 
+    public static long getLong(String content) {
+        if (!TextUtils.isEmpty(content)) {
+            try {
+                return Long.parseLong(content);
+            } catch (Exception e) {
+                return 0;
+            }
+        } else {
+            return 0;
+        }
+    }
+
     public static double getDouble(String content) {
         if (!TextUtils.isEmpty(content)) {
             try {

@@ -22,6 +22,7 @@ import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.adapter.ZhiNengFamilyManageAdapter;
 import com.smarthome.magic.adapter.ZhiNengFamilyManageDetailAdapter;
 import com.smarthome.magic.app.BaseActivity;
@@ -38,6 +39,8 @@ import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.model.ZhiNengFamilyMAnageDetailBean;
 import com.smarthome.magic.model.ZhiNengHomeListBean;
+import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.sdk.api.IResultCallback;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,6 +79,7 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
     private ZhiNengFamilyManageDetailAdapter zhiNengFamilyManageDetailAdapter;
     private View footerView;
     private String family_id = "";
+    private String ty_family_id;
 
     @Override
     public int getContentViewResId() {
@@ -99,6 +103,8 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
     protected void onResume() {
         super.onResume();
         family_id = getIntent().getStringExtra("family_id");
+        ty_family_id = getIntent().getStringExtra("ty_family_id");
+        Y.e("反舰导弹发射  " + ty_family_id);
         if (family_id == null) {
             family_id = "";
         }
@@ -189,12 +195,27 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
 
                     @Override
                     public void clickRight() {
-                        deleteFamily();
+                        deleteTuyaJiating();
                     }
                 });
                 myCarCaoZuoDialog_caoZuoTIshi.show();
                 break;
         }
+    }
+
+    private void deleteTuyaJiating() {
+        TuyaHomeSdk.newHomeInstance(Y.getLong(ty_family_id)).dismissHome(new IResultCallback() {
+            @Override
+            public void onSuccess() {
+                Y.e("解散涂鸦家庭成功 ");
+                deleteFamily();
+            }
+
+            @Override
+            public void onError(String code, String error) {
+                Y.t("解散家庭失败:"+error);
+            }
+        });
     }
 
     private void getnet() {

@@ -34,6 +34,9 @@ import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.ZhiNengHomeBean;
 import com.smarthome.magic.model.ZhiNengHomeListBean;
+import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.home.sdk.bean.HomeBean;
+import com.tuya.smart.home.sdk.callback.ITuyaGetHomeListCallback;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,7 +80,6 @@ public class ZhiNengHomeListActivity extends BaseActivity implements View.OnClic
         showLoadFailed();
         getnet();
     }
-
 
     @Override
     protected void onLoadRetry() {

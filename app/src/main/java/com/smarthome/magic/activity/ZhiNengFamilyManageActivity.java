@@ -22,6 +22,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.adapter.ZhiNengFamilyManageAdapter;
 import com.smarthome.magic.adapter.ZhiNengHomeListAdapter;
 import com.smarthome.magic.adapter.ZhiNengRoomListAdapter;
@@ -38,6 +39,10 @@ import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.model.ZhiNengFamilyManageBean;
 import com.smarthome.magic.model.ZhiNengHomeListBean;
+import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.home.sdk.bean.HomeBean;
+import com.tuya.smart.home.sdk.bean.RoomBean;
+import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -106,6 +111,7 @@ public class ZhiNengFamilyManageActivity extends BaseActivity implements View.On
                 ZhiNengHomeListBean.DataBean dataBean = (ZhiNengHomeListBean.DataBean) adapter.getItem(position);
                 Bundle bundle = new Bundle();
                 bundle.putString("family_id", dataBean.getFamily_id());
+                bundle.putString("ty_family_id", dataBean.getTy_family_id());
                 startActivity(new Intent(context, ZhiNengFamilyManageDetailActivity.class).putExtras(bundle));
             }
         });
@@ -113,7 +119,7 @@ public class ZhiNengFamilyManageActivity extends BaseActivity implements View.On
             @Override
             public void call(Notice message) {
                 if (message.type == ConstanceValue.MSG_FAMILY_MANAGE_ADD) {
-                    creatFamily(message.content.toString());
+                    creatTuyaFamily(message.content.toString());
                 }
             }
         }));
@@ -175,13 +181,31 @@ public class ZhiNengFamilyManageActivity extends BaseActivity implements View.On
                 });
     }
 
-    private void creatFamily(String familyName) {
+    private void creatTuyaFamily(String name) {
+        List<String> addRooms = new ArrayList<>();
+        TuyaHomeSdk.getHomeManagerInstance().createHome(name, 0, 0, "", addRooms, new ITuyaHomeResultCallback() {
+            @Override
+            public void onSuccess(HomeBean bean) {
+                long tuyaHomeId = bean.getHomeId();
+                creatFamily(name, tuyaHomeId, 0);
+            }
+
+            @Override
+            public void onError(String errorCode, String errorMsg) {
+                Y.t("创建家庭失败:" + errorMsg);
+            }
+        });
+    }
+
+    private void creatFamily(String familyName, long ty_family_id, long ty_room_id) {
         //访问网络获取数据 下面的列表数据
         Map<String, String> map = new HashMap<>();
         map.put("code", "16011");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(context).getAppToken());
         map.put("family_name", familyName);
+        map.put("ty_family_id", ty_family_id + "");
+        map.put("ty_room_id", ty_room_id + "");
         Gson gson = new Gson();
         Log.e("map_data", gson.toJson(map));
         OkGo.<AppResponse<ZhiNengFamilyManageBean.DataBean>>post(ZHINENGJIAJU)
@@ -193,6 +217,7 @@ public class ZhiNengFamilyManageActivity extends BaseActivity implements View.On
                         if (response.body().msg.equals("ok")) {
                             Bundle bundle = new Bundle();
                             bundle.putString("family_id", response.body().data.get(0).getFamily_id());
+                            bundle.putString("ty_family_id", response.body().data.get(0).getTy_family_id());
                             startActivity(new Intent(context, ZhiNengFamilyManageDetailActivity.class).putExtras(bundle));
                         }
                     }

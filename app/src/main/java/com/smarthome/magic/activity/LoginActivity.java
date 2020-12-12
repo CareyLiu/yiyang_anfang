@@ -45,6 +45,10 @@ import com.smarthome.magic.model.LoginUser;
 import com.smarthome.magic.model.Message;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.TimeCount;
+import com.tuya.smart.android.user.api.ILoginCallback;
+import com.tuya.smart.android.user.api.IUidLoginCallback;
+import com.tuya.smart.android.user.bean.User;
+import com.tuya.smart.home.sdk.TuyaHomeSdk;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -232,7 +236,7 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.tv_switch, R.id.bt_login,R.id.tv_zhaohui})
+    @OnClick({R.id.tv_switch, R.id.bt_login, R.id.tv_zhaohui})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_zhaohui:
@@ -344,86 +348,8 @@ public class LoginActivity extends BaseActivity {
                         @Override
                         public void onSuccess(Response<AppResponse<LoginUser.DataBean>> response) {
                             userlist.clear();
-
                             LoginActivity.this.response = response;
-                            //保存用户手机号码
-                            PreferenceHelper.getInstance(LoginActivity.this).putString("user_phone", mEtPhone.getText().toString() + "");
-
-                            String accid = LoginActivity.this.response.body().data.get(0).getAccid();
-                            JPushInterface.setAlias(mContext, 0, accid);
-                            Set<String> tags = new HashSet<>();
-                            tags.add(accid);
-                            JPushInterface.setTags(mContext, 0, tags);
-
-                            if (response.body().data.size() == 1) {
-                                //如果登录角色数量<=1则直接登录
-                                // response.body().data.get(0).invitation_code_state = "2";
-                                UserManager.getManager(LoginActivity.this).saveUser(LoginActivity.this.response.body().data.get(0));
-                                if (response.body().data.get(0).getPower_state().equals("1")) {
-
-                                    if (response.body().data.get(0).invitation_code_state.equals("2")) {
-                                        BuTianYaoQingMaDialog buTianYaoQingMaDialog = new BuTianYaoQingMaDialog(mContext, new BuTianYaoQingMaDialog.OnDialogItemClickListener() {
-                                            @Override
-                                            public void qudingclick(String str) {
-
-                                                if (StringUtils.isEmpty(str)) {
-                                                    UIHelper.ToastMessage(mContext, "请输入邀请码后再进行验证");
-                                                } else {
-                                                    getNet_butian(str);
-                                                }
-                                            }
-
-                                            @Override
-                                            public void quxiaoclick() {
-
-                                                UserManager.getManager(LoginActivity.this).saveUser(response.body().data.get(0));
-                                                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-
-                                                //重连mqtt
-                                                Notice n = new Notice();
-                                                n.type = ConstanceValue.MSG_CONNET_MQTT;
-                                                RxBus.getDefault().sendRx(n);
-                                                finish();
-
-                                            }
-                                        });
-                                        buTianYaoQingMaDialog.show();
-                                    } else {
-                                        UserManager.getManager(LoginActivity.this).saveUser(response.body().data.get(0));
-                                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-
-                                        //重连mqtt
-                                        Notice n = new Notice();
-                                        n.type = ConstanceValue.MSG_CONNET_MQTT;
-                                        RxBus.getDefault().sendRx(n);
-                                        finish();
-                                    }
-
-                                } else {
-                                    UserManager.getManager(LoginActivity.this).saveUser(response.body().data.get(0));
-                                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-
-                                    //重连mqtt
-                                    Notice n = new Notice();
-                                    n.type = ConstanceValue.MSG_CONNET_MQTT;
-                                    RxBus.getDefault().sendRx(n);
-                                    finish();
-                                }
-
-                            } else {
-                                //登录角色 >1 时，让用户选择要登录的角色
-                                userlist.addAll(response.body().data);
-                                startActivity(new Intent(LoginActivity.this, SelectLoginActivity.class));
-                            }
-
-                            String rongYunTouken = UserManager.getManager(mContext).getRongYun();
-                            if (!StringUtils.isEmpty(rongYunTouken)) {
-                                //connectRongYun(response.body().data.get(0).getToken_rong());
-                                Notice notice = new Notice();
-                                notice.type = ConstanceValue.MSG_RONGYUN_CHONGZHI;
-                                RxBus.getDefault().sendRx(notice);
-                                
-                            }
+                            loginTuya(mEtPhone.getText().toString());
                         }
 
                         @Override
@@ -431,6 +357,100 @@ public class LoginActivity extends BaseActivity {
                             Y.tError(response);
                         }
                     });
+        }
+    }
+
+    private void loginTuya(String phone) {
+        TuyaHomeSdk.getUserInstance().loginOrRegisterWithUid("86", phone, "123456", new ILoginCallback() {
+            @Override
+            public void onSuccess(User user) {
+                loginXiayibu();
+            }
+
+            @Override
+            public void onError(String code, String error) {
+                Y.t("登录失败:"+error);
+            }
+        });
+    }
+
+    private void loginXiayibu() {
+        //保存用户手机号码
+        PreferenceHelper.getInstance(LoginActivity.this).putString("user_phone", mEtPhone.getText().toString() + "");
+
+        String accid = LoginActivity.this.response.body().data.get(0).getAccid();
+        JPushInterface.setAlias(mContext, 0, accid);
+        Set<String> tags = new HashSet<>();
+        tags.add(accid);
+        JPushInterface.setTags(mContext, 0, tags);
+
+        if (response.body().data.size() == 1) {
+            //如果登录角色数量<=1则直接登录
+            // response.body().data.get(0).invitation_code_state = "2";
+            UserManager.getManager(LoginActivity.this).saveUser(LoginActivity.this.response.body().data.get(0));
+            if (response.body().data.get(0).getPower_state().equals("1")) {
+
+                if (response.body().data.get(0).invitation_code_state.equals("2")) {
+                    BuTianYaoQingMaDialog buTianYaoQingMaDialog = new BuTianYaoQingMaDialog(mContext, new BuTianYaoQingMaDialog.OnDialogItemClickListener() {
+                        @Override
+                        public void qudingclick(String str) {
+
+                            if (StringUtils.isEmpty(str)) {
+                                UIHelper.ToastMessage(mContext, "请输入邀请码后再进行验证");
+                            } else {
+                                getNet_butian(str);
+                            }
+                        }
+
+                        @Override
+                        public void quxiaoclick() {
+
+                            UserManager.getManager(LoginActivity.this).saveUser(response.body().data.get(0));
+                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+
+                            //重连mqtt
+                            Notice n = new Notice();
+                            n.type = ConstanceValue.MSG_CONNET_MQTT;
+                            RxBus.getDefault().sendRx(n);
+                            finish();
+
+                        }
+                    });
+                    buTianYaoQingMaDialog.show();
+                } else {
+                    UserManager.getManager(LoginActivity.this).saveUser(response.body().data.get(0));
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+
+                    //重连mqtt
+                    Notice n = new Notice();
+                    n.type = ConstanceValue.MSG_CONNET_MQTT;
+                    RxBus.getDefault().sendRx(n);
+                    finish();
+                }
+
+            } else {
+                UserManager.getManager(LoginActivity.this).saveUser(response.body().data.get(0));
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+
+                //重连mqtt
+                Notice n = new Notice();
+                n.type = ConstanceValue.MSG_CONNET_MQTT;
+                RxBus.getDefault().sendRx(n);
+                finish();
+            }
+
+        } else {
+            //登录角色 >1 时，让用户选择要登录的角色
+            userlist.addAll(response.body().data);
+            startActivity(new Intent(LoginActivity.this, SelectLoginActivity.class));
+        }
+
+        String rongYunTouken = UserManager.getManager(mContext).getRongYun();
+        if (!StringUtils.isEmpty(rongYunTouken)) {
+            //connectRongYun(response.body().data.get(0).getToken_rong());
+            Notice notice = new Notice();
+            notice.type = ConstanceValue.MSG_RONGYUN_CHONGZHI;
+            RxBus.getDefault().sendRx(notice);
         }
     }
 

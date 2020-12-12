@@ -62,8 +62,17 @@ public class ZhiNengHomeListBean {
         private String active;
         private String device_num;
         private String family_id;
+        private String ty_family_id;
         private String room_num;
         private String family_name;
+
+        public String getTy_family_id() {
+            return ty_family_id;
+        }
+
+        public void setTy_family_id(String ty_family_id) {
+            this.ty_family_id = ty_family_id;
+        }
 
         public String getMember_type() {
             return member_type;

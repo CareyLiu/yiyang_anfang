@@ -124,4 +124,16 @@ public interface ConstanceValue {
     int MSG_ZHINENGJIAJUGUANDENG = 0x10087;//关灯
     int MSG_ZHINENGJIAJU_ZHUJI = 0x10088;//主机在线与离线
 
+    int MSG_WIFI_CLOSE = 0x10089;//wifi关闭
+    int MSG_WIFI_INFO = 0x10090;//wifi信息
+    int MSG_WIFI_SET = 0x10091;//wifi信息
+    int MSG_DEVICE_ADD = 0x10092;//添加设备
+    int MSG_DEVICE_DATA = 0x10093;//dp数据更新
+    int MSG_DEVICE_REMOVED = 0x10094;//设备移除回调
+    int MSG_DEVICE_STATUSCHANGED = 0x10095;//设备上下线回调
+    int MSG_DEVICE_NETWORKSTATUSCHANGED = 0x10096;//网络状态发生变动时的回调
+    int MSG_DEVICE_DEVINFOUPDATE = 0x10097;//设备信息更新回调
+    int MSG_CAMERA_FAIL = 0x10098;//摄像机通知失败
+
+
 }

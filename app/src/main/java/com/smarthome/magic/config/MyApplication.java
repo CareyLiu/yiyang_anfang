@@ -64,6 +64,7 @@ import com.smarthome.magic.util.JinChengUtils;
 import com.smarthome.magic.util.SerializeUtil;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.tuya.smart.home.sdk.TuyaHomeSdk;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -109,7 +110,7 @@ public class MyApplication extends MultiDexApplication {
 
     String daGeBenDi = "tcp://192.168.1.127";
     String mqttUrl = "tcp://mqtt.hljsdkj.com";
-String ggwCeShi = "tcp://ggw.hljsdkj.com";
+    String ggwCeShi = "tcp://ggw.hljsdkj.com";
 
 
     public static List<String> mqttDingyue = new ArrayList<>();
@@ -203,6 +204,7 @@ String ggwCeShi = "tcp://ggw.hljsdkj.com";
         initWindow();
         initDefaultPicker();
         initOkgo();
+        initTuya();//涂鸦智能家居
 
         // 获取当前包名
         String packageName = context.getPackageName();
@@ -300,6 +302,10 @@ String ggwCeShi = "tcp://ggw.hljsdkj.com";
         //view
         Gloading.initDefault(new GlobalAdapter());
         Logger.addLogAdapter(new AndroidLogAdapter());
+    }
+
+    private void initTuya() {//涂鸦智能家居
+        TuyaHomeSdk.init(this);
     }
 
     private void initRongYun() {

@@ -5,15 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.fragment.app.Fragment;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.gson.Gson;
@@ -25,12 +21,13 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.ZhiNengHomeListActivity;
+import com.smarthome.magic.activity.shuinuan.Y;
+import com.smarthome.magic.activity.tuya_camera.add.TuyaDeviceAddActivity;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.PeiWangYinDaoPageActivity;
 import com.smarthome.magic.adapter.NewsFragmentPagerAdapter;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
-import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
@@ -54,6 +51,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -93,6 +94,8 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     LinearLayout rlMain;
     @BindView(R.id.tv_zhuji_zhuangtai)
     TextView tvZhujiZhuangtai;
+    @BindView(R.id.bt_add_camera)
+    Button bt_add_camera;
 
 
     private List<String> tabs = new ArrayList<>();
@@ -196,6 +199,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
 
         srLSmart.setEnableLoadMore(false);
         ll_checkhome.setOnClickListener(this);
+        bt_add_camera.setOnClickListener(this);
         initViewpager();
         initMagicIndicator();
         initData();
@@ -214,6 +218,8 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                 } else if (message.type == ConstanceValue.MSG_ZHINENGJIAJU_ZHUJI) {
                     //刷新列表
                     Log.i("设备离线", "设备离线刷新列表");
+                    getnet();
+                } else if (message.type == ConstanceValue.MSG_DEVICE_ADD) {
                     getnet();
                 }
             }
@@ -259,8 +265,11 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                             tv_family_name.setText(dataBean.get(0).getFamily_name() + "(共享家庭)");
                         }
                         tv_device_num.setText(dataBean.get(0).getDevice_num() + "个设备");
+
                         device.putParcelableArrayList("device", dataBean.get(0).getDevice());
                         device.putString("member_type", dataBean.get(0).getMember_type());
+                        device.putString("family_id", dataBean.get(0).getFamily_id());
+
                         room.putParcelableArrayList("room", dataBean.get(0).getRoom());
                         room.putString("member_type", dataBean.get(0).getMember_type());
                         room.putString("family_id", dataBean.get(0).getFamily_id());
@@ -272,7 +281,9 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                         }
 
                         String familyId = dataBean.get(0).getFamily_id();
+                        String ty_family_id = dataBean.get(0).getTy_family_id();
                         PreferenceHelper.getInstance(getActivity()).putString(AppConfig.PEIWANG_FAMILYID, familyId);
+                        PreferenceHelper.getInstance(getActivity()).putLong(AppConfig.TUYA_HOME_ID, Y.getLong(ty_family_id));
 
                         /**
                          * online_state	在线状态：1.在线 2.离线
@@ -308,6 +319,16 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
             case R.id.ll_checkhome:
                 startActivity(new Intent(getActivity(), ZhiNengHomeListActivity.class));
                 break;
+            case R.id.bt_add_camera:
+                clickAddCamera();
+                break;
         }
     }
+
+    private void clickAddCamera() {
+        PreferenceHelper.getInstance(getActivity()).putString(AppConfig.MC_DEVICE_CCID, "aaaaaaaaaaaaaaaa80140018");
+        TuyaDeviceAddActivity.actionStart(getContext());
+    }
+
+
 }

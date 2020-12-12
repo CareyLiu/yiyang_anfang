@@ -543,4 +543,17 @@
     <color name="blue_ff3a85f8">#ff3a85f8</color>
 
 
+    <color name="color_1">#111111</color>
+    <color name="color_2">#222222</color>
+    <color name="color_3">#333333</color>
+    <color name="color_4">#444444</color>
+    <color name="color_5">#555555</color>
+    <color name="color_6">#666666</color>
+    <color name="color_7">#777777</color>
+    <color name="color_8">#888888</color>
+    <color name="color_9">#999999</color>
+    <color name="color_main">#3A85F8</color>
+    <color name="color_main_80">#803A85F8</color>
+    <color name="black_55">#55000000</color>
+    <color name="line">#EEEEEE</color>
 </resources>

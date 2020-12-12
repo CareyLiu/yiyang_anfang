@@ -61,8 +61,15 @@
         android:sharedUserId="android.uid.system"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        tools:replace="android:allowBackup">
-        <activity android:name=".activity.YanShiActivity"></activity>
+        tools:replace="android:allowBackup,android:supportsRtl">
+
+        <!-- 涂鸦验证 -->
+        <meta-data
+            android:name="TUYA_SMART_APPKEY"
+            android:value="5hx3uuppmxacmyt4vgky" />
+        <meta-data
+            android:name="TUYA_SMART_SECRET"
+            android:value="estd4ycjana3t7pk7rwcjqcvftx85u8e" />
 
         <!-- Required SDK 核心功能-->
         <!-- 可配置 android:process 参数将 PushService 放在其他进程中 -->
@@ -1201,6 +1208,73 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
+
+        <!-- 涂鸦wifi监听 -->
+        <receiver android:name=".activity.tuya_camera.utils.WifiReceiver" />
+
+        <!-- 涂鸦设备配网 -->
+        <activity
+            android:name=".activity.tuya_camera.add.TuyaDevicePeiwangActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦添加设备 -->
+        <activity
+            android:name=".activity.tuya_camera.add.TuyaDeviceAddActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦添加设备成功 -->
+        <activity
+            android:name=".activity.tuya_camera.add.TuyaDeviceAddFinishActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦添摄像机 -->
+        <activity
+            android:name=".activity.tuya_camera.camera.TuyaCameraActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦设置 -->
+        <activity
+            android:name=".activity.tuya_camera.camera.CameraSetActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦基础设置 -->
+        <activity
+            android:name=".activity.tuya_camera.camera.CameraSetJichuActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦报警设置 -->
+        <activity
+            android:name=".activity.tuya_camera.camera.CameraSetBaojingActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦存储设置 -->
+        <activity
+            android:name=".activity.tuya_camera.camera.CameraSetCunchuActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            tools:ignore="LockedOrientationActivity" />
     </application>
 
 </manifest>

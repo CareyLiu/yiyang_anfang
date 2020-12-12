@@ -18,7 +18,6 @@ import java.util.Properties;
 public class AppConfig {
 
 
-
     public static String DefaultCity = "哈尔滨市";
     public static boolean ADSTATE = true;
     public static String SCREEN = "-1";//检索预约
@@ -109,7 +108,7 @@ public class AppConfig {
     public final static String SMS_ID = "SMS_ID";//smsId;//临时使用
     public final static String SMS_CODE = "SMS_CODE";//临时使用
     public final static String RONGYUN_TOKEN = "RONGYUN_TOKEN";
-    public final static String TANCHUFUWUTANKUANG ="TANCHUFUWUTANKUANG";//弹出服务弹框
+    public final static String TANCHUFUWUTANKUANG = "TANCHUFUWUTANKUANG";//弹出服务弹框
     //福利功能  需要的字段
     //作废时间  --待使用
     public static String abolishDate;
@@ -273,4 +272,11 @@ public class AppConfig {
         setProps(props);
     }
 
+
+    public final static String TUYA_PEIWANG_ADMIN = "TUYA_PEIWANG_ADMIN";
+    public final static String TUYA_PEIWANG_MIMA = "TUYA_PEIWANG_MIMA";
+    public final static String TUYA_PEIWANG_ADMIN_GET = "TUYA_PEIWANG_ADMIN_GET";
+    public final static String TUYA_PEIWANG_MIMA_GET = "TUYA_PEIWANG_MIMA_GET";
+    public final static String TUYA_HOME_ID = "TUYA_HOME_ID";
+    public final static String MC_DEVICE_CCID = "MC_DEVICE_CCID";
 }

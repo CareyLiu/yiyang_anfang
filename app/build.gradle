@@ -23,11 +23,10 @@ android {
     compileSdkVersion 29
     defaultConfig {
         applicationId "com.smarthome.magic"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 29
         versionCode 33
         versionName "1.8.8"
-        //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         ndk {
@@ -36,9 +35,9 @@ android {
 
 
         manifestPlaceholders = [
-                JPUSH_PKGNAME : applicationId,
+                JPUSH_PKGNAME: applicationId,
                 JPUSH_APPKEY : "02c5d1167fe464e61186e333", //JPush 上注册的包名对应的 Appkey.
-                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
     }
 
@@ -86,14 +85,30 @@ android {
         exclude 'META-INF/proguard/androidx-annotations.pro'
         exclude 'assets/location_map_gps_locked.png'
         exclude 'assets/location_map_gps_3d.png'
+        //涂鸦
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/INDEX.LIST'
+        exclude 'META-INF/maven/com.squareup.okio/okio/pom.properties'
+        exclude 'META-INF/maven/com.squareup.okio/okio/pom.xml'
+        exclude 'META-INF/android-offlinelog-api_release.kotlin_module'
+        exclude 'META-INF/android-offlinelog-upload_release.kotlin_module'
+        pickFirst 'lib/*/libc++_shared.so'
+        pickFirst 'lib/*/libgnustl_shared.so'
+        doNotStrip '*/mips/*.so'
+        doNotStrip '*/mips64/*.so'
     }
 
+    lintOptions {
+        abortOnError false
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
 }
 
 
@@ -247,7 +262,7 @@ dependencies {
     implementation 'com.alibaba.sdk.android:AlibcTradeCommon:4.0.0.8@aar'
     implementation 'com.alibaba.sdk.android:AlibcTradeBiz:4.0.0.8@aar'
     implementation 'com.alibaba.sdk.android:nb_trade:4.0.0.8@aar'
-    implementation 'com.alibaba:fastjson:1.2.41'
+    implementation 'com.alibaba:fastjson:1.1.67.android'
 
     /**
      *   Android智能下拉刷新框架-SmartRefreshLayout
@@ -307,4 +322,15 @@ dependencies {
     implementation 'cn.jiguang.sdk:jcore:2.4.2'  // 此处以JCore 2.4.2 版本为例。
     implementation 'com.bulong.rudeness:rudeness:latest.release@aar'
 
+    //涂鸦sdk
+    implementation 'com.tuya.smart:tuyasmart:3.20.0-beta1'
+    //涂鸦摄像头
+    implementation 'com.tuya.smart:tuyasmart-ipc-camera-middleware:3.20.0'
+    implementation 'com.tuya.smart:tuyasmart-ipc-camera-v2:3.20.0'
+    implementation 'com.tuya.smart:tuyasmart-ipc-camera-utils:3.20.0'
+    implementation 'com.tuya.smart:tuyasmart-ipc-camera-diff-api:3.20.0'
+    implementation 'com.tuya.smart:tuyasmart-ipc-camera-outside:3.20.0'
+    implementation 'com.tuya.smart:tuyasmart-base-utils:3.18.0r143-rc.9'
+    implementation 'com.tuya.smart:tuyasmart-ipc-camera-message:3.13.0r128'
+    implementation 'com.tuya.smart:tuyasmart-ipc-devicecontrol:3.17.0r139'
 }

@@ -31,6 +31,7 @@ import com.lzy.okgo.model.Response;
 import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.v1.EspTouchActivity;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.ConstanceValue;
@@ -49,6 +50,8 @@ import com.smarthome.magic.model.Upload;
 import com.smarthome.magic.model.UserInfo;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.CleanMessageUtil;
+import com.tuya.smart.android.user.api.ILogoutCallback;
+import com.tuya.smart.home.sdk.TuyaHomeSdk;
 
 import org.devio.takephoto.app.TakePhoto;
 import org.devio.takephoto.app.TakePhotoImpl;
@@ -333,7 +336,7 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
                     @Override
                     public void clickRight() {
                         if (str.equals("1")) {
-                            PhoneCheckActivity.actionStart_WeiBind(SettingActivity.this, "0320",false);
+                            PhoneCheckActivity.actionStart_WeiBind(SettingActivity.this, "0320", false);
                         } else if (str.equals("2")) {
                             PhoneCheckActivity.actionStart_WeiBind(SettingActivity.this, "0320", true);
                         }
@@ -396,6 +399,18 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
 
                                 RongIM.getInstance().logout();
                                 startActivity(new Intent(SettingActivity.this, LoginActivity.class));
+
+                                TuyaHomeSdk.getUserInstance().logout(new ILogoutCallback() {
+                                    @Override
+                                    public void onSuccess() {
+
+                                    }
+
+                                    @Override
+                                    public void onError(String errorCode, String errorMsg) {
+
+                                    }
+                                });
                             }
                         });
                 break;

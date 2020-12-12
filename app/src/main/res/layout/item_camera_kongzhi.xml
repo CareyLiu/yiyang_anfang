@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="240pt"
+        android:layout_height="240pt"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="61pt"
+            android:layout_height="61pt" />
+
+        <TextView
+            android:id="@+id/tv_kongzhi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50pt"
+            android:includeFontPadding="false"
+            android:text="控制类型"
+            android:textColor="@color/color_1"
+            android:textSize="27pt"
+            android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>

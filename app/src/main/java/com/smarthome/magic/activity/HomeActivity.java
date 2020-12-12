@@ -34,7 +34,11 @@ import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.gaiban.HomeFragment_New;
+import com.smarthome.magic.activity.zhinengjiaju.function.LouShuiActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.MenCiActivity;
+import com.smarthome.magic.activity.zhinengjiaju.function.MenSuoActivity;
+import com.smarthome.magic.activity.zhinengjiaju.function.SosActivity;
+import com.smarthome.magic.activity.zhinengjiaju.function.YanGanActivity;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
@@ -175,9 +179,18 @@ public class HomeActivity extends BaseActivity {
                     if (tishiDialog != null && tishiDialog.isShowing()) {
                         return;
                     }
+                    /**
+                     / 00 主机 01.灯 02.插座 03.喂鱼 04.浇花 05门锁 06.空调电视(开关，加风，减风，讯飞语音配置)
+                     / 07.车库门  08.开关 09.晾衣架 10.窗磁 11.烟雾报警 12.门磁 13.漏水14.雷达
+                     / 15.紧急开关 16.窗帘 17.电视(开关，加减音量，加减亮暗，讯飞语音配置) 18.摄像头
+                     / 19.空气检测 20.温湿度检测 21.煤气管道关闭 22.自来水管道关闭 23.宠物喂食 24.宠物喂水
+                     / 25.智能手环 26.排风 27背景音乐显示控制 28.电视遥控 29.空气净化 30.体质检测
+                     / 31.光敏控制 32.燃气报警 33.风扇 34.雷达
+                     */
                     ZhiNengJiaJuNotifyJson zhiNengJiaJuNotifyJson = new ZhiNengJiaJuNotifyJson();
                     zhiNengJiaJuNotifyJson = (ZhiNengJiaJuNotifyJson) notice.content;
                     ZhiNengJiaJuNotifyJson finalZhiNengJiaJuNotifyJson = zhiNengJiaJuNotifyJson;
+                    ZhiNengJiaJuNotifyJson finalZhiNengJiaJuNotifyJson1 = zhiNengJiaJuNotifyJson;
                     tishiDialog = new TishiDialog(mContext, 1, new TishiDialog.TishiDialogListener() {
                         @Override
                         public void onClickCancel(View v, TishiDialog dialog) {
@@ -186,6 +199,17 @@ public class HomeActivity extends BaseActivity {
 
                         @Override
                         public void onClickConfirm(View v, TishiDialog dialog) {
+                            if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("12")) {
+                                MenCiActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
+                            } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("11")) {
+                                YanGanActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
+                            } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("15")) {
+                                SosActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
+                            } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("05")) {
+                                MenSuoActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
+                            } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("13")) {
+                                LouShuiActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
+                            }
                             MenCiActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson.getDevice_id());
                         }
 
@@ -194,7 +218,7 @@ public class HomeActivity extends BaseActivity {
 
                         }
                     });
-                    tishiDialog.setTextContent("您的家庭有人进入是否前去查看");
+                    tishiDialog.setTextContent("您的家庭有新的状况，是否前去查看?");
 
                     tishiDialog.show();
                 }

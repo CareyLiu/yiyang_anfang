@@ -28,6 +28,7 @@ import com.smarthome.magic.activity.ZhiNengRoomDeviceDetailAutoActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_camera.camera.TuyaCameraActivity;
 import com.smarthome.magic.activity.zckt.AirConditionerActivity;
+import com.smarthome.magic.activity.zhinengjiaju.function.LouShuiActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.MenCiActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.MenSuoActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.SosActivity;
@@ -229,7 +230,9 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                             SosActivity.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
                         } else if (deviceBean.getDevice_type().equals("05")) {
                             MenSuoActivity.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
-                        } else {
+                        }else if (deviceBean.getDevice_type().equals("13")){
+                            LouShuiActivity.actionStart(getActivity(),deviceBean.getDevice_id(),member_type);
+                        }else {
                             Bundle bundle = new Bundle();
                             bundle.putString("device_id", deviceBean.getDevice_id());
                             bundle.putString("device_type", deviceBean.getDevice_type());

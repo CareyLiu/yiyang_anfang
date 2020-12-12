@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -26,13 +27,11 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.ZhiNengDianDengActivity;
-import com.smarthome.magic.adapter.MenCiListAdapter;
+import com.smarthome.magic.adapter.SosListAdapter;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
-import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
@@ -60,11 +59,10 @@ import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-import static com.smarthome.magic.config.MyApplication.CAR_CTROL;
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
 //智能家居 门磁
-public class MenCiActivity extends BaseActivity {
+public class SosActivity extends BaseActivity {
     @BindView(R.id.rlv_list)
     RecyclerView rlvList;
     @BindView(R.id.srL_smart)
@@ -72,7 +70,7 @@ public class MenCiActivity extends BaseActivity {
     @BindView(R.id.tv_room_delete)
     TextView tvRoomDelete;
 
-    private MenCiListAdapter menCiListAdapter;
+    private SosListAdapter menCiListAdapter;
     private List<AlarmListBean> mDatas;
 
     private TextView tvJiaTingName;
@@ -86,6 +84,7 @@ public class MenCiActivity extends BaseActivity {
     ZnjjMqttMingLing znjjMqttMingLing;
     private String deviceCCid = "";
     LordingDialog lordingDialog;
+    private ImageView ivSos;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -116,12 +115,12 @@ public class MenCiActivity extends BaseActivity {
 //            ivShebeiZaixianzhuangtaiImg.setBackgroundResource(R.drawable.bg_zhineng_device_offline);
 //        }
 
-        menCiListAdapter = new MenCiListAdapter(R.layout.item_menci_list, R.layout.item_menci_header, mDatas);
+        menCiListAdapter = new SosListAdapter(R.layout.item_sos_list, R.layout.item_sos_header, mDatas);
         rlvList.setLayoutManager(new LinearLayoutManager(mContext));
         rlvList.setAdapter(menCiListAdapter);
 
 
-        headerView = View.inflate(mContext, R.layout.menci_header, null);
+        headerView = View.inflate(mContext, R.layout.sos_header, null);
 
 
         tvJiaTingName = headerView.findViewById(R.id.tv_jiating_name);
@@ -131,6 +130,8 @@ public class MenCiActivity extends BaseActivity {
         switch1 = headerView.findViewById(R.id.btn_gaojing);
         viewZhongJian = headerView.findViewById(R.id.view_zhongjian);
         ll_caozuo_jilu = headerView.findViewById(R.id.ll_caozuo_jilu);
+        ivSos = headerView.findViewById(R.id.iv_sos);
+        ivSos.setBackgroundResource(R.mipmap.tuya_sos_pic_normal);
 
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -164,8 +165,9 @@ public class MenCiActivity extends BaseActivity {
                     if (zhuangZhiId.equals(deviceCCid)) {
                         if (kaiGuanDengZhuangTai.equals("1")) {//门磁开
                             viewZhongJian.setVisibility(View.VISIBLE);
+                            ivSos.setBackgroundResource(R.mipmap.tuya_sos_pic_normal);
                         } else if (kaiGuanDengZhuangTai.equals("2")) {//门磁关
-                            viewZhongJian.setVisibility(View.GONE);
+                            ivSos.setBackgroundResource(R.mipmap.tuya_sos_pic_no);
                         }
                     }
 
@@ -263,7 +265,7 @@ public class MenCiActivity extends BaseActivity {
 
     @Override
     public int getContentViewResId() {
-        return R.layout.layout_menci;
+        return R.layout.layout_sos;
     }
 
 
@@ -273,7 +275,7 @@ public class MenCiActivity extends BaseActivity {
      * @param context
      */
     public static void actionStart(Context context, String device_id, String memberType) {
-        Intent intent = new Intent(context, MenCiActivity.class);
+        Intent intent = new Intent(context, SosActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("device_id", device_id);
         intent.putExtra("memberType", memberType);
@@ -286,7 +288,7 @@ public class MenCiActivity extends BaseActivity {
      * @param context
      */
     public static void actionStart(Context context, String device_id) {
-        Intent intent = new Intent(context, MenCiActivity.class);
+        Intent intent = new Intent(context, SosActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("device_id", device_id);
 
@@ -354,15 +356,14 @@ public class MenCiActivity extends BaseActivity {
                             firstEnter = false;
                         }
 
-//                        N9Thread n9Thread = new N9Thread();
-//                        n9Thread.start();
+                        if (dataBean == null) {
+                            return;
+                        }
 
-
-                        if (dataBean.getWarn_state().equals("1")) {
-                            viewZhongJian.setVisibility(View.GONE);
-                        } else if (dataBean.getWarn_state().equals("2")) {
-                            viewZhongJian.setVisibility(View.VISIBLE);
-
+                        if (dataBean.getWarn_state().equals("1")) {//开
+                            ivSos.setBackgroundResource(R.mipmap.tuya_sos_pic_normal);
+                        } else if (dataBean.getWarn_state().equals("2")) {//关
+                            ivSos.setBackgroundResource(R.mipmap.tuya_sos_pic_no);
                         }
                         tvJiaTingName.setText(dataBean.getFamily_name());
                         tvLeiXingName.setText(dataBean.getDevice_name());
@@ -384,6 +385,7 @@ public class MenCiActivity extends BaseActivity {
                             return;
                         }
 
+                        mDatas.clear();
                         for (int i = 0; i < dataBean.getAlarm_list().size(); i++) {
 
                             AlarmListBean alarmListBean = new AlarmListBean(true, dataBean.getAlarm_list().get(i).getAlarm_date());
@@ -474,7 +476,7 @@ public class MenCiActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
                         if (response.body().msg_code.equals("0000")) {
-                            MyCarCaoZuoDialog_Success myCarCaoZuoDialog_success = new MyCarCaoZuoDialog_Success(MenCiActivity.this,
+                            MyCarCaoZuoDialog_Success myCarCaoZuoDialog_success = new MyCarCaoZuoDialog_Success(SosActivity.this,
                                     "成功", "设备删除成功", "好的", new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
                                 @Override
                                 public void clickLeft() {

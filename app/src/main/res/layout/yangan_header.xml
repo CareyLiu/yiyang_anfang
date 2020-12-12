@@ -45,20 +45,22 @@
             android:visibility="visible">
 
             <ImageView
+                android:id="@+id/iv_yangan"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/menci_pic_menci_left" />
+                android:layout_height="wrap_content" />
 
             <View
                 android:id="@+id/view_zhongjian"
                 android:layout_width="19dp"
-                android:layout_height="1dp" />
+                android:layout_height="1dp"
+                android:visibility="gone" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:src="@mipmap/menci_pic_menci_right"
 
-                android:src="@mipmap/menci_pic_menci_right" />
+                android:visibility="gone" />
         </LinearLayout>
 
         <RelativeLayout
@@ -255,9 +257,9 @@
         android:background="#cccccc" />
 
     <RelativeLayout
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="47dp">
+        android:layout_height="47dp"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -311,7 +313,6 @@
         android:background="#cccccc" />
 
     <LinearLayout
-        android:id="@+id/ll_caozuo_jilu"
         android:layout_width="match_parent"
         android:layout_height="47dp"
         android:background="#eeeeee"

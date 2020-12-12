@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,6 +27,10 @@ import com.smarthome.magic.activity.ZhiNengJiaoHuaAutoActivity;
 import com.smarthome.magic.activity.ZhiNengRoomDeviceDetailAutoActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.zckt.AirConditionerActivity;
+import com.smarthome.magic.activity.zhinengjiaju.function.MenCiActivity;
+import com.smarthome.magic.activity.zhinengjiaju.function.MenSuoActivity;
+import com.smarthome.magic.activity.zhinengjiaju.function.SosActivity;
+import com.smarthome.magic.activity.zhinengjiaju.function.YanGanActivity;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.PeiWangYinDaoPageActivity;
 import com.smarthome.magic.adapter.ZhiNengDeviceListAdapter;
 import com.smarthome.magic.app.AppManager;
@@ -180,9 +183,12 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                     case R.id.ll_content:
                         ZhiNengHomeBean.DataBean.DeviceBean deviceBean = (ZhiNengHomeBean.DataBean.DeviceBean) adapter.getItem(position);
                         /**
-                         * 1.灯 2.插座 3.开关 4.喂鱼 5.浇花 6门锁 7.空调 8.车库门
-                         * 9.晾衣架 A.烟雾报警 B.门磁 C.漏水D.雷达 E紧急开关 F.窗帘 G.电视
-                         * Z.风水摆件
+                         / 00 主机 01.灯 02.插座 03.喂鱼 04.浇花 05门锁 06.空调电视(开关，加风，减风，讯飞语音配置)
+                         / 07.车库门  08.开关 09.晾衣架 10.窗磁 11.烟雾报警 12.门磁 13.漏水14.雷达
+                         / 15.紧急开关 16.窗帘 17.电视(开关，加减音量，加减亮暗，讯飞语音配置) 18.摄像头
+                         / 19.空气检测 20.温湿度检测 21.煤气管道关闭 22.自来水管道关闭 23.宠物喂食 24.宠物喂水
+                         / 25.智能手环 26.排风 27背景音乐显示控制 28.电视遥控 29.空气净化 30.体质检测
+                         / 31.光敏控制 32.燃气报警 33.风扇 34.雷达
                          */
                         if (deviceBean.getDevice_type().equals("7")) {//空调
                             String ccid = deviceBean.getDevice_ccid();
@@ -212,6 +218,14 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                             bundle.putString("member_type", member_type);
                             bundle.putString("work_state", deviceBean.getWork_state());
                             startActivity(new Intent(getActivity(), ZhiNengJiaJuChaZuoActivity.class).putExtras(bundle));
+                        } else if (deviceBean.getDevice_type().equals("12")) {
+                            MenCiActivity.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
+                        } else if (deviceBean.getDevice_type().equals("11")) {
+                            YanGanActivity.actionStart(getActivity(), deviceBean.getDevice_id());
+                        } else if (deviceBean.getDevice_type().equals("15")) {
+                            SosActivity.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
+                        } else if (deviceBean.getDevice_type().equals("05")) {
+                            MenSuoActivity.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
                         } else {
                             Bundle bundle = new Bundle();
                             bundle.putString("device_id", deviceBean.getDevice_id());

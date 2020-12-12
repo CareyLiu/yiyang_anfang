@@ -26,13 +26,11 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.ZhiNengDianDengActivity;
 import com.smarthome.magic.adapter.MenCiListAdapter;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
-import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
@@ -60,11 +58,10 @@ import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-import static com.smarthome.magic.config.MyApplication.CAR_CTROL;
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
 //智能家居 门磁
-public class MenCiActivity extends BaseActivity {
+public class MenSuoActivity extends BaseActivity {
     @BindView(R.id.rlv_list)
     RecyclerView rlvList;
     @BindView(R.id.srL_smart)
@@ -116,12 +113,12 @@ public class MenCiActivity extends BaseActivity {
 //            ivShebeiZaixianzhuangtaiImg.setBackgroundResource(R.drawable.bg_zhineng_device_offline);
 //        }
 
-        menCiListAdapter = new MenCiListAdapter(R.layout.item_menci_list, R.layout.item_menci_header, mDatas);
+        menCiListAdapter = new MenCiListAdapter(R.layout.item_mensuo_list, R.layout.item_mensuo_header, mDatas);
         rlvList.setLayoutManager(new LinearLayoutManager(mContext));
         rlvList.setAdapter(menCiListAdapter);
 
 
-        headerView = View.inflate(mContext, R.layout.menci_header, null);
+        headerView = View.inflate(mContext, R.layout.mensuo_header, null);
 
 
         tvJiaTingName = headerView.findViewById(R.id.tv_jiating_name);
@@ -263,7 +260,7 @@ public class MenCiActivity extends BaseActivity {
 
     @Override
     public int getContentViewResId() {
-        return R.layout.layout_menci;
+        return R.layout.layout_mensuo;
     }
 
 
@@ -273,7 +270,7 @@ public class MenCiActivity extends BaseActivity {
      * @param context
      */
     public static void actionStart(Context context, String device_id, String memberType) {
-        Intent intent = new Intent(context, MenCiActivity.class);
+        Intent intent = new Intent(context, MenSuoActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("device_id", device_id);
         intent.putExtra("memberType", memberType);
@@ -286,7 +283,7 @@ public class MenCiActivity extends BaseActivity {
      * @param context
      */
     public static void actionStart(Context context, String device_id) {
-        Intent intent = new Intent(context, MenCiActivity.class);
+        Intent intent = new Intent(context, MenSuoActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("device_id", device_id);
 
@@ -474,7 +471,7 @@ public class MenCiActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
                         if (response.body().msg_code.equals("0000")) {
-                            MyCarCaoZuoDialog_Success myCarCaoZuoDialog_success = new MyCarCaoZuoDialog_Success(MenCiActivity.this,
+                            MyCarCaoZuoDialog_Success myCarCaoZuoDialog_success = new MyCarCaoZuoDialog_Success(MenSuoActivity.this,
                                     "成功", "设备删除成功", "好的", new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
                                 @Override
                                 public void clickLeft() {

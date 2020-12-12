@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
+import com.smarthome.magic.activity.zhinengjiaju.function.MenCiActivity;
+import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
@@ -46,6 +48,7 @@ public class JiGuangReceive extends JPushMessageReceiver {
          * jyj_0003		href_url广告推送，跳转h5链接，h5链接放在url字段处
          * jyj_0004		通知消息推送，跳转消息列表
          * jyj_0005		kind_type
+         * jyj_0006
          * 0:普通商品 1: 团购商品 2:修配厂店铺类型详情
          * 商品推送，点击推送消息进入商品详情，推送信息中带有商品对应id，字段参考普通商品详情以及团购商品详情
          */
@@ -81,6 +84,25 @@ public class JiGuangReceive extends JPushMessageReceiver {
             case "jyj_0005":
                 break;
             case "jyj_0006":
+
+                if (AppManager.getAppManager().cunZaiClass(MenCiActivity.class).equals("0")) {
+                    //判断页面是否展示
+                    Notice notice = new Notice();
+                    notice.type = ConstanceValue.MSG_ZHINENGJIAJU_MENCI;
+                    notice.content = zhiNengJiaJuNotifyJson;
+                    RxBus.getDefault().sendRx(notice);
+
+                } else {
+                    Notice notice = new Notice();
+                    notice.type = ConstanceValue.MSG_ZHINENGJIAJU_MENCIPAGE;
+                    notice.content = zhiNengJiaJuNotifyJson;
+                    RxBus.getDefault().sendRx(notice);
+
+                }
+
+
+                //如果升级
+
                 break;
             case "jyj_0007":
                 break;

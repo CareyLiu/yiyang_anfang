@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,19 +20,15 @@ import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
-import com.rairmmd.andmqtt.AndMqtt;
-import com.rairmmd.andmqtt.MqttPublish;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.ZhiNengDianDengActivity;
-import com.smarthome.magic.adapter.MenCiListAdapter;
+import com.smarthome.magic.adapter.YanGanListAdapter;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
-import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
@@ -45,11 +41,7 @@ import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.AlarmListBean;
 import com.smarthome.magic.model.MenCiListModel;
 import com.smarthome.magic.model.ZhiNengFamilyEditBean;
-import com.smarthome.magic.mqtt_zhiling.ZnjjMqttMingLing;
 import com.smarthome.magic.util.DoMqttValue;
-
-import org.eclipse.paho.client.mqttv3.IMqttActionListener;
-import org.eclipse.paho.client.mqttv3.IMqttToken;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,11 +52,10 @@ import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-import static com.smarthome.magic.config.MyApplication.CAR_CTROL;
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
 //智能家居 门磁
-public class MenCiActivity extends BaseActivity {
+public class YanGanActivity extends BaseActivity {
     @BindView(R.id.rlv_list)
     RecyclerView rlvList;
     @BindView(R.id.srL_smart)
@@ -72,7 +63,7 @@ public class MenCiActivity extends BaseActivity {
     @BindView(R.id.tv_room_delete)
     TextView tvRoomDelete;
 
-    private MenCiListAdapter menCiListAdapter;
+    private YanGanListAdapter menCiListAdapter;
     private List<AlarmListBean> mDatas;
 
     private TextView tvJiaTingName;
@@ -81,11 +72,9 @@ public class MenCiActivity extends BaseActivity {
     private TextView tvLeiXingName;
     private Switch switch1;
     private View viewZhongJian;
-    View headerView;
-    private LinearLayout ll_caozuo_jilu;
-    ZnjjMqttMingLing znjjMqttMingLing;
-    private String deviceCCid = "";
-    LordingDialog lordingDialog;
+    private ImageView ivYanGan;
+    private LordingDialog lordingDialog;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -116,21 +105,22 @@ public class MenCiActivity extends BaseActivity {
 //            ivShebeiZaixianzhuangtaiImg.setBackgroundResource(R.drawable.bg_zhineng_device_offline);
 //        }
 
-        menCiListAdapter = new MenCiListAdapter(R.layout.item_menci_list, R.layout.item_menci_header, mDatas);
+        menCiListAdapter = new YanGanListAdapter(R.layout.item_yangan_list, R.layout.item_yangan_header, mDatas);
         rlvList.setLayoutManager(new LinearLayoutManager(mContext));
         rlvList.setAdapter(menCiListAdapter);
 
 
-        headerView = View.inflate(mContext, R.layout.menci_header, null);
+        View view = View.inflate(mContext, R.layout.yangan_header, null);
 
+        tvJiaTingName = view.findViewById(R.id.tv_jiating_name);
+        tvLeiXingName = view.findViewById(R.id.tv_leixing_name);
+        tvMingChengName = view.findViewById(R.id.tv_mingcheng_name);
+        tvRoomName = view.findViewById(R.id.tv_room_name);
+        switch1 = view.findViewById(R.id.btn_gaojing);
+        viewZhongJian = view.findViewById(R.id.view_zhongjian);
+        ivYanGan = view.findViewById(R.id.iv_yangan);
+        ivYanGan.setBackgroundResource(R.mipmap.tuya_yanwu_pic_normal);
 
-        tvJiaTingName = headerView.findViewById(R.id.tv_jiating_name);
-        tvLeiXingName = headerView.findViewById(R.id.tv_leixing_name);
-        tvMingChengName = headerView.findViewById(R.id.tv_mingcheng_name);
-        tvRoomName = headerView.findViewById(R.id.tv_room_name);
-        switch1 = headerView.findViewById(R.id.btn_gaojing);
-        viewZhongJian = headerView.findViewById(R.id.view_zhongjian);
-        ll_caozuo_jilu = headerView.findViewById(R.id.ll_caozuo_jilu);
 
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -146,7 +136,7 @@ public class MenCiActivity extends BaseActivity {
             }
         });
 
-        menCiListAdapter.addHeaderView(headerView);
+        menCiListAdapter.addHeaderView(view);
         menCiListAdapter.setNewData(mDatas);
         srLSmart.setEnableLoadMore(false);
         getNet();
@@ -160,15 +150,11 @@ public class MenCiActivity extends BaseActivity {
                     List<String> messageList = (List<String>) notice.content;
                     String zhuangZhiId = messageList.get(0);
                     String kaiGuanDengZhuangTai = messageList.get(1);
-
-                    if (zhuangZhiId.equals(deviceCCid)) {
-                        if (kaiGuanDengZhuangTai.equals("1")) {//门磁开
-                            viewZhongJian.setVisibility(View.VISIBLE);
-                        } else if (kaiGuanDengZhuangTai.equals("2")) {//门磁关
-                            viewZhongJian.setVisibility(View.GONE);
-                        }
+                    if (kaiGuanDengZhuangTai.equals("1")) {//开
+                        ivYanGan.setBackgroundResource(R.mipmap.tuya_yanwu_pic_normal);
+                    } else if (kaiGuanDengZhuangTai.equals("2")) {//关
+                        ivYanGan.setBackgroundResource(R.mipmap.tuya_yanwu_pic_no);
                     }
-
                 }
             }
         }));
@@ -180,6 +166,7 @@ public class MenCiActivity extends BaseActivity {
                         "提示", "确定要删除设备吗？", "取消", "确定", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
                     @Override
                     public void clickLeft() {
+
                     }
 
                     @Override
@@ -197,69 +184,7 @@ public class MenCiActivity extends BaseActivity {
                 myCarCaoZuoDialog_caoZuoTIshi.show();
             }
         });
-
-
     }
-
-    private class N9Thread extends Thread {
-        boolean flag = true;
-
-        public void run() {
-            while (true) {
-                try {
-
-                    if (flag) {
-                        AndMqtt.getInstance().publish(new MqttPublish()
-                                .setMsg("i12010101197.")
-                                .setQos(2)
-                                .setTopic("zn/app/1/aaaaaaaaaaaaaaaa90140018")
-                                .setRetained(false), new IMqttActionListener() {
-                            @Override
-                            public void onSuccess(IMqttToken asyncActionToken) {
-                                Log.i("Rair", "模拟硬件发送数据 开");
-
-                            }
-
-                            @Override
-                            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                                Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
-                            }
-                        });
-
-
-                    } else {
-                        AndMqtt.getInstance().publish(new MqttPublish()
-                                .setMsg("i12010101297.")
-                                .setQos(2)
-                                .setTopic("zn/app/1/aaaaaaaaaaaaaaaa90140018")
-                                .setRetained(false), new IMqttActionListener() {
-                            @Override
-                            public void onSuccess(IMqttToken asyncActionToken) {
-                                Log.i("Rair", "模拟硬件发送数据 关");
-
-                            }
-
-                            @Override
-                            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                                Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
-                            }
-                        });
-
-                    }
-                    flag = !flag;
-                    Thread.sleep(5000);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-
-                }
-
-
-            }
-
-        }
-    }
-
 
     @Override
     public int getContentViewResId() {
@@ -273,7 +198,7 @@ public class MenCiActivity extends BaseActivity {
      * @param context
      */
     public static void actionStart(Context context, String device_id, String memberType) {
-        Intent intent = new Intent(context, MenCiActivity.class);
+        Intent intent = new Intent(context, YanGanActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("device_id", device_id);
         intent.putExtra("memberType", memberType);
@@ -286,7 +211,7 @@ public class MenCiActivity extends BaseActivity {
      * @param context
      */
     public static void actionStart(Context context, String device_id) {
-        Intent intent = new Intent(context, MenCiActivity.class);
+        Intent intent = new Intent(context, YanGanActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("device_id", device_id);
 
@@ -317,8 +242,6 @@ public class MenCiActivity extends BaseActivity {
     private String memberType;
     MenCiListModel.DataBean dataBean;
 
-    private boolean firstEnter = true;
-
     public void getNet() {
         Map<String, String> map = new HashMap<>();
         map.put("code", "16043");
@@ -337,31 +260,10 @@ public class MenCiActivity extends BaseActivity {
                     public void onSuccess(Response<AppResponse<MenCiListModel.DataBean>> response) {
                         srLSmart.finishRefresh();
                         dataBean = response.body().data.get(0);
-                        deviceCCid = dataBean.getDevice_ccid();
-                        if (firstEnter) {
-                            znjjMqttMingLing = new ZnjjMqttMingLing(mContext, dataBean.getDevice_ccid_up(), dataBean.getServer_id());
-                            znjjMqttMingLing.subscribeAppShiShiXinXi(new IMqttActionListener() {
-                                @Override
-                                public void onSuccess(IMqttToken asyncActionToken) {
-                                    getNet();
-                                }
-
-                                @Override
-                                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-
-                                }
-                            });
-                            firstEnter = false;
-                        }
-
-//                        N9Thread n9Thread = new N9Thread();
-//                        n9Thread.start();
-
-
                         if (dataBean.getWarn_state().equals("1")) {
-                            viewZhongJian.setVisibility(View.GONE);
+                            ivYanGan.setBackgroundResource(R.mipmap.tuya_yanwu_pic_normal);
                         } else if (dataBean.getWarn_state().equals("2")) {
-                            viewZhongJian.setVisibility(View.VISIBLE);
+                            ivYanGan.setBackgroundResource(R.mipmap.tuya_yanwu_pic_no);
 
                         }
                         tvJiaTingName.setText(dataBean.getFamily_name());
@@ -375,12 +277,7 @@ public class MenCiActivity extends BaseActivity {
                             switch1.setChecked(false);
                         }
 
-
                         if (dataBean.getAlarm_list().size() == 0) {
-                            View view = View.inflate(mContext, R.layout.zhinneng_jiaju_empty_view, null);
-                            //ll_caozuo_jilu.addView(view);
-                            menCiListAdapter.addFooterView(view);
-                            menCiListAdapter.notifyDataSetChanged();
                             return;
                         }
 
@@ -416,7 +313,7 @@ public class MenCiActivity extends BaseActivity {
                     @Override
                     public void onStart(Request<AppResponse<MenCiListModel.DataBean>, ? extends Request> request) {
                         super.onStart(request);
-                        lordingDialog.setTextMsg("数据加载中，请稍后");
+                        lordingDialog.setTextMsg("正在加载，请稍后");
                         lordingDialog.show();
                     }
 
@@ -474,7 +371,7 @@ public class MenCiActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
                         if (response.body().msg_code.equals("0000")) {
-                            MyCarCaoZuoDialog_Success myCarCaoZuoDialog_success = new MyCarCaoZuoDialog_Success(MenCiActivity.this,
+                            MyCarCaoZuoDialog_Success myCarCaoZuoDialog_success = new MyCarCaoZuoDialog_Success(YanGanActivity.this,
                                     "成功", "设备删除成功", "好的", new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
                                 @Override
                                 public void clickLeft() {
@@ -512,31 +409,4 @@ public class MenCiActivity extends BaseActivity {
                 });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        znjjMqttMingLing.unSubscribeShiShiXinXi(new IMqttActionListener() {
-            @Override
-            public void onSuccess(IMqttToken asyncActionToken) {
-
-            }
-
-            @Override
-            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-
-            }
-        });
-
-        znjjMqttMingLing.unSubscribeAppShiShiXinXi(new IMqttActionListener() {
-            @Override
-            public void onSuccess(IMqttToken asyncActionToken) {
-
-            }
-
-            @Override
-            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-
-            }
-        });
-    }
 }

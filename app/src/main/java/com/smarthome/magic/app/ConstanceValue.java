@@ -123,5 +123,8 @@ public interface ConstanceValue {
     int MSG_SHEBEIZHUANGTAI = 0x10086;//开灯
     int MSG_ZHINENGJIAJUGUANDENG = 0x10087;//关灯
     int MSG_ZHINENGJIAJU_ZHUJI = 0x10088;//主机在线与离线
+    int MSG_ZHINENGJIAJU_MENCI = 0x10089;//门磁进入
+    int MSG_ZHINENGJIAJU_MENCIPAGE = 0x10090;//门磁页面
+
 
 }

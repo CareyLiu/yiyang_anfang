@@ -25,7 +25,4 @@ public class Notice {
     }
 
     public String  devId;
-    public String  key;
-    public String  value;
-    public JSONObject jsonObject;
 }

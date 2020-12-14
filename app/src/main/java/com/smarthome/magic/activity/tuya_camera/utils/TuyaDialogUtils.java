@@ -7,8 +7,8 @@ import com.smarthome.magic.activity.tuya_camera.dialog.TishiNewDialog;
 
 public class TuyaDialogUtils {
 
-    public static void t(Context context,String  msg){
-        TishiNewDialog tishiDialog=new TishiNewDialog(context, new TishiNewDialog.TishiDialogListener() {
+    public static void t(Context context, String msg) {
+        TishiNewDialog tishiDialog = new TishiNewDialog(context, new TishiNewDialog.TishiDialogListener() {
             @Override
             public void onClickCancel(View v, TishiNewDialog dialog) {
 
@@ -29,4 +29,11 @@ public class TuyaDialogUtils {
         tishiDialog.show();
     }
 
+
+    public static void t(Context context, String msg, TishiNewDialog.TishiDialogListener listener) {
+        TishiNewDialog tishiDialog = new TishiNewDialog(context, listener);
+        tishiDialog.setTextCancel("");
+        tishiDialog.setTextCont(msg);
+        tishiDialog.show();
+    }
 }

@@ -1,5 +1,6 @@
 package com.smarthome.magic.activity.tuya_camera.camera.adapter;
 
+import android.view.View;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -26,5 +27,12 @@ public class TuyaKongzhiAdapter extends BaseQuickAdapter<TuyaKongzhiModel, BaseV
             iv_icon.setImageResource(item.getIconId());
         }
 
+        View view_pingbi = helper.getView(R.id.view_pingbi);
+        helper.addOnClickListener(R.id.view_pingbi);
+        if (item.isCanClick()) {
+            view_pingbi.setVisibility(View.GONE);
+        } else {
+            view_pingbi.setVisibility(View.VISIBLE);
+        }
     }
 }

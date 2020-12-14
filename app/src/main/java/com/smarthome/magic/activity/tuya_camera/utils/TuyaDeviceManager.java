@@ -37,6 +37,7 @@ public class TuyaDeviceManager implements IDevListener {
         gson = new Gson();
 
         String schema = deviceBean.getSchema();
+        Y.e("我是什么状态 " + deviceBean.getIsOnline());
         Y.e(schema);
     }
 
@@ -89,7 +90,7 @@ public class TuyaDeviceManager implements IDevListener {
     public void onRemoved(String devId) {
         Notice notice = new Notice();
         notice.type = ConstanceValue.MSG_DEVICE_REMOVED;
-        notice.content = devId;
+        notice.devId = devId;
         RxBus.getDefault().sendRx(notice);
     }
 
@@ -102,7 +103,12 @@ public class TuyaDeviceManager implements IDevListener {
      */
     @Override
     public void onStatusChanged(String devId, boolean online) {
-
+        Y.e("设备上下线回调  " + online);
+        Notice notice = new Notice();
+        notice.type = ConstanceValue.MSG_DEVICE_STATUSCHANGED;
+        notice.devId = devId;
+        notice.content = online;
+        RxBus.getDefault().sendRx(notice);
     }
 
 

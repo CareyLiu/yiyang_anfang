@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.zhinengjiaju.function.MenCiActivity;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.ConstanceValue;
@@ -84,6 +85,7 @@ public class JiGuangReceive extends JPushMessageReceiver {
             case "jyj_0005":
                 break;
             case "jyj_0006":
+                Y.e("见风使舵老师的打快速反击 ");
 
                 if (AppManager.getAppManager().cunZaiClass(MenCiActivity.class).equals("0")) {
                     //判断页面是否展示
@@ -91,18 +93,13 @@ public class JiGuangReceive extends JPushMessageReceiver {
                     notice.type = ConstanceValue.MSG_ZHINENGJIAJU_MENCI;
                     notice.content = zhiNengJiaJuNotifyJson;
                     RxBus.getDefault().sendRx(notice);
-
                 } else {
                     Notice notice = new Notice();
                     notice.type = ConstanceValue.MSG_ZHINENGJIAJU_MENCIPAGE;
                     notice.content = zhiNengJiaJuNotifyJson;
                     RxBus.getDefault().sendRx(notice);
-
                 }
-
-
                 //如果升级
-
                 break;
             case "jyj_0007":
                 break;

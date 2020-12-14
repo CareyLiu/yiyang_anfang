@@ -6,6 +6,7 @@ public class TuyaKongzhiModel {
     private int iconIdS;
     private String name;
     private boolean isSelect;
+    private boolean isCanClick;
 
     public TuyaKongzhiModel(int iconId, String name) {
         this.iconId = iconId;
@@ -48,5 +49,13 @@ public class TuyaKongzhiModel {
 
     public void setIconIdS(int iconIdS) {
         this.iconIdS = iconIdS;
+    }
+
+    public boolean isCanClick() {
+        return isCanClick;
+    }
+
+    public void setCanClick(boolean canClick) {
+        isCanClick = canClick;
     }
 }

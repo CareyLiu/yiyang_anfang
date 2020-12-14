@@ -1,12 +1,19 @@
 package com.smarthome.magic.activity.tuya_camera.camera;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
+import android.view.Surface;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -53,6 +60,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -63,7 +71,7 @@ import rx.functions.Action1;
 
 public class TuyaCameraActivity extends BaseActivity implements View.OnClickListener, View.OnTouchListener {
 
-    @BindView(R.id.camera_video_view)
+    //    @BindView(R.id.camera_video_view)
     TuyaCameraView mVideoView;
     @BindView(R.id.rv_kongzhi)
     RecyclerView rv_kongzhi;
@@ -87,6 +95,22 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
     TextView tv_switch_qingxidu;
     @BindView(R.id.tv_xinhao)
     TextView tv_xinhao;
+    @BindView(R.id.fl_camera)
+    FrameLayout fl_camera;
+    @BindView(R.id.ll_main)
+    LinearLayout ll_main;
+    @BindView(R.id.fl_quanping)
+    FrameLayout fl_quanping;
+    @BindView(R.id.bt_chonglian)
+    TextView bt_chonglian;
+    @BindView(R.id.iv_switch_shengyin_qp)
+    ImageView iv_switch_shengyin_qp;
+    @BindView(R.id.iv_switch_quanping_qp)
+    ImageView iv_switch_quanping_qp;
+    @BindView(R.id.tv_switch_qingxidu_qp)
+    TextView tv_switch_qingxidu_qp;
+    @BindView(R.id.rl_quanping)
+    RelativeLayout rl_quanping;
 
     private int p2pType;
     private DeviceBean mDeviceBeen;
@@ -101,6 +125,8 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
     private String qingxidu;
     private ITuyaCameraDevice mTuyaCameraDevice;
     private boolean isOpenFangxiang;
+    private boolean isPlay;
+    private boolean isOnline;
 
     /**
      * 用于其他Activty跳转到该Activity
@@ -182,13 +208,34 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
                     if (ty_device_ccid.equals(deviceBean.getDevId())) {
                         TuyaDeviceManager.getDeviceManager().initDevice(deviceBean);
                         initCamera();
+                        return;
                     }
                 }
             }
 
             @Override
             public void onError(String errorCode, String errorMsg) {
-                TuyaDialogUtils.t(mContext, errorMsg);
+                TuyaDialogUtils.t(mContext, "获取设备信息失败");
+            }
+        });
+    }
+
+    private void lixianle() {
+        bt_chonglian.setVisibility(View.VISIBLE);
+        dissCameraConnect();
+        TuyaDialogUtils.t(mContext, "设备已离线，请检查设备网络！", new TishiNewDialog.TishiDialogListener() {
+            @Override
+            public void onClickCancel(View v, TishiNewDialog dialog) {
+
+            }
+
+            @Override
+            public void onClickConfirm(View v, TishiNewDialog dialog) {
+
+            }
+
+            @Override
+            public void onDismiss(TishiNewDialog dialog) {
             }
         });
     }
@@ -227,8 +274,12 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
                         dialog.show();
                     }
                 } else if (message.type == ConstanceValue.MSG_DEVICE_STATUSCHANGED) {
-
-
+                    if (message.devId.equals(mDeviceBeen.getDevId())) {
+                        isOnline = (boolean) message.content;
+                        if (!isOnline) {
+                            lixianle();
+                        }
+                    }
                 } else if (message.type == ConstanceValue.MSG_DEVICE_NETWORKSTATUSCHANGED) {
 
 
@@ -243,10 +294,6 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
     }
 
     private void init() {
-//        p2pType = 5;
-//        p2pType = getIntent().getIntExtra("p2pType", 1);
-
-
         bt_up.setOnClickListener(this);
         bt_down.setOnClickListener(this);
         bt_left.setOnClickListener(this);
@@ -262,25 +309,8 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
         mDeviceBeen = TuyaDeviceManager.getDeviceManager().getDeviceBeen();
         mDevice = TuyaDeviceManager.getDeviceManager().getDevice();
         mTuyaCameraDevice = TuyaCameraDeviceControlSDK.getCameraDeviceInstance(mDeviceBeen.getDevId());
-        mDevice.requestWifiSignal(new WifiSignalListener() {
-
-            @Override
-            public void onSignalValueFind(String signal) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        tv_xinhao.setText("信号:" + signal + "%");
-                    }
-                });
-            }
-
-            @Override
-            public void onError(String errorCode, String errorMsg) {
-
-            }
-        });
-
         mCameraP2P = TuyaSmartCameraP2PFactory.createCameraP2P(p2pType, mDeviceBeen.getDevId());
+        mVideoView = new TuyaCameraView(mContext);
         mVideoView.setViewCallback(new AbsVideoViewCallback() {
             @Override
             public void onCreated(Object o) {
@@ -319,22 +349,9 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
             }
         });
 
+        fl_camera.addView(mVideoView);
         cameraConnect();
-    }
-
-    private void cameraConnect() {
-        showProgressDialog();
-        mCameraP2P.connect(mDeviceBeen.getDevId(), new OperationDelegateCallBack() {
-            @Override
-            public void onSuccess(int sessionId, int requestId, String data) {
-                startPlay();
-            }
-
-            @Override
-            public void onFailure(int sessionId, int requestId, int errCode) {
-                showFailure();
-            }
-        });
+        isPlay = true;
     }
 
     private void initAdapter() {
@@ -371,6 +388,20 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
                 } else if (name.equals("相册")) {
 //                    CameraXiangceActivity.actionStart(mContext);
                 }
+            }
+        });
+    }
+
+    private void setAdapterCanClikc(boolean canClikc) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < kongzhis.size(); i++) {
+                    TuyaKongzhiModel tuyaKongzhiModel = kongzhis.get(i);
+                    tuyaKongzhiModel.setCanClick(canClikc);
+                    kongzhis.set(i, tuyaKongzhiModel);
+                }
+                adapter.notifyDataSetChanged();
             }
         });
     }
@@ -504,21 +535,55 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
     }
 
     private void stopLuzhi(TuyaKongzhiModel model) {//停止录制
-        runOnUiThread(new Runnable() {
+        mCameraP2P.stopRecordLocalMp4(new OperationDelegateCallBack() {
             @Override
-            public void run() {
-                mCameraP2P.stopRecordLocalMp4(new OperationDelegateCallBack() {
-                    @Override
-                    public void onSuccess(int sessionId, int requestId, String data) {
-                        upData(model);
-                    }
+            public void onSuccess(int sessionId, int requestId, String data) {
+                upData(model);
+            }
 
+            @Override
+            public void onFailure(int sessionId, int requestId, int errCode) {
+                showFailure();
+                upData(model);
+            }
+        });
+    }
+
+    private void cameraConnect() {
+        showProgressDialog();
+        mCameraP2P.connect(mDeviceBeen.getDevId(), new OperationDelegateCallBack() {
+            @Override
+            public void onSuccess(int sessionId, int requestId, String data) {
+                startPlay();
+                getXinhao();
+            }
+
+            @Override
+            public void onFailure(int sessionId, int requestId, int errCode) {
+                dismissProgressDialog();
+                TuyaDialogUtils.t(mContext, "设备连接失败");
+                bt_chonglian.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void getXinhao() {
+        mDevice.requestWifiSignal(new WifiSignalListener() {
+
+            @Override
+            public void onSignalValueFind(String signal) {
+                Y.e("我在执行着信号强度么  " + signal);
+                runOnUiThread(new Runnable() {
                     @Override
-                    public void onFailure(int sessionId, int requestId, int errCode) {
-                        showFailure();
-                        upData(model);
+                    public void run() {
+                        tv_xinhao.setText("信号:" + signal + "%");
                     }
                 });
+            }
+
+            @Override
+            public void onError(String errorCode, String errorMsg) {
+                Y.e("信号强度失败了：  " + errorMsg);
             }
         });
     }
@@ -530,15 +595,36 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
                 public void onSuccess(int sessionId, int requestId, String data) {
                     dismissProgressDialog();
                     getQingxidu();
+                    setAdapterCanClikc(true);
+                    bt_chonglian.setVisibility(View.GONE);
                 }
 
                 @Override
                 public void onFailure(int sessionId, int requestId, int errCode) {
                     dismissProgressDialog();
-                    TuyaDialogUtils.t(mContext, "播放实时视频失败:" + errCode);
+                    TuyaDialogUtils.t(mContext, "播放实时视频失败");
+                    bt_chonglian.setVisibility(View.VISIBLE);
                 }
             });
         }
+    }
+
+    private void dissCameraConnect() {
+        closeFangxiang();
+//        if (mCameraP2P != null) {
+//            mCameraP2P.disconnect(new OperationDelegateCallBack() {
+//                @Override
+//                public void onSuccess(int i, int i1, String s) {
+//
+//                }
+//
+//                @Override
+//                public void onFailure(int i, int i1, int i2) {
+//
+//                }
+//            });
+//        }
+        stopPlay();
     }
 
     private void stopPlay() {//停止播放
@@ -547,12 +633,12 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
                 @Override
                 public void onSuccess(int sessionId, int requestId, String data) {
                     dismissProgressDialog();
+                    setAdapterCanClikc(false);
                 }
 
                 @Override
                 public void onFailure(int sessionId, int requestId, int errCode) {
                     dismissProgressDialog();
-
                 }
             });
         }
@@ -606,22 +692,98 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
         Y.e("解析出的数据:  " + "key: " + key + ",value:" + value);
     }
 
-    @OnClick({R.id.iv_switch_shengyin, R.id.iv_switch_quanping, R.id.tv_switch_qingxidu, R.id.rl_back})
+    @OnClick({R.id.bt_chonglian, R.id.iv_switch_shengyin, R.id.iv_switch_shengyin_qp, R.id.iv_switch_quanping, R.id.iv_switch_quanping_qp, R.id.tv_switch_qingxidu, R.id.tv_switch_qingxidu_qp, R.id.rl_back})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_switch_shengyin:
+            case R.id.iv_switch_shengyin_qp:
                 clickShengyin();
                 break;
             case R.id.iv_switch_quanping:
+            case R.id.iv_switch_quanping_qp:
+                clickQuanping();
                 break;
             case R.id.tv_switch_qingxidu:
+            case R.id.tv_switch_qingxidu_qp:
                 swichQingxidu();
                 break;
             case R.id.rl_back:
                 closeFangxiang();
                 break;
+            case R.id.bt_chonglian:
+                cameraConnect();
+                break;
         }
     }
+
+    @SuppressLint("SourceLockedOrientationActivity")
+    private void clickQuanping() {
+        if (getScreenOrientation(this) == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
+    }
+
+    public int getScreenOrientation(Activity activity) {
+        int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+        DisplayMetrics dm = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int width = dm.widthPixels;
+        int height = dm.heightPixels;
+        int orientation;
+        // if the device's natural orientation is portrait:
+        if ((rotation == Surface.ROTATION_0
+                || rotation == Surface.ROTATION_180) && height > width ||
+                (rotation == Surface.ROTATION_90
+                        || rotation == Surface.ROTATION_270) && width > height) {
+            switch (rotation) {
+                case Surface.ROTATION_0:
+                    orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+                    break;
+                case Surface.ROTATION_90:
+                    orientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+                    break;
+                case Surface.ROTATION_180:
+                    orientation =
+                            ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT;
+                    break;
+                case Surface.ROTATION_270:
+                    orientation =
+                            ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE;
+                    break;
+                default:
+                    orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+                    break;
+            }
+        }
+        // if the device's natural orientation is landscape or if the device
+        // is square:
+        else {
+            switch (rotation) {
+                case Surface.ROTATION_0:
+                    orientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+                    break;
+                case Surface.ROTATION_90:
+                    orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+                    break;
+                case Surface.ROTATION_180:
+                    orientation =
+                            ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE;
+                    break;
+                case Surface.ROTATION_270:
+                    orientation =
+                            ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT;
+                    break;
+                default:
+                    orientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+                    break;
+            }
+        }
+
+        return orientation;
+    }
+
 
     private void closeFangxiang() {
         isOpenFangxiang = false;
@@ -640,9 +802,11 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
         showProgressDialog();
         if (isKaiqishengyin) {
             iv_switch_shengyin.setImageResource(R.mipmap.tuya_shexiangtou_icon_jingyin);
+            iv_switch_shengyin_qp.setImageResource(R.mipmap.tuya_shexiangtou_icon_jingyin);
             guanbishengyin();
         } else {
             iv_switch_shengyin.setImageResource(R.mipmap.tuya_shexiangtou_icon_you_shengyin);
+            iv_switch_shengyin_qp.setImageResource(R.mipmap.tuya_shexiangtou_icon_you_shengyin);
             kaiqiShengyin();
         }
         isKaiqishengyin = !isKaiqishengyin;
@@ -653,8 +817,14 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onSuccess(int sessionId, int requestId, String data) {
                 dismissProgressDialog();
-                iv_switch_shengyin.setImageResource(R.mipmap.tuya_shexiangtou_icon_you_shengyin);
-                isKaiqishengyin = true;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        iv_switch_shengyin.setImageResource(R.mipmap.tuya_shexiangtou_icon_you_shengyin);
+                        iv_switch_shengyin_qp.setImageResource(R.mipmap.tuya_shexiangtou_icon_you_shengyin);
+                        isKaiqishengyin = true;
+                    }
+                });
             }
 
             @Override
@@ -669,8 +839,14 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onSuccess(int sessionId, int requestId, String data) {
                 dismissProgressDialog();
-                iv_switch_shengyin.setImageResource(R.mipmap.tuya_shexiangtou_icon_jingyin);
-                isKaiqishengyin = false;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        iv_switch_shengyin.setImageResource(R.mipmap.tuya_shexiangtou_icon_jingyin);
+                        iv_switch_shengyin_qp.setImageResource(R.mipmap.tuya_shexiangtou_icon_jingyin);
+                        isKaiqishengyin = false;
+                    }
+                });
             }
 
             @Override
@@ -680,7 +856,7 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
         });
     }
 
-    private void getQingxidu() {
+    private void getQingxidu() {//获取清晰度
         mCameraP2P.getVideoClarity(new OperationDelegateCallBack() {
             @Override
             public void onSuccess(int sessionId, int requestId, String data) {
@@ -690,8 +866,10 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
                     public void run() {
                         if (qingxidu.equals("4")) {
                             tv_switch_qingxidu.setText("高清");
+                            tv_switch_qingxidu_qp.setText("高清");
                         } else {
                             tv_switch_qingxidu.setText("标清");
+                            tv_switch_qingxidu_qp.setText("标清");
                         }
                     }
                 });
@@ -702,11 +880,12 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
                 dismissProgressDialog();
                 qingxidu = "4";
                 tv_switch_qingxidu.setText("高清");
+                tv_switch_qingxidu_qp.setText("高清");
             }
         });
     }
 
-    private void swichQingxidu() {
+    private void swichQingxidu() {//切换清晰度
         showProgressDialog();
         if (qingxidu.equals("4")) {
             mCameraP2P.setVideoClarity(2, new OperationDelegateCallBack() {
@@ -718,6 +897,7 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
                         @Override
                         public void run() {
                             tv_switch_qingxidu.setText("标清");
+                            tv_switch_qingxidu_qp.setText("标清");
                         }
                     });
                 }
@@ -737,6 +917,7 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
                         @Override
                         public void run() {
                             tv_switch_qingxidu.setText("高清");
+                            tv_switch_qingxidu_qp.setText("高清");
                         }
                     });
                 }
@@ -826,15 +1007,46 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
-        startPlay();
+        if (mCameraP2P != null && isPlay) {
+            cameraConnect();
+        }
     }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     public void onBackPressedSupport() {
-        if (isOpenFangxiang) {
-            closeFangxiang();
+        if (getScreenOrientation(this) == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         } else {
-            finish();
+            if (isOpenFangxiang) {
+                closeFangxiang();
+            } else {
+                finish();
+            }
+        }
+    }
+
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+            Y.e("我是竖屏阿飞烦烦烦");
+            ll_main.setVisibility(View.VISIBLE);
+            rl_quanping.setVisibility(View.GONE);
+            fl_quanping.removeAllViews();
+            fl_camera.addView(mVideoView);
+            mToolbar.setVisibility(View.VISIBLE);
+            setNotFullScreen();
+        } else {
+            mToolbar.setVisibility(View.GONE);
+            closeFangxiang();
+            Y.e("我是横屏开飞机的收费电视 ");
+            ll_main.setVisibility(View.GONE);
+            rl_quanping.setVisibility(View.VISIBLE);
+            fl_camera.removeAllViews();
+            fl_quanping.addView(mVideoView);
+            setFullScreen();
         }
     }
 }

@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 
@@ -224,5 +225,13 @@ public abstract class BaseActivity<T extends BasicPresenter, E extends BasicMode
                 e.printStackTrace();
             }
         }
+    }
+
+    public void setFullScreen() {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    public void setNotFullScreen() {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 }

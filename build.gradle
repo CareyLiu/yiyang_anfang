@@ -36,6 +36,7 @@ allprojects {
         }
         maven { url "https://dl.bintray.com/rongcloud/maven" }
         maven { url "https://dl.bintray.com/jetbrains/anko" }
+
     }
 }
 

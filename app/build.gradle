@@ -323,7 +323,7 @@ dependencies {
     implementation 'com.bulong.rudeness:rudeness:latest.release@aar'
 
     //涂鸦sdk
-    implementation 'com.tuya.smart:tuyasmart:3.20.0-beta1'
+    implementation 'com.tuya.smart:tuyasmart:3.19.0-beta1'
     //涂鸦摄像头
     implementation 'com.tuya.smart:tuyasmart-ipc-camera-middleware:3.20.0'
     implementation 'com.tuya.smart:tuyasmart-ipc-camera-v2:3.20.0'

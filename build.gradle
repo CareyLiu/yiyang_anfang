@@ -31,9 +31,9 @@ allprojects {
             url 'https://maven.google.com/'
             name 'Google'
         }
-//        maven {
-//            url "http://repo.baichuan-android.taobao.com/content/groups/BaichuanRepositories/"
-//        }
+        maven {
+            url "http://repo.baichuan-android.taobao.com/content/groups/BaichuanRepositories/"
+        }
         maven { url "https://dl.bintray.com/rongcloud/maven" }
         maven { url "https://dl.bintray.com/jetbrains/anko" }
 

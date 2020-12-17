@@ -194,7 +194,6 @@ public class HomeActivity extends BaseActivity {
                     tishiDialog = new TishiDialog(mContext, 1, new TishiDialog.TishiDialogListener() {
                         @Override
                         public void onClickCancel(View v, TishiDialog dialog) {
-
                         }
 
                         @Override
@@ -210,7 +209,6 @@ public class HomeActivity extends BaseActivity {
                             } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("13")) {
                                 LouShuiActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
                             }
-                            MenCiActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson.getDevice_id());
                         }
 
                         @Override
@@ -219,7 +217,6 @@ public class HomeActivity extends BaseActivity {
                         }
                     });
                     tishiDialog.setTextContent("您的家庭有新的状况，是否前去查看?");
-
                     tishiDialog.show();
                 }
             }

@@ -15,11 +15,13 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         app:layout_constraintTop_toTopOf="parent">
+
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlTextSizeTime="10sp"
             app:srlTextSizeTitle="@dimen/sp_12" />
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -355,10 +357,10 @@
 
 
                         <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_marginTop="25dp"
                             android:id="@+id/constrain1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="25dp"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/iv_back">
@@ -413,10 +415,10 @@
                                 app:layout_constraintTop_toTopOf="@+id/iv_pingjia" />
 
                             <TextView
-                     android:layout_marginLeft="1dp"
                                 android:id="@+id/tv_daifukuan"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="1dp"
                                 android:layout_marginTop="11dp"
                                 android:text="待付款"
                                 android:textColor="#ff333333"
@@ -848,12 +850,12 @@
 
                         <ImageView
 
-                            android:visibility="invisible"
                             android:id="@+id/iv_bazism"
                             android:layout_width="31dp"
                             android:layout_height="31dp"
                             android:layout_marginLeft="33dp"
                             android:src="@mipmap/mine_icon_bazifuwu"
+                            android:visibility="gone"
                             app:layout_constraintLeft_toRightOf="@+id/iv_about_us"
                             app:layout_constraintTop_toTopOf="@+id/iv_about_us" />
 
@@ -902,7 +904,6 @@
 
                         <TextView
 
-                            android:visibility="invisible"
                             android:id="@+id/tv_bazism"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -910,9 +911,36 @@
                             android:text="八紫算命"
                             android:textColor="#ff333333"
                             android:textSize="12sp"
+                            android:visibility="gone"
                             app:layout_constraintLeft_toLeftOf="@+id/iv_bazism"
                             app:layout_constraintRight_toRightOf="@id/iv_bazism"
                             app:layout_constraintTop_toBottomOf="@+id/iv_bazism"
+                            app:layout_constraintTop_toTopOf="@+id/tv_about_us" />
+
+
+                        <ImageView
+
+                            android:id="@+id/iv_tongji"
+                            android:layout_width="31dp"
+                            android:layout_height="31dp"
+                            android:layout_marginLeft="33dp"
+                            android:src="@mipmap/mine_icon_tuiguangtongji_bk"
+                            android:visibility="visible"
+                            app:layout_constraintLeft_toRightOf="@+id/iv_bazism"
+                            app:layout_constraintTop_toTopOf="@+id/iv_about_us" />
+
+                        <TextView
+                            android:id="@+id/tv_tuiguang_tongji"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="推广统计"
+                            android:textColor="#ff333333"
+                            android:textSize="12sp"
+                            android:visibility="visible"
+                            app:layout_constraintLeft_toLeftOf="@+id/iv_tongji"
+                            app:layout_constraintRight_toRightOf="@id/iv_tongji"
+                            app:layout_constraintTop_toBottomOf="@+id/iv_tongji"
                             app:layout_constraintTop_toTopOf="@+id/tv_about_us" />
 
                         <View

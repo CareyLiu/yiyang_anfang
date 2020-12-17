@@ -167,7 +167,7 @@ dependencies {
     implementation "com.google.android.material:material:1.0.0"
 
     // implementation "com.android.support:recyclerview-v7:$supportVersion"
-    implementation "androidx.annotation:annotation"
+    //implementation "androidx.annotation:annotation"
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.squareup.picasso:picasso:2.5.2'
@@ -323,8 +323,10 @@ dependencies {
     implementation 'com.bulong.rudeness:rudeness:latest.release@aar'
 
     //涂鸦sdk
-    implementation 'com.tuya.smart:tuyasmart:3.20.0-beta1'
-    //涂鸦摄像头
+    implementation ('com.tuya.smart:tuyasmart:3.19.0-beta1'){
+      //  exclude group: 'com.tuya.smart:tuyasmart:tuyasmart-hardware:3.20.0-beta1'
+    }
+//    //涂鸦摄像头
     implementation 'com.tuya.smart:tuyasmart-ipc-camera-middleware:3.20.0'
     implementation 'com.tuya.smart:tuyasmart-ipc-camera-v2:3.20.0'
     implementation 'com.tuya.smart:tuyasmart-ipc-camera-utils:3.20.0'

@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -15,6 +17,9 @@ import android.widget.Toast;
 
 import com.smarthome.magic.R;
 import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.app.ConstanceValue;
+import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.util.x5.utils.MyX5WebView;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
@@ -23,6 +28,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 import static com.smarthome.magic.get_net.Urls.PDDWEB;
 
@@ -141,6 +148,49 @@ public class TuanYouWebView extends BaseActivity {
                 }
             }
         });
+
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_SAOMASUCCESS) {
+                    // x5WebView.loadUrl("javascript:java_js('appToJsPaySuccess')");
+                    // x5WebView.loadUrl("http://www.baidu.com");
+                    // 通过Handler发送消息
+                    webview.post(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            // 注意调用的JS方法名要对应上
+                            // 调用javascript的callJS()方法
+                            webview.loadUrl("javascript:appToJsPaySuccess()");
+                        }
+                    });
+                    Log.i("x5webviewsuccess", "webview_success");
+                    UIHelper.ToastMessage(TuanYouWebView.this, "支付成功");
+                } else if (message.type == ConstanceValue.MSG_SAOMAFAILE) {
+                    //x5WebView.loadUrl("javascript:java_js('appToJsPayFaile')");
+
+                    webview.post(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            // 注意调用的JS方法名要对应上
+                            // 调用javascript的callJS()方法
+                            webview.loadUrl("javascript:appToJsPayFaile()");
+                        }
+                    });
+                    UIHelper.ToastMessage(TuanYouWebView.this, "支付失败");
+                } else if (message.type == ConstanceValue.MSG_DAILISHANG_TIXIAN) {
+                    if (message.content.toString().equals("0")) {
+                        webview.loadUrl("javascript:appToJsTXResult(0)");
+                        webview.reload();
+                    } else {
+                        webview.loadUrl("javascript:appToJsTXResult(1)");
+                        webview.reload();
+                    }
+                }
+            }
+        }));
 
     }
 

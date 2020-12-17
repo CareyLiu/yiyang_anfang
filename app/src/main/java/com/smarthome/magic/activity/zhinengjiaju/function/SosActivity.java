@@ -163,10 +163,10 @@ public class SosActivity extends BaseActivity {
                     String kaiGuanDengZhuangTai = messageList.get(1);
 
                     if (zhuangZhiId.equals(deviceCCid)) {
-                        if (kaiGuanDengZhuangTai.equals("1")) {//门磁开
+                        if (kaiGuanDengZhuangTai.equals("2")) {//门磁开
                             viewZhongJian.setVisibility(View.VISIBLE);
                             ivSos.setBackgroundResource(R.mipmap.tuya_sos_pic_normal);
-                        } else if (kaiGuanDengZhuangTai.equals("2")) {//门磁关
+                        } else if (kaiGuanDengZhuangTai.equals("1")) {//门磁关
                             ivSos.setBackgroundResource(R.mipmap.tuya_sos_pic_no);
                         }
                     }

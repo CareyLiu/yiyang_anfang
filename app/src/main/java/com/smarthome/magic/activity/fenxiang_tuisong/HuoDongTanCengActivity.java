@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.DefaultX5WebViewActivity;
 import com.smarthome.magic.activity.DefaultX5WebView_HaveNameActivity;
 import com.smarthome.magic.activity.tuangou.TuanGouShangJiaListActivity;
 import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallDetailsActivity;
@@ -122,19 +123,28 @@ public class HuoDongTanCengActivity extends Activity {
         ivLijichakan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //  UIHelper.ToastMessage(HuoDongTanCengActivity.this, "立即查看");
                 if (activity.get(position).activity_type_id.equals("1")) {
                     ZiJianShopMallDetailsActivity.actionStart(HuoDongTanCengActivity.this, activity.get(position).shop_product_id, activity.get(position).wares_id);
-                } else {
-                    DefaultX5WebView_HaveNameActivity.actionStart(HuoDongTanCengActivity.this, activity.get(position).activity_type_id, "聚易佳");
+                } else if (activity.get(position).activity_type_id.equals("4")) {
+                    TuanGouShangJiaListActivity.actionStart(HuoDongTanCengActivity.this, activity.get(position).img_type);
+
+                } else if (activity.get(position).activity_type_id.equals("2")) {
+                    if (null == activity.get(position).html_url) {
+                        return;
+                    }
+                    DefaultX5WebViewActivity.actionStart(HuoDongTanCengActivity.this, activity.get(position).html_url);
                 }
             }
+
         });
         ivFenxiangzhuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //UIHelper.ToastMessage(HuoDongTanCengActivity.this, "分享赚");
                 if (activity.get(position).is_share.equals("2")) {
+                    return;
+                }
+                if (activity.get(position).activity_type_id.equals("5")) {
                     return;
                 }
                 ShouYeFenXiangActivity.actionStart(HuoDongTanCengActivity.this, activity.get(position));
@@ -189,7 +199,7 @@ public class HuoDongTanCengActivity extends Activity {
                     if (null == activity.get(position).html_url) {
                         return;
                     }
-                    DefaultX5WebView_HaveNameActivity.actionStart(HuoDongTanCengActivity.this, activity.get(position).html_url, "聚易佳");
+                    DefaultX5WebViewActivity.actionStart(HuoDongTanCengActivity.this, activity.get(position).html_url);
                 }
             }
         });

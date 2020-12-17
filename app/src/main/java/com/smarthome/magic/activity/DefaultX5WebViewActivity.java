@@ -24,6 +24,7 @@ import com.smarthome.magic.util.x5.utils.X5WebView;
 import com.tencent.smtt.export.external.interfaces.SslError;
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
 import com.tencent.smtt.sdk.DownloadListener;
+import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
@@ -97,16 +98,36 @@ public class DefaultX5WebViewActivity extends BaseActivity {
             public void call(Notice message) {
                 if (message.type == ConstanceValue.MSG_SAOMASUCCESS) {
                     // x5WebView.loadUrl("javascript:java_js('appToJsPaySuccess')");
-                    x5WebView.loadUrl("javascript:appToJsPaySuccess()");
+                    // x5WebView.loadUrl("http://www.baidu.com");
+                    // 通过Handler发送消息
+                    x5WebView.post(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            // 注意调用的JS方法名要对应上
+                            // 调用javascript的callJS()方法
+                            x5WebView.loadUrl("javascript:appToJsPaySuccess()");
+                        }
+                    });
                     Log.i("x5webviewsuccess", "webview_success");
                     UIHelper.ToastMessage(DefaultX5WebViewActivity.this, "支付成功");
                 } else if (message.type == ConstanceValue.MSG_SAOMAFAILE) {
                     //x5WebView.loadUrl("javascript:java_js('appToJsPayFaile')");
-                    x5WebView.loadUrl("javascript:appToJsPayFaile()");
 
+
+                    x5WebView.post(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            // 注意调用的JS方法名要对应上
+                            // 调用javascript的callJS()方法
+                            x5WebView.loadUrl("javascript:appToJsPayFaile()");
+                        }
+                    });
+                    UIHelper.ToastMessage(DefaultX5WebViewActivity.this, "支付失败");
                 } else if (message.type == ConstanceValue.MSG_DAILISHANG_TIXIAN) {
                     if (message.content.toString().equals("0")) {
-                       x5WebView.loadUrl("javascript:appToJsTXResult(0)");
+                        x5WebView.loadUrl("javascript:appToJsTXResult(0)");
                         x5WebView.reload();
                     } else {
                         x5WebView.loadUrl("javascript:appToJsTXResult(1)");
@@ -217,7 +238,6 @@ public class DefaultX5WebViewActivity extends BaseActivity {
             }
             mGoBackUrlList.add(url);
             isLoad = false;
-
         }
 
         //网页加载失败时调用，隐藏加载提示旋转进度条

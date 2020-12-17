@@ -1062,7 +1062,7 @@
         <activity
             android:name=".activity.fenxiang_tuisong.HuoDongTanCengActivity"
             android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/MyTranslucentTheme"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
         <activity
@@ -1311,6 +1311,11 @@
 
         <activity
             android:name=".activity.zhinengjiaju.function.LouShuiActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".activity.fenxiang_tuisong.TuanYouTuiGuangActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />

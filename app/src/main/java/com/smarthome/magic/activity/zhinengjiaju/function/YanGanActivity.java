@@ -150,9 +150,9 @@ public class YanGanActivity extends BaseActivity {
                     List<String> messageList = (List<String>) notice.content;
                     String zhuangZhiId = messageList.get(0);
                     String kaiGuanDengZhuangTai = messageList.get(1);
-                    if (kaiGuanDengZhuangTai.equals("1")) {//开
+                    if (kaiGuanDengZhuangTai.equals("2")) {//开
                         ivYanGan.setBackgroundResource(R.mipmap.tuya_yanwu_pic_normal);
-                    } else if (kaiGuanDengZhuangTai.equals("2")) {//关
+                    } else if (kaiGuanDengZhuangTai.equals("1")) {//关
                         ivYanGan.setBackgroundResource(R.mipmap.tuya_yanwu_pic_no);
                     }
                 }

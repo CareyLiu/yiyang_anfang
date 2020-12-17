@@ -155,16 +155,16 @@ public class MenCiActivity extends BaseActivity {
             @Override
             public void call(Notice notice) {
                 if (notice.type == ConstanceValue.MSG_ZHINENGJIAJU_MENCIPAGE) {
-                    getNet();
+                  getNet();
                 } else if (notice.type == ConstanceValue.MSG_SHEBEIZHUANGTAI) {
                     List<String> messageList = (List<String>) notice.content;
                     String zhuangZhiId = messageList.get(0);
                     String kaiGuanDengZhuangTai = messageList.get(1);
 
                     if (zhuangZhiId.equals(deviceCCid)) {
-                        if (kaiGuanDengZhuangTai.equals("1")) {//门磁开
+                        if (kaiGuanDengZhuangTai.equals("2")) {//门磁开
                             viewZhongJian.setVisibility(View.VISIBLE);
-                        } else if (kaiGuanDengZhuangTai.equals("2")) {//门磁关
+                        } else if (kaiGuanDengZhuangTai.equals("1")) {//门磁关
                             viewZhongJian.setVisibility(View.GONE);
                         }
                     }
@@ -248,15 +248,10 @@ public class MenCiActivity extends BaseActivity {
                     }
                     flag = !flag;
                     Thread.sleep(5000);
-
                 } catch (Exception e) {
                     e.printStackTrace();
-
                 }
-
-
             }
-
         }
     }
 

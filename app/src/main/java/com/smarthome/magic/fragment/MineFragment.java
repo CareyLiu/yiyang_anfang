@@ -26,6 +26,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.DefaultX5WebViewActivity;
 import com.smarthome.magic.activity.SettingActivity;
 import com.smarthome.magic.activity.dingdan.MyOrderActivity;
+import com.smarthome.magic.activity.fenxiang_tuisong.TuanYouTuiGuangActivity;
 import com.smarthome.magic.activity.gouwuche.GouWuCheActivity;
 import com.smarthome.magic.activity.tuangou.KaQuanActivity;
 import com.smarthome.magic.activity.wode_page.AboutUsActivity;
@@ -208,6 +209,10 @@ public class MineFragment extends BaseFragment implements Observer {
     TextView tvAboutUs;
     @BindView(R.id.tv_bazism)
     TextView tvBazism;
+    @BindView(R.id.iv_tongji)
+    ImageView ivTongji;
+    @BindView(R.id.tv_tuiguang_tongji)
+    TextView tvTuiguangTongji;
 
 
     @Override
@@ -364,9 +369,15 @@ public class MineFragment extends BaseFragment implements Observer {
             R.id.iv_zhanghu_chongzhi, R.id.iv_kapianchongzhi, R.id.tv_kapianchongzhi, R.id.iv_chongzhi_jilu, R.id.tv_chongzhi_jilu, R.id.iv_shouhou_fuwu,
             R.id.tv_xiaofeijilu, R.id.iv_xiche_erwei, R.id.rlv_xiche, R.id.iv_tuiguangma, R.id.tv_tuiguangma, R.id.iv_dailishang, R.id.iv_about_us, R.id.iv_bazism,
             R.id.view, R.id.rlv_about_us, R.id.ll_kaquan, R.id.tv_daifukuan, R.id.tv_daishouhuo, R.id.tv_daodian, R.id.ll_shoucangjia,
-            R.id.ll_guanzhudianpu, R.id.tv_dalishang})
+            R.id.ll_guanzhudianpu, R.id.tv_dalishang, R.id.iv_tongji, R.id.tv_tuiguang_tongji})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.iv_tongji:
+                TuanYouTuiGuangActivity.actionStart(getActivity());
+                break;
+            case R.id.tv_tuiguang_tongji:
+                TuanYouTuiGuangActivity.actionStart(getActivity());
+                break;
             case R.id.riv_image:
                 ArrayList<String> strings = new ArrayList<>();
                 strings.add(dataBean.getUser_img_url());

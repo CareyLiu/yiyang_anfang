@@ -21,6 +21,31 @@ import com.smarthome.magic.app.Notice;
 import com.tuya.smart.sdk.api.IResultCallback;
 import com.tuya.smart.sdk.api.ITuyaDevice;
 import com.tuya.smart.sdk.bean.DeviceBean;
+import com.tuyasmart.camera.devicecontrol.ITuyaCameraDevice;
+import com.tuyasmart.camera.devicecontrol.TuyaCameraDeviceControlSDK;
+import com.tuyasmart.camera.devicecontrol.api.ITuyaCameraDeviceControlCallback;
+import com.tuyasmart.camera.devicecontrol.bean.DpBasicFlip;
+import com.tuyasmart.camera.devicecontrol.bean.DpBasicIndicator;
+import com.tuyasmart.camera.devicecontrol.bean.DpBasicNightvision;
+import com.tuyasmart.camera.devicecontrol.bean.DpBasicOSD;
+import com.tuyasmart.camera.devicecontrol.bean.DpBasicPrivate;
+import com.tuyasmart.camera.devicecontrol.bean.DpDecibelSensitivity;
+import com.tuyasmart.camera.devicecontrol.bean.DpDecibelSwitch;
+import com.tuyasmart.camera.devicecontrol.bean.DpMotionSensitivity;
+import com.tuyasmart.camera.devicecontrol.bean.DpMotionSwitch;
+import com.tuyasmart.camera.devicecontrol.bean.DpPIRSwitch;
+import com.tuyasmart.camera.devicecontrol.bean.DpPTZControl;
+import com.tuyasmart.camera.devicecontrol.bean.DpPTZStop;
+import com.tuyasmart.camera.devicecontrol.bean.DpSDFormat;
+import com.tuyasmart.camera.devicecontrol.bean.DpSDFormatStatus;
+import com.tuyasmart.camera.devicecontrol.bean.DpSDRecordModel;
+import com.tuyasmart.camera.devicecontrol.bean.DpSDRecordSwitch;
+import com.tuyasmart.camera.devicecontrol.bean.DpSDStatus;
+import com.tuyasmart.camera.devicecontrol.bean.DpSDStorage;
+import com.tuyasmart.camera.devicecontrol.bean.DpWirelessBatterylock;
+import com.tuyasmart.camera.devicecontrol.bean.DpWirelessElectricity;
+import com.tuyasmart.camera.devicecontrol.bean.DpWirelessLowpower;
+import com.tuyasmart.camera.devicecontrol.bean.DpWirelessPowermode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,6 +82,7 @@ public class CameraSetJichuActivity extends BaseActivity {
     private boolean shuiyin;
     private String productId;
     private String fanzhuanFangshi;
+    private ITuyaCameraDevice tuyaCameraDevice;
 
     /**
      * 用于其他Activty跳转到该Activity
@@ -99,6 +125,66 @@ public class CameraSetJichuActivity extends BaseActivity {
         ButterKnife.bind(this);
         init();
         initHuidiao();
+//        initTwo();
+    }
+
+    private void initTwo() {
+        tuyaCameraDevice = TuyaCameraDeviceControlSDK.getCameraDeviceInstance(deviceBeen.getDevId());
+        boolean z = tuyaCameraDevice.isSupportCameraDps(DpBasicIndicator.ID);
+
+        boolean a = tuyaCameraDevice.isSupportCameraDps(DpBasicFlip.ID);
+        boolean b = tuyaCameraDevice.isSupportCameraDps(DpBasicOSD.ID);
+        boolean c = tuyaCameraDevice.isSupportCameraDps(DpBasicPrivate.ID);
+        boolean d = tuyaCameraDevice.isSupportCameraDps(DpBasicNightvision.ID);
+        boolean e = tuyaCameraDevice.isSupportCameraDps(DpPIRSwitch.ID);
+        boolean f = tuyaCameraDevice.isSupportCameraDps(DpMotionSwitch.ID);
+        boolean g = tuyaCameraDevice.isSupportCameraDps(DpMotionSensitivity.ID);
+        boolean h = tuyaCameraDevice.isSupportCameraDps(DpDecibelSwitch.ID);
+        boolean i = tuyaCameraDevice.isSupportCameraDps(DpDecibelSensitivity.ID);
+
+        boolean j = tuyaCameraDevice.isSupportCameraDps(DpSDStatus.ID);
+        boolean k = tuyaCameraDevice.isSupportCameraDps(DpSDStorage.ID);
+        boolean l = tuyaCameraDevice.isSupportCameraDps(DpSDFormat.ID);
+        boolean m = tuyaCameraDevice.isSupportCameraDps(DpSDFormatStatus.ID);
+        boolean n = tuyaCameraDevice.isSupportCameraDps(DpSDRecordSwitch.ID);
+        boolean o = tuyaCameraDevice.isSupportCameraDps(DpSDRecordModel.ID);
+
+        boolean p = tuyaCameraDevice.isSupportCameraDps(DpPTZControl.ID);
+        boolean q = tuyaCameraDevice.isSupportCameraDps(DpPTZStop.ID);
+
+        boolean r = tuyaCameraDevice.isSupportCameraDps(DpWirelessElectricity.ID);
+        boolean s = tuyaCameraDevice.isSupportCameraDps(DpWirelessLowpower.ID);
+        boolean t = tuyaCameraDevice.isSupportCameraDps(DpWirelessBatterylock.ID);
+        boolean u = tuyaCameraDevice.isSupportCameraDps(DpWirelessPowermode.ID);
+
+
+
+        Y.e("斤斤计较"+" z:" + z +" a:" + a + " b:" + b + " c:" + c + " d:" + d + " e:" + e + " f:" + f + " g:" + g + " h:" + h + " i:" + i + " j:" + j + " k:" + k +
+                " l:" + l+
+                " m:" + m+
+                " n:" + n+
+                " o:" + o+
+                " p:" + p+
+                " q:" + q+
+                " r:" + r+
+                " s:" + s+
+                " t:" + t+
+                " u:" + u);
+
+
+//        tuyaCameraDevice.registorTuyaCameraDeviceControlCallback(DpBasicOSD.ID, new ITuyaCameraDeviceControlCallback<Boolean>() {
+//            @Override
+//            public void onSuccess(String s, DpNotifyModel.ACTION action, DpNotifyModel.SUB_ACTION sub_action, Boolean o) {
+//                showPublishTxt.setText("LAN/Cloud query result: " + o);
+//            }
+//
+//            @Override
+//            public void onFailure(String s, DpNotifyModel.ACTION action, DpNotifyModel.SUB_ACTION sub_action, String s1, String s2) {
+//
+//            }
+//        });
+//        mTuyaCameraDevice.publishCameraDps(DpBasicFlip.ID, true);
+
     }
 
     private void initHuidiao() {

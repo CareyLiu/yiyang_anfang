@@ -3,12 +3,16 @@ package com.smarthome.magic.activity.tuya_camera.camera;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.ZhiNengRoomManageActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
@@ -21,7 +25,12 @@ import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
+import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.tuya.smart.sdk.api.IResultCallback;
 import com.tuya.smart.sdk.api.ITuyaDevice;
 import com.tuya.smart.sdk.bean.DeviceBean;
@@ -38,6 +47,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+
+import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
 public class CameraSetActivity extends BaseActivity {
 
@@ -60,6 +71,10 @@ public class CameraSetActivity extends BaseActivity {
     TextView bt_delete;
     @BindView(R.id.tv_yeshi)
     TextView tv_yeshi;
+    @BindView(R.id.tv_room_name)
+    TextView tv_room_name;
+    @BindView(R.id.tv_device_name)
+    TextView tv_device_name;
     private ITuyaDevice device;
     private DeviceBean deviceBeen;
     private String yeshiPos;
@@ -67,16 +82,18 @@ public class CameraSetActivity extends BaseActivity {
     private String device_id;
     private String member_type;
     private String old_name;
+    private String room_name;
 
     /**
      * 用于其他Activty跳转到该Activity
      */
-    public static void actionStart(Context context, String member_type, String device_id, String old_name) {
+    public static void actionStart(Context context, String member_type, String device_id, String old_name, String room_name) {
         Intent intent = new Intent(context, CameraSetActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("member_type", member_type);
         intent.putExtra("device_id", device_id);
         intent.putExtra("old_name", old_name);
+        intent.putExtra("room_name", room_name);
         context.startActivity(intent);
     }
 
@@ -119,7 +136,11 @@ public class CameraSetActivity extends BaseActivity {
         family_id = PreferenceHelper.getInstance(mContext).getString(AppConfig.PEIWANG_FAMILYID, "");
         device_id = getIntent().getStringExtra("device_id");
         old_name = getIntent().getStringExtra("old_name");
+        room_name = getIntent().getStringExtra("room_name");
         member_type = getIntent().getStringExtra("member_type");
+
+        tv_room_name.setText(room_name);
+        tv_device_name.setText(old_name);
 
         deviceBeen = TuyaDeviceManager.getDeviceManager().getDeviceBeen();
         device = TuyaDeviceManager.getDeviceManager().getDevice();
@@ -167,7 +188,7 @@ public class CameraSetActivity extends BaseActivity {
     public void getData(String dpStr) {
         JSONObject jsonObject = JSON.parseObject(dpStr);
         Set<String> strings = jsonObject.keySet();
-        Iterator<String> it = strings.iterator( );
+        Iterator<String> it = strings.iterator();
         while (it.hasNext()) {
             // 获得key
             String key = it.next();
@@ -282,17 +303,7 @@ public class CameraSetActivity extends BaseActivity {
 
             @Override
             public void onClickConfirm(View v, TishiNewDialog dialog) {
-                device.removeDevice(new IResultCallback() {
-                    @Override
-                    public void onError(String errorCode, String errorMsg) {
-                        Y.t("移除失败:" + errorCode);
-                    }
-
-                    @Override
-                    public void onSuccess() {
-                        Y.t("移除成功");
-                    }
-                });
+                deleteDevice();
             }
 
             @Override
@@ -303,5 +314,48 @@ public class CameraSetActivity extends BaseActivity {
         dialog.setTextCont("是否移除设备");
         dialog.setTextConfirm("移除");
         dialog.show();
+    }
+
+
+    /**
+     * 删除设备
+     */
+    private void deleteDevice() {
+        showProgressDialog();
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16034");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("family_id", family_id);
+        map.put("device_id", device_id);
+        Gson gson = new Gson();
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<ZhiNengFamilyEditBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ZhiNengFamilyEditBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        device.removeDevice(new IResultCallback() {
+                            @Override
+                            public void onError(String errorCode, String errorMsg) {
+                                dismissProgressDialog();
+                                Y.t("移除设备失败:" + errorMsg);
+                            }
+
+                            @Override
+                            public void onSuccess() {
+                                dismissProgressDialog();
+                                finish();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        dismissProgressDialog();
+                        Y.tError(response);
+                    }
+                });
     }
 }

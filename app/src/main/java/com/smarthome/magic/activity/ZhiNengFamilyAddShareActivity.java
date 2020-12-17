@@ -1,5 +1,6 @@
 package com.smarthome.magic.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,11 +15,14 @@ import com.jaeger.library.StatusBarUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.shuinuan.Y;
+import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 
+import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuoTIshi;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Success;
@@ -29,6 +33,10 @@ import com.smarthome.magic.model.ZhiNengHomeListBean;
 import com.smarthome.magic.util.AddShareTimeCount;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.TimeCount;
+import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.home.sdk.bean.MemberBean;
+import com.tuya.smart.home.sdk.bean.MemberWrapperBean;
+import com.tuya.smart.sdk.api.ITuyaDataCallback;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -115,7 +123,7 @@ public class ZhiNengFamilyAddShareActivity extends BaseActivity implements View.
                 } else if (et_code.getText().toString().isEmpty()) {
                     Toast.makeText(context, "验证码不能为空", Toast.LENGTH_SHORT).show();
                 } else {
-                    bindMember();
+                    yaoqing(et_phone.getText().toString());
                 }
                 break;
         }
@@ -225,5 +233,32 @@ public class ZhiNengFamilyAddShareActivity extends BaseActivity implements View.
                         }
                     }
                 });
+    }
+
+
+    private void yaoqing(String phone) {
+        long homeId = PreferenceHelper.getInstance(mContext).getLong(AppConfig.TUYA_HOME_ID, 0);
+        @SuppressLint("WrongConstant") MemberWrapperBean bean = new MemberWrapperBean.Builder()
+                .setHomeId(homeId)
+                .setNickName(phone)
+                .setAccount(phone)
+                .setCountryCode("86")
+                .setRole(0)
+                .setHeadPic("")
+                .setAutoAccept(true)
+                .build();
+
+        TuyaHomeSdk.getMemberInstance().addMember(bean, new ITuyaDataCallback<MemberBean>() {
+            @Override
+            public void onSuccess(MemberBean result) {
+                Y.e("邀请成功");
+                bindMember();
+            }
+
+            @Override
+            public void onError(String errorCode, String errorMessage) {
+                Y.e("邀请失败啦 " + errorMessage);
+            }
+        });
     }
 }

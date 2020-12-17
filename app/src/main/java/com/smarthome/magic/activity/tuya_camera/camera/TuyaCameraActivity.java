@@ -131,13 +131,14 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
     /**
      * 用于其他Activty跳转到该Activity
      */
-    public static void actionStart(Context context, String member_type, String device_id, String ty_device_ccid, String old_name) {
+    public static void actionStart(Context context, String member_type, String device_id, String ty_device_ccid, String old_name, String room_name) {
         Intent intent = new Intent(context, TuyaCameraActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("member_type", member_type);
         intent.putExtra("device_id", device_id);
         intent.putExtra("ty_device_ccid", ty_device_ccid);
         intent.putExtra("old_name", old_name);
+        intent.putExtra("room_name", room_name);
         context.startActivity(intent);
     }
 
@@ -182,7 +183,9 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
         CameraSetActivity.actionStart(mContext,
                 getIntent().getStringExtra("member_type"),
                 getIntent().getStringExtra("device_id"),
-                getIntent().getStringExtra("old_name"));
+                getIntent().getStringExtra("old_name"),
+                getIntent().getStringExtra("room_name")
+        );
     }
 
     @Override
@@ -250,7 +253,7 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
                     }
                 } else if (message.type == ConstanceValue.MSG_DEVICE_REMOVED) {
                     String devId = TuyaDeviceManager.getDeviceManager().getDeviceBeen().getDevId();
-                    String ccc = message.content.toString();
+                    String ccc = message.devId;
                     if (ccc.equals(devId)) {
                         TishiNewDialog dialog = new TishiNewDialog(mContext, new TishiNewDialog.TishiDialogListener() {
                             @Override
@@ -378,7 +381,7 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
                 } else if (name.equals("录制")) {
                     clickLuzhi();
                 } else if (name.equals("回放")) {
-//                    CameraHuifangActivity.actionStart(mContext, p2pType);
+                    CameraHuifangActivity.actionStart(mContext, p2pType);
                 } else if (name.equals("云存储")) {
 
                 } else if (name.equals("方向")) {
@@ -386,7 +389,7 @@ public class TuyaCameraActivity extends BaseActivity implements View.OnClickList
                 } else if (name.equals("报警")) {
                     CameraSetBaojingActivity.actionStart(mContext);
                 } else if (name.equals("相册")) {
-//                    CameraXiangceActivity.actionStart(mContext);
+                    CameraXiangceActivity.actionStart(mContext);
                 }
             }
         });

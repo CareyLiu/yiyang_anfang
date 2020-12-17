@@ -1292,6 +1292,23 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
             tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦相册 -->
+        <activity
+            android:name=".activity.tuya_camera.camera.CameraXiangceActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦回放 -->
+        <activity
+            android:name=".activity.tuya_camera.camera.CameraHuifangActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
         <activity
             android:name=".activity.zhinengjiaju.function.LouShuiActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"

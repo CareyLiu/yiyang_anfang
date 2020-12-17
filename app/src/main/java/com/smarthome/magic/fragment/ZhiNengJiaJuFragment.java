@@ -3,6 +3,7 @@ package com.smarthome.magic.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,9 +21,12 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.ZhiNengFamilyManageDetailActivity;
 import com.smarthome.magic.activity.ZhiNengHomeListActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_camera.add.TuyaDeviceAddActivity;
+import com.smarthome.magic.activity.tuya_camera.utils.TuyaDeviceManager;
+import com.smarthome.magic.activity.tuya_camera.utils.TuyaDialogUtils;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.PeiWangYinDaoPageActivity;
 import com.smarthome.magic.adapter.NewsFragmentPagerAdapter;
 import com.smarthome.magic.app.AppConfig;
@@ -33,7 +37,9 @@ import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuoTIshi;
 import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.ZhiNengFamilyManageBean;
 import com.smarthome.magic.model.ZhiNengHomeBean;
 import com.smarthome.magic.view.NoSlidingViewPager;
 import com.smarthome.magic.view.magicindicator.MagicIndicator;
@@ -45,6 +51,12 @@ import com.smarthome.magic.view.magicindicator.buildins.commonnavigator.abs.IPag
 import com.smarthome.magic.view.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import com.smarthome.magic.view.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
 import com.smarthome.magic.view.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
+import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.home.sdk.bean.HomeBean;
+import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
+import com.tuya.smart.sdk.TuyaSdk;
+import com.tuya.smart.sdk.api.IResultCallback;
+import com.tuya.smart.sdk.bean.DeviceBean;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -153,8 +165,6 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
         viewPagerAdapter = new NewsFragmentPagerAdapter(getActivity().getSupportFragmentManager(), fragmentList);
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setCurrentItem(0);
-
-
     }
 
     private void initMagicIndicator() {
@@ -281,9 +291,57 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                         }
 
                         String familyId = dataBean.get(0).getFamily_id();
-                        String ty_family_id = dataBean.get(0).getTy_family_id();
                         PreferenceHelper.getInstance(getActivity()).putString(AppConfig.PEIWANG_FAMILYID, familyId);
-                        PreferenceHelper.getInstance(getActivity()).putLong(AppConfig.TUYA_HOME_ID, Y.getLong(ty_family_id));
+                        String ty_family_id = dataBean.get(0).getTy_family_id();
+                        if (TextUtils.isEmpty(ty_family_id)) {
+                            if (dataBean.get(0).getMember_type().equals("1")) {
+                                List<String> addRooms = new ArrayList<>();
+                                TuyaHomeSdk.getHomeManagerInstance().createHome(dataBean.get(0).getFamily_name(), 0, 0, "", addRooms, new ITuyaHomeResultCallback() {
+                                    @Override
+                                    public void onSuccess(HomeBean bean) {
+                                        long tuyaHomeId = bean.getHomeId();
+                                        PreferenceHelper.getInstance(getActivity()).putLong(AppConfig.TUYA_HOME_ID, tuyaHomeId);
+                                        addTuyaHome(familyId, tuyaHomeId);
+                                    }
+
+                                    @Override
+                                    public void onError(String errorCode, String errorMsg) {
+                                        Y.t("创建家庭失败:" + errorMsg);
+                                    }
+                                });
+                            }
+                        } else {
+                            PreferenceHelper.getInstance(getActivity()).putLong(AppConfig.TUYA_HOME_ID, Y.getLong(ty_family_id));
+//                            TuyaHomeSdk.newHomeInstance(Y.getLong(ty_family_id)).getHomeDetail(new ITuyaHomeResultCallback() {
+//                                @Override
+//                                public void onSuccess(HomeBean bean) {
+//                                    List<DeviceBean> deviceList = bean.getDeviceList();
+//                                    Y.e("裂缝宽度发生的  " + deviceList.size());
+//                                    for (int i = 0; i < deviceList.size(); i++) {
+//                                        DeviceBean deviceBean = deviceList.get(i);
+//                                        Y.e("愧疚反倒是离开的是 " + deviceBean.getName());
+//                                        TuyaHomeSdk.newDeviceInstance(deviceBean.getDevId()).removeDevice(new IResultCallback() {
+//                                            @Override
+//                                            public void onError(String errorCode, String errorMsg) {
+//                                                Y.e("东方斯卡拉就发顺丰 ");
+//                                            }
+//
+//                                            @Override
+//                                            public void onSuccess() {
+//                                                Y.e("我一处乘客都给对方 "+deviceBean.getName());
+//                                            }
+//                                        });
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onError(String errorCode, String errorMsg) {
+////                                    TuyaDialogUtils.t(mContext, "获取设备信息失败");
+//                                }
+//                            });
+
+                        }
+
 
                         /**
                          * online_state	在线状态：1.在线 2.离线
@@ -308,6 +366,31 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                                 tvZhujiZhuangtai.setText("主机离线");
                             }
                         }
+                    }
+                });
+    }
+
+    private void addTuyaHome(String family_id, long ty_family_id) {
+        //访问网络获取数据 下面的列表数据
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16045");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(getActivity()).getAppToken());
+        map.put("family_id", family_id);
+        map.put("ty_family_id", ty_family_id + "");
+        map.put("ty_room_id", "0");
+        Gson gson = new Gson();
+        OkGo.<AppResponse<ZhiNengFamilyManageBean.DataBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ZhiNengFamilyManageBean.DataBean>>() {
+                    @Override
+                    public void onSuccess(final Response<AppResponse<ZhiNengFamilyManageBean.DataBean>> response) {
+
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ZhiNengFamilyManageBean.DataBean>> response) {
 
                     }
                 });

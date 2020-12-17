@@ -14,12 +14,12 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="410pt">
+            android:layout_height="405pt">
 
             <FrameLayout
                 android:id="@+id/fl_camera"
                 android:layout_width="match_parent"
-                android:layout_height="410pt"
+                android:layout_height="405pt"
                 android:background="@color/black">
 
                 <!--            <com.tuya.smart.camera.middleware.widget.TuyaCameraView-->

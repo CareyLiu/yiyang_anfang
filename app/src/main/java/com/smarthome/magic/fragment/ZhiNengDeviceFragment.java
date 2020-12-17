@@ -205,8 +205,8 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                             } else {
                                 UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
                             }
-                        } else if (deviceBean.getDevice_type().equals("18")) {//涂鸦摄像机
-                            TuyaCameraActivity.actionStart(getActivity(),member_type,deviceBean.getDevice_id(),deviceBean.getTy_device_ccid(),deviceBean.getDevice_name());
+                        } else if (deviceBean.getDevice_type().equals("sp")) {//涂鸦摄像机
+                            TuyaCameraActivity.actionStart(getActivity(), member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(),deviceBean.getRoom_name());
                         } else if (deviceBean.getDevice_type().equals("16")) {//窗帘
                             ZhiNengChuangLianActivity.actionStart(getActivity(), deviceBean.getDevice_id());
                         } else if (deviceBean.getDevice_type().equals("01")) {//灯
@@ -230,9 +230,9 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                             SosActivity.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
                         } else if (deviceBean.getDevice_type().equals("05")) {
                             MenSuoActivity.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
-                        }else if (deviceBean.getDevice_type().equals("13")){
-                            LouShuiActivity.actionStart(getActivity(),deviceBean.getDevice_id(),member_type);
-                        }else {
+                        } else if (deviceBean.getDevice_type().equals("13")) {
+                            LouShuiActivity.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
+                        } else {
                             Bundle bundle = new Bundle();
                             bundle.putString("device_id", deviceBean.getDevice_id());
                             bundle.putString("device_type", deviceBean.getDevice_type());

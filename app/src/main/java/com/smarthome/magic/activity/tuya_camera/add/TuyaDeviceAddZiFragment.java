@@ -94,7 +94,7 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
     private TuyaDeviceAdapter adapter;
     private BluetoothAdapter bluetoothAdapter;
     private ITuyaActivator mTuyaActivator;
-    private String mc_device_ccid;
+    private String familyId;
 
     @Override
     protected void initLogic() {
@@ -193,7 +193,7 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
         wifiSSid = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.TUYA_PEIWANG_ADMIN, "");
         mima = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.TUYA_PEIWANG_MIMA, "");
         homeId = PreferenceHelper.getInstance(getActivity()).getLong(AppConfig.TUYA_HOME_ID, 0);
-        mc_device_ccid = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.MC_DEVICE_CCID, "aaaaaaaaaaaaaaaa80140018");
+        familyId = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.PEIWANG_FAMILYID, "");
 
         if (!TextUtils.isEmpty(wifiSSid) && !TextUtils.isEmpty(mima)) {
             isSetWifi = true;
@@ -290,7 +290,7 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                                  public void onActiveSuccess(DeviceBean devResp) {
                                      Y.e("成功添加设备" + devResp.getName() + "   " + devResp.getIconUrl());
                                      getShebei();
-                                     addCamera(devResp.getDevId());
+                                     addCamera(devResp);
                                      deviceBeans.add(devResp);
                                      adapter.notifyDataSetChanged();
                                  }
@@ -306,18 +306,21 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
         mTuyaActivator.start();
     }
 
-    private void addCamera(String devId) {
+    private void addCamera(DeviceBean devResp) {
         //访问网络获取数据 下面的列表数据
         Map<String, String> map = new HashMap<>();
         map.put("code", "16042");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(getActivity()).getAppToken());
-        map.put("mc_device_ccid", mc_device_ccid);
-        map.put("ty_device_ccid", devId);
+        map.put("family_id", familyId);
+        map.put("ty_device_ccid", devResp.getDevId());
         map.put("ty_family_id", homeId + "");
         map.put("ty_room_id", "0");
-        map.put("device_type", "18");
-        map.put("device_category", "01");
+        map.put("device_type", devResp.getProductBean().getCategory());
+        map.put("device_category", devResp.getProductId());
+        map.put("device_category_code", devResp.getProductBean().getCategoryCode());
+        map.put("device_type_name", devResp.getName());
+        map.put("device_type_pic", devResp.getIconUrl());
         Gson gson = new Gson();
         OkGo.<AppResponse<ZhiNengHomeBean.DataBean>>post(ZHINENGJIAJU)
                 .tag(this)//

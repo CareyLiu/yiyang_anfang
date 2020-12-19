@@ -108,7 +108,7 @@ public class MyApplication extends MultiDexApplication {
     public Activity activity_main;
 
 
-    //  String mqttUrl = "tcp://192.168.1.127";//大个本地
+    //String mqttUrl = "tcp://192.168.1.127";//大个本地
     //String mqttUrl = "tcp://mqtt.hljsdkj.com";//正式
     String mqttUrl = "tcp://ggw.hljsdkj.com";//ggw
 
@@ -564,6 +564,11 @@ public class MyApplication extends MultiDexApplication {
                                 n1.type = ConstanceValue.MSG_GUZHANG;
                                 n1.content = message.toString();
                                 RxBus.getDefault().sendRx(n1);
+                            }else if (codeClass.code.equals("jyj_0006")){
+                                Notice n = new Notice();
+                                n.type = ConstanceValue.MSG_GUZHANG_SHOUYE;
+                                n.content = message.toString();
+                                RxBus.getDefault().sendRx(n);
                             }
 
                         } else if (message.toString().contains("p.")) {

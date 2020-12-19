@@ -1,83 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:background="@color/grayfff5f5f5">
+    android:layout_height="wrap_content"
+    android:background="@color/grayfff5f5f5"
+    android:orientation="vertical">
 
-
-    <ImageView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:scaleType="fitXY"
-        android:src="@mipmap/tuiguang_pic_top_bg"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="96dp"
+        android:background="@drawable/tongji_background">
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/clv_image"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginLeft="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:text="Ophelia Ramsey"
+            android:textColor="#ffffffff"
+            android:textSize="15sp"
+            app:layout_constraintLeft_toRightOf="@+id/clv_image"
+            app:layout_constraintTop_toTopOf="@+id/clv_image" />
+
+        <ImageView
+            android:id="@+id/iv_type_name"
+            android:layout_width="31dp"
+            android:layout_height="19dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
-
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_height="48dp">
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/rl_1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@mipmap/tuiguang_concent_bg"
-            android:orientation="vertical">
+            android:layout_height="48dp"
+            android:layout_weight="1">
 
             <TextView
+                android:id="@+id/tv_zhijie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="13dp"
-                android:layout_marginTop="10dp"
-                android:text="近一月推广人数"
-                android:textColor="#ff666666"
-                android:textSize="13sp" />
-
-            <TextView
-                android:id="@+id/tv_jinyigeyue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="13dp"
-                android:layout_marginTop="19dp"
-                android:text="2000"
-                android:textColor="#ff111111"
-                android:textSize="19sp"
+                android:layout_centerInParent="true"
+                android:text="直接邀请(10)"
+                android:textColor="#ff333333"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
-        </LinearLayout>
+            <View
+                android:id="@+id/view_zhijie"
+                android:layout_width="23dp"
+                android:layout_height="4dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/FC0100" />
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/rl_2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@mipmap/tuiguang_concent_bg"
-            android:orientation="vertical">
+            android:layout_height="48dp"
+            android:layout_weight="1">
 
             <TextView
-
+                android:id="@+id/tv_jianjie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="13dp"
-                android:layout_marginTop="10dp"
-                android:text="近7天推广数"
-                android:textColor="#ff666666"
-                android:textSize="13sp" />
+                android:layout_centerInParent="true"
+                android:text="间接邀请(5)"
+                android:textColor="#ff999999"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
-            <TextView
-                android:textStyle="bold"
-                android:id="@+id/tv_jinqitian"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="13dp"
-                android:layout_marginTop="19dp"
-                android:text="2000"
-                android:textColor="#ff111111"
-                android:textSize="19sp" />
+            <View
+                android:id="@+id/view_jianjie"
+                android:layout_width="23dp"
+                android:layout_height="4dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/FC0100"
+                android:visibility="gone" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>

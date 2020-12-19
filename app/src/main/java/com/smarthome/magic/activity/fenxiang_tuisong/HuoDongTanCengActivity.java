@@ -190,17 +190,17 @@ public class HuoDongTanCengActivity extends Activity {
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                if (activity.get(position).activity_type_id.equals("1")) {
-                    ZiJianShopMallDetailsActivity.actionStart(HuoDongTanCengActivity.this, activity.get(position).shop_product_id, activity.get(position).wares_id);
-                } else if (activity.get(position).activity_type_id.equals("4")) {
-                    TuanGouShangJiaListActivity.actionStart(HuoDongTanCengActivity.this, activity.get(position).img_type);
-
-                } else if (activity.get(position).activity_type_id.equals("2")) {
-                    if (null == activity.get(position).html_url) {
-                        return;
-                    }
-                    DefaultX5WebViewActivity.actionStart(HuoDongTanCengActivity.this, activity.get(position).html_url);
-                }
+//                if (activity.get(position).activity_type_id.equals("1")) {
+//                    ZiJianShopMallDetailsActivity.actionStart(HuoDongTanCengActivity.this, activity.get(position).shop_product_id, activity.get(position).wares_id);
+//                } else if (activity.get(position).activity_type_id.equals("4")) {
+//                    TuanGouShangJiaListActivity.actionStart(HuoDongTanCengActivity.this, activity.get(position).img_type);
+//
+//                } else if (activity.get(position).activity_type_id.equals("2")) {
+//                    if (null == activity.get(position).html_url) {
+//                        return;
+//                    }
+//                    DefaultX5WebViewActivity.actionStart(HuoDongTanCengActivity.this, activity.get(position).html_url);
+//                }
             }
         });
     }

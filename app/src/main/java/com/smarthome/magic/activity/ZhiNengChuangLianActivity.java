@@ -33,6 +33,7 @@ import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.model.ZhiiNengRoomDeviceRoomBean;
 import com.smarthome.magic.mqtt_zhiling.ZnjjMqttMingLing;
+import com.smarthome.magic.util.SoundPoolUtils;
 import com.suke.widget.SwitchButton;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -180,7 +181,7 @@ public class ZhiNengChuangLianActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //UIHelper.ToastMessage(mContext, "点击了开窗");
-
+                SoundPoolUtils.soundPool(mContext,R.raw.kaiqizhinengchuanglian);
                 rrlGuanchuang.setBackground(mContext.getResources().getDrawable(R.drawable.chuanglian_no_sel));
                 tvGuanchuanglian.setTextColor(mContext.getResources().getColor(R.color.black_333333));
                 ivGuanchuang.setBackgroundResource(R.mipmap.chuanglian_button_guan_nor);
@@ -218,7 +219,7 @@ public class ZhiNengChuangLianActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 // UIHelper.ToastMessage(mContext, "点击了关窗");
-
+                SoundPoolUtils.soundPool(mContext,R.raw.guanbizhinengchuanglian);
                 rrlGuanchuang.setBackground(mContext.getResources().getDrawable(R.drawable.chuagnlian_sel));
                 tvGuanchuanglian.setTextColor(mContext.getResources().getColor(R.color.white));
                 ivGuanchuang.setBackgroundResource(R.mipmap.chuanglian_button_guan_sel);

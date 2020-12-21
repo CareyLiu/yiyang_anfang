@@ -94,6 +94,7 @@ public class TuanYouTuiGuangActivity extends BaseActivity {
                 viewJianJie.setVisibility(View.GONE);
                 srLSmart.setEnableAutoLoadMore(true);
                 mDatas.clear();
+                tuanYouTuiGuangAdapter.removeAllFooterView();
             }
         });
 
@@ -103,6 +104,7 @@ public class TuanYouTuiGuangActivity extends BaseActivity {
                 num = 0;
                 type = "2";
                 getNet(type);
+                tuanYouTuiGuangAdapter.removeAllFooterView();
 
                 tv_jianjie.setTextColor(mContext.getResources().getColor(R.color.black_333333));
                 viewJianJie.setVisibility(View.VISIBLE);

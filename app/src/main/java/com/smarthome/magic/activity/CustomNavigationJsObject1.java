@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.fenxiang_tuisong.ShouYeFenXiangActivity;
 import com.smarthome.magic.activity.wode_page.TiXianActivity;
 import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallDetailsActivity;
 import com.smarthome.magic.app.App;
@@ -38,6 +39,7 @@ import com.smarthome.magic.config.Wetch_S;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.DaiLiShangQianBaoModel;
 import com.smarthome.magic.model.GaoDeMapModel;
+import com.smarthome.magic.model.Home;
 import com.smarthome.magic.model.MenSuoModel;
 import com.smarthome.magic.model.SaoMaPayModel;
 import com.smarthome.magic.model.SaoMaWeiXinPayModel;
@@ -480,6 +482,14 @@ public class CustomNavigationJsObject1 {
         builder.create().show();
     }
 
+    //JS请求java
+    @JavascriptInterface
+    public void jsToAppTyShare(String para) {
+//        UIHelper.ToastMessage(mContext, para);
+//        Log.i("app_to_share", para);
+        Home.DataBean.activity activity = new Gson().fromJson(para, Home.DataBean.activity.class);
+        ShouYeFenXiangActivity.actionStart(mContext, activity);
+    }
     public String getKey() {
         return key;
     }

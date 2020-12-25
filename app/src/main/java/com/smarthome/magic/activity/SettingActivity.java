@@ -52,6 +52,9 @@ import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.CleanMessageUtil;
 import com.tuya.smart.android.user.api.ILogoutCallback;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.sdk.api.IResultCallback;
+import com.umeng.message.PushAgent;
+import com.umeng.message.UTrack;
 
 import org.devio.takephoto.app.TakePhoto;
 import org.devio.takephoto.app.TakePhotoImpl;
@@ -396,14 +399,18 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
                                 Notice n = new Notice();
                                 n.type = ConstanceValue.MSG_UNSUB_MQTT;
                                 RxBus.getDefault().sendRx(n);
-
                                 RongIM.getInstance().logout();
                                 startActivity(new Intent(SettingActivity.this, LoginActivity.class));
-
                                 TuyaHomeSdk.getUserInstance().logout(new ILogoutCallback() {
                                     @Override
                                     public void onSuccess() {
-
+                                        String strPhone = PreferenceHelper.getInstance(SettingActivity.this).getString("user_phone", "");
+                                        PushAgent.getInstance(SettingActivity.this).deleteAlias(strPhone, "TUYA_SMART", new UTrack.ICallBack() {
+                                            @Override
+                                            public void onMessage(boolean isSuccess, String message) {
+                                                Y.e("解除涂鸦推送成功了么 " + isSuccess + "   " + message);
+                                            }
+                                        });
                                     }
 
                                     @Override

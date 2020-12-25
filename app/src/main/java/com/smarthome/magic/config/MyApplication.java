@@ -46,6 +46,7 @@ import com.smarthome.magic.aakefudan.chat.MyMessage;
 import com.smarthome.magic.aakefudan.chat.MyMessageItemProvider;
 import com.smarthome.magic.activity.LoginActivity;
 import com.smarthome.magic.activity.WelcomeActivity;
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.adapter.view.GlobalAdapter;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.CodeClass;
@@ -65,6 +66,9 @@ import com.smarthome.magic.util.SerializeUtil;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.umeng.commonsdk.UMConfigure;
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.PushAgent;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -205,6 +209,7 @@ public class MyApplication extends MultiDexApplication {
         initDefaultPicker();
         initOkgo();
         initTuya();//涂鸦智能家居
+        initYoumeng();//友盟推送
 
         // 获取当前包名
         String packageName = context.getPackageName();
@@ -304,12 +309,29 @@ public class MyApplication extends MultiDexApplication {
         Logger.addLogAdapter(new AndroidLogAdapter());
     }
 
+    private void initYoumeng() {
+        UMConfigure.init(this, "5fdff473842ba953b890dd98", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, "a51f307db82a88eaa46cf1cef4009316");
+        PushAgent mPushAgent = PushAgent.getInstance(this);
+        mPushAgent.register(new IUmengRegisterCallback() {
+            @Override
+            public void onSuccess(String token) {
+                Y.e("友盟连接成功获取Token是  " + token);
+            }
+
+            @Override
+            public void onFailure(String s, String s1) {
+                Y.e("友盟连接失败 " + s + "   " + s1);
+            }
+        });
+    }
+
     private void initTuya() {//涂鸦智能家居
         TuyaHomeSdk.init(this);
+        TuyaHomeSdk.setDebugMode(true);
     }
 
     private void initRongYun() {
-// 初始化. 建议在 Application 中进行初始化.
+        // 初始化. 建议在 Application 中进行初始化.
         String appKey = "cpj2xarlct6en";
         RongIM.init(context, appKey);
         RongIM.registerMessageType(MyMessage.class);

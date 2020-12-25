@@ -1,5 +1,6 @@
 package com.smarthome.magic.adapter;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -39,7 +40,12 @@ public class ZhiNengDeviceListAdapter extends BaseQuickAdapter<ZhiNengHomeBean.D
                 || item.getDevice_type().equals("14") || item.getDevice_type().equals("15")) {
             helper.getView(R.id.iv_switch).setVisibility(View.INVISIBLE);
         } else {
-            helper.getView(R.id.iv_switch).setVisibility(View.VISIBLE);
+            String ty_device_ccid = item.getTy_device_ccid();
+            if (TextUtils.isEmpty(ty_device_ccid)){
+                helper.getView(R.id.iv_switch).setVisibility(View.VISIBLE);
+            }else {
+                helper.getView(R.id.iv_switch).setVisibility(View.INVISIBLE);
+            }
         }
 
         if (item.getWork_state().equals("1")) {

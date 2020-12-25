@@ -26,6 +26,7 @@ import com.smarthome.magic.adapter.ZhiNengRoomManageAdapter;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
@@ -142,7 +143,7 @@ public class ZhiNengRoomManageActivity extends BaseActivity implements View.OnCl
                         @Override
                         public void clickRight() {
                             if (member_type.equals("1")) {
-                                deviceTransfer(dataBean.getRoom_id());
+                                deviceTransfer(dataBean.getRoom_id(), dataBean.getRoom_name());
                             } else {
                                 Toast.makeText(context, "操作失败，需要管理员身份", Toast.LENGTH_SHORT).show();
                             }
@@ -266,7 +267,7 @@ public class ZhiNengRoomManageActivity extends BaseActivity implements View.OnCl
     /**
      * 设备转移
      */
-    private void deviceTransfer(String room_id) {
+    private void deviceTransfer(String room_id, String room_name) {
         Map<String, String> map = new HashMap<>();
         map.put("code", "16025");
         map.put("key", Urls.key);
@@ -284,6 +285,11 @@ public class ZhiNengRoomManageActivity extends BaseActivity implements View.OnCl
                     @Override
                     public void onSuccess(final Response<AppResponse<ZhiNengFamilyEditBean>> response) {
                         if (response.body().msg.equals("ok")) {
+                            Notice notice = new Notice();
+                            notice.type = ConstanceValue.MSG_DEVICE_ROOM_NAME_CHANGE;
+                            notice.content = room_name;
+                            RxBus.getDefault().sendRx(notice);
+
                             MyCarCaoZuoDialog_Success dialog_success = new MyCarCaoZuoDialog_Success(ZhiNengRoomManageActivity.this,
                                     "成功", "成功将设备移入该房间", new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
                                 @Override

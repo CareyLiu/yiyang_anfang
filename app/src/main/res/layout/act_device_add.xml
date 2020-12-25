@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
 
-    <com.smarthome.magic.activity.tuya_camera.add.adapter.MyViewPager
+    <com.smarthome.magic.activity.tuya_device.add.adapter.MyViewPager
         android:id="@+id/vpg"
         android:layout_width="match_parent"
         android:layout_height="0dp"

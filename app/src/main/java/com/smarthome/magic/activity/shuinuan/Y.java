@@ -16,6 +16,10 @@ import com.smarthome.magic.config.MyApplication;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * 开发工具类
@@ -292,5 +296,28 @@ public class Y {
         if (imm.isActive()) {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    /**
+     * 获取日期
+     */
+    public static Date getData(String date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        try {
+            Date parse = format.parse(date);
+            return parse;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return new Date();
+        }
+    }
+
+    /**
+     * 获取日期精确到秒
+     */
+    public static String getDataS(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        format.setTimeZone(TimeZone.getTimeZone("GMT+08"));
+        return format.format(date);
     }
 }

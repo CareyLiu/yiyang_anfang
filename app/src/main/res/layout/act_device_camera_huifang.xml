@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -35,29 +36,17 @@
             android:src="@mipmap/tuya_shexiangtou_icon_quanping" />
     </RelativeLayout>
 
-    <LinearLayout
+    <com.tuya.smart.android.camera.timeline.TuyaTimelineView
+        android:id="@+id/tuya_time_line"
         android:layout_width="match_parent"
-        android:layout_height="104pt"
-        android:orientation="horizontal">
+        android:layout_height="60dp"
+        app:bottomTextMargin="5dp"
+        app:bubbleColor="@color/white"
+        app:bubbleTextColor="@color/black"
+        app:landscapeBgColor="@color/black"
+        app:linesColor="@color/white"
+        app:portraitBgColor="@color/black"
+        app:timeScaleColor="@color/white"
+        app:topTextMargin="10dp"></com.tuya.smart.android.camera.timeline.TuyaTimelineView>
 
-
-        <RelativeLayout
-            android:id="@+id/rl_play"
-            android:layout_width="104pt"
-            android:layout_height="match_parent"
-            android:background="@color/black">
-
-            <ImageView
-                android:id="@+id/iv_play"
-                android:layout_width="46pt"
-                android:layout_height="46pt" />
-
-
-        </RelativeLayout>
-
-
-        <com.tuya.smart.android.camera.timeline.TuyaTimelineView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
 </LinearLayout>

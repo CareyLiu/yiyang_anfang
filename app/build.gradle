@@ -25,12 +25,12 @@ android {
         applicationId "com.smarthome.magic"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 34
-        versionName "1.8.9"
+        versionCode 35
+        versionName "1.9.0"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         ndk {
-            abiFilters "x86_64", "armeabi", "armeabi-v7a", "arm64-v8a", "x86"
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86"
         }
 
 
@@ -323,7 +323,7 @@ dependencies {
     implementation 'com.bulong.rudeness:rudeness:latest.release@aar'
 
     //涂鸦sdk
-    implementation 'com.tuya.smart:tuyasmart:3.19.0-beta1'
+    implementation 'com.tuya.smart:tuyasmart:3.20.0'
     //涂鸦摄像头
     implementation 'com.tuya.smart:tuyasmart-ipc-camera-middleware:3.20.0'
     implementation 'com.tuya.smart:tuyasmart-ipc-camera-v2:3.20.0'
@@ -334,5 +334,8 @@ dependencies {
     implementation 'com.tuya.smart:tuyasmart-ipc-camera-message:3.13.0r128'
     implementation 'com.tuya.smart:tuyasmart-ipc-devicecontrol:3.17.0r139'
     implementation 'com.tuya.smart:tuyasmart-ipc-camera-timeline:1.0.0'
-
+    implementation project(path: ':push')
+    implementation files('libs\\umeng-common-9.3.3.jar')
+    implementation files('libs\\umeng-asms-armeabi-v1.1.4.aar')
+    implementation files('libs\\aranger-1.0.6.jar')
 }

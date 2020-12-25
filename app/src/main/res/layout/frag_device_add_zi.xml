@@ -52,7 +52,6 @@
             android:layout_marginTop="313pt"
             android:src="@mipmap/tuya_add_pic_circle" />
 
-
         <TextView
             android:id="@+id/bt_xiugai"
             android:layout_width="359pt"
@@ -60,10 +59,24 @@
             android:layout_below="@+id/iv_search"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="121pt"
-            android:background="@drawable/bg_wihte_line_main_radius48"
+            android:background="@drawable/bg_wihte_line_main_radius45"
             android:gravity="center"
             android:text="修改配置Wi-Fi"
             android:textColor="@color/color_main"
+            android:textSize="33pt"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/bt_chongxinsousuo"
+            android:layout_width="359pt"
+            android:layout_height="96pt"
+            android:layout_below="@+id/bt_xiugai"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20pt"
+            android:background="@drawable/bt_radius45_s"
+            android:gravity="center"
+            android:text="重新搜索"
+            android:textColor="@color/white"
             android:textSize="33pt"
             android:textStyle="bold" />
 

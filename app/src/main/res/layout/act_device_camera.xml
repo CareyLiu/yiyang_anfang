@@ -29,52 +29,58 @@
                 <!--                android:background="@color/black" />-->
             </FrameLayout>
 
+            <RelativeLayout
+                android:id="@+id/rl_mianban"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
 
-            <ImageView
-                android:id="@+id/iv_switch_shengyin"
-                android:layout_width="54pt"
-                android:layout_height="54pt"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="23pt"
-                android:layout_marginBottom="36pt"
-                android:src="@mipmap/tuya_shexiangtou_icon_jingyin" />
+                <ImageView
+                    android:id="@+id/iv_switch_shengyin"
+                    android:layout_width="54pt"
+                    android:layout_height="54pt"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="23pt"
+                    android:layout_marginBottom="36pt"
+                    android:src="@mipmap/tuya_shexiangtou_icon_jingyin" />
 
-            <ImageView
-                android:id="@+id/iv_switch_quanping"
-                android:layout_width="54pt"
-                android:layout_height="54pt"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginRight="23pt"
-                android:layout_marginBottom="36pt"
-                android:src="@mipmap/tuya_shexiangtou_icon_quanping" />
+                <ImageView
+                    android:id="@+id/iv_switch_quanping"
+                    android:layout_width="54pt"
+                    android:layout_height="54pt"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="23pt"
+                    android:layout_marginBottom="36pt"
+                    android:src="@mipmap/tuya_shexiangtou_icon_quanping" />
 
-            <TextView
-                android:id="@+id/tv_switch_qingxidu"
-                android:layout_width="120pt"
-                android:layout_height="54pt"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="23pt"
-                android:layout_marginBottom="36pt"
-                android:layout_toRightOf="@id/iv_switch_shengyin"
-                android:background="@drawable/bg_black_radius_45_05"
-                android:gravity="center"
-                android:text="高清"
-                android:textColor="@color/white"
-                android:textSize="27pt"
-                android:visibility="visible" />
+                <TextView
+                    android:id="@+id/tv_switch_qingxidu"
+                    android:layout_width="120pt"
+                    android:layout_height="54pt"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="23pt"
+                    android:layout_marginBottom="36pt"
+                    android:layout_toRightOf="@id/iv_switch_shengyin"
+                    android:background="@drawable/bg_black_radius_45_05"
+                    android:gravity="center"
+                    android:text="高清"
+                    android:textColor="@color/white"
+                    android:textSize="27pt"
+                    android:visibility="visible" />
 
-            <TextView
-                android:id="@+id/tv_xinhao"
-                android:layout_width="150pt"
-                android:layout_height="61pt"
-                android:layout_alignParentRight="true"
-                android:layout_marginHorizontal="14pt"
-                android:layout_marginTop="18pt"
-                android:background="@drawable/bg_black_radius_15_05"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="23pt" />
+                <TextView
+                    android:id="@+id/tv_xinhao"
+                    android:layout_width="150pt"
+                    android:layout_height="61pt"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginHorizontal="14pt"
+                    android:layout_marginTop="18pt"
+                    android:background="@drawable/bg_black_radius_15_05"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="23pt" />
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/bt_chonglian"
@@ -82,7 +88,22 @@
                 android:layout_height="80pt"
                 android:layout_centerInParent="true"
                 android:background="@drawable/bg_black_radius_15_05"
+                android:gravity="center"
                 android:text="重连"
+                android:textColor="@color/white"
+                android:textSize="40pt"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_yinsimoshi"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/black"
+                android:gravity="center"
+                android:text="隐私模式开启中"
+                android:textColor="@color/white"
+                android:textSize="40pt"
+                android:textStyle="bold"
                 android:visibility="gone" />
         </RelativeLayout>
 
@@ -95,7 +116,7 @@
                 android:id="@+id/rv_kongzhi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="104pt" />
+                android:layout_marginTop="52dp" />
 
             <LinearLayout
                 android:id="@+id/ll_fangxiang"
@@ -107,12 +128,12 @@
                 <RelativeLayout
                     android:id="@+id/rl_back"
                     android:layout_width="match_parent"
-                    android:layout_height="104pt"
+                    android:layout_height="52dp"
                     android:background="@color/white">
 
                     <ImageView
-                        android:layout_width="61pt"
-                        android:layout_height="61pt"
+                        android:layout_width="31dp"
+                        android:layout_height="31dp"
                         android:layout_centerInParent="true"
                         android:src="@mipmap/tuya_shexiangtou_icon_shouqi" />
                 </RelativeLayout>
@@ -122,7 +143,6 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:visibility="visible">
-
 
                     <RelativeLayout
                         android:layout_width="372pt"

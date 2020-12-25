@@ -49,6 +49,9 @@ import com.tuya.smart.android.user.api.ILoginCallback;
 import com.tuya.smart.android.user.api.IUidLoginCallback;
 import com.tuya.smart.android.user.bean.User;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.sdk.api.IResultCallback;
+import com.umeng.message.PushAgent;
+import com.umeng.message.UTrack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -365,11 +368,32 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onSuccess(User user) {
                 loginXiayibu();
+                loginYoumeng(phone);
             }
 
             @Override
             public void onError(String code, String error) {
-                Y.t("登录失败:"+error);
+                Y.t("登录失败:" + error);
+            }
+        });
+    }
+
+    private void loginYoumeng(String phone) {
+        PushAgent.getInstance(this).setAlias(phone, "TUYA_SMART", new UTrack.ICallBack() {
+            @Override
+            public void onMessage(boolean isSuccess, String message) {
+                Y.e("友盟设置别名成功了么 " + isSuccess + "   " + message);
+                TuyaHomeSdk.getPushInstance().registerDevice(phone, "umeng", new IResultCallback() {
+                    @Override
+                    public void onError(String code, String error) {
+                        Y.e("涂鸦设置别名失败了 " + code + "   " + error);
+                    }
+
+                    @Override
+                    public void onSuccess() {
+                        Y.e("涂鸦设置别名成功了  ");
+                    }
+                });
             }
         });
     }

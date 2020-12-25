@@ -136,7 +136,7 @@ public interface ConstanceValue {
     int MSG_DEVICE_STATUSCHANGED = 0x10097;//设备上下线回调
     int MSG_DEVICE_NETWORKSTATUSCHANGED = 0x10098;//网络状态发生变动时的回调
     int MSG_DEVICE_DEVINFOUPDATE = 0x10099;//设备信息更新回调
-    int MSG_CAMERA_FAIL = 0x100100;//摄像机通知失败
-
-
+    int MSG_CAMERA_FAIL = 0x10100;//摄像机通知失败
+    int MSG_DEVICE_ROOM_NAME_CHANGE = 0x10101;//摄像机名字改变
+    int MSG_DEVICE_DELETE = 0x10102;//移除设备
 }

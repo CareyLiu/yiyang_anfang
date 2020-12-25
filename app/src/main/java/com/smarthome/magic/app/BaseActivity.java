@@ -16,6 +16,7 @@ import com.smarthome.magic.basicmvp.BasicModel;
 import com.smarthome.magic.basicmvp.BasicPresenter;
 import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.dialog.LordingDialog;
+import com.umeng.message.PushAgent;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -70,8 +71,6 @@ public abstract class BaseActivity<T extends BasicPresenter, E extends BasicMode
     }
 
 
-
-
     @Override
     public int getContentViewResId() {
         return R.layout.basic_layout;
@@ -108,6 +107,8 @@ public abstract class BaseActivity<T extends BasicPresenter, E extends BasicMode
         ButterKnife.bind(this);
         AppManager.getAppManager().addActivity(this);
         _subscriptions = RxUtils.getNewCompositeSubIfUnsubscribed(_subscriptions);
+
+        PushAgent.getInstance(this).onAppStart();//友盟推送
     }
 
     @Override
@@ -176,27 +177,27 @@ public abstract class BaseActivity<T extends BasicPresenter, E extends BasicMode
 
 
     /**
-     *        Map<String, String> map = new HashMap<>();
-     *                 map.put("code", "04154");
-     *                 map.put("key", Urls.key);
-     *                 map.put("token", UserManager.getManager(DingDanShenQingTuikuanActivity.this).getAppToken());
-     *                 map.put("shop_form_id", shop_form_id);
-     *                 map.put("refund_type", refund_type);
-     *                 map.put("refund_cause", refund_cause);
-     *                 map.put("refund_phone", refund_phone);
+     * Map<String, String> map = new HashMap<>();
+     * map.put("code", "04154");
+     * map.put("key", Urls.key);
+     * map.put("token", UserManager.getManager(DingDanShenQingTuikuanActivity.this).getAppToken());
+     * map.put("shop_form_id", shop_form_id);
+     * map.put("refund_type", refund_type);
+     * map.put("refund_cause", refund_cause);
+     * map.put("refund_phone", refund_phone);
+     * <p>
+     * Gson gson = new Gson();
+     * Log.e("map_data", gson.toJson(map));
+     * OkGo.<AppResponse<TaoKeDetailList.DataBean>>post(TAOKELIST)
+     * .tag(this)//
+     * .upJson(gson.toJson(map))
+     * .execute(new JsonCallback<AppResponse<TaoKeDetailList.DataBean>>() {
      *
-     *                 Gson gson = new Gson();
-     *                 Log.e("map_data", gson.toJson(map));
-     *                 OkGo.<AppResponse<TaoKeDetailList.DataBean>>post(TAOKELIST)
-     *                         .tag(this)//
-     *                         .upJson(gson.toJson(map))
-     *                         .execute(new JsonCallback<AppResponse<TaoKeDetailList.DataBean>>() {
-     *                             @Override
-     *                             public void onSuccess(Response<AppResponse<TaoKeDetailList.DataBean>> response) {
-     *                                 // Log.i("response_data", new Gson().toJson(response.body()));
-     *
-     *                             }
-     *                         });
+     * @Override public void onSuccess(Response<AppResponse<TaoKeDetailList.DataBean>> response) {
+     * // Log.i("response_data", new Gson().toJson(response.body()));
+     * <p>
+     * }
+     * });
      */
 
 

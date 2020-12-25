@@ -3,6 +3,8 @@ package com.smarthome.magic.activity.zhinengjiaju.function;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -32,6 +34,7 @@ import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
@@ -46,6 +49,7 @@ import com.smarthome.magic.model.MenCiListModel;
 import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.mqtt_zhiling.ZnjjMqttMingLing;
 import com.smarthome.magic.util.DoMqttValue;
+import com.smarthome.magic.util.SoundPoolUtils;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
@@ -59,6 +63,7 @@ import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
+import static com.smarthome.magic.config.MyApplication.CAR_CTROL;
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
 //智能家居 门磁
@@ -85,10 +90,13 @@ public class SosActivity extends BaseActivity {
     private String deviceCCid = "";
     LordingDialog lordingDialog;
     private ImageView ivSos;
+    SosThread sosThread;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         lordingDialog = new LordingDialog(mContext);
         PreferenceHelper.getInstance(mContext).putString(App.CHOOSE_KONGZHI_XIANGMU, DoMqttValue.ZHINENGJIAJU);
         srLSmart.setOnRefreshListener(new OnRefreshListener() {
@@ -164,10 +172,10 @@ public class SosActivity extends BaseActivity {
 
                     if (zhuangZhiId.equals(deviceCCid)) {
                         if (kaiGuanDengZhuangTai.equals("2")) {//门磁开
-                            viewZhongJian.setVisibility(View.VISIBLE);
-                            ivSos.setBackgroundResource(R.mipmap.tuya_sos_pic_normal);
-                        } else if (kaiGuanDengZhuangTai.equals("1")) {//门磁关
-                            ivSos.setBackgroundResource(R.mipmap.tuya_sos_pic_no);
+
+                            sosThread = new SosThread();
+                            sosThread.start();
+
                         }
                     }
 
@@ -202,6 +210,22 @@ public class SosActivity extends BaseActivity {
 
 
     }
+
+    public int BAOJING = 0X11;
+    public int BUBAOJING = 0X12;
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == BAOJING) {
+                ivSos.setBackgroundResource(R.mipmap.tuya_sos_pic_no);
+                SoundPoolUtils.soundPool(mContext, R.raw.baojingyin_1);
+            } else if (msg.what == BUBAOJING) {
+                ivSos.setBackgroundResource(R.mipmap.tuya_sos_pic_normal);
+            }
+        }
+    };
+
 
     private class N9Thread extends Thread {
         boolean flag = true;
@@ -295,6 +319,40 @@ public class SosActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
+    private class SosThread extends Thread {
+        private int i = 0;
+
+        public void run() {
+            while (i != 4) {
+                try {
+                    if (i == 0) {
+                        Message message = new Message();
+                        message.what = BAOJING;
+                        handler.sendMessage(message);
+                    } else if (i == 1) {
+                        Message message = new Message();
+                        message.what = BUBAOJING;
+                        handler.sendMessage(message);
+                    } else if (i == 2) {
+                        Message message = new Message();
+                        message.what = BAOJING;
+                        handler.sendMessage(message);
+                    } else if (i == 3) {
+                        Message message = new Message();
+                        message.what = BUBAOJING;
+                        handler.sendMessage(message);
+                    }
+                    i = i + 1;
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    break;
+
+                }
+            }
+        }
+    }
+
     @Override
     protected void initToolbar() {
         super.initToolbar();
@@ -360,11 +418,8 @@ public class SosActivity extends BaseActivity {
                             return;
                         }
 
-                        if (dataBean.getWarn_state().equals("1")) {//开
-                            ivSos.setBackgroundResource(R.mipmap.tuya_sos_pic_normal);
-                        } else if (dataBean.getWarn_state().equals("2")) {//关
-                            ivSos.setBackgroundResource(R.mipmap.tuya_sos_pic_no);
-                        }
+                        ivSos.setBackgroundResource(R.mipmap.tuya_sos_pic_normal);
+
                         tvJiaTingName.setText(dataBean.getFamily_name());
                         tvLeiXingName.setText(dataBean.getDevice_name());
                         tvMingChengName.setText(dataBean.getDevice_type_name());
@@ -517,6 +572,9 @@ public class SosActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (sosThread != null) {
+            sosThread.interrupt();
+        }
         znjjMqttMingLing.unSubscribeShiShiXinXi(new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
@@ -541,4 +599,6 @@ public class SosActivity extends BaseActivity {
             }
         });
     }
+
+
 }

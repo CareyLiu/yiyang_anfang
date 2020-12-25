@@ -3,6 +3,8 @@ package com.smarthome.magic.activity.zhinengjiaju.function;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -42,6 +44,7 @@ import com.smarthome.magic.model.AlarmListBean;
 import com.smarthome.magic.model.MenCiListModel;
 import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.util.DoMqttValue;
+import com.smarthome.magic.util.SoundPoolUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -408,5 +411,42 @@ public class YanGanActivity extends BaseActivity {
 
                 });
     }
+
+    public int BAOJING = 0X11;
+    public int BUBAOJING = 0X12;
+//    private class SosThread extends Thread {
+//        private int i = 0;
+//
+//        public void run() {
+//            while (i != 4) {
+//                try {
+//                    if (i == 0) {
+//                        Message message = new Message();
+//                        message.what = BAOJING;
+//                        handler.sendMessage(message);
+//                    } else if (i == 1) {
+//                        Message message = new Message();
+//                        message.what = BUBAOJING;
+//                        handler.sendMessage(message);
+//                    } else if (i == 2) {
+//                        Message message = new Message();
+//                        message.what = BAOJING;
+//                        handler.sendMessage(message);
+//                    } else if (i == 3) {
+//                        Message message = new Message();
+//                        message.what = BUBAOJING;
+//                        handler.sendMessage(message);
+//                    }
+//                    i = i + 1;
+//                    Thread.sleep(1000);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    break;
+//
+//                }
+//            }
+//        }
+//    }
+
 
 }

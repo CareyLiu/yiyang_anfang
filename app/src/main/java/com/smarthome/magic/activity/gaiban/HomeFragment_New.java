@@ -561,8 +561,8 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
             @Override
             public void onItemClick(View view, int position) {
 
-                ZiJianShopMallDetailsActivity.actionStart(getActivity(), remenListBean.get(position).getShop_product_id(), remenListBean.get(position).getWares_id());
-
+               // ZiJianShopMallDetailsActivity.actionStart(getActivity(), remenListBean.get(position).getShop_product_id(), remenListBean.get(position).getWares_id());
+                TuanGouShangJiaListActivity.actionStart(getActivity(), "7");
                 // startActivity(new Intent(getActivity(), GoosDetailsActivity.class)
                 //       .putExtra("shop_product_id", hotList.get(position).getShop_product_id())
                 //     .putExtra("wares_id", hotList.get(position).getWares_id()));
@@ -723,7 +723,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                             bannerXiuPeiChang.setOnBannerListener(new OnBannerListener() {
                                 @Override
                                 public void OnBannerClick(int position) {
-                                    XiuPeiChangHomeActivity.actionStart(getActivity());
+                                    TuanGouShangJiaListActivity.actionStart(getActivity(), "7");
                                 }
                             });
                         }

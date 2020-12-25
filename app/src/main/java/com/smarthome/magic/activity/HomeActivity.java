@@ -122,6 +122,8 @@ public class HomeActivity extends BaseActivity {
                     String message = (String) notice.content;
                     Gson gson = new Gson();
                     alarmClass = gson.fromJson(message.toString(), AlarmClass.class);
+
+
                     Log.i("alarmClass", alarmClass.changjia_name + alarmClass.sell_phone);
 //
 //                    if (player != null) {
@@ -131,44 +133,78 @@ public class HomeActivity extends BaseActivity {
 //                        player = null;
 //                    }
 
+                    if (alarmClass.type.equals("1")) {
+                        switch (alarmClass.sound) {
 
-                    switch (alarmClass.sound) {
+                            case "chSound1.mp3":
+                                // SoundPoolUtils.soundPool(mContext,R.raw.ch_sound1);
+                                playMusic(R.raw.ch_sound1);
+                                break;
+                            case "chSound2.mp3":
+                                playMusic(R.raw.ch_sound2);
+                                break;
+                            case "chSound3.mp3":
+                                playMusic(R.raw.ch_sound3);
+                                break;
+                            case "chSound4.mp3":
+                                playMusic(R.raw.ch_sound4);
+                                break;
+                            case "chSound5.mp3":
+                                playMusic(R.raw.ch_sound5);
+                                break;
+                            case "chSound6.mp3":
+                                playMusic(R.raw.ch_sound6);
+                                break;
+                            case "chSound8.mp3":
+                                playMusic(R.raw.ch_sound8);
+                                break;
+                            case "chSound9.mp3":
+                                playMusic(R.raw.ch_sound9);
+                                break;
+                            case "chSound10.mp3":
+                                playMusic(R.raw.ch_sound10);
+                                break;
+                            case "chSound11.mp3":
+                                playMusic(R.raw.ch_sound11);
+                                break;
+                            case "chSound18.mp3":
+                                playMusic(R.raw.ch_sound18);
+                                break;
+                        }
+                    } else if (alarmClass.type.equals("5")) {
+                        if (alarmClass.code.equals("jyj_0006")) {
+                            tishiDialog = new TishiDialog(mContext, 1, new TishiDialog.TishiDialogListener() {
+                                @Override
+                                public void onClickCancel(View v, TishiDialog dialog) {
+                                }
 
-                        case "chSound1.mp3":
-                            // SoundPoolUtils.soundPool(mContext,R.raw.ch_sound1);
-                            playMusic(R.raw.ch_sound1);
-                            break;
-                        case "chSound2.mp3":
-                            playMusic(R.raw.ch_sound2);
-                            break;
-                        case "chSound3.mp3":
-                            playMusic(R.raw.ch_sound3);
-                            break;
-                        case "chSound4.mp3":
-                            playMusic(R.raw.ch_sound4);
-                            break;
-                        case "chSound5.mp3":
-                            playMusic(R.raw.ch_sound5);
-                            break;
-                        case "chSound6.mp3":
-                            playMusic(R.raw.ch_sound6);
-                            break;
-                        case "chSound8.mp3":
-                            playMusic(R.raw.ch_sound8);
-                            break;
-                        case "chSound9.mp3":
-                            playMusic(R.raw.ch_sound9);
-                            break;
-                        case "chSound10.mp3":
-                            playMusic(R.raw.ch_sound10);
-                            break;
-                        case "chSound11.mp3":
-                            playMusic(R.raw.ch_sound11);
-                            break;
-                        case "chSound18.mp3":
-                            playMusic(R.raw.ch_sound18);
-                            break;
+                                @Override
+                                public void onClickConfirm(View v, TishiDialog dialog) {
+                                    if (alarmClass.device_type.equals("12")) {
+                                        MenCiActivity.actionStart(mContext, alarmClass.device_id);
+                                    } else if (alarmClass.device_type.equals("11")) {
+                                        YanGanActivity.actionStart(mContext, alarmClass.device_id);
+                                    } else if (alarmClass.device_type.equals("15")) {
+                                        SosActivity.actionStart(mContext, alarmClass.device_id);
+                                        SoundPoolUtils.soundPool(mContext, R.raw.baojingyin_1);
+                                    } else if (alarmClass.device_type.equals("05")) {
+                                        MenSuoActivity.actionStart(mContext, alarmClass.device_id);
+                                    } else if (alarmClass.device_type.equals("13")) {
+                                        LouShuiActivity.actionStart(mContext, alarmClass.device_id);
+                                    }
+                                }
+
+                                @Override
+                                public void onDismiss(TishiDialog dialog) {
+
+                                }
+                            });
+                            tishiDialog.setTextContent("您的家庭有新的状况，是否前去查看?");
+                            tishiDialog.show();
+
+                        }
                     }
+
                 } else if (notice.type == ConstanceValue.MSG_GOTOXIAOXI) {
                     mVp.setCurrentItem(3, false);
                 } else if (notice.type == ConstanceValue.MSG_P) {

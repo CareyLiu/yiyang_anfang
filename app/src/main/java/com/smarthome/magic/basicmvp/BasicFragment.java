@@ -29,13 +29,7 @@ import rx.subscriptions.CompositeSubscription;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
-/**
- * Author: hualw
- * Version: V1.0版本
- * Description: 通用的basefragment
- * Date: 2018/5/28
- * Email: 313312768@qq.com
- */
+
 
 public abstract class BasicFragment<T extends BasicPresenter, E extends BasicModel> extends BasicSupportFragment {
 

@@ -12,8 +12,7 @@ import android.widget.TextView;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.TuyaBaseDeviceActivity;
-import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaDeviceManager;
-import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaDeviceManagerTwo;
 import com.tuya.smart.sdk.bean.DeviceBean;
 import com.tuyasmart.camera.devicecontrol.ITuyaCameraDevice;
 import com.tuyasmart.camera.devicecontrol.TuyaCameraDeviceControlSDK;
@@ -90,7 +89,7 @@ public class CameraSetCunchuActivity extends TuyaBaseDeviceActivity implements I
 
     private void init() {
         showProgressDialog();
-        deviceBeen = TuyaDeviceManager.getDeviceManager().getDeviceBeen();
+        deviceBeen = TuyaDeviceManagerTwo.getDeviceManager().getDeviceBeen();
         mTuyaCameraDevice = TuyaCameraDeviceControlSDK.getCameraDeviceInstance(deviceBeen.getDevId());
 
         mTuyaCameraDevice.registorTuyaCameraDeviceControlCallback(DpSDStatus.ID, this);
@@ -120,9 +119,9 @@ public class CameraSetCunchuActivity extends TuyaBaseDeviceActivity implements I
             } else if (sub_action.equals(DpNotifyModel.SUB_ACTION.REQUEST_STORAGE)) {
                 String[] split = o.toString().replace("|", ",").split(",");
                 if (split.length == 3) {
-                    String s1 = TuyaDeviceManager.bytes2kb(Y.getLong(split[0]));
-                    String s2 = TuyaDeviceManager.bytes2kb(Y.getLong(split[1]));
-                    String s3 = TuyaDeviceManager.bytes2kb(Y.getLong(split[2]));
+                    String s1 = TuyaDeviceManagerTwo.bytes2kb(Y.getLong(split[0]));
+                    String s2 = TuyaDeviceManagerTwo.bytes2kb(Y.getLong(split[1]));
+                    String s3 = TuyaDeviceManagerTwo.bytes2kb(Y.getLong(split[2]));
 
                     tv_zongrongliang.setText(s1);
                     tv_yishiyong.setText(s2);

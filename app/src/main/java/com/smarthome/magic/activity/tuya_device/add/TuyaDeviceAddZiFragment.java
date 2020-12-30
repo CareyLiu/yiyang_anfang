@@ -22,6 +22,7 @@ import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.add.adapter.TuyaDeviceAdapter;
 import com.smarthome.magic.activity.tuya_device.add.model.TuyaAddDeviceModel;
 import com.smarthome.magic.activity.tuya_device.utils.OnTuyaItemClickListener;
+import com.smarthome.magic.activity.tuya_device.utils.WifiReceiver;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaHomeManager;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.ConstanceValue;
@@ -34,23 +35,34 @@ import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.ZhiNengHomeBean;
 import com.tuya.smart.android.ble.ITuyaBleOperator;
+import com.tuya.smart.android.ble.api.ITuyaBleConfigListener;
 import com.tuya.smart.android.ble.api.ScanDeviceBean;
 import com.tuya.smart.android.ble.api.ScanType;
 import com.tuya.smart.android.ble.api.TyBleScanResponse;
+import com.tuya.smart.android.blemesh.api.ITuyaBlueMeshActivatorListener;
+import com.tuya.smart.android.blemesh.api.ITuyaBlueMeshSearch;
+import com.tuya.smart.android.blemesh.api.ITuyaBlueMeshSearchListener;
+import com.tuya.smart.android.blemesh.bean.SearchDeviceBean;
+import com.tuya.smart.android.blemesh.builder.SearchBuilder;
+import com.tuya.smart.android.blemesh.builder.TuyaSigMeshActivatorBuilder;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.home.sdk.bean.ConfigProductInfoBean;
 import com.tuya.smart.home.sdk.builder.ActivatorBuilder;
 import com.tuya.smart.sdk.api.ITuyaActivator;
 import com.tuya.smart.sdk.api.ITuyaActivatorGetToken;
 import com.tuya.smart.sdk.api.ITuyaDataCallback;
 import com.tuya.smart.sdk.api.ITuyaSmartActivatorListener;
+import com.tuya.smart.sdk.api.bluemesh.ITuyaBlueMeshActivator;
 import com.tuya.smart.sdk.bean.DeviceBean;
 import com.tuya.smart.sdk.bean.ProductBean;
+import com.tuya.smart.sdk.bean.SigMeshBean;
 import com.tuya.smart.sdk.enums.ActivatorModelEnum;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -104,6 +116,8 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
     private ITuyaActivator mTuyaActivator;
     private ITuyaBleOperator bleOperator;
     private String familyId;
+    private ITuyaBlueMeshSearchListener iTuyaBlueMeshSearchListener;
+    private SigMeshBean sigMeshBean;
 
     @Override
     protected void initLogic() {
@@ -206,8 +220,13 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
         familyId = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.PEIWANG_FAMILYID, "");
 
         if (!TextUtils.isEmpty(wifiSSid) && !TextUtils.isEmpty(mima)) {
-            isSetWifi = true;
-            iv_wifi.setVisibility(View.VISIBLE);
+            if (wifiSSid.equals(WifiReceiver.WIFI_NAME)) {
+                isSetWifi = true;
+                iv_wifi.setVisibility(View.VISIBLE);
+            } else {
+                isSetWifi = false;
+                iv_wifi.setVisibility(View.GONE);
+            }
         } else {
             isSetWifi = false;
             iv_wifi.setVisibility(View.GONE);
@@ -275,6 +294,7 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                         Y.e("获取Token成功：" + token + "   账号：" + wifiSSid + "  密码：" + mima);
                         startWifiPeiwang(token);
                         startLanyaPeiwang(token);
+                        startLanyaMeshPeiwang();
                     }
 
                     @Override
@@ -285,7 +305,75 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                 });
     }
 
+    private void startLanyaMeshPeiwang() {
+        Y.e("是否执行蓝牙Mesh配网      " + isSetLanya);
+        sigMeshBean = TuyaHomeManager.getHomeManager().getSigMeshBean();
+        if (sigMeshBean != null) {
+            Y.e("执行了蓝牙Mesh配网      ");
+
+            iTuyaBlueMeshSearchListener = new ITuyaBlueMeshSearchListener() {
+                @Override
+                public void onSearched(SearchDeviceBean deviceBean) {
+                    Y.e("我扫描到了Mesh设备" + deviceBean.getMeshName() + "   " + deviceBean.getProductId() + "   " + deviceBean.getMacAdress());
+                    stopSearch();
+                    jixua(deviceBean);
+                }
+
+                @Override
+                public void onSearchFinish() {
+                    Y.e("蓝牙Mesh搜索结束了");
+                }
+            };
+            // 待配网的SigMesh设备UUID是固定的
+            UUID[] MESH_PROVISIONING_UUID = {UUID.fromString("00001827-0000-1000-8000-00805f9b34fb")};
+            SearchBuilder searchBuilder = new SearchBuilder()
+                    .setServiceUUIDs(MESH_PROVISIONING_UUID)    //SigMesh的UUID是固定值
+                    .setTimeOut(100)        //扫描时长 单位秒
+                    .setTuyaBlueMeshSearchListener(iTuyaBlueMeshSearchListener).build();
+            ITuyaBlueMeshSearch mMeshSearch = TuyaHomeSdk.getTuyaBlueMeshConfig().newTuyaBlueMeshSearch(searchBuilder);
+            //开启扫描
+            mMeshSearch.startSearch();
+        } else {
+            Y.e("缺少参数蓝牙失败");
+        }
+    }
+
+    private void jixua(SearchDeviceBean deviceBean) {
+        List<SearchDeviceBean> mSearchDeviceBeanList = new ArrayList<>();
+        mSearchDeviceBeanList.add(deviceBean);
+        TuyaSigMeshActivatorBuilder tuyaSigMeshActivatorBuilder = new TuyaSigMeshActivatorBuilder()
+                .setSearchDeviceBeans(mSearchDeviceBeanList)
+                .setSigMeshBean(sigMeshBean) // Sigmesh基本信息
+                .setTimeOut(120)  //超时时间
+                .setTuyaBlueMeshActivatorListener(new ITuyaBlueMeshActivatorListener() {
+                    @Override
+                    public void onSuccess(String mac, DeviceBean deviceBean) {
+                        Y.e("搜索设备Mesh成功了啊  " + deviceBean.getIconUrl() + "   " + deviceBean.getName());
+                        getShebei();
+                        addShebei(deviceBean);
+                        deviceBeans.add(deviceBean);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onError(String mac, String errorCode, String errorMsg) {
+                        Y.e("搜索设备蓝牙Mesh失败了  " + errorMsg + "   " + errorCode);
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                    }
+                });
+
+        ITuyaBlueMeshActivator iTuyaBlueMeshActivator = TuyaHomeSdk.getTuyaBlueMeshConfig().newSigActivator(tuyaSigMeshActivatorBuilder);
+        //开启配网
+        iTuyaBlueMeshActivator.startActivator();
+    }
+
+
     private void startLanyaPeiwang(String token) {
+        Y.e("是否执行蓝牙  " + token + "    " + isSetLanya);
         if (isSetLanya) {
             bleOperator = TuyaHomeSdk.getBleOperator();
             bleOperator.startLeScan(60000, ScanType.SINGLE, new TyBleScanResponse() {
@@ -301,7 +389,27 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
 
                     stopSearch();
 
+                    Map<String, Object> param = new HashMap<>();
+                    param.put("ssid", wifiSSid); //wifi ssid
+                    param.put("password", mima); //wifi pwd
+                    param.put("token", token); // user token
+                    TuyaHomeSdk.getBleManager().startBleConfig(homeId, bean.getUuid(), param, new ITuyaBleConfigListener() {
+                        @Override
+                        public void onSuccess(DeviceBean devResp) {
+                            Y.e("蓝牙成功添加了设备啊啊啊" + devResp.getName() + "   " + devResp.getIconUrl());
+                            getShebei();
+                            addShebei(devResp);
+                            deviceBeans.add(devResp);
+                            adapter.notifyDataSetChanged();
+                        }
 
+                        @Override
+                        public void onFail(String code, String msg, Object handle) {
+                            Y.t("获取设备失败,请重新搜索" + msg);
+                            Y.e("蓝牙配网失败了,请重新搜索" + msg);
+                            stopPeiwang();
+                        }
+                    });
                 }
             });
         }
@@ -318,8 +426,8 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                 .setListener(new ITuyaSmartActivatorListener() {
                                  @Override
                                  public void onError(String errorCode, String errorMsg) {
-                                     Y.t("获取设备失败,请重新搜索");
-                                     Y.e("获取设备失败,请重新搜索");
+                                     Y.t("获取设备失败,请重新搜索" + errorMsg);
+                                     Y.e("获取设备失败,请重新搜索" + errorMsg);
                                      stopPeiwang();
                                  }
 
@@ -408,7 +516,6 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
 
     private void stopPeiwang() {
         bt_chongxinsousuo.setVisibility(View.VISIBLE);
-
         stopAnimation();
         stopSearch();
     }
@@ -426,7 +533,6 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
 
     private void stopAnimation() {
         iv_search.clearAnimation();
-
     }
 
     @Override

@@ -187,6 +187,7 @@ public class ZhiNengFamilyManageActivity extends BaseActivity implements View.On
             @Override
             public void onSuccess(HomeBean bean) {
                 long tuyaHomeId = bean.getHomeId();
+                Y.e("创建涂鸦家庭成功了啊 " + tuyaHomeId);
                 creatFamily(name, tuyaHomeId, 0);
             }
 

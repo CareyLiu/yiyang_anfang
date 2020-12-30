@@ -22,6 +22,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.adapter.ZhiNengRoomManageAdapter;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
@@ -288,6 +289,7 @@ public class ZhiNengRoomManageActivity extends BaseActivity implements View.OnCl
                             Notice notice = new Notice();
                             notice.type = ConstanceValue.MSG_DEVICE_ROOM_NAME_CHANGE;
                             notice.content = room_name;
+                            notice.devId = device_id;
                             RxBus.getDefault().sendRx(notice);
 
                             MyCarCaoZuoDialog_Success dialog_success = new MyCarCaoZuoDialog_Success(ZhiNengRoomManageActivity.this,
@@ -308,24 +310,19 @@ public class ZhiNengRoomManageActivity extends BaseActivity implements View.OnCl
 
                     @Override
                     public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
-                        String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
-                        String[] str1 = str.split("：");
-                        if (str1.length == 3) {
-                            MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(context,
-                                    "提示", str1[2], "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
-                                @Override
-                                public void clickLeft() {
+                        MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(context,
+                                "提示", response.getException().getMessage(), "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+                            @Override
+                            public void clickLeft() {
 
-                                }
+                            }
 
-                                @Override
-                                public void clickRight() {
+                            @Override
+                            public void clickRight() {
 
-                                }
-                            });
-                            myCarCaoZuoDialog_caoZuoTIshi.show();
-                        }
+                            }
+                        });
+                        myCarCaoZuoDialog_caoZuoTIshi.show();
                     }
                 });
     }

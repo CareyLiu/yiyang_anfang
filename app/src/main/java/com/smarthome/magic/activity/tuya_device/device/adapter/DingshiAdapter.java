@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.tuya_device.utils.TuyaConfig;
 import com.tuya.smart.sdk.bean.Timer;
 
 import java.util.Iterator;
@@ -19,9 +20,11 @@ import java.util.Set;
 import androidx.annotation.Nullable;
 
 public class DingshiAdapter extends BaseQuickAdapter<Timer, BaseViewHolder> {
+    private String productId;
 
-    public DingshiAdapter(int layoutResId, @Nullable List<Timer> data) {
+    public DingshiAdapter(int layoutResId, @Nullable List<Timer> data, String productId) {
         super(layoutResId, data);
+        this.productId = productId;
     }
 
     @Override
@@ -110,6 +113,47 @@ public class DingshiAdapter extends BaseQuickAdapter<Timer, BaseViewHolder> {
     }
 
     private void jieData(String key, JSONObject jsonObject, BaseViewHolder helper) {
+        switch (productId) {
+            case TuyaConfig.PRODUCTID_CHAZUO_A:
+            case TuyaConfig.PRODUCTID_CHAZUO_B:
+            case TuyaConfig.PRODUCTID_CHAZUO_WG:
+                chazuo(key, jsonObject, helper);
+                break;
+            case TuyaConfig.PRODUCTID_SWITCH_THREE:
+                switchSan(key, jsonObject, helper);
+                break;
+        }
+    }
+
+    private void switchSan(String key, JSONObject jsonObject, BaseViewHolder helper) {
+        if (key.equals("1")) {//switch右键
+            helper.setText(R.id.tv_dps_key, "右键：");
+            Boolean kaiguan = jsonObject.getBoolean(key);
+            if (kaiguan) {
+                helper.setText(R.id.tv_dps_value, "开启");
+            } else {
+                helper.setText(R.id.tv_dps_value, "关闭");
+            }
+        } else if (key.equals("2")) {//switch中键
+            helper.setText(R.id.tv_dps_key, "中键：");
+            Boolean kaiguan = jsonObject.getBoolean(key);
+            if (kaiguan) {
+                helper.setText(R.id.tv_dps_value, "开启");
+            } else {
+                helper.setText(R.id.tv_dps_value, "关闭");
+            }
+        } else if (key.equals("3")) {//switch左键
+            helper.setText(R.id.tv_dps_key, "左键：");
+            Boolean kaiguan = jsonObject.getBoolean(key);
+            if (kaiguan) {
+                helper.setText(R.id.tv_dps_value, "开启");
+            } else {
+                helper.setText(R.id.tv_dps_value, "关闭");
+            }
+        }
+    }
+
+    private void chazuo(String key, JSONObject jsonObject, BaseViewHolder helper) {
         if (key.equals("1")) {//switch开关
             helper.setText(R.id.tv_dps_key, "开关：");
             Boolean kaiguan = jsonObject.getBoolean(key);
@@ -118,8 +162,6 @@ public class DingshiAdapter extends BaseQuickAdapter<Timer, BaseViewHolder> {
             } else {
                 helper.setText(R.id.tv_dps_value, "关闭");
             }
-        } else if (key.equals("11")) {//倒计时
-
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.smarthome.magic.activity.tuya_device.wangguan.model;
+package com.smarthome.magic.activity.tuya_device.device.model;
 
 import java.util.List;
 

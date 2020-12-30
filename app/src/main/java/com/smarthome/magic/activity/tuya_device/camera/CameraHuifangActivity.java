@@ -13,8 +13,7 @@ import com.smarthome.magic.activity.tuya_device.TuyaBaseDeviceActivity;
 import com.smarthome.magic.activity.tuya_device.camera.ceshi.TimePieceBean;
 import com.smarthome.magic.activity.tuya_device.camera.model.TuyaPlayDataModel;
 import com.smarthome.magic.activity.tuya_device.camera.model.TuyaPlayPieceModel;
-import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaDeviceManager;
-import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaDeviceManagerTwo;
 import com.tuya.smart.android.camera.timeline.OnBarMoveListener;
 import com.tuya.smart.android.camera.timeline.TimeBean;
 import com.tuya.smart.android.camera.timeline.TimelineUnitMode;
@@ -112,8 +111,8 @@ public class CameraHuifangActivity extends TuyaBaseDeviceActivity implements OnB
     }
 
     private void init() {
-        p2pType = TuyaDeviceManager.getDeviceManager().getP2pType();
-        deviceBeen = TuyaDeviceManager.getDeviceManager().getDeviceBeen();
+        p2pType = TuyaDeviceManagerTwo.getDeviceManager().getP2pType();
+        deviceBeen = TuyaDeviceManagerTwo.getDeviceManager().getDeviceBeen();
         mBackDataMonthCache = new HashMap<>();
         mBackDataDayCache = new HashMap<>();
     }

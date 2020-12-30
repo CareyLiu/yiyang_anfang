@@ -28,7 +28,7 @@ import com.smarthome.magic.activity.tuya_device.TuyaBaseDeviceActivity;
 import com.smarthome.magic.activity.tuya_device.camera.adapter.TuyaKongzhiAdapter;
 import com.smarthome.magic.activity.tuya_device.camera.model.TuyaKongzhiModel;
 import com.smarthome.magic.activity.tuya_device.utils.TuyaDialogUtils;
-import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaDeviceManager;
+import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaDeviceManagerTwo;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaHomeManager;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
@@ -171,6 +171,8 @@ public class TuyaCameraActivity extends TuyaBaseDeviceActivity implements View.O
                 }
             }
         });
+
+
     }
 
     private void set() {//移除设备
@@ -206,7 +208,7 @@ public class TuyaCameraActivity extends TuyaBaseDeviceActivity implements View.O
 
         DeviceBean haveDevice = TuyaHomeManager.getHomeManager().isHaveDevice(ty_device_ccid);
         if (haveDevice != null) {
-            TuyaDeviceManager.getDeviceManager().initDevice(haveDevice);
+            TuyaDeviceManagerTwo.getDeviceManager().initDevice(haveDevice);
             initCamera();
         } else {
             TuyaDialogUtils.t(mContext, "设备已失效!");
@@ -226,9 +228,9 @@ public class TuyaCameraActivity extends TuyaBaseDeviceActivity implements View.O
 //    }
 
     private void initCamera() {
-        p2pType = TuyaDeviceManager.getDeviceManager().getP2pType();
-        mDeviceBeen = TuyaDeviceManager.getDeviceManager().getDeviceBeen();
-        mDevice = TuyaDeviceManager.getDeviceManager().getDevice();
+        p2pType = TuyaDeviceManagerTwo.getDeviceManager().getP2pType();
+        mDeviceBeen = TuyaDeviceManagerTwo.getDeviceManager().getDeviceBeen();
+        mDevice = TuyaDeviceManagerTwo.getDeviceManager().getDevice();
         mCameraP2P = TuyaSmartCameraP2PFactory.createCameraP2P(p2pType, mDeviceBeen.getDevId());
         mVideoView = new TuyaCameraView(mContext);
         mVideoView.setViewCallback(new AbsVideoViewCallback() {
@@ -275,7 +277,7 @@ public class TuyaCameraActivity extends TuyaBaseDeviceActivity implements View.O
                         getData((String) message.content);
                     }
                 } else if (message.type == ConstanceValue.MSG_DEVICE_REMOVED) {
-                    String devId = TuyaDeviceManager.getDeviceManager().getDeviceBeen().getDevId();
+                    String devId = TuyaDeviceManagerTwo.getDeviceManager().getDeviceBeen().getDevId();
                     String ccc = message.devId;
                     if (ccc.equals(devId)) {
                         finish();
@@ -611,7 +613,7 @@ public class TuyaCameraActivity extends TuyaBaseDeviceActivity implements View.O
                 public void onSuccess(int sessionId, int requestId, String data) {
                     dismissProgressDialog();
                     getQingxidu();
-                    Map<String, Object> dps = TuyaDeviceManager.getDeviceManager().getDeviceBeen().getDps();
+                    Map<String, Object> dps = TuyaDeviceManagerTwo.getDeviceManager().getDeviceBeen().getDps();
                     isYinsi = (boolean) dps.get("105");
                     if (isYinsi) {
                         setAdapterCanClikc(false);
@@ -961,7 +963,7 @@ public class TuyaCameraActivity extends TuyaBaseDeviceActivity implements View.O
             mCameraP2P.removeOnP2PCameraListener();
             mCameraP2P.destroyP2P();
         }
-        TuyaDeviceManager.getDeviceManager().unRegisterDevListener();
+        TuyaDeviceManagerTwo.getDeviceManager().unRegisterDevListener();
     }
 
     @SuppressLint("SourceLockedOrientationActivity")

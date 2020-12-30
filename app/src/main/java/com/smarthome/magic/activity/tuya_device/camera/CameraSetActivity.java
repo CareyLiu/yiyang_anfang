@@ -22,7 +22,7 @@ import com.smarthome.magic.activity.tuya_device.dialog.TuyaBottomDialog;
 import com.smarthome.magic.activity.tuya_device.dialog.TuyaBottomDialogView;
 import com.smarthome.magic.activity.tuya_device.dialog.TuyaTishiDialog;
 import com.smarthome.magic.activity.tuya_device.utils.TuyaDialogUtils;
-import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaDeviceManager;
+import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaDeviceManagerTwo;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
@@ -93,6 +93,7 @@ public class CameraSetActivity extends TuyaBaseDeviceActivity {
     private String old_name;
     private String room_name;
     private boolean isYinsi;
+    private String tuyaDevId;
 
     /**
      * 用于其他Activty跳转到该Activity
@@ -152,8 +153,9 @@ public class CameraSetActivity extends TuyaBaseDeviceActivity {
         tv_room_name.setText(room_name);
         tv_device_name.setText(old_name);
 
-        deviceBeen = TuyaDeviceManager.getDeviceManager().getDeviceBeen();
-        device = TuyaDeviceManager.getDeviceManager().getDevice();
+        deviceBeen = TuyaDeviceManagerTwo.getDeviceManager().getDeviceBeen();
+        device = TuyaDeviceManagerTwo.getDeviceManager().getDevice();
+        tuyaDevId = deviceBeen.getDevId();
         Map<String, Object> dps = deviceBeen.getDps();
         yeshiPos = (String) dps.get("108");
         if (yeshiPos.equals("0")) {
@@ -181,12 +183,6 @@ public class CameraSetActivity extends TuyaBaseDeviceActivity {
                 if (message.type == ConstanceValue.MSG_DEVICE_DATA) {
                     if (message.devId.equals(deviceBeen.getDevId())) {
                         getData((String) message.content);
-                    }
-                } else if (message.type == ConstanceValue.MSG_DEVICE_REMOVED) {
-                    String devId = TuyaDeviceManager.getDeviceManager().getDeviceBeen().getDevId();
-                    String ccc = message.content.toString();
-                    if (ccc.equals(devId)) {
-                        finish();
                     }
                 } else if (message.type == ConstanceValue.MSG_DEVICE_STATUSCHANGED) {
 
@@ -278,21 +274,25 @@ public class CameraSetActivity extends TuyaBaseDeviceActivity {
     }
 
     private void clickYinsi() {
-        showProgressDialog();
-        Map<String, Boolean> dps = new HashMap<>();
-        dps.put("105", !isYinsi);
-        device.publishDps(TuyaDeviceManager.getDeviceManager().getJosnString(dps), new IResultCallback() {
-            @Override
-            public void onError(String code, String error) {
-                dismissProgressDialog();
-                Y.e("设置失败 " + error);
-            }
+        if (device != null) {
+            showProgressDialog();
+            Map<String, Boolean> dps = new HashMap<>();
+            dps.put("105", !isYinsi);
+            device.publishDps(TuyaDeviceManagerTwo.getDeviceManager().getJosnString(dps), new IResultCallback() {
+                @Override
+                public void onError(String code, String error) {
+                    dismissProgressDialog();
+                    Y.e("设置失败 " + error);
+                }
 
-            @Override
-            public void onSuccess() {
-                Y.e("设置成功");
-            }
-        });
+                @Override
+                public void onSuccess() {
+                    Y.e("设置成功");
+                }
+            });
+        } else {
+            Y.t("设备已失效");
+        }
     }
 
     private void clickName() {
@@ -398,21 +398,25 @@ public class CameraSetActivity extends TuyaBaseDeviceActivity {
     }
 
     private void setYeshi(int pos) {
-        showProgressDialog();
-        Map<String, String> dps = new HashMap<>();
-        dps.put("108", pos + "");
-        device.publishDps(TuyaDeviceManager.getDeviceManager().getJosnString(dps), new IResultCallback() {
-            @Override
-            public void onError(String code, String error) {
-                dismissProgressDialog();
-                Y.e("设置失败 " + error);
-            }
+        if (device != null) {
+            showProgressDialog();
+            Map<String, String> dps = new HashMap<>();
+            dps.put("108", pos + "");
+            device.publishDps(TuyaDeviceManagerTwo.getDeviceManager().getJosnString(dps), new IResultCallback() {
+                @Override
+                public void onError(String code, String error) {
+                    dismissProgressDialog();
+                    Y.e("设置失败 " + error);
+                }
 
-            @Override
-            public void onSuccess() {
-                Y.e("设置成功");
-            }
-        });
+                @Override
+                public void onSuccess() {
+                    Y.e("设置成功");
+                }
+            });
+        } else {
+            Y.t("设备已失效");
+        }
     }
 
     private void clickDelete() {
@@ -457,41 +461,45 @@ public class CameraSetActivity extends TuyaBaseDeviceActivity {
                 .execute(new JsonCallback<AppResponse<ZhiNengFamilyEditBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
-                        TuyaDeviceManager.getDeviceManager().unRegisterDevListenerTwo();
-                        device.removeDevice(new IResultCallback() {
+                        dismissProgressDialog();
+                        TuyaTishiDialog dialog = new TuyaTishiDialog(mContext, new TuyaTishiDialog.TishiDialogListener() {
                             @Override
-                            public void onError(String errorCode, String errorMsg) {
-                                dismissProgressDialog();
-                                Y.t("移除设备失败:" + errorMsg);
+                            public void onClickCancel(View v, TuyaTishiDialog dialog) {
+
                             }
 
                             @Override
-                            public void onSuccess() {
-                                dismissProgressDialog();
-                                TuyaTishiDialog dialog = new TuyaTishiDialog(mContext, new TuyaTishiDialog.TishiDialogListener() {
-                                    @Override
-                                    public void onClickCancel(View v, TuyaTishiDialog dialog) {
+                            public void onClickConfirm(View v, TuyaTishiDialog dialog) {
 
-                                    }
+                            }
 
-                                    @Override
-                                    public void onClickConfirm(View v, TuyaTishiDialog dialog) {
-
-                                    }
-
-                                    @Override
-                                    public void onDismiss(TuyaTishiDialog dialog) {
-                                        Notice notice = new Notice();
-                                        notice.type = ConstanceValue.MSG_DEVICE_DELETE;
-                                        RxBus.getDefault().sendRx(notice);
-                                        finish();
-                                    }
-                                });
-                                dialog.setTextCont("设备移除成功");
-                                dialog.setTextCancel("");
-                                dialog.show();
+                            @Override
+                            public void onDismiss(TuyaTishiDialog dialog) {
+                                Notice notice = new Notice();
+                                notice.type = ConstanceValue.MSG_DEVICE_DELETE;
+                                notice.devId = tuyaDevId;
+                                RxBus.getDefault().sendRx(notice);
+                                finish();
                             }
                         });
+                        dialog.setTextCont("设备移除成功");
+                        dialog.setTextCancel("");
+                        dialog.show();
+
+                        TuyaDeviceManagerTwo.getDeviceManager().unRegisterDevListenerTwo();
+                        if (device != null) {
+                            device.removeDevice(new IResultCallback() {
+                                @Override
+                                public void onError(String errorCode, String errorMsg) {
+                                    Y.e("移除设备失败:" + errorMsg);
+                                }
+
+                                @Override
+                                public void onSuccess() {
+                                    Y.e("涂鸦设备移除成功");
+                                }
+                            });
+                        }
                     }
 
                     @Override

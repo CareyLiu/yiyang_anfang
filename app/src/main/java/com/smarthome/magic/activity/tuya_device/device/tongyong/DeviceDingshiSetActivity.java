@@ -4,13 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.google.gson.Gson;
 import com.smarthome.magic.R;
@@ -20,18 +22,19 @@ import com.smarthome.magic.activity.tuya_device.device.model.DpsTimeModel;
 import com.smarthome.magic.activity.tuya_device.dialog.TuyaInputDialog;
 import com.smarthome.magic.activity.tuya_device.utils.TuyaConfig;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaDeviceManager;
-import com.smarthome.magic.activity.wode_page.bazinew.utils.TimeUtils;
 import com.smarthome.magic.app.ConstanceValue;
-import com.smarthome.magic.dialog.ZhiNengFamilyAddDIalog;
+import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.RxBus;
 import com.tuya.smart.android.device.builder.TuyaTimerBuilder;
 import com.tuya.smart.android.device.enums.TimerDeviceTypeEnum;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.api.IResultCallback;
+import com.tuya.smart.sdk.bean.DeviceBean;
 
-import java.text.ParseException;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -62,7 +65,9 @@ public class DeviceDingshiSetActivity extends TuyaBaseDeviceActivity {
     private TimePickerView timePicker;
 
     private String devId;
+    private String productId;
     private String category;
+
     private String dps;
     private String dpsId;
     private Object value;
@@ -127,34 +132,73 @@ public class DeviceDingshiSetActivity extends TuyaBaseDeviceActivity {
 
 
     private void init() {
-        devId = TuyaDeviceManager.getDeviceManager().getDeviceBeen().getDevId();
-        category = TuyaDeviceManager.getDeviceManager().getDeviceBeen().getProductBean().getCategory();
+        DeviceBean deviceBeen = TuyaDeviceManager.getDeviceManager().getDeviceBeen();
+        devId = deviceBeen.getDevId();
+        productId = deviceBeen.getProductId();
+        category = deviceBeen.getProductBean().getCategory();
 
         time = "00:00";
         loops = "0000000";
     }
 
     private void initPeizhi() {
-        switch (category) {
-            case TuyaConfig.CATEGORY_CAMERA:
+        switch (productId) {
+            case TuyaConfig.PRODUCTID_CAMERA_A:
+            case TuyaConfig.PRODUCTID_CAMERA_B:
                 dpsId = "119";
                 value = true;
                 break;
-            case TuyaConfig.CATEGORY_SWITCH:
-                dpsId = "1";
-                value = true;
+            case TuyaConfig.PRODUCTID_CHAZUO_A:
+            case TuyaConfig.PRODUCTID_CHAZUO_B:
+            case TuyaConfig.PRODUCTID_CHAZUO_WG:
+                setChazuo("开启");
                 break;
+            case TuyaConfig.PRODUCTID_SWITCH_THREE:
+                setSwitch("右键", "开启");
+                break;
+
         }
     }
 
+    private void setSwitch(String kongzhiName, String kongzhi) {
+        if (kongzhiName.equals("右键")) {
+            dpsId = "1";
+        } else if (kongzhiName.equals("中键")) {
+            dpsId = "2";
+        } else if (kongzhiName.equals("左键")) {
+            dpsId = "3";
+        }
+
+        if (kongzhi.equals("开启")) {
+            value = true;
+        } else {
+            value = false;
+        }
+
+        tv_dps_key.setText("开关");
+        tv_dps_value.setText(kongzhiName + ":" + kongzhi);
+    }
+
+
+    private void setChazuo(String kongzhi) {
+        dpsId = "1";
+        if (kongzhi.equals("开启")) {
+            value = true;
+        } else {
+            value = false;
+        }
+
+        tv_dps_key.setText("开关");
+        tv_dps_value.setText(kongzhi);
+    }
+
     private void addDingshi() {
+        showProgressDialog();
         Map<String, Object> map = new HashMap<>();
         map.put(dpsId, value);
         DpsTimeModel model = new DpsTimeModel(map, time);
         dps = new Gson().toJson(model);
-
         String beizhu = tv_beizhu.getText().toString();
-
         Y.e("设置的dps是多少   " + dps + "    " + loops + "  " + beizhu);
         TuyaTimerBuilder builder = new TuyaTimerBuilder.Builder()
                 .taskName("")
@@ -169,11 +213,17 @@ public class DeviceDingshiSetActivity extends TuyaBaseDeviceActivity {
         TuyaHomeSdk.getTimerInstance().addTimer(builder, new IResultCallback() {
             @Override
             public void onSuccess() {
+                dismissProgressDialog();
                 Y.e("设置成功了啊");
+                Notice notice = new Notice();
+                notice.type = ConstanceValue.MSG_DEVICE_DINGSHI;
+                RxBus.getDefault().sendRx(notice);
+                finish();
             }
 
             @Override
             public void onError(String errorCode, String errorMsg) {
+                dismissProgressDialog();
                 Y.t("添加定时失败:" + errorMsg);
             }
         });
@@ -191,8 +241,63 @@ public class DeviceDingshiSetActivity extends TuyaBaseDeviceActivity {
                 clickBeizhu();
                 break;
             case R.id.ll_dps_kongzhi:
+                clickKongzhi();
                 break;
         }
+    }
+
+    private void clickKongzhi() {
+        Y.e("我执行了么  " + productId);
+        switch (productId) {
+            case TuyaConfig.PRODUCTID_CAMERA_A:
+            case TuyaConfig.PRODUCTID_CAMERA_B:
+
+                break;
+            case TuyaConfig.PRODUCTID_CHAZUO_A:
+            case TuyaConfig.PRODUCTID_CHAZUO_B:
+            case TuyaConfig.PRODUCTID_CHAZUO_WG:
+                kongzhiChazuo();
+                break;
+            case TuyaConfig.PRODUCTID_SWITCH_THREE:
+                clickSwitchSan();
+                break;
+        }
+    }
+
+    private void clickSwitchSan() {
+        List<String> kongzhiName = new ArrayList<>();
+        kongzhiName.add("右键");
+        kongzhiName.add("中键");
+        kongzhiName.add("左键");
+
+        List<String> kongzhis = new ArrayList<>();
+        kongzhis.add("开启");
+        kongzhis.add("关闭");
+        OptionsPickerView<String> kongZhiPicker = new OptionsPickerBuilder(mContext, new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+                String kongzhiMing = kongzhiName.get(options1);
+                String kongzhi = kongzhis.get(option2);
+                setSwitch(kongzhiMing, kongzhi);
+            }
+        }).setTitleText("开关").build();
+        kongZhiPicker.setNPicker(kongzhiName, kongzhis, null);
+        kongZhiPicker.show();
+    }
+
+    private void kongzhiChazuo() {
+        List<String> kongzhis = new ArrayList<>();
+        kongzhis.add("开启");
+        kongzhis.add("关闭");
+        OptionsPickerView<String> kongZhiPicker = new OptionsPickerBuilder(mContext, new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+                String kongzhi = kongzhis.get(options1);
+                setChazuo(kongzhi);
+            }
+        }).setTitleText("开关").build();
+        kongZhiPicker.setPicker(kongzhis);
+        kongZhiPicker.show();
     }
 
     private void clickBeizhu() {
@@ -239,6 +344,7 @@ public class DeviceDingshiSetActivity extends TuyaBaseDeviceActivity {
                         time = hours + ":" + minutes;
                     }
                 }
+                tv_time.setText(time);
             }
         })
                 .setType(select)// 默认全部显示

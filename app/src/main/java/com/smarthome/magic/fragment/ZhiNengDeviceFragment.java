@@ -27,10 +27,10 @@ import com.smarthome.magic.activity.ZhiNengJiaoHuaAutoActivity;
 import com.smarthome.magic.activity.ZhiNengRoomDeviceDetailAutoActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.camera.TuyaCameraActivity;
-import com.smarthome.magic.activity.tuya_device.device.DeviceSwichiActivity;
+import com.smarthome.magic.activity.tuya_device.device.DeviceChazuoActivity;
 import com.smarthome.magic.activity.tuya_device.device.DeviceWgCzActivity;
 import com.smarthome.magic.activity.tuya_device.utils.TuyaConfig;
-import com.smarthome.magic.activity.tuya_device.wangguan.DeviceWangguanActivity;
+import com.smarthome.magic.activity.tuya_device.device.DeviceWangguanActivity;
 import com.smarthome.magic.activity.zckt.AirConditionerActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.LouShuiActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.MenCiActivity;
@@ -211,11 +211,11 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                             }
                         } else if (deviceBean.getDevice_type().equals(TuyaConfig.CATEGORY_CAMERA)) {//涂鸦摄像机
                             TuyaCameraActivity.actionStart(getActivity(), member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
-                        } else if (deviceBean.getDevice_type().equals(TuyaConfig.CATEGORY_SWITCH)) {//涂鸦插座
-                            if (deviceBean.getDevice_category().equals(TuyaConfig.PRODUCTID_SWITCH_WG)) {
+                        } else if (deviceBean.getDevice_type().equals(TuyaConfig.CATEGORY_CHAZUO)) {//涂鸦插座
+                            if (deviceBean.getDevice_category().equals(TuyaConfig.PRODUCTID_CHAZUO_WG)) {
                                 DeviceWgCzActivity.actionStart(getActivity(), member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
                             } else {
-                                DeviceSwichiActivity.actionStart(getActivity(), member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
+                                DeviceChazuoActivity.actionStart(getActivity(), member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
                             }
                         } else if (deviceBean.getDevice_type().equals(TuyaConfig.CATEGORY_WANGGUAN)) {//涂鸦网关
                             DeviceWangguanActivity.actionStart(getActivity(), member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
@@ -371,6 +371,5 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                 recyclerView.addItemDecoration(new GridAverageUIDecoration(14, 10));
             }
         }
-
     }
 }

@@ -99,6 +99,12 @@
                             android:layout_height="265pt"
                             android:src="@mipmap/menci_pic_menci_left" />
 
+                        <View
+                            android:id="@+id/view_zhongjian"
+                            android:layout_width="19dp"
+                            android:layout_height="0dp"
+                            android:visibility="gone" />
+
                         <ImageView
                             android:id="@+id/iv_menci_right"
                             android:layout_width="36pt"

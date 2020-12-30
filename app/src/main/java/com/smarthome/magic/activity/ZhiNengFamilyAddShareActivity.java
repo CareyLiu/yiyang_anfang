@@ -36,6 +36,7 @@ import com.smarthome.magic.util.TimeCount;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.bean.MemberBean;
 import com.tuya.smart.home.sdk.bean.MemberWrapperBean;
+import com.tuya.smart.sdk.api.IResultCallback;
 import com.tuya.smart.sdk.api.ITuyaDataCallback;
 
 import java.util.HashMap;
@@ -179,12 +180,13 @@ public class ZhiNengFamilyAddShareActivity extends BaseActivity implements View.
     /**
      * 绑定共享成员
      */
-    private void bindMember() {
+    private void bindMember(long memberId) {
         Map<String, String> map = new HashMap<>();
         map.put("code", "16017");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(context).getAppToken());
         map.put("user_phone", et_phone.getText().toString());
+        map.put("memberId", memberId + "");
         map.put("family_id", family_id);
         map.put("sms_id", smsId);
         map.put("sms_code", et_code.getText().toString());
@@ -213,28 +215,38 @@ public class ZhiNengFamilyAddShareActivity extends BaseActivity implements View.
 
                     @Override
                     public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        removeMember(memberId);
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
-                        String[] str1 = str.split("：");
-                        if (str1.length == 3) {
-                            MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(context,
-                                    "提示", str1[2], "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
-                                @Override
-                                public void clickLeft() {
+                        MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(context,
+                                "提示", str, "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+                            @Override
+                            public void clickLeft() {
 
-                                }
+                            }
 
-                                @Override
-                                public void clickRight() {
+                            @Override
+                            public void clickRight() {
 
-                                }
-                            });
-                            myCarCaoZuoDialog_caoZuoTIshi.show();
-                        }
+                            }
+                        });
+                        myCarCaoZuoDialog_caoZuoTIshi.show();
                     }
                 });
     }
 
+    private void removeMember(long memberId) {
+        TuyaHomeSdk.getMemberInstance().removeMember(memberId, new IResultCallback() {
+            @Override
+            public void onSuccess() {
+                Y.e("删除成功");
+            }
+
+            @Override
+            public void onError(String code, String error) {
+                Y.e("删除失败" + code + "   " + error);
+            }
+        });
+    }
 
     private void yaoqing(String phone) {
         long homeId = PreferenceHelper.getInstance(mContext).getLong(AppConfig.TUYA_HOME_ID, 0);
@@ -252,7 +264,8 @@ public class ZhiNengFamilyAddShareActivity extends BaseActivity implements View.
             @Override
             public void onSuccess(MemberBean result) {
                 Y.e("邀请成功");
-                bindMember();
+                long memberId = result.getMemberId();
+                bindMember(memberId);
             }
 
             @Override

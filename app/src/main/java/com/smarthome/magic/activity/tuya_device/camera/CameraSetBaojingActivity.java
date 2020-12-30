@@ -13,8 +13,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.TuyaBaseDeviceActivity;
 import com.smarthome.magic.activity.tuya_device.device.tongyong.DeviceDingshiActivity;
-import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaDeviceManager;
-import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaDeviceManagerTwo;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.tuya.smart.sdk.api.IResultCallback;
@@ -98,9 +97,6 @@ public class CameraSetBaojingActivity extends TuyaBaseDeviceActivity {
                     if (message.devId.equals(deviceBeen.getDevId())) {
                         getData((String) message.content);
                     }
-                } else if (message.type == ConstanceValue.MSG_DEVICE_REMOVED) {
-
-
                 } else if (message.type == ConstanceValue.MSG_DEVICE_STATUSCHANGED) {
 
 
@@ -152,8 +148,8 @@ public class CameraSetBaojingActivity extends TuyaBaseDeviceActivity {
 
 
     private void init() {
-        deviceBeen = TuyaDeviceManager.getDeviceManager().getDeviceBeen();
-        device = TuyaDeviceManager.getDeviceManager().getDevice();
+        deviceBeen = TuyaDeviceManagerTwo.getDeviceManager().getDeviceBeen();
+        device = TuyaDeviceManagerTwo.getDeviceManager().getDevice();
 
         Map<String, Object> dps = deviceBeen.getDps();
         baojing = (boolean) dps.get("134");
@@ -190,7 +186,7 @@ public class CameraSetBaojingActivity extends TuyaBaseDeviceActivity {
         showProgressDialog();
         Map<String, Boolean> dps = new HashMap<>();
         dps.put("134", !baojing);
-        device.publishDps(TuyaDeviceManager.getDeviceManager().getJosnString(dps), new IResultCallback() {
+        device.publishDps(TuyaDeviceManagerTwo.getDeviceManager().getJosnString(dps), new IResultCallback() {
             @Override
             public void onError(String code, String error) {
                 dismissProgressDialog();
@@ -208,7 +204,7 @@ public class CameraSetBaojingActivity extends TuyaBaseDeviceActivity {
         showProgressDialog();
         Map<String, Boolean> dps = new HashMap<>();
         dps.put("161", !zhuizong);
-        device.publishDps(TuyaDeviceManager.getDeviceManager().getJosnString(dps), new IResultCallback() {
+        device.publishDps(TuyaDeviceManagerTwo.getDeviceManager().getJosnString(dps), new IResultCallback() {
             @Override
             public void onError(String code, String error) {
                 dismissProgressDialog();

@@ -31,6 +31,8 @@ import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaHomeManager;
 import com.smarthome.magic.activity.wode_page.bazinew.utils.TimeUtils;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.RxBus;
+import com.tuya.smart.sdk.api.IDevListener;
 import com.tuya.smart.sdk.api.ITuyaDevice;
 import com.tuya.smart.sdk.bean.DeviceBean;
 
@@ -48,7 +50,7 @@ import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-public class DeviceSwichiActivity extends TuyaBaseDeviceActivity {
+public class DeviceChazuoActivity extends TuyaBaseDeviceActivity {
 
     @BindView(R.id.rl_back)
     RelativeLayout rl_back;
@@ -76,18 +78,19 @@ public class DeviceSwichiActivity extends TuyaBaseDeviceActivity {
 
     private String ty_device_ccid;
     private String old_name;
+    private String productId;
     private boolean isOnline;
+
     private boolean switchState;//开关状态
     private int daojishi;
 
     private TimePickerView timePicker;
-    private String productId;
 
     /**
      * 用于其他Activty跳转到该Activity
      */
     public static void actionStart(Context context, String member_type, String device_id, String ty_device_ccid, String old_name, String room_name) {
-        Intent intent = new Intent(context, DeviceSwichiActivity.class);
+        Intent intent = new Intent(context, DeviceChazuoActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("member_type", member_type);
         intent.putExtra("device_id", device_id);
@@ -99,7 +102,7 @@ public class DeviceSwichiActivity extends TuyaBaseDeviceActivity {
 
     @Override
     public int getContentViewResId() {
-        return R.layout.act_device_swich;
+        return R.layout.act_device_chazuo;
     }
 
     @Override
@@ -166,10 +169,56 @@ public class DeviceSwichiActivity extends TuyaBaseDeviceActivity {
         mDeviceBeen = TuyaDeviceManager.getDeviceManager().getDeviceBeen();
         mDevice = TuyaDeviceManager.getDeviceManager().getDevice();
         productId = mDeviceBeen.getProductId();
+        isOnline = mDeviceBeen.getIsOnline();
+
+        initDeviceListener();
 
         Map<String, Object> dps = mDeviceBeen.getDps();
         switchState = (boolean) dps.get("1");
         setSwichState();
+    }
+
+    private void initDeviceListener() {//初始化监听
+        mDevice.registerDevListener(new IDevListener() {
+            @Override
+            public void onDpUpdate(String devId, String dpStr) {
+                Y.e("Dp点数据更新啦:" + devId + " | " + dpStr);
+                Notice notice = new Notice();
+                notice.type = ConstanceValue.MSG_DEVICE_DATA;
+                notice.content = dpStr;
+                notice.devId = devId;
+                RxBus.getDefault().sendRx(notice);
+            }
+
+            @Override
+            public void onRemoved(String devId) {
+                Y.e("设备被移除了" + devId);
+                Notice notice = new Notice();
+                notice.type = ConstanceValue.MSG_DEVICE_REMOVED;
+                notice.devId = devId;
+                RxBus.getDefault().sendRx(notice);
+            }
+
+            @Override
+            public void onStatusChanged(String devId, boolean online) {
+                Y.e("设备上下线回调  " + devId + "   " + online);
+                Notice notice = new Notice();
+                notice.type = ConstanceValue.MSG_DEVICE_STATUSCHANGED;
+                notice.devId = devId;
+                notice.content = online;
+                RxBus.getDefault().sendRx(notice);
+            }
+
+            @Override
+            public void onNetworkStatusChanged(String devId, boolean status) {
+                Y.e("网络状态发生变动时的回调  " + devId + "    " + status);
+            }
+
+            @Override
+            public void onDevInfoUpdate(String devId) {
+                Y.e("设备信息更新回调  " + devId);
+            }
+        });
     }
 
     private void initHuidiao() {
@@ -177,30 +226,22 @@ public class DeviceSwichiActivity extends TuyaBaseDeviceActivity {
             @Override
             public void call(Notice message) {
                 if (message.type == ConstanceValue.MSG_DEVICE_DATA) {
-                    if (message.devId.equals(mDeviceBeen.getDevId())) {
-                        getData((String) message.content);
-                    }
-                } else if (message.type == ConstanceValue.MSG_DEVICE_REMOVED) {
-                    String devId = TuyaDeviceManager.getDeviceManager().getDeviceBeen().getDevId();
-                    String ccc = message.devId;
-                    if (ccc.equals(devId)) {
-                        TuyaDeviceManager.getDeviceManager().device_removed(DeviceSwichiActivity.this);
+                    if (message.devId.equals(ty_device_ccid)) {
+                        getData(message.content.toString());
                     }
                 } else if (message.type == ConstanceValue.MSG_DEVICE_STATUSCHANGED) {
-                    if (message.devId.equals(mDeviceBeen.getDevId())) {
+                    if (message.devId.equals(ty_device_ccid)) {
                         isOnline = (boolean) message.content;
-                        if (!isOnline) {
-                            Y.e("离线了啊啊啊啊");
-                        }
                     }
-                } else if (message.type == ConstanceValue.MSG_DEVICE_NETWORKSTATUSCHANGED) {
-
-
-                } else if (message.type == ConstanceValue.MSG_DEVICE_DEVINFOUPDATE) {
-
-
+                } else if (message.type == ConstanceValue.MSG_DEVICE_REMOVED) {
+                    if (message.devId.equals(ty_device_ccid)) {
+                        TuyaDeviceManager.getDeviceManager().device_removed(DeviceChazuoActivity.this);
+                    }
                 } else if (message.type == ConstanceValue.MSG_DEVICE_DELETE) {
-                    finish();
+                    String device_id = getIntent().getStringExtra("device_id");
+                    if (device_id.equals(message.devId)) {
+                        finish();
+                    }
                 }
             }
         }));
@@ -323,11 +364,11 @@ public class DeviceSwichiActivity extends TuyaBaseDeviceActivity {
                     int seconds = date.getSeconds();
                     int timeDingshi = minutes * 60 + seconds;
 
-                    if (TuyaConfig.PRODUCTID_SWITCH_A.equals(productId)) {
+                    if (TuyaConfig.PRODUCTID_CHAZUO_A.equals(productId)) {
                         setDp("11", timeDingshi);
-                    } else if (TuyaConfig.PRODUCTID_SWITCH_B.equals(productId)) {
+                    } else if (TuyaConfig.PRODUCTID_CHAZUO_B.equals(productId)) {
                         setDp("11", timeDingshi);
-                    } else if (TuyaConfig.PRODUCTID_SWITCH_WG.equals(productId)) {
+                    } else if (TuyaConfig.PRODUCTID_CHAZUO_WG.equals(productId)) {
                         setDp("9", timeDingshi);
                     }
                 }
@@ -342,9 +383,20 @@ public class DeviceSwichiActivity extends TuyaBaseDeviceActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (mDeviceBeen != null) {
+            TuyaDeviceManager.getDeviceManager().initDevice(mDeviceBeen);
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        TuyaDeviceManager.getDeviceManager().unRegisterDevListener();
         stopHandler();
+        if (mDevice != null) {
+            mDevice.unRegisterDevListener();
+            mDevice.onDestroy();
+        }
     }
 }

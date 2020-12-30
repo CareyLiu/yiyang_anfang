@@ -14,6 +14,7 @@ import com.smarthome.magic.app.RxBus;
 
 public class WifiReceiver extends BroadcastReceiver {
     private static final String TAG = "wifiReceiver";
+    public static String WIFI_NAME;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -29,10 +30,10 @@ public class WifiReceiver extends BroadcastReceiver {
                 WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
                 WifiInfo wifiInfo = wifiManager.getConnectionInfo();
                 //获取当前wifi名称
-                String name = wifiInfo.getSSID().replace("\"", "");
+                WIFI_NAME = wifiInfo.getSSID().replace("\"", "");
                 Notice notice = new Notice();
                 notice.type = ConstanceValue.MSG_WIFI_INFO;
-                notice.content = name;
+                notice.content = WIFI_NAME;
                 RxBus.getDefault().sendRx(notice);
             }
         }

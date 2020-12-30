@@ -16,7 +16,7 @@ import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.TuyaBaseDeviceActivity;
 import com.smarthome.magic.activity.tuya_device.dialog.TuyaBottomDialogView;
 import com.smarthome.magic.activity.tuya_device.dialog.TuyaBottomDialog;
-import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaDeviceManager;
+import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaDeviceManagerTwo;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.tuya.smart.sdk.api.IResultCallback;
@@ -194,10 +194,7 @@ public class CameraSetJichuActivity extends TuyaBaseDeviceActivity {
                     if (message.devId.equals(deviceBeen.getDevId())) {
                         getData((String) message.content);
                     }
-                } else if (message.type == ConstanceValue.MSG_DEVICE_REMOVED) {
-
-
-                } else if (message.type == ConstanceValue.MSG_DEVICE_STATUSCHANGED) {
+                }else if (message.type == ConstanceValue.MSG_DEVICE_STATUSCHANGED) {
 
 
                 } else if (message.type == ConstanceValue.MSG_DEVICE_NETWORKSTATUSCHANGED) {
@@ -259,8 +256,8 @@ public class CameraSetJichuActivity extends TuyaBaseDeviceActivity {
     }
 
     private void init() {
-        deviceBeen = TuyaDeviceManager.getDeviceManager().getDeviceBeen();
-        device = TuyaDeviceManager.getDeviceManager().getDevice();
+        deviceBeen = TuyaDeviceManagerTwo.getDeviceManager().getDeviceBeen();
+        device = TuyaDeviceManagerTwo.getDeviceManager().getDevice();
         productId = deviceBeen.getProductId();
         Map<String, Object> dps = deviceBeen.getDps();
         String s = new Gson().toJson(dps);
@@ -372,8 +369,8 @@ public class CameraSetJichuActivity extends TuyaBaseDeviceActivity {
         showProgressDialog();
         Map<String, String> dps = new HashMap<>();
         dps.put("102", fanzhuanFangshi);
-        Y.e("我是对方 " + TuyaDeviceManager.getDeviceManager().getJosnString(dps));
-        device.publishDps(TuyaDeviceManager.getDeviceManager().getJosnString(dps), new IResultCallback() {
+        Y.e("我是对方 " + TuyaDeviceManagerTwo.getDeviceManager().getJosnString(dps));
+        device.publishDps(TuyaDeviceManagerTwo.getDeviceManager().getJosnString(dps), new IResultCallback() {
             @Override
             public void onError(String code, String error) {
                 dismissProgressDialog();
@@ -416,7 +413,7 @@ public class CameraSetJichuActivity extends TuyaBaseDeviceActivity {
         showProgressDialog();
         Map<String, Boolean> dps = new HashMap<>();
         dps.put("104", !shuiyin);
-        device.publishDps(TuyaDeviceManager.getDeviceManager().getJosnString(dps), new IResultCallback() {
+        device.publishDps(TuyaDeviceManagerTwo.getDeviceManager().getJosnString(dps), new IResultCallback() {
             @Override
             public void onError(String code, String error) {
                 dismissProgressDialog();
@@ -433,7 +430,7 @@ public class CameraSetJichuActivity extends TuyaBaseDeviceActivity {
         showProgressDialog();
         Map<String, Boolean> dps = new HashMap<>();
         dps.put("103", !fanzhuan);
-        device.publishDps(TuyaDeviceManager.getDeviceManager().getJosnString(dps), new IResultCallback() {
+        device.publishDps(TuyaDeviceManagerTwo.getDeviceManager().getJosnString(dps), new IResultCallback() {
             @Override
             public void onError(String code, String error) {
                 dismissProgressDialog();

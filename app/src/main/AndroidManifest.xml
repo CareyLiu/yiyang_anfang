@@ -1257,7 +1257,7 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
             tools:ignore="LockedOrientationActivity" />
 
-        <!-- 涂鸦添摄像机 -->
+        <!-- 涂鸦摄像机 -->
         <activity
             android:name=".activity.tuya_device.camera.TuyaCameraActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|smallestScreenSize|screenSize"
@@ -1323,7 +1323,7 @@
 
         <!-- 涂鸦插座 -->
         <activity
-            android:name=".activity.tuya_device.device.DeviceSwichiActivity"
+            android:name=".activity.tuya_device.device.DeviceChazuoActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
@@ -1337,9 +1337,49 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
             tools:ignore="LockedOrientationActivity" />
 
+        <!-- 涂鸦网关插座设置 -->
+        <activity
+            android:name=".activity.tuya_device.device.DeviceWgCzSetActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦网关插座日志 -->
+        <activity
+            android:name=".activity.tuya_device.device.DeviceWgCzLogActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦蓝牙三联开关 -->
+        <activity
+            android:name=".activity.tuya_device.device.DeviceSwitchThreeActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦蓝牙二联开关 -->
+        <activity
+            android:name=".activity.tuya_device.device.DeviceSwitchTwoActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦蓝牙开关设置 -->
+        <activity
+            android:name=".activity.tuya_device.device.DeviceSwitchSetActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
         <!-- 涂鸦网关 -->
         <activity
-            android:name=".activity.tuya_device.wangguan.DeviceWangguanActivity"
+            android:name=".activity.tuya_device.device.DeviceWangguanActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
@@ -1347,7 +1387,7 @@
 
         <!-- 涂鸦网关添加子设备 -->
         <activity
-            android:name=".activity.tuya_device.wangguan.DeviceWangguanAddActivity"
+            android:name=".activity.tuya_device.add.TuyaWangguanAddActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"

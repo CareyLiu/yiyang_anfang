@@ -11,6 +11,8 @@ import com.jaeger.library.StatusBarUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.shuinuan.Y;
+import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaHomeManager;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
@@ -20,8 +22,13 @@ import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Success;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.model.ZhiNengFamilyMAnageDetailBean;
+import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.home.sdk.bean.MemberBean;
+import com.tuya.smart.home.sdk.callback.ITuyaGetMemberListCallback;
+import com.tuya.smart.sdk.api.IResultCallback;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -43,6 +50,8 @@ public class ZhiNengFamilyMemberDetailActivity extends BaseActivity implements V
     private String member_id = "";
     private String family_id = "";
     private ZhiNengFamilyMAnageDetailBean.DataBean.MemberBean memberBean;
+    private String member_phone;
+    private long tuya_memberId;
 
     @Override
     public int getContentViewResId() {
@@ -60,6 +69,30 @@ public class ZhiNengFamilyMemberDetailActivity extends BaseActivity implements V
         StatusBarUtil.setLightMode(this);
         initToolbar();
         initView();
+        initMember();
+    }
+
+    private void initMember() {
+        TuyaHomeSdk.getMemberInstance().queryMemberList(TuyaHomeManager.getHomeManager().getHomeId(), new ITuyaGetMemberListCallback() {
+            @Override
+            public void onSuccess(List<MemberBean> memberBeans) {
+                // do something
+                for (int i = 0; i < memberBeans.size(); i++) {
+                    MemberBean memberBean = memberBeans.get(i);
+                    String account = memberBean.getAccount();
+                    Y.e("账号是多少啊啊啊 " + account);
+                    if (member_phone.equals(account)) {
+                        tuya_memberId = memberBean.getMemberId();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onError(String errorCode, String error) {
+                // do something
+            }
+        });
     }
 
     private void initView() {
@@ -69,7 +102,8 @@ public class ZhiNengFamilyMemberDetailActivity extends BaseActivity implements V
         memberBean = getIntent().getParcelableExtra("member");
         member_id = memberBean.getMember_id();
         tv_name.setText(memberBean.getUser_name());
-        tv_phone.setText(memberBean.getMember_phone());
+        member_phone = memberBean.getMember_phone();
+        tv_phone.setText(member_phone);
         tv_type.setText(memberBean.getMember_type_name());
         if (member_type.equals("1")) {
             if (memberBean.getMember_type_name().equals("管理员")) {
@@ -156,7 +190,23 @@ public class ZhiNengFamilyMemberDetailActivity extends BaseActivity implements V
                             });
                             dialog_success.show();
                         }
+
+                        removeMember(tuya_memberId);
                     }
                 });
+    }
+
+    private void removeMember(long memberId) {
+        TuyaHomeSdk.getMemberInstance().removeMember(memberId, new IResultCallback() {
+            @Override
+            public void onSuccess() {
+                Y.e("删除成功");
+            }
+
+            @Override
+            public void onError(String code, String error) {
+                Y.e("删除失败" + code + "   " + error);
+            }
+        });
     }
 }

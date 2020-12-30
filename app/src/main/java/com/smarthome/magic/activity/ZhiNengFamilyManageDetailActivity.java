@@ -111,7 +111,7 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
         super.onResume();
         family_id = getIntent().getStringExtra("family_id");
         ty_family_id = getIntent().getStringExtra("ty_family_id");
-        Y.e("反舰导弹发射  " + ty_family_id);
+        Y.e("涂鸦家庭Id是多少啊  " + ty_family_id);
         if (family_id == null) {
             family_id = "";
         }
@@ -205,7 +205,7 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
 
                     @Override
                     public void clickRight() {
-                        deleteTuyaJiating();
+                        deleteFamily();
                     }
                 });
                 myCarCaoZuoDialog_caoZuoTIshi.show();
@@ -344,6 +344,7 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                             String title = "";
                             if (dataBean.getMember_type().equals("1")) {
                                 title = "删除家庭";
+                                deleteTuyaJiating();
                             } else {
                                 title = "退出家庭";
                             }
@@ -362,7 +363,29 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                             dialog_success.show();
                         }
                     }
+
+                    @Override
+                    public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        super.onError(response);
+                        Y.tError(response);
+                    }
                 });
+    }
+
+
+    private void deleteTuyaJiating() {
+        Y.e("解散的涂鸦家庭是多少啊 " + ty_family_id);
+        TuyaHomeSdk.newHomeInstance(Y.getLong(ty_family_id)).dismissHome(new IResultCallback() {
+            @Override
+            public void onSuccess() {
+                Y.e("解散涂鸦家庭成功 ");
+            }
+
+            @Override
+            public void onError(String code, String error) {
+                Y.t("解散家庭失败:" + error);
+            }
+        });
     }
 
     @Override

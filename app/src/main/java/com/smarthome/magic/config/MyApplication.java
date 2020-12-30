@@ -20,6 +20,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.multidex.MultiDexApplication;
 
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -71,6 +72,8 @@ import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
+import com.umeng.message.UmengMessageHandler;
+import com.umeng.message.entity.UMessage;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -331,6 +334,21 @@ public class MyApplication extends MultiDexApplication {
                 Y.e("友盟连接失败 " + s + "   " + s1);
             }
         });
+
+        UmengMessageHandler messageHandler = new UmengMessageHandler(){
+            @Override
+            public void dealWithCustomMessage(final Context context, final UMessage msg) {
+                new Handler(getMainLooper()).post(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        Y.e("获取到推送数据了么啊  "+msg.custom);
+                    }
+                });
+            }
+        };
+
+        mPushAgent.setMessageHandler(messageHandler);
     }
 
     private void initTuya() {//涂鸦智能家居

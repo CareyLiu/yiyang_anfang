@@ -12,6 +12,8 @@ import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.TuyaBaseDeviceActivity;
 import com.smarthome.magic.activity.tuya_device.device.adapter.DingshiAdapter;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaDeviceManager;
+import com.smarthome.magic.app.ConstanceValue;
+import com.smarthome.magic.app.Notice;
 import com.tuya.smart.android.device.enums.TimerDeviceTypeEnum;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.api.ITuyaDataCallback;
@@ -26,6 +28,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 public class DeviceDingshiActivity extends TuyaBaseDeviceActivity {
 
@@ -41,6 +45,7 @@ public class DeviceDingshiActivity extends TuyaBaseDeviceActivity {
     TextView bt_add_two;
 
     private String devId;
+    private String productId;
     private ArrayList<Timer> timerList = new ArrayList<>();
     private DingshiAdapter adapter;
 
@@ -83,18 +88,20 @@ public class DeviceDingshiActivity extends TuyaBaseDeviceActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
-        init();
+        devId = TuyaDeviceManager.getDeviceManager().getDevId();
+        productId = TuyaDeviceManager.getDeviceManager().getDeviceBeen().getProductId();
         initAdapter();
         initHuidiao();
+        getDingshi();
     }
 
-    private void init() {
-        devId = TuyaDeviceManager.getDeviceManager().getDeviceBeen().getDevId();
+    private void getDingshi() {
         showProgressDialog();
         TuyaHomeSdk.getTimerInstance().getTimerList(null, devId, TimerDeviceTypeEnum.DEVICE, new ITuyaDataCallback<TimerTask>() {
             @Override
             public void onSuccess(TimerTask timerTask) {
                 dismissProgressDialog();
+                Y.e("我成功了啊啊啊 ");
                 timerList = timerTask.getTimerList();
                 if (timerList.size() > 0) {
                     bt_add_two.setVisibility(View.VISIBLE);
@@ -119,13 +126,20 @@ public class DeviceDingshiActivity extends TuyaBaseDeviceActivity {
     }
 
     private void initAdapter() {
-        adapter = new DingshiAdapter(R.layout.item_tuya_dingshi, timerList);
+        adapter = new DingshiAdapter(R.layout.item_tuya_dingshi, timerList,productId);
         rv_content.setLayoutManager(new LinearLayoutManager(mContext));
         rv_content.setAdapter(adapter);
     }
 
     private void initHuidiao() {
-
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_DEVICE_DINGSHI) {
+                    getDingshi();
+                }
+            }
+        }));
     }
 
     @OnClick({R.id.bt_add, R.id.bt_add_two})

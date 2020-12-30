@@ -1,4 +1,4 @@
-package com.smarthome.magic.activity.tuya_device.wangguan.adapter;
+package com.smarthome.magic.activity.tuya_device.device.adapter;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -8,8 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.tuya_device.utils.TuyaConfig;
-import com.smarthome.magic.activity.tuya_device.wangguan.model.ZishebeiModel;
-import com.tuya.smart.sdk.bean.DeviceBean;
+import com.smarthome.magic.activity.tuya_device.device.model.ZishebeiModel;
 
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class WangguanAdapter extends BaseQuickAdapter<ZishebeiModel.DataBean, Ba
         iv_switch.setImageResource(R.mipmap.img_device_switch_open);
 
         String category = deviceBean.getDevice_type();
-        if (category.equals(TuyaConfig.CATEGORY_SWITCH)) {
+        if (category.equals(TuyaConfig.CATEGORY_CHAZUO)) {
             iv_switch.setVisibility(View.VISIBLE);
         } else {
             iv_switch.setVisibility(View.GONE);

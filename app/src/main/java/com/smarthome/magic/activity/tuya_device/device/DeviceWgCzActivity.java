@@ -17,7 +17,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.TuyaBaseDeviceActivity;
@@ -27,26 +31,44 @@ import com.smarthome.magic.activity.tuya_device.utils.TuyaConfig;
 import com.smarthome.magic.activity.tuya_device.utils.TuyaDialogUtils;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaDeviceManager;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaHomeManager;
+import com.smarthome.magic.activity.tuya_device.add.TuyaWangguanAddActivity;
+import com.smarthome.magic.activity.tuya_device.device.adapter.WangguanAdapter;
+import com.smarthome.magic.activity.tuya_device.device.model.ZishebeiModel;
 import com.smarthome.magic.activity.wode_page.bazinew.utils.TimeUtils;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.RxBus;
+import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
+import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.sdk.api.IDevListener;
+import com.tuya.smart.sdk.api.ISubDevListener;
 import com.tuya.smart.sdk.api.ITuyaDevice;
+import com.tuya.smart.sdk.api.ITuyaGateway;
 import com.tuya.smart.sdk.bean.DeviceBean;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+
+import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
 public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
 
@@ -86,12 +108,17 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
 
     private String ty_device_ccid;
     private String old_name;
+    private String member_type;
+
+    private String productId;
     private boolean isOnline;
     private boolean switchState;//开关状态
     private int daojishi;
 
     private TimePickerView timePicker;
-    private String productId;
+
+    private List<ZishebeiModel.DataBean> deviceBeans = new ArrayList<>();
+    private WangguanAdapter adapter;
 
     /**
      * 用于其他Activty跳转到该Activity
@@ -109,7 +136,7 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
 
     @Override
     public int getContentViewResId() {
-        return R.layout.act_device_wangguan_swich;
+        return R.layout.act_device_wangguan_chazuo;
     }
 
     @Override
@@ -155,6 +182,7 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
         init();
+        initAdapter();
         initHuidiao();
     }
 
@@ -162,6 +190,7 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
         ty_device_ccid = getIntent().getStringExtra("ty_device_ccid");
         old_name = getIntent().getStringExtra("old_name");
         tv_switch_name.setText(old_name);
+        member_type = getIntent().getStringExtra("member_type");
 
         DeviceBean haveDevice = TuyaHomeManager.getHomeManager().isHaveDevice(ty_device_ccid);
         if (haveDevice != null) {
@@ -176,10 +205,129 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
         mDeviceBeen = TuyaDeviceManager.getDeviceManager().getDeviceBeen();
         mDevice = TuyaDeviceManager.getDeviceManager().getDevice();
         productId = mDeviceBeen.getProductId();
+        isOnline = mDeviceBeen.getIsOnline();
+        initDeviceListener();
+        getWangguanList();
+        initDps();
+    }
 
-        Map<String, Object> dps = mDeviceBeen.getDps();
-        switchState = (boolean) dps.get("1");
-        setSwichState();
+    private void initDps() {
+        try {
+            Map<String, Object> dps = mDeviceBeen.getDps();
+            switchState = (boolean) dps.get("1");
+            setSwichState();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initDeviceListener() {//初始化监听
+        mDevice.registerDevListener(new IDevListener() {
+            @Override
+            public void onDpUpdate(String devId, String dpStr) {
+                Y.e("Dp点数据更新啦:" + devId + " | " + dpStr);
+                Notice notice = new Notice();
+                notice.type = ConstanceValue.MSG_DEVICE_DATA;
+                notice.content = dpStr;
+                notice.devId = devId;
+                RxBus.getDefault().sendRx(notice);
+            }
+
+            @Override
+            public void onRemoved(String devId) {
+                Y.e("设备被移除了" + devId);
+                Notice notice = new Notice();
+                notice.type = ConstanceValue.MSG_DEVICE_REMOVED;
+                notice.devId = devId;
+                RxBus.getDefault().sendRx(notice);
+            }
+
+            @Override
+            public void onStatusChanged(String devId, boolean online) {
+                Y.e("设备上下线回调  " + devId + "   " + online);
+                Notice notice = new Notice();
+                notice.type = ConstanceValue.MSG_DEVICE_STATUSCHANGED;
+                notice.devId = devId;
+                notice.content = online;
+                RxBus.getDefault().sendRx(notice);
+            }
+
+            @Override
+            public void onNetworkStatusChanged(String devId, boolean status) {
+                Y.e("网络状态发生变动时的回调  " + devId + "    " + status);
+            }
+
+            @Override
+            public void onDevInfoUpdate(String devId) {
+                Y.e("设备信息更新回调  " + devId);
+            }
+        });
+    }
+
+    private void getWangguanList() {
+        //访问网络获取数据 下面的列表数据
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16047");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("wg_device_ccid", ty_device_ccid);
+        Gson gson = new Gson();
+        OkGo.<AppResponse<ZishebeiModel.DataBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ZishebeiModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ZishebeiModel.DataBean>> response) {
+                        dismissProgressDialog();
+                        deviceBeans = response.body().data;
+                        adapter.setNewData(deviceBeans);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ZishebeiModel.DataBean>> response) {
+                        super.onError(response);
+                        dismissProgressDialog();
+                        Y.tError(response);
+                    }
+                });
+    }
+
+    private void initAdapter() {
+        adapter = new WangguanAdapter(R.layout.item_tuya_device_wangguan, deviceBeans);
+        rv_device_content.setLayoutManager(new LinearLayoutManager(mContext));
+        rv_device_content.setAdapter(adapter);
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (deviceBeans != null) {
+                    ZishebeiModel.DataBean deviceBean = deviceBeans.get(position);
+                    String device_type = deviceBean.getDevice_type();
+                    String device_category = deviceBean.getDevice_category();
+                    String device_category_code = deviceBean.getDevice_category_code();
+
+                    Y.e("device_type:" + device_type + "  device_category:" + device_category + "  device_category_code:" + device_category_code);
+
+                    TuyaHomeManager.getHomeManager().isHaveDevice(deviceBean.getTy_device_ccid());
+
+                    if (device_type.equals(TuyaConfig.CATEGORY_MENCI)) {
+                        DeviceMenciActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
+                    } else if (device_type.equals(TuyaConfig.CATEGORY_MENCISUO)) {
+                        DeviceMenciActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
+                    } else if (device_type.equals(TuyaConfig.CATEGORY_SOS)) {
+
+                    } else if (device_type.equals(TuyaConfig.CATEGORY_SWITCH)) {
+                        if (device_category.equals(TuyaConfig.PRODUCTID_SWITCH_THREE)) {
+                            DeviceSwitchThreeActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
+                        } else if (device_category.equals(TuyaConfig.PRODUCTID_SWITCH_TWO)) {
+                            DeviceSwitchTwoActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
+                        }
+                    } else {
+
+                    }
+                }
+            }
+        });
     }
 
     private void initHuidiao() {
@@ -187,30 +335,25 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
             @Override
             public void call(Notice message) {
                 if (message.type == ConstanceValue.MSG_DEVICE_DATA) {
-                    if (message.devId.equals(mDeviceBeen.getDevId())) {
-                        getData((String) message.content);
-                    }
-                } else if (message.type == ConstanceValue.MSG_DEVICE_REMOVED) {
-                    String devId = TuyaDeviceManager.getDeviceManager().getDeviceBeen().getDevId();
-                    String ccc = message.devId;
-                    if (ccc.equals(devId)) {
-                        TuyaDeviceManager.getDeviceManager().device_removed(DeviceWgCzActivity.this);
+                    if (message.devId.equals(ty_device_ccid)) {
+                        getData(message.content.toString());
                     }
                 } else if (message.type == ConstanceValue.MSG_DEVICE_STATUSCHANGED) {
-                    if (message.devId.equals(mDeviceBeen.getDevId())) {
+                    if (message.devId.equals(ty_device_ccid)) {
                         isOnline = (boolean) message.content;
-                        if (!isOnline) {
-                            Y.e("离线了啊啊啊啊");
-                        }
                     }
-                } else if (message.type == ConstanceValue.MSG_DEVICE_NETWORKSTATUSCHANGED) {
-
-
-                } else if (message.type == ConstanceValue.MSG_DEVICE_DEVINFOUPDATE) {
-
-
+                } else if (message.type == ConstanceValue.MSG_DEVICE_REMOVED) {
+                    if (message.devId.equals(ty_device_ccid)) {
+                        TuyaDeviceManager.getDeviceManager().device_removed(DeviceWgCzActivity.this);
+                    }
                 } else if (message.type == ConstanceValue.MSG_DEVICE_DELETE) {
-                    finish();
+                    getWangguanList();
+                    String device_id = getIntent().getStringExtra("device_id");
+                    if (device_id.equals(message.devId)) {
+                        finish();
+                    }
+                } else if (message.type == ConstanceValue.MSG_DEVICE_ADD) {
+                    getWangguanList();
                 }
             }
         }));
@@ -223,18 +366,18 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
         while (it.hasNext()) {
             // 获得key
             String key = it.next();
-            String value = jsonObject.getString(key);
-            jieData(key, value, jsonObject);
+            Object value = jsonObject.get(key);
+            jieData(key, value);
         }
     }
 
-    private void jieData(String key, String value, JSONObject jsonObject) {
-        Y.e("解析出的数据:  " + "key = " + key + "  |  value = " + value);
+    private void jieData(String key, Object value) {
+        setDps(key, value);
         if (key.equals("1")) {//switch开关
-            switchState = jsonObject.getBoolean(key);
+            switchState = (boolean) value;
             setSwichState();
         } else if (key.equals("11")) {//倒计时
-            daojishi = Y.getInt(value);
+            daojishi = Y.getInt(value.toString());
             if (daojishi > 0) {
                 tv_daojishi.setVisibility(View.VISIBLE);
                 if (switchState) {
@@ -248,7 +391,7 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
                 stopHandler();
             }
         } else if (key.equals("9")) {//倒计时
-            daojishi = Y.getInt(value);
+            daojishi = Y.getInt(value.toString());
             if (daojishi > 0) {
                 tv_daojishi.setVisibility(View.VISIBLE);
                 if (switchState) {
@@ -262,6 +405,13 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
                 stopHandler();
             }
         }
+    }
+
+    private void setDps(String key, Object value) {
+        Y.e("解析出的数据:  " + "key = " + key + "  |  value = " + value);
+        Map<String, Object> dps = mDeviceBeen.getDps();
+        dps.put(key, value);
+        mDeviceBeen.setDps(dps);
     }
 
     private void setSwichState() {
@@ -287,7 +437,7 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
         handler.removeMessages(1);
     }
 
-    @OnClick({R.id.rl_back, R.id.rl_set, R.id.ll_kaiguan, R.id.ll_daojishi, R.id.ll_dingshi, R.id.iv_switch_state})
+    @OnClick({R.id.ll_shezhi, R.id.ll_add_device, R.id.rl_back, R.id.rl_set, R.id.ll_kaiguan, R.id.ll_daojishi, R.id.ll_dingshi, R.id.iv_switch_state})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_back:
@@ -303,10 +453,20 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
             case R.id.ll_dingshi:
                 DeviceDingshiActivity.actionStart(mContext);
                 break;
+            case R.id.ll_add_device:
+                addZishebei();
+                break;
+            case R.id.ll_shezhi:
+                DeviceWgCzSetActivity.actionStart(mContext);
+                break;
             case R.id.rl_set:
                 set();
                 break;
         }
+    }
+
+    private void addZishebei() {
+        TuyaWangguanAddActivity.actionStart(mContext);
     }
 
     private void set() {
@@ -335,11 +495,11 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
                     int seconds = date.getSeconds();
                     int timeDingshi = minutes * 60 + seconds;
 
-                    if (TuyaConfig.PRODUCTID_SWITCH_A.equals(productId)) {
+                    if (TuyaConfig.PRODUCTID_CHAZUO_A.equals(productId)) {
                         setDp("11", timeDingshi);
-                    } else if (TuyaConfig.PRODUCTID_SWITCH_B.equals(productId)) {
+                    } else if (TuyaConfig.PRODUCTID_CHAZUO_B.equals(productId)) {
                         setDp("11", timeDingshi);
-                    } else if (TuyaConfig.PRODUCTID_SWITCH_WG.equals(productId)) {
+                    } else if (TuyaConfig.PRODUCTID_CHAZUO_WG.equals(productId)) {
                         setDp("9", timeDingshi);
                     }
                 }
@@ -354,9 +514,20 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (mDeviceBeen != null) {
+            TuyaDeviceManager.getDeviceManager().initDevice(mDeviceBeen);
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        TuyaDeviceManager.getDeviceManager().unRegisterDevListener();
         stopHandler();
+        if (mDevice != null) {
+            mDevice.unRegisterDevListener();
+            mDevice.onDestroy();
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.smarthome.magic.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -49,10 +50,15 @@ import com.smarthome.magic.view.magicindicator.buildins.commonnavigator.titles.C
 import com.smarthome.magic.view.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.bean.HomeBean;
+import com.tuya.smart.home.sdk.bean.MemberBean;
+import com.tuya.smart.home.sdk.bean.MemberWrapperBean;
+import com.tuya.smart.home.sdk.callback.ITuyaGetHomeListCallback;
 import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
 import com.tuya.smart.sdk.TuyaSdk;
 import com.tuya.smart.sdk.api.IResultCallback;
 import com.tuya.smart.sdk.bean.DeviceBean;
+import com.tuya.smart.sdk.api.IResultCallback;
+import com.tuya.smart.sdk.api.ITuyaDataCallback;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -302,7 +308,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
 
                                     @Override
                                     public void onError(String errorCode, String errorMsg) {
-                                        Y.t("创建家庭失败:" + errorMsg);
+                                        Y.e("创建家庭失败:" + errorMsg);
                                     }
                                 });
                             }
@@ -382,7 +388,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                 .execute(new JsonCallback<AppResponse<ZhiNengFamilyManageBean.DataBean>>() {
                     @Override
                     public void onSuccess(final Response<AppResponse<ZhiNengFamilyManageBean.DataBean>> response) {
-
+                        TuyaHomeManager.getHomeManager().setHomeId(ty_family_id);
                     }
 
                     @Override
@@ -407,7 +413,72 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     private void clickAddCamera() {
         PreferenceHelper.getInstance(getActivity()).putString(AppConfig.MC_DEVICE_CCID, "aaaaaaaaaaaaaaaa80140018");
         TuyaDeviceAddActivity.actionStart(getContext());
+
+        getHomeList();
+//        yaoqing("13091891781");
     }
 
 
+    private void getHomeList() {
+        TuyaHomeSdk.getHomeManagerInstance().queryHomeList(new ITuyaGetHomeListCallback() {
+            @Override
+            public void onSuccess(List<HomeBean> homeBeans) {
+
+                Y.e("我到底创建了多少啊  " + homeBeans.size());
+                for (int i = 0; i < homeBeans.size(); i++) {
+                    HomeBean homeBean = homeBeans.get(i);
+                    long homeId = homeBean.getHomeId();
+                    String name = homeBean.getName();
+                    if (homeId == 28169148 || homeId == 28369996 || homeId == 28689589 || homeId == 28690032) {
+                        Y.e("我是有的不删  " + homeId + "   " + name);
+                    } else {
+                        Y.e("该解散的家庭 " + homeId + "  " + name);
+//                        TuyaHomeSdk.newHomeInstance(homeId).dismissHome(new IResultCallback() {
+//                            @Override
+//                            public void onSuccess() {
+//                                Y.e("解散涂鸦家庭成功 "+homeId);
+//                            }
+//
+//                            @Override
+//                            public void onError(String code, String error) {
+//                                Y.t("解散家庭失败:" + error);
+//                            }
+//                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String errorCode, String error) {
+
+            }
+        });
+
+    }
+
+
+    private void yaoqing(String phone) {
+        long homeId = PreferenceHelper.getInstance(getContext()).getLong(AppConfig.TUYA_HOME_ID, 0);
+        @SuppressLint("WrongConstant") MemberWrapperBean bean = new MemberWrapperBean.Builder()
+                .setHomeId(homeId)
+                .setNickName(phone)
+                .setAccount(phone)
+                .setCountryCode("86")
+                .setRole(0)
+                .setHeadPic("")
+                .setAutoAccept(true)
+                .build();
+
+        TuyaHomeSdk.getMemberInstance().addMember(bean, new ITuyaDataCallback<MemberBean>() {
+            @Override
+            public void onSuccess(MemberBean result) {
+                Y.t("邀请成功");
+            }
+
+            @Override
+            public void onError(String errorCode, String errorMessage) {
+                Y.e("邀请失败啦 " + errorMessage);
+            }
+        });
+    }
 }

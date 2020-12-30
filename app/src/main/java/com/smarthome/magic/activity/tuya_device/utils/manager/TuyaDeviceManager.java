@@ -23,11 +23,13 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-public class TuyaDeviceManager implements IDevListener {
+public class TuyaDeviceManager {
     private static TuyaDeviceManager instance;
     private DeviceBean deviceBean;
-    private ITuyaDevice mDevice;
+    private String devId;
     private Gson gson;
+
+    private int p2pType;
 
     public static TuyaDeviceManager getDeviceManager() {
         if (null == instance) {
@@ -38,9 +40,10 @@ public class TuyaDeviceManager implements IDevListener {
 
     public void initDevice(DeviceBean deviceBean) {
         this.deviceBean = deviceBean;
-        mDevice = TuyaHomeSdk.newDeviceInstance(deviceBean.getDevId());
-        mDevice.registerDevListener(this);
-        gson = new Gson();
+        this.devId = deviceBean.getDevId();
+        this.gson = new Gson();
+
+        Y.e("设备Id时多少 "+deviceBean.getDevId());
 
         String schema = deviceBean.getSchema();
         Y.e("我是什么状态 " + deviceBean.getIsOnline());
@@ -49,102 +52,19 @@ public class TuyaDeviceManager implements IDevListener {
     }
 
     public ITuyaDevice getDevice() {
-        return mDevice;
+        return TuyaHomeSdk.newDeviceInstance(devId);
     }
 
     public DeviceBean getDeviceBeen() {
         return deviceBean;
     }
 
-    public void setDeviceBeen(DeviceBean deviceBean) {
-        this.deviceBean = deviceBean;
+    public String getDevId() {
+        return devId;
     }
 
     public String getJosnString(Map dps) {
         return gson.toJson(dps);
-    }
-
-    public void unRegisterDevListener() {
-        if (mDevice != null) {
-            mDevice.unRegisterDevListener();
-            mDevice.onDestroy();
-            mDevice = null;
-        }
-    }
-
-    public void unRegisterDevListenerTwo() {
-        if (mDevice != null) {
-            mDevice.unRegisterDevListener();
-        }
-    }
-
-    /**
-     * dp数据更新
-     *
-     * @param devId 设备 id
-     * @param dpStr 设备发生变动的功能点，为 json 字符串，数据格式：{"101": true}
-     */
-    @Override
-    public void onDpUpdate(String devId, String dpStr) {
-        Y.e("Dp点数据更新啦:" + devId + " | " + dpStr);
-        Notice notice = new Notice();
-        notice.type = ConstanceValue.MSG_DEVICE_DATA;
-        notice.content = dpStr;
-        notice.devId = devId;
-        RxBus.getDefault().sendRx(notice);
-    }
-
-    /**
-     * 设备移除回调
-     *
-     * @param devId 设备id
-     */
-    @Override
-    public void onRemoved(String devId) {
-        Y.e("设备被移除了" + devId);
-        Notice notice = new Notice();
-        notice.type = ConstanceValue.MSG_DEVICE_REMOVED;
-        notice.devId = devId;
-        RxBus.getDefault().sendRx(notice);
-    }
-
-
-    /**
-     * 设备上下线回调
-     *
-     * @param devId  设备id
-     * @param online 是否在线，在线为 true
-     */
-    @Override
-    public void onStatusChanged(String devId, boolean online) {
-        Y.e("设备上下线回调  " + online);
-        Notice notice = new Notice();
-        notice.type = ConstanceValue.MSG_DEVICE_STATUSCHANGED;
-        notice.devId = devId;
-        notice.content = online;
-        RxBus.getDefault().sendRx(notice);
-    }
-
-
-    /**
-     * 网络状态发生变动时的回调
-     *
-     * @param devId  设备id
-     * @param status 网络状态是否可用，可用为 true
-     */
-    @Override
-    public void onNetworkStatusChanged(String devId, boolean status) {
-
-    }
-
-    /**
-     * 设备信息更新回调
-     *
-     * @param devId 设备 id
-     */
-    @Override
-    public void onDevInfoUpdate(String devId) {
-
     }
 
     public void getData(String devId, String dpStr) {
@@ -158,8 +78,6 @@ public class TuyaDeviceManager implements IDevListener {
             Y.e("key: " + key + ",value:" + value);
         }
     }
-
-    private int p2pType;
 
     public int getP2pType() {
         Map<String, Object> map = deviceBean.getSkills();
@@ -187,39 +105,6 @@ public class TuyaDeviceManager implements IDevListener {
         } else {
             return bytes + "KB";
         }
-    }
-
-    public static final String CAMERA_A = "aooci0uh0ufwuaey";
-    public static final String CAMERA_B = "qw9quez5r4m8neyh";
-
-    public void setDp(String key, Object value) {
-        Map<String, Object> dps = new HashMap<>();
-        dps.put(key, value);
-        mDevice.publishDps(TuyaDeviceManager.getDeviceManager().getJosnString(dps), new IResultCallback() {
-            @Override
-            public void onError(String code, String error) {
-                Y.t("操作失败" + error);
-            }
-
-            @Override
-            public void onSuccess() {
-                Y.e("操作成功:  key = " + key + "  |  value = " + value);
-            }
-        });
-    }
-
-    public void getDp(String dpId) {
-        mDevice.getDp(dpId, new IResultCallback() {
-            @Override
-            public void onError(String code, String error) {
-                Y.e("获取点失败 " + code + "  " + error);
-            }
-
-            @Override
-            public void onSuccess() {
-                Y.e("获取点成功");
-            }
-        });
     }
 
     public void device_removed(Activity mActivity) {

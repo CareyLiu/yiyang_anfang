@@ -16,15 +16,18 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.TuyaBaseDeviceActivity;
-import com.smarthome.magic.activity.tuya_device.device.adapter.MenciAdapter;
+import com.smarthome.magic.activity.tuya_device.device.adapter.TuyaDeviceLogAdapter;
 import com.smarthome.magic.activity.tuya_device.device.model.DpModel;
 import com.smarthome.magic.activity.tuya_device.device.tongyong.DeviceSetActivity;
+import com.smarthome.magic.activity.tuya_device.utils.TuyaConfig;
 import com.smarthome.magic.activity.tuya_device.utils.TuyaDialogUtils;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaDeviceManager;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaHomeManager;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.RxBus;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.sdk.api.IDevListener;
 import com.tuya.smart.sdk.api.ITuyaDataCallback;
 import com.tuya.smart.sdk.api.ITuyaDevice;
 import com.tuya.smart.sdk.bean.DeviceBean;
@@ -68,6 +71,8 @@ public class DeviceMenciActivity extends TuyaBaseDeviceActivity {
     RecyclerView rv_content;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
+    @BindView(R.id.view_zhongjian)
+    View view_zhongjian;
 
     private String ty_device_ccid;
     private String old_name;
@@ -76,9 +81,10 @@ public class DeviceMenciActivity extends TuyaBaseDeviceActivity {
     private DeviceBean mDeviceBeen;
     private Boolean isOnline;
     private String productId;
+    private String dpsKaiguanId;
 
     private List<DpModel.DpsBean> dps = new ArrayList<>();
-    private MenciAdapter adapter;
+    private TuyaDeviceLogAdapter adapter;
     private int offset;
 
     private int dianliang;
@@ -161,11 +167,78 @@ public class DeviceMenciActivity extends TuyaBaseDeviceActivity {
         mDevice = TuyaDeviceManager.getDeviceManager().getDevice();
         productId = mDeviceBeen.getProductId();
         isOnline = mDeviceBeen.getIsOnline();
-        setIsOnline();
 
+        setIsOnline();
+        initDeviceListener();
+
+        initDpId();
+    }
+
+    private void initDpId() {
         Map<String, Object> dps = mDeviceBeen.getDps();
-        dianliang = (int) dps.get("103");
-        Y.e("电量是多少少 " + dianliang);
+        if (productId.equals(TuyaConfig.PRODUCTID_MENCISUO_SIG)) {
+            dpsKaiguanId = "1";
+
+            String s = dps.get(dpsKaiguanId).toString();
+            if (s.equals("true")) {
+                view_zhongjian.setVisibility(View.GONE);
+            } else {
+                view_zhongjian.setVisibility(View.VISIBLE);
+            }
+
+        } else if (productId.equals(TuyaConfig.PRODUCTID_MENCI)) {
+            dpsKaiguanId = "101";
+            String s = dps.get(dpsKaiguanId).toString();
+
+            if (s.equals("true")) {
+                view_zhongjian.setVisibility(View.VISIBLE);
+            } else {
+                view_zhongjian.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    private void initDeviceListener() {//初始化监听
+        mDevice.registerDevListener(new IDevListener() {
+            @Override
+            public void onDpUpdate(String devId, String dpStr) {
+                Y.e("Dp点数据更新啦:" + devId + " | " + dpStr);
+                Notice notice = new Notice();
+                notice.type = ConstanceValue.MSG_DEVICE_DATA;
+                notice.content = dpStr;
+                notice.devId = devId;
+                RxBus.getDefault().sendRx(notice);
+            }
+
+            @Override
+            public void onRemoved(String devId) {
+                Y.e("设备被移除了" + devId);
+                Notice notice = new Notice();
+                notice.type = ConstanceValue.MSG_DEVICE_REMOVED;
+                notice.devId = devId;
+                RxBus.getDefault().sendRx(notice);
+            }
+
+            @Override
+            public void onStatusChanged(String devId, boolean online) {
+                Y.e("设备上下线回调  " + devId + "   " + online);
+                Notice notice = new Notice();
+                notice.type = ConstanceValue.MSG_DEVICE_STATUSCHANGED;
+                notice.devId = devId;
+                notice.content = online;
+                RxBus.getDefault().sendRx(notice);
+            }
+
+            @Override
+            public void onNetworkStatusChanged(String devId, boolean status) {
+                Y.e("网络状态发生变动时的回调  " + devId + "    " + status);
+            }
+
+            @Override
+            public void onDevInfoUpdate(String devId) {
+                Y.e("设备信息更新回调  " + devId);
+            }
+        });
     }
 
     private void setIsOnline() {
@@ -183,30 +256,22 @@ public class DeviceMenciActivity extends TuyaBaseDeviceActivity {
             @Override
             public void call(Notice message) {
                 if (message.type == ConstanceValue.MSG_DEVICE_DATA) {
-                    if (message.devId.equals(mDeviceBeen.getDevId())) {
-                        getData((String) message.content);
-                    }
-                } else if (message.type == ConstanceValue.MSG_DEVICE_REMOVED) {
-                    String devId = TuyaDeviceManager.getDeviceManager().getDeviceBeen().getDevId();
-                    String ccc = message.devId;
-                    if (ccc.equals(devId)) {
-                        TuyaDeviceManager.getDeviceManager().device_removed(DeviceMenciActivity.this);
+                    if (message.devId.equals(ty_device_ccid)) {
+                        getData(message.content.toString());
                     }
                 } else if (message.type == ConstanceValue.MSG_DEVICE_STATUSCHANGED) {
-                    if (message.devId.equals(mDeviceBeen.getDevId())) {
+                    if (message.devId.equals(ty_device_ccid)) {
                         isOnline = (boolean) message.content;
-                        if (!isOnline) {
-                            Y.e("离线了啊啊啊啊");
-                        }
                     }
-                } else if (message.type == ConstanceValue.MSG_DEVICE_NETWORKSTATUSCHANGED) {
-
-
-                } else if (message.type == ConstanceValue.MSG_DEVICE_DEVINFOUPDATE) {
-
-
-                }else if (message.type == ConstanceValue.MSG_DEVICE_DELETE) {
-                    finish();
+                } else if (message.type == ConstanceValue.MSG_DEVICE_REMOVED) {
+                    if (message.devId.equals(ty_device_ccid)) {
+                        TuyaDeviceManager.getDeviceManager().device_removed(DeviceMenciActivity.this);
+                    }
+                } else if (message.type == ConstanceValue.MSG_DEVICE_DELETE) {
+                    String device_id = getIntent().getStringExtra("device_id");
+                    if (device_id.equals(message.devId)) {
+                        finish();
+                    }
                 }
             }
         }));
@@ -226,7 +291,7 @@ public class DeviceMenciActivity extends TuyaBaseDeviceActivity {
 
     public void jieData(String key, String value, JSONObject jsonObject) {
         Y.e("解析出的数据:  " + "key = " + key + "  |  value = " + value);
-        if (key.equals("101")) {
+        if (key.equals(dpsKaiguanId)) {
             DpModel.DpsBean dpsBean = new DpModel.DpsBean();
             String data = Y.getDataS(new Date());
             dpsBean.setTimeStr(data);
@@ -234,13 +299,27 @@ public class DeviceMenciActivity extends TuyaBaseDeviceActivity {
             dps.add(0, dpsBean);
             offset++;
             adapter.notifyDataSetChanged();
+
+            if (productId.equals(TuyaConfig.PRODUCTID_MENCISUO_SIG)) {
+                if (value.equals("true")) {
+                    view_zhongjian.setVisibility(View.GONE);
+                } else {
+                    view_zhongjian.setVisibility(View.VISIBLE);
+                }
+            } else if (productId.equals(TuyaConfig.PRODUCTID_MENCI)) {
+                if (value.equals("true")) {
+                    view_zhongjian.setVisibility(View.VISIBLE);
+                } else {
+                    view_zhongjian.setVisibility(View.GONE);
+                }
+            }
         } else if (key.equals("103")) {
 
         }
     }
 
     private void initAdapter() {
-        adapter = new MenciAdapter(R.layout.item_tuya_device_menci, dps);
+        adapter = new TuyaDeviceLogAdapter(R.layout.item_tuya_device_log, dps, productId);
         rv_content.setLayoutManager(new LinearLayoutManager(mContext));
         rv_content.setAdapter(adapter);
     }
@@ -264,7 +343,7 @@ public class DeviceMenciActivity extends TuyaBaseDeviceActivity {
     private void lordMore() {
         Map<String, Object> map = new HashMap<>();
         map.put("devId", ty_device_ccid);
-        map.put("dpIds", "101");
+        map.put("dpIds", dpsKaiguanId);
         map.put("offset", offset);
         map.put("limit", 10);
         TuyaHomeSdk.getRequestInstance().requestWithApiName("tuya.m.smart.operate.all.log", "1.0", map, DpModel.class, new ITuyaDataCallback<DpModel>() {
@@ -289,7 +368,7 @@ public class DeviceMenciActivity extends TuyaBaseDeviceActivity {
         offset = 0;
         Map<String, Object> map = new HashMap<>();
         map.put("devId", ty_device_ccid);
-        map.put("dpIds", "101");
+        map.put("dpIds", dpsKaiguanId);
         map.put("offset", offset);
         map.put("limit", 10);
         TuyaHomeSdk.getRequestInstance().requestWithApiName("tuya.m.smart.operate.all.log", "1.0", map, DpModel.class, new ITuyaDataCallback<DpModel>() {
@@ -340,8 +419,19 @@ public class DeviceMenciActivity extends TuyaBaseDeviceActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (mDeviceBeen != null) {
+            TuyaDeviceManager.getDeviceManager().initDevice(mDeviceBeen);
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        TuyaDeviceManager.getDeviceManager().unRegisterDevListener();
+        if (mDevice != null) {
+            mDevice.unRegisterDevListener();
+            mDevice.onDestroy();
+        }
     }
 }

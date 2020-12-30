@@ -1,4 +1,4 @@
-package com.smarthome.magic.activity.tuya_device.wangguan;
+package com.smarthome.magic.activity.tuya_device.device;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,14 +14,14 @@ import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.TuyaBaseDeviceActivity;
-import com.smarthome.magic.activity.tuya_device.device.DeviceMenciActivity;
 import com.smarthome.magic.activity.tuya_device.device.tongyong.DeviceSetActivity;
 import com.smarthome.magic.activity.tuya_device.utils.TuyaConfig;
 import com.smarthome.magic.activity.tuya_device.utils.TuyaDialogUtils;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaDeviceManager;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaHomeManager;
-import com.smarthome.magic.activity.tuya_device.wangguan.adapter.WangguanAdapter;
-import com.smarthome.magic.activity.tuya_device.wangguan.model.ZishebeiModel;
+import com.smarthome.magic.activity.tuya_device.device.adapter.WangguanAdapter;
+import com.smarthome.magic.activity.tuya_device.device.model.ZishebeiModel;
+import com.smarthome.magic.activity.tuya_device.add.TuyaWangguanAddActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.callback.JsonCallback;
@@ -56,7 +56,7 @@ public class DeviceWangguanActivity extends TuyaBaseDeviceActivity {
     @BindView(R.id.bt_add_device)
     TextView bt_add_device;
 
-    private String devId;
+    private String ty_device_ccid;
     private String old_name;
     private String member_type;
     private List<ZishebeiModel.DataBean> deviceBeans = new ArrayList<>();
@@ -120,11 +120,11 @@ public class DeviceWangguanActivity extends TuyaBaseDeviceActivity {
     }
 
     private void init() {
-        devId = getIntent().getStringExtra("ty_device_ccid");
+        ty_device_ccid = getIntent().getStringExtra("ty_device_ccid");
         old_name = getIntent().getStringExtra("old_name");
         member_type = getIntent().getStringExtra("member_type");
         tv_device_name.setText(old_name);
-        DeviceBean haveDevice = TuyaHomeManager.getHomeManager().isHaveDevice(devId);
+        DeviceBean haveDevice = TuyaHomeManager.getHomeManager().isHaveDevice(ty_device_ccid);
         if (haveDevice != null) {
             TuyaDeviceManager.getDeviceManager().initDevice(haveDevice);
             getWangguanList();
@@ -173,7 +173,7 @@ public class DeviceWangguanActivity extends TuyaBaseDeviceActivity {
         map.put("code", "16047");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
-        map.put("wg_device_ccid", devId);
+        map.put("wg_device_ccid", ty_device_ccid);
         Gson gson = new Gson();
         OkGo.<AppResponse<ZishebeiModel.DataBean>>post(ZHINENGJIAJU)
                 .tag(this)//
@@ -207,12 +207,6 @@ public class DeviceWangguanActivity extends TuyaBaseDeviceActivity {
 
     @OnClick(R.id.bt_add_device)
     public void onViewClicked() {
-        DeviceWangguanAddActivity.actionStart(mContext);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        TuyaDeviceManager.getDeviceManager().unRegisterDevListener();
+        TuyaWangguanAddActivity.actionStart(mContext);
     }
 }

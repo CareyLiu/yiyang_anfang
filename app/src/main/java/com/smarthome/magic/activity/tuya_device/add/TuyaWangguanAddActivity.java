@@ -1,4 +1,4 @@
-package com.smarthome.magic.activity.tuya_device.wangguan;
+package com.smarthome.magic.activity.tuya_device.add;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +17,6 @@ import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.TuyaBaseDeviceActivity;
-import com.smarthome.magic.activity.tuya_device.add.TuyaDeviceAddFinishActivity;
 import com.smarthome.magic.activity.tuya_device.add.adapter.TuyaDeviceAdapter;
 import com.smarthome.magic.activity.tuya_device.add.model.TuyaAddDeviceModel;
 import com.smarthome.magic.activity.tuya_device.utils.OnTuyaItemClickListener;
@@ -53,7 +52,7 @@ import rx.functions.Action1;
 
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
-public class DeviceWangguanAddActivity extends TuyaBaseDeviceActivity {
+public class TuyaWangguanAddActivity extends TuyaBaseDeviceActivity {
 
 
     @BindView(R.id.rv_shebei)
@@ -78,7 +77,7 @@ public class DeviceWangguanAddActivity extends TuyaBaseDeviceActivity {
      * 用于其他Activty跳转到该Activity
      */
     public static void actionStart(Context context) {
-        Intent intent = new Intent(context, DeviceWangguanAddActivity.class);
+        Intent intent = new Intent(context, TuyaWangguanAddActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
@@ -114,7 +113,7 @@ public class DeviceWangguanAddActivity extends TuyaBaseDeviceActivity {
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
         homeId = TuyaHomeManager.getHomeManager().getHomeId();
-        devId = TuyaDeviceManager.getDeviceManager().getDeviceBeen().getDevId();
+        devId = TuyaDeviceManager.getDeviceManager().getDevId();
         familyId = PreferenceHelper.getInstance(mContext).getString(AppConfig.PEIWANG_FAMILYID, "");
 
         initAdapter();

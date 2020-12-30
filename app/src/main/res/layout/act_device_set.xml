@@ -115,138 +115,146 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="92pt"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="31pt">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:includeFontPadding="false"
-            android:text="设备离线提醒"
-            android:textColor="@color/color_3"
-            android:textSize="31pt"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/iv_switch"
-            android:layout_width="102pt"
-            android:layout_height="62pt"
-            android:src="@mipmap/switch_open" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1pt"
-        android:background="@color/line" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="92pt"
-        android:gravity="center_vertical"
-        android:paddingLeft="31pt"
-        android:text="其他"
-        android:textColor="@color/color_9"
-        android:textSize="27pt" />
-
-    <LinearLayout
-        android:id="@+id/ll_device_wenti"
-        android:layout_width="match_parent"
-        android:layout_height="92pt"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="31pt">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:includeFontPadding="false"
-            android:text="常见问题与反馈"
-            android:textColor="@color/color_3"
-            android:textSize="31pt"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:layout_width="35pt"
-            android:layout_height="35pt"
-            android:src="@mipmap/tuya_arrow_ccc" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1pt"
-        android:background="@color/line" />
-
-    <LinearLayout
-        android:id="@+id/ll_device_addzhu"
-        android:layout_width="match_parent"
-        android:layout_height="92pt"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="31pt">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:includeFontPadding="false"
-            android:text="添加到主屏幕"
-            android:textColor="@color/color_3"
-            android:textSize="31pt"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:layout_width="35pt"
-            android:layout_height="35pt"
-            android:src="@mipmap/tuya_arrow_ccc" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1pt"
-        android:background="@color/line" />
-
-    <LinearLayout
-        android:id="@+id/ll_device_wangluo"
-        android:layout_width="match_parent"
-        android:layout_height="92pt"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="31pt">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:includeFontPadding="false"
-            android:text="检查设备网络"
-            android:textColor="@color/color_3"
-            android:textSize="31pt"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="24pt"
-            android:includeFontPadding="false"
-            android:text="立即检查"
+            android:layout_width="match_parent"
+            android:layout_height="92pt"
+            android:gravity="center_vertical"
+            android:paddingLeft="31pt"
+            android:text="其他"
             android:textColor="@color/color_9"
-            android:textSize="31pt" />
+            android:textSize="27pt" />
 
-        <ImageView
-            android:layout_width="35pt"
-            android:layout_height="35pt"
-            android:src="@mipmap/tuya_arrow_ccc" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="92pt"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="31pt">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:includeFontPadding="false"
+                android:text="设备离线提醒"
+                android:textColor="@color/color_3"
+                android:textSize="31pt"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iv_switch"
+                android:layout_width="102pt"
+                android:layout_height="62pt"
+                android:src="@mipmap/switch_open" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1pt"
+            android:background="@color/line" />
+
+
+        <LinearLayout
+            android:id="@+id/ll_device_wenti"
+            android:layout_width="match_parent"
+            android:layout_height="92pt"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="31pt">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:includeFontPadding="false"
+                android:text="常见问题与反馈"
+                android:textColor="@color/color_3"
+                android:textSize="31pt"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="35pt"
+                android:layout_height="35pt"
+                android:src="@mipmap/tuya_arrow_ccc" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1pt"
+            android:background="@color/line" />
+
+        <LinearLayout
+            android:id="@+id/ll_device_addzhu"
+            android:layout_width="match_parent"
+            android:layout_height="92pt"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="31pt">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:includeFontPadding="false"
+                android:text="添加到主屏幕"
+                android:textColor="@color/color_3"
+                android:textSize="31pt"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="35pt"
+                android:layout_height="35pt"
+                android:src="@mipmap/tuya_arrow_ccc" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1pt"
+            android:background="@color/line" />
+
+        <LinearLayout
+            android:id="@+id/ll_device_wangluo"
+            android:layout_width="match_parent"
+            android:layout_height="92pt"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="31pt">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:includeFontPadding="false"
+                android:text="检查设备网络"
+                android:textColor="@color/color_3"
+                android:textSize="31pt"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="24pt"
+                android:includeFontPadding="false"
+                android:text="立即检查"
+                android:textColor="@color/color_9"
+                android:textSize="31pt" />
+
+            <ImageView
+                android:layout_width="35pt"
+                android:layout_height="35pt"
+                android:src="@mipmap/tuya_arrow_ccc" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1pt"
+            android:background="@color/line" />
+
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1pt"
-        android:background="@color/line" />
-
 
     <TextView
         android:id="@+id/bt_delete"

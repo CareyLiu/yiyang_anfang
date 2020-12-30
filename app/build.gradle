@@ -146,7 +146,7 @@ dependencies {
     implementation 'org.jaaksi:pickerview:2.0.1'
     implementation 'com.amap.api:location:latest.integration'
     implementation 'com.github.prolificinteractive:material-calendarview:2.0.0'
-    implementation 'com.contrarywind:Android-PickerView:4.1.8'
+    implementation 'com.contrarywind:Android-PickerView:4.1.9'
     implementation 'com.contrarywind:wheelview:4.0.9'
     implementation 'org.devio.takephoto:takephoto_library:4.1.0'
     implementation 'com.smartTop:jd-address:1.0.3'

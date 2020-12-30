@@ -2,7 +2,10 @@ package com.smarthome.magic.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -12,9 +15,30 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.fragment.app.Fragment;
+
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
+import com.iflytek.aiui.AIUIAgent;
+import com.iflytek.aiui.AIUIConstant;
+import com.iflytek.aiui.AIUIEvent;
+import com.iflytek.aiui.AIUIListener;
+import com.iflytek.aiui.AIUIMessage;
+import com.iflytek.cloud.ErrorCode;
+import com.iflytek.cloud.InitListener;
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechError;
+import com.iflytek.cloud.SpeechEvent;
+import com.iflytek.cloud.SpeechSynthesizer;
+import com.iflytek.cloud.SynthesizerListener;
+import com.iflytek.cloud.VoiceWakeuper;
+import com.iflytek.cloud.WakeuperListener;
+import com.iflytek.cloud.WakeuperResult;
+import com.iflytek.cloud.util.ResourceUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -23,6 +47,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.ZhiNengHomeListActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
+import com.smarthome.magic.activity.tuya_camera.add.TuyaDeviceAddActivity;
 import com.smarthome.magic.activity.tuya_device.add.TuyaDeviceAddActivity;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaHomeManager;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.PeiWangYinDaoPageActivity;
@@ -30,14 +55,17 @@ import com.smarthome.magic.adapter.NewsFragmentPagerAdapter;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.ResultModel;
 import com.smarthome.magic.model.ZhiNengFamilyManageBean;
 import com.smarthome.magic.model.ZhiNengHomeBean;
+import com.smarthome.magic.util.YuYinMqtt;
 import com.smarthome.magic.view.NoSlidingViewPager;
 import com.smarthome.magic.view.magicindicator.MagicIndicator;
 import com.smarthome.magic.view.magicindicator.ViewPagerHelper;
@@ -52,15 +80,16 @@ import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.bean.HomeBean;
 import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -102,6 +131,8 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     TextView tvZhujiZhuangtai;
     @BindView(R.id.bt_add_camera)
     Button bt_add_camera;
+    @BindView(R.id.bt_huanxing)
+    Button btHuanxing;
 
 
     private List<String> tabs = new ArrayList<>();
@@ -113,6 +144,8 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     private List<ZhiNengHomeBean.DataBean> dataBean = new ArrayList<>();
     private Bundle device = new Bundle();
     private Bundle room = new Bundle();
+
+    private SharedPreferences mSharedPreferences;
 
     @Override
     protected void initLogic() {
@@ -197,6 +230,10 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
         ViewPagerHelper.bind(magicIndicator, viewPager);
     }
 
+
+
+
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -207,6 +244,8 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
         initViewpager();
         initMagicIndicator();
         initData();
+
+        // 初始化唤醒对象
 
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
@@ -225,8 +264,6 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                     getnet();
                 } else if (message.type == ConstanceValue.MSG_DEVICE_ADD) {
                     getnet();
-                } else if (message.type == ConstanceValue.MSG_DEVICE_DELETE) {
-                    getnet();
                 }
             }
         }));
@@ -237,7 +274,33 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                 getnet();
             }
         });
+
+        btHuanxing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+            }
+        });
+
+
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     protected boolean immersionEnabled() {
@@ -310,7 +373,34 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                             }
                         } else {
                             PreferenceHelper.getInstance(getActivity()).putLong(AppConfig.TUYA_HOME_ID, Y.getLong(ty_family_id));
-                            TuyaHomeManager.getHomeManager().setHomeId(Y.getLong(ty_family_id));
+//                            TuyaHomeSdk.newHomeInstance(Y.getLong(ty_family_id)).getHomeDetail(new ITuyaHomeResultCallback() {
+//                                @Override
+//                                public void onSuccess(HomeBean bean) {
+//                                    List<DeviceBean> deviceList = bean.getDeviceList();
+//                                    Y.e("裂缝宽度发生的  " + deviceList.size());
+//                                    for (int i = 0; i < deviceList.size(); i++) {
+//                                        DeviceBean deviceBean = deviceList.get(i);
+//                                        Y.e("愧疚反倒是离开的是 " + deviceBean.getName());
+//                                        TuyaHomeSdk.newDeviceInstance(deviceBean.getDevId()).removeDevice(new IResultCallback() {
+//                                            @Override
+//                                            public void onError(String errorCode, String errorMsg) {
+//                                                Y.e("东方斯卡拉就发顺丰 ");
+//                                            }
+//
+//                                            @Override
+//                                            public void onSuccess() {
+//                                                Y.e("我一处乘客都给对方 "+deviceBean.getName());
+//                                            }
+//                                        });
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onError(String errorCode, String errorMsg) {
+////                                    TuyaDialogUtils.t(mContext, "获取设备信息失败");
+//                                }
+//                            });
+
                         }
 
 

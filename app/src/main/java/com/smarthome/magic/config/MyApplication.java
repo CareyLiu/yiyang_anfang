@@ -30,6 +30,8 @@ import com.alibaba.baichuan.android.trade.callback.AlibcTradeInitCallback;
 import com.billy.android.loading.Gloading;
 import com.bulong.rudeness.RudenessScreenHelper;
 import com.google.gson.Gson;
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechUtility;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
@@ -194,6 +196,12 @@ public class MyApplication extends MultiDexApplication {
     DoMqttValue doMqttValue;
 
     public void onCreate() {
+        StringBuffer param = new StringBuffer();
+        param.append("appid="+getString(R.string.app_id));
+        param.append(",");
+        // 设置使用v5+
+        param.append(SpeechConstant.ENGINE_MODE+"="+SpeechConstant.MODE_MSC);
+        SpeechUtility.createUtility(MyApplication.this, param.toString());
         super.onCreate();
         //设计图标注的宽度
         int designWidth = 720;

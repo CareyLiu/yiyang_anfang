@@ -8,6 +8,7 @@
     android:background="@color/grayfff5f5f5"
     android:fitsSystemWindows="true">
 
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smartRefreshLayout"
         android:layout_width="match_parent"
@@ -288,10 +289,10 @@
                     </LinearLayout>
 
                     <RelativeLayout
-                        android:layout_marginTop="6dp"
                         android:id="@+id/rl_xiupeichang"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
                         app:layout_constraintTop_toBottomOf="@+id/iv_dalibao">
 
                         <ImageView
@@ -454,6 +455,107 @@
             android:layout_marginTop="8dp"
             android:src="@mipmap/home_icon_gouwuche" />
 
+
     </RelativeLayout>
 
+    <RelativeLayout
+
+        android:id="@+id/rl_bottom_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="14dp"
+        android:layout_marginBottom="50dp"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/iv_yuyin"
+            android:layout_width="53dp"
+            android:layout_height="53dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="8dp"
+            android:src="@mipmap/shuinuan_guzhang" />
+
+
+    </RelativeLayout>
+
+    <com.flyco.roundview.RoundRelativeLayout
+        android:visibility="gone"
+        android:id="@+id/rrl_yuyin_mianban"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_margin="15dp"
+        app:rv_backgroundColor="@color/black"
+        app:rv_cornerRadius="10dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="15dp">
+
+            <ImageView
+                android:id="@+id/tv_yuyin_image"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:src="@mipmap/shuinuan_guzhang"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="小灯正在听"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_yuyin_image"
+
+                app:layout_constraintLeft_toRightOf="@+id/tv_yuyin_image"
+                app:layout_constraintTop_toTopOf="@+id/tv_yuyin_image" />
+
+            <ImageView
+                android:id="@+id/iv_close"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/pop_icon_close"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_yuyin_image"
+
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_yuyin_image" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_shishishuo"
+            android:layout_marginTop="15dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cl_top"
+            android:text="试试说"
+            android:textColor="@color/white">
+
+        </TextView>
+
+
+        <TextView
+            android:id="@+id/tv_result"
+            android:textSize="22sp"
+            android:layout_marginTop="15dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_shishishuo"
+            android:text="打开客厅灯"
+            android:textColor="@color/white">
+
+        </TextView>
+
+
+    </com.flyco.roundview.RoundRelativeLayout>
+
 </RelativeLayout>
+

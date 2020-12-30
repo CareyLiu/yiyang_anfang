@@ -28,6 +28,7 @@ import com.amap.api.location.AMapLocationQualityReport;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.flyco.roundview.RoundRelativeLayout;
 import com.github.jdsjlzx.ItemDecoration.GridItemDecoration;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
@@ -41,6 +42,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.DefaultX5WebViewActivity;
 import com.smarthome.magic.activity.xiupeichang.XiuPeiChangHomeActivity;
 import com.smarthome.magic.activity.zckt.AirConditionerActivity;
 import com.smarthome.magic.activity.DefaultX5WebView_HaveNameActivity;
@@ -79,12 +81,14 @@ import com.smarthome.magic.config.Radius_XiuPeiChangImageLoader;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.LordingDialog;
 import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.inter.YuYinInter;
 import com.smarthome.magic.model.Home;
 import com.smarthome.magic.model.TuiGuangMaModel;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.GlideShowImageUtils;
 import com.smarthome.magic.util.GridAverageUIDecoration;
 import com.smarthome.magic.util.Utils;
+import com.smarthome.magic.util.YuYinChuLiTool;
 import com.smarthome.magic.view.ObservableScrollView;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.youth.banner.Banner;
@@ -178,12 +182,17 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
     SmartRefreshLayout smartRefreshLayout;
     ObservableScrollView nestedScrollView;
     RelativeLayout rl_bottom;
+    RelativeLayout rl_bottom_1;
+    private ImageView ivClose;
 
     RecyclerView rlv_ziYing;
     HomeZiYingAdapter homeZiYingAdapter;
     RecyclerView rlvRemen;
     HomeReMenAdapter homeReMenAdapter;
     private ImageView iv_home_xiaoxi;
+
+    RoundRelativeLayout rrlYuYinMianBan;
+    TextView tvResult;
 
     @Override
     protected void initLogic() {
@@ -199,6 +208,9 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
 
     @Override
     protected void initView(View view) {
+        rrlYuYinMianBan = view.findViewById(R.id.rrl_yuyin_mianban);
+        tvResult = view.findViewById(R.id.tv_result);
+
         nestedScrollView = view.findViewById(R.id.scrollView);
         topPanel = view.findViewById(R.id.topPanel);
         middlePanel = view.findViewById(R.id.middlePanel);
@@ -232,6 +244,8 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
             }
         });
         rl_bottom = view.findViewById(R.id.rl_bottom);
+        rl_bottom_1 = view.findViewById(R.id.rl_bottom_1);
+        ivClose = view.findViewById(R.id.iv_close);
         clQuanBu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -365,44 +379,6 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
             }
         });
 
-//        header = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home_header, (ViewGroup) Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), false);
-//        footer = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home_footer, (ViewGroup) getActivity().findViewById(android.R.id.content), false);
-//
-//        TextView tvMore = header.findViewById(R.id.tv_pinpai_more);
-//        ImageView ivMore = header.findViewById(R.id.iv_more);
-//
-//        tvMore.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FenLeiThirdActivity.actionStart(getActivity(), "品牌直供", "2");
-//            }
-//        });
-//
-//        ivMore.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FenLeiThirdActivity.actionStart(getActivity(), "品牌直供", "2");
-//            }
-//        });
-//
-//
-//
-//        tvRemenMore.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FenLeiThirdActivity.actionStart(getActivity(), "热门商品", "1");
-//            }
-//        });
-//
-//        ivRemenMore.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FenLeiThirdActivity.actionStart(getActivity(), "热门商品", "1");
-//            }
-//        });
-
-
-        // directRecyclerView = header.findViewById(R.id.list);//品牌制造商
         ImageView ivSaoMa = view.findViewById(R.id.iv_saoma);
         ivSaoMa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -519,36 +495,15 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         });
 
 
-        // groupRecyclerView = footer.findViewById(R.id.list);
-
-
-        // wind_heater = header.findViewById(R.id.wind_heater);
-        // hydronic = header.findViewById(R.id.hydronic);
-        //  start_engine = header.findViewById(R.id.start_engine);
-        //  vehicle_info = header.findViewById(R.id.vehicle_info);
-
-        //  wind_heater.setOnClickListener(this);
-        //  hydronic.setOnClickListener(this);
-        //  start_engine.setOnClickListener(this);
-        //   vehicle_info.setOnClickListener(this);
-
-
         GridItemDecoration divider = new GridItemDecoration.Builder(getActivity())
                 .setHorizontal(R.dimen.default_divider_padding_5dp)
                 .setVertical(R.dimen.default_divider_padding_5dp)
                 .setColorResource(R.color.white)
                 .build();
-//        directRecyclerView.addItemDecoration(divider);
-//
-//
-//        directRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        // groupRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
 
         hotLRecyclerViewAdapter = new LRecyclerViewAdapter(hotGoodsAdapter);
         directLRecyclerViewAdapter = new LRecyclerViewAdapter(directAdapter);
-//        directRecyclerView.setAdapter(directLRecyclerViewAdapter);
-//        directRecyclerView.setLoadMoreEnabled(false);
-//        directRecyclerView.setPullRefreshEnabled(false);
 
 
         //设置图片加载器
@@ -561,7 +516,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
             @Override
             public void onItemClick(View view, int position) {
 
-               // ZiJianShopMallDetailsActivity.actionStart(getActivity(), remenListBean.get(position).getShop_product_id(), remenListBean.get(position).getWares_id());
+                // ZiJianShopMallDetailsActivity.actionStart(getActivity(), remenListBean.get(position).getShop_product_id(), remenListBean.get(position).getWares_id());
                 TuanGouShangJiaListActivity.actionStart(getActivity(), "7");
                 // startActivity(new Intent(getActivity(), GoosDetailsActivity.class)
                 //       .putExtra("shop_product_id", hotList.get(position).getShop_product_id())
@@ -601,6 +556,37 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
 
         // mImmersionBar.with(this).statusBarDarkFont(true).fitsSystemWindows(true).statusBarColor(R.color.white).init();
         setZiYingOrReMenLine("0");
+
+        YuYinChuLiTool yuYinChuLiTool = new YuYinChuLiTool(getActivity());
+        rl_bottom_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                yuYinChuLiTool.beginWakeUp(new YuYinInter() {
+                    @Override
+                    public void showMianBan() {
+                        Log.i("展示面板", "showMianBan");
+                        rrlYuYinMianBan.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void dismissMianBan() {
+                        rrlYuYinMianBan.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void yuYinResult(String result) {
+                        tvResult.setText(result);
+                    }
+                });
+            }
+        });
+        ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                yuYinChuLiTool.closeMianBan();
+                rrlYuYinMianBan.setVisibility(View.GONE);
+            }
+        });
     }
 
 
@@ -701,7 +687,8 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                                     if (response.body().data.get(0).getBannerList().get(position).getRotation_img_type().equals("1")) {
                                         ZiJianShopMallDetailsActivity.actionStart(getActivity(), response.body().data.get(0).getBannerList().get(position).getShop_product_id(), response.body().data.get(0).getBannerList().get(position).getWares_id());
                                     } else if (response.body().data.get(0).getBannerList().get(position).getRotation_img_type().equals("2")) {
-                                        startActivity(new Intent(getActivity(), WebViewActivity.class).putExtra("url", response.body().data.get(0).getBannerList().get(position).getHtml_url()));
+                                        // startActivity(new Intent(getActivity(), WebViewActivity.class).putExtra("url", response.body().data.get(0).getBannerList().get(position).getHtml_url()));
+                                        DefaultX5WebViewActivity.actionStart(getActivity(), response.body().data.get(0).getBannerList().get(position).getHtml_url());
                                     } else if (response.body().data.get(0).getBannerList().get(position).getRotation_img_type().equals("3")) {
                                         DaLiBaoActivity.actionStart(getActivity());
                                     }
@@ -1101,6 +1088,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
             strViewLine = "1";
             //  viewLineTop.setVisibility(View.VISIBLE);
             rl_bottom.setVisibility(View.VISIBLE);
+            rl_bottom_1.setVisibility(View.GONE);
         }
 
         if (locationY > topHeight && topPanel.getVisibility() == View.VISIBLE) {
@@ -1113,10 +1101,8 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
             strViewLine = "0";
             // viewLineTop.setVisibility(View.GONE);
             rl_bottom.setVisibility(View.GONE);
-
+            rl_bottom_1.setVisibility(View.VISIBLE);
         }
-
-
     }
 
 
@@ -1159,7 +1145,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
 //                viewLineTop.setVisibility(View.GONE);
 //                remenViewLineTop.setVisibility(View.GONE);
 //            } else {
-//                viewLineTop.setVisibility(View.VISIBLE);
+//               viewLineTop.setVisibility(View.VISIBLE);
 //                remenViewLineTop.setVisibility(View.GONE);
 //            }
 

@@ -139,4 +139,10 @@ public interface ConstanceValue {
     int MSG_CAMERA_FAIL = 0x10100;//摄像机通知失败
     int MSG_DEVICE_ROOM_NAME_CHANGE = 0x10101;//摄像机名字改变
     int MSG_DEVICE_DELETE = 0x10102;//移除设备
+    int MSG_YUYINHUANXING = 0x100103;//语音唤醒
+    int MSG_YUYINKAIQITONGZHI = 0x100104;//开启语音
+    int MSG_YUYINGUANBITONGZHI = 0x100105;//关闭语音
+    int MSG_YUYINXIAOSHI = 0x100106;//界面消失
+
+
 }

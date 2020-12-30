@@ -91,6 +91,7 @@ public class SosActivity extends BaseActivity {
     LordingDialog lordingDialog;
     private ImageView ivSos;
     SosThread sosThread;
+    boolean sosZhuangTai;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -107,6 +108,8 @@ public class SosActivity extends BaseActivity {
         });
         device_id = getIntent().getStringExtra("device_id");
         memberType = getIntent().getStringExtra("memberType");
+        sosZhuangTai = getIntent().getBooleanExtra("sosZhuangTai", false);
+
 
         if (memberType == null) {
             tvRoomDelete.setVisibility(View.GONE);
@@ -219,7 +222,6 @@ public class SosActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             if (msg.what == BAOJING) {
                 ivSos.setBackgroundResource(R.mipmap.tuya_sos_pic_no);
-                SoundPoolUtils.soundPool(mContext, R.raw.baojingyin_1);
             } else if (msg.what == BUBAOJING) {
                 ivSos.setBackgroundResource(R.mipmap.tuya_sos_pic_normal);
             }
@@ -311,11 +313,13 @@ public class SosActivity extends BaseActivity {
      *
      * @param context
      */
-    public static void actionStart(Context context, String device_id) {
+    private String str = "0";
+
+    public static void actionStart(Context context, String device_id, boolean sosZhuangTai) {
         Intent intent = new Intent(context, SosActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("device_id", device_id);
-
+        intent.putExtra("sosZhuangTai", sosZhuangTai);
         context.startActivity(intent);
     }
 
@@ -329,14 +333,17 @@ public class SosActivity extends BaseActivity {
                         Message message = new Message();
                         message.what = BAOJING;
                         handler.sendMessage(message);
+
                     } else if (i == 1) {
                         Message message = new Message();
                         message.what = BUBAOJING;
                         handler.sendMessage(message);
+
                     } else if (i == 2) {
                         Message message = new Message();
                         message.what = BAOJING;
                         handler.sendMessage(message);
+
                     } else if (i == 3) {
                         Message message = new Message();
                         message.what = BUBAOJING;
@@ -462,7 +469,11 @@ public class SosActivity extends BaseActivity {
                         }
 
                         menCiListAdapter.notifyDataSetChanged();
-
+                        if (sosZhuangTai) {
+                            Log.i("SosActivity", String.valueOf(sosZhuangTai) + "sosActivity");
+                            sosThread = new SosThread();
+                            sosThread.start();
+                        }
                     }
 
                     @Override

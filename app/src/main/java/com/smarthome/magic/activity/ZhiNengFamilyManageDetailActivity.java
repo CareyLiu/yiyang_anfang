@@ -39,6 +39,12 @@ import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.model.ZhiNengFamilyMAnageDetailBean;
 import com.smarthome.magic.model.ZhiNengHomeListBean;
+import com.smarttop.library.bean.City;
+import com.smarttop.library.bean.County;
+import com.smarttop.library.bean.Province;
+import com.smarttop.library.bean.Street;
+import com.smarttop.library.widget.BottomDialog;
+import com.smarttop.library.widget.OnAddressSelectedListener;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.api.IResultCallback;
 
@@ -53,7 +59,7 @@ import rx.functions.Action1;
 
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
-public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements View.OnClickListener {
+public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements View.OnClickListener, OnAddressSelectedListener {
     @BindView(R.id.rl_family_name)
     RelativeLayout rl_family_name;
     @BindView(R.id.tv_family_name)
@@ -80,6 +86,7 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
     private View footerView;
     private String family_id = "";
     private String ty_family_id;
+    private BottomDialog dialog;
 
     @Override
     public int getContentViewResId() {
@@ -172,7 +179,10 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                 zhiNengFamilyAddDIalog.show();
                 break;
             case R.id.rl_family_address:
-                Toast.makeText(mContext, "开发中", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, "开发中", Toast.LENGTH_SHORT).show();
+                dialog = new BottomDialog(this);
+                dialog.setOnAddressSelectedListener(this);
+                dialog.show();
                 break;
             case R.id.rl_family_room_num:
                 Bundle bundle1 = new Bundle();
@@ -213,7 +223,7 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
 
             @Override
             public void onError(String code, String error) {
-                Y.t("解散家庭失败:"+error);
+                Y.t("解散家庭失败:" + error);
             }
         });
     }
@@ -353,5 +363,17 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                         }
                     }
                 });
+    }
+
+    @Override
+    public void onAddressSelected(Province province, City city, County county, Street street) {
+        dialog.dismiss();
+        tv_family_address.setText(String.format("%s-%s-%s", province.name, city.name, county.name));
+//        province_id = province.code;
+//        province_name = province.name;
+//        city_id = city.code;
+//        city_name = city.name;
+//        area_id = county.code;
+//        area_name = county.name;
     }
 }

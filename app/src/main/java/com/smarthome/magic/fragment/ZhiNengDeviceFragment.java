@@ -130,7 +130,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                             clickTongtiao(bean, position);
                         } else {
                             mqttMingLing = new ZnjjMqttMingLing(getActivity(), bean.getDevice_ccid_up(), bean.getServer_id());
-                            if (bean.getDevice_type().equals("1")) {
+
                                 if (bean.getWork_state().equals("1")) {
                                     mqttMingLing.setAction(bean.getDevice_ccid(), "02", new IMqttActionListener() {
                                         @Override
@@ -181,7 +181,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                                     });
 
                                 }
-                            }
+
                             break;
 
                         }

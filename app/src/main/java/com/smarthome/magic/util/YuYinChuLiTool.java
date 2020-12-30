@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 
+
 import com.google.gson.Gson;
 import com.iflytek.aiui.AIUIAgent;
 import com.iflytek.aiui.AIUIConstant;
@@ -24,27 +25,23 @@ import com.iflytek.cloud.VoiceWakeuper;
 import com.iflytek.cloud.WakeuperListener;
 import com.iflytek.cloud.WakeuperResult;
 import com.iflytek.cloud.util.ResourceUtil;
-import com.rairmmd.andmqtt.AndMqtt;
-import com.rairmmd.andmqtt.MqttPublish;
 import com.smarthome.magic.R;
+import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
+import com.smarthome.magic.config.Logger;
+import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.inter.YuYinInter;
 import com.smarthome.magic.model.ResultModel;
-
-import org.eclipse.paho.client.mqttv3.IMqttActionListener;
-import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.io.InputStream;
-
 import static com.smarthome.magic.activity.shuinuan.Y.getResources;
 import static com.smarthome.magic.activity.shuinuan.Y.getString;
-import static com.smarthome.magic.config.MyApplication.CAR_CTROL;
+
 
 public class YuYinChuLiTool {
     private String TAG = YuYinChuLiTool.class.getSimpleName();
@@ -80,18 +77,20 @@ public class YuYinChuLiTool {
     }
 
 
-    public YuYinChuLiTool(Context context) {
+    public YuYinChuLiTool(Context context, YuYinInter yuYinInter) {
         this.context = context;
         mIvw = VoiceWakeuper.createWakeuper(context, null);
         // 初始化合成对象
         mTts = SpeechSynthesizer.createSynthesizer(context, mTtsInitListener);
+        this.yuYinInter = yuYinInter;
+
     }
 
     YuYinInter yuYinInter = null;
 
     //唤醒功能
-    public void beginWakeUp(YuYinInter yuYinInter) {
-        this.yuYinInter = yuYinInter;
+    public void beginWakeUp() {
+
 
         //   非空判断，防止因空指针使程序崩溃
         mIvw = VoiceWakeuper.getWakeuper();
@@ -151,7 +150,7 @@ public class YuYinChuLiTool {
     };
 
     private void showTip(final String str) {
-        UIHelper.ToastMessage(context, str);
+        //UIHelper.ToastMessage(context, str);
     }
 
     private WakeuperListener mWakeuperListener = new WakeuperListener() {
@@ -185,17 +184,19 @@ public class YuYinChuLiTool {
             }
             //textView.setText(resultString);
             Log.i("RESULT_STRING", resultString);
-            mIvw.stopListening();
 
-            yuYinInter.showMianBan();
-
-            int code = mTts.startSpeaking("请说", mTtsListener);
-//            Intent nlpIntent = new Intent(getActivity(), NlpDemo.class);
-//            startActivity(nlpIntent);
-
-            //激活唤醒，开启语音识别
-            createAgent();
-            startVoiceNlp();
+            beginYuYIn();
+//            mIvw.stopListening();
+//
+//
+//
+//            int code = mTts.startSpeaking("在呢", mTtsListener);
+////            Intent nlpIntent = new Intent(getActivity(), NlpDemo.class);
+////            startActivity(nlpIntent);
+//
+//            //激活唤醒，开启语音识别
+//            createAgent();
+//            startVoiceNlp();
         }
 
 
@@ -271,8 +272,15 @@ public class YuYinChuLiTool {
                 showTip("播放完成");
                 if (resultModel.getAnswer().getText().equals("正在为您操作")) {
                     yuYinInter.dismissMianBan();
-                    mIvw.startListening(mWakeuperListener);
-                    stopVoiceNlp();
+                    closeMianBan();
+//                    if (thread5CloseExit != null) {
+//                        thread5CloseExit.interrupt();
+//                        thread5CloseExit = null;
+//                        guanBiYuYinThread = "0";
+//                    }
+//                    guanBiYuYinThread = "1";
+//                    thread5CloseExit = new Exit5CloseThread();
+//                    thread5CloseExit.start();
                 }
 
             } else if (error != null) {
@@ -318,7 +326,6 @@ public class YuYinChuLiTool {
         // 在输入参数中设置tag，则对应结果中也将携带该tag，可用于关联输入输出
         String params = "sample_rate=16000,data_type=audio";
         AIUIMessage startRecord = new AIUIMessage(AIUIConstant.CMD_START_RECORD, 0, 0, params, null);
-
         mAIUIAgent.sendMessage(startRecord);
     }
 
@@ -382,7 +389,7 @@ public class YuYinChuLiTool {
 
         @Override
         public void onEvent(AIUIEvent event) {
-            Log.i(TAG, "on event: " + event.eventType);
+            //Log.i(TAG, "on event: " + event.eventType);
 
             switch (event.eventType) {
                 case AIUIConstant.EVENT_CONNECTED_TO_SERVER:
@@ -444,7 +451,20 @@ public class YuYinChuLiTool {
                                 // 设置参数
                                 setParam();
                                 if (resultModel != null) {
+                                    kaiQiYuYinThread = "0";
+                                    if (thread5Exit != null) {
+                                        thread5Exit.interrupt();
+                                    }
+                                    thread5Exit = null;
+
+//                                    if (thread5CloseExit != null) {
+//                                        thread5CloseExit.interrupt();
+//                                        thread5CloseExit = null;
+//                                        guanBiYuYinThread = "0";
+//                                    }
                                     if (resultModel.getAnswer() != null) {
+
+
                                         ResultModel.SemanticBean semanticBean = resultModel.getSemantic().get(0);
                                         yuYinInter.yuYinResult(resultModel.getText());
                                         int code = mTts.startSpeaking(resultModel.getVoice_answer().get(0).getContent(), mTtsListener);
@@ -716,7 +736,6 @@ public class YuYinChuLiTool {
             mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD);
             //设置发音人
             mTts.setParameter(SpeechConstant.VOICE_NAME, voicerCloud);
-
         } else if (mEngineType.equals(SpeechConstant.TYPE_LOCAL)) {
             //设置使用本地引擎
             mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_LOCAL);
@@ -779,11 +798,121 @@ public class YuYinChuLiTool {
     }
 
     public void closeMianBan() {
-        mIvw.startListening(mWakeuperListener);
+        if (thread5CloseExit != null) {
+            thread5CloseExit.interrupt();
+            thread5CloseExit = null;
+            guanBiYuYinThread = "0";
+        }
+        if (mIvw != null) {
+            String yuYinEnable = PreferenceHelper.getInstance(context).getString(AppConfig.YUYINZHUSHOU, "0");
+            if (yuYinEnable.equals("0")) {
+                //  mIvw.startListening(mWakeuperListener);
+                mIvw.stopListening();
+            } else {
+                mIvw.startListening(mWakeuperListener);
+            }
+        }
+
         stopVoiceNlp();
     }
 
     // 打开语音助手5秒 没有接收到语音关闭语音助手页面
     // 一次交互完成后，5秒没有接收到语音，关闭语音助手
+
+    public void beginYuYIn() {
+        if (mIvw != null) {
+            mIvw.stopListening();
+        }
+        int code = mTts.startSpeaking("在呢", mTtsListener);
+        yuYinInter.showMianBan();
+//            Intent nlpIntent = new Intent(getActivity(), NlpDemo.class);
+//            startActivity(nlpIntent);
+
+        //激活唤醒，开启语音识别
+        createAgent();
+        startVoiceNlp();
+        kaiQiYuYinThread = "1";
+        thread5Exit = new Exit5Thread();
+        thread5Exit.start();
+    }
+
+    public void stopHuanXing() {
+        if (mIvw != null) {
+            mIvw.stopListening();
+        }
+        stopVoiceNlp();
+    }
+
+    Exit5Thread thread5Exit = null;
+    private String kaiQiYuYinThread = "1";//开启语音
+
+    private class Exit5Thread extends Thread {
+        private int i = 0;
+
+        public void run() {
+            while (kaiQiYuYinThread.equals("1")) {
+
+                try {
+                    if (i == 6) {
+                        closeMianBan();
+                        // yuYinInter.dismissMianBan();
+                        Notice n = new Notice();
+                        n.type = ConstanceValue.MSG_YUYINXIAOSHI;
+                        //  n.content = message.toString();
+                        RxBus.getDefault().sendRx(n);
+                        thread5Exit.interrupt();
+                        thread5Exit = null;
+                        kaiQiYuYinThread = "0";
+                    }
+                    i = i + 1;
+                    //UIHelper.ToastMessage(context, "第" + String.valueOf(i) + "秒");
+                    Logger.i(TAG, i + "");
+
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    break;
+
+                }
+            }
+        }
+    }
+
+
+    Exit5CloseThread thread5CloseExit = null;
+    private String guanBiYuYinThread = "1";//开启语音
+
+    private class Exit5CloseThread extends Thread {
+        private int i = 0;
+
+        public void run() {
+            while (guanBiYuYinThread.equals("1")) {
+
+                try {
+                    if (i == 6) {
+                        closeMianBan();
+                        // yuYinInter.dismissMianBan();
+                        Notice n = new Notice();
+                        n.type = ConstanceValue.MSG_YUYINXIAOSHI;
+                        //  n.content = message.toString();
+                        RxBus.getDefault().sendRx(n);
+                        thread5CloseExit.interrupt();
+                        thread5CloseExit = null;
+                        guanBiYuYinThread = "0";
+                    }
+                    i = i + 1;
+                    //UIHelper.ToastMessage(context, "第" + String.valueOf(i) + "秒");
+                    Logger.i(TAG, i + "");
+
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    break;
+
+                }
+            }
+        }
+    }
+
 
 }

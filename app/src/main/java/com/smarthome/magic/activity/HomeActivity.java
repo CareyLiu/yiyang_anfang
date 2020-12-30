@@ -8,26 +8,27 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
 import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
+import com.flyco.roundview.RoundRelativeLayout;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
+import com.iflytek.cloud.Setting;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.jaeger.library.StatusBarUtil;
 import com.rairmmd.andmqtt.AndMqtt;
@@ -39,21 +40,25 @@ import com.smarthome.magic.activity.zhinengjiaju.function.MenCiActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.MenSuoActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.SosActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.YanGanActivity;
+import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.config.AudioFocusManager;
+import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Notify;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.fragment.MessagerFragment;
 import com.smarthome.magic.fragment.MineFragment;
 import com.smarthome.magic.fragment.OnlineFragment;
 import com.smarthome.magic.fragment.ZhiNengJiaJuFragment;
+import com.smarthome.magic.inter.YuYinInter;
 import com.smarthome.magic.model.AlarmClass;
 import com.smarthome.magic.model.ZhiNengJiaJuNotifyJson;
 import com.smarthome.magic.util.AppToast;
 import com.smarthome.magic.util.SoundPoolUtils;
+import com.smarthome.magic.util.YuYinChuLiTool;
 import com.smarthome.magic.view.NoScrollViewPager;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -79,14 +84,29 @@ public class HomeActivity extends BaseActivity {
     NoScrollViewPager mVp;
     @BindView(R.id.activity_with_view_pager)
     RelativeLayout activityWithViewPager;
-    @BindView(R.id.layout_bg)
-    LinearLayout layoutBg;
+    @BindView(R.id.bnve)
+    BottomNavigationViewEx bnve;
+    @BindView(R.id.tv_yuyin_image)
+    ImageView tvYuyinImage;
+    @BindView(R.id.iv_close)
+    ImageView ivClose;
+    @BindView(R.id.cl_top)
+    ConstraintLayout clTop;
+    @BindView(R.id.tv_shishishuo)
+    TextView tvShishishuo;
+    @BindView(R.id.tv_result)
+    TextView tvResult;
+    @BindView(R.id.rrl_yuyin_mianban)
+    RelativeLayout rrlYuyinMianban;
+    @BindView(R.id.tv_shezhi)
+    TextView tvShezhi;
     private boolean isExit;
 
     private SparseIntArray items;
     AlarmClass alarmClass;
     private int i = 0;
     TishiDialog tishiDialog;
+    YuYinChuLiTool yuYinChuLiTool;
 
     @Override
     public int getContentViewResId() {
@@ -112,99 +132,38 @@ public class HomeActivity extends BaseActivity {
         initData();
         initEvent();
 
-        com.smarthome.magic.app.AppManager.getAppManager().addActivity(this);
+        AppManager.getAppManager().addActivity(this);
+        yuYinChuLiTool = new YuYinChuLiTool(HomeActivity.this, new YuYinInter() {
+            @Override
+            public void showMianBan() {
+                Log.i("展示面板", "showMianBan");
+                rrlYuyinMianban.setVisibility(View.VISIBLE);
+                SoundPoolUtils.soundPool(mContext, R.raw.huanxing_mianban);
+            }
 
+            @Override
+            public void dismissMianBan() {
+                rrlYuyinMianban.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void yuYinResult(String result) {
+                tvResult.setText(result);
+            }
+        });
+
+        String yuYinZhuShouEnable = PreferenceHelper.getInstance(HomeActivity.this).getString(AppConfig.YUYINZHUSHOU, "0");
+        Log.i("yuYinZhuShou", "yuYinZhuShou: " + yuYinZhuShouEnable);
+        if (yuYinZhuShouEnable.equals("0")) {
+
+        } else {
+            wakeUpClick();
+        }
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
             public void call(Notice notice) {
                 if (notice.type == ConstanceValue.MSG_GUZHANG_SHOUYE) {
-
-                    String message = (String) notice.content;
-                    Gson gson = new Gson();
-                    alarmClass = gson.fromJson(message.toString(), AlarmClass.class);
-
-
-                    Log.i("alarmClass", alarmClass.changjia_name + alarmClass.sell_phone);
-//
-//                    if (player != null) {
-//                        player.stop();
-//                        player.release();
-//                        audioFocusManage.releaseTheAudioFocus();
-//                        player = null;
-//                    }
-
-                    if (alarmClass.type.equals("1")) {
-                        switch (alarmClass.sound) {
-
-                            case "chSound1.mp3":
-                                // SoundPoolUtils.soundPool(mContext,R.raw.ch_sound1);
-                                playMusic(R.raw.ch_sound1);
-                                break;
-                            case "chSound2.mp3":
-                                playMusic(R.raw.ch_sound2);
-                                break;
-                            case "chSound3.mp3":
-                                playMusic(R.raw.ch_sound3);
-                                break;
-                            case "chSound4.mp3":
-                                playMusic(R.raw.ch_sound4);
-                                break;
-                            case "chSound5.mp3":
-                                playMusic(R.raw.ch_sound5);
-                                break;
-                            case "chSound6.mp3":
-                                playMusic(R.raw.ch_sound6);
-                                break;
-                            case "chSound8.mp3":
-                                playMusic(R.raw.ch_sound8);
-                                break;
-                            case "chSound9.mp3":
-                                playMusic(R.raw.ch_sound9);
-                                break;
-                            case "chSound10.mp3":
-                                playMusic(R.raw.ch_sound10);
-                                break;
-                            case "chSound11.mp3":
-                                playMusic(R.raw.ch_sound11);
-                                break;
-                            case "chSound18.mp3":
-                                playMusic(R.raw.ch_sound18);
-                                break;
-                        }
-                    } else if (alarmClass.type.equals("5")) {
-                        if (alarmClass.code.equals("jyj_0006")) {
-                            tishiDialog = new TishiDialog(mContext, 1, new TishiDialog.TishiDialogListener() {
-                                @Override
-                                public void onClickCancel(View v, TishiDialog dialog) {
-                                }
-
-                                @Override
-                                public void onClickConfirm(View v, TishiDialog dialog) {
-                                    if (alarmClass.device_type.equals("12")) {
-                                        MenCiActivity.actionStart(mContext, alarmClass.device_id);
-                                    } else if (alarmClass.device_type.equals("11")) {
-                                        YanGanActivity.actionStart(mContext, alarmClass.device_id);
-                                    } else if (alarmClass.device_type.equals("15")) {
-                                        SosActivity.actionStart(mContext, alarmClass.device_id);
-                                        SoundPoolUtils.soundPool(mContext, R.raw.baojingyin_1);
-                                    } else if (alarmClass.device_type.equals("05")) {
-                                        MenSuoActivity.actionStart(mContext, alarmClass.device_id);
-                                    } else if (alarmClass.device_type.equals("13")) {
-                                        LouShuiActivity.actionStart(mContext, alarmClass.device_id);
-                                    }
-                                }
-
-                                @Override
-                                public void onDismiss(TishiDialog dialog) {
-
-                                }
-                            });
-                            tishiDialog.setTextContent("您的家庭有新的状况，是否前去查看?");
-                            tishiDialog.show();
-
-                        }
-                    }
-
+                    tuiSongTanChuang(notice);
                 } else if (notice.type == ConstanceValue.MSG_GOTOXIAOXI) {
                     mVp.setCurrentItem(3, false);
                 } else if (notice.type == ConstanceValue.MSG_P) {
@@ -212,48 +171,24 @@ public class HomeActivity extends BaseActivity {
                 } else if (notice.type == ConstanceValue.MSG_ZHINENGJIAJU) {
                     mVp.setCurrentItem(1, false);
                 } else if (notice.type == ConstanceValue.MSG_ZHINENGJIAJU_MENCI) {
-                    if (tishiDialog != null && tishiDialog.isShowing()) {
-                        return;
+                    zhiNengJiaJuCaoZuo(notice);
+                } else if (notice.type == ConstanceValue.MSG_YUYINHUANXING) {//语音唤醒
+                    //String yuYinZhuShouEnable = PreferenceHelper.getInstance(HomeActivity.this).getString(AppConfig.YUYINZHUSHOU, "0");
+                    //wakeUpClick();
+                    if (rrlYuyinMianban.getVisibility() == View.VISIBLE) {
+
+                    } else {
+                        rrlYuyinMianban.setVisibility(View.VISIBLE);
+                        yuYinChuLiTool.beginYuYIn();
                     }
-                    /**
-                     / 00 主机 01.灯 02.插座 03.喂鱼 04.浇花 05门锁 06.空调电视(开关，加风，减风，讯飞语音配置)
-                     / 07.车库门  08.开关 09.晾衣架 10.窗磁 11.烟雾报警 12.门磁 13.漏水14.雷达
-                     / 15.紧急开关 16.窗帘 17.电视(开关，加减音量，加减亮暗，讯飞语音配置) 18.摄像头
-                     / 19.空气检测 20.温湿度检测 21.煤气管道关闭 22.自来水管道关闭 23.宠物喂食 24.宠物喂水
-                     / 25.智能手环 26.排风 27背景音乐显示控制 28.电视遥控 29.空气净化 30.体质检测
-                     / 31.光敏控制 32.燃气报警 33.风扇 34.雷达
-                     */
-                    ZhiNengJiaJuNotifyJson zhiNengJiaJuNotifyJson = new ZhiNengJiaJuNotifyJson();
-                    zhiNengJiaJuNotifyJson = (ZhiNengJiaJuNotifyJson) notice.content;
-                    ZhiNengJiaJuNotifyJson finalZhiNengJiaJuNotifyJson = zhiNengJiaJuNotifyJson;
-                    ZhiNengJiaJuNotifyJson finalZhiNengJiaJuNotifyJson1 = zhiNengJiaJuNotifyJson;
-                    tishiDialog = new TishiDialog(mContext, 1, new TishiDialog.TishiDialogListener() {
-                        @Override
-                        public void onClickCancel(View v, TishiDialog dialog) {
-                        }
 
-                        @Override
-                        public void onClickConfirm(View v, TishiDialog dialog) {
-                            if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("12")) {
-                                MenCiActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
-                            } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("11")) {
-                                YanGanActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
-                            } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("15")) {
-                                SosActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
-                            } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("05")) {
-                                MenSuoActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
-                            } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("13")) {
-                                LouShuiActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
-                            }
-                        }
-
-                        @Override
-                        public void onDismiss(TishiDialog dialog) {
-
-                        }
-                    });
-                    tishiDialog.setTextContent("您的家庭有新的状况，是否前去查看?");
-                    tishiDialog.show();
+                } else if (notice.type == ConstanceValue.MSG_YUYINKAIQITONGZHI) {
+                    wakeUpClick();
+                } else if (notice.type == ConstanceValue.MSG_YUYINGUANBITONGZHI) {
+                    yuYinChuLiTool.stopHuanXing();//停止唤醒同时停止录音
+                } else if (notice.type == ConstanceValue.MSG_YUYINXIAOSHI) {
+                    yuYinChuLiTool.closeMianBan();
+                    rrlYuyinMianban.setVisibility(View.GONE);
                 }
             }
         }));
@@ -285,6 +220,162 @@ public class HomeActivity extends BaseActivity {
         };
 
         handler.postDelayed(runnable, 5000);
+
+        ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                yuYinChuLiTool.closeMianBan();
+                rrlYuyinMianban.setVisibility(View.GONE);
+            }
+        });
+
+        tvShezhi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                YuYinSheZhiActivity.actionStart(HomeActivity.this);
+            }
+        });
+    }
+
+    private void zhiNengJiaJuCaoZuo(Notice notice) {
+        if (tishiDialog != null && tishiDialog.isShowing()) {
+            return;
+        }
+        /**
+         / 00 主机 01.灯 02.插座 03.喂鱼 04.浇花 05门锁 06.空调电视(开关，加风，减风，讯飞语音配置)
+         / 07.车库门  08.开关 09.晾衣架 10.窗磁 11.烟雾报警 12.门磁 13.漏水14.雷达
+         / 15.紧急开关 16.窗帘 17.电视(开关，加减音量，加减亮暗，讯飞语音配置) 18.摄像头
+         / 19.空气检测 20.温湿度检测 21.煤气管道关闭 22.自来水管道关闭 23.宠物喂食 24.宠物喂水
+         / 25.智能手环 26.排风 27背景音乐显示控制 28.电视遥控 29.空气净化 30.体质检测
+         / 31.光敏控制 32.燃气报警 33.风扇 34.雷达
+         */
+        ZhiNengJiaJuNotifyJson zhiNengJiaJuNotifyJson = new ZhiNengJiaJuNotifyJson();
+        zhiNengJiaJuNotifyJson = (ZhiNengJiaJuNotifyJson) notice.content;
+        ZhiNengJiaJuNotifyJson finalZhiNengJiaJuNotifyJson = zhiNengJiaJuNotifyJson;
+        ZhiNengJiaJuNotifyJson finalZhiNengJiaJuNotifyJson1 = zhiNengJiaJuNotifyJson;
+        if (tishiDialog != null) {
+            if (tishiDialog.isShowing()) {
+                tishiDialog.dismiss();
+            }
+        }
+        tishiDialog = new TishiDialog(mContext, 1, new TishiDialog.TishiDialogListener() {
+            @Override
+            public void onClickCancel(View v, TishiDialog dialog) {
+            }
+
+            @Override
+            public void onClickConfirm(View v, TishiDialog dialog) {
+                if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("12")) {
+                    MenCiActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
+                } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("11")) {
+                    YanGanActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
+                } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("15")) {
+                    SosActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id(), true);
+                    SoundPoolUtils.soundPool(mContext, R.raw.baojingyin_1);
+                } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("05")) {
+                    MenSuoActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
+                } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("13")) {
+                    LouShuiActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
+                }
+                tishiDialog.dismiss();
+            }
+
+            @Override
+            public void onDismiss(TishiDialog dialog) {
+
+            }
+        });
+        tishiDialog.setTextContent("您的家庭有新的状况，是否前去查看?");
+        tishiDialog.show();
+    }
+
+    private void tuiSongTanChuang(Notice notice) {
+
+        String message = (String) notice.content;
+        Gson gson = new Gson();
+        alarmClass = gson.fromJson(message.toString(), AlarmClass.class);
+
+
+        Log.i("alarmClass", alarmClass.changjia_name + alarmClass.sell_phone);
+//
+//                    if (player != null) {
+//                        player.stop();
+//                        player.release();
+//                        audioFocusManage.releaseTheAudioFocus();
+//                        player = null;
+//                    }
+
+        if (alarmClass.type.equals("1")) {
+            switch (alarmClass.sound) {
+
+                case "chSound1.mp3":
+                    // SoundPoolUtils.soundPool(mContext,R.raw.ch_sound1);
+                    playMusic(R.raw.ch_sound1);
+                    break;
+                case "chSound2.mp3":
+                    playMusic(R.raw.ch_sound2);
+                    break;
+                case "chSound3.mp3":
+                    playMusic(R.raw.ch_sound3);
+                    break;
+                case "chSound4.mp3":
+                    playMusic(R.raw.ch_sound4);
+                    break;
+                case "chSound5.mp3":
+                    playMusic(R.raw.ch_sound5);
+                    break;
+                case "chSound6.mp3":
+                    playMusic(R.raw.ch_sound6);
+                    break;
+                case "chSound8.mp3":
+                    playMusic(R.raw.ch_sound8);
+                    break;
+                case "chSound9.mp3":
+                    playMusic(R.raw.ch_sound9);
+                    break;
+                case "chSound10.mp3":
+                    playMusic(R.raw.ch_sound10);
+                    break;
+                case "chSound11.mp3":
+                    playMusic(R.raw.ch_sound11);
+                    break;
+                case "chSound18.mp3":
+                    playMusic(R.raw.ch_sound18);
+                    break;
+            }
+        } else if (alarmClass.type.equals("5")) {
+            if (alarmClass.code.equals("jyj_0006")) {
+                tishiDialog = new TishiDialog(mContext, 1, new TishiDialog.TishiDialogListener() {
+                    @Override
+                    public void onClickCancel(View v, TishiDialog dialog) {
+                    }
+
+                    @Override
+                    public void onClickConfirm(View v, TishiDialog dialog) {
+                        if (alarmClass.device_type.equals("12")) {
+                            MenCiActivity.actionStart(mContext, alarmClass.device_id);
+                        } else if (alarmClass.device_type.equals("11")) {
+                            YanGanActivity.actionStart(mContext, alarmClass.device_id);
+                        } else if (alarmClass.device_type.equals("15")) {
+                            SosActivity.actionStart(mContext, alarmClass.device_id,true);
+                            SoundPoolUtils.soundPool(mContext, R.raw.baojingyin_1);
+                        } else if (alarmClass.device_type.equals("05")) {
+                            MenSuoActivity.actionStart(mContext, alarmClass.device_id);
+                        } else if (alarmClass.device_type.equals("13")) {
+                            LouShuiActivity.actionStart(mContext, alarmClass.device_id);
+                        }
+                    }
+
+                    @Override
+                    public void onDismiss(TishiDialog dialog) {
+
+                    }
+                });
+                tishiDialog.setTextContent("您的家庭有新的状况，是否前去查看?");
+                tishiDialog.show();
+
+            }
+        }
     }
 
     public MediaPlayer player;
@@ -528,6 +619,10 @@ public class HomeActivity extends BaseActivity {
 
     public static HomeActivity getInstance() {
         return new HomeActivity();
+    }
+
+    private void wakeUpClick() {
+        yuYinChuLiTool.beginWakeUp();
     }
 
 

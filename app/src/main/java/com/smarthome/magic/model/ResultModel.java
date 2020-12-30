@@ -232,7 +232,7 @@ public class ResultModel {
         private String entrypoint;
         private boolean hazard;
         private String intent;
-        private int score;
+        private float score;
         private String template;
         private List<SlotsBean> slots;
 
@@ -260,7 +260,7 @@ public class ResultModel {
             this.intent = intent;
         }
 
-        public int getScore() {
+        public float getScore() {
             return score;
         }
 

@@ -137,6 +137,10 @@ public interface ConstanceValue {
     int MSG_DEVICE_NETWORKSTATUSCHANGED = 0x10098;//网络状态发生变动时的回调
     int MSG_DEVICE_DEVINFOUPDATE = 0x10099;//设备信息更新回调
     int MSG_CAMERA_FAIL = 0x100100;//摄像机通知失败
+    int MSG_YUYINHUANXING = 0x100101;//语音唤醒
+    int MSG_YUYINKAIQITONGZHI = 0x100102;//开启语音
+    int MSG_YUYINGUANBITONGZHI = 0x100103;//关闭语音
+    int MSG_YUYINXIAOSHI = 0x100104;//界面消失
 
 
 }

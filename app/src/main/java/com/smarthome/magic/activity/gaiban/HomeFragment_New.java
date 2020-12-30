@@ -182,7 +182,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
     SmartRefreshLayout smartRefreshLayout;
     ObservableScrollView nestedScrollView;
     RelativeLayout rl_bottom;
-    RelativeLayout rl_bottom_1;
+
     private ImageView ivClose;
 
     RecyclerView rlv_ziYing;
@@ -244,7 +244,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
             }
         });
         rl_bottom = view.findViewById(R.id.rl_bottom);
-        rl_bottom_1 = view.findViewById(R.id.rl_bottom_1);
+
         ivClose = view.findViewById(R.id.iv_close);
         clQuanBu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -372,10 +372,41 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         iv_home_xiaoxi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Notice n = new Notice();
-                n.type = ConstanceValue.MSG_GOTOXIAOXI;
-                //  n.content = message.toString();
-                RxBus.getDefault().sendRx(n);
+
+                RxPermissions rxPermissions = new RxPermissions(getActivity());
+                rxPermissions.request(Manifest.permission.RECORD_AUDIO).subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean granted) {
+                        if (granted) { // 在android 6.0之前会默认返回true
+                            Notice n = new Notice();
+                            n.type = ConstanceValue.MSG_YUYINHUANXING;
+                            //  n.content = message.toString();
+                            RxBus.getDefault().sendRx(n);
+
+                            //YanShiActivity.actionStart(getActivity());
+                        } else {
+                            Toast.makeText(getActivity(), "该应用需要赋予访问相机的权限，不开启将无法正常工作！", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
+//                yuYinChuLiTool.beginWakeUp(new YuYinInter() {
+//                    @Override
+//                    public void showMianBan() {
+//                        Log.i("展示面板", "showMianBan");
+//                        rrlYuYinMianBan.setVisibility(View.VISIBLE);
+//                    }
+//
+//                    @Override
+//                    public void dismissMianBan() {
+//                        rrlYuYinMianBan.setVisibility(View.GONE);
+//                    }
+//
+//                    @Override
+//                    public void yuYinResult(String result) {
+//                        tvResult.setText(result);
+//                    }
+//                });
             }
         });
 
@@ -557,36 +588,9 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         // mImmersionBar.with(this).statusBarDarkFont(true).fitsSystemWindows(true).statusBarColor(R.color.white).init();
         setZiYingOrReMenLine("0");
 
-        YuYinChuLiTool yuYinChuLiTool = new YuYinChuLiTool(getActivity());
-        rl_bottom_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                yuYinChuLiTool.beginWakeUp(new YuYinInter() {
-                    @Override
-                    public void showMianBan() {
-                        Log.i("展示面板", "showMianBan");
-                        rrlYuYinMianBan.setVisibility(View.VISIBLE);
-                    }
 
-                    @Override
-                    public void dismissMianBan() {
-                        rrlYuYinMianBan.setVisibility(View.GONE);
-                    }
 
-                    @Override
-                    public void yuYinResult(String result) {
-                        tvResult.setText(result);
-                    }
-                });
-            }
-        });
-        ivClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                yuYinChuLiTool.closeMianBan();
-                rrlYuYinMianBan.setVisibility(View.GONE);
-            }
-        });
+
     }
 
 
@@ -1076,7 +1080,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         int[] location = new int[2];
         clZiYing_Middle.getLocationOnScreen(location);
         int locationY = location[1];
-        Log.e("locationY", locationY + " " + "topHeight的值是：" + topHeight);
+       // Log.e("locationY", locationY + " " + "topHeight的值是：" + topHeight);
 
         if (locationY <= topHeight && (topPanel.getVisibility() == View.GONE || topPanel.getVisibility() == View.INVISIBLE)) {
             topPanel.setVisibility(View.VISIBLE);
@@ -1088,7 +1092,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
             strViewLine = "1";
             //  viewLineTop.setVisibility(View.VISIBLE);
             rl_bottom.setVisibility(View.VISIBLE);
-            rl_bottom_1.setVisibility(View.GONE);
+
         }
 
         if (locationY > topHeight && topPanel.getVisibility() == View.VISIBLE) {
@@ -1101,7 +1105,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
             strViewLine = "0";
             // viewLineTop.setVisibility(View.GONE);
             rl_bottom.setVisibility(View.GONE);
-            rl_bottom_1.setVisibility(View.VISIBLE);
+
         }
     }
 

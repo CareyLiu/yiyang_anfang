@@ -109,6 +109,7 @@ public class AppConfig {
     public final static String SMS_CODE = "SMS_CODE";//临时使用
     public final static String RONGYUN_TOKEN = "RONGYUN_TOKEN";
     public final static String TANCHUFUWUTANKUANG = "TANCHUFUWUTANKUANG";//弹出服务弹框
+    public final static String YUYINZHUSHOU = "YUYINZHUSHOU";//0 否 1 是
     //福利功能  需要的字段
     //作废时间  --待使用
     public static String abolishDate;

@@ -213,21 +213,6 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
         }
     }
 
-    private void deleteTuyaJiating() {
-        TuyaHomeSdk.newHomeInstance(Y.getLong(ty_family_id)).dismissHome(new IResultCallback() {
-            @Override
-            public void onSuccess() {
-                Y.e("解散涂鸦家庭成功 ");
-                deleteFamily();
-            }
-
-            @Override
-            public void onError(String code, String error) {
-                Y.t("解散家庭失败:" + error);
-            }
-        });
-    }
-
     private void getnet() {
         //访问网络获取数据 下面的列表数据
         Map<String, String> map = new HashMap<>();

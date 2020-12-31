@@ -308,9 +308,8 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
     private void startLanyaMeshPeiwang() {
         Y.e("是否执行蓝牙Mesh配网      " + isSetLanya);
         sigMeshBean = TuyaHomeManager.getHomeManager().getSigMeshBean();
-        if (sigMeshBean != null) {
+        if (isSetLanya && sigMeshBean != null) {
             Y.e("执行了蓝牙Mesh配网      ");
-
             iTuyaBlueMeshSearchListener = new ITuyaBlueMeshSearchListener() {
                 @Override
                 public void onSearched(SearchDeviceBean deviceBean) {

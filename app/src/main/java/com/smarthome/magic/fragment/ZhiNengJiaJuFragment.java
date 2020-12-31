@@ -25,6 +25,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.ZhiNengHomeListActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.add.TuyaDeviceAddActivity;
+import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaHomeManager;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.PeiWangYinDaoPageActivity;
 import com.smarthome.magic.adapter.NewsFragmentPagerAdapter;
 import com.smarthome.magic.app.AppConfig;
@@ -314,34 +315,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                             }
                         } else {
                             PreferenceHelper.getInstance(getActivity()).putLong(AppConfig.TUYA_HOME_ID, Y.getLong(ty_family_id));
-//                            TuyaHomeSdk.newHomeInstance(Y.getLong(ty_family_id)).getHomeDetail(new ITuyaHomeResultCallback() {
-//                                @Override
-//                                public void onSuccess(HomeBean bean) {
-//                                    List<DeviceBean> deviceList = bean.getDeviceList();
-//                                    Y.e("裂缝宽度发生的  " + deviceList.size());
-//                                    for (int i = 0; i < deviceList.size(); i++) {
-//                                        DeviceBean deviceBean = deviceList.get(i);
-//                                        Y.e("愧疚反倒是离开的是 " + deviceBean.getName());
-//                                        TuyaHomeSdk.newDeviceInstance(deviceBean.getDevId()).removeDevice(new IResultCallback() {
-//                                            @Override
-//                                            public void onError(String errorCode, String errorMsg) {
-//                                                Y.e("东方斯卡拉就发顺丰 ");
-//                                            }
-//
-//                                            @Override
-//                                            public void onSuccess() {
-//                                                Y.e("我一处乘客都给对方 "+deviceBean.getName());
-//                                            }
-//                                        });
-//                                    }
-//                                }
-//
-//                                @Override
-//                                public void onError(String errorCode, String errorMsg) {
-////                                    TuyaDialogUtils.t(mContext, "获取设备信息失败");
-//                                }
-//                            });
-
+                            TuyaHomeManager.getHomeManager().setHomeId(Y.getLong(ty_family_id));
                         }
 
 

@@ -35,10 +35,13 @@ import com.smarthome.magic.config.Logger;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.inter.YuYinInter;
 import com.smarthome.magic.model.ResultModel;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
+
 import static com.smarthome.magic.activity.shuinuan.Y.getResources;
 import static com.smarthome.magic.activity.shuinuan.Y.getString;
 
@@ -237,6 +240,7 @@ public class YuYinChuLiTool {
         public void onSpeakBegin() {
             //showTip("开始播放");
             Log.d(TAG, "开始播放：" + System.currentTimeMillis());
+            stopVoiceNlp();
         }
 
         @Override
@@ -268,11 +272,14 @@ public class YuYinChuLiTool {
 
         @Override
         public void onCompleted(SpeechError error) {
+            startVoiceNlp();
             if (error == null) {
                 showTip("播放完成");
-                if (resultModel.getAnswer().getText().equals("正在为您操作")) {
-                    yuYinInter.dismissMianBan();
-                    closeMianBan();
+                if (resultModel != null) {
+                    if (resultModel.getAnswer().getText() != null) {
+                        if (resultModel.getAnswer().getText().equals("正在为您操作")) {
+//                    yuYinInter.dismissMianBan();
+//                    closeMianBan();
 //                    if (thread5CloseExit != null) {
 //                        thread5CloseExit.interrupt();
 //                        thread5CloseExit = null;
@@ -281,11 +288,15 @@ public class YuYinChuLiTool {
 //                    guanBiYuYinThread = "1";
 //                    thread5CloseExit = new Exit5CloseThread();
 //                    thread5CloseExit.start();
+                        }
+                    }
                 }
 
             } else if (error != null) {
                 showTip(error.getPlainDescription(true));
             }
+            Log.d(TAG, "播放完成：" + System.currentTimeMillis());
+
         }
 
         @Override
@@ -447,27 +458,30 @@ public class YuYinChuLiTool {
                                 String resultStr = cntJson.optString("intent");
                                 Log.i(TAG, "语义结果: " + resultStr);
 
+                                if (resultStr.equals("{}")) {
+                                    return;
+                                }
+
                                 resultModel = new Gson().fromJson(resultStr, ResultModel.class);
                                 // 设置参数
                                 setParam();
-                                if (resultModel != null) {
-                                    kaiQiYuYinThread = "0";
-                                    if (thread5Exit != null) {
-                                        thread5Exit.interrupt();
-                                    }
-                                    thread5Exit = null;
 
+
+                                if (resultModel != null) {
 //                                    if (thread5CloseExit != null) {
 //                                        thread5CloseExit.interrupt();
 //                                        thread5CloseExit = null;
 //                                        guanBiYuYinThread = "0";
 //                                    }
-                                    if (resultModel.getAnswer() != null) {
-
+                                    if (resultModel.getRc() == 0) {
+                                        if (resultModel.getSemantic() == null) {
+                                            return;
+                                        }
+                                        int code = mTts.startSpeaking(resultModel.getAnswer().getText(), mTtsListener);
 
                                         ResultModel.SemanticBean semanticBean = resultModel.getSemantic().get(0);
                                         yuYinInter.yuYinResult(resultModel.getText());
-                                        int code = mTts.startSpeaking(resultModel.getVoice_answer().get(0).getContent(), mTtsListener);
+
                                         Log.i("语义结果", "code" + code);
                                         String topic = "zn/server/1/aaaaaaaaaaaaaaaa90140018";
                                         YuYinMqtt yuYinMqtt = new YuYinMqtt(context, topic);
@@ -524,6 +538,9 @@ public class YuYinChuLiTool {
                                                     msg = "j{'intentName':" + "feedingFish" + ",'operate':" + "打开" + ",'device':" + "喂鱼" + ",'room':" + "客厅" + ",'time':" + circle + "}.";
                                                     Log.i("语义结果", msg);
                                                     yuYinMqtt.pushMingLing(msg);
+                                                    caozuo = "";
+                                                    shebei = "";
+                                                    weizhi = "";
                                                 }
 
                                                 break;
@@ -540,7 +557,6 @@ public class YuYinChuLiTool {
                                             case "dkcz":
 
                                                 for (int i = 0; i < semanticBean.getSlots().size(); i++) {
-
                                                     if (semanticBean.getSlots().get(i).getName().equals("caozuo")) {
                                                         caozuo = semanticBean.getSlots().get(i).getNormValue();
                                                     } else if (semanticBean.getSlots().get(i).getName().equals("chazuo")) {
@@ -601,12 +617,15 @@ public class YuYinChuLiTool {
                                                 }
                                                 break;
 
+
                                             default:
-                                                throw new IllegalStateException("Unexpected value: " + resultModel.getSemantic().get(0).getIntent());
+                                                break;
+
                                         }
 
 
                                     }
+
                                 }
 
                             }
@@ -629,12 +648,20 @@ public class YuYinChuLiTool {
                 break;
 
                 case AIUIConstant.EVENT_VAD: {
+                    //vad事件
                     if (AIUIConstant.VAD_BOS == event.arg1) {
-                        showTip("找到vad_bos");
+                        //找到语音前端点
+                        Log.i(TAG, "找到vad_bos");
                     } else if (AIUIConstant.VAD_EOS == event.arg1) {
-                        showTip("找到vad_eos");
+                        //找到语音后端点
+                        Log.i(TAG, "找到vad_eos");
+                    } else if (AIUIConstant.VAD_BOS_TIMEOUT == event.arg1) {
+                        // 送入音频前端点超时
+                        Log.i(TAG, "前端点超时");
+                        closeMianBan();
+                        yuYinInter.dismissMianBan();
                     } else {
-                        //  showTip("" + event.arg2);
+                        Log.i(TAG, "event vad " + event.arg2);
                     }
                 }
                 break;
@@ -831,9 +858,16 @@ public class YuYinChuLiTool {
         //激活唤醒，开启语音识别
         createAgent();
         startVoiceNlp();
-        kaiQiYuYinThread = "1";
-        thread5Exit = new Exit5Thread();
-        thread5Exit.start();
+//        if (thread5Exit != null) {
+//            thread5Exit.interrupt();
+//            thread5Exit = null;
+//            kaiQiYuYinThread = "0";
+//        } else {
+//            kaiQiYuYinThread = "1";
+//            thread5Exit = new Exit5Thread();
+//            thread5Exit.start();
+//        }
+
     }
 
     public void stopHuanXing() {
@@ -843,40 +877,40 @@ public class YuYinChuLiTool {
         stopVoiceNlp();
     }
 
-    Exit5Thread thread5Exit = null;
-    private String kaiQiYuYinThread = "1";//开启语音
+    //    Exit5Thread thread5Exit = null;
+    private volatile String kaiQiYuYinThread = "1";//开启语音
 
-    private class Exit5Thread extends Thread {
-        private int i = 0;
-
-        public void run() {
-            while (kaiQiYuYinThread.equals("1")) {
-
-                try {
-                    if (i == 6) {
-                        closeMianBan();
-                        // yuYinInter.dismissMianBan();
-                        Notice n = new Notice();
-                        n.type = ConstanceValue.MSG_YUYINXIAOSHI;
-                        //  n.content = message.toString();
-                        RxBus.getDefault().sendRx(n);
-                        thread5Exit.interrupt();
-                        thread5Exit = null;
-                        kaiQiYuYinThread = "0";
-                    }
-                    i = i + 1;
-                    //UIHelper.ToastMessage(context, "第" + String.valueOf(i) + "秒");
-                    Logger.i(TAG, i + "");
-
-                    Thread.sleep(1000);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    break;
-
-                }
-            }
-        }
-    }
+//    private class Exit5Thread extends Thread {
+//        private int i = 0;
+//
+//        public void run() {
+//            while (kaiQiYuYinThread.equals("1")) {
+//
+//                try {
+//                    if (i == 4) {
+//                        closeMianBan();
+//                        // yuYinInter.dismissMianBan();
+//                        Notice n = new Notice();
+//                        n.type = ConstanceValue.MSG_YUYINXIAOSHI;
+//                        //  n.content = message.toString();
+//                        RxBus.getDefault().sendRx(n);
+//                        thread5Exit.interrupt();
+//                        thread5Exit = null;
+//                        kaiQiYuYinThread = "0";
+//                    }
+//                    i = i + 1;
+//                    //UIHelper.ToastMessage(context, "第" + String.valueOf(i) + "秒");
+//                    Logger.i(TAG, i + "");
+//
+//                    Thread.sleep(1000);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    break;
+//
+//                }
+//            }
+//        }
+//    }
 
 
     Exit5CloseThread thread5CloseExit = null;

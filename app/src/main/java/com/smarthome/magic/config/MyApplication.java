@@ -126,8 +126,8 @@ public class MyApplication extends MultiDexApplication {
 
 
     //String mqttUrl = "tcp://192.168.1.127";//大个本地
-    String mqttUrl = "tcp://mqtt.hljsdkj.com";//正式
-   // String mqttUrl = "tcp://ggw.hljsdkj.com";//ggw
+    // String mqttUrl = "tcp://mqtt.hljsdkj.com";//正式
+    String mqttUrl = "tcp://ggw.hljsdkj.com";//ggw
 
 
     public static List<String> mqttDingyue = new ArrayList<>();
@@ -208,10 +208,10 @@ public class MyApplication extends MultiDexApplication {
 
     public void onCreate() {
         StringBuffer param = new StringBuffer();
-        param.append("appid="+getString(R.string.app_id));
+        param.append("appid=" + getString(R.string.app_id));
         param.append(",");
         // 设置使用v5+
-        param.append(SpeechConstant.ENGINE_MODE+"="+SpeechConstant.MODE_MSC);
+        param.append(SpeechConstant.ENGINE_MODE + "=" + SpeechConstant.MODE_MSC);
         SpeechUtility.createUtility(MyApplication.this, param.toString());
         super.onCreate();
         //设计图标注的宽度
@@ -343,14 +343,14 @@ public class MyApplication extends MultiDexApplication {
             }
         });
 
-        UmengMessageHandler messageHandler = new UmengMessageHandler(){
+        UmengMessageHandler messageHandler = new UmengMessageHandler() {
             @Override
             public void dealWithCustomMessage(final Context context, final UMessage msg) {
                 new Handler(getMainLooper()).post(new Runnable() {
 
                     @Override
                     public void run() {
-                        Y.e("获取到推送数据了么啊  "+msg.custom);
+                        Y.e("获取到推送数据了么啊  " + msg.custom);
                     }
                 });
             }

@@ -19,6 +19,10 @@ import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
 import com.rairmmd.andmqtt.MqttSubscribe;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.SuiYiTieActivity;
+import com.smarthome.magic.activity.SuiYiTieOneActivity;
+import com.smarthome.magic.activity.SuiYiTieThreeActivity;
+import com.smarthome.magic.activity.SuiYiTieTwoActivity;
 import com.smarthome.magic.activity.ZhiNengChuangLianActivity;
 import com.smarthome.magic.activity.ZhiNengDianDengActivity;
 import com.smarthome.magic.activity.ZhiNengJiaJuChaZuoActivity;
@@ -251,6 +255,17 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                             MenSuoActivity.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
                         } else if (deviceBean.getDevice_type().equals("13")) {
                             LouShuiActivity.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
+                        } else if (deviceBean.getDevice_type().equals("08")) {//随意贴
+                            //SuiYiTieActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up());
+                            String strJiLian = deviceBean.getDevice_ccid().substring(2, 4);
+                            Log.i("ZhiNengDeviceFragment", "strJiLian:" + strJiLian);
+                            if (strJiLian.equals("01")) {
+                                SuiYiTieOneActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up());
+                            } else if (strJiLian.equals("02")) {
+                                SuiYiTieTwoActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up());
+                            } else if (strJiLian.equals("03")) {
+                                SuiYiTieThreeActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up());
+                            }
                         } else {
                             Bundle bundle = new Bundle();
                             bundle.putString("device_id", deviceBean.getDevice_id());

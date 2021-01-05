@@ -26,7 +26,11 @@ public class ZhiNengDeviceListAdapter extends BaseQuickAdapter<ZhiNengHomeBean.D
         Glide.with(mContext).load(item.getDevice_type_pic()).into((ImageView) helper.getView(R.id.iv_device));
         helper.setText(R.id.tv_device_name, item.getDevice_name());
         helper.setText(R.id.tv_room_name, item.getRoom_name());
-        if (item.getOnline_state().equals("1")) {
+        if (item.getOnline_state() == null) {
+            //设备离线
+            helper.setBackgroundRes(R.id.iv_state, R.drawable.bg_zhineng_device_offline);
+            helper.setText(R.id.tv_state, "设备离线");
+        } else if (item.getOnline_state().equals("1")) {
             //设备在线
             helper.setBackgroundRes(R.id.iv_state, R.drawable.bg_zhineng_device_online);
             helper.setText(R.id.tv_state, "设备在线");
@@ -41,9 +45,9 @@ public class ZhiNengDeviceListAdapter extends BaseQuickAdapter<ZhiNengHomeBean.D
             helper.getView(R.id.iv_switch).setVisibility(View.INVISIBLE);
         } else {
             String ty_device_ccid = item.getTy_device_ccid();
-            if (TextUtils.isEmpty(ty_device_ccid)){
+            if (TextUtils.isEmpty(ty_device_ccid)) {
                 helper.getView(R.id.iv_switch).setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 helper.getView(R.id.iv_switch).setVisibility(View.INVISIBLE);
             }
         }

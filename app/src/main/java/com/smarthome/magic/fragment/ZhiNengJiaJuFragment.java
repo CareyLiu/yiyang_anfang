@@ -70,6 +70,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
+
 import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -334,7 +335,10 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                                 }
                             });
                         } else {
-                            if (dataBean.get(0).getDevice().get(0).getOnline_state().equals("1")) {
+                            if (dataBean.get(0).getDevice().get(0).getOnline_state() == null) {
+                                ivZhujiZhuangtai.setBackgroundResource(R.mipmap.zhikong_zhujilixian);
+                                tvZhujiZhuangtai.setText("主机离线");
+                            } else if (dataBean.get(0).getDevice().get(0).getOnline_state().equals("1")) {
                                 ivZhujiZhuangtai.setBackgroundResource(R.mipmap.zhikong_zhujizaixian);
                                 tvZhujiZhuangtai.setText("主机在线");
                             } else {

@@ -19,6 +19,10 @@ import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
 import com.rairmmd.andmqtt.MqttSubscribe;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.SuiYiTieActivity;
+import com.smarthome.magic.activity.SuiYiTieOneActivity;
+import com.smarthome.magic.activity.SuiYiTieThreeActivity;
+import com.smarthome.magic.activity.SuiYiTieTwoActivity;
 import com.smarthome.magic.activity.ZhiNengChuangLianActivity;
 import com.smarthome.magic.activity.ZhiNengDianDengActivity;
 import com.smarthome.magic.activity.ZhiNengJiaJuChaZuoActivity;
@@ -131,56 +135,56 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                         } else {
                             mqttMingLing = new ZnjjMqttMingLing(getActivity(), bean.getDevice_ccid_up(), bean.getServer_id());
 
-                                if (bean.getWork_state().equals("1")) {
-                                    mqttMingLing.setAction(bean.getDevice_ccid(), "02", new IMqttActionListener() {
-                                        @Override
-                                        public void onSuccess(IMqttToken asyncActionToken) {
-                                            //UIHelper.ToastMessage(mContext, "当前装置开启");
+                            if (bean.getWork_state().equals("1")) {
+                                mqttMingLing.setAction(bean.getDevice_ccid(), "02", new IMqttActionListener() {
+                                    @Override
+                                    public void onSuccess(IMqttToken asyncActionToken) {
+                                        //UIHelper.ToastMessage(mContext, "当前装置开启");
 
-                                            List<String> stringList = new ArrayList<>();
-                                            stringList.add(bean.getDevice_ccid());
-                                            stringList.add("2");
+                                        List<String> stringList = new ArrayList<>();
+                                        stringList.add(bean.getDevice_ccid());
+                                        stringList.add("2");
 
-                                            Notice notice = new Notice();
-                                            notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
-                                            notice.content = stringList;
-                                            Log.i("Rair", notice.content.toString());
-                                            RxBus.getDefault().sendRx(notice);
-                                        }
+                                        Notice notice = new Notice();
+                                        notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
+                                        notice.content = stringList;
+                                        Log.i("Rair", notice.content.toString());
+                                        RxBus.getDefault().sendRx(notice);
+                                    }
 
-                                        @Override
-                                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                                            UIHelper.ToastMessage(getActivity(), "未发送指令");
-                                        }
-                                    });
+                                    @Override
+                                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                                        UIHelper.ToastMessage(getActivity(), "未发送指令");
+                                    }
+                                });
 
-                                }
+                            }
 
-                                if (bean.getWork_state().equals("2")) {
+                            if (bean.getWork_state().equals("2")) {
 
-                                    mqttMingLing.setAction(bean.getDevice_ccid(), "01", new IMqttActionListener() {
-                                        @Override
-                                        public void onSuccess(IMqttToken asyncActionToken) {
-                                            //UIHelper.ToastMessage(mContext, "当前装置开启");
+                                mqttMingLing.setAction(bean.getDevice_ccid(), "01", new IMqttActionListener() {
+                                    @Override
+                                    public void onSuccess(IMqttToken asyncActionToken) {
+                                        //UIHelper.ToastMessage(mContext, "当前装置开启");
 
-                                            List<String> stringList = new ArrayList<>();
-                                            stringList.add(bean.getDevice_ccid());
-                                            stringList.add("1");
+                                        List<String> stringList = new ArrayList<>();
+                                        stringList.add(bean.getDevice_ccid());
+                                        stringList.add("1");
 
-                                            Notice notice = new Notice();
-                                            notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
-                                            notice.content = stringList;
-                                            Log.i("Rair", notice.content.toString());
-                                            RxBus.getDefault().sendRx(notice);
-                                        }
+                                        Notice notice = new Notice();
+                                        notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
+                                        notice.content = stringList;
+                                        Log.i("Rair", notice.content.toString());
+                                        RxBus.getDefault().sendRx(notice);
+                                    }
 
-                                        @Override
-                                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                                            UIHelper.ToastMessage(getActivity(), "未发送指令");
-                                        }
-                                    });
+                                    @Override
+                                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                                        UIHelper.ToastMessage(getActivity(), "未发送指令");
+                                    }
+                                });
 
-                                }
+                            }
 
                             break;
 
@@ -244,6 +248,17 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                             MenSuoActivity.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
                         } else if (deviceBean.getDevice_type().equals("13")) {
                             LouShuiActivity.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
+                        } else if (deviceBean.getDevice_type().equals("08")) {//随意贴
+                            //SuiYiTieActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up());
+                            String strJiLian = deviceBean.getDevice_ccid().substring(2, 4);
+                            Log.i("ZhiNengDeviceFragment", "strJiLian:" + strJiLian);
+                            if (strJiLian.equals("01")) {
+                                SuiYiTieOneActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up());
+                            } else if (strJiLian.equals("02")) {
+                                SuiYiTieTwoActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up());
+                            } else if (strJiLian.equals("03")) {
+                                SuiYiTieThreeActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up());
+                            }
                         } else {
                             Bundle bundle = new Bundle();
                             bundle.putString("device_id", deviceBean.getDevice_id());

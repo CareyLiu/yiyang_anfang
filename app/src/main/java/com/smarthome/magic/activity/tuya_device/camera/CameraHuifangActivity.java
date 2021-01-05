@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import com.alibaba.fastjson.JSON;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
+import com.smarthome.magic.activity.tuya_device.TuyaBaseCameraDeviceActivity;
 import com.smarthome.magic.activity.tuya_device.TuyaBaseDeviceActivity;
 import com.smarthome.magic.activity.tuya_device.camera.ceshi.TimePieceBean;
 import com.smarthome.magic.activity.tuya_device.camera.model.TuyaPlayDataModel;
@@ -37,7 +38,7 @@ import java.util.TimeZone;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CameraHuifangActivity extends TuyaBaseDeviceActivity implements OnBarMoveListener {
+public class CameraHuifangActivity extends TuyaBaseCameraDeviceActivity implements OnBarMoveListener {
 
     @BindView(R.id.camera_video_view)
     TuyaCameraView mVideoView;

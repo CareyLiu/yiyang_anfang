@@ -8,6 +8,8 @@ public class TuyaConfig {
     public static final String CATEGORY_MENCISUO = "mcs";//门磁锁类型
     public static final String CATEGORY_SOS = "sos";//sos报警
     public static final String CATEGORY_SWITCH = "kg";//开关类型
+    public static final String CATEGORY_WNYKQ = "wnykq";//万能遥控器
+    public static final String CATEGORY_WSDCG = "wsdcg";//温湿度传感
 
     public static final String PRODUCTID_CAMERA_A = "aooci0uh0ufwuaey";//涂鸦智能摄像机
     public static final String PRODUCTID_CAMERA_B = "qw9quez5r4m8neyh";//涂鸦ipc摄像机
@@ -19,4 +21,5 @@ public class TuyaConfig {
     public static final String PRODUCTID_MENCISUO_SIG = "fxpkjapy";//涂鸦蓝牙门磁锁
     public static final String PRODUCTID_SWITCH_THREE = "ffgdh3tf";//涂鸦蓝牙三联开关
     public static final String PRODUCTID_SWITCH_TWO = "0qqmayhk";//涂鸦蓝牙二联开关
+    public static final String PRODUCTID_WSDCG = "pbevj5x2";//温湿度传感器
 }

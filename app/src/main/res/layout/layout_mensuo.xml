@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:background="@color/trans"
             app:srlTextSizeTime="10sp"
-            app:srlTextSizeTitle="@dimen/sp_12" />
+                app:srlTextSizeTitle="12sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rlv_list"

@@ -24,7 +24,7 @@
             app:mcv_leftArrowMask="@drawable/trajectory_calendar_prep"
             app:mcv_rightArrowMask="@drawable/trajectory_calendar_next"
             app:mcv_selectionColor="@color/white"
-            app:mcv_tileSize="@dimen/sp_12"
+            app:mcv_tileSize="12sp"
             app:mcv_tileHeight="35dp"
             app:mcv_tileWidth="45dp" />
     </RelativeLayout>

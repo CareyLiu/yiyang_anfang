@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlTextSizeTime="10sp"
-            app:srlTextSizeTitle="@dimen/sp_12" />
+                app:srlTextSizeTitle="12sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rlv_list"

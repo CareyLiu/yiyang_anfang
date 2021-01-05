@@ -30,6 +30,7 @@ import com.alibaba.baichuan.android.trade.callback.AlibcTradeInitCallback;
 
 import com.billy.android.loading.Gloading;
 import com.bulong.rudeness.RudenessScreenHelper;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.gson.Gson;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
@@ -50,6 +51,7 @@ import com.smarthome.magic.aakefudan.chat.MyMessageItemProvider;
 import com.smarthome.magic.activity.LoginActivity;
 import com.smarthome.magic.activity.WelcomeActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
+import com.smarthome.magic.activity.tuya_device.utils.BizBundleFamilyServiceImpl;
 import com.smarthome.magic.adapter.view.GlobalAdapter;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.CodeClass;
@@ -68,7 +70,13 @@ import com.smarthome.magic.util.JinChengUtils;
 import com.smarthome.magic.util.SerializeUtil;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.tuya.smart.api.router.UrlBuilder;
+import com.tuya.smart.api.service.RouteEventListener;
+import com.tuya.smart.api.service.ServiceEventListener;
+import com.tuya.smart.commonbiz.bizbundle.family.api.AbsBizBundleFamilyService;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.optimus.sdk.TuyaOptimusSdk;
+import com.tuya.smart.wrapper.api.TuyaWrapper;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
@@ -352,8 +360,28 @@ public class MyApplication extends MultiDexApplication {
     }
 
     private void initTuya() {//涂鸦智能家居
+//        TuyaHomeSdk.init(this);
+//        TuyaHomeSdk.setDebugMode(true);
+        Fresco.initialize(this);
         TuyaHomeSdk.init(this);
-        TuyaHomeSdk.setDebugMode(true);
+        TuyaWrapper.init(this, new RouteEventListener() {
+            @Override
+            public void onFaild(int errorCode, UrlBuilder urlBuilder) {
+                // urlBuilder.target is a router address, urlBuilder.params is a router params
+                // urlBuilder.target 目标路由， urlBuilder.params 路由参数
+                Log.e("router not implement", urlBuilder.target + urlBuilder.params.toString());
+            }
+        }, new ServiceEventListener() {
+            @Override
+            public void onFaild(String serviceName) {
+                Log.e("service not implement", serviceName);
+            }
+        });
+        TuyaOptimusSdk.init(this);
+
+        // register family service，mall bizbundle don't have to implement it.
+        // 注册家庭服务，商城业务包可以不注册此服务
+        TuyaWrapper.registerService(AbsBizBundleFamilyService.class, new BizBundleFamilyServiceImpl());
     }
 
     private void initRongYun() {

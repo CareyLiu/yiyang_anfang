@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
+import com.smarthome.magic.activity.tuya_device.TuyaBaseCameraDeviceActivity;
 import com.smarthome.magic.activity.tuya_device.TuyaBaseDeviceActivity;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaDeviceManagerTwo;
 import com.tuya.smart.sdk.bean.DeviceBean;
@@ -27,7 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CameraSetCunchuActivity extends TuyaBaseDeviceActivity implements ITuyaCameraDeviceControlCallback {
+public class CameraSetCunchuActivity extends TuyaBaseCameraDeviceActivity implements ITuyaCameraDeviceControlCallback {
 
     @BindView(R.id.tv_zongrongliang)
     TextView tv_zongrongliang;

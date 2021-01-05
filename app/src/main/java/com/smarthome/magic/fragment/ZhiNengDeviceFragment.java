@@ -28,6 +28,7 @@ import com.smarthome.magic.activity.ZhiNengRoomDeviceDetailAutoActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.camera.TuyaCameraActivity;
 import com.smarthome.magic.activity.tuya_device.device.DeviceChazuoActivity;
+import com.smarthome.magic.activity.tuya_device.device.DeviceMenciActivity;
 import com.smarthome.magic.activity.tuya_device.device.DeviceWgCzActivity;
 import com.smarthome.magic.activity.tuya_device.utils.TuyaConfig;
 import com.smarthome.magic.activity.tuya_device.device.DeviceWangguanActivity;
@@ -51,6 +52,9 @@ import com.smarthome.magic.mqtt_zhiling.ZnjjMqttMingLing;
 import com.smarthome.magic.tools.NetworkUtils;
 import com.smarthome.magic.util.GridAverageUIDecoration;
 import com.smarthome.magic.model.ZhiNengHomeBean;
+import com.tuya.smart.api.MicroContext;
+import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.panelcaller.api.AbsPanelCallerService;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
@@ -131,56 +135,56 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                         } else {
                             mqttMingLing = new ZnjjMqttMingLing(getActivity(), bean.getDevice_ccid_up(), bean.getServer_id());
 
-                                if (bean.getWork_state().equals("1")) {
-                                    mqttMingLing.setAction(bean.getDevice_ccid(), "02", new IMqttActionListener() {
-                                        @Override
-                                        public void onSuccess(IMqttToken asyncActionToken) {
-                                            //UIHelper.ToastMessage(mContext, "当前装置开启");
+                            if (bean.getWork_state().equals("1")) {
+                                mqttMingLing.setAction(bean.getDevice_ccid(), "02", new IMqttActionListener() {
+                                    @Override
+                                    public void onSuccess(IMqttToken asyncActionToken) {
+                                        //UIHelper.ToastMessage(mContext, "当前装置开启");
 
-                                            List<String> stringList = new ArrayList<>();
-                                            stringList.add(bean.getDevice_ccid());
-                                            stringList.add("2");
+                                        List<String> stringList = new ArrayList<>();
+                                        stringList.add(bean.getDevice_ccid());
+                                        stringList.add("2");
 
-                                            Notice notice = new Notice();
-                                            notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
-                                            notice.content = stringList;
-                                            Log.i("Rair", notice.content.toString());
-                                            RxBus.getDefault().sendRx(notice);
-                                        }
+                                        Notice notice = new Notice();
+                                        notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
+                                        notice.content = stringList;
+                                        Log.i("Rair", notice.content.toString());
+                                        RxBus.getDefault().sendRx(notice);
+                                    }
 
-                                        @Override
-                                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                                            UIHelper.ToastMessage(getActivity(), "未发送指令");
-                                        }
-                                    });
+                                    @Override
+                                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                                        UIHelper.ToastMessage(getActivity(), "未发送指令");
+                                    }
+                                });
 
-                                }
+                            }
 
-                                if (bean.getWork_state().equals("2")) {
+                            if (bean.getWork_state().equals("2")) {
 
-                                    mqttMingLing.setAction(bean.getDevice_ccid(), "01", new IMqttActionListener() {
-                                        @Override
-                                        public void onSuccess(IMqttToken asyncActionToken) {
-                                            //UIHelper.ToastMessage(mContext, "当前装置开启");
+                                mqttMingLing.setAction(bean.getDevice_ccid(), "01", new IMqttActionListener() {
+                                    @Override
+                                    public void onSuccess(IMqttToken asyncActionToken) {
+                                        //UIHelper.ToastMessage(mContext, "当前装置开启");
 
-                                            List<String> stringList = new ArrayList<>();
-                                            stringList.add(bean.getDevice_ccid());
-                                            stringList.add("1");
+                                        List<String> stringList = new ArrayList<>();
+                                        stringList.add(bean.getDevice_ccid());
+                                        stringList.add("1");
 
-                                            Notice notice = new Notice();
-                                            notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
-                                            notice.content = stringList;
-                                            Log.i("Rair", notice.content.toString());
-                                            RxBus.getDefault().sendRx(notice);
-                                        }
+                                        Notice notice = new Notice();
+                                        notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
+                                        notice.content = stringList;
+                                        Log.i("Rair", notice.content.toString());
+                                        RxBus.getDefault().sendRx(notice);
+                                    }
 
-                                        @Override
-                                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                                            UIHelper.ToastMessage(getActivity(), "未发送指令");
-                                        }
-                                    });
+                                    @Override
+                                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                                        UIHelper.ToastMessage(getActivity(), "未发送指令");
+                                    }
+                                });
 
-                                }
+                            }
 
                             break;
 
@@ -217,6 +221,9 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                             } else {
                                 DeviceChazuoActivity.actionStart(getActivity(), member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
                             }
+                        } else if (deviceBean.getDevice_type().equals(TuyaConfig.CATEGORY_WNYKQ)) {//万能遥控器
+                            AbsPanelCallerService service = MicroContext.getServiceManager().findServiceByInterface(AbsPanelCallerService.class.getName());
+                            service.goPanelWithCheckAndTip(getActivity(), deviceBean.getTy_device_ccid());
                         } else if (deviceBean.getDevice_type().equals(TuyaConfig.CATEGORY_WANGGUAN)) {//涂鸦网关
                             DeviceWangguanActivity.actionStart(getActivity(), member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
                         } else if (deviceBean.getDevice_type().equals("16")) {//窗帘

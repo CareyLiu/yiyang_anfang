@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             app:srlDrawableArrow="@drawable/mf_icon_anim"
             app:srlTextSizeTime="10sp"
-            app:srlTextSizeTitle="@dimen/sp_12" />
+                app:srlTextSizeTitle="12sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/swipe_target"
@@ -29,6 +29,6 @@
             android:layout_height="wrap_content"
             android:background="#ffeeeeee"
             app:srlTextSizeTime="10sp"
-            app:srlTextSizeTitle="@dimen/sp_12" />
+                app:srlTextSizeTitle="12sp" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

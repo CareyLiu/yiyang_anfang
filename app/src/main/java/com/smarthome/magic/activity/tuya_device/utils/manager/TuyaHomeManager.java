@@ -2,6 +2,8 @@ package com.smarthome.magic.activity.tuya_device.utils.manager;
 
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.utils.TuyaDialogUtils;
+import com.tuya.smart.api.service.MicroServiceManager;
+import com.tuya.smart.commonbiz.bizbundle.family.api.AbsBizBundleFamilyService;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.bean.HomeBean;
 import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
@@ -61,6 +63,9 @@ public class TuyaHomeManager {
                 Y.e("设置家庭成功了");
                 setHomeBean(bean);
                 setMesh();
+
+                AbsBizBundleFamilyService familyService = MicroServiceManager.getInstance().findServiceByInterface(AbsBizBundleFamilyService.class.getName());
+                familyService.setCurrentHomeId(homeId);
             }
 
             @Override
@@ -96,9 +101,11 @@ public class TuyaHomeManager {
         DeviceBean mineDeviceBean = null;
         if (homeBean != null) {
             List<DeviceBean> deviceList = homeBean.getDeviceList();
+
             for (int i = 0; i < deviceList.size(); i++) {
                 DeviceBean deviceBean = deviceList.get(i);
                 Y.e(" 綁定的设备 " + deviceBean.getName());
+                Y.e(deviceBean.getDevId());
 
                 if (devId.equals(deviceBean.getDevId())) {
                     mineDeviceBean = deviceBean;

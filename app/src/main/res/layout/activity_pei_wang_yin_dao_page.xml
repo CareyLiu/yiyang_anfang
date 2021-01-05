@@ -32,7 +32,7 @@
             android:id="@+id/tv_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_22"
+            android:layout_marginTop="22dp"
             android:includeFontPadding="false"
             android:text="打开手机“设置”-“无线局域网”，选取你家的Wi-Fi"
             android:textColor="#ff999999"

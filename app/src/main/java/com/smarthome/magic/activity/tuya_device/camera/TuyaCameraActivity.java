@@ -24,6 +24,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
+import com.smarthome.magic.activity.tuya_device.TuyaBaseCameraDeviceActivity;
 import com.smarthome.magic.activity.tuya_device.TuyaBaseDeviceActivity;
 import com.smarthome.magic.activity.tuya_device.camera.adapter.TuyaKongzhiAdapter;
 import com.smarthome.magic.activity.tuya_device.camera.model.TuyaKongzhiModel;
@@ -60,7 +61,7 @@ import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-public class TuyaCameraActivity extends TuyaBaseDeviceActivity implements View.OnClickListener, View.OnTouchListener {
+public class TuyaCameraActivity extends TuyaBaseCameraDeviceActivity implements View.OnClickListener, View.OnTouchListener {
 
     TuyaCameraView mVideoView;
     @BindView(R.id.rv_kongzhi)
@@ -171,8 +172,6 @@ public class TuyaCameraActivity extends TuyaBaseDeviceActivity implements View.O
                 }
             }
         });
-
-
     }
 
     private void set() {//移除设备
@@ -297,7 +296,7 @@ public class TuyaCameraActivity extends TuyaBaseDeviceActivity implements View.O
 
                 } else if (message.type == ConstanceValue.MSG_CAMERA_FAIL) {
                     TuyaDialogUtils.t(mContext, (String) message.content);
-                }else if (message.type == ConstanceValue.MSG_DEVICE_DELETE) {
+                } else if (message.type == ConstanceValue.MSG_DEVICE_DELETE) {
                     finish();
                 }
             }
@@ -614,7 +613,12 @@ public class TuyaCameraActivity extends TuyaBaseDeviceActivity implements View.O
                     dismissProgressDialog();
                     getQingxidu();
                     Map<String, Object> dps = TuyaDeviceManagerTwo.getDeviceManager().getDeviceBeen().getDps();
-                    isYinsi = (boolean) dps.get("105");
+                    Object o = dps.get("105");
+                    if (o == null) {
+                        isYinsi = false;
+                    } else {
+                        isYinsi = (boolean) o;
+                    }
                     if (isYinsi) {
                         setAdapterCanClikc(false);
                         mCameraP2P.disconnect(null);
@@ -944,7 +948,7 @@ public class TuyaCameraActivity extends TuyaBaseDeviceActivity implements View.O
     @Override
     protected void onResume() {
         super.onResume();
-        if (mCameraP2P != null&&!isYinsi) {
+        if (mCameraP2P != null && !isYinsi) {
             cameraConnect();
         }
     }

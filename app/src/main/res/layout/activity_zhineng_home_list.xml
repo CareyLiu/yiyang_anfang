@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:background="@color/trans"
             app:srlTextSizeTime="10sp"
-            app:srlTextSizeTitle="@dimen/sp_12" />
+                app:srlTextSizeTitle="12sp" />
 
         <LinearLayout
             android:layout_width="match_parent"

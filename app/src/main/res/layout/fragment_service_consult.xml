@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:srlTextSizeTime="10sp"
-                app:srlTextSizeTitle="@dimen/sp_12" />
+                    app:srlTextSizeTitle="12sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/lv_dangan"
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/bg_app"
                 app:srlTextSizeTime="10sp"
-                app:srlTextSizeTitle="@dimen/sp_12" />
+                    app:srlTextSizeTitle="12sp" />
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
         <include

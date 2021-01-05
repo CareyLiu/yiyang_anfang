@@ -633,7 +633,7 @@ public class DriveinfoActivity extends BaseActivity implements View.OnClickListe
 
                     @Override
                     public void onError(Response<AppResponse> response) {
-                        //   AlertUtil.t(MyShowDataBottomActivity.this, response.getException().getMessage());
+
                     }
                 });
 
@@ -704,7 +704,6 @@ public class DriveinfoActivity extends BaseActivity implements View.OnClickListe
 
                     @Override
                     public void onError(Response<AppResponse<OwnerInfo.DataBean>> response) {
-                        // AlertUtil.t(PartsInfoActivity.this, response.getException().getMessage());
                     }
                 });
     }

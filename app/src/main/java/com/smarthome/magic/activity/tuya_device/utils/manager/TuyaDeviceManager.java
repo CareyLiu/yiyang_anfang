@@ -43,7 +43,7 @@ public class TuyaDeviceManager {
         this.devId = deviceBean.getDevId();
         this.gson = new Gson();
 
-        Y.e("设备Id时多少 "+deviceBean.getDevId());
+        Y.e("设备Id时多少 " + deviceBean.getDevId());
 
         String schema = deviceBean.getSchema();
         Y.e("我是什么状态 " + deviceBean.getIsOnline());
@@ -108,25 +108,29 @@ public class TuyaDeviceManager {
     }
 
     public void device_removed(Activity mActivity) {
-        TuyaTishiDialog dialog = new TuyaTishiDialog(mActivity, new TuyaTishiDialog.TishiDialogListener() {
-            @Override
-            public void onClickCancel(View v, TuyaTishiDialog dialog) {
+        try {
+            TuyaTishiDialog dialog = new TuyaTishiDialog(mActivity, new TuyaTishiDialog.TishiDialogListener() {
+                @Override
+                public void onClickCancel(View v, TuyaTishiDialog dialog) {
 
-            }
+                }
 
-            @Override
-            public void onClickConfirm(View v, TuyaTishiDialog dialog) {
+                @Override
+                public void onClickConfirm(View v, TuyaTishiDialog dialog) {
 
-            }
+                }
 
-            @Override
-            public void onDismiss(TuyaTishiDialog dialog) {
-                mActivity.finish();
-            }
-        });
-        dialog.setTextCont("设备已被移除");
-        dialog.setTextConfirm("确定");
-        dialog.setTextCancel("");
-        dialog.show();
+                @Override
+                public void onDismiss(TuyaTishiDialog dialog) {
+                    mActivity.finish();
+                }
+            });
+            dialog.setTextCont("设备已被移除");
+            dialog.setTextConfirm("确定");
+            dialog.setTextCancel("");
+            dialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -113,13 +113,10 @@ public class HeaterSettingActivity extends BaseActivity {
                 startActivity(new Intent(this, UserInfoActivity.class));
                 break;
             case R.id.item_parts:
-                // startActivity(new Intent(this, PartsInfoActivity.class));
-
                 DriveinfoActivity.actionStart(this);
                 break;
             case R.id.item_ratio://风油比参数
                 ServerPassWordActivity.actionStart(this, "RatioActivity");
-                //startActivity(new Intent(this, RatioActivity.class));
                 break;
             case R.id.item_host:
                 if (version.equals("2019")) {

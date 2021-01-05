@@ -42,7 +42,9 @@ import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
+import com.tuya.smart.api.MicroContext;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.panelcaller.api.AbsPanelCallerService;
 import com.tuya.smart.sdk.api.IDevListener;
 import com.tuya.smart.sdk.api.ISubDevListener;
 import com.tuya.smart.sdk.api.ITuyaDevice;
@@ -308,14 +310,13 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
 
                     Y.e("device_type:" + device_type + "  device_category:" + device_category + "  device_category_code:" + device_category_code);
 
-                    TuyaHomeManager.getHomeManager().isHaveDevice(deviceBean.getTy_device_ccid());
-
                     if (device_type.equals(TuyaConfig.CATEGORY_MENCI)) {
                         DeviceMenciActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
                     } else if (device_type.equals(TuyaConfig.CATEGORY_MENCISUO)) {
                         DeviceMenciActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
-                    } else if (device_type.equals(TuyaConfig.CATEGORY_SOS)) {
-
+                    } else if (device_type.equals(TuyaConfig.CATEGORY_WSDCG)) {
+                        AbsPanelCallerService service = MicroContext.getServiceManager().findServiceByInterface(AbsPanelCallerService.class.getName());
+                        service.goPanelWithCheckAndTip(DeviceWgCzActivity.this, deviceBean.getTy_device_ccid());
                     } else if (device_type.equals(TuyaConfig.CATEGORY_SWITCH)) {
                         if (device_category.equals(TuyaConfig.PRODUCTID_SWITCH_THREE)) {
                             DeviceSwitchThreeActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
@@ -323,7 +324,8 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
                             DeviceSwitchTwoActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
                         }
                     } else {
-
+                        AbsPanelCallerService service = MicroContext.getServiceManager().findServiceByInterface(AbsPanelCallerService.class.getName());
+                        service.goPanelWithCheckAndTip(DeviceWgCzActivity.this, deviceBean.getTy_device_ccid());
                     }
                 }
             }

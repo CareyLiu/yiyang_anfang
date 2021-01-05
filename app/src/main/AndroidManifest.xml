@@ -66,8 +66,8 @@
         android:roundIcon="@mipmap/logi_icon"
         android:sharedUserId="android.uid.system"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        tools:replace="android:allowBackup,android:supportsRtl">
+        android:theme="@style/Base_BizBundle_Theme"
+        tools:replace="android:theme,android:allowBackup,android:supportsRtl">
 
         <!-- 涂鸦验证 -->
         <meta-data
@@ -121,14 +121,7 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="c4fa107f21600a897caa2d5417c2f8a5" /> <!-- <provider -->
-        <!-- android:name="androidx.core.content.FileProvider" -->
-        <!-- android:authorities="com.smarthome.magic.FileProvider" -->
-        <!-- android:exported="false" -->
-        <!-- android:grantUriPermissions="true"> -->
-        <!-- <meta-data -->
-        <!-- android:name="android.support.FILE_PROVIDER_PATHS" -->
-        <!-- android:resource="@xml/rc_file_path" /> -->
-        <!-- </provider> -->
+
         <service android:name="com.amap.api.location.APSService" />
         <service android:name=".service.DownLoadApkService" />
         <service
@@ -144,11 +137,15 @@
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.smarthome.magic.fileprovider"
             android:exported="false"
+            tools:replace="android:authorities"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
+                tools:replace="android:resource"
                 android:resource="@xml/file_paths" />
-        </provider> <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" -->
+        </provider>
+
+        <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" -->
         <activity
             android:name=".activity.SplashActivity"
             android:configChanges="keyboardHidden|orientation|fontScale|screenSize"
@@ -231,11 +228,6 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activity.UserInfoActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.PartsInfoActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
@@ -401,9 +393,6 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".dialog.MyCarCaoZuoDialog_Notify_Activity"
-            android:theme="@android:style/Theme.Translucent" />
-        <activity
-            android:name=".activity.MyShowDataBottomActivity"
             android:theme="@android:style/Theme.Translucent" />
         <activity
             android:name=".activity.taokeshagncheng.GoodsActivity"

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
+import com.smarthome.magic.activity.tuya_device.TuyaBaseCameraDeviceActivity;
 import com.smarthome.magic.activity.tuya_device.TuyaBaseDeviceActivity;
 import com.smarthome.magic.activity.tuya_device.camera.adapter.TuyaXiangceAdapter;
 import com.smarthome.magic.activity.tuya_device.camera.model.TuyaFilesModel;
@@ -26,7 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CameraXiangceActivity extends TuyaBaseDeviceActivity {
+public class CameraXiangceActivity extends TuyaBaseCameraDeviceActivity {
 
     @BindView(R.id.rv_content)
     RecyclerView rv_content;

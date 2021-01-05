@@ -88,12 +88,12 @@ public class TuyaDeviceManagerTwo implements IDevListener {
      */
     @Override
     public void onDpUpdate(String devId, String dpStr) {
-//        Y.e("Dp点数据更新啦:" + devId + " | " + dpStr);
-//        Notice notice = new Notice();
-//        notice.type = ConstanceValue.MSG_DEVICE_DATA;
-//        notice.content = dpStr;
-//        notice.devId = devId;
-//        RxBus.getDefault().sendRx(notice);
+        Y.e("Dp点数据更新啦:" + devId + " | " + dpStr);
+        Notice notice = new Notice();
+        notice.type = ConstanceValue.MSG_DEVICE_DATA;
+        notice.content = dpStr;
+        notice.devId = devId;
+        RxBus.getDefault().sendRx(notice);
     }
 
     /**

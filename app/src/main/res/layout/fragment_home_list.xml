@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlTextSizeTime="10sp"
-            app:srlTextSizeTitle="@dimen/sp_12" />
+                app:srlTextSizeTitle="12sp" />
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nsl_scollview"
@@ -76,7 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlTextSizeTime="10sp"
-            app:srlTextSizeTitle="@dimen/sp_12" />
+                app:srlTextSizeTitle="12sp" />
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

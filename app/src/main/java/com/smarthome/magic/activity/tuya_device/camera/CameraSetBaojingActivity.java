@@ -11,6 +11,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
+import com.smarthome.magic.activity.tuya_device.TuyaBaseCameraDeviceActivity;
 import com.smarthome.magic.activity.tuya_device.TuyaBaseDeviceActivity;
 import com.smarthome.magic.activity.tuya_device.device.tongyong.DeviceDingshiActivity;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaDeviceManagerTwo;
@@ -31,7 +32,7 @@ import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-public class CameraSetBaojingActivity extends TuyaBaseDeviceActivity {
+public class CameraSetBaojingActivity extends TuyaBaseCameraDeviceActivity {
 
 
     @BindView(R.id.iv_yidong_baojing)

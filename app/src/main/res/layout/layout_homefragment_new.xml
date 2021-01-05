@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             app:srlTextSizeTime="10sp"
-            app:srlTextSizeTitle="@dimen/sp_12" />
+                app:srlTextSizeTitle="12sp" />
 
         <com.smarthome.magic.view.ObservableScrollView
             android:id="@+id/scrollView"
@@ -77,7 +77,7 @@
                         android:id="@+id/iv_home_xiaoxi"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:layout_marginRight="@dimen/dp_14"
+                        android:layout_marginRight="14dp"
                         android:src="@mipmap/yuyinzhushou_nav_icon_mai_bk"
                         android:visibility="visible"
                         app:layout_constraintBottom_toBottomOf="@+id/iv_logo"
@@ -416,7 +416,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlTextSizeTime="10sp"
-            app:srlTextSizeTitle="@dimen/sp_12" />
+                app:srlTextSizeTitle="12sp" />
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

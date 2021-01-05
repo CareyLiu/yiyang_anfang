@@ -17,7 +17,7 @@ import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.ZhiNengRoomManageActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
-import com.smarthome.magic.activity.tuya_device.TuyaBaseDeviceActivity;
+import com.smarthome.magic.activity.tuya_device.TuyaBaseCameraDeviceActivity;
 import com.smarthome.magic.activity.tuya_device.dialog.TuyaBottomDialog;
 import com.smarthome.magic.activity.tuya_device.dialog.TuyaBottomDialogView;
 import com.smarthome.magic.activity.tuya_device.dialog.TuyaTishiDialog;
@@ -55,7 +55,7 @@ import rx.functions.Action1;
 
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
-public class CameraSetActivity extends TuyaBaseDeviceActivity {
+public class CameraSetActivity extends TuyaBaseCameraDeviceActivity {
 
 
     @BindView(R.id.ll_device_info)
@@ -84,6 +84,8 @@ public class CameraSetActivity extends TuyaBaseDeviceActivity {
     ImageView iv_switch_yinsi;
     @BindView(R.id.ll_other_view)
     LinearLayout ll_other_view;
+    @BindView(R.id.ll_yinsi_mode)
+    LinearLayout ll_yinsi_mode;
     private ITuyaDevice device;
     private DeviceBean deviceBeen;
     private String yeshiPos;
@@ -165,8 +167,13 @@ public class CameraSetActivity extends TuyaBaseDeviceActivity {
         } else if (yeshiPos.equals("1")) {
             tv_yeshi.setText("关闭");
         }
-
-        isYinsi = (boolean) dps.get("105");
+        Object o = dps.get("105");
+        if (o != null) {
+            isYinsi = (boolean) o;
+        } else {
+            isYinsi = false;
+            ll_yinsi_mode.setVisibility(View.GONE);
+        }
         if (isYinsi) {
             iv_switch_yinsi.setImageResource(R.mipmap.switch_open);
             ll_other_view.setVisibility(View.GONE);

@@ -134,7 +134,6 @@ dependencies {
     implementation 'com.flyco.animation:FlycoAnimation_Lib:1.0.0@aar'
     implementation 'com.nineoldandroids:library:2.4.0'
     implementation 'com.makeramen:roundedimageview:2.2.1'
-    implementation 'com.github.jdsjlzx:LRecyclerView:1.5.0'
     implementation 'com.youth.banner:banner:1.4.10'
     implementation 'com.github.pinguo-zhouwei:CustomPopwindow:2.1.1'
 
@@ -234,13 +233,8 @@ dependencies {
     /*一个扩展原生控件支持圆角矩形框背景的库,可以减少相关shape资源文*/
     implementation 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
     implementation 'com.czp.arcProgressBar:ArcProgressBar:1.0.1'
-    implementation 'com.github.open-android:WheelPicker:v1.0.0'
-
-    //
 
     //支付宝（可选）
-
-    //  implementation 'com.alipay.android.app.cashier:standardcashier-single:15.6.5@aar'
     compileOnly 'com.alipay.mobile.android.securitysdk:apsecuritysdk-all:3.3.0'
 
     //登陆
@@ -332,9 +326,6 @@ dependencies {
     // 此处以JCore 2.4.2 版本为例。
     implementation 'com.bulong.rudeness:rudeness:latest.release@aar'
 
-    //涂鸦sdk
-    implementation 'com.tuya.smart:tuyasmart:3.20.0'
-
     //涂鸦摄像头
     implementation 'com.tuya.smart:tuyasmart-ipc-camera-middleware:3.20.0'
     implementation 'com.tuya.smart:tuyasmart-ipc-camera-v2:3.20.0'
@@ -350,5 +341,8 @@ dependencies {
     implementation files('libs\\umeng-asms-armeabi-v1.1.4.aar')
     implementation files('libs\\aranger-1.0.6.jar')
     implementation files('libs/Msc.jar')
+    implementation project(path: ':LRecyclerview_library')
 
+    implementation 'com.tuya.smart:tuyasmart:3.22.0'
+    implementation 'com.tuya.smart:tuyasmart-bizbundle-panel:3.22.0-5'
 }

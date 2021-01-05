@@ -122,34 +122,41 @@
                 android:background="@color/line" />
 
             <LinearLayout
+                android:id="@+id/ll_yinsi_mode"
                 android:layout_width="match_parent"
-                android:layout_height="92pt"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="31pt">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="12pt"
-                    android:layout_weight="1"
-                    android:includeFontPadding="false"
-                    android:text="隐私模式"
-                    android:textColor="@color/color_3"
-                    android:textSize="31pt"
-                    android:textStyle="bold" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="92pt"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="31pt">
 
-                <ImageView
-                    android:id="@+id/iv_switch_yinsi"
-                    android:layout_width="102pt"
-                    android:layout_height="62pt"
-                    android:src="@mipmap/switch_open" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="12pt"
+                        android:layout_weight="1"
+                        android:includeFontPadding="false"
+                        android:text="隐私模式"
+                        android:textColor="@color/color_3"
+                        android:textSize="31pt"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/iv_switch_yinsi"
+                        android:layout_width="102pt"
+                        android:layout_height="62pt"
+                        android:src="@mipmap/switch_open" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1pt"
+                    android:background="@color/line" />
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1pt"
-                android:background="@color/line" />
 
             <LinearLayout
                 android:id="@+id/ll_other_view"

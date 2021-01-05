@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
+import com.smarthome.magic.activity.tuya_device.TuyaBaseCameraDeviceActivity;
 import com.smarthome.magic.activity.tuya_device.TuyaBaseDeviceActivity;
 import com.smarthome.magic.activity.tuya_device.dialog.TuyaBottomDialogView;
 import com.smarthome.magic.activity.tuya_device.dialog.TuyaBottomDialog;
@@ -60,7 +61,7 @@ import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-public class CameraSetJichuActivity extends TuyaBaseDeviceActivity {
+public class CameraSetJichuActivity extends TuyaBaseCameraDeviceActivity {
 
     @BindView(R.id.iv_switch_huamian)
     ImageView iv_switch_huamian;

@@ -17,7 +17,7 @@
             android:background="@color/white"
             app:srlDrawableArrow="@drawable/mf_icon_anim"
             app:srlTextSizeTime="10sp"
-            app:srlTextSizeTitle="@dimen/sp_12" />
+                app:srlTextSizeTitle="12sp" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -92,7 +92,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/dp_14"
+                        android:layout_marginRight="14dp"
                         android:src="@mipmap/push_gray_999"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
@@ -242,7 +242,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:orientation="vertical"
-                    android:paddingBottom="@dimen/dp_14">
+                    android:paddingBottom="14dp">
 
 
                 </LinearLayout>
@@ -264,7 +264,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dp_14">
+            android:layout_marginRight="14dp">
 
             <TextView
                 android:id="@+id/tv_quzhifu"

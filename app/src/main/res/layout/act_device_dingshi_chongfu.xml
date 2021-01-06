@@ -10,10 +10,12 @@
         android:layout_height="92pt"
         android:gravity="center_vertical"
         android:paddingHorizontal="31pt"
-        android:text="定时可能会存在30秒左右误差"
+        android:text="不勾选将默认只执行一次"
         android:textColor="@color/color_9"
         android:textSize="27pt" />
 
-
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_chongfu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

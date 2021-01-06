@@ -26,5 +26,4 @@
             android:layout_height="40pt"
             android:src="@mipmap/kaquan_select_n" />
     </LinearLayout>
-
 </LinearLayout>

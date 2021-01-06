@@ -138,4 +138,18 @@
         android:layout_width="match_parent"
         android:layout_height="1pt"
         android:background="@color/line" />
+
+
+    <TextView
+        android:id="@+id/bt_delete"
+        android:layout_width="match_parent"
+        android:layout_height="92pt"
+        android:layout_marginTop="64pt"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="删除"
+        android:textColor="@color/text_red"
+        android:textSize="31pt"
+        android:textStyle="bold"
+        android:visibility="gone" />
 </LinearLayout>

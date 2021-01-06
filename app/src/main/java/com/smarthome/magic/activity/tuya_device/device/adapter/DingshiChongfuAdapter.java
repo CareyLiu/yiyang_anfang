@@ -26,5 +26,7 @@ public class DingshiChongfuAdapter extends BaseQuickAdapter<DingshiModel, BaseVi
         } else {
             iv_select.setImageResource(R.mipmap.kaquan_select_n);
         }
+
+        helper.setText(R.id.tv_xingqi, item.getXingqi());
     }
 }

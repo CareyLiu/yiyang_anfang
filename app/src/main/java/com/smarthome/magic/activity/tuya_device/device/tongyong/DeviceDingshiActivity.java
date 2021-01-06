@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.TuyaBaseDeviceActivity;
@@ -16,11 +17,14 @@ import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.tuya.smart.android.device.enums.TimerDeviceTypeEnum;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.home.sdk.constant.TimerUpdateEnum;
+import com.tuya.smart.sdk.api.IResultCallback;
 import com.tuya.smart.sdk.api.ITuyaDataCallback;
 import com.tuya.smart.sdk.bean.Timer;
 import com.tuya.smart.sdk.bean.TimerTask;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -92,11 +96,11 @@ public class DeviceDingshiActivity extends TuyaBaseDeviceActivity {
         productId = TuyaDeviceManager.getDeviceManager().getDeviceBeen().getProductId();
         initAdapter();
         initHuidiao();
+        showProgressDialog();
         getDingshi();
     }
 
     private void getDingshi() {
-        showProgressDialog();
         TuyaHomeSdk.getTimerInstance().getTimerList(null, devId, TimerDeviceTypeEnum.DEVICE, new ITuyaDataCallback<TimerTask>() {
             @Override
             public void onSuccess(TimerTask timerTask) {
@@ -126,9 +130,24 @@ public class DeviceDingshiActivity extends TuyaBaseDeviceActivity {
     }
 
     private void initAdapter() {
-        adapter = new DingshiAdapter(R.layout.item_tuya_dingshi, timerList,productId);
+        adapter = new DingshiAdapter(R.layout.item_tuya_dingshi, timerList, productId);
         rv_content.setLayoutManager(new LinearLayoutManager(mContext));
         rv_content.setAdapter(adapter);
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Timer timer = timerList.get(position);
+                TuyaDeviceManager.getDeviceManager().setTimer(timer);
+                DeviceDingshiEditActivity.actionStart(mContext);
+            }
+        });
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+
+                setDingshiqi(position);
+            }
+        });
     }
 
     private void initHuidiao() {
@@ -150,5 +169,38 @@ public class DeviceDingshiActivity extends TuyaBaseDeviceActivity {
                 DeviceDingshiSetActivity.actionStart(mContext);
                 break;
         }
+    }
+
+
+    private void setDingshiqi(int position) {
+        Timer timer = timerList.get(position);
+        String timeId = timer.getTimerId();
+        int status = timer.getStatus();
+
+        TimerUpdateEnum timerUpdateEnum;
+        if (status == 1) {
+            timerUpdateEnum = TimerUpdateEnum.CLOSE;
+            status = 0;
+        } else {
+            timerUpdateEnum = TimerUpdateEnum.OPEN;
+            status = 1;
+        }
+
+        List<String> list = new ArrayList<>();
+        list.add(timeId);
+        int finalStatus = status;
+        TuyaHomeSdk.getTimerInstance().updateTimerStatus(devId, TimerDeviceTypeEnum.DEVICE, list, timerUpdateEnum, new IResultCallback() {
+            @Override
+            public void onError(String code, String error) {
+                Y.t("操作失败:" + error);
+            }
+
+            @Override
+            public void onSuccess() {
+                timer.setStatus(finalStatus);
+                timerList.set(position, timer);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 }

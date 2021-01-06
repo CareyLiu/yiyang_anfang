@@ -1,5 +1,6 @@
 package com.smarthome.magic.activity.tuya_device.device.tongyong;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
@@ -16,6 +19,7 @@ import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.google.gson.Gson;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.ZhiNengFamilyManageDetailActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.TuyaBaseDeviceActivity;
 import com.smarthome.magic.activity.tuya_device.device.model.DpsTimeModel;
@@ -25,18 +29,22 @@ import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaDeviceManager;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
+import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuoTIshi;
 import com.tuya.smart.android.device.builder.TuyaTimerBuilder;
 import com.tuya.smart.android.device.enums.TimerDeviceTypeEnum;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.constant.TimerUpdateEnum;
 import com.tuya.smart.sdk.api.IResultCallback;
 import com.tuya.smart.sdk.bean.DeviceBean;
+import com.tuya.smart.sdk.bean.Timer;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,8 +52,7 @@ import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-public class DeviceDingshiSetActivity extends TuyaBaseDeviceActivity {
-
+public class DeviceDingshiEditActivity extends TuyaBaseDeviceActivity {
 
     @BindView(R.id.tv_time)
     TextView tv_time;
@@ -63,6 +70,8 @@ public class DeviceDingshiSetActivity extends TuyaBaseDeviceActivity {
     TextView tv_dps_value;
     @BindView(R.id.ll_dps_kongzhi)
     LinearLayout ll_dps_kongzhi;
+    @BindView(R.id.bt_delete)
+    TextView bt_delete;
 
 
     private TimePickerView timePicker;
@@ -76,12 +85,17 @@ public class DeviceDingshiSetActivity extends TuyaBaseDeviceActivity {
     private Object value;
     private String time;
     private String loops;
+    private long timerId;
+    private int status;
+
+    private Timer beenTimer;
+
 
     /**
      * 用于其他Activty跳转到该Activity
      */
     public static void actionStart(Context context) {
-        Intent intent = new Intent(context, DeviceDingshiSetActivity.class);
+        Intent intent = new Intent(context, DeviceDingshiEditActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
@@ -129,7 +143,7 @@ public class DeviceDingshiSetActivity extends TuyaBaseDeviceActivity {
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
         init();
-        initPeizhi();
+//        initPeizhi();
         initHuidiao();
     }
 
@@ -139,78 +153,131 @@ public class DeviceDingshiSetActivity extends TuyaBaseDeviceActivity {
             public void call(Notice message) {
                 if (message.type == ConstanceValue.MSG_DEVICE_DINGSHI_CHONGFU) {
                     loops = message.content.toString();
-                    Y.e("设置重复成功过" + loops);
-
-                    if (loops.equals("0000000")) {
-                        tv_chongfu.setText("仅限一次");
-                    } else if (loops.equals("1111111")) {
-                        tv_chongfu.setText("每天");
-                    } else {
-                        String week_0 = loops.substring(0, 1);
-                        String week_1 = loops.substring(1, 2);
-                        String week_2 = loops.substring(2, 3);
-                        String week_3 = loops.substring(3, 4);
-                        String week_4 = loops.substring(4, 5);
-                        String week_5 = loops.substring(5, 6);
-                        String week_6 = loops.substring(6);
-
-                        String chongfuText = "";
-                        if (week_0.equals("1")) {
-                            chongfuText = chongfuText + "周日 ";
-                        }
-                        if (week_1.equals("1")) {
-                            chongfuText = chongfuText + "周一 ";
-                        }
-                        if (week_2.equals("1")) {
-                            chongfuText = chongfuText + "周二 ";
-                        }
-                        if (week_3.equals("1")) {
-                            chongfuText = chongfuText + "周三 ";
-                        }
-                        if (week_4.equals("1")) {
-                            chongfuText = chongfuText + "周四 ";
-                        }
-                        if (week_5.equals("1")) {
-                            chongfuText = chongfuText + "周五 ";
-                        }
-                        if (week_6.equals("1")) {
-                            chongfuText = chongfuText + "周六 ";
-                        }
-                        tv_chongfu.setText(chongfuText);
-                    }
+                    setLoops();
                 }
             }
         }));
     }
 
-
     private void init() {
+        bt_delete.setVisibility(View.VISIBLE);
+
         DeviceBean deviceBeen = TuyaDeviceManager.getDeviceManager().getDeviceBeen();
         devId = deviceBeen.getDevId();
         productId = deviceBeen.getProductId();
         category = deviceBeen.getProductBean().getCategory();
+        beenTimer = TuyaDeviceManager.getDeviceManager().getTimer();
 
-        time = "00:00";
-        loops = "0000000";
+        time = beenTimer.getTime();
+        loops = beenTimer.getLoops();
+        status = beenTimer.getStatus();
+        timerId = Y.getLong(beenTimer.getTimerId());
+        String timerValue = beenTimer.getValue();
+        String remark = beenTimer.getRemark();
+
+        tv_time.setText(time);
+        tv_beizhu.setText(remark);
+
+        setLoops();
+        getData(timerValue);
     }
 
-    private void initPeizhi() {
+    private void setLoops() {
+        if (loops.equals("0000000")) {
+            tv_chongfu.setText("仅限一次");
+        } else if (loops.equals("1111111")) {
+            tv_chongfu.setText("每天");
+        } else {
+            String week_0 = loops.substring(0, 1);
+            String week_1 = loops.substring(1, 2);
+            String week_2 = loops.substring(2, 3);
+            String week_3 = loops.substring(3, 4);
+            String week_4 = loops.substring(4, 5);
+            String week_5 = loops.substring(5, 6);
+            String week_6 = loops.substring(6);
+
+            String chongfuText = "";
+            if (week_0.equals("1")) {
+                chongfuText = chongfuText + "周日 ";
+            }
+            if (week_1.equals("1")) {
+                chongfuText = chongfuText + "周一 ";
+            }
+            if (week_2.equals("1")) {
+                chongfuText = chongfuText + "周二 ";
+            }
+            if (week_3.equals("1")) {
+                chongfuText = chongfuText + "周三 ";
+            }
+            if (week_4.equals("1")) {
+                chongfuText = chongfuText + "周四 ";
+            }
+            if (week_5.equals("1")) {
+                chongfuText = chongfuText + "周五 ";
+            }
+            if (week_6.equals("1")) {
+                chongfuText = chongfuText + "周六 ";
+            }
+            tv_chongfu.setText(chongfuText);
+        }
+    }
+
+    public void getData(String dpStr) {
+        JSONObject jsonObject = JSON.parseObject(dpStr);
+        Set<String> strings = jsonObject.keySet();
+        Iterator<String> it = strings.iterator();
+        while (it.hasNext()) {
+            // 获得key
+            String key = it.next();
+            Object value = jsonObject.get(key);
+            jieData(key, value);
+        }
+    }
+
+    public void jieData(String dpsId, Object value) {
+        this.dpsId = dpsId;
+        this.value = value;
         switch (productId) {
             case TuyaConfig.PRODUCTID_CAMERA_A:
             case TuyaConfig.PRODUCTID_CAMERA_B:
-                dpsId = "119";
-                value = true;
                 break;
             case TuyaConfig.PRODUCTID_CHAZUO_A:
             case TuyaConfig.PRODUCTID_CHAZUO_B:
             case TuyaConfig.PRODUCTID_CHAZUO_WG:
-                setChazuo("开启");
+                tv_dps_key.setText("开关");
+                if ((boolean) value) {
+                    tv_dps_value.setText("开启");
+                } else {
+                    tv_dps_value.setText("关闭");
+                }
                 break;
             case TuyaConfig.PRODUCTID_SWITCH_THREE:
-                setSwitch("右键", "开启");
+                initSwitchThree();
                 break;
-
         }
+
+    }
+
+    private void initSwitchThree() {
+        tv_dps_key.setText("开关");
+        String kongzhiName = "";
+        if (dpsId.equals("1")) {
+            kongzhiName = "右键";
+        } else if (dpsId.equals("2")) {
+            kongzhiName = "中键";
+        } else if (dpsId.equals("3")) {
+            kongzhiName = "左键";
+        }
+
+        String kongzhi = "";
+        if ((boolean) value) {
+            kongzhi = "开启";
+        } else {
+            kongzhi = "关闭";
+        }
+
+        tv_dps_value.setText(kongzhiName + ":" + kongzhi);
+        tv_dps_value.setText(kongzhiName + ":" + kongzhi);
     }
 
     private void setSwitch(String kongzhiName, String kongzhi) {
@@ -252,18 +319,19 @@ public class DeviceDingshiSetActivity extends TuyaBaseDeviceActivity {
         DpsTimeModel model = new DpsTimeModel(map, time);
         dps = new Gson().toJson(model);
         String beizhu = tv_beizhu.getText().toString();
-        Y.e("设置的dps是多少   " + dps + "    " + loops + "  " + beizhu);
+        Y.e("设置的dps是多少   " + dps + "    " + loops + "  " + beizhu + "  " + timerId + "    " + devId);
         TuyaTimerBuilder builder = new TuyaTimerBuilder.Builder()
+                .timerId(timerId)
                 .taskName("")
                 .devId(devId)
                 .deviceType(TimerDeviceTypeEnum.DEVICE)
                 .actions(dps)
                 .loops(loops)
                 .aliasName(beizhu)
-                .status(1)
+                .status(status)
                 .appPush(false)
                 .build();
-        TuyaHomeSdk.getTimerInstance().addTimer(builder, new IResultCallback() {
+        TuyaHomeSdk.getTimerInstance().updateTimer(builder, new IResultCallback() {
             @Override
             public void onSuccess() {
                 dismissProgressDialog();
@@ -282,7 +350,7 @@ public class DeviceDingshiSetActivity extends TuyaBaseDeviceActivity {
         });
     }
 
-    @OnClick({R.id.tv_time, R.id.ll_chongfu, R.id.ll_beizhu, R.id.ll_dps_kongzhi})
+    @OnClick({R.id.bt_delete, R.id.tv_time, R.id.ll_chongfu, R.id.ll_beizhu, R.id.ll_dps_kongzhi})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_time:
@@ -294,10 +362,49 @@ public class DeviceDingshiSetActivity extends TuyaBaseDeviceActivity {
             case R.id.ll_beizhu:
                 clickBeizhu();
                 break;
+            case R.id.bt_delete:
+                clickDelect();
+                break;
             case R.id.ll_dps_kongzhi:
                 clickKongzhi();
                 break;
         }
+    }
+
+    private void clickDelect() {
+        MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(mContext,
+                "提示", "确定要删除定时任务？", "取消", "确定", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+            @Override
+            public void clickLeft() {
+
+            }
+
+            @Override
+            public void clickRight() {
+                deleteDingshi();
+            }
+        });
+        myCarCaoZuoDialog_caoZuoTIshi.show();
+    }
+
+    private void deleteDingshi() {
+        List<String> list = new ArrayList<>();
+        list.add(timerId + "");
+        TuyaHomeSdk.getTimerInstance().updateTimerStatus(devId, TimerDeviceTypeEnum.DEVICE, list, TimerUpdateEnum.DELETE, new IResultCallback() {
+            @Override
+            public void onError(String code, String error) {
+                Y.t("删除失败了啊:" + error);
+            }
+
+            @Override
+            public void onSuccess() {
+                Y.e("删除成功了啊");
+                Notice notice = new Notice();
+                notice.type = ConstanceValue.MSG_DEVICE_DINGSHI;
+                RxBus.getDefault().sendRx(notice);
+                finish();
+            }
+        });
     }
 
     private void clickKongzhi() {
@@ -405,5 +512,5 @@ public class DeviceDingshiSetActivity extends TuyaBaseDeviceActivity {
                 .build();
         timePicker.show();
     }
- }
+}
 

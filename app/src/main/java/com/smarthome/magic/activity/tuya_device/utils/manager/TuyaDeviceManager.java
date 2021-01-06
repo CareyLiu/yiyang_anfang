@@ -16,6 +16,7 @@ import com.tuya.smart.sdk.api.IDevListener;
 import com.tuya.smart.sdk.api.IResultCallback;
 import com.tuya.smart.sdk.api.ITuyaDevice;
 import com.tuya.smart.sdk.bean.DeviceBean;
+import com.tuya.smart.sdk.bean.Timer;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -28,6 +29,7 @@ public class TuyaDeviceManager {
     private DeviceBean deviceBean;
     private String devId;
     private Gson gson;
+    private Timer timer;
 
     private int p2pType;
 
@@ -132,5 +134,13 @@ public class TuyaDeviceManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public Timer getTimer() {
+        return timer;
+    }
+
+    public void setTimer(Timer timer) {
+        this.timer = timer;
     }
 }

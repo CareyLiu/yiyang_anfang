@@ -137,12 +137,12 @@
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.smarthome.magic.fileprovider"
             android:exported="false"
-            tools:replace="android:authorities"
-            android:grantUriPermissions="true">
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                tools:replace="android:resource"
-                android:resource="@xml/file_paths" />
+                android:resource="@xml/file_paths"
+                tools:replace="android:resource" />
         </provider>
 
         <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" -->
@@ -1401,6 +1401,22 @@
         <!-- 涂鸦定时设置 -->
         <activity
             android:name=".activity.tuya_device.device.tongyong.DeviceDingshiSetActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦定时设置 -->
+        <activity
+            android:name=".activity.tuya_device.device.tongyong.DeviceDingshiEditActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦定时设置重复 -->
+        <activity
+            android:name=".activity.tuya_device.device.tongyong.DeviceDingshiChongfuActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"

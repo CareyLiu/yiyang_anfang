@@ -38,6 +38,7 @@ allprojects {
         maven { url "https://dl.bintray.com/rongcloud/maven" }
         maven { url "https://dl.bintray.com/jetbrains/anko" }
         maven { url 'https://dl.bintray.com/umsdk/release' }
+
     }
 }
 

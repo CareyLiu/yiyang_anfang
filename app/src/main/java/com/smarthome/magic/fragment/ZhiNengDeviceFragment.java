@@ -218,7 +218,10 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                                 UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
                             }
                         } else if (deviceBean.getDevice_type().equals(TuyaConfig.CATEGORY_CAMERA)) {//涂鸦摄像机
-                            TuyaCameraActivity.actionStart(getActivity(), member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
+                            AbsPanelCallerService service = MicroContext.getServiceManager().findServiceByInterface(AbsPanelCallerService.class.getName());
+                            service.goPanelWithCheckAndTip(getActivity(), deviceBean.getTy_device_ccid());
+
+//                            TuyaCameraActivity.actionStart(getActivity(), member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
                         } else if (deviceBean.getDevice_type().equals(TuyaConfig.CATEGORY_CHAZUO)) {//涂鸦插座
                             if (deviceBean.getDevice_category().equals(TuyaConfig.PRODUCTID_CHAZUO_WG)) {
                                 DeviceWgCzActivity.actionStart(getActivity(), member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());

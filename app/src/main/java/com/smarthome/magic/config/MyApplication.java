@@ -369,7 +369,7 @@ public class MyApplication extends MultiDexApplication {
             public void onFaild(int errorCode, UrlBuilder urlBuilder) {
                 // urlBuilder.target is a router address, urlBuilder.params is a router params
                 // urlBuilder.target 目标路由， urlBuilder.params 路由参数
-                Log.e("router not implement", urlBuilder.target + urlBuilder.params.toString());
+                Log.e("router not implement", errorCode+"  帆帆帆帆  "+urlBuilder.target +"  嘎嘎嘎  "+ urlBuilder.params.toString());
             }
         }, new ServiceEventListener() {
             @Override

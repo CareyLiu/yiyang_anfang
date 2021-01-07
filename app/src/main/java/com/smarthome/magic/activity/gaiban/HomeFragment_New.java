@@ -2,7 +2,6 @@ package com.smarthome.magic.activity.gaiban;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -43,12 +42,9 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.DefaultX5WebViewActivity;
-import com.smarthome.magic.activity.xiupeichang.XiuPeiChangHomeActivity;
-import com.smarthome.magic.activity.zckt.AirConditionerActivity;
 import com.smarthome.magic.activity.DefaultX5WebView_HaveNameActivity;
 import com.smarthome.magic.activity.SheBeiLieBiaoActivity;
 import com.smarthome.magic.activity.TuanYouWebView;
-import com.smarthome.magic.activity.WebViewActivity;
 import com.smarthome.magic.activity.fenxiang_tuisong.HuoDongTanCengActivity;
 import com.smarthome.magic.activity.gouwuche.GouWuCheActivity;
 import com.smarthome.magic.activity.homepage.DaLiBaoActivity;
@@ -56,6 +52,7 @@ import com.smarthome.magic.activity.jd_taobao_pinduoduo.TaoBao_Jd_PinDuoDuoActiv
 import com.smarthome.magic.activity.saoma.ScanActivity;
 import com.smarthome.magic.activity.tuangou.TuanGouShangJiaListActivity;
 import com.smarthome.magic.activity.xin_tuanyou.TuanYouList;
+import com.smarthome.magic.activity.zhinengjiaju.WenShiDuChuanGanQiActivity;
 import com.smarthome.magic.activity.zijian_shangcheng.FenLeiThirdActivity;
 import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallActivity;
 import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallDetailsActivity;
@@ -81,14 +78,12 @@ import com.smarthome.magic.config.Radius_XiuPeiChangImageLoader;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.LordingDialog;
 import com.smarthome.magic.get_net.Urls;
-import com.smarthome.magic.inter.YuYinInter;
 import com.smarthome.magic.model.Home;
 import com.smarthome.magic.model.TuiGuangMaModel;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.GlideShowImageUtils;
 import com.smarthome.magic.util.GridAverageUIDecoration;
 import com.smarthome.magic.util.Utils;
-import com.smarthome.magic.util.YuYinChuLiTool;
 import com.smarthome.magic.view.ObservableScrollView;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.youth.banner.Banner;
@@ -373,22 +368,24 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
             @Override
             public void onClick(View v) {
 
-                RxPermissions rxPermissions = new RxPermissions(getActivity());
-                rxPermissions.request(Manifest.permission.RECORD_AUDIO).subscribe(new Action1<Boolean>() {
-                    @Override
-                    public void call(Boolean granted) {
-                        if (granted) { // 在android 6.0之前会默认返回true
-                            Notice n = new Notice();
-                            n.type = ConstanceValue.MSG_YUYINHUANXING;
-                            //  n.content = message.toString();
-                            RxBus.getDefault().sendRx(n);
+//                RxPermissions rxPermissions = new RxPermissions(getActivity());
+//                rxPermissions.request(Manifest.permission.RECORD_AUDIO).subscribe(new Action1<Boolean>() {
+//                    @Override
+//                    public void call(Boolean granted) {
+//                        if (granted) { // 在android 6.0之前会默认返回true
+//                            Notice n = new Notice();
+//                            n.type = ConstanceValue.MSG_YUYINHUANXING;
+//                            //  n.content = message.toString();
+//                            RxBus.getDefault().sendRx(n);
+//
+//                            //YanShiActivity.actionStart(getActivity());
+//                        } else {
+//                            Toast.makeText(getActivity(), "该应用需要赋予访问相机的权限，不开启将无法正常工作！", Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//                });
 
-                            //YanShiActivity.actionStart(getActivity());
-                        } else {
-                            Toast.makeText(getActivity(), "该应用需要赋予访问相机的权限，不开启将无法正常工作！", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+                WenShiDuChuanGanQiActivity.actionStart(getActivity());
 
 //                yuYinChuLiTool.beginWakeUp(new YuYinInter() {
 //                    @Override
@@ -587,8 +584,6 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
 
         // mImmersionBar.with(this).statusBarDarkFont(true).fitsSystemWindows(true).statusBarColor(R.color.white).init();
         setZiYingOrReMenLine("0");
-
-
 
 
     }
@@ -1080,7 +1075,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         int[] location = new int[2];
         clZiYing_Middle.getLocationOnScreen(location);
         int locationY = location[1];
-       // Log.e("locationY", locationY + " " + "topHeight的值是：" + topHeight);
+        // Log.e("locationY", locationY + " " + "topHeight的值是：" + topHeight);
 
         if (locationY <= topHeight && (topPanel.getVisibility() == View.GONE || topPanel.getVisibility() == View.INVISIBLE)) {
             topPanel.setVisibility(View.VISIBLE);

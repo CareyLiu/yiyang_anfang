@@ -23,6 +23,7 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.ZhiNengRoomDeviceDetailAutoActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.TuyaBaseDeviceActivity;
 import com.smarthome.magic.activity.tuya_device.device.tongyong.DeviceDingshiActivity;
@@ -34,6 +35,7 @@ import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaHomeManager;
 import com.smarthome.magic.activity.tuya_device.add.TuyaWangguanAddActivity;
 import com.smarthome.magic.activity.tuya_device.device.adapter.WangguanAdapter;
 import com.smarthome.magic.activity.tuya_device.device.model.ZishebeiModel;
+import com.smarthome.magic.activity.wode_page.AboutUsActivity;
 import com.smarthome.magic.activity.wode_page.bazinew.utils.TimeUtils;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
@@ -309,14 +311,13 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
                     String device_category_code = deviceBean.getDevice_category_code();
 
                     Y.e("device_type:" + device_type + "  device_category:" + device_category + "  device_category_code:" + device_category_code);
+                    TuyaHomeManager.getHomeManager().isHaveDevice(deviceBean.getTy_device_ccid());
+
 
                     if (device_type.equals(TuyaConfig.CATEGORY_MENCI)) {
                         DeviceMenciActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
                     } else if (device_type.equals(TuyaConfig.CATEGORY_MENCISUO)) {
                         DeviceMenciActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
-                    } else if (device_type.equals(TuyaConfig.CATEGORY_WSDCG)) {
-                        AbsPanelCallerService service = MicroContext.getServiceManager().findServiceByInterface(AbsPanelCallerService.class.getName());
-                        service.goPanelWithCheckAndTip(DeviceWgCzActivity.this, deviceBean.getTy_device_ccid());
                     } else if (device_type.equals(TuyaConfig.CATEGORY_SWITCH)) {
                         if (device_category.equals(TuyaConfig.PRODUCTID_SWITCH_THREE)) {
                             DeviceSwitchThreeActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
@@ -326,6 +327,13 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
                     } else {
                         AbsPanelCallerService service = MicroContext.getServiceManager().findServiceByInterface(AbsPanelCallerService.class.getName());
                         service.goPanelWithCheckAndTip(DeviceWgCzActivity.this, deviceBean.getTy_device_ccid());
+
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("device_id", deviceBean.getDevice_id());
+//                        bundle.putString("device_type", deviceBean.getDevice_type());
+//                        bundle.putString("member_type", member_type);
+//                        bundle.putString("work_state", "1");
+//                        startActivity(new Intent(mContext, ZhiNengRoomDeviceDetailAutoActivity.class).putExtras(bundle));
                     }
                 }
             }

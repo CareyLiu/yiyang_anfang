@@ -269,7 +269,7 @@ public class CameraSetActivity extends TuyaBaseCameraDeviceActivity {
                 CameraSetBaojingActivity.actionStart(mContext);
                 break;
             case R.id.ll_cunchu:
-                CameraSetCunchuActivity.actionStart(mContext);
+//                CameraSetCunchuActivity.actionStart(mContext);
                 break;
             case R.id.iv_switch_yinsi:
                 clickYinsi();

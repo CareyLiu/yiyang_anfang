@@ -60,6 +60,9 @@ import com.smarthome.magic.util.AppToast;
 import com.smarthome.magic.util.SoundPoolUtils;
 import com.smarthome.magic.util.YuYinChuLiTool;
 import com.smarthome.magic.view.NoScrollViewPager;
+import com.tuya.smart.panel.base.activity.DevBaseInfoActivity;
+import com.tuya.smart.panel.base.activity.DevPanelMoreActivity;
+import com.tuya.smart.wrapper.api.TuyaWrapper;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
@@ -126,6 +129,8 @@ public class HomeActivity extends BaseActivity {
         ButterKnife.bind(this);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+
+        TuyaWrapper.onLogin();
 
         mBnve = findViewById(R.id.bnve);
         initView();

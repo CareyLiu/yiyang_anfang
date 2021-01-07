@@ -81,7 +81,6 @@ android {
         }
     }
     packagingOptions {
-        exclude 'AndroidManifest.xml'
         exclude 'META-INF/rxjava.properties'
         exclude 'META-INF/proguard/androidx-annotations.pro'
         exclude 'assets/location_map_gps_locked.png'
@@ -335,8 +334,8 @@ dependencies {
     implementation 'com.tuya.smart:tuyasmart-ipc-camera-diff-api:3.20.0'
     implementation 'com.tuya.smart:tuyasmart-ipc-camera-outside:3.20.0'
     implementation 'com.tuya.smart:tuyasmart-base-utils:3.18.0r143-rc.9'
-    implementation 'com.tuya.smart:tuyasmart-ipc-camera-message:3.13.0r128'
-    implementation 'com.tuya.smart:tuyasmart-ipc-devicecontrol:3.17.0r139'
+//    implementation 'com.tuya.smart:tuyasmart-ipc-camera-message:3.13.0r128'
+//    implementation 'com.tuya.smart:tuyasmart-ipc-devicecontrol:3.17.0r139'
     implementation 'com.tuya.smart:tuyasmart-ipc-camera-timeline:1.0.0'
     implementation project(path: ':push')
     implementation files('libs\\umeng-common-9.3.3.jar')
@@ -346,5 +345,7 @@ dependencies {
     implementation project(path: ':LRecyclerview_library')
 
     implementation 'com.tuya.smart:tuyasmart:3.22.0'
-    implementation 'com.tuya.smart:tuyasmart-bizbundle-panel:3.20.0-5'
+    implementation 'com.tuya.smart:tuyasmart-bizbundle-panel:3.22.0-5'
+    implementation 'com.tuya.smart:tuyasmart-bizbundle-scene:3.22.0-5'
+    implementation 'com.tuya.smart:tuyasmart-bizbundle-camera:3.22.0-5'
 }

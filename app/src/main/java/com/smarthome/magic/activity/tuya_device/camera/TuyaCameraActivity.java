@@ -35,6 +35,8 @@ import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
 import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tuya.smart.api.router.UrlBuilder;
+import com.tuya.smart.api.router.UrlRouter;
 import com.tuya.smart.camera.camerasdk.typlayer.callback.AbsP2pCameraListener;
 import com.tuya.smart.camera.camerasdk.typlayer.callback.OperationDelegateCallBack;
 import com.tuya.smart.camera.middleware.p2p.ITuyaSmartCameraP2P;
@@ -371,15 +373,26 @@ public class TuyaCameraActivity extends TuyaBaseCameraDeviceActivity implements 
                 } else if (name.equals("录制")) {
                     clickLuzhi();
                 } else if (name.equals("回放")) {
-                    CameraHuifangActivity.actionStart(mContext, p2pType);
+//                    CameraHuifangActivity.actionStart(mContext, p2pType);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("extra_camera_uuid", ty_device_ccid);
+                    UrlBuilder urlBuilder = new UrlBuilder(mContext, "camera_playback_panel").putExtras(bundle);
+                    UrlRouter.execute(urlBuilder);
                 } else if (name.equals("云存储")) {
-
+                    Bundle bundle = new Bundle();
+                    bundle.putString("extra_camera_uuid", ty_device_ccid);
+                    UrlBuilder urlBuilder = new UrlBuilder(mContext, "camera_cloud_panel").putExtras(bundle);
+                    UrlRouter.execute(urlBuilder);
                 } else if (name.equals("方向")) {
                     openFangxiang();
                 } else if (name.equals("报警")) {
                     CameraSetBaojingActivity.actionStart(mContext);
                 } else if (name.equals("相册")) {
                     CameraXiangceActivity.actionStart(mContext);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("extra_camera_uuid", ty_device_ccid);
+//                    UrlBuilder urlBuilder = new UrlBuilder(mContext, "camera_local_video_photo").putExtras(bundle);
+//                    UrlRouter.execute(urlBuilder);
                 }
             }
         });

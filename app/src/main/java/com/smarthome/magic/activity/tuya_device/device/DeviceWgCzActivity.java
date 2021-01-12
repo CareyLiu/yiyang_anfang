@@ -310,7 +310,7 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
                     String device_category = deviceBean.getDevice_category();
                     String device_category_code = deviceBean.getDevice_category_code();
 
-                    Y.e("device_type:" + device_type + "  device_category:" + device_category + "  device_category_code:" + device_category_code);
+                    Y.e("设备的信息是什么啊  "+"device_category:" + device_type + "  produco:" + device_category + "  device_category_code:" + device_category_code);
                     TuyaHomeManager.getHomeManager().isHaveDevice(deviceBean.getTy_device_ccid());
 
 

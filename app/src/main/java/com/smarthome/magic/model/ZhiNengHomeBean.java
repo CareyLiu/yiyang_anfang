@@ -139,6 +139,7 @@ public class ZhiNengHomeBean {
              * device_type : 0
              * server_id : 1/
              * device_ccid_up : 0
+             * device_category_code
              */
 
             private String room_name;
@@ -163,6 +164,7 @@ public class ZhiNengHomeBean {
             private String device_category;
             private String ty_device_ccid;
             private String ty_family_id;
+            private String device_category_code;
 
             protected DeviceBean(Parcel in) {
                 room_name = in.readString();
@@ -184,6 +186,14 @@ public class ZhiNengHomeBean {
 
             public DeviceBean() {
 
+            }
+
+            public String getDevice_category_code() {
+                return device_category_code;
+            }
+
+            public void setDevice_category_code(String device_category_code) {
+                this.device_category_code = device_category_code;
             }
 
             public static final Creator<DeviceBean> CREATOR = new Creator<DeviceBean>() {

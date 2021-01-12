@@ -129,6 +129,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     private ArrayList<Fragment> fragmentList = new ArrayList<>();
     private ZhiNengDeviceFragment zhiNengDeviceFragment;
     private ZhiNengRoomFragment zhiNengRoomFragment;
+    private ZhiNengJiaJuChangJingFragment zhiNengJiaJuChangJingFragment;
 
     private List<ZhiNengHomeBean.DataBean> dataBean = new ArrayList<>();
     private Bundle device = new Bundle();
@@ -175,8 +176,11 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
         fragmentList.add(zhiNengDeviceFragment);
         zhiNengRoomFragment = ZhiNengRoomFragment.newInstance(room);
         fragmentList.add(zhiNengRoomFragment);
+        zhiNengJiaJuChangJingFragment = ZhiNengJiaJuChangJingFragment.newInstance(room);
+        fragmentList.add(zhiNengJiaJuChangJingFragment);
         tabs.add("设备");
         tabs.add("房间");
+        tabs.add("场景");
         viewPagerAdapter = new NewsFragmentPagerAdapter(getActivity().getSupportFragmentManager(), fragmentList);
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setCurrentItem(0);

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +16,29 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.SuiYiTieSetting;
 import com.smarthome.magic.app.BaseActivity;
-import com.smarthome.magic.util.icon_util.LineChart01View;
+import com.smarthome.magic.app.UIHelper;
+import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.WenShiDuChuanGanQiModel;
 import com.smarthome.magic.util.icon_util.LineChart02View;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import butterknife.BindView;
+
+import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
 public class WenShiDuChuanGanQiActivity extends BaseActivity {
     @BindView(R.id.tv_wendu)
@@ -42,11 +59,21 @@ public class WenShiDuChuanGanQiActivity extends BaseActivity {
     TextView tvDangqianshidu;
     @BindView(R.id.ll_main)
     LinearLayout llMain;
+    @BindView(R.id.tv_dangqianwendu_huashu)
+    TextView tvDangqianwenduHuashu;
+    private String device_ccid;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        device_ccid = getIntent().getStringExtra("device_ccid");
+
+        getnet();
+    }
+
+
+    private void huiZhiYeMian(Context mContext, List<WenShiDuChuanGanQiModel.DataBean.HumListBean> humListBeans, List<WenShiDuChuanGanQiModel.DataBean.TemListBean> temListBeans) {
         FrameLayout content = new FrameLayout(this);
 
         //缩放控件放置在FrameLayout的上层，用于放大缩小图表
@@ -74,7 +101,7 @@ public class WenShiDuChuanGanQiActivity extends BaseActivity {
         //图表view放入布局中，也可直接将图表view放入Activity对应的xml文件中
         final RelativeLayout chartLayout = new RelativeLayout(this);
 
-        chartLayout.addView(new LineChart02View(mContext), layoutParams);
+        chartLayout.addView(new LineChart02View(mContext, humListBeans, temListBeans), layoutParams);
         llMain.addView(chartLayout);
     }
 
@@ -120,9 +147,62 @@ public class WenShiDuChuanGanQiActivity extends BaseActivity {
      *
      * @param context
      */
-    public static void actionStart(Context context) {
+    public static void actionStart(Context context, String device_ccid) {
         Intent intent = new Intent(context, WenShiDuChuanGanQiActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("device_ccid", device_ccid);
         context.startActivity(intent);
+    }
+
+    private void getnet() {
+        //访问网络获取数据 下面的列表数据
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16035");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("device_id", device_ccid);
+        Gson gson = new Gson();
+        String a = gson.toJson(map);
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<WenShiDuChuanGanQiModel.DataBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<WenShiDuChuanGanQiModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<WenShiDuChuanGanQiModel.DataBean>> response) {
+                        showLoadSuccess();
+                        WenShiDuChuanGanQiModel.DataBean dataBean = response.body().data.get(0);
+                        tvWenduzhi.setText(dataBean.getDevice_tem());
+                        tvShiduzhi.setText(dataBean.getDevice_hum());
+                        Glide.with(mContext).load(dataBean.getEnvironment_status_img()).into(ivIcon1);
+                        tvDangqianwenduHuashu.setText(dataBean.getEnvironment_status_des());
+                        huiZhiYeMian(mContext, dataBean.getHum_list(), dataBean.getTem_list());
+
+                        tvDangqianwendu.setText("当前温度" + dataBean.getDevice_tem() + "℃");
+                        tvDangqianshidu.setText("当前湿度" + dataBean.getDevice_hum() + "%");
+
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<WenShiDuChuanGanQiModel.DataBean>> response) {
+                        String str = response.getException().getMessage();
+                        Log.i("cuifahuo", str);
+                        String[] str1 = str.split("：");
+                        UIHelper.ToastMessage(mContext, response.getException().getMessage());
+                        showLoadSuccess();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<WenShiDuChuanGanQiModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showLoading();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        showLoadSuccess();
+                    }
+                });
     }
 }

@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_288"
+                android:background="@mipmap/kongqijiance_back">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="5dp">
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="甲醛"
+                            android:textColor="#ffffffff"
+                            android:textSize="13sp" />
+
+                        <com.flyco.roundview.RoundRelativeLayout
+                            android:layout_width="71dp"
+                            android:layout_height="@dimen/dp_35"
+                            android:layout_marginTop="5dp"
+                            app:rv_backgroundColor="#6EA6EB"
+                            app:rv_cornerRadius="8dp"
+                            app:rv_strokeColor="@color/white"
+                            app:rv_strokeWidth="3dp">
+
+                            <TextView
+                                android:id="@+id/tv_jiaquan"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="0.063"
+                                android:textColor="#ffffffff"
+                                android:textSize="15sp" />
+
+                        </com.flyco.roundview.RoundRelativeLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="(mg/m3)"
+                            android:textColor="#ffffffff"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="TVOC"
+                            android:textColor="#ffffffff"
+                            android:textSize="15sp" />
+
+                        <com.flyco.roundview.RoundRelativeLayout
+                            android:layout_width="71dp"
+                            android:layout_height="@dimen/dp_35"
+                            android:layout_marginTop="5dp"
+                            app:rv_backgroundColor="#6EA6EB"
+                            app:rv_cornerRadius="8dp"
+                            app:rv_strokeColor="@color/white"
+                            app:rv_strokeWidth="3dp">
+
+                            <TextView
+                                android:id="@+id/tv_tvoc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="0.063"
+                                android:textColor="#ffffffff"
+                                android:textSize="15sp" />
+
+                        </com.flyco.roundview.RoundRelativeLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="(mg/m3)"
+                            android:textColor="#ffffffff"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="AQI"
+                            android:textColor="#ffffffff"
+                            android:textSize="15sp" />
+
+                        <com.flyco.roundview.RoundRelativeLayout
+                            android:layout_width="71dp"
+                            android:layout_height="@dimen/dp_35"
+                            android:layout_marginTop="5dp"
+                            app:rv_backgroundColor="#6EA6EB"
+                            app:rv_cornerRadius="8dp"
+                            app:rv_strokeColor="@color/white"
+                            app:rv_strokeWidth="3dp">
+
+                            <TextView
+                                android:id="@+id/tv_AQI"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="0.063"
+                                android:textColor="#ffffffff"
+                                android:textSize="15sp" />
+
+                        </com.flyco.roundview.RoundRelativeLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="(mg/m3)"
+                            android:textColor="#ffffffff"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="CO2"
+                            android:textColor="#ffffffff"
+                            android:textSize="15sp" />
+
+                        <com.flyco.roundview.RoundRelativeLayout
+                            android:layout_width="71dp"
+                            android:layout_height="@dimen/dp_35"
+                            android:layout_marginTop="5dp"
+                            app:rv_backgroundColor="#6EA6EB"
+                            app:rv_cornerRadius="8dp"
+                            app:rv_strokeColor="@color/white"
+                            app:rv_strokeWidth="3dp">
+
+                            <TextView
+                                android:id="@+id/tv_co2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="0.063"
+                                android:textColor="#ffffffff"
+                                android:textSize="15sp" />
+
+                        </com.flyco.roundview.RoundRelativeLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="(mg/m3)"
+                            android:textColor="#ffffffff"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:text="空气等级"
+                android:textColor="#ff333333"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="60dp"
+                        android:layout_height="19dp"
+                        android:background="#58B7FF" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="优秀"
+                        android:textColor="#ff333333"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="60dp"
+                        android:layout_height="19dp"
+                        android:background="#36FF00" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="良好"
+                        android:textColor="#ff333333"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="60dp"
+                        android:layout_height="19dp"
+                        android:background="#F9E04B" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="轻度污染"
+                        android:textColor="#ff333333"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="60dp"
+                        android:layout_height="19dp"
+                        android:background="#EC5F2A" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="中度污染"
+                        android:textColor="#ff333333"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="60dp"
+                        android:layout_height="19dp"
+                        android:background="#EA3324" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="重度污染"
+                        android:textColor="#ff333333"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_main"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

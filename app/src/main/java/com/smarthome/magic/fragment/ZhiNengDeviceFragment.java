@@ -37,6 +37,8 @@ import com.smarthome.magic.activity.tuya_device.device.DeviceWgCzActivity;
 import com.smarthome.magic.activity.tuya_device.utils.TuyaConfig;
 import com.smarthome.magic.activity.tuya_device.device.DeviceWangguanActivity;
 import com.smarthome.magic.activity.zckt.AirConditionerActivity;
+
+import com.smarthome.magic.activity.zhinengjiaju.WenShiDuChuanGanQiActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.LouShuiActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.MenCiActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.MenSuoActivity;
@@ -269,6 +271,10 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                             } else if (strJiLian.equals("03")) {
                                 SuiYiTieThreeActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up());
                             }
+                        } else if (deviceBean.getDevice_type().equals("36")) {
+
+                            WenShiDuChuanGanQiActivity.actionStart(getActivity(),deviceBean.getDevice_id());
+
                         } else {
                             Bundle bundle = new Bundle();
                             bundle.putString("device_id", deviceBean.getDevice_id());

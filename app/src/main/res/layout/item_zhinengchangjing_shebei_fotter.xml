@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="12dp"
+    android:background="@color/grayfff5f5f5">
+
+    <com.flyco.roundview.RoundRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:layout_marginHorizontal="15dp"
+        app:rv_backgroundColor="@color/white"
+        app:rv_cornerRadius_BL="8dp"
+        app:rv_cornerRadius_BR="8dp">
+
+    </com.flyco.roundview.RoundRelativeLayout>
+</LinearLayout>

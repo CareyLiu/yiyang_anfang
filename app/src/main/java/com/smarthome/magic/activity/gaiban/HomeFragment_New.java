@@ -368,24 +368,24 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
             @Override
             public void onClick(View v) {
 
-//                RxPermissions rxPermissions = new RxPermissions(getActivity());
-//                rxPermissions.request(Manifest.permission.RECORD_AUDIO).subscribe(new Action1<Boolean>() {
-//                    @Override
-//                    public void call(Boolean granted) {
-//                        if (granted) { // 在android 6.0之前会默认返回true
-//                            Notice n = new Notice();
-//                            n.type = ConstanceValue.MSG_YUYINHUANXING;
-//                            //  n.content = message.toString();
-//                            RxBus.getDefault().sendRx(n);
-//
-//                            //YanShiActivity.actionStart(getActivity());
-//                        } else {
-//                            Toast.makeText(getActivity(), "该应用需要赋予访问相机的权限，不开启将无法正常工作！", Toast.LENGTH_LONG).show();
-//                        }
-//                    }
-//                });
+                RxPermissions rxPermissions = new RxPermissions(getActivity());
+                rxPermissions.request(Manifest.permission.RECORD_AUDIO).subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean granted) {
+                        if (granted) { // 在android 6.0之前会默认返回true
+                            Notice n = new Notice();
+                            n.type = ConstanceValue.MSG_YUYINHUANXING;
+                            //  n.content = message.toString();
+                            RxBus.getDefault().sendRx(n);
 
-                WenShiDuChuanGanQiActivity.actionStart(getActivity());
+                            //YanShiActivity.actionStart(getActivity());
+                        } else {
+                            Toast.makeText(getActivity(), "该应用需要赋予访问相机的权限，不开启将无法正常工作！", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
+             //   WenShiDuChuanGanQiActivity.actionStart(getActivity());
 
 //                yuYinChuLiTool.beginWakeUp(new YuYinInter() {
 //                    @Override

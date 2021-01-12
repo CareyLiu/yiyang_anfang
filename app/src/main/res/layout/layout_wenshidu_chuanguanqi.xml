@@ -24,7 +24,6 @@
                 android:background="@mipmap/wenshidu_chuanganqi_beijing">
 
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -141,6 +140,7 @@
                     android:src="@mipmap/kongqi_zhiliang_icon" />
 
                 <TextView
+                    android:id="@+id/tv_dangqianwendu_huashu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -162,23 +162,42 @@
                 app:rv_backgroundColor="@color/white"
                 app:rv_cornerRadius="10dp">
 
+                <ImageView
+                    android:id="@+id/iv_wendu_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="17dp"
+                    android:src="@mipmap/wenshidu_pic_wendu" />
+
                 <TextView
                     android:id="@+id/tv_dangqianwendu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="15dp"
+                    android:layout_toRightOf="@+id/iv_wendu_icon"
                     android:text="当前温度 ℃"
                     android:textColor="#ff333333"
                     android:textSize="13sp" />
 
+                <ImageView
+                    android:id="@+id/iv_shidu_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_toRightOf="@+id/tv_dangqianwendu"
+                    android:src="@mipmap/wenshidu_pic_shidu" />
+
                 <TextView
+
                     android:id="@+id/tv_dangqianshidu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/tv_dangqianwendu"
-                    android:layout_marginLeft="15dp"
-                    android:layout_toRightOf="@+id/tv_dangqianwendu"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/iv_shidu_icon"
                     android:text="当前湿度 %"
                     android:textColor="#ff333333"
                     android:textSize="13sp" />
@@ -194,6 +213,12 @@
 
                 </LinearLayout>
             </com.flyco.roundview.RoundRelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp">
+
+            </View>
 
         </LinearLayout>
     </ScrollView>

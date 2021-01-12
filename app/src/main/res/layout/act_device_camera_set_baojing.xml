@@ -81,7 +81,8 @@
         android:paddingLeft="31pt"
         android:text="报警功能定时设置"
         android:textColor="@color/color_9"
-        android:textSize="27pt" />
+        android:textSize="27pt"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/ll_dingshi"
@@ -89,7 +90,8 @@
         android:layout_height="92pt"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:paddingHorizontal="31pt">
+        android:paddingHorizontal="31pt"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="0dp"

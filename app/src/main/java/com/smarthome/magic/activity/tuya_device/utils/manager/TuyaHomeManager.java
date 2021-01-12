@@ -2,10 +2,15 @@ package com.smarthome.magic.activity.tuya_device.utils.manager;
 
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.utils.TuyaDialogUtils;
+import com.smarthome.magic.app.ConstanceValue;
+import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.RxBus;
 import com.tuya.smart.api.service.MicroServiceManager;
 import com.tuya.smart.commonbiz.bizbundle.family.api.AbsBizBundleFamilyService;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.bean.HomeBean;
+import com.tuya.smart.home.sdk.bean.WeatherBean;
+import com.tuya.smart.home.sdk.callback.IIGetHomeWetherSketchCallBack;
 import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
 import com.tuya.smart.home.sdk.callback.ITuyaResultCallback;
 import com.tuya.smart.sdk.bean.DeviceBean;
@@ -66,6 +71,8 @@ public class TuyaHomeManager {
 
                 AbsBizBundleFamilyService familyService = MicroServiceManager.getInstance().findServiceByInterface(AbsBizBundleFamilyService.class.getName());
                 familyService.setCurrentHomeId(homeId);
+
+                setTianqi(bean);
             }
 
             @Override
@@ -73,6 +80,35 @@ public class TuyaHomeManager {
                 Y.e("设置家庭失败了");
             }
         });
+    }
+
+    private void setTianqi(HomeBean bean) {
+        if (bean.getLon() != 0) {
+            TuyaHomeSdk.newHomeInstance(bean.getHomeId()).getHomeWeatherSketch(bean.getLon(), bean.getLat(), new IIGetHomeWetherSketchCallBack() {
+                @Override
+                public void onSuccess(WeatherBean result) {
+                    Y.e("我是什么啊啊啊啊  " + result.getTemp() + "    " + result.getCondition() + "    " + result.getInIconUrl() + "    " + result.getIconUrl());
+
+                    Notice notice = new Notice();
+                    notice.type = ConstanceValue.MSG_TUYA_TIANQI;
+                    notice.content = result;
+                    RxBus.getDefault().sendRx(notice);
+                }
+
+                @Override
+                public void onFailure(String errorCode, String errorMsg) {
+                    Notice notice = new Notice();
+                    notice.type = ConstanceValue.MSG_TUYA_TIANQI;
+                    notice.content = null;
+                    RxBus.getDefault().sendRx(notice);
+                }
+            });
+        } else {
+            Notice notice = new Notice();
+            notice.type = ConstanceValue.MSG_TUYA_TIANQI;
+            notice.content = null;
+            RxBus.getDefault().sendRx(notice);
+        }
     }
 
     private void setMesh() {

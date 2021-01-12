@@ -204,6 +204,9 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                          / 25.智能手环 26.排风 27背景音乐显示控制 28.电视遥控 29.空气净化 30.体质检测
                          / 31.光敏控制 32.燃气报警 33.风扇 34.雷达
                          */
+                        Y.e("设备的信息是什么啊  "+"device_category:" + deviceBean.getDevice_type() + "  produco:" + deviceBean.getDevice_category() + "  device_category_code:" + deviceBean.getDevice_category_code());
+
+
                         if (deviceBean.getDevice_type().equals("7")) {//空调
                             String ccid = deviceBean.getDevice_ccid();
                             PreferenceHelper.getInstance(getContext()).putString("ccid", ccid);
@@ -218,10 +221,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                                 UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
                             }
                         } else if (deviceBean.getDevice_type().equals(TuyaConfig.CATEGORY_CAMERA)) {//涂鸦摄像机
-                            AbsPanelCallerService service = MicroContext.getServiceManager().findServiceByInterface(AbsPanelCallerService.class.getName());
-                            service.goPanelWithCheckAndTip(getActivity(), deviceBean.getTy_device_ccid());
-
-//                            TuyaCameraActivity.actionStart(getActivity(), member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
+                            TuyaCameraActivity.actionStart(getActivity(), member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
                         } else if (deviceBean.getDevice_type().equals(TuyaConfig.CATEGORY_CHAZUO)) {//涂鸦插座
                             if (deviceBean.getDevice_category().equals(TuyaConfig.PRODUCTID_CHAZUO_WG)) {
                                 DeviceWgCzActivity.actionStart(getActivity(), member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());

@@ -3,27 +3,33 @@ package com.smarthome.magic.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amap.api.services.geocoder.GeocodeAddress;
+import com.amap.api.services.geocoder.GeocodeQuery;
+import com.amap.api.services.geocoder.GeocodeResult;
+import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeResult;
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.google.gson.Gson;
 import com.jaeger.library.StatusBarUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
-import com.smarthome.magic.adapter.ZhiNengFamilyManageAdapter;
+import com.smarthome.magic.activity.tuya_device.utils.TuyaConfig;
+import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaHomeManager;
 import com.smarthome.magic.adapter.ZhiNengFamilyManageDetailAdapter;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
@@ -36,15 +42,9 @@ import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuoTIshi;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Success;
 import com.smarthome.magic.dialog.ZhiNengFamilyAddDIalog;
 import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.ChandiModel;
 import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.model.ZhiNengFamilyMAnageDetailBean;
-import com.smarthome.magic.model.ZhiNengHomeListBean;
-import com.smarttop.library.bean.City;
-import com.smarttop.library.bean.County;
-import com.smarttop.library.bean.Province;
-import com.smarttop.library.bean.Street;
-import com.smarttop.library.widget.BottomDialog;
-import com.smarttop.library.widget.OnAddressSelectedListener;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.api.IResultCallback;
 
@@ -59,7 +59,7 @@ import rx.functions.Action1;
 
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
-public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements View.OnClickListener, OnAddressSelectedListener {
+public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.rl_family_name)
     RelativeLayout rl_family_name;
     @BindView(R.id.tv_family_name)
@@ -86,7 +86,6 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
     private View footerView;
     private String family_id = "";
     private String ty_family_id;
-    private BottomDialog dialog;
 
     @Override
     public int getContentViewResId() {
@@ -179,10 +178,7 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                 zhiNengFamilyAddDIalog.show();
                 break;
             case R.id.rl_family_address:
-                //Toast.makeText(mContext, "开发中", Toast.LENGTH_SHORT).show();
-                dialog = new BottomDialog(this);
-                dialog.setOnAddressSelectedListener(this);
-                dialog.show();
+                showSelectCity();
                 break;
             case R.id.rl_family_room_num:
                 Bundle bundle1 = new Bundle();
@@ -243,6 +239,11 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                         memberBeans.clear();
                         memberBeans.addAll(dataBean.getMember());
                         zhiNengFamilyManageDetailAdapter.notifyDataSetChanged();
+
+                        String province_name = dataBean.getProvince_name();
+                        if (!TextUtils.isEmpty(province_name)) {
+                            tv_family_address.setText(province_name + "-" + dataBean.getCity_name() + "-" + dataBean.getArea_name());
+                        }
                     }
                 });
     }
@@ -287,7 +288,6 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                     @Override
                     public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
                         String[] str1 = str.split("：");
                         if (str1.length == 3) {
                             MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(context,
@@ -373,15 +373,171 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
         });
     }
 
-    @Override
-    public void onAddressSelected(Province province, City city, County county, Street street) {
-        dialog.dismiss();
-        tv_family_address.setText(String.format("%s-%s-%s", province.name, city.name, county.name));
-//        province_id = province.code;
-//        province_name = province.name;
-//        city_id = city.code;
-//        city_name = city.name;
-//        area_id = county.code;
-//        area_name = county.name;
+    private OptionsPickerView<Object> chandiPicker;
+    private List<ChandiModel.DataBean> chandiModels;
+    private String province_name_pro = "";
+    private String province_id_pro = "";
+    private String city_name_pro = "";
+    private String city_id_pro = "";
+    private String code_id = "";
+    private String code_name = "";
+
+    private void showSelectCity() {
+        if (chandiPicker == null) {
+            showProgressDialog();
+            getCity();
+        } else {
+            chandiPicker.show();
+        }
+    }
+
+    private void getCity() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "00005");
+        map.put("key", Urls.key);
+        map.put("type_id", "province_city_ch");//物流公司
+        Gson gson = new Gson();
+        OkGo.<AppResponse<ChandiModel.DataBean>>post(Urls.MSG)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ChandiModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ChandiModel.DataBean>> response) {
+                        chandiModels = response.body().data;
+                        initChandi();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
+                    }
+                });
+    }
+
+    private void initChandi() {
+        List<Object> names1 = new ArrayList<>();
+        List<List<Object>> names2 = new ArrayList<>();
+        List<List<List<Object>>> names3 = new ArrayList<>();
+
+
+        for (int i = 0; i < chandiModels.size(); i++) {
+            ChandiModel.DataBean bean = chandiModels.get(i);
+            names1.add(bean.getCode_name());
+            List<ChandiModel.DataBean.ClBeanX> next2 = bean.getCl();
+            List<Object> names2Beans = new ArrayList<>();
+            List<List<Object>> names3Beans = new ArrayList<>();
+            for (int j = 0; j < next2.size(); j++) {
+                ChandiModel.DataBean.ClBeanX nextLevelBeanX = next2.get(j);
+                names2Beans.add(nextLevelBeanX.getCode_name());
+                List<ChandiModel.DataBean.ClBeanX.ClBean> next3 = nextLevelBeanX.getCl();
+
+                List<Object> names3BeansZi = new ArrayList<>();
+                for (int k = 0; k < next3.size(); k++) {
+                    names3BeansZi.add(next3.get(k).getCode_name());
+                }
+                names3Beans.add(names3BeansZi);
+
+            }
+            names2.add(names2Beans);
+            names3.add(names3Beans);
+        }
+
+        //条件选择器
+        chandiPicker = new OptionsPickerBuilder(mContext, new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+                ChandiModel.DataBean dataBean = chandiModels.get(options1);
+                ChandiModel.DataBean.ClBeanX cityBean = dataBean.getCl().get(option2);
+                ChandiModel.DataBean.ClBeanX.ClBean clBean = cityBean.getCl().get(options3);
+
+                province_name_pro = dataBean.getCode_name();
+                province_id_pro = dataBean.getCode_id();
+                city_name_pro = cityBean.getCode_name();
+                city_id_pro = cityBean.getCode_id();
+                code_id = clBean.getCode_id();
+                code_name = clBean.getCode_name();
+
+                tv_family_address.setText(province_name_pro + "-" + city_name_pro + "-" + code_name);
+                changeCity();
+            }
+        }).build();
+        chandiPicker.setPicker(names1, names2, names3);
+        chandiPicker.show();
+    }
+
+    /**
+     * 修改城市
+     */
+    private void changeCity() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16012");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(context).getAppToken());
+        map.put("family_id", family_id);
+        map.put("family_name", dataBean.getFamily_name());
+        map.put("old_name", dataBean.getFamily_name());
+        map.put("province_id", province_id_pro);
+        map.put("province_name", province_name_pro);
+        map.put("city_id", city_id_pro);
+        map.put("city_name", city_name_pro);
+        map.put("area_id", code_id);
+        map.put("area_name", code_name);
+        Gson gson = new Gson();
+        OkGo.<AppResponse<ZhiNengFamilyEditBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ZhiNengFamilyEditBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        changeTuyaCity();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+
+                    }
+                });
+    }
+
+    private void changeTuyaCity() {
+        GeocodeSearch geocodeSearch = new GeocodeSearch(mContext);
+        geocodeSearch.setOnGeocodeSearchListener(new GeocodeSearch.OnGeocodeSearchListener() {
+            @Override
+            public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
+
+            }
+
+            @Override
+            public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
+                if (i == 1000) {
+                    if (geocodeResult != null && geocodeResult.getGeocodeAddressList() != null && geocodeResult.getGeocodeAddressList().size() > 0) {
+                        GeocodeAddress geocodeAddress = geocodeResult.getGeocodeAddressList().get(0);
+                        double latitude = geocodeAddress.getLatLonPoint().getLatitude();//纬度
+                        double longititude = geocodeAddress.getLatLonPoint().getLongitude();//经度
+                        Y.e("经纬度获取成功了 " + latitude + "  " + longititude);
+                        setTuyaCity(latitude, longititude);
+                    } else {
+                        Y.e("编码转换失败");
+                    }
+                }
+            }
+        });
+        GeocodeQuery geocodeQuery = new GeocodeQuery(province_name_pro + city_name_pro + code_name, "29");
+        geocodeSearch.getFromLocationNameAsyn(geocodeQuery);
+    }
+
+    private void setTuyaCity(double latitude, double longititude) {
+        TuyaHomeSdk.newHomeInstance(TuyaHomeManager.getHomeManager().getHomeId()).updateHome(dataBean.getFamily_name(), longititude, latitude, province_name_pro + city_name_pro + code_name, new IResultCallback() {
+            @Override
+            public void onSuccess() {
+                Y.e("涂鸦家庭设置成功");
+            }
+
+            @Override
+            public void onError(String code, String error) {
+                Y.e("涂鸦家庭设置失败:" + error);
+            }
+        });
     }
 }

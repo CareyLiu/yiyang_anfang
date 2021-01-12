@@ -147,4 +147,6 @@ public interface ConstanceValue {
     int MSG_YUYINXIAOSHI = 0x100108;//界面消失
 
     int MSG_DEVICE_DINGSHI_CHONGFU = 0x10109;//定时设置重复
+
+    int MSG_TUYA_TIANQI = 0x10110;//涂鸦天气设置
 }

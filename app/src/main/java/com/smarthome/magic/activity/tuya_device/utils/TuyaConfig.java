@@ -22,4 +22,11 @@ public class TuyaConfig {
     public static final String PRODUCTID_SWITCH_THREE = "ffgdh3tf";//涂鸦蓝牙三联开关
     public static final String PRODUCTID_SWITCH_TWO = "0qqmayhk";//涂鸦蓝牙二联开关
     public static final String PRODUCTID_WSDCG = "pbevj5x2";//温湿度传感器
+
+
+    public static final String CODE_CHAZUO_WG = "cz_2b10s1w_4";//涂鸦网关插座（自己的）
+    public static final String CODE_CHAZUO_WF = "wf_cz";//wife插座
+    public static final String CODE_MENCISUO_SIG = "sig_mcs";//蓝牙门磁
+
+
 }

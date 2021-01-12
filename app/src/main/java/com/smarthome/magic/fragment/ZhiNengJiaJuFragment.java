@@ -7,12 +7,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
@@ -22,9 +22,12 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.ZhiNengFamilyManageDetailActivity;
 import com.smarthome.magic.activity.ZhiNengHomeListActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.add.TuyaDeviceAddActivity;
+import com.smarthome.magic.activity.tuya_device.changjing.TuyaChangjingActivity;
+import com.smarthome.magic.activity.tuya_device.changjing.TuyaTianqiActivity;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaHomeManager;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.PeiWangYinDaoPageActivity;
 import com.smarthome.magic.adapter.NewsFragmentPagerAdapter;
@@ -53,12 +56,9 @@ import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.bean.HomeBean;
 import com.tuya.smart.home.sdk.bean.MemberBean;
 import com.tuya.smart.home.sdk.bean.MemberWrapperBean;
+import com.tuya.smart.home.sdk.bean.WeatherBean;
 import com.tuya.smart.home.sdk.callback.ITuyaGetHomeListCallback;
 import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
-import com.tuya.smart.sdk.TuyaSdk;
-import com.tuya.smart.sdk.api.IResultCallback;
-import com.tuya.smart.sdk.bean.DeviceBean;
-import com.tuya.smart.sdk.api.IResultCallback;
 import com.tuya.smart.sdk.api.ITuyaDataCallback;
 
 import java.util.ArrayList;
@@ -70,7 +70,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
-
 import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -111,7 +110,18 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     @BindView(R.id.tv_zhuji_zhuangtai)
     TextView tvZhujiZhuangtai;
     @BindView(R.id.bt_add_camera)
-    Button bt_add_camera;
+    ImageView bt_add_camera;
+
+    @BindView(R.id.iv_tianqi)
+    ImageView iv_tianqi;
+    @BindView(R.id.tv_tianqi)
+    TextView tv_tianqi;
+    @BindView(R.id.tv_tianqi_wendu)
+    TextView tv_tianqi_wendu;
+    @BindView(R.id.iv_tianqi_enter)
+    ImageView iv_tianqi_enter;
+    @BindView(R.id.ll_tianqi_click)
+    LinearLayout ll_tianqi_click;
 
 
     private List<String> tabs = new ArrayList<>();
@@ -123,6 +133,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     private List<ZhiNengHomeBean.DataBean> dataBean = new ArrayList<>();
     private Bundle device = new Bundle();
     private Bundle room = new Bundle();
+    private boolean isSettianqi;
 
     @Override
     protected void initLogic() {
@@ -214,6 +225,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
         srLSmart.setEnableLoadMore(false);
         ll_checkhome.setOnClickListener(this);
         bt_add_camera.setOnClickListener(this);
+        ll_tianqi_click.setOnClickListener(this);
         initViewpager();
         initMagicIndicator();
         initData();
@@ -235,6 +247,22 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                     getnet();
                 } else if (message.type == ConstanceValue.MSG_DEVICE_ADD) {
                     getnet();
+                } else if (message.type == ConstanceValue.MSG_TUYA_TIANQI) {
+                    Object content = message.content;
+                    if (content == null) {
+                        isSettianqi = false;
+                        tv_tianqi.setText("欢迎回家");
+//                        iv_tianqi.setImageResource();
+                        tv_tianqi_wendu.setText("设置家庭位置，获取更多信息");
+                        iv_tianqi_enter.setVisibility(View.VISIBLE);
+                    } else {
+                        isSettianqi = true;
+                        WeatherBean result = (WeatherBean) message.content;
+                        tv_tianqi.setText(result.getCondition());
+                        Glide.with(getContext()).load(result.getInIconUrl()).into(iv_tianqi);
+                        tv_tianqi_wendu.setText("室外温度:" + result.getTemp() + "℃");
+                        iv_tianqi_enter.setVisibility(View.GONE);
+                    }
                 }
             }
         }));
@@ -382,9 +410,24 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
             case R.id.ll_checkhome:
                 startActivity(new Intent(getActivity(), ZhiNengHomeListActivity.class));
                 break;
+            case R.id.ll_tianqi_click:
+                clickSetTianqi();
+                break;
             case R.id.bt_add_camera:
                 clickAddCamera();
                 break;
+        }
+    }
+
+    private void clickSetTianqi() {
+        if (isSettianqi) {
+//            TuyaTianqiActivity.actionStart(getContext());
+            TuyaChangjingActivity.actionStart(getContext());
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putString("family_id", dataBean.get(0).getFamily_id());
+            bundle.putString("ty_family_id", dataBean.get(0).getTy_family_id());
+            startActivity(new Intent(getContext(), ZhiNengFamilyManageDetailActivity.class).putExtras(bundle));
         }
     }
 

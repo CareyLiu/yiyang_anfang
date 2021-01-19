@@ -25,6 +25,7 @@ import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
 import com.flyco.dialog.widget.NormalDialog;
 import com.google.gson.Gson;
+import com.iflytek.cloud.Setting;
 import com.jaeger.library.StatusBarUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -34,6 +35,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.v1.EspTouchActivity;
 import com.smarthome.magic.app.App;
+import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
@@ -394,6 +396,8 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
                             @Override
                             public void onBtnClick() {
                                 UserManager.getManager(SettingActivity.this).removeUser();
+                                PreferenceHelper.getInstance(SettingActivity.this).removeKey(AppConfig.SERVERID);
+                                PreferenceHelper.getInstance(SettingActivity.this).removeKey(AppConfig.DEVICECCID);
                                 normalDialog.dismiss();
                                 //发送通知 -- 关闭所有订阅的mqtt
                                 Notice n = new Notice();

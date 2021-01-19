@@ -38,6 +38,7 @@ import com.smarthome.magic.activity.tuya_device.utils.TuyaConfig;
 import com.smarthome.magic.activity.tuya_device.device.DeviceWangguanActivity;
 import com.smarthome.magic.activity.zckt.AirConditionerActivity;
 
+import com.smarthome.magic.activity.zhinengjiaju.RenTiGanYingActivity;
 import com.smarthome.magic.activity.zhinengjiaju.WenShiDuChuanGanQiActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.LouShuiActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.MenCiActivity;
@@ -46,6 +47,7 @@ import com.smarthome.magic.activity.zhinengjiaju.function.SosActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.YanGanActivity;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.PeiWangYinDaoPageActivity;
 import com.smarthome.magic.adapter.ZhiNengDeviceListAdapter;
+import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
@@ -53,6 +55,7 @@ import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.basicmvp.BaseFragment;
+import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.mqtt_zhiling.ZnjjMqttMingLing;
 import com.smarthome.magic.tools.NetworkUtils;
@@ -206,7 +209,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                          / 25.智能手环 26.排风 27背景音乐显示控制 28.电视遥控 29.空气净化 30.体质检测
                          / 31.光敏控制 32.燃气报警 33.风扇 34.雷达
                          */
-                        Y.e("设备的信息是什么啊  "+"device_category:" + deviceBean.getDevice_type() + "  produco:" + deviceBean.getDevice_category() + "  device_category_code:" + deviceBean.getDevice_category_code());
+                        Y.e("设备的信息是什么啊  " + "device_category:" + deviceBean.getDevice_type() + "  produco:" + deviceBean.getDevice_category() + "  device_category_code:" + deviceBean.getDevice_category_code());
 
 
                         if (deviceBean.getDevice_type().equals("7")) {//空调
@@ -273,8 +276,10 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                             }
                         } else if (deviceBean.getDevice_type().equals("36")) {
 
-                            WenShiDuChuanGanQiActivity.actionStart(getActivity(),deviceBean.getDevice_id());
+                            WenShiDuChuanGanQiActivity.actionStart(getActivity(), deviceBean.getDevice_id(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up());
 
+                        } else if (deviceBean.getDevice_type().equals("34")) {
+                            RenTiGanYingActivity.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
                         } else {
                             Bundle bundle = new Bundle();
                             bundle.putString("device_id", deviceBean.getDevice_id());
@@ -385,6 +390,23 @@ public class ZhiNengDeviceFragment extends BaseFragment {
 //            }
             member_type = getArguments().getString("member_type");
             family_id = getArguments().getString("family_id");
+            if (device.size() == 0) {
+                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.DEVICECCID, "");
+                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, "");
+            } else {
+                if (StringUtils.isEmpty(device.get(0).getDevice_ccid())) {
+                    PreferenceHelper.getInstance(getActivity()).putString(AppConfig.DEVICECCID, "");
+                } else {
+                    PreferenceHelper.getInstance(getActivity()).putString(AppConfig.DEVICECCID, device.get(0).getDevice_ccid());
+                }
+                if (StringUtils.isEmpty(device.get(0).getServer_id())) {
+                    PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, "");
+                } else {
+                    PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, device.get(0).getServer_id());
+                }
+
+            }
+
             dataBean.clear();
             dataBean.addAll(device);
             if (zhiNengDeviceListAdapter != null) {

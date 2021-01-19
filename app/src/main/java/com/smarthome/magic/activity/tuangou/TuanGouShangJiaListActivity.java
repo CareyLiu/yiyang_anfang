@@ -186,14 +186,20 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
 //                    }
                 } else if (ziJian_headerAdapter.getData().get(position).getId().equals("11")) {
                     TuanYouList.actionStart(mContext);
-                } else if (iconBean.getId().equals("1") || iconBean.getId().equals("2") || iconBean.getId().equals("3") || iconBean.getId().equals("4")) {
-                    TuanGouShangJiaListActivity.actionStart(mContext, ziJian_headerAdapter.getData().get(position).getId());
-                } else {
+                }  else {
+
+//                    pageNumber = "0";
+//                    item_id = iconListBeans1.get(finalI).getHref_url();
+//                    three_img_id = iconListBeans1.get(finalI).getThree_img_id();
+//                    inst_id = "";
+//                    imgType = type;
+
+
                     inst_id = "";
                     meter = "";
                     item_id = ziJian_headerAdapter.getData().get(position).getHref_url();
                     three_img_id = ziJian_headerAdapter.getData().get(position).getThree_img_id();
-                    imgType = ziJian_headerAdapter.getData().get(position).getId();
+                    imgType = type;
                     //imgType = type;
                     getNet_storeList();
 

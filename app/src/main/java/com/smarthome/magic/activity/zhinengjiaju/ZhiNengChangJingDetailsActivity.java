@@ -1,26 +1,57 @@
 package com.smarthome.magic.activity.zhinengjiaju;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.ActionSheetDialog;
 import com.flyco.roundview.RoundRelativeLayout;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.ShuRuInterView;
 import com.smarthome.magic.adapter.ZhiNengChangJingSheBeiAdapter;
+import com.smarthome.magic.adapter.ZhiNengChangJingSheBeiAdapter1;
 import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.app.ConstanceValue;
+import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.UIHelper;
+import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.ShuRuDIalog;
+import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.BianJiDingShiNeedModel;
+import com.smarthome.magic.model.ChangJingWhereModel;
+import com.smarthome.magic.model.ChangJingXiangQingModel;
+import com.smarthome.magic.model.ChangJingZhiXingModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+
+import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
 public class ZhiNengChangJingDetailsActivity extends BaseActivity {
 
@@ -30,24 +61,130 @@ public class ZhiNengChangJingDetailsActivity extends BaseActivity {
     RoundRelativeLayout rlYijianzhixing;
     @BindView(R.id.rrl_shebei)
     RecyclerView rrlShebei;
-    List<String> mDatas = new ArrayList<>();
+    List<ChangJingXiangQingModel.DataBean.ImplementListBean> mDatas = new ArrayList<>();
 
     ZhiNengChangJingSheBeiAdapter zhiNengChangJingSheBeiAdapter;
+    @BindView(R.id.iv_image_shengxiao)
+    ImageView ivImageShengxiao;
+    @BindView(R.id.rl_shengxiaoshijian)
+    RoundRelativeLayout rlShengxiaoshijian;
+    @BindView(R.id.rl_yijianzhixing_tianjiatiaojian)
+    RoundRelativeLayout rlYijianzhixingTianjiatiaojian;
+    @BindView(R.id.ll_yijian_zhixing)
+    LinearLayout llYijianZhixing;
+
+    @BindView(R.id.tv_changjingmingcheng)
+    TextView tvChangjingmingcheng;
+    @BindView(R.id.rll_tianjiashebei)
+    RoundRelativeLayout rllTianjiashebei;
+    @BindView(R.id.rl_changjing)
+    RoundRelativeLayout rlChangjing;
+    @BindView(R.id.ll_yijianzhixing_tianjia_tiaojian)
+    LinearLayout llYijianzhixingTianjiaTiaojian;
+    @BindView(R.id.tv_yijianzhixing)
+    TextView tvYijianzhixing;
+    @BindView(R.id.tv_time)
+    TextView tvTime;
+    private String senceType;
+    private String scene_id;
+    ShuRuDIalog shuRuDIalog;
+    ImageView icIcon;
+    private String familyId;
+    String iconStr;
+    ZhiNengChangJingSheBeiAdapter1 zhiNengChangJingSheBeiAdapter1;
+    private List<ChangJingZhiXingModel> mSheBeiDatas = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initRecycleView();
+        senceType = getIntent().getStringExtra("senceType");
+        scene_id = getIntent().getStringExtra("scene_id");
+        familyId = getIntent().getStringExtra("familyId");
+
+        rlChangjing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shuRuDIalog = new ShuRuDIalog(mContext, new ShuRuInterView() {
+                    @Override
+                    public void cannel() {
+                        shuRuDIalog.dismiss();
+                    }
+
+                    @Override
+                    public void submit(String str) {
+                        tvChangjingmingcheng.setText(str);
+                        bianJiChangJingMingCheng(str);
+                    }
+                });
+                shuRuDIalog.show();
+            }
+        });
+
+        if (senceType.equals("1")) {
+            //一键执行
+
+            llYijianzhixingTianjiaTiaojian.setVisibility(View.GONE);
+
+        } else if (senceType.equals("2")) {
+            tvTime.setVisibility(View.VISIBLE);
+            //2定时
+            llYijianzhixingTianjiaTiaojian.setVisibility(View.GONE);
+            rlYijianzhixing.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // ChuangJianZhiNengDingShiActivity.actionStart(mContext,"youzhi");
+                    Intent intent = new Intent(mContext, ChuangJianZhiNengDingShiActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.putExtra("XiangQingUse", "xiangQingUse");
+                    startActivityForResult(intent, 1);
+
+                }
+            });
+        } else if (senceType.equals("3")) {
+            //3 动作触发
+            llYijianzhixingTianjiaTiaojian.setVisibility(View.GONE);
+            //一键执行 动作触发
+        }
+
+        getChangJingQing();
+
+        rlYijianzhixingTianjiatiaojian.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_ZHINENGJIAJU_ICON) {
+                    iconStr = (String) message.content;
+                    Glide.with(mContext).load(iconStr).into(icIcon);
+                    changeChangJingIcon(iconStr);
+                } else if (message.type == ConstanceValue.MSG_ZHINENGJIAJU_SHEBEILIEBIAO) {
+
+                    ChangJingZhiXingModel changJingZhiXingModel = (ChangJingZhiXingModel) message.content;
+                    List<ChangJingZhiXingModel> changJingZhiXingModels = new ArrayList<>();
+                    changJingZhiXingModels.add(changJingZhiXingModel);
+                    tianJiaChangJingSheBei(changJingZhiXingModels);
+
+                } else if (message.type == ConstanceValue.MSG_DINGSHI_NEED) {
+                    BianJiDingShiNeedModel bianJiDingShiNeedModel = (BianJiDingShiNeedModel) message.content;
+                    leiXing = bianJiDingShiNeedModel.leiXing;
+                    kaiShiSHiJian = bianJiDingShiNeedModel.kaiShiSHiJian;
+                    chongFuLeiXing = bianJiDingShiNeedModel.chongFuLeiXing;
+                    xingQiList = bianJiDingShiNeedModel.xingQiList;
+                    bianJiChangJingShiJian();
+                }
+            }
+        }));
+
     }
 
     private void initRecycleView() {
-        mDatas.add("");
-        mDatas.add("");
-        mDatas.add("");
-        mDatas.add("");
-        mDatas.add("");
-        mDatas.add("");
-        mDatas.add("");
+
 
         zhiNengChangJingSheBeiAdapter = new ZhiNengChangJingSheBeiAdapter(R.layout.item_zhinengchangjing_shebei, mDatas);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
@@ -56,9 +193,51 @@ public class ZhiNengChangJingDetailsActivity extends BaseActivity {
 
 
         View view = View.inflate(mContext, R.layout.item_zhinengchangjing_shebei_fotter, null);
+        icIcon = view.findViewById(R.id.iv_icon);
+        RelativeLayout rlZhiNengTuBiao = view.findViewById(R.id.rl_zhinengtubiao);
+        rlZhiNengTuBiao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChangJingTuBiaoActivity.actionStart(mContext);
+            }
+        });
+
         zhiNengChangJingSheBeiAdapter.addFooterView(view);
         zhiNengChangJingSheBeiAdapter.setNewData(mDatas);
 
+        rllTianjiashebei.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SheBeiBianHuaActivity.actionStart(mContext, familyId, "");
+            }
+        });
+        zhiNengChangJingSheBeiAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+
+                    case R.id.ll_item:
+                        String[] items = {"删除"};
+                        final ActionSheetDialog dialog = new ActionSheetDialog(mContext, items, null);
+                        dialog.isTitleShow(false).show();
+                        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+                            @Override
+                            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                switch (position) {
+                                    case 0:
+                                        shanChuChangJingSheBei(mDatas.get(position).getScene_oper_id());
+                                        break;
+                                }
+                                dialog.dismiss();
+
+                            }
+                        });
+                        break;
+                }
+            }
+        });
     }
 
     @Override
@@ -77,14 +256,14 @@ public class ZhiNengChangJingDetailsActivity extends BaseActivity {
         tv_title.setText("场景");
         tv_title.setTextSize(17);
         tv_title.setTextColor(getResources().getColor(R.color.black));
-        tv_rightTitle.setVisibility(View.VISIBLE);
-        tv_rightTitle.setText("编辑");
-        tv_rightTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UIHelper.ToastMessage(mContext, "编辑");
-            }
-        });
+        //   tv_rightTitle.setVisibility(View.VISIBLE);
+        //tv_rightTitle.setText("编辑");
+//        tv_rightTitle.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                UIHelper.ToastMessage(mContext, "编辑");
+//            }
+//        });
         mToolbar.setNavigationIcon(R.mipmap.backbutton);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,14 +275,276 @@ public class ZhiNengChangJingDetailsActivity extends BaseActivity {
     }
 
 
-    /**
-     * 用于其他Activty跳转到该Activity
-     *
-     * @param context
-     */
-    public static void actionStart(Context context) {
+    public static void actionStart(Context context, String senceType, String scene_id, String familyId) {
         Intent intent = new Intent(context, ZhiNengChangJingDetailsActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("senceType", senceType);
+        intent.putExtra("scene_id", scene_id);
+        intent.putExtra("familyId", familyId);
         context.startActivity(intent);
+    }
+
+    /**
+     * 获得场景详情
+     */
+    private void getChangJingQing() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16066");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("scene_id", scene_id);
+        Gson gson = new Gson();
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<ChangJingXiangQingModel.DataBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ChangJingXiangQingModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ChangJingXiangQingModel.DataBean>> response) {
+                        tvChangjingmingcheng.setText(response.body().data.get(0).getScene_title());
+                        Glide.with(mContext).load(response.body().data.get(0).getScene_pic()).into(icIcon);
+
+                        Glide.with(mContext).load(response.body().data.get(0).getCondition_list().get(0).getImg_url()).into(ivImage);
+                        tvYijianzhixing.setText(response.body().data.get(0).getCondition_list().get(0).getDevice_name());
+
+                        tvTime.setText(response.body().data.get(0).getCondition_list().get(0).getImplement_detail());
+
+                        mDatas.clear();
+                        mDatas.addAll(response.body().data.get(0).getImplement_list());
+                        zhiNengChangJingSheBeiAdapter.notifyDataSetChanged();
+
+
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ChangJingXiangQingModel.DataBean>> response) {
+                        String str = response.getException().getMessage();
+                        Log.i("cuifahuo", str);
+                        UIHelper.ToastMessage(mContext, str);
+                    }
+                });
+    }
+
+    private void bianJiChangJingMingCheng(String strMingCheng) {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16063");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("scene_id", scene_id);
+        map.put("family_id", familyId);
+        map.put("type", "2");
+        map.put("scene_title", strMingCheng);
+        Gson gson = new Gson();
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<ChangJingXiangQingModel.DataBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ChangJingXiangQingModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ChangJingXiangQingModel.DataBean>> response) {
+                        UIHelper.ToastMessage(mContext, "名称修改成功");
+
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ChangJingXiangQingModel.DataBean>> response) {
+                        String str = response.getException().getMessage();
+                        Log.i("cuifahuo", str);
+                        UIHelper.ToastMessage(mContext, str);
+                    }
+                });
+    }
+
+
+    private void shanChuChangJingSheBei(String scene_oper_id) {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16063");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("scene_id", scene_id);
+        map.put("family_id", familyId);
+        map.put("type", "3");
+        map.put("scene_oper_id", scene_oper_id);
+        Gson gson = new Gson();
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<ChangJingXiangQingModel.DataBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ChangJingXiangQingModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ChangJingXiangQingModel.DataBean>> response) {
+                        UIHelper.ToastMessage(mContext, "删除成功");
+                        getChangJingQing();
+
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ChangJingXiangQingModel.DataBean>> response) {
+                        String str = response.getException().getMessage();
+                        Log.i("cuifahuo", str);
+                        UIHelper.ToastMessage(mContext, str);
+                    }
+                });
+    }
+
+
+    private void changeChangJingIcon(String iconUrl) {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16063");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("scene_id", scene_id);
+        map.put("family_id", familyId);
+        map.put("type", "6");
+        map.put("scene_pic", iconUrl);
+        Gson gson = new Gson();
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<ChangJingXiangQingModel.DataBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ChangJingXiangQingModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ChangJingXiangQingModel.DataBean>> response) {
+                        UIHelper.ToastMessage(mContext, "图片修改成功");
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ChangJingXiangQingModel.DataBean>> response) {
+                        String str = response.getException().getMessage();
+                        Log.i("cuifahuo", str);
+                        UIHelper.ToastMessage(mContext, str);
+                    }
+                });
+    }
+
+    private void tianJiaChangJingSheBei(List<ChangJingZhiXingModel> changJingZhiXingModels) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", "16063");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("scene_id", scene_id);
+        map.put("family_id", familyId);
+        map.put("type", "5");
+        map.put("go", changJingZhiXingModels);
+        Gson gson = new Gson();
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<ChangJingXiangQingModel.DataBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ChangJingXiangQingModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ChangJingXiangQingModel.DataBean>> response) {
+                        UIHelper.ToastMessage(mContext, "增加场景成功");
+                        getChangJingQing();
+
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ChangJingXiangQingModel.DataBean>> response) {
+                        String str = response.getException().getMessage();
+                        Log.i("cuifahuo", str);
+                        UIHelper.ToastMessage(mContext, str);
+                    }
+                });
+    }
+
+    private void bianJiChangJingShiJian() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", "16063");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("scene_id", scene_id);
+        map.put("family_id", familyId);
+        map.put("type", "4");
+        ChangJingWhereModel changJingWhereModel = new ChangJingWhereModel();
+        changJingWhereModel.week_time_begin = kaiShiSHiJian;
+        changJingWhereModel.week_time_oper = chongFuLeiXing;
+        List<ChangJingWhereModel> changJingWhereModels = new ArrayList<>();
+
+        if (xingQiList != null && xingQiList.size() > 0) {
+            if (xingQiList.get(0).equals("1")) {
+                changJingWhereModel.week_1 = "1";
+            } else {
+                changJingWhereModel.week_1 = "2";
+            }
+
+            if (xingQiList.get(1).equals("1")) {
+                changJingWhereModel.week_2 = "1";
+            } else {
+                changJingWhereModel.week_2 = "2";
+            }
+
+            if (xingQiList.get(2).equals("1")) {
+                changJingWhereModel.week_3 = "1";
+            } else {
+                changJingWhereModel.week_3 = "2";
+            }
+
+            if (xingQiList.get(3).equals("1")) {
+                changJingWhereModel.week_4 = "1";
+            } else {
+                changJingWhereModel.week_4 = "2";
+            }
+            if (xingQiList.get(4).equals("1")) {
+                changJingWhereModel.week_5 = "1";
+            } else {
+                changJingWhereModel.week_5 = "2";
+            }
+            if (xingQiList.get(5).equals("1")) {
+                changJingWhereModel.week_6 = "1";
+            } else {
+                changJingWhereModel.week_6 = "2";
+            }
+            if (xingQiList.get(6).equals("1")) {
+                changJingWhereModel.week_7 = "1";
+            } else {
+                changJingWhereModel.week_7 = "2";
+            }
+            changJingWhereModels.add(changJingWhereModel);
+            map.put("where", changJingWhereModels);
+        }
+        Gson gson = new Gson();
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<ChangJingXiangQingModel.DataBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ChangJingXiangQingModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ChangJingXiangQingModel.DataBean>> response) {
+                        UIHelper.ToastMessage(mContext, "时间修改成功");
+                        getChangJingQing();
+
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ChangJingXiangQingModel.DataBean>> response) {
+                        String str = response.getException().getMessage();
+                        Log.i("cuifahuo", str);
+                        UIHelper.ToastMessage(mContext, str);
+                    }
+                });
+    }
+
+
+    private String leiXing;
+    private String kaiShiSHiJian;
+    private String chongFuLeiXing;
+    private List<String> xingQiList = new ArrayList<>();
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (requestCode == 1) {
+            if (resultCode == 3) {
+//                Bundle bundle = intent.getExtras();
+//                leiXing = bundle.getString("leiXing");
+//                kaiShiSHiJian = bundle.getString("kaiShiShiJian");
+//                chongFuLeiXing = bundle.getString("chongFuLeiXing");
+//                xingQiList = (List<String>) bundle.getSerializable("mDatas");
+//
+//                bianJiChangJingShiJian();
+            }
+        }
+
     }
 }

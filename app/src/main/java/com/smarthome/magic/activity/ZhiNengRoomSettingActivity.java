@@ -209,7 +209,7 @@ public class ZhiNengRoomSettingActivity extends BaseActivity implements View.OnC
                         SuiYiTieThreeActivity.actionStart(mContext, deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up());
                     }
                 } else if (deviceBean.getDevice_type().equals("36")) {
-                    WenShiDuChuanGanQiActivity.actionStart(mContext, deviceBean.getDevice_id());
+                    WenShiDuChuanGanQiActivity.actionStart(mContext, deviceBean.getDevice_id(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up());
                 } else {
                     String ty_device_ccid = deviceBean.getTy_device_ccid();
                     if (TextUtils.isEmpty(ty_device_ccid)) {

@@ -1062,7 +1062,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         strFirst = "1";
 
 
-        HuoDongTanCengActivity.actionStart(getActivity(), activity);
+//        HuoDongTanCengActivity.actionStart(getActivity(), activity);  活动弹层注释
 
 
     }

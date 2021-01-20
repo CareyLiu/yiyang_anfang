@@ -136,6 +136,7 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                 Bundle bundle = new Bundle();
                 bundle.putString("member_type", dataBean.getMember_type());
                 bundle.putString("family_id", dataBean.getFamily_id());
+                bundle.putString("ty_family_id", ty_family_id);
                 bundle.putParcelable("member", memberBean);
                 startActivity(new Intent(context, ZhiNengFamilyMemberDetailActivity.class).putExtras(bundle));
             }
@@ -528,7 +529,7 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
     }
 
     private void setTuyaCity(double latitude, double longititude) {
-        TuyaHomeSdk.newHomeInstance(TuyaHomeManager.getHomeManager().getHomeId()).updateHome(dataBean.getFamily_name(), longititude, latitude, province_name_pro + city_name_pro + code_name, new IResultCallback() {
+        TuyaHomeSdk.newHomeInstance(Y.getLong(ty_family_id)).updateHome(dataBean.getFamily_name(), longititude, latitude, province_name_pro + city_name_pro + code_name, new IResultCallback() {
             @Override
             public void onSuccess() {
                 Y.e("涂鸦家庭设置成功");

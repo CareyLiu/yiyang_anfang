@@ -52,6 +52,7 @@ public class ZhiNengFamilyMemberDetailActivity extends BaseActivity implements V
     private ZhiNengFamilyMAnageDetailBean.DataBean.MemberBean memberBean;
     private String member_phone;
     private long tuya_memberId;
+    private String ty_family_id;
 
     @Override
     public int getContentViewResId() {
@@ -73,24 +74,19 @@ public class ZhiNengFamilyMemberDetailActivity extends BaseActivity implements V
     }
 
     private void initMember() {
-        TuyaHomeSdk.getMemberInstance().queryMemberList(TuyaHomeManager.getHomeManager().getHomeId(), new ITuyaGetMemberListCallback() {
+        TuyaHomeSdk.getMemberInstance().queryMemberList(Y.getLong(ty_family_id), new ITuyaGetMemberListCallback() {
             @Override
             public void onSuccess(List<MemberBean> memberBeans) {
-                // do something
                 for (int i = 0; i < memberBeans.size(); i++) {
                     MemberBean memberBean = memberBeans.get(i);
                     String account = memberBean.getAccount();
-                    Y.e("账号是多少啊啊啊 " + account);
-                    if (member_phone.equals(account)) {
-                        tuya_memberId = memberBean.getMemberId();
-                    }
+                    Y.e("账号是多少啊啊啊 " + account + "   " + memberBean.getMemberId());
                 }
-
             }
 
             @Override
             public void onError(String errorCode, String error) {
-                // do something
+                Y.e("我失败了么啊啊啊" + error);
             }
         });
     }
@@ -99,10 +95,12 @@ public class ZhiNengFamilyMemberDetailActivity extends BaseActivity implements V
         tv_delete.setOnClickListener(this);
         member_type = getIntent().getStringExtra("member_type");
         family_id = getIntent().getStringExtra("family_id");
+        ty_family_id = getIntent().getStringExtra("ty_family_id");
         memberBean = getIntent().getParcelableExtra("member");
         member_id = memberBean.getMember_id();
         tv_name.setText(memberBean.getUser_name());
         member_phone = memberBean.getMember_phone();
+        tuya_memberId = Y.getLong(memberBean.getTy_member_id());
         tv_phone.setText(member_phone);
         tv_type.setText(memberBean.getMember_type_name());
         if (member_type.equals("1")) {
@@ -114,6 +112,7 @@ public class ZhiNengFamilyMemberDetailActivity extends BaseActivity implements V
         } else {
             tv_delete.setVisibility(View.GONE);
         }
+        Y.e("涂鸦成员ID是多少" + tuya_memberId);
     }
 
     @Override
@@ -140,8 +139,7 @@ public class ZhiNengFamilyMemberDetailActivity extends BaseActivity implements V
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_delete:
-                MyCarCaoZuoDialog_CaoZuoTIshi dialog_success = new MyCarCaoZuoDialog_CaoZuoTIshi(ZhiNengFamilyMemberDetailActivity.this,
-                        "提示", "确定删除该成员？", "取消", "确定", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+                MyCarCaoZuoDialog_CaoZuoTIshi dialog_success = new MyCarCaoZuoDialog_CaoZuoTIshi(ZhiNengFamilyMemberDetailActivity.this, "提示", "确定删除该成员？", "取消", "确定", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
                     @Override
                     public void clickLeft() {
 
@@ -152,7 +150,6 @@ public class ZhiNengFamilyMemberDetailActivity extends BaseActivity implements V
                         deleteMember();
                     }
                 });
-
                 dialog_success.show();
                 break;
         }
@@ -190,7 +187,6 @@ public class ZhiNengFamilyMemberDetailActivity extends BaseActivity implements V
                             });
                             dialog_success.show();
                         }
-
                         removeMember(tuya_memberId);
                     }
                 });

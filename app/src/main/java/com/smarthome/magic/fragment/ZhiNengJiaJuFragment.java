@@ -267,6 +267,8 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                         tv_tianqi_wendu.setText("室外温度:" + result.getTemp() + "℃");
                         iv_tianqi_enter.setVisibility(View.GONE);
                     }
+                } else if (message.type == ConstanceValue.MSG_DEVICE_DELETE) {
+                    getnet();
                 }
             }
         }));
@@ -351,11 +353,9 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                             TuyaHomeManager.getHomeManager().setHomeId(Y.getLong(ty_family_id));
                         }
 
-
                         /**
                          * online_state	在线状态：1.在线 2.离线
                          */
-
                         if (dataBean.get(0).getDevice().size() == 0) {
                             ivZhujiZhuangtai.setBackgroundResource(R.mipmap.img_connect_device);
                             tvZhujiZhuangtai.setText("添加主机");
@@ -425,8 +425,8 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
 
     private void clickSetTianqi() {
         if (isSettianqi) {
-//            TuyaTianqiActivity.actionStart(getContext());
-            TuyaChangjingActivity.actionStart(getContext());
+            TuyaTianqiActivity.actionStart(getContext());
+//            TuyaChangjingActivity.actionStart(getContext());
         } else {
             Bundle bundle = new Bundle();
             bundle.putString("family_id", dataBean.get(0).getFamily_id());
@@ -448,28 +448,24 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
         TuyaHomeSdk.getHomeManagerInstance().queryHomeList(new ITuyaGetHomeListCallback() {
             @Override
             public void onSuccess(List<HomeBean> homeBeans) {
-
-                Y.e("我到底创建了多少啊  " + homeBeans.size());
                 for (int i = 0; i < homeBeans.size(); i++) {
                     HomeBean homeBean = homeBeans.get(i);
                     long homeId = homeBean.getHomeId();
                     String name = homeBean.getName();
-                    if (homeId == 28169148 || homeId == 28369996 || homeId == 28689589 || homeId == 28690032) {
-                        Y.e("我是有的不删  " + homeId + "   " + name);
-                    } else {
-                        Y.e("该解散的家庭 " + homeId + "  " + name);
-//                        TuyaHomeSdk.newHomeInstance(homeId).dismissHome(new IResultCallback() {
-//                            @Override
-//                            public void onSuccess() {
-//                                Y.e("解散涂鸦家庭成功 "+homeId);
-//                            }
+
+                    Y.e("家庭名称  " + name + "  " + homeId);
+
+//                    TuyaHomeSdk.newHomeInstance(homeId).dismissHome(new IResultCallback() {
+//                        @Override
+//                        public void onSuccess() {
+//                            Y.e("解散涂鸦家庭成功 " + homeId);
+//                        }
 //
-//                            @Override
-//                            public void onError(String code, String error) {
-//                                Y.t("解散家庭失败:" + error);
-//                            }
-//                        });
-                    }
+//                        @Override
+//                        public void onError(String code, String error) {
+//                            Y.t("解散家庭失败:" + error);
+//                        }
+//                    });
                 }
             }
 
@@ -478,9 +474,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
 
             }
         });
-
     }
-
 
     private void yaoqing(String phone) {
         long homeId = PreferenceHelper.getInstance(getContext()).getLong(AppConfig.TUYA_HOME_ID, 0);

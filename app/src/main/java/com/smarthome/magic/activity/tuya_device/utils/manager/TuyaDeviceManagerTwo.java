@@ -37,17 +37,20 @@ public class TuyaDeviceManagerTwo implements IDevListener {
     }
 
     public void initDevice(DeviceBean deviceBean) {
-        unRegisterDevListenerTwo();
+        if (deviceBean != null) {
+            unRegisterDevListenerTwo();
 
-        this.deviceBean = deviceBean;
-        mDevice = TuyaHomeSdk.newDeviceInstance(deviceBean.getDevId());
-        mDevice.registerDevListener(this);
-        gson = new Gson();
+            this.deviceBean = deviceBean;
+            mDevice = TuyaHomeSdk.newDeviceInstance(deviceBean.getDevId());
+            mDevice.registerDevListener(this);
 
-        String schema = deviceBean.getSchema();
-        Y.e("我是什么状态 " + deviceBean.getIsOnline());
-        Y.e(schema);
-        Y.e(deviceBean.getProductBean().getCategory() + "     " + deviceBean.getProductBean().getCategoryCode() + "    " + deviceBean.getProductId());
+            gson = new Gson();
+
+            String schema = deviceBean.getSchema();
+            Y.e("我是什么状态 " + deviceBean.getIsOnline());
+            Y.e(schema);
+            Y.e(deviceBean.getProductBean().getCategory() + "     " + deviceBean.getProductBean().getCategoryCode() + "    " + deviceBean.getProductId());
+        }
     }
 
     public ITuyaDevice getDevice() {

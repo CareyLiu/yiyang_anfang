@@ -146,7 +146,6 @@ public class ZhiNengFamilyAddShareActivity extends BaseActivity implements View.
                 .execute(new JsonCallback<AppResponse<Message.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<Message.DataBean>> response) {
-                        //           UIHelper.ToastMessage(LoginActivity.this, response.body().msg);
                         Toast.makeText(context, "验证码发送成功，请注意查收", Toast.LENGTH_SHORT).show();
                         timeCount.start();
                         if (response.body().data.size() > 0)
@@ -186,12 +185,11 @@ public class ZhiNengFamilyAddShareActivity extends BaseActivity implements View.
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(context).getAppToken());
         map.put("user_phone", et_phone.getText().toString());
-        map.put("memberId", memberId + "");
+        map.put("ty_member_id", memberId + "");
         map.put("family_id", family_id);
         map.put("sms_id", smsId);
         map.put("sms_code", et_code.getText().toString());
         Gson gson = new Gson();
-        Log.e("map_data", gson.toJson(map));
         OkGo.<AppResponse<ZhiNengFamilyEditBean>>post(ZHINENGJIAJU)
                 .tag(this)//
                 .upJson(gson.toJson(map))

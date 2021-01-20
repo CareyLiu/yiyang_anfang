@@ -181,7 +181,7 @@ public class ZhiNengFamilyManageActivity extends BaseActivity implements View.On
                 });
     }
 
-    private void creatTuyaFamily(String name) {
+    private void creatTuyaFamily(String name) {//创建涂鸦家庭
         List<String> addRooms = new ArrayList<>();
         TuyaHomeSdk.getHomeManagerInstance().createHome(name, 0, 0, "", addRooms, new ITuyaHomeResultCallback() {
             @Override

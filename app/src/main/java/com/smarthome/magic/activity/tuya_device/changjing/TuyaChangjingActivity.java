@@ -20,6 +20,8 @@ import com.tuya.smart.home.sdk.callback.ITuyaResultCallback;
 import com.tuya.smart.scene.business.api.ITuyaSceneBusinessService;
 import com.tuya.smart.utils.ToastUtil;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,9 +101,7 @@ public class TuyaChangjingActivity extends BaseActivity {
                 sceneBeans = result;
                 Y.e("我是多少啊啊啊啊啊" + result.size());
                 for (int i = 0; i < result.size(); i++) {
-
                     SceneBean sceneBean = result.get(i);
-
                     String name = sceneBean.getName();
                     String arrowIconUrl = sceneBean.getArrowIconUrl();
                     String coverIcon = sceneBean.getCoverIcon();
@@ -127,9 +127,9 @@ public class TuyaChangjingActivity extends BaseActivity {
                     List<SceneTask> actions = sceneBean.getActions();
 
                     if (conditions == null) {
-                        Y.e(name+"没有条件");
-                    }else {
-                        Y.e(name+"有了条件");
+                        Y.e(name + "没有条件");
+                    } else {
+                        Y.e(name + "有了条件");
                         Y.e("conditions有多少 " + conditions.size());
                         for (int j = 0; j < conditions.size(); j++) {
                             SceneCondition sceneCondition = conditions.get(j);
@@ -146,10 +146,10 @@ public class TuyaChangjingActivity extends BaseActivity {
                         }
                     }
 
-                    if (actions==null){
-                        Y.e(name+"没有任务啦");
-                    }else {
-                        Y.e(name+"执行的任务  " + actions.size());
+                    if (actions == null) {
+                        Y.e(name + "没有任务啦");
+                    } else {
+                        Y.e(name + "执行的任务  " + actions.size());
                         for (int j = 0; j < actions.size(); j++) {
                             SceneTask sceneTask = actions.get(j);
                             String entityName = sceneTask.getEntityName();
@@ -157,9 +157,9 @@ public class TuyaChangjingActivity extends BaseActivity {
                             String defaultIconUrl = sceneTask.getDefaultIconUrl();
                             String deleteDevIcon = sceneTask.getDeleteDevIcon();
                             Y.e("克劳福德是否  " + entityName);
-                            Y.e("devIcon:"+devIcon);
-                            Y.e("defaultIconUrl:"+defaultIconUrl);
-                            Y.e("deleteDevIcon:"+deleteDevIcon);
+                            Y.e("devIcon:" + devIcon);
+                            Y.e("defaultIconUrl:" + defaultIconUrl);
+                            Y.e("deleteDevIcon:" + deleteDevIcon);
                         }
                     }
                 }
@@ -181,12 +181,28 @@ public class TuyaChangjingActivity extends BaseActivity {
 
 
     private void editScene() {
-        if (!sceneBeans.isEmpty()) {
-            SceneBean sceneBean = sceneBeans.get(0);
-            if (null != iTuyaSceneBusinessService) {
-                iTuyaSceneBusinessService.editScene(TuyaChangjingActivity.this, mServiceByInterface.getCurrentHomeId(), sceneBean, EDIT_SCENE_REQUEST_CODE);
+//        if (!sceneBeans.isEmpty()) {
+//            SceneBean sceneBean = sceneBeans.get(0);
+//            if (null != iTuyaSceneBusinessService) {
+//               iTuyaSceneBusinessService .editScene(TuyaChangjingActivity.this, mServiceByInterface.getCurrentHomeId(), sceneBean, EDIT_SCENE_REQUEST_CODE);
+//            }
+//        }
+        TuyaHomeSdk.getSceneManagerInstance().getSceneList(mServiceByInterface.getCurrentHomeId(), new ITuyaResultCallback<List<SceneBean>>() {
+            @Override
+            public void onSuccess(List<SceneBean> result) {
+                if (!result.isEmpty()) {
+                    SceneBean sceneBean = result.get(0);
+                    if (null != iTuyaSceneBusinessService) {
+                        iTuyaSceneBusinessService.editScene(TuyaChangjingActivity.this, mServiceByInterface.getCurrentHomeId(), sceneBean, EDIT_SCENE_REQUEST_CODE);
+                    }
+                }
             }
-        }
+
+            @Override
+            public void onError(String errorCode, String errorMessage) {
+
+            }
+        });
     }
 
 

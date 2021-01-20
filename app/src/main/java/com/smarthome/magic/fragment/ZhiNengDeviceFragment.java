@@ -3,6 +3,7 @@ package com.smarthome.magic.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -206,10 +207,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                          / 25.智能手环 26.排风 27背景音乐显示控制 28.电视遥控 29.空气净化 30.体质检测
                          / 31.光敏控制 32.燃气报警 33.风扇 34.雷达
                          */
-                        Y.e("设备的信息是什么啊  "+"device_category:" + deviceBean.getDevice_type() + "  produco:" + deviceBean.getDevice_category() + "  device_category_code:" + deviceBean.getDevice_category_code());
-
-
-                        if (deviceBean.getDevice_type().equals("7")) {//空调
+                        if (deviceBean.getDevice_type().equals("20")) {//空调
                             String ccid = deviceBean.getDevice_ccid();
                             PreferenceHelper.getInstance(getContext()).putString("ccid", ccid);
                             PreferenceHelper.getInstance(getContext()).putString("share_type", "1");
@@ -222,19 +220,6 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                             } else {
                                 UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
                             }
-                        } else if (deviceBean.getDevice_type().equals(TuyaConfig.CATEGORY_CAMERA)) {//涂鸦摄像机
-                            TuyaCameraActivity.actionStart(getActivity(), member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
-                        } else if (deviceBean.getDevice_type().equals(TuyaConfig.CATEGORY_CHAZUO)) {//涂鸦插座
-                            if (deviceBean.getDevice_category().equals(TuyaConfig.PRODUCTID_CHAZUO_WG)) {
-                                DeviceWgCzActivity.actionStart(getActivity(), member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
-                            } else {
-                                DeviceChazuoActivity.actionStart(getActivity(), member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
-                            }
-                        } else if (deviceBean.getDevice_type().equals(TuyaConfig.CATEGORY_WNYKQ)) {//万能遥控器
-                            AbsPanelCallerService service = MicroContext.getServiceManager().findServiceByInterface(AbsPanelCallerService.class.getName());
-                            service.goPanelWithCheckAndTip(getActivity(), deviceBean.getTy_device_ccid());
-                        } else if (deviceBean.getDevice_type().equals(TuyaConfig.CATEGORY_WANGGUAN)) {//涂鸦网关
-                            DeviceWangguanActivity.actionStart(getActivity(), member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
                         } else if (deviceBean.getDevice_type().equals("16")) {//窗帘
                             ZhiNengChuangLianActivity.actionStart(getActivity(), deviceBean.getDevice_id());
                         } else if (deviceBean.getDevice_type().equals("01")) {//灯
@@ -272,16 +257,37 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                                 SuiYiTieThreeActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up());
                             }
                         } else if (deviceBean.getDevice_type().equals("36")) {
-
-                            WenShiDuChuanGanQiActivity.actionStart(getActivity(),deviceBean.getDevice_id());
-
+                            WenShiDuChuanGanQiActivity.actionStart(getActivity(), deviceBean.getDevice_id());
                         } else {
-                            Bundle bundle = new Bundle();
-                            bundle.putString("device_id", deviceBean.getDevice_id());
-                            bundle.putString("device_type", deviceBean.getDevice_type());
-                            bundle.putString("member_type", member_type);
-                            bundle.putString("work_state", deviceBean.getWork_state());
-                            startActivity(new Intent(getActivity(), ZhiNengRoomDeviceDetailAutoActivity.class).putExtras(bundle));
+                            String ty_device_ccid = deviceBean.getTy_device_ccid();
+                            if (TextUtils.isEmpty(ty_device_ccid)) {
+                                Bundle bundle = new Bundle();
+                                bundle.putString("device_id", deviceBean.getDevice_id());
+                                bundle.putString("device_type", deviceBean.getDevice_type());
+                                bundle.putString("member_type", member_type);
+                                bundle.putString("work_state", deviceBean.getWork_state());
+                                startActivity(new Intent(getActivity(), ZhiNengRoomDeviceDetailAutoActivity.class).putExtras(bundle));
+                            } else {
+                                Y.e("设备的信息是什么啊  " + "device_category:" + deviceBean.getDevice_type() + "  produco:" + deviceBean.getDevice_category() + "  device_category_code:" + deviceBean.getDevice_category_code());
+
+                                if (deviceBean.getDevice_type().equals(TuyaConfig.CATEGORY_CAMERA)) {//涂鸦摄像机
+                                    TuyaCameraActivity.actionStart(getActivity(), member_type, deviceBean.getDevice_id(), ty_device_ccid, deviceBean.getDevice_name(), deviceBean.getRoom_name());
+                                } else if (deviceBean.getDevice_type().equals(TuyaConfig.CATEGORY_CHAZUO)) {//涂鸦插座
+                                    if (deviceBean.getDevice_category().equals(TuyaConfig.PRODUCTID_CHAZUO_WG)) {
+                                        DeviceWgCzActivity.actionStart(getActivity(), member_type, deviceBean.getDevice_id(), ty_device_ccid, deviceBean.getDevice_name(), deviceBean.getRoom_name());
+                                    } else {
+                                        DeviceChazuoActivity.actionStart(getActivity(), member_type, deviceBean.getDevice_id(), ty_device_ccid, deviceBean.getDevice_name(), deviceBean.getRoom_name());
+                                    }
+                                } else if (deviceBean.getDevice_type().equals(TuyaConfig.CATEGORY_WANGGUAN)) {//涂鸦网关
+                                    DeviceWangguanActivity.actionStart(getActivity(), member_type, deviceBean.getDevice_id(), ty_device_ccid, deviceBean.getDevice_name(), deviceBean.getRoom_name());
+                                } else if (deviceBean.getDevice_type().equals(TuyaConfig.CATEGORY_WNYKQ)) {//万能遥控器
+                                    AbsPanelCallerService service = MicroContext.getServiceManager().findServiceByInterface(AbsPanelCallerService.class.getName());
+                                    service.goPanelWithCheckAndTip(getActivity(), ty_device_ccid);
+                                } else {//其他涂鸦设备
+                                    AbsPanelCallerService service = MicroContext.getServiceManager().findServiceByInterface(AbsPanelCallerService.class.getName());
+                                    service.goPanelWithCheckAndTip(getActivity(), ty_device_ccid);
+                                }
+                            }
                         }
                         break;
                 }
@@ -375,7 +381,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
 //                ZhiNengHomeBean.DataBean.DeviceBean kongtiaoBean = new ZhiNengHomeBean.DataBean.DeviceBean();
 //                kongtiaoBean.setDevice_ccid("kkkkkkkkkkkkkkkk90120018");
 //                kongtiaoBean.setDevice_name("智能空調");
-//                kongtiaoBean.setDevice_type("7");
+//                kongtiaoBean.setDevice_type("20");
 //                kongtiaoBean.setDevice_type_pic("https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11711");
 //                kongtiaoBean.setOnline_state("1");
 //                kongtiaoBean.setServer_id("8/");

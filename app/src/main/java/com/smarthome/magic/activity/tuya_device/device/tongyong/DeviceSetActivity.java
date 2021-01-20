@@ -236,23 +236,7 @@ public class DeviceSetActivity extends TuyaBaseDeviceActivity {
 
                     @Override
                     public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
-                        String str = response.getException().getMessage();
-                        String[] str1 = str.split("：");
-                        if (str1.length == 3) {
-                            MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(DeviceSetActivity.this,
-                                    "提示", str1[2], "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
-                                @Override
-                                public void clickLeft() {
-
-                                }
-
-                                @Override
-                                public void clickRight() {
-
-                                }
-                            });
-                            myCarCaoZuoDialog_caoZuoTIshi.show();
-                        }
+                        Y.tError(response);
                     }
                 });
     }

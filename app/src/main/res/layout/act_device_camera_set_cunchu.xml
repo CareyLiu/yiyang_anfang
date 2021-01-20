@@ -150,12 +150,49 @@
         android:background="@color/line" />
 
     <LinearLayout
+        android:id="@+id/ll_luxiang_mode"
+        android:layout_width="match_parent"
+        android:layout_height="92pt"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="31pt"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12pt"
+            android:layout_weight="1"
+            android:includeFontPadding="false"
+            android:text="录像模式"
+            android:textColor="@color/color_3"
+            android:textSize="31pt"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_luxiang_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12pt"
+            android:includeFontPadding="false"
+            android:text="事件录像"
+            android:textColor="@color/color_9"
+            android:textSize="31pt" />
+
+        <ImageView
+            android:layout_width="35pt"
+            android:layout_height="35pt"
+            android:src="@mipmap/tuya_arrow_ccc" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/ll_dingshi"
         android:layout_width="match_parent"
         android:layout_height="92pt"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:paddingHorizontal="31pt">
+        android:paddingHorizontal="31pt"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="0dp"

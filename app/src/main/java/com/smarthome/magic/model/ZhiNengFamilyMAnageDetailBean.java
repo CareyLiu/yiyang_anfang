@@ -210,6 +210,7 @@ public class ZhiNengFamilyMAnageDetailBean {
             private String member_phone;
             private String user_name;
             private String member_type_name;
+            private String ty_member_id;
 
             protected MemberBean(Parcel in) {
                 member_id = in.readString();
@@ -217,6 +218,7 @@ public class ZhiNengFamilyMAnageDetailBean {
                 member_phone = in.readString();
                 user_name = in.readString();
                 member_type_name = in.readString();
+                ty_member_id = in.readString();
             }
 
             public static final Creator<MemberBean> CREATOR = new Creator<MemberBean>() {
@@ -271,6 +273,14 @@ public class ZhiNengFamilyMAnageDetailBean {
                 this.member_type_name = member_type_name;
             }
 
+            public String getTy_member_id() {
+                return ty_member_id;
+            }
+
+            public void setTy_member_id(String ty_member_id) {
+                this.ty_member_id = ty_member_id;
+            }
+
             @Override
             public int describeContents() {
                 return 0;
@@ -283,6 +293,7 @@ public class ZhiNengFamilyMAnageDetailBean {
                 dest.writeString(member_phone);
                 dest.writeString(user_name);
                 dest.writeString(member_type_name);
+                dest.writeString(ty_member_id);
             }
         }
     }

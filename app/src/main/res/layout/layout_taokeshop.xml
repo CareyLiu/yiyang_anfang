@@ -1,40 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/grayf3f3f3">
+    android:layout_margin="5dp"
+    android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constrain"
-        android:layout_width="176dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
         android:background="@color/white">
 
-
         <ImageView
-
             android:id="@+id/iv_product"
-            android:layout_width="176dp"
-            android:layout_height="176dp"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="fitCenter"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view"
-            tools:background="@color/blue" />
+            app:layout_constraintTop_toBottomOf="@+id/view" />
 
         <ImageView
             android:id="@+id/biaozhi"
             android:layout_width="23dp"
             android:layout_height="13dp"
             android:layout_marginLeft="10dp"
-
-
             app:layout_constraintLeft_toLeftOf="parent"
-
             app:layout_constraintTop_toTopOf="@+id/tv_title" />
 
         <TextView
@@ -43,13 +37,14 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="3dp"
             android:layout_marginTop="10dp"
+            android:ellipsize="end"
             android:includeFontPadding="false"
+            android:maxLines="2"
             android:text=" 绿茶补水保湿护肤品件套装1111111"
             android:textColor="#ff000000"
             android:textSize="13sp"
             app:layout_constraintLeft_toRightOf="@+id/biaozhi"
             app:layout_constraintTop_toBottomOf="@+id/iv_product" />
-
 
         <TextView
             android:id="@+id/tv_yishou"
@@ -89,7 +84,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/tv_xianjia"
             app:layout_constraintLeft_toRightOf="@+id/tv_xianjia"
             app:layout_constraintTop_toTopOf="@+id/tv_xianjia" />
-
 
         <com.flyco.roundview.RoundTextView
             android:id="@+id/rtv_youhuijuan"

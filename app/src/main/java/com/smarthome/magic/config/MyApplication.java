@@ -3,6 +3,9 @@ package com.smarthome.magic.config;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,9 +15,12 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -24,6 +30,7 @@ import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.widget.RemoteViews;
 
 import com.alibaba.baichuan.android.trade.AlibcTradeSDK;
 import com.alibaba.baichuan.android.trade.callback.AlibcTradeInitCallback;
@@ -354,6 +361,12 @@ public class MyApplication extends MultiDexApplication {
                     }
                 });
             }
+
+//            @Override
+//            public Notification getNotification(Context context, UMessage msg) {
+//                Notification.Builder builder = new Notification.Builder(context).setContentTitle(msg.title).setContentText(msg.text).setDefaults(Notification.DEFAULT_ALL);
+//                return builder.build();
+//            }
         };
 
         mPushAgent.setMessageHandler(messageHandler);

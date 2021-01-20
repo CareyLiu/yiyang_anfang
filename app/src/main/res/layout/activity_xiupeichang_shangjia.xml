@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlTextSizeTime="10sp"
-                app:srlTextSizeTitle="12sp" />
+            app:srlTextSizeTitle="12sp" />
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scrollView"
@@ -56,7 +56,7 @@
                     <TextView
                         android:id="@+id/tv_name"
                         android:layout_width="wrap_content"
-                        android:layout_height="30pt"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="29pt"
                         android:layout_marginTop="22pt"
                         android:gravity="center"
@@ -95,7 +95,7 @@
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="29pt"
+                            android:layout_height="wrap_content"
                             android:layout_marginTop="12pt"
                             android:includeFontPadding="false"
                             android:text="联系商家"
@@ -122,7 +122,7 @@
                         <TextView
                             android:id="@+id/tv_juli"
                             android:layout_width="wrap_content"
-                            android:layout_height="29pt"
+                            android:layout_height="wrap_content"
                             android:layout_marginTop="12pt"
                             android:includeFontPadding="false"
                             android:text="0km"
@@ -168,7 +168,7 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="31pt"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="19pt"
                         android:gravity="center"
                         android:includeFontPadding="false"
@@ -179,7 +179,7 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="24pt"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="65pt"
                         android:gravity="center"
                         android:includeFontPadding="false"
@@ -222,7 +222,7 @@
                             <TextView
                                 android:id="@+id/tv_select_fuwu"
                                 android:layout_width="wrap_content"
-                                android:layout_height="36pt"
+                                android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
                                 android:gravity="center"
                                 android:includeFontPadding="false"
@@ -249,7 +249,7 @@
                             <TextView
                                 android:id="@+id/tv_select_pingjia"
                                 android:layout_width="wrap_content"
-                                android:layout_height="36pt"
+                                android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
                                 android:gravity="center"
                                 android:includeFontPadding="false"
@@ -328,6 +328,6 @@
             android:layout_height="wrap_content"
             android:background="#ffeeeeee"
             app:srlTextSizeTime="10sp"
-                app:srlTextSizeTitle="12sp" />
+            app:srlTextSizeTitle="12sp" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

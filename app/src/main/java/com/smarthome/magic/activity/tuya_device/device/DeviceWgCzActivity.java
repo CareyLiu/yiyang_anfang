@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,6 +29,7 @@ import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.TuyaBaseDeviceActivity;
 import com.smarthome.magic.activity.tuya_device.device.tongyong.DeviceDingshiActivity;
 import com.smarthome.magic.activity.tuya_device.device.tongyong.DeviceSetActivity;
+import com.smarthome.magic.activity.tuya_device.dialog.TuyaTishiDialog;
 import com.smarthome.magic.activity.tuya_device.utils.TuyaConfig;
 import com.smarthome.magic.activity.tuya_device.utils.TuyaDialogUtils;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaDeviceManager;
@@ -37,17 +39,21 @@ import com.smarthome.magic.activity.tuya_device.device.adapter.WangguanAdapter;
 import com.smarthome.magic.activity.tuya_device.device.model.ZishebeiModel;
 import com.smarthome.magic.activity.wode_page.AboutUsActivity;
 import com.smarthome.magic.activity.wode_page.bazinew.utils.TimeUtils;
+import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.tuya.smart.api.MicroContext;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.panelcaller.api.AbsPanelCallerService;
 import com.tuya.smart.sdk.api.IDevListener;
+import com.tuya.smart.sdk.api.IResultCallback;
 import com.tuya.smart.sdk.api.ISubDevListener;
 import com.tuya.smart.sdk.api.ITuyaDevice;
 import com.tuya.smart.sdk.api.ITuyaGateway;
@@ -123,6 +129,7 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
 
     private List<ZishebeiModel.DataBean> deviceBeans = new ArrayList<>();
     private WangguanAdapter adapter;
+    private ITuyaGateway iTuyaGateway;
 
     /**
      * 用于其他Activty跳转到该Activity
@@ -211,9 +218,11 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
         productId = mDeviceBeen.getProductId();
         isOnline = mDeviceBeen.getIsOnline();
         initDeviceListener();
+        initWangguanListener();
         getWangguanList();
         initDps();
     }
+
 
     private void initDps() {
         try {
@@ -268,6 +277,53 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
         });
     }
 
+
+    private void initWangguanListener() {
+        iTuyaGateway = TuyaHomeSdk.newGatewayInstance(ty_device_ccid);
+        iTuyaGateway.registerSubDevListener(new ISubDevListener() {
+            @Override
+            public void onSubDevDpUpdate(String nodeId, String dpStr) {
+
+            }
+
+            /**
+             * 设备移除时的通知
+             */
+            @Override
+            public void onSubDevRemoved(String devId) {
+                Y.e("设备移除了" + devId);
+                for (int i = 0; i < deviceBeans.size(); i++) {
+                    ZishebeiModel.DataBean deviceBean = deviceBeans.get(i);
+                    String ty_device_ccid = deviceBean.getTy_device_ccid();
+                    if (devId.equals(ty_device_ccid)) {
+                        String device_type = deviceBean.getDevice_type();
+                        if (device_type.equals(TuyaConfig.CATEGORY_MENCI)) {//门磁
+                        } else if (device_type.equals(TuyaConfig.CATEGORY_MENCISUO)) {//蓝牙门磁
+                        } else if (device_type.equals(TuyaConfig.CATEGORY_SWITCH)) {//蓝牙开关
+                        } else {
+                            deleteDevice(deviceBean.getDevice_id());
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onSubDevAdded(String devId) {
+
+            }
+
+            @Override
+            public void onSubDevInfoUpdate(String devId) {
+
+            }
+
+            @Override
+            public void onSubDevStatusChanged(List<String> onlines, List<String> offlines) {
+
+            }
+        });
+    }
+
     private void getWangguanList() {
         //访问网络获取数据 下面的列表数据
         Map<String, String> map = new HashMap<>();
@@ -308,32 +364,22 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
                     ZishebeiModel.DataBean deviceBean = deviceBeans.get(position);
                     String device_type = deviceBean.getDevice_type();
                     String device_category = deviceBean.getDevice_category();
-                    String device_category_code = deviceBean.getDevice_category_code();
 
-                    Y.e("设备的信息是什么啊  "+"device_category:" + device_type + "  produco:" + device_category + "  device_category_code:" + device_category_code);
                     TuyaHomeManager.getHomeManager().isHaveDevice(deviceBean.getTy_device_ccid());
-
-
-                    if (device_type.equals(TuyaConfig.CATEGORY_MENCI)) {
+                    if (device_type.equals(TuyaConfig.CATEGORY_MENCI)) {//门磁
                         DeviceMenciActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
-                    } else if (device_type.equals(TuyaConfig.CATEGORY_MENCISUO)) {
+                    } else if (device_type.equals(TuyaConfig.CATEGORY_MENCISUO)) {//门磁
                         DeviceMenciActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
-                    } else if (device_type.equals(TuyaConfig.CATEGORY_SWITCH)) {
-                        if (device_category.equals(TuyaConfig.PRODUCTID_SWITCH_THREE)) {
+                    } else if (device_type.equals(TuyaConfig.CATEGORY_SWITCH)) {//开关
+                        if (device_category.equals(TuyaConfig.PRODUCTID_SWITCH_THREE)) {//三路开关
                             DeviceSwitchThreeActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
-                        } else if (device_category.equals(TuyaConfig.PRODUCTID_SWITCH_TWO)) {
+                        } else if (device_category.equals(TuyaConfig.PRODUCTID_SWITCH_TWO)) {//二路开关
                             DeviceSwitchTwoActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
                         }
                     } else {
                         AbsPanelCallerService service = MicroContext.getServiceManager().findServiceByInterface(AbsPanelCallerService.class.getName());
                         service.goPanelWithCheckAndTip(DeviceWgCzActivity.this, deviceBean.getTy_device_ccid());
-
-//                        Bundle bundle = new Bundle();
-//                        bundle.putString("device_id", deviceBean.getDevice_id());
-//                        bundle.putString("device_type", deviceBean.getDevice_type());
-//                        bundle.putString("member_type", member_type);
-//                        bundle.putString("work_state", "1");
-//                        startActivity(new Intent(mContext, ZhiNengRoomDeviceDetailAutoActivity.class).putExtras(bundle));
+//                        deleteDevice(deviceBean.getDevice_id());
                     }
                 }
             }
@@ -539,5 +585,38 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
             mDevice.unRegisterDevListener();
             mDevice.onDestroy();
         }
+
+        if (iTuyaGateway != null) {
+            iTuyaGateway.unRegisterSubDevListener();
+        }
+    }
+
+    /**
+     * 删除设备
+     */
+    private void deleteDevice(String deviceId) {
+        showProgressDialog();
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16034");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("family_id", PreferenceHelper.getInstance(mContext).getString(AppConfig.PEIWANG_FAMILYID, ""));
+        map.put("device_id", deviceId);
+        Gson gson = new Gson();
+        OkGo.<AppResponse<ZhiNengFamilyEditBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ZhiNengFamilyEditBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        Y.e("移除设备成功");
+                        getWangguanList();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        Y.e("移除设备失败");
+                    }
+                });
     }
 }

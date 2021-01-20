@@ -212,21 +212,10 @@ public class TuyaCameraActivity extends TuyaBaseCameraDeviceActivity implements 
             TuyaDeviceManagerTwo.getDeviceManager().initDevice(haveDevice);
             initCamera();
         } else {
+            TuyaDeviceManagerTwo.getDeviceManager().initDevice(null);
             TuyaDialogUtils.t(mContext, "设备已失效!");
         }
     }
-//
-//    private void initHome() {
-//        HomeBean homeBean = TuyaHomeManager.getHomeManager().getHomeBean();
-//        List<DeviceBean> deviceList = homeBean.getDeviceList();
-//        for (int i = 0; i < deviceList.size(); i++) {
-//            DeviceBean deviceBean = deviceList.get(i);
-//            if (ty_device_ccid.equals(deviceBean.getDevId())) {
-//                TuyaDeviceManager.getDeviceManager().initDevice(deviceBean);
-//                initCamera();
-//            }
-//        }
-//    }
 
     private void initCamera() {
         p2pType = TuyaDeviceManagerTwo.getDeviceManager().getP2pType();
@@ -324,7 +313,6 @@ public class TuyaCameraActivity extends TuyaBaseCameraDeviceActivity implements 
             isYinsi = jsonObject.getBoolean("105");
             if (isYinsi) {
                 setAdapterCanClikc(false);
-//                tv_yinsimoshi.setVisibility(View.VISIBLE);
                 mCameraP2P.disconnect(null);
             } else {
                 setAdapterCanClikc(true);
@@ -639,6 +627,7 @@ public class TuyaCameraActivity extends TuyaBaseCameraDeviceActivity implements 
                             @Override
                             public void run() {
                                 tv_yinsimoshi.setVisibility(View.VISIBLE);
+                                bt_chonglian.setVisibility(View.GONE);
                             }
                         });
                     } else {
@@ -647,6 +636,7 @@ public class TuyaCameraActivity extends TuyaBaseCameraDeviceActivity implements 
                             @Override
                             public void run() {
                                 tv_yinsimoshi.setVisibility(View.GONE);
+                                bt_chonglian.setVisibility(View.GONE);
                             }
                         });
                     }

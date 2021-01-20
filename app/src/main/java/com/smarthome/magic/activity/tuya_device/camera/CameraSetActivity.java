@@ -23,6 +23,7 @@ import com.smarthome.magic.activity.tuya_device.dialog.TuyaBottomDialogView;
 import com.smarthome.magic.activity.tuya_device.dialog.TuyaTishiDialog;
 import com.smarthome.magic.activity.tuya_device.utils.TuyaDialogUtils;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaDeviceManagerTwo;
+import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaHomeManager;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
@@ -156,30 +157,32 @@ public class CameraSetActivity extends TuyaBaseCameraDeviceActivity {
         tv_device_name.setText(old_name);
 
         deviceBeen = TuyaDeviceManagerTwo.getDeviceManager().getDeviceBeen();
-        device = TuyaDeviceManagerTwo.getDeviceManager().getDevice();
-        tuyaDevId = deviceBeen.getDevId();
-        Map<String, Object> dps = deviceBeen.getDps();
-        yeshiPos = (String) dps.get("108");
-        if (yeshiPos.equals("0")) {
-            tv_yeshi.setText("自动");
-        } else if (yeshiPos.equals("2")) {
-            tv_yeshi.setText("开启");
-        } else if (yeshiPos.equals("1")) {
-            tv_yeshi.setText("关闭");
-        }
-        Object o = dps.get("105");
-        if (o != null) {
-            isYinsi = (boolean) o;
-        } else {
-            isYinsi = false;
-            ll_yinsi_mode.setVisibility(View.GONE);
-        }
-        if (isYinsi) {
-            iv_switch_yinsi.setImageResource(R.mipmap.switch_open);
-            ll_other_view.setVisibility(View.GONE);
-        } else {
-            iv_switch_yinsi.setImageResource(R.mipmap.switch_close);
-            ll_other_view.setVisibility(View.VISIBLE);
+        if (deviceBeen != null) {
+            device = TuyaDeviceManagerTwo.getDeviceManager().getDevice();
+            tuyaDevId = deviceBeen.getDevId();
+            Map<String, Object> dps = deviceBeen.getDps();
+            yeshiPos = (String) dps.get("108");
+            if (yeshiPos.equals("0")) {
+                tv_yeshi.setText("自动");
+            } else if (yeshiPos.equals("2")) {
+                tv_yeshi.setText("开启");
+            } else if (yeshiPos.equals("1")) {
+                tv_yeshi.setText("关闭");
+            }
+            Object o = dps.get("105");
+            if (o != null) {
+                isYinsi = (boolean) o;
+            } else {
+                isYinsi = false;
+                ll_yinsi_mode.setVisibility(View.GONE);
+            }
+            if (isYinsi) {
+                iv_switch_yinsi.setImageResource(R.mipmap.switch_open);
+                ll_other_view.setVisibility(View.GONE);
+            } else {
+                iv_switch_yinsi.setImageResource(R.mipmap.switch_close);
+                ll_other_view.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -260,16 +263,26 @@ public class CameraSetActivity extends TuyaBaseCameraDeviceActivity {
                 clickName();
                 break;
             case R.id.ll_jichu:
-                CameraSetJichuActivity.actionStart(mContext);
+                clickJichu();
                 break;
             case R.id.ll_yeshi:
                 clickYeshi();
                 break;
             case R.id.ll_baojing:
+                if (deviceBeen == null) {
+                    TuyaDialogUtils.t(mContext, "设备已失效!");
+                    return;
+                }
+                CameraSetJichuActivity.actionStart(mContext);
                 CameraSetBaojingActivity.actionStart(mContext);
                 break;
             case R.id.ll_cunchu:
-//                CameraSetCunchuActivity.actionStart(mContext);
+                if (deviceBeen == null) {
+                    TuyaDialogUtils.t(mContext, "设备已失效!");
+                    return;
+                }
+                CameraSetJichuActivity.actionStart(mContext);
+                CameraSetCunchuActivity.actionStart(mContext);
                 break;
             case R.id.iv_switch_yinsi:
                 clickYinsi();
@@ -280,26 +293,35 @@ public class CameraSetActivity extends TuyaBaseCameraDeviceActivity {
         }
     }
 
-    private void clickYinsi() {
-        if (device != null) {
-            showProgressDialog();
-            Map<String, Boolean> dps = new HashMap<>();
-            dps.put("105", !isYinsi);
-            device.publishDps(TuyaDeviceManagerTwo.getDeviceManager().getJosnString(dps), new IResultCallback() {
-                @Override
-                public void onError(String code, String error) {
-                    dismissProgressDialog();
-                    Y.e("设置失败 " + error);
-                }
-
-                @Override
-                public void onSuccess() {
-                    Y.e("设置成功");
-                }
-            });
-        } else {
-            Y.t("设备已失效");
+    private void clickJichu() {
+        if (deviceBeen == null) {
+            TuyaDialogUtils.t(mContext, "设备已失效!");
+            return;
         }
+        CameraSetJichuActivity.actionStart(mContext);
+    }
+
+    private void clickYinsi() {
+        if (deviceBeen == null) {
+            TuyaDialogUtils.t(mContext, "设备已失效!");
+            return;
+        }
+
+        showProgressDialog();
+        Map<String, Boolean> dps = new HashMap<>();
+        dps.put("105", !isYinsi);
+        device.publishDps(TuyaDeviceManagerTwo.getDeviceManager().getJosnString(dps), new IResultCallback() {
+            @Override
+            public void onError(String code, String error) {
+                dismissProgressDialog();
+                Y.e("设置失败 " + error);
+            }
+
+            @Override
+            public void onSuccess() {
+                Y.e("设置成功");
+            }
+        });
     }
 
     private void clickName() {
@@ -347,23 +369,7 @@ public class CameraSetActivity extends TuyaBaseCameraDeviceActivity {
 
                     @Override
                     public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
-                        String str = response.getException().getMessage();
-                        String[] str1 = str.split("：");
-                        if (str1.length == 3) {
-                            MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(CameraSetActivity.this,
-                                    "提示", str1[2], "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
-                                @Override
-                                public void clickLeft() {
-
-                                }
-
-                                @Override
-                                public void clickRight() {
-
-                                }
-                            });
-                            myCarCaoZuoDialog_caoZuoTIshi.show();
-                        }
+                        Y.tError(response);
                     }
                 });
     }
@@ -377,6 +383,12 @@ public class CameraSetActivity extends TuyaBaseCameraDeviceActivity {
     }
 
     private void clickYeshi() {
+        if (deviceBeen == null) {
+            TuyaDialogUtils.t(mContext, "设备已失效!");
+            return;
+        }
+        CameraSetJichuActivity.actionStart(mContext);
+
         List<String> names = new ArrayList<>();
         names.add("自动");
         names.add("开启");
@@ -427,25 +439,29 @@ public class CameraSetActivity extends TuyaBaseCameraDeviceActivity {
     }
 
     private void clickDelete() {
-        TuyaTishiDialog dialog = new TuyaTishiDialog(mContext, new TuyaTishiDialog.TishiDialogListener() {
-            @Override
-            public void onClickCancel(View v, TuyaTishiDialog dialog) {
+        if (member_type.equals("1")) {
+            TuyaTishiDialog dialog = new TuyaTishiDialog(mContext, new TuyaTishiDialog.TishiDialogListener() {
+                @Override
+                public void onClickCancel(View v, TuyaTishiDialog dialog) {
 
-            }
+                }
 
-            @Override
-            public void onClickConfirm(View v, TuyaTishiDialog dialog) {
-                deleteDevice();
-            }
+                @Override
+                public void onClickConfirm(View v, TuyaTishiDialog dialog) {
+                    deleteDevice();
+                }
 
-            @Override
-            public void onDismiss(TuyaTishiDialog dialog) {
+                @Override
+                public void onDismiss(TuyaTishiDialog dialog) {
 
-            }
-        });
-        dialog.setTextCont("是否移除设备");
-        dialog.setTextConfirm("移除");
-        dialog.show();
+                }
+            });
+            dialog.setTextCont("是否移除设备");
+            dialog.setTextConfirm("移除");
+            dialog.show();
+        } else {
+            Y.t("需要管理员权限才可删除设备！");
+        }
     }
 
 
@@ -493,8 +509,8 @@ public class CameraSetActivity extends TuyaBaseCameraDeviceActivity {
                         dialog.setTextCancel("");
                         dialog.show();
 
-                        TuyaDeviceManagerTwo.getDeviceManager().unRegisterDevListenerTwo();
                         if (device != null) {
+                            TuyaDeviceManagerTwo.getDeviceManager().unRegisterDevListenerTwo();
                             device.removeDevice(new IResultCallback() {
                                 @Override
                                 public void onError(String errorCode, String errorMsg) {

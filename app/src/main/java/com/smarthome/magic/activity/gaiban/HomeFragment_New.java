@@ -71,6 +71,7 @@ import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.Radius_GlideImageLoader;
@@ -368,6 +369,11 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
             @Override
             public void onClick(View v) {
 
+                String serverid = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.SERVERID, "");
+                if (StringUtils.isEmpty(serverid)) {
+                    UIHelper.ToastMessage(getActivity(), "请添加主机后重新尝试");
+                    return;
+                }
                 RxPermissions rxPermissions = new RxPermissions(getActivity());
                 rxPermissions.request(Manifest.permission.RECORD_AUDIO).subscribe(new Action1<Boolean>() {
                     @Override
@@ -385,7 +391,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                     }
                 });
 
-             //   WenShiDuChuanGanQiActivity.actionStart(getActivity());
+                //   WenShiDuChuanGanQiActivity.actionStart(getActivity());
 
 //                yuYinChuLiTool.beginWakeUp(new YuYinInter() {
 //                    @Override

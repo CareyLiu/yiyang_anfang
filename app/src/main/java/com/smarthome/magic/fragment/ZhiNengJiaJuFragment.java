@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -37,6 +38,7 @@ import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
+
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
@@ -301,6 +303,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                 .execute(new JsonCallback<AppResponse<ZhiNengHomeBean.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<ZhiNengHomeBean.DataBean>> response) {
+
                         if (srLSmart != null) {
                             srLSmart.setEnableRefresh(true);
                             srLSmart.finishRefresh();

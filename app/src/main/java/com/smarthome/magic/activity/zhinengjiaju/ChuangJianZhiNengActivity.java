@@ -10,7 +10,9 @@ import androidx.annotation.Nullable;
 
 import com.flyco.roundview.RoundRelativeLayout;
 import com.smarthome.magic.R;
+import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.config.PreferenceHelper;
 
 import butterknife.BindView;
 
@@ -41,10 +43,11 @@ public class ChuangJianZhiNengActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         rlQixiangbianhua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChangJingYiJianZhiXingActivity.actionStart(mContext);
+
             }
         });
         rlWeizhibianhua.setOnClickListener(new View.OnClickListener() {
@@ -56,19 +59,23 @@ public class ChuangJianZhiNengActivity extends BaseActivity {
         rlDingshi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ChuangJianZhiNengDingShiActivity.actionStart(mContext);
+                PreferenceHelper.getInstance(mContext).putString(AppConfig.ZHIXING_LEIXING, "2");
             }
         });
         rlShebeizhuangtaibianhua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String familyId = PreferenceHelper.getInstance(mContext).getString(AppConfig.FAMILY_ID, "");
+                PreferenceHelper.getInstance(mContext).putString(AppConfig.ZHIXING_LEIXING, "3");
+                SheBeiBianHuaActivity.actionStart(mContext, familyId,"leiXingBiaoShi");
             }
         });
         rlYijianzhixing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                PreferenceHelper.getInstance(mContext).putString(AppConfig.ZHIXING_LEIXING, "1");
+                ChangJingYiJianZhiXingActivity.actionStart(mContext, "1", "", "", null);
             }
         });
     }

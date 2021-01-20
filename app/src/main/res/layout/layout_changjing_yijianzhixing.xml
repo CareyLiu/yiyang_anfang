@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,6 +11,7 @@
         android:orientation="vertical">
 
         <com.flyco.roundview.RoundRelativeLayout
+            android:id="@+id/rll_changjingmingcheng"
             android:layout_width="match_parent"
             android:layout_height="69dp"
             android:layout_marginHorizontal="15dp"
@@ -30,12 +31,13 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/tv_changjingmingcheng"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:text="离家"
+                android:text="点击编辑"
                 android:textColor="#ff999999"
                 android:textSize="15sp" />
         </com.flyco.roundview.RoundRelativeLayout>
@@ -67,6 +69,7 @@
                     android:textSize="15sp" />
 
                 <LinearLayout
+                    android:id="@+id/ll_tianjiatiaojian"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -106,19 +109,39 @@
                     android:layout_width="31dp"
                     android:layout_height="31dp"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:src="@mipmap/addchangjing_icon_yijianzhixing" />
+                    android:layout_marginLeft="15dp" />
 
-
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
                     android:layout_toRightOf="@+id/iv_image"
-                    android:text="一键执行"
-                    android:textColor="#ff333333"
-                    android:textSize="15sp" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_tiaoJianMing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+
+                        android:text="一键执行"
+                        android:textColor="#ff333333"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_tiaojianxihua"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="5dp"
+
+                        android:text="一键执行"
+                        android:textColor="#ff333333"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -128,6 +151,13 @@
                     android:layout_marginRight="15dp"
                     android:src="@mipmap/push_gray_999" />
             </com.flyco.roundview.RoundRelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tiaojian_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
 
 
             <com.flyco.roundview.RoundRelativeLayout
@@ -172,6 +202,15 @@
                 </LinearLayout>
             </com.flyco.roundview.RoundRelativeLayout>
 
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rlv_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
             <com.flyco.roundview.RoundRelativeLayout
                 android:id="@+id/rl_changjing"
                 android:layout_width="match_parent"
@@ -191,6 +230,17 @@
                     android:textSize="15sp" />
 
                 <ImageView
+                    android:id="@+id/iv_icon"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_toLeftOf="@+id/iv_icon_1">
+
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/iv_icon_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -200,5 +250,5 @@
             </com.flyco.roundview.RoundRelativeLayout>
         </LinearLayout>
     </LinearLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>
 

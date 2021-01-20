@@ -155,6 +155,7 @@
 
 
             <com.flyco.roundview.RoundRelativeLayout
+                android:id="@+id/rll_zhumianban"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_268"
                 android:layout_marginHorizontal="15dp"

@@ -483,7 +483,10 @@ public class YuYinChuLiTool {
                                         yuYinInter.yuYinResult(resultModel.getText());
 
                                         Log.i("语义结果", "code" + code);
-                                        String topic = "zn/server/1/aaaaaaaaaaaaaaaa90140018";
+                                        String deviceCCID = PreferenceHelper.getInstance(context).getString(AppConfig.DEVICECCID, "");
+                                        String serverId = PreferenceHelper.getInstance(context).getString(AppConfig.SERVERID, "");
+                                        String topic = "zn/server/" + serverId  + deviceCCID;
+                                        //topic = "zn/server/8/aaaaaaaaaaaaaaaa90140018";
                                         YuYinMqtt yuYinMqtt = new YuYinMqtt(context, topic);
                                         yuYinMqtt.subscribeMingLing();
 

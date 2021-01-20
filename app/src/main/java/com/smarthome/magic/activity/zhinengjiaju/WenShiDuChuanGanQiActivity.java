@@ -17,12 +17,13 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
+import com.flyco.roundview.RoundRelativeLayout;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.SuiYiTieSetting;
+import com.smarthome.magic.activity.ZhiNengJiaJuZhuangZhiSetting;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
@@ -61,15 +62,29 @@ public class WenShiDuChuanGanQiActivity extends BaseActivity {
     LinearLayout llMain;
     @BindView(R.id.tv_dangqianwendu_huashu)
     TextView tvDangqianwenduHuashu;
+    @BindView(R.id.iv_wendu_icon)
+    ImageView ivWenduIcon;
+    @BindView(R.id.iv_shidu_icon)
+    ImageView ivShiduIcon;
+    @BindView(R.id.rll_zhumianban)
+    RoundRelativeLayout rllZhumianban;
     private String device_ccid;
+    String device_ccid_up;
+    private String device_id;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        device_id = getIntent().getStringExtra("device_id");
         device_ccid = getIntent().getStringExtra("device_ccid");
-
+        device_ccid_up = getIntent().getStringExtra("device_ccid_up");
         getnet();
+        rllZhumianban.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShuJuQuXianActivity.actionStart(mContext, device_id);
+            }
+        });
     }
 
 
@@ -128,7 +143,7 @@ public class WenShiDuChuanGanQiActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 // TODO: 2021/1/7 添加ccid 和 ccidup
-                SuiYiTieSetting.actionStart(mContext, "", "");
+                ZhiNengJiaJuZhuangZhiSetting.actionStart(mContext, device_id);
             }
         });
         iv_rightTitle.setBackgroundResource(R.mipmap.fengnuan_icon_shezhi);
@@ -147,10 +162,12 @@ public class WenShiDuChuanGanQiActivity extends BaseActivity {
      *
      * @param context
      */
-    public static void actionStart(Context context, String device_ccid) {
+    public static void actionStart(Context context, String device_id, String device_ccid, String device_ccid_up) {
         Intent intent = new Intent(context, WenShiDuChuanGanQiActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("device_id", device_id);
         intent.putExtra("device_ccid", device_ccid);
+        intent.putExtra("device_ccid_up", device_ccid_up);
         context.startActivity(intent);
     }
 
@@ -160,7 +177,7 @@ public class WenShiDuChuanGanQiActivity extends BaseActivity {
         map.put("code", "16035");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
-        map.put("device_id", device_ccid);
+        map.put("device_id", device_id);
         Gson gson = new Gson();
         String a = gson.toJson(map);
         Log.e("map_data", gson.toJson(map));

@@ -1424,9 +1424,17 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
             tools:ignore="LockedOrientationActivity" />
 
-        <!-- 涂鸦门磁 -->
+        <!-- 涂鸦门磁传感器 -->
         <activity
             android:name=".activity.tuya_device.device.DeviceMenciActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦水浸传感器 -->
+        <activity
+            android:name=".activity.tuya_device.device.DeviceLoushuiActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
@@ -1516,8 +1524,8 @@
         <activity
             android:name=".activity.zhinengjiaju.ZhiNengChangJingDetailsActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".activity.zhinengjiaju.ChuangJianZhiNengActivity"
@@ -1575,9 +1583,9 @@
             android:screenOrientation="fullSensor"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
-            android:launchMode="singleTop"
             android:name=".activity.zhinengjiaju.ChuangJianZhiNengDingShiActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
+            android:launchMode="singleTop"
             android:screenOrientation="fullSensor"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity

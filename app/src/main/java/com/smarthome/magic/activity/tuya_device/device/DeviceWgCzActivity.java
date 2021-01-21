@@ -368,8 +368,10 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
                     TuyaHomeManager.getHomeManager().isHaveDevice(deviceBean.getTy_device_ccid());
                     if (device_type.equals(TuyaConfig.CATEGORY_MENCI)) {//门磁
                         DeviceMenciActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
-                    } else if (device_type.equals(TuyaConfig.CATEGORY_MENCISUO)) {//门磁
+                    } else if (device_type.equals(TuyaConfig.CATEGORY_MENCISUO)) {//门磁蓝牙
                         DeviceMenciActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
+                    } else if (device_type.equals(TuyaConfig.CATEGORY_MENCISUO)) {//漏水
+                        DeviceLoushuiActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
                     } else if (device_type.equals(TuyaConfig.CATEGORY_SWITCH)) {//开关
                         if (device_category.equals(TuyaConfig.PRODUCTID_SWITCH_THREE)) {//三路开关
                             DeviceSwitchThreeActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
@@ -377,9 +379,12 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
                             DeviceSwitchTwoActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
                         }
                     } else {
-                        AbsPanelCallerService service = MicroContext.getServiceManager().findServiceByInterface(AbsPanelCallerService.class.getName());
-                        service.goPanelWithCheckAndTip(DeviceWgCzActivity.this, deviceBean.getTy_device_ccid());
-//                        deleteDevice(deviceBean.getDevice_id());
+//                        AbsPanelCallerService service = MicroContext.getServiceManager().findServiceByInterface(AbsPanelCallerService.class.getName());
+//                        service.goPanelWithCheckAndTip(DeviceWgCzActivity.this, deviceBean.getTy_device_ccid());
+
+
+                        DeviceLoushuiActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
+
                     }
                 }
             }

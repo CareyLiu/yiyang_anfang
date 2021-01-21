@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,11 +27,13 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuoTIshi;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Success;
 import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.SuiYiTieModel;
 import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.model.ZhiiNengRoomDeviceRoomBean;
 import com.smarthome.magic.mqtt_zhiling.ZnjjMqttMingLing;
@@ -125,11 +129,19 @@ public class ZhiNengChuangLianActivity extends BaseActivity {
     @BindView(R.id.iv_zanting_tupian)
     ImageView ivZantingTupian;
 
+    @BindView(R.id.tv_caozuotishiyin)
+    TextView tvCaozuotishiyin;
+    @BindView(R.id.sbtn_caozuotishiyin)
+    Switch sbtnCaozuotishiyin;
+    @BindView(R.id.rl_caozuotishiyin)
+    RelativeLayout rlCaozuotishiyin;
+
 
     private String device_id;
     ZnjjMqttMingLing mqttMingLing;
     private String device_ccid;
     private String member_type = "";
+    private String isVoice = "1";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -181,7 +193,8 @@ public class ZhiNengChuangLianActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //UIHelper.ToastMessage(mContext, "点击了开窗");
-                SoundPoolUtils.soundPool(mContext,R.raw.kaiqizhinengchuanglian);
+                if (isVoice.equals("1"))
+                    SoundPoolUtils.soundPool(mContext, R.raw.kaiqizhinengchuanglian);
                 rrlGuanchuang.setBackground(mContext.getResources().getDrawable(R.drawable.chuanglian_no_sel));
                 tvGuanchuanglian.setTextColor(mContext.getResources().getColor(R.color.black_333333));
                 ivGuanchuang.setBackgroundResource(R.mipmap.chuanglian_button_guan_nor);
@@ -219,7 +232,8 @@ public class ZhiNengChuangLianActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 // UIHelper.ToastMessage(mContext, "点击了关窗");
-                SoundPoolUtils.soundPool(mContext,R.raw.guanbizhinengchuanglian);
+                if (isVoice.equals("1"))
+                    SoundPoolUtils.soundPool(mContext, R.raw.guanbizhinengchuanglian);
                 rrlGuanchuang.setBackground(mContext.getResources().getDrawable(R.drawable.chuagnlian_sel));
                 tvGuanchuanglian.setTextColor(mContext.getResources().getColor(R.color.white));
                 ivGuanchuang.setBackgroundResource(R.mipmap.chuanglian_button_guan_sel);
@@ -282,6 +296,21 @@ public class ZhiNengChuangLianActivity extends BaseActivity {
                 });
             }
         });
+        sbtnCaozuotishiyin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!buttonView.isPressed()) {
+                    return;
+                }
+                if (isChecked) {
+                    sheZhiTiShiYin("1");
+                } else {
+                    sheZhiTiShiYin("2");
+                }
+
+            }
+        });
+
     }
 
     @Override
@@ -361,7 +390,18 @@ public class ZhiNengChuangLianActivity extends BaseActivity {
 //                            });
                         }
 
+                        if (StringUtils.isEmpty(response.body().data.get(0).is_voice)) {
+                            isVoice = "1";
+                            sbtnCaozuotishiyin.setChecked(true);
+                        } else {
+                            isVoice = response.body().data.get(0).is_voice;
 
+                            if (isVoice.equals("1")) {
+                                sbtnCaozuotishiyin.setChecked(true);
+                            } else if (isVoice.equals("2")) {
+                                sbtnCaozuotishiyin.setChecked(false);
+                            }
+                        }
                         showLoadSuccess();
                     }
 
@@ -484,6 +524,55 @@ public class ZhiNengChuangLianActivity extends BaseActivity {
                             });
                             myCarCaoZuoDialog_caoZuoTIshi.show();
                         }
+                    }
+                });
+    }
+
+    private void sheZhiTiShiYin(String isVoice) {
+        //访问网络获取数据 下面的列表数据
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16053");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("device_id", device_id);
+        map.put("is_voice", isVoice);
+        Gson gson = new Gson();
+        String a = gson.toJson(map);
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<SuiYiTieModel.DataBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<SuiYiTieModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<SuiYiTieModel.DataBean>> response) {
+
+                        if (isVoice.equals("1")) {
+                            UIHelper.ToastMessage(mContext, "开启提示音设置成功");
+                            ZhiNengChuangLianActivity.this.isVoice = "1";
+                        } else if (isVoice.equals("2")) {
+                            UIHelper.ToastMessage(mContext, "关闭提示音设置成功");
+                            ZhiNengChuangLianActivity.this.isVoice = "2";
+                        }
+                        showLoadSuccess();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<SuiYiTieModel.DataBean>> response) {
+                        String str = response.getException().getMessage();
+                        Log.i("cuifahuo", str);
+                        String[] str1 = str.split("：");
+                        UIHelper.ToastMessage(mContext, response.getException().getMessage());
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<SuiYiTieModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showLoading();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
                     }
                 });
     }

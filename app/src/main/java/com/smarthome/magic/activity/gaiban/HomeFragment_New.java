@@ -626,7 +626,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         }
     }
 
-    private String JiaMiToken;
+    public static String JiaMiToken;
     public static List<String> items = new ArrayList<>();
     public static List<Object> items_xiupeichang = new ArrayList<>();
     LordingDialog lordingDialog;
@@ -693,7 +693,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                                         ZiJianShopMallDetailsActivity.actionStart(getActivity(), response.body().data.get(0).getBannerList().get(position).getShop_product_id(), response.body().data.get(0).getBannerList().get(position).getWares_id());
                                     } else if (response.body().data.get(0).getBannerList().get(position).getRotation_img_type().equals("2")) {
                                         // startActivity(new Intent(getActivity(), WebViewActivity.class).putExtra("url", response.body().data.get(0).getBannerList().get(position).getHtml_url()));
-                                        DefaultX5WebViewActivity.actionStart(getActivity(), response.body().data.get(0).getBannerList().get(position).getHtml_url());
+                                        DefaultX5WebView_HaveNameActivity.actionStart(getActivity(), response.body().data.get(0).getBannerList().get(position).getHtml_url(), "产品简介");
                                     } else if (response.body().data.get(0).getBannerList().get(position).getRotation_img_type().equals("3")) {
                                         DaLiBaoActivity.actionStart(getActivity());
                                     }
@@ -1068,7 +1068,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         strFirst = "1";
 
 
-//        HuoDongTanCengActivity.actionStart(getActivity(), activity);  活动弹层注释
+      HuoDongTanCengActivity.actionStart(getActivity(), activity);
 
 
     }

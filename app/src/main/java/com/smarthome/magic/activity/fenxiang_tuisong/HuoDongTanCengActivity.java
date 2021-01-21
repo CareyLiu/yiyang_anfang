@@ -132,7 +132,7 @@ public class HuoDongTanCengActivity extends Activity {
                     if (null == activity.get(position).html_url) {
                         return;
                     }
-                    DefaultX5WebViewActivity.actionStart(HuoDongTanCengActivity.this, activity.get(position).html_url);
+                    DefaultX5WebView_HaveNameActivity.actionStart(HuoDongTanCengActivity.this, activity.get(position).html_url, "红包活动");
                 }
             }
 

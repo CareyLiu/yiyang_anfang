@@ -27,6 +27,7 @@ import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
 import com.rairmmd.andmqtt.MqttSubscribe;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.zhinengjiaju.RenTiGanYingActivity;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
@@ -104,7 +105,7 @@ public class SuiYiTieOneActivity extends BaseActivity {
         iv_rightTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SuiYiTieSetting.actionStart(mContext, device_ccid, device_ccidup);
+                RenTiGanYingActivity.actionStart(mContext, device_ccid, device_ccidup);
             }
         });
         mToolbar.setNavigationIcon(R.mipmap.backbutton);
@@ -114,8 +115,9 @@ public class SuiYiTieOneActivity extends BaseActivity {
                 finish();
             }
         });
-    }
 
+
+    }
     private void kongJianClick() {
         rllOne.setOnClickListener(new View.OnClickListener() {
             @Override

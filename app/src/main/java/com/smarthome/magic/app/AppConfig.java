@@ -114,6 +114,8 @@ public class AppConfig {
     public final static String DEVICECCID = "DEVICECCID";
     public final static String FAMILY_ID = "FAMILY_ID";//切换家庭主机时候使用的familyid
     public final static String ZHIXING_LEIXING = "ZHIXINGLEIXING";// 1 一键执行 2.定时 3 条件
+    public final static String BAOJINGTISHIYIN = "BAOJINGTISHIYIN";//0关1开
+    public final static String ZHINENGJIAJUGUANLIYUAN = "ZHINENGJIAJUGUANLIYUAN"; //0 不是 1 是
     //福利功能  需要的字段
     //作废时间  --待使用
     public static String abolishDate;

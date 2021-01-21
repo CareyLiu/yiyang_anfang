@@ -1,6 +1,5 @@
 package com.smarthome.magic.activity.zhinengjiaju;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,14 +27,17 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.ShuRuInterView;
 import com.smarthome.magic.adapter.ZhiNengChangJingSheBeiAdapter;
 import com.smarthome.magic.adapter.ZhiNengChangJingSheBeiAdapter1;
+import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.ShuRuDIalog;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.BianJiDingShiNeedModel;
 import com.smarthome.magic.model.ChangJingWhereModel;
@@ -51,6 +53,7 @@ import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
+import static com.smarthome.magic.dialog.newdia.TishiDialog.TYPE_CAOZUO;
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
 public class ZhiNengChangJingDetailsActivity extends BaseActivity {
@@ -85,6 +88,8 @@ public class ZhiNengChangJingDetailsActivity extends BaseActivity {
     TextView tvYijianzhixing;
     @BindView(R.id.tv_time)
     TextView tvTime;
+    @BindView(R.id.rl_shanchu)
+    RoundRelativeLayout rlShanchu;
     private String senceType;
     private String scene_id;
     ShuRuDIalog shuRuDIalog;
@@ -93,6 +98,7 @@ public class ZhiNengChangJingDetailsActivity extends BaseActivity {
     String iconStr;
     ZhiNengChangJingSheBeiAdapter1 zhiNengChangJingSheBeiAdapter1;
     private List<ChangJingZhiXingModel> mSheBeiDatas = new ArrayList<>();
+    private String guanLiYuan;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,23 +107,28 @@ public class ZhiNengChangJingDetailsActivity extends BaseActivity {
         senceType = getIntent().getStringExtra("senceType");
         scene_id = getIntent().getStringExtra("scene_id");
         familyId = getIntent().getStringExtra("familyId");
-
+        guanLiYuan = PreferenceHelper.getInstance(mContext).getString(AppConfig.ZHINENGJIAJUGUANLIYUAN, "0");
         rlChangjing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shuRuDIalog = new ShuRuDIalog(mContext, new ShuRuInterView() {
-                    @Override
-                    public void cannel() {
-                        shuRuDIalog.dismiss();
-                    }
+                if (guanLiYuan.equals("1")) {
+                    shuRuDIalog = new ShuRuDIalog(mContext, new ShuRuInterView() {
+                        @Override
+                        public void cannel() {
+                            shuRuDIalog.dismiss();
+                        }
 
-                    @Override
-                    public void submit(String str) {
-                        tvChangjingmingcheng.setText(str);
-                        bianJiChangJingMingCheng(str);
-                    }
-                });
-                shuRuDIalog.show();
+                        @Override
+                        public void submit(String str) {
+                            tvChangjingmingcheng.setText(str);
+                            bianJiChangJingMingCheng(str);
+                        }
+                    });
+                    shuRuDIalog.show();
+                } else {
+                    UIHelper.ToastMessage(mContext, "您不是管理员暂无此权限");
+                }
+
             }
         });
 
@@ -134,16 +145,20 @@ public class ZhiNengChangJingDetailsActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
                     // ChuangJianZhiNengDingShiActivity.actionStart(mContext,"youzhi");
-                    Intent intent = new Intent(mContext, ChuangJianZhiNengDingShiActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    intent.putExtra("XiangQingUse", "xiangQingUse");
-                    startActivityForResult(intent, 1);
-
+                    if (guanLiYuan.equals("1")) {
+                        Intent intent = new Intent(mContext, ChuangJianZhiNengDingShiActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        intent.putExtra("XiangQingUse", "xiangQingUse");
+                        startActivityForResult(intent, 1);
+                    } else {
+                        UIHelper.ToastMessage(mContext, "您不是管理员暂无此权限");
+                    }
                 }
             });
         } else if (senceType.equals("3")) {
             //3 动作触发
             llYijianzhixingTianjiaTiaojian.setVisibility(View.GONE);
+            tvTime.setVisibility(View.VISIBLE);
             //一键执行 动作触发
         }
 
@@ -181,6 +196,62 @@ public class ZhiNengChangJingDetailsActivity extends BaseActivity {
             }
         }));
 
+        rlShanchu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TishiDialog tishiDialog = new TishiDialog(mContext, TYPE_CAOZUO, new TishiDialog.TishiDialogListener() {
+                    @Override
+                    public void onClickCancel(View v, TishiDialog dialog) {
+
+                    }
+
+                    @Override
+                    public void onClickConfirm(View v, TishiDialog dialog) {
+                        getShanChuNet();
+                    }
+
+                    @Override
+                    public void onDismiss(TishiDialog dialog) {
+
+                    }
+                });
+                tishiDialog.setTextContent("是否确定删除场景");
+                tishiDialog.show();
+            }
+        });
+    }
+
+    public void getShanChuNet() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16063");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("scene_id", scene_id);
+        map.put("family_id", familyId);
+        map.put("type", "1");
+
+        Gson gson = new Gson();
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<ChangJingXiangQingModel.DataBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ChangJingXiangQingModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ChangJingXiangQingModel.DataBean>> response) {
+                        UIHelper.ToastMessage(mContext, "场景删除成功");
+                        Notice notice = new Notice();
+                        notice.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+                        finish();
+
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ChangJingXiangQingModel.DataBean>> response) {
+                        String str = response.getException().getMessage();
+                        Log.i("cuifahuo", str);
+                        UIHelper.ToastMessage(mContext, str);
+                    }
+                });
     }
 
     private void initRecycleView() {
@@ -198,7 +269,11 @@ public class ZhiNengChangJingDetailsActivity extends BaseActivity {
         rlZhiNengTuBiao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChangJingTuBiaoActivity.actionStart(mContext);
+                if (guanLiYuan.equals("1")) {
+                    ChangJingTuBiaoActivity.actionStart(mContext);
+                } else {
+                    UIHelper.ToastMessage(mContext, "您不是管理员暂无此权限");
+                }
             }
         });
 
@@ -208,8 +283,11 @@ public class ZhiNengChangJingDetailsActivity extends BaseActivity {
         rllTianjiashebei.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                SheBeiBianHuaActivity.actionStart(mContext, familyId, "");
+                if (guanLiYuan.equals("1")) {
+                    SheBeiBianHuaActivity.actionStart(mContext, familyId, "");
+                } else {
+                    UIHelper.ToastMessage(mContext, "您不是管理员暂无此权限");
+                }
             }
         });
         zhiNengChangJingSheBeiAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
@@ -218,22 +296,27 @@ public class ZhiNengChangJingDetailsActivity extends BaseActivity {
                 switch (view.getId()) {
 
                     case R.id.ll_item:
-                        String[] items = {"删除"};
-                        final ActionSheetDialog dialog = new ActionSheetDialog(mContext, items, null);
-                        dialog.isTitleShow(false).show();
-                        dialog.setOnOperItemClickL(new OnOperItemClickL() {
-                            @Override
-                            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        if (guanLiYuan.equals("1")) {
+                            String[] items = {"删除"};
+                            final ActionSheetDialog dialog = new ActionSheetDialog(mContext, items, null);
+                            dialog.isTitleShow(false).show();
+                            dialog.setOnOperItemClickL(new OnOperItemClickL() {
+                                @Override
+                                public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                                switch (position) {
-                                    case 0:
-                                        shanChuChangJingSheBei(mDatas.get(position).getScene_oper_id());
-                                        break;
+                                    switch (position) {
+                                        case 0:
+                                            shanChuChangJingSheBei(mDatas.get(position).getScene_oper_id());
+                                            break;
+                                    }
+                                    dialog.dismiss();
+
                                 }
-                                dialog.dismiss();
+                            });
+                        } else {
+                            UIHelper.ToastMessage(mContext, "您不是管理员暂无此权限");
+                        }
 
-                            }
-                        });
                         break;
                 }
             }

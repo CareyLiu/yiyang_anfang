@@ -83,6 +83,7 @@ public class DefaultX5WebView_HaveNameActivity extends BaseActivity {
         shareId = intent.getStringExtra("shareId");
         shareType = intent.getStringExtra("shareType");
         titleName = intent.getStringExtra("titleName");
+        tv_title.setText(titleName);
         init();
         if (!TextUtils.isEmpty(shareId) && !TextUtils.isEmpty(shareType)) {
             iv_rightTitle.setVisibility(View.VISIBLE);
@@ -195,9 +196,9 @@ public class DefaultX5WebView_HaveNameActivity extends BaseActivity {
                 progressDialog = null;
                 x5WebView.setEnabled(true);
             }
-            if (tv_title != null && view != null && view.getTitle() != null) {
-                tv_title.setText(view.getTitle());
-            }
+//            if (tv_title != null && view != null && view.getTitle() != null) {
+//                tv_title.setText(view.getTitle());
+//            }
             publicMethod = "javascript:publicMethod('operatingSystem','" + new Gson().toJson("android") + "')";
             if (x5WebView != null) {
                 x5WebView.loadUrl(publicMethod);
@@ -284,6 +285,7 @@ public class DefaultX5WebView_HaveNameActivity extends BaseActivity {
         super.initToolbar();
         tv_title.setTextSize(17);
         tv_title.setTextColor(getResources().getColor(R.color.black));
+
         mToolbar.setNavigationIcon(R.mipmap.backbutton);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

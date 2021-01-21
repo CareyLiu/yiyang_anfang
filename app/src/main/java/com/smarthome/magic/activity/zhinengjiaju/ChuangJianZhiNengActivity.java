@@ -61,6 +61,7 @@ public class ChuangJianZhiNengActivity extends BaseActivity {
             public void onClick(View v) {
                 ChuangJianZhiNengDingShiActivity.actionStart(mContext);
                 PreferenceHelper.getInstance(mContext).putString(AppConfig.ZHIXING_LEIXING, "2");
+                finish();
             }
         });
         rlShebeizhuangtaibianhua.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +70,8 @@ public class ChuangJianZhiNengActivity extends BaseActivity {
                 String familyId = PreferenceHelper.getInstance(mContext).getString(AppConfig.FAMILY_ID, "");
                 PreferenceHelper.getInstance(mContext).putString(AppConfig.ZHIXING_LEIXING, "3");
                 SheBeiBianHuaActivity.actionStart(mContext, familyId,"leiXingBiaoShi");
+
+                finish();
             }
         });
         rlYijianzhixing.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +79,8 @@ public class ChuangJianZhiNengActivity extends BaseActivity {
             public void onClick(View v) {
                 PreferenceHelper.getInstance(mContext).putString(AppConfig.ZHIXING_LEIXING, "1");
                 ChangJingYiJianZhiXingActivity.actionStart(mContext, "1", "", "", null);
+
+                finish();
             }
         });
     }

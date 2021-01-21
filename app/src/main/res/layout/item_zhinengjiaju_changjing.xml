@@ -59,6 +59,7 @@
             android:src="@mipmap/zhienngchangjing_button_zhixing" />
 
         <com.suke.widget.SwitchButton
+            android:id="@+id/csw_switch_button"
             android:layout_width="49dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
@@ -67,6 +68,15 @@
             app:sb_checked="false"
             app:sb_checked_color="#07C160"
             app:sb_show_indicator="false" />
+
+        <View
+            android:id="@+id/view"
+            android:background="@color/trans"
+            android:layout_width="49dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp" />
     </com.flyco.roundview.RoundRelativeLayout>
 
 </LinearLayout>

@@ -28,6 +28,8 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.RenTiGanYingSetting;
+import com.smarthome.magic.activity.SuiYiTieSetting;
 import com.smarthome.magic.adapter.MenCiListAdapter;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.BaseActivity;
@@ -239,9 +241,17 @@ public class RenTiGanYingActivity extends BaseActivity {
     @Override
     protected void initToolbar() {
         super.initToolbar();
-        tv_title.setText("设备详情");
+        tv_title.setText("人体感应详情");
         tv_title.setTextSize(17);
         tv_title.setTextColor(getResources().getColor(R.color.black));
+        iv_rightTitle.setVisibility(View.GONE);
+        iv_rightTitle.setImageResource(R.mipmap.fengnuan_icon_shezhi);
+        iv_rightTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RenTiGanYingSetting.actionStart(mContext, device_id, deviceCCid, device_id);
+            }
+        });
         mToolbar.setNavigationIcon(R.mipmap.backbutton);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

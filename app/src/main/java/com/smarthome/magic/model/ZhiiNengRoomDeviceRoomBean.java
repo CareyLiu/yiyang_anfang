@@ -89,6 +89,7 @@ public class ZhiiNengRoomDeviceRoomBean {
         private String family_name;
         private String device_ccid_up;
         public String device_state;
+        public String is_voice;
 
         public String getRoom_id() {
             return room_id;

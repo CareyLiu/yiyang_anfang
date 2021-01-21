@@ -26,6 +26,7 @@ import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
@@ -48,6 +49,7 @@ import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
+import static com.smarthome.magic.app.ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
 public class ChangJingYiJianZhiXingActivity extends BaseActivity {
@@ -151,7 +153,7 @@ public class ChangJingYiJianZhiXingActivity extends BaseActivity {
             tiaojianList.setVisibility(View.GONE);
         } else if (zhiXingLeiXing.equals("3")) {
 
-            rlYijianzhixing.setVisibility(View.GONE);
+            rlYijianzhixing.setVisibility(View.VISIBLE);
             tiaojianList.setVisibility(View.GONE);
 
             Glide.with(mContext).load(changJingZhiXingModel.img_url).into(ivImage);
@@ -278,8 +280,9 @@ public class ChangJingYiJianZhiXingActivity extends BaseActivity {
         map.put("code", "16056");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
-        if (tvChangjingmingcheng.getText().toString().equals("")) {
-            UIHelper.ToastMessage(mContext, "场景名称不能为空");
+        if (tvChangjingmingcheng.getText().toString().equals("点击编辑")) {
+            UIHelper.ToastMessage(mContext, "请编辑场景名后重新尝试");
+            return;
         } else {
             map.put("scene_title", tvChangjingmingcheng.getText().toString());
         }
@@ -287,9 +290,11 @@ public class ChangJingYiJianZhiXingActivity extends BaseActivity {
             map.put("scene_pic", iconStr);
         } else {
             UIHelper.ToastMessage(mContext, "请选择场景图标");
+            return;
         }
         if (mDatas.size() == 0) {
             UIHelper.ToastMessage(mContext, "请选择设备后重新尝试");
+            return;
         }
         map.put("scene_type", zhiXingLeiXing);
         map.put("family_id", familyId);
@@ -361,6 +366,10 @@ public class ChangJingYiJianZhiXingActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Response<AppResponse<ChangJingXiangQingModel.DataBean>> response) {
                         UIHelper.ToastMessage(mContext, "场景发布成功");
+
+                        Notice notice = new Notice();
+                        notice.type = MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+                        RxBus.getDefault().sendRx(notice);
                         finish();
                     }
 

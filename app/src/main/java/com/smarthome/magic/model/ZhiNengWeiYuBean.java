@@ -97,6 +97,7 @@ public class ZhiNengWeiYuBean {
         private String auto_state;
         private String family_name;
         private String device_ccid_up;
+        public String is_voice;
 
         public String getRoom_id() {
             return room_id;

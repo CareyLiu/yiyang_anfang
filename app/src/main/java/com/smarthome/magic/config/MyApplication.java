@@ -72,6 +72,7 @@ import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.ZhiNengJiaJuNotifyJson;
 import com.smarthome.magic.util.DoMqttValue;
 import com.smarthome.magic.util.JinChengUtils;
 import com.smarthome.magic.util.SerializeUtil;
@@ -655,8 +656,9 @@ public class MyApplication extends MultiDexApplication {
                                 RxBus.getDefault().sendRx(n1);
                             } else if (codeClass.code.equals("jyj_0006")) {
                                 Notice n = new Notice();
-                                n.type = ConstanceValue.MSG_GUZHANG_SHOUYE;
-                                n.content = message.toString();
+                                n.type = ConstanceValue.MSG_ZHINENGJIAJU_MENCI;
+                                ZhiNengJiaJuNotifyJson zhiNengJiaJuNotifyJson = new Gson().fromJson(message.toString(), ZhiNengJiaJuNotifyJson.class);
+                                n.content = zhiNengJiaJuNotifyJson;
                                 RxBus.getDefault().sendRx(n);
                             }
 

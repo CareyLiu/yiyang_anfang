@@ -52,6 +52,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.smarthome.magic.activity.gaiban.HomeFragment_New.JiaMiToken;
 import static com.smarthome.magic.app.App.JINGDU;
 import static com.smarthome.magic.app.App.WEIDU;
 import static com.smarthome.magic.get_net.Urls.LIBAOLIST;
@@ -170,41 +171,66 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                 TuanGouShangJiaListBean.DataBean.IconBean iconBean = ziJian_headerAdapter.getData().get(position);
 
 
-                if (ziJian_headerAdapter.getData().get(position).getId().equals("6")) {
-//                    String jingdu = PreferenceHelper.getInstance(mContext).getString(JINGDU, "0X11");
-//                    String weidu = PreferenceHelper.getInstance(mContext).getString(WEIDU, "0X11");
-//                    if (!jingdu.equals("0X11")) {
-//                        String str = ziJian_headerAdapter.getData().get(position).getHref_url() + "?i=" + JiaMiToken + "&" + "gps_x=" + weidu + "&" + "gps_y=" + jingdu;
-//                        TuanYouWebView.actionStart(getActivity(), str);
-//                    } else {
-//                        choosePostion = position;
-//                        if (ziJian_headerAdapter.getData().get(position).getId().equals("6")) {
-//                            String str = ziJian_headerAdapter.getData().get(position).getHref_url() + "?i=" + JiaMiToken + "&" + "gps_x=45.666043" + "&" + "gps_y=126.605713";
-//                            TuanYouWebView.actionStart(getActivity(), str);
-//                            Toast.makeText(getActivity(), "该应用需要赋予定位的权限！", Toast.LENGTH_LONG).show();
-//                        }
-//                    }
-                } else if (ziJian_headerAdapter.getData().get(position).getId().equals("11")) {
-                    TuanYouList.actionStart(mContext);
-                }  else {
-
 //                    pageNumber = "0";
 //                    item_id = iconListBeans1.get(finalI).getHref_url();
 //                    three_img_id = iconListBeans1.get(finalI).getThree_img_id();
 //                    inst_id = "";
 //                    imgType = type;
 
+                if (type.equals("10")) {
 
+
+                    if (ziJian_headerAdapter.getData().get(position).getId().equals("6")) {
+                        String jingdu = PreferenceHelper.getInstance(mContext).getString(JINGDU, "0X11");
+                        String weidu = PreferenceHelper.getInstance(mContext).getString(WEIDU, "0X11");
+                        if (!jingdu.equals("0X11")) {
+                            String str = ziJian_headerAdapter.getData().get(position).getHref_url() + "?i=" + JiaMiToken + "&" + "gps_x=" + weidu + "&" + "gps_y=" + jingdu;
+                            TuanYouWebView.actionStart(mContext, str);
+                        } else {
+                            choosePostion = position;
+                            if (ziJian_headerAdapter.getData().get(position).getId().equals("6")) {
+                                String str = ziJian_headerAdapter.getData().get(position).getHref_url() + "?i=" + JiaMiToken + "&" + "gps_x=45.666043" + "&" + "gps_y=126.605713";
+                                TuanYouWebView.actionStart(mContext, str);
+                                Toast.makeText(mContext, "该应用需要赋予定位的权限！", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    } else if (ziJian_headerAdapter.getData().get(position).getId().equals("11")) {
+                        TuanYouList.actionStart(mContext);
+                    }  else if (ziJian_headerAdapter.getData().get(position).getId().equals("1")) {
+                        TuanGouShangJiaListActivity.actionStart(mContext, ziJian_headerAdapter.getData().get(position).getId());
+                    } else if (ziJian_headerAdapter.getData().get(position).getId().equals("2")) {
+                        TuanGouShangJiaListActivity.actionStart(mContext, ziJian_headerAdapter.getData().get(position).getId());
+                    } else if (ziJian_headerAdapter.getData().get(position).getId().equals("3")) {
+                        TuanGouShangJiaListActivity.actionStart(mContext, ziJian_headerAdapter.getData().get(position).getId());
+                    } else if (ziJian_headerAdapter.getData().get(position).getId().equals("4")) {
+                        TuanGouShangJiaListActivity.actionStart(mContext, ziJian_headerAdapter.getData().get(position).getId());
+                    } else {
+                        inst_id = "";
+                        meter = "";
+                        item_id = ziJian_headerAdapter.getData().get(position).getHref_url();
+                        three_img_id = ziJian_headerAdapter.getData().get(position).getThree_img_id();
+                        imgType = ziJian_headerAdapter.getData().get(position).getId();
+                        //imgType = type;
+
+                        getNet_storeList();
+                    }
+
+
+                } else {
                     inst_id = "";
                     meter = "";
                     item_id = ziJian_headerAdapter.getData().get(position).getHref_url();
                     three_img_id = ziJian_headerAdapter.getData().get(position).getThree_img_id();
                     imgType = type;
                     //imgType = type;
-                    getNet_storeList();
 
+
+                    getNet_storeList();
                 }
+
+
             }
+
         });
         //初始化一下
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false);
@@ -276,14 +302,26 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                             constraintLayout.setVisibility(View.VISIBLE);
                             ivNoneImage.setVisibility(View.VISIBLE);
                             noneText.setVisibility(View.VISIBLE);
+
+
                         } else {
                             constraintLayout.setVisibility(View.GONE);
                             ivNoneImage.setVisibility(View.GONE);
                             noneText.setVisibility(View.GONE);
+
                         }
                         tuanGouShangJiaListAdapter.setNewData(storeListBeans);
                         tuanGouShangJiaListAdapter.notifyDataSetChanged();
                         //  getTurn();
+
+                        srLSmart.finishRefresh();
+                        srLSmart.finishLoadMore();
+
+                        if (response.body().typeNext.equals("0")) {
+                            srLSmart.setEnableLoadMore(false);
+                        } else {
+                            srLSmart.setEnableLoadMore(true);
+                        }
 
                     }
                 });
@@ -488,23 +526,57 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                             @Override
                             public void onClick(View v) {
                                 tvQuanBu.setText(iconListBeans1.get(finalI).getName());
-                                if (iconListBeans1.get(finalI).getName().equals("全部")) {
-                                    pageNumber = "0";
-                                    item_id = "";
-                                    three_img_id = "";
-                                    inst_id = "";
-                                    imgType = type;
+                                if (type.equals("10")) {
+
+
+                                    if (iconListBeans1.get(finalI).getId().equals("6")) {
+                                        String jingdu = PreferenceHelper.getInstance(mContext).getString(JINGDU, "0X11");
+                                        String weidu = PreferenceHelper.getInstance(mContext).getString(WEIDU, "0X11");
+                                        if (!jingdu.equals("0X11")) {
+                                            String str =iconListBeans1.get(finalI).getHref_url() + "?i=" + JiaMiToken + "&" + "gps_x=" + weidu + "&" + "gps_y=" + jingdu;
+                                            TuanYouWebView.actionStart(mContext, str);
+                                        } else {
+                                            choosePostion = finalI;
+                                            if (iconListBeans1.get(finalI).getId().equals("6")) {
+                                                String str = iconListBeans1.get(finalI).getHref_url() + "?i=" + JiaMiToken + "&" + "gps_x=45.666043" + "&" + "gps_y=126.605713";
+                                                TuanYouWebView.actionStart(mContext, str);
+                                                Toast.makeText(mContext, "该应用需要赋予定位的权限！", Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+                                    } else if (iconListBeans1.get(finalI).getId().equals("11")) {
+                                        TuanYouList.actionStart(mContext);
+                                    } else if (iconListBeans1.get(finalI).getId().equals("1")) {
+                                        TuanGouShangJiaListActivity.actionStart(mContext, iconListBeans1.get(finalI).getId());
+                                    } else if (iconListBeans1.get(finalI).getId().equals("2")) {
+                                        TuanGouShangJiaListActivity.actionStart(mContext,iconListBeans1.get(finalI).getId());
+                                    } else if (iconListBeans1.get(finalI).getId().equals("3")) {
+                                        TuanGouShangJiaListActivity.actionStart(mContext, iconListBeans1.get(finalI).getId());
+                                    } else if (iconListBeans1.get(finalI).getId().equals("4")) {
+                                        TuanGouShangJiaListActivity.actionStart(mContext, iconListBeans1.get(finalI).getId());
+                                    } else {
+                                        inst_id = "";
+                                        meter = "";
+                                        item_id = iconListBeans1.get(finalI).getHref_url();
+                                        three_img_id = iconListBeans1.get(finalI).getThree_img_id();
+                                        imgType = iconListBeans1.get(finalI).getId();
+                                        //imgType = type;
+
+                                        getNet_storeList();
+                                    }
+
+
                                 } else {
-                                    pageNumber = "0";
+                                    inst_id = "";
+                                    meter = "";
                                     item_id = iconListBeans1.get(finalI).getHref_url();
                                     three_img_id = iconListBeans1.get(finalI).getThree_img_id();
-                                    inst_id = "";
                                     imgType = type;
+                                    //imgType = type;
+
+                                    getNet_storeList();
                                 }
 
 
-                                //image_type =
-                                getNet_storeList();
                                 constrain.setVisibility(View.GONE);
                                 quanbuShow = false;
                                 ivImage1.setBackgroundResource(R.mipmap.shangjia_icon_shouqi);

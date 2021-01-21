@@ -72,7 +72,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
+
 import butterknife.BindView;
+import io.reactivex.internal.operators.maybe.MaybeDoAfterSuccess;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
@@ -279,6 +281,9 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 getnet();
+                Notice notice = new Notice();
+                notice.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+                sendRx(notice);
             }
         });
     }
@@ -324,6 +329,11 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                         room.putParcelableArrayList("room", dataBean.get(0).getRoom());
                         room.putString("member_type", dataBean.get(0).getMember_type());
                         room.putString("family_id", dataBean.get(0).getFamily_id());
+                        if (dataBean.get(0).getMember_type().equals("1")) {
+                            PreferenceHelper.getInstance(getActivity()).putString(AppConfig.ZHINENGJIAJUGUANLIYUAN, "1");
+                        } else {
+                            PreferenceHelper.getInstance(getActivity()).putString(AppConfig.ZHINENGJIAJUGUANLIYUAN, "0");
+                        }
                         if (zhiNengDeviceFragment != null) {
                             zhiNengDeviceFragment.onRefresh();
                         }

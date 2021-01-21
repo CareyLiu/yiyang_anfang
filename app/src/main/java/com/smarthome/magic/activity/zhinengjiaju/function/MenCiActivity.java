@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.flyco.roundview.RoundRelativeLayout;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -25,10 +27,12 @@ import com.rairmmd.andmqtt.MqttPublish;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.ZhiNengDianDengActivity;
 import com.smarthome.magic.adapter.MenCiListAdapter;
 import com.smarthome.magic.app.App;
+import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
@@ -41,6 +45,7 @@ import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.LordingDialog;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuoTIshi;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Success;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.AlarmListBean;
 import com.smarthome.magic.model.MenCiListModel;
@@ -61,6 +66,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 import static com.smarthome.magic.config.MyApplication.CAR_CTROL;
+import static com.smarthome.magic.dialog.newdia.TishiDialog.TYPE_CAOZUO;
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
 //智能家居 门磁
@@ -74,7 +80,7 @@ public class MenCiActivity extends BaseActivity {
 
     private MenCiListAdapter menCiListAdapter;
     private List<AlarmListBean> mDatas;
-
+    RoundRelativeLayout rlQingKong;
     private TextView tvJiaTingName;
     private TextView tvRoomName;
     private TextView tvMingChengName;
@@ -86,6 +92,9 @@ public class MenCiActivity extends BaseActivity {
     ZnjjMqttMingLing znjjMqttMingLing;
     private String deviceCCid = "";
     LordingDialog lordingDialog;
+    RelativeLayout rlGaoJingSheZhi;
+    TextView tvSheBeiZaiXianHuaShu;
+    private int pageNumber = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -131,7 +140,57 @@ public class MenCiActivity extends BaseActivity {
         switch1 = headerView.findViewById(R.id.btn_gaojing);
         viewZhongJian = headerView.findViewById(R.id.view_zhongjian);
         ll_caozuo_jilu = headerView.findViewById(R.id.ll_caozuo_jilu);
+        rlGaoJingSheZhi = headerView.findViewById(R.id.rl_gaojing_shezhi);
+        tvSheBeiZaiXianHuaShu = headerView.findViewById(R.id.tv_shebei_zaixian_huashu);
+        Switch switchBaoJingTishiYin = headerView.findViewById(R.id.btn_baojing_tishiyin);
+        rlQingKong = headerView.findViewById(R.id.rl_qingkong);
+        rlQingKong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                TishiDialog tishiDialog = new TishiDialog(mContext, TYPE_CAOZUO, new TishiDialog.TishiDialogListener() {
+                    @Override
+                    public void onClickCancel(View v, TishiDialog dialog) {
+
+                    }
+
+                    @Override
+                    public void onClickConfirm(View v, TishiDialog dialog) {
+                        UIHelper.ToastMessage(mContext, "清空所有数据");
+                        getQingKongNet();
+                    }
+
+                    @Override
+                    public void onDismiss(TishiDialog dialog) {
+
+                    }
+                });
+                tishiDialog.setTextContent("是否清空所有数据？");
+                tishiDialog.show();
+            }
+        });
+
+        String strBaoJing = PreferenceHelper.getInstance(mContext).getString(AppConfig.BAOJINGTISHIYIN, "2");
+        if (strBaoJing.equals("0")) {
+            switchBaoJingTishiYin.setChecked(false);
+        } else {
+            switchBaoJingTishiYin.setChecked(true);
+        }
+
+        switchBaoJingTishiYin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!buttonView.isPressed()) {
+                    return;
+                }
+                if (isChecked) {
+                    PreferenceHelper.getInstance(mContext).putString(AppConfig.BAOJINGTISHIYIN, "1");
+                } else {
+                    PreferenceHelper.getInstance(mContext).putString(AppConfig.BAOJINGTISHIYIN, "0");
+                }
+            }
+        });
+        rlGaoJingSheZhi.setVisibility(View.VISIBLE);
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -155,7 +214,7 @@ public class MenCiActivity extends BaseActivity {
             @Override
             public void call(Notice notice) {
                 if (notice.type == ConstanceValue.MSG_ZHINENGJIAJU_MENCIPAGE) {
-                  getNet();
+                    getNet();
                 } else if (notice.type == ConstanceValue.MSG_SHEBEIZHUANGTAI) {
                     List<String> messageList = (List<String>) notice.content;
                     String zhuangZhiId = messageList.get(0);
@@ -198,7 +257,22 @@ public class MenCiActivity extends BaseActivity {
             }
         });
 
+        srLSmart.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                pageNumber = pageNumber + 1;
+            }
 
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+
+            }
+        });
+
+    }
+
+    private void getQingKongNet() {
+        //清空所有接口
     }
 
     private class N9Thread extends Thread {
@@ -320,7 +394,7 @@ public class MenCiActivity extends BaseActivity {
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
         map.put("device_id", device_id);
-        map.put("page_num", "0");
+        map.put("page_num", String.valueOf(pageNumber));
 
         Gson gson = new Gson();
         Log.e("map_data", gson.toJson(map));
@@ -358,6 +432,11 @@ public class MenCiActivity extends BaseActivity {
                         } else if (dataBean.getWarn_state().equals("2")) {
                             viewZhongJian.setVisibility(View.VISIBLE);
 
+                        }
+                        if (dataBean.getOnline_state().equals("1")) {
+                            tvSheBeiZaiXianHuaShu.setText("设备在线");
+                        } else if (dataBean.getOnline_state().equals("2")) {
+                            tvSheBeiZaiXianHuaShu.setText("设备离线");
                         }
                         tvJiaTingName.setText(dataBean.getFamily_name());
                         tvLeiXingName.setText(dataBean.getDevice_name());
@@ -400,6 +479,12 @@ public class MenCiActivity extends BaseActivity {
                         }
 
                         menCiListAdapter.notifyDataSetChanged();
+
+                        if (response.body().next.equals("1")) {
+                            srLSmart.setEnableLoadMore(true);
+                        } else {
+                            srLSmart.setEnableLoadMore(false);
+                        }
 
                     }
 
@@ -510,28 +595,31 @@ public class MenCiActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        znjjMqttMingLing.unSubscribeShiShiXinXi(new IMqttActionListener() {
-            @Override
-            public void onSuccess(IMqttToken asyncActionToken) {
+        if (znjjMqttMingLing != null) {
+            znjjMqttMingLing.unSubscribeShiShiXinXi(new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
 
-            }
+                }
 
-            @Override
-            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
 
-            }
-        });
+                }
+            });
 
-        znjjMqttMingLing.unSubscribeAppShiShiXinXi(new IMqttActionListener() {
-            @Override
-            public void onSuccess(IMqttToken asyncActionToken) {
+            znjjMqttMingLing.unSubscribeAppShiShiXinXi(new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
 
-            }
+                }
 
-            @Override
-            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
 
-            }
-        });
+                }
+            });
+        }
+
     }
 }

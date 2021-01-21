@@ -198,6 +198,12 @@ public class HomeActivity extends BaseActivity {
             }
         }));
 
+        rrlYuyinMianban.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         handler = new Handler();
         runnable = new Runnable() {
@@ -256,7 +262,7 @@ public class HomeActivity extends BaseActivity {
          */
         ZhiNengJiaJuNotifyJson zhiNengJiaJuNotifyJson = new ZhiNengJiaJuNotifyJson();
         zhiNengJiaJuNotifyJson = (ZhiNengJiaJuNotifyJson) notice.content;
-        ZhiNengJiaJuNotifyJson finalZhiNengJiaJuNotifyJson = zhiNengJiaJuNotifyJson;
+
         ZhiNengJiaJuNotifyJson finalZhiNengJiaJuNotifyJson1 = zhiNengJiaJuNotifyJson;
         if (tishiDialog != null) {
             if (tishiDialog.isShowing()) {
@@ -276,7 +282,7 @@ public class HomeActivity extends BaseActivity {
                     YanGanActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
                 } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("15")) {
                     SosActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id(), true);
-                    SoundPoolUtils.soundPool(mContext, R.raw.baojingyin_1);
+
                 } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("05")) {
                     MenSuoActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
                 } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("13")) {
@@ -290,6 +296,13 @@ public class HomeActivity extends BaseActivity {
 
             }
         });
+        String strBaoJingYin = PreferenceHelper.getInstance(mContext).getString(AppConfig.BAOJINGTISHIYIN, "2");
+        if (strBaoJingYin.equals("0")) {
+
+        } else {
+            SoundPoolUtils.soundPool(mContext, R.raw.baojingyin3);
+        }
+
         tishiDialog.setTextContent("您的家庭有新的状况，是否前去查看?");
         tishiDialog.show();
     }
@@ -362,7 +375,7 @@ public class HomeActivity extends BaseActivity {
                         } else if (alarmClass.device_type.equals("11")) {
                             YanGanActivity.actionStart(mContext, alarmClass.device_id);
                         } else if (alarmClass.device_type.equals("15")) {
-                            SosActivity.actionStart(mContext, alarmClass.device_id,true);
+                            SosActivity.actionStart(mContext, alarmClass.device_id, true);
                             SoundPoolUtils.soundPool(mContext, R.raw.baojingyin_1);
                         } else if (alarmClass.device_type.equals("05")) {
                             MenSuoActivity.actionStart(mContext, alarmClass.device_id);

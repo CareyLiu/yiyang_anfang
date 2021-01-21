@@ -308,7 +308,8 @@ public class ChuangJianZhiNengDingShiActivity extends BaseActivity {
                 String leixing = PreferenceHelper.getInstance(mContext).getString(AppConfig.ZHIXING_LEIXING, "");
                 String kaiShiShiJian = null;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                    kaiShiShiJian = String.valueOf(timePacker.getHour()) + ":" + timePacker.getMinute();
+                    String minte = String.format("%02d", timePacker.getMinute());
+                    kaiShiShiJian = String.valueOf(timePacker.getHour()) + ":" + minte;
                 }
                 if (!StringUtils.isEmpty(xiangQingUse)) {
 
@@ -326,6 +327,7 @@ public class ChuangJianZhiNengDingShiActivity extends BaseActivity {
                 } else {
                     if (!StringUtils.isEmpty(kaiShiShiJian)) {
                         ChangJingYiJianZhiXingActivity.actionStart(mContext, leixing, kaiShiShiJian, chongFuLeiXing, mDatas);
+                        finish();
                     } else {
                         UIHelper.ToastMessage(mContext, "请选择时间");
                     }

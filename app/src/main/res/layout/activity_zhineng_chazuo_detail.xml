@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:background="@color/trans"
             app:srlTextSizeTime="10sp"
-                app:srlTextSizeTitle="12sp" />
+            app:srlTextSizeTitle="12sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -84,6 +84,7 @@
                                 android:layout_marginRight="10dp"
                                 android:layout_marginBottom="10dp" />
                         </RelativeLayout>
+
                         <ImageView
                             android:id="@+id/iv_head"
                             android:layout_width="105dp"
@@ -249,6 +250,7 @@
                             android:textColor="#999999"
                             android:textSize="14sp" />
                     </RelativeLayout>
+
                     <RelativeLayout
                         android:id="@+id/rl_caozuotishiyin"
                         android:layout_width="match_parent"
@@ -278,6 +280,7 @@
                             android:layout_marginLeft="14dp"
                             android:layout_marginRight="14dp" />
                     </RelativeLayout>
+
                     <RelativeLayout
                         android:id="@+id/rl_device_state"
                         android:layout_width="match_parent"
@@ -335,7 +338,7 @@
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
-                        <com.suke.widget.SwitchButton
+                        <Switch
                             android:id="@+id/switch_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -343,9 +346,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="14dp"
                             android:layout_marginRight="14dp"
-                            app:sb_checked="false"
-                            app:sb_checked_color="#1677FF"
-                            app:sb_show_indicator="false" />
+                         />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -367,17 +368,14 @@
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
-                        <com.suke.widget.SwitchButton
+                        <Switch
                             android:id="@+id/auto_switch_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="14dp"
-                            android:layout_marginRight="14dp"
-                            app:sb_checked="false"
-                            app:sb_checked_color="#1677FF"
-                            app:sb_show_indicator="false" />
+                            android:layout_marginRight="14dp" />
                     </RelativeLayout>
 
                     <LinearLayout

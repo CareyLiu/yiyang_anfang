@@ -105,7 +105,7 @@ public class SuiYiTieOneActivity extends BaseActivity {
         iv_rightTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RenTiGanYingActivity.actionStart(mContext, device_ccid, device_ccidup);
+                SuiYiTieSetting.actionStart(mContext, device_ccid, device_ccidup);
             }
         });
         mToolbar.setNavigationIcon(R.mipmap.backbutton);
@@ -118,6 +118,7 @@ public class SuiYiTieOneActivity extends BaseActivity {
 
 
     }
+
     private void kongJianClick() {
         rllOne.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -317,8 +318,8 @@ public class SuiYiTieOneActivity extends BaseActivity {
 
             }
         });
-        String zhuangZhiId =   mDatas.get(0).getDevice_ccid();
-        String zhiLing = "i"+zhuangZhiId + "1" + "01" + "003" + ".";
+        String zhuangZhiId = mDatas.get(0).getDevice_ccid();
+        String zhiLing = "i" + zhuangZhiId + "1" + "01" + "003" + ".";
         Log.i("Rair", zhiLing);
         AndMqtt.getInstance().publish(new MqttPublish()
                 .setMsg(zhiLing)

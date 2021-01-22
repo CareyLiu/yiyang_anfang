@@ -137,7 +137,7 @@ public class SuiYiTieThreeActivity extends BaseActivity {
         iv_rightTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RenTiGanYingActivity.actionStart(mContext, device_ccid, device_ccidup);
+                SuiYiTieSetting.actionStart(mContext, device_ccid, device_ccidup);
             }
         });
         mToolbar.setNavigationIcon(R.mipmap.backbutton);

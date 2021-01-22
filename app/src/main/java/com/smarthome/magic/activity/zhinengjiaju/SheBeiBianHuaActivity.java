@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -161,7 +162,11 @@ public class SheBeiBianHuaActivity extends BaseActivity {
                     public void onSuccess(Response<AppResponse<ZhiNengSheBeiLieBiaoModel.DataBean>> response) {
                         mDatas.clear();
                         mDatas.addAll(response.body().data);
+                        if (mDatas.size() == 0) {
+                            sheBeiBianHua_sheBeiLieBiaoAdapter.setEmptyView(LayoutInflater.from(mContext).inflate(R.layout.activity_zhineng_room_setting_none, null));
+                        }
                         sheBeiBianHua_sheBeiLieBiaoAdapter.notifyDataSetChanged();
+
                         dismissProgressDialog();
                     }
 

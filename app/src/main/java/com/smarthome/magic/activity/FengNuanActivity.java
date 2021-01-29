@@ -510,7 +510,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                if (!AndMqtt.getInstance().isConneect()) {
+                if (!AndMqtt.getInstance().isConnect()) {
                     UIHelper.ToastMessage(mContext, "请检查网络后重新尝试");
                     return;
                 }

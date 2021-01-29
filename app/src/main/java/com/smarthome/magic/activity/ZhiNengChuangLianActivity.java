@@ -582,7 +582,7 @@ public class ZhiNengChuangLianActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (!AndMqtt.getInstance().isConneect()) {
+        if (!AndMqtt.getInstance().isConnect()) {
             UIHelper.ToastMessage(mContext, "未连接主机,请重新尝试");
             return;
         }

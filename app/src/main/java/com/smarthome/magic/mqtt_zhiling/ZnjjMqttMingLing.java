@@ -65,7 +65,7 @@ public class ZnjjMqttMingLing {
      */
     public void setAction(String zhuangZhiId, String caoZuoFangShi, IMqttActionListener listener) {
 
-        if (!AndMqtt.getInstance().isConneect()) {
+        if (!AndMqtt.getInstance().isConnect()) {
             UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
             return;
         }
@@ -92,7 +92,7 @@ public class ZnjjMqttMingLing {
      * @return
      */
     public void setErTongMoShi(String zhuangZhiId, String caoZuoFangShi, IMqttActionListener listener) {
-        if (!AndMqtt.getInstance().isConneect()) {
+        if (!AndMqtt.getInstance().isConnect()) {
             UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
             return;
         }
@@ -114,7 +114,7 @@ public class ZnjjMqttMingLing {
      * @param listener
      */
     public void setJieChuJingBao(String zhuangZhiId, IMqttActionListener listener) {
-        if (!AndMqtt.getInstance().isConneect()) {
+        if (!AndMqtt.getInstance().isConnect()) {
             UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
             return;
         }
@@ -135,7 +135,7 @@ public class ZnjjMqttMingLing {
      */
 
     public void getSheBeiShiShiData(String zhuangZhiId, IMqttActionListener listener) {
-        if (!AndMqtt.getInstance().isConneect()) {
+        if (!AndMqtt.getInstance().isConnect()) {
             UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
             return;
         }
@@ -168,7 +168,7 @@ public class ZnjjMqttMingLing {
      * @param listener      监听
      */
     public void getJiaoHuaAction(String zhuangZhiId, String erTongMoShi, String ziDongMoShi, String kaiShiShiJian, String shiJianJianGe, IMqttActionListener listener) {
-        if (!AndMqtt.getInstance().isConneect()) {
+        if (!AndMqtt.getInstance().isConnect()) {
             UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
             return;
         }
@@ -217,7 +217,7 @@ public class ZnjjMqttMingLing {
      * @param listener      监听
      */
     public void getWeiYuAction(String zhuangZhiId, String erTongMoShi, String ziDongMoShi, String kaiShiShiJian, String shiJianJianGe, IMqttActionListener listener) {
-        if (!AndMqtt.getInstance().isConneect()) {
+        if (!AndMqtt.getInstance().isConnect()) {
             UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
             return;
         }
@@ -243,7 +243,7 @@ public class ZnjjMqttMingLing {
      * @param listener
      */
     public void subscribeShiShiXinXi(IMqttActionListener listener) {
-        if (!AndMqtt.getInstance().isConneect()) {
+        if (!AndMqtt.getInstance().isConnect()) {
             UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
             return;
         }
@@ -265,7 +265,7 @@ public class ZnjjMqttMingLing {
      * @param listener
      */
     public void unSubscribeShiShiXinXi(IMqttActionListener listener) {
-        if (!AndMqtt.getInstance().isConneect()) {
+        if (!AndMqtt.getInstance().isConnect()) {
             UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
             return;
         }
@@ -280,7 +280,7 @@ public class ZnjjMqttMingLing {
      * @param listener
      */
     public void unSubscribeHardware(IMqttActionListener listener) {
-        if (!AndMqtt.getInstance().isConneect()) {
+        if (!AndMqtt.getInstance().isConnect()) {
             UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
             return;
         }
@@ -308,7 +308,7 @@ public class ZnjjMqttMingLing {
      */
     public void setWeiYuAction(String zhuangZhiId, String caoZuoFangShi, String quanshu, IMqttActionListener listener) {
 
-        if (!AndMqtt.getInstance().isConneect()) {
+        if (!AndMqtt.getInstance().isConnect()) {
             UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
             return;
         }
@@ -332,7 +332,7 @@ public class ZnjjMqttMingLing {
      * @param listener
      */
     public void subscribeAppShiShiXinXi(IMqttActionListener listener) {
-        if (!AndMqtt.getInstance().isConneect()) {
+        if (!AndMqtt.getInstance().isConnect()) {
             UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
             return;
         }
@@ -363,7 +363,7 @@ public class ZnjjMqttMingLing {
      * @param listener
      */
     public void unSubscribeAppShiShiXinXi(IMqttActionListener listener) {
-        if (!AndMqtt.getInstance().isConneect()) {
+        if (!AndMqtt.getInstance().isConnect()) {
             UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
             return;
         }

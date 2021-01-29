@@ -271,6 +271,7 @@ public class RenTiGanYingActivity extends BaseActivity {
     MenCiListModel.DataBean dataBean;
 
     private boolean firstEnter = true;
+    View view;
 
     public void getNet() {
         Map<String, String> map = new HashMap<>();
@@ -328,13 +329,16 @@ public class RenTiGanYingActivity extends BaseActivity {
                         }
 
 
-                        if (dataBean.getAlarm_list().size() == 0) {
-                            View view = View.inflate(mContext, R.layout.zhinneng_jiaju_empty_view, null);
-                            //ll_caozuo_jilu.addView(view);
-                            menCiListAdapter.addFooterView(view);
-                            menCiListAdapter.notifyDataSetChanged();
-                            return;
+                        if (view == null) {
+                            if (dataBean.getAlarm_list().size() == 0) {
+                                view = View.inflate(mContext, R.layout.zhinneng_jiaju_empty_view, null);
+                                //ll_caozuo_jilu.addView(view);
+                                menCiListAdapter.addFooterView(view);
+                                menCiListAdapter.notifyDataSetChanged();
+                                return;
+                            }
                         }
+
 
                         for (int i = 0; i < dataBean.getAlarm_list().size(); i++) {
 
@@ -350,7 +354,6 @@ public class RenTiGanYingActivity extends BaseActivity {
                                 alarmListBean1.alerm_time = alermTimeListBean.getAlerm_time();
                                 alarmListBean1.device_state = alermTimeListBean.getDevice_state();
                                 alarmListBean1.device_state_name = alermTimeListBean.getDevice_state_name();
-
                                 mDatas.add(alarmListBean1);
                             }
 

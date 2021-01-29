@@ -29,11 +29,13 @@ import com.rairmmd.andmqtt.MqttPublish;
 import com.rairmmd.andmqtt.MqttSubscribe;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.zhinengjiaju.RenTiGanYingActivity;
+import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.SuiYiTieModel;
@@ -193,20 +195,20 @@ public class SuiYiTieThreeActivity extends BaseActivity {
         rlLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tanChuang("0");
+                tanChuang("0", bangDingLeft);
             }
         });
         rlCenter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tanChuang("1");
+                tanChuang("1", bangDingCenter);
 
             }
         });
         rlRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tanChuang("2");
+                tanChuang("2", bangDingRight);
 
             }
         });
@@ -225,37 +227,101 @@ public class SuiYiTieThreeActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
-    public void tanChuang(String paiwei) {
-//        String[] items = {"设备"};
-//        final ActionSheetDialog dialog = new ActionSheetDialog(this, items, null);
-//        dialog.isTitleShow(false).show();
-//        dialog.setOnOperItemClickL(new OnOperItemClickL() {
-//            @Override
-//            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                File file = new File(Environment.getExternalStorageDirectory(), "/temp/" + System.currentTimeMillis() + ".jpg");
-//                if (!file.getParentFile().exists()) {
-//                    file.getParentFile().mkdirs();
-//                }
-//                Uri imageUri = Uri.fromFile(file);
-//                switch (position) {
-////                    case 0:
-////                        SuiYiTieTianJiaSheBeiActivity.actionStart(mContext, paiwei, device_ccid, device_ccidup, "1");
-////                        break;
-//                    case 0:
-        String deviceCcidSt = "";
-        //UIHelper.ToastMessage(mContext, "绑定设备");
-        if (mDatas.get(Integer.valueOf(paiwei)) != null) {
-            deviceCcidSt = mDatas.get(Integer.valueOf(paiwei)).getDevice_ccid();
+    public void tanChuang(String paiwei, String bangDingType) {
+        if (StringUtils.isEmpty(bangDingType)) {
+            return;
         }
-        SuiYiTieTianJiaSheBeiActivity.actionStart(mContext, paiwei, device_ccid, device_ccidup, "2", deviceCcidSt);
-//                        break;
-//                }
-//                dialog.dismiss();
-//
-//            }
-//        });
+        if (bangDingType.equals("1")) {
+            String[] items = {"添加新设备", "移除设备"};
+            final ActionSheetDialog dialog = new ActionSheetDialog(this, items, null);
+            dialog.isTitleShow(false).show();
+            dialog.setOnOperItemClickL(new OnOperItemClickL() {
+                @Override
+                public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    File file = new File(Environment.getExternalStorageDirectory(), "/temp/" + System.currentTimeMillis() + ".jpg");
+                    if (!file.getParentFile().exists()) {
+                        file.getParentFile().mkdirs();
+                    }
+                    Uri imageUri = Uri.fromFile(file);
+                    switch (position) {
+                        case 0:
+                            String deviceCcidSt = "";
+                            //UIHelper.ToastMessage(mContext, "绑定设备");
+                            if (mDatas.get(Integer.valueOf(paiwei)) != null) {
+                                deviceCcidSt = mDatas.get(Integer.valueOf(paiwei)).getDevice_ccid();
+                            }
+                            SuiYiTieTianJiaSheBeiActivity.actionStart(mContext, paiwei, device_ccid, device_ccidup, "2", deviceCcidSt);
+                            break;
+                        case 1:
+                            yiChuSheBei();
+                            break;
+                    }
+                    dialog.dismiss();
+                }
+            });
+        } else {
+            String deviceCcidSt = "";
+            //UIHelper.ToastMessage(mContext, "绑定设备");
+            if (mDatas.get(Integer.valueOf(paiwei)) != null) {
+                deviceCcidSt = mDatas.get(Integer.valueOf(paiwei)).getDevice_ccid();
+            }
+            SuiYiTieTianJiaSheBeiActivity.actionStart(mContext, paiwei, device_ccid, device_ccidup, "2", deviceCcidSt);
+        }
+    }
+
+
+    public void yiChuSheBei() {
+
+
+        //访问网络获取数据 下面的列表数据
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16055");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("device_ccid", device_ccid);
+        map.put("device_ccid_up", device_ccidup);
+        String familyId = PreferenceHelper.getInstance(mContext).getString(AppConfig.FAMILY_ID, "0");
+        map.put("family_id", familyId);
+        Gson gson = new Gson();
+        String a = gson.toJson(map);
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<SuiYiTieModel.DataBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<SuiYiTieModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<SuiYiTieModel.DataBean>> response) {
+                        UIHelper.ToastMessage(mContext, "移除设备成功");
+                        getnet();
+                        showLoadSuccess();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<SuiYiTieModel.DataBean>> response) {
+                        String str = response.getException().getMessage();
+                        Log.i("cuifahuo", str);
+                        String[] str1 = str.split("：");
+                        UIHelper.ToastMessage(mContext, response.getException().getMessage());
+                        showLoadSuccess();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<SuiYiTieModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showLoading();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                    }
+                });
 
     }
+
+    String bangDingLeft;//0否 1 是
+    String bangDingCenter;// 0否 1是
+    String bangDingRight;//0否 1是
 
 
     private void getnet() {
@@ -347,7 +413,9 @@ public class SuiYiTieThreeActivity extends BaseActivity {
             tvsuiyitie.setVisibility(View.GONE);
             if (StringUtils.isEmpty(response.body().data.get(0).getDevice_list().get(0).getBinding_device_name())) {
                 Glide.with(mContext).load(R.mipmap.tuya_nav_icon_add).into(ivAdd1);
+                bangDingLeft = "0";
             } else {
+                bangDingLeft = "1";
                 SuiYiTieModel.DataBean dataBean0 = response.body().data.get(0);
                 Glide.with(mContext).load(dataBean0.getDevice_list().get(0).getBinding_device_type_pic()).into(ivAdd1);
                 tvAdd1Name.setText(dataBean0.getDevice_list().get(0).getBinding_device_name());
@@ -361,7 +429,9 @@ public class SuiYiTieThreeActivity extends BaseActivity {
 
             if (StringUtils.isEmpty(response.body().data.get(0).getDevice_list().get(1).getBinding_device_name())) {
                 Glide.with(mContext).load(R.mipmap.tuya_nav_icon_add).into(ivAdd2);
+                bangDingCenter = "0";
             } else {
+                bangDingCenter = "1";
                 SuiYiTieModel.DataBean dataBean1 = response.body().data.get(0);
                 Glide.with(mContext).load(dataBean1.getDevice_list().get(1).getBinding_device_type_pic()).into(ivAdd2);
                 tvAdd2Name.setText(dataBean1.getDevice_list().get(1).getBinding_device_name());
@@ -375,7 +445,9 @@ public class SuiYiTieThreeActivity extends BaseActivity {
 
             if (StringUtils.isEmpty(response.body().data.get(0).getDevice_list().get(2).getBinding_device_name())) {
                 Glide.with(mContext).load(R.mipmap.tuya_nav_icon_add).into(ivAdd3);
+                bangDingRight = "0";
             } else {
+                bangDingRight = "1";
                 SuiYiTieModel.DataBean dataBean2 = response.body().data.get(0);
                 Glide.with(mContext).load(dataBean2.getDevice_list().get(2).getBinding_device_type_pic()).into(ivAdd3);
                 tvAdd3Name.setText(dataBean2.getDevice_list().get(2).getBinding_device_name());

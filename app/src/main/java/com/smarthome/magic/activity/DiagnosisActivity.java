@@ -168,7 +168,7 @@ public class DiagnosisActivity extends BaseActivity {
         ButterKnife.bind(this);
         PreferenceHelper.getInstance(mContext).putString(App.CHOOSE_KONGZHI_XIANGMU, DoMqttValue.FENGNUAN);
 
-        if (!AndMqtt.getInstance().isConneect()) {
+        if (!AndMqtt.getInstance().isConnect()) {
             mTvTitle.setText("设备已离线，请检查设备");
             return;
         }

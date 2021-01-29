@@ -66,7 +66,7 @@ public class DeviceStateActivity extends BaseActivity {
         //查询时时数据
         //HeaterMqttService.mqttService.publish("N9.", HeaterMqttService.TOPIC_SERVER_ORDER, 2, false);
         //HeaterMqttService.handler = stateHandler;
-        if (!AndMqtt.getInstance().isConneect()) {
+        if (!AndMqtt.getInstance().isConnect()) {
             UIHelper.ToastMessage(DeviceStateActivity.this, "设备已离线，请检查设备后重新尝试");
             return;
         }

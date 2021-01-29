@@ -1057,7 +1057,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
 
     @Override
     public boolean onLongClick(View view) {
-        if (!AndMqtt.getInstance().isConneect()) {
+        if (!AndMqtt.getInstance().isConnect()) {
             UIHelper.ToastMessage(mContext, "设备已离线,请检查设备后重新尝试");
             return true;
         }
@@ -1181,7 +1181,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                 finish();
                 break;
             case R.id.action_settings:
-                if (!AndMqtt.getInstance().isConneect()) {
+                if (!AndMqtt.getInstance().isConnect()) {
                     UIHelper.ToastMessage(mContext, "设备已离线,暂不支持菜单功能，请检查后重新尝试");
                     break;
                 }

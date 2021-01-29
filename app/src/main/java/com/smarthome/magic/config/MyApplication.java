@@ -102,6 +102,7 @@ import org.jaaksi.pickerview.util.Util;
 import org.jaaksi.pickerview.widget.DefaultCenterDecoration;
 import org.jaaksi.pickerview.widget.PickerView;
 
+import java.sql.BatchUpdateException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -134,7 +135,7 @@ public class MyApplication extends MultiDexApplication {
 
 
     //String mqttUrl = "tcp://192.168.1.127";//大个本地
-     String mqttUrl = "tcp://mqtt.hljsdkj.com";//正式
+    String mqttUrl = "tcp://mqtt.hljsdkj.com";//正式
     //String mqttUrl = "tcp://ggw.hljsdkj.com";//ggw
 
 
@@ -259,7 +260,7 @@ public class MyApplication extends MultiDexApplication {
             public void call(Notice message) {
                 if (message.type == ConstanceValue.MSG_UNSUB_MQTT) {//取消订阅 application 里面所有的关于mqtt 服务的基本信息
                     // AndMqtt.getInstance().init(MyApplication.this);
-                    if (AndMqtt.getInstance().isConneect()) {
+                    if (AndMqtt.getInstance().isConnect()) {
 
                         AndMqtt.getInstance().unSubscribe(new MqttUnSubscribe().setTopic(CARBOX_JINGBAO), new IMqttActionListener() {
                             @Override
@@ -383,7 +384,7 @@ public class MyApplication extends MultiDexApplication {
             public void onFaild(int errorCode, UrlBuilder urlBuilder) {
                 // urlBuilder.target is a router address, urlBuilder.params is a router params
                 // urlBuilder.target 目标路由， urlBuilder.params 路由参数
-                Log.e("router not implement", errorCode+"  帆帆帆帆  "+urlBuilder.target +"  嘎嘎嘎  "+ urlBuilder.params.toString());
+                Log.e("router not implement", errorCode + "  帆帆帆帆  " + urlBuilder.target + "  嘎嘎嘎  " + urlBuilder.params.toString());
             }
         }, new ServiceEventListener() {
             @Override
@@ -585,7 +586,7 @@ public class MyApplication extends MultiDexApplication {
                         .setUserPassword("aG678om34buysdi")
                         .setServer(mqttUrl).setTimeout(1);
 
-                AndMqtt.getInstance().setMessageListener(new MqttCallbackExtended() {
+                builder.setMessageListener(new MqttCallbackExtended() {
                     @Override
                     public void connectComplete(boolean reconnect, String serverURI) {
                         Log.i("Rair", "(MainActivity.java:29)-connectComplete:-&gt;连接完成");
@@ -676,38 +677,38 @@ public class MyApplication extends MultiDexApplication {
                         Log.i("Rair", "(MainActivity.java:44)-deliveryComplete:-&gt;消息已送达");
                         sendRx(ConstanceValue.MSG_MQTT_CONNECTCOMPLETE, "");
                     }
-                }).connect(builder
-                        //设置自动重连
-                        , new IMqttActionListener() {
+                });
+
+                AndMqtt.getInstance().connect(builder, new IMqttActionListener() {
+                    @Override
+                    public void onSuccess(IMqttToken asyncActionToken) {
+                        Log.i("Rair", "(MainActivity.java:51)-onSuccess:-&gt;连接成功");
+
+                        AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                                .setTopic(CARBOX_JINGBAO)
+                                .setQos(2), new IMqttActionListener() {
                             @Override
                             public void onSuccess(IMqttToken asyncActionToken) {
-                                Log.i("Rair", "(MainActivity.java:51)-onSuccess:-&gt;连接成功");
-
-                                AndMqtt.getInstance().subscribe(new MqttSubscribe()
-                                        .setTopic(CARBOX_JINGBAO)
-                                        .setQos(2), new IMqttActionListener() {
-                                    @Override
-                                    public void onSuccess(IMqttToken asyncActionToken) {
-                                        Log.i("Rair", "自动连接 成功" + CARBOX_JINGBAO);
-                                    }
-
-                                    @Override
-                                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                                        Log.i("Rair", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
-                                    }
-                                });
-
-                                sendRx(ConstanceValue.MSG_MQTT_CONNECT_CHONGLIAN_ONSUCCESS, "");
-
+                                Log.i("Rair", "自动连接 成功" + CARBOX_JINGBAO);
                             }
 
                             @Override
                             public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                                Log.i("Rair", "(MainActivity.java:56)-onFailure:-&gt;连接失败" + exception.getMessage() + "..." + exception.getLocalizedMessage());
-                                //System.out.println("exception.getMessage" + exception.getMessage());
-                                sendRx(ConstanceValue.MSG_MQTT_CONNECT_CHONGLIAN_ONFAILE, "");
+                                Log.i("Rair", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
                             }
                         });
+
+                        sendRx(ConstanceValue.MSG_MQTT_CONNECT_CHONGLIAN_ONSUCCESS, "");
+
+                    }
+
+                    @Override
+                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                        Log.i("Rair", "(MainActivity.java:56)-onFailure:-&gt;连接失败" + exception.getMessage() + "..." + exception.getLocalizedMessage());
+                        //System.out.println("exception.getMessage" + exception.getMessage());
+                        sendRx(ConstanceValue.MSG_MQTT_CONNECT_CHONGLIAN_ONFAILE, "");
+                    }
+                });
             }
         }
     }

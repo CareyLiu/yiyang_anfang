@@ -113,65 +113,12 @@
                     </LinearLayout>
                 </RelativeLayout>
 
-                <LinearLayout
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_gaojing"
                     android:layout_width="match_parent"
-                    android:layout_height="94pt"
-                    android:background="@color/white"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="29pt">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="告警设置"
-                        android:textColor="@color/black"
-                        android:textSize="29pt"
-                        android:textStyle="bold" />
-
-
-                    <ImageView
-                        android:id="@+id/switch_gaojing"
-                        android:layout_width="102pt"
-                        android:layout_height="62pt"
-                        android:src="@mipmap/switch_close" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1pt"
-                    android:background="@color/line" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="94pt"
-                    android:background="@color/white"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="29pt">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="低电量提醒"
-                        android:textColor="@color/black"
-                        android:textSize="29pt"
-                        android:textStyle="bold" />
-
-                    <ImageView
-                        android:id="@+id/switch_dianliang"
-                        android:layout_width="102pt"
-                        android:layout_height="62pt"
-                        android:src="@mipmap/switch_close" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1pt"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="23pt"
-                    android:background="@color/line" />
+                    android:background="@color/white" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

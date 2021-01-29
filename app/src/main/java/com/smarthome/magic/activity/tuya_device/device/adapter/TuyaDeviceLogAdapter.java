@@ -42,6 +42,12 @@ public class TuyaDeviceLogAdapter extends BaseQuickAdapter<DpModel.DpsBean, Base
             } else {
                 helper.setText(R.id.tv_caozuo, "关闭");
             }
+        } else if (productId.equals(TuyaConfig.PRODUCTID_SJ)) {
+            if (value.equals("alarm")) {
+                helper.setText(R.id.tv_caozuo, "水浸报警");
+            } else {
+                helper.setText(R.id.tv_caozuo, "正常");
+            }
         }
     }
 }

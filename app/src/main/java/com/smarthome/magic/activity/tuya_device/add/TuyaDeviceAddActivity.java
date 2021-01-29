@@ -8,7 +8,8 @@ import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.View;
-
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
@@ -26,6 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
@@ -33,6 +35,20 @@ public class TuyaDeviceAddActivity extends BaseActivity {
 
     @BindView(R.id.vpg)
     MyViewPager vpg;
+    @BindView(R.id.rl_back)
+    RelativeLayout rl_back;
+    @BindView(R.id.tv_shoudong)
+    TextView tv_shoudong;
+    @BindView(R.id.line_shoudong)
+    View line_shoudong;
+    @BindView(R.id.rl_shoudong)
+    RelativeLayout rl_shoudong;
+    @BindView(R.id.tv_zidong)
+    TextView tv_zidong;
+    @BindView(R.id.line_zidong)
+    View line_zidong;
+    @BindView(R.id.rl_zidong)
+    RelativeLayout rl_zidong;
 
     private List<BaseFragment> mFragments = new ArrayList<>();
     private WifiReceiver wifiReceiver;
@@ -54,7 +70,7 @@ public class TuyaDeviceAddActivity extends BaseActivity {
 
     @Override
     public boolean showToolBar() {
-        return true;
+        return false;
     }
 
     @Override
@@ -108,6 +124,7 @@ public class TuyaDeviceAddActivity extends BaseActivity {
     }
 
     private void initVpg() {
+        mFragments.add(new TuyaDeviceAddShouFragment());
         mFragments.add(new TuyaDeviceAddZiFragment());
         MainVpAdapter mainVpAdapter = new MainVpAdapter(getSupportFragmentManager(), mFragments);
         vpg.setAdapter(mainVpAdapter);
@@ -126,5 +143,36 @@ public class TuyaDeviceAddActivity extends BaseActivity {
     public void onDestroy() {
         super.onDestroy();
         unregisterReceiver(wifiReceiver);
+    }
+
+    @OnClick({R.id.rl_back, R.id.rl_shoudong, R.id.rl_zidong})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.rl_back:
+                finish();
+                break;
+            case R.id.rl_shoudong:
+                clickShoudong();
+                break;
+            case R.id.rl_zidong:
+                clickZidong();
+                break;
+        }
+    }
+
+    private void clickShoudong() {
+        tv_shoudong.setTextColor(Y.getColor(R.color.color_3));
+        tv_zidong.setTextColor(Y.getColor(R.color.color_9));
+        line_shoudong.setVisibility(View.VISIBLE);
+        line_zidong.setVisibility(View.GONE);
+        vpg.setCurrentItem(0);
+    }
+
+    private void clickZidong() {
+        tv_shoudong.setTextColor(Y.getColor(R.color.color_9));
+        tv_zidong.setTextColor(Y.getColor(R.color.color_3));
+        line_shoudong.setVisibility(View.GONE);
+        line_zidong.setVisibility(View.VISIBLE);
+        vpg.setCurrentItem(1);
     }
 }

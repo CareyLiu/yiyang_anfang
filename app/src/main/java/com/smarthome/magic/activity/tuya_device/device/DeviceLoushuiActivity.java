@@ -19,7 +19,6 @@ import com.smarthome.magic.activity.tuya_device.TuyaBaseDeviceActivity;
 import com.smarthome.magic.activity.tuya_device.device.adapter.TuyaDeviceLogAdapter;
 import com.smarthome.magic.activity.tuya_device.device.model.DpModel;
 import com.smarthome.magic.activity.tuya_device.device.tongyong.DeviceSetActivity;
-import com.smarthome.magic.activity.tuya_device.utils.TuyaConfig;
 import com.smarthome.magic.activity.tuya_device.utils.TuyaDialogUtils;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaDeviceManager;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaHomeManager;
@@ -33,6 +32,7 @@ import com.tuya.smart.sdk.api.ITuyaDevice;
 import com.tuya.smart.sdk.bean.DeviceBean;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -86,6 +86,9 @@ public class DeviceLoushuiActivity extends TuyaBaseDeviceActivity {
     private int offset;
 
     private int dianliang;
+    private boolean isFangchai;
+    private boolean isShuijin;
+    private boolean isDianliao;
 
     /**
      * 用于其他Activty跳转到该Activity
@@ -169,20 +172,21 @@ public class DeviceLoushuiActivity extends TuyaBaseDeviceActivity {
         setIsOnline();
         initDeviceListener();
 
-//        initDpId();
+        initDpId();
+
+        isFangchai = false;
+        isShuijin = false;
+        isDianliao = false;
     }
 
     private void initDpId() {
         Map<String, Object> dps = mDeviceBeen.getDps();
-        if (productId.equals(TuyaConfig.PRODUCTID_MENCISUO_SIG)) {
-            dpsKaiguanId = "1";
-            String s = dps.get(dpsKaiguanId).toString();
-
-
-        } else if (productId.equals(TuyaConfig.PRODUCTID_MENCI)) {
-            dpsKaiguanId = "101";
-            String s = dps.get(dpsKaiguanId).toString();
-
+        dpsKaiguanId = "1";
+        String s = dps.get(dpsKaiguanId).toString();
+        if (s.equals("alarm")) {
+            iv_menci_left.setImageResource(R.mipmap.shuijin_pic_menci_sel);
+        } else {
+            iv_menci_left.setImageResource(R.mipmap.shuijin_pic_menci_normol);
         }
     }
 
@@ -190,7 +194,7 @@ public class DeviceLoushuiActivity extends TuyaBaseDeviceActivity {
         mDevice.registerDevListener(new IDevListener() {
             @Override
             public void onDpUpdate(String devId, String dpStr) {
-                Y.e("Dp点数据更新啦:" + devId + " | " + dpStr);
+                Y.e("Dp点数据更新啦漏水:" + devId + " | " + dpStr);
                 Notice notice = new Notice();
                 notice.type = ConstanceValue.MSG_DEVICE_DATA;
                 notice.content = dpStr;
@@ -279,6 +283,22 @@ public class DeviceLoushuiActivity extends TuyaBaseDeviceActivity {
 
     private void jieData(String key, Object value) {
         setDps(key, value);
+
+        if (key.equals(dpsKaiguanId)) {
+            DpModel.DpsBean dpsBean = new DpModel.DpsBean();
+            String data = Y.getDataS(new Date());
+            dpsBean.setTimeStr(data);
+            dpsBean.setValue(value.toString());
+            dps.add(0, dpsBean);
+            offset++;
+            adapter.notifyDataSetChanged();
+
+            if (value.equals("alarm")) {
+                iv_menci_left.setImageResource(R.mipmap.shuijin_pic_menci_sel);
+            } else {
+                iv_menci_left.setImageResource(R.mipmap.shuijin_pic_menci_normol);
+            }
+        }
     }
 
     private void setDps(String key, Object value) {
@@ -363,9 +383,10 @@ public class DeviceLoushuiActivity extends TuyaBaseDeviceActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.switch_gaojing_loushui:
+                clickLoushui();
                 break;
             case R.id.switch_gaojing_fangchai:
-                clickGaojing();
+                clickFangchai();
                 break;
             case R.id.switch_dianliang:
                 clickDianliang();
@@ -373,12 +394,31 @@ public class DeviceLoushuiActivity extends TuyaBaseDeviceActivity {
         }
     }
 
-    private void clickGaojing() {
+    private void clickLoushui() {
+        isShuijin = !isShuijin;
+        if (isShuijin) {
+            switch_gaojing_loushui.setImageResource(R.mipmap.switch_open);
+        } else {
+            switch_gaojing_loushui.setImageResource(R.mipmap.switch_close);
+        }
+    }
 
+    private void clickFangchai() {
+        isFangchai = !isFangchai;
+        if (isFangchai) {
+            switch_gaojing_fangchai.setImageResource(R.mipmap.switch_open);
+        } else {
+            switch_gaojing_fangchai.setImageResource(R.mipmap.switch_close);
+        }
     }
 
     private void clickDianliang() {
-//        getDp(mDevice, "103");
+          isDianliao = !isDianliao;
+        if (isDianliao) {
+            switch_dianliang.setImageResource(R.mipmap.switch_open);
+        } else {
+            switch_dianliang.setImageResource(R.mipmap.switch_close);
+        }
     }
 
     private void set() {

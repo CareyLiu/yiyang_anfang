@@ -130,6 +130,7 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
     private List<ZishebeiModel.DataBean> deviceBeans = new ArrayList<>();
     private WangguanAdapter adapter;
     private ITuyaGateway iTuyaGateway;
+    private boolean isOnActivity;
 
     /**
      * 用于其他Activty跳转到该Activity
@@ -143,6 +144,7 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
         intent.putExtra("old_name", old_name);
         intent.putExtra("room_name", room_name);
         context.startActivity(intent);
+
     }
 
     @Override
@@ -238,12 +240,14 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
         mDevice.registerDevListener(new IDevListener() {
             @Override
             public void onDpUpdate(String devId, String dpStr) {
-                Y.e("Dp点数据更新啦:" + devId + " | " + dpStr);
-                Notice notice = new Notice();
-                notice.type = ConstanceValue.MSG_DEVICE_DATA;
-                notice.content = dpStr;
-                notice.devId = devId;
-                RxBus.getDefault().sendRx(notice);
+                Y.e("Dp点数据更新啦网关插座:" + devId + " | " + dpStr);
+                if (isOnActivity) {
+                    Notice notice = new Notice();
+                    notice.type = ConstanceValue.MSG_DEVICE_DATA;
+                    notice.content = dpStr;
+                    notice.devId = devId;
+                    RxBus.getDefault().sendRx(notice);
+                }
             }
 
             @Override
@@ -300,6 +304,7 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
                         if (device_type.equals(TuyaConfig.CATEGORY_MENCI)) {//门磁
                         } else if (device_type.equals(TuyaConfig.CATEGORY_MENCISUO)) {//蓝牙门磁
                         } else if (device_type.equals(TuyaConfig.CATEGORY_SWITCH)) {//蓝牙开关
+                        } else if (device_type.equals(TuyaConfig.CATEGORY_SJ)) {//漏水
                         } else {
                             deleteDevice(deviceBean.getDevice_id());
                         }
@@ -370,7 +375,7 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
                         DeviceMenciActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
                     } else if (device_type.equals(TuyaConfig.CATEGORY_MENCISUO)) {//门磁蓝牙
                         DeviceMenciActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
-                    } else if (device_type.equals(TuyaConfig.CATEGORY_MENCISUO)) {//漏水
+                    } else if (device_type.equals(TuyaConfig.CATEGORY_SJ)) {//漏水
                         DeviceLoushuiActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
                     } else if (device_type.equals(TuyaConfig.CATEGORY_SWITCH)) {//开关
                         if (device_category.equals(TuyaConfig.PRODUCTID_SWITCH_THREE)) {//三路开关
@@ -379,12 +384,8 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
                             DeviceSwitchTwoActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
                         }
                     } else {
-//                        AbsPanelCallerService service = MicroContext.getServiceManager().findServiceByInterface(AbsPanelCallerService.class.getName());
-//                        service.goPanelWithCheckAndTip(DeviceWgCzActivity.this, deviceBean.getTy_device_ccid());
-
-
-                        DeviceLoushuiActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
-
+                        AbsPanelCallerService service = MicroContext.getServiceManager().findServiceByInterface(AbsPanelCallerService.class.getName());
+                        service.goPanelWithCheckAndTip(DeviceWgCzActivity.this, deviceBean.getTy_device_ccid());
                     }
                 }
             }
@@ -577,9 +578,16 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        isOnActivity = true;
         if (mDeviceBeen != null) {
             TuyaDeviceManager.getDeviceManager().initDevice(mDeviceBeen);
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isOnActivity = false;
     }
 
     @Override

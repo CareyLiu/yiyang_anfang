@@ -154,7 +154,6 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
             @Override
             public void onItmeCilck(int pos) {
                 DeviceBean deviceBean = deviceBeans.get(pos);
-                Y.t("点击的了设备" + deviceBean.getName() + "  " + deviceBean.getIconUrl());
             }
         });
     }
@@ -294,7 +293,7 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                         Y.e("获取Token成功：" + token + "   账号：" + wifiSSid + "  密码：" + mima);
                         startWifiPeiwang(token);
                         startLanyaPeiwang(token);
-                        startLanyaMeshPeiwang();
+//                        startLanyaMeshPeiwang();
                     }
 
                     @Override
@@ -306,21 +305,18 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
     }
 
     private void startLanyaMeshPeiwang() {
-        Y.e("是否执行蓝牙Mesh配网      " + isSetLanya);
         sigMeshBean = TuyaHomeManager.getHomeManager().getSigMeshBean();
         if (isSetLanya && sigMeshBean != null) {
-            Y.e("执行了蓝牙Mesh配网      ");
             iTuyaBlueMeshSearchListener = new ITuyaBlueMeshSearchListener() {
                 @Override
                 public void onSearched(SearchDeviceBean deviceBean) {
-                    Y.e("我扫描到了Mesh设备" + deviceBean.getMeshName() + "   " + deviceBean.getProductId() + "   " + deviceBean.getMacAdress());
                     stopSearch();
                     jixua(deviceBean);
                 }
 
                 @Override
                 public void onSearchFinish() {
-                    Y.e("蓝牙Mesh搜索结束了");
+
                 }
             };
             // 待配网的SigMesh设备UUID是固定的
@@ -332,8 +328,6 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
             ITuyaBlueMeshSearch mMeshSearch = TuyaHomeSdk.getTuyaBlueMeshConfig().newTuyaBlueMeshSearch(searchBuilder);
             //开启扫描
             mMeshSearch.startSearch();
-        } else {
-            Y.e("缺少参数蓝牙失败");
         }
     }
 
@@ -347,7 +341,6 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                 .setTuyaBlueMeshActivatorListener(new ITuyaBlueMeshActivatorListener() {
                     @Override
                     public void onSuccess(String mac, DeviceBean deviceBean) {
-                        Y.e("搜索设备Mesh成功了啊  " + deviceBean.getIconUrl() + "   " + deviceBean.getName());
                         getShebei();
                         addShebei(deviceBean);
                         deviceBeans.add(deviceBean);
@@ -356,7 +349,7 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
 
                     @Override
                     public void onError(String mac, String errorCode, String errorMsg) {
-                        Y.e("搜索设备蓝牙Mesh失败了  " + errorMsg + "   " + errorCode);
+
                     }
 
                     @Override
@@ -366,26 +359,15 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                 });
 
         ITuyaBlueMeshActivator iTuyaBlueMeshActivator = TuyaHomeSdk.getTuyaBlueMeshConfig().newSigActivator(tuyaSigMeshActivatorBuilder);
-        //开启配网
         iTuyaBlueMeshActivator.startActivator();
     }
 
-
     private void startLanyaPeiwang(String token) {
-        Y.e("是否执行蓝牙  " + token + "    " + isSetLanya);
         if (isSetLanya) {
             bleOperator = TuyaHomeSdk.getBleOperator();
             bleOperator.startLeScan(60000, ScanType.SINGLE, new TyBleScanResponse() {
                 @Override
                 public void onResult(ScanDeviceBean bean) {
-                    Y.e("我成功了么么么   id:" + bean.getId() + "   name:" + bean.getName() + "    providerName:" + bean.getProviderName() +
-                            "   configType:" + bean.getConfigType() +
-                            "   productId:" + bean.getProductId() +
-                            "   uuid:" + bean.getUuid() +
-                            "   mac:" + bean.getMac() +
-                            "   isbind:" + bean.getIsbind() +
-                            "   flag:" + bean.getFlag());
-
                     stopSearch();
 
                     Map<String, Object> param = new HashMap<>();
@@ -405,7 +387,6 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                         @Override
                         public void onFail(String code, String msg, Object handle) {
                             Y.t("获取设备失败,请重新搜索" + msg);
-                            Y.e("蓝牙配网失败了,请重新搜索" + msg);
                             stopPeiwang();
                         }
                     });

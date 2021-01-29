@@ -3,12 +3,14 @@ package com.smarthome.magic.activity.tuya_device.device;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -16,7 +18,9 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.TuyaBaseDeviceActivity;
+import com.smarthome.magic.activity.tuya_device.device.adapter.GaojingAdapter;
 import com.smarthome.magic.activity.tuya_device.device.adapter.TuyaDeviceLogAdapter;
+import com.smarthome.magic.activity.tuya_device.device.model.DeviceGaojing;
 import com.smarthome.magic.activity.tuya_device.device.model.DpModel;
 import com.smarthome.magic.activity.tuya_device.device.tongyong.DeviceSetActivity;
 import com.smarthome.magic.activity.tuya_device.utils.TuyaConfig;
@@ -45,7 +49,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
@@ -63,10 +66,8 @@ public class DeviceMenciActivity extends TuyaBaseDeviceActivity {
     ImageView iv_menci_left;
     @BindView(R.id.iv_menci_right)
     ImageView iv_menci_right;
-    @BindView(R.id.switch_gaojing)
-    ImageView switch_gaojing;
-    @BindView(R.id.switch_dianliang)
-    ImageView switch_dianliang;
+    @BindView(R.id.rv_gaojing)
+    RecyclerView rv_gaojing;
     @BindView(R.id.rv_content)
     RecyclerView rv_content;
     @BindView(R.id.smartRefreshLayout)
@@ -87,7 +88,12 @@ public class DeviceMenciActivity extends TuyaBaseDeviceActivity {
     private TuyaDeviceLogAdapter adapter;
     private int offset;
 
+    private List<DeviceGaojing> gaojings = new ArrayList<>();
+    private GaojingAdapter gaojingAdapter;
+
     private int dianliang;
+    private boolean isGaojing;
+    private boolean isDianling;
 
     /**
      * 用于其他Activty跳转到该Activity
@@ -148,6 +154,25 @@ public class DeviceMenciActivity extends TuyaBaseDeviceActivity {
         getRefresh();
     }
 
+    private void initGaojing() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("devId", ty_device_ccid);
+        TuyaHomeSdk.getRequestInstance().requestWithApiName("tuya.m.linkage.rule.product.query", "1.0", map, String.class, new ITuyaDataCallback<String>() {
+            @Override
+            public void onSuccess(String dpModel) {
+                gaojings = JSON.parseArray(dpModel, DeviceGaojing.class);
+                gaojingAdapter.setNewData(gaojings);
+                gaojingAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(String s, String s1) {
+                smartRefreshLayout.finishLoadMore();
+            }
+        });
+
+    }
+
     private void init() {
         ty_device_ccid = getIntent().getStringExtra("ty_device_ccid");
         room_name = getIntent().getStringExtra("room_name");
@@ -167,6 +192,10 @@ public class DeviceMenciActivity extends TuyaBaseDeviceActivity {
         mDevice = TuyaDeviceManager.getDeviceManager().getDevice();
         productId = mDeviceBeen.getProductId();
         isOnline = mDeviceBeen.getIsOnline();
+
+        isGaojing = false;
+        isDianling = false;
+
 
         setIsOnline();
         initDeviceListener();
@@ -322,6 +351,62 @@ public class DeviceMenciActivity extends TuyaBaseDeviceActivity {
         adapter = new TuyaDeviceLogAdapter(R.layout.item_tuya_device_log, dps, productId);
         rv_content.setLayoutManager(new LinearLayoutManager(mContext));
         rv_content.setAdapter(adapter);
+
+        gaojingAdapter = new GaojingAdapter(R.layout.item_tuya_gaojing, gaojings);
+        rv_gaojing.setLayoutManager(new LinearLayoutManager(mContext));
+        rv_gaojing.setAdapter(gaojingAdapter);
+        gaojingAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                setGaojing(position);
+            }
+        });
+    }
+
+    private void setGaojing(int position) {
+        String ruleIds = "";
+        for (int i = 0; i < gaojings.size(); i++) {
+            DeviceGaojing gaojing = gaojings.get(i);
+            boolean enabled = gaojing.isEnabled();
+            String id = gaojing.getId();
+            if (i == position) {
+                if (enabled) {
+                    ruleIds = ruleIds + id + ",";
+                }
+            } else {
+                if (!enabled) {
+                    ruleIds = ruleIds + id + ",";
+                }
+            }
+        }
+        boolean disabled = false;
+        if (!TextUtils.isEmpty(ruleIds)) {
+            ruleIds = ruleIds.substring(0, ruleIds.length() - 1);
+            disabled = true;
+        } else {
+            disabled = false;
+        }
+
+        showProgressDialog();
+        Map<String, Object> map = new HashMap<>();
+        map.put("devId", ty_device_ccid);
+        map.put("ruleIds", ruleIds);
+        map.put("disabled", disabled);
+        TuyaHomeSdk.getRequestInstance().requestWithApiName("tuya.m.linkage.dev.warn.set", "1.0", map, Boolean.class, new ITuyaDataCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean dpModel) {
+                dismissProgressDialog();
+                DeviceGaojing gaojing = gaojings.get(position);
+                gaojing.setEnabled(!gaojing.isEnabled());
+                gaojings.set(position, gaojing);
+                gaojingAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(String s, String s1) {
+                dismissProgressDialog();
+            }
+        });
     }
 
     private void initSM() {
@@ -365,6 +450,7 @@ public class DeviceMenciActivity extends TuyaBaseDeviceActivity {
     }
 
     private void getRefresh() {
+        initGaojing();
         offset = 0;
         Map<String, Object> map = new HashMap<>();
         map.put("devId", ty_device_ccid);
@@ -386,27 +472,6 @@ public class DeviceMenciActivity extends TuyaBaseDeviceActivity {
                 smartRefreshLayout.finishRefresh();
             }
         });
-    }
-
-
-    @OnClick({R.id.switch_gaojing, R.id.switch_dianliang})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.switch_gaojing:
-                clickGaojing();
-                break;
-            case R.id.switch_dianliang:
-                clickDianliang();
-                break;
-        }
-    }
-
-    private void clickGaojing() {
-
-    }
-
-    private void clickDianliang() {
-//        getDp(mDevice, "103");
     }
 
     private void set() {

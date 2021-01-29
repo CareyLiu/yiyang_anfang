@@ -95,9 +95,9 @@
 
                         <ImageView
                             android:id="@+id/iv_menci_left"
-                            android:layout_width="100pt"
-                            android:layout_height="265pt"
-                            android:src="@mipmap/menci_pic_menci_left" />
+                            android:layout_width="154pt"
+                            android:layout_height="154pt"
+                            android:src="@mipmap/shuijin_pic_menci_normol" />
                     </LinearLayout>
                 </RelativeLayout>
 

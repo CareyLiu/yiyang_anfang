@@ -317,13 +317,7 @@ public class OrderTuiKuanDetailsActivity extends BaseActivity {
                         //   UIHelper.ToastMessage(getActivity(), response.body().msg);
 
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
-
-                        String[] str1 = str.split("：");
-
-                        if (str1.length == 3) {
-                            UIHelper.ToastMessage(OrderTuiKuanDetailsActivity.this, str1[2]);
-                        }
+                        UIHelper.ToastMessage(mContext, str);
 
                     }
 
@@ -422,13 +416,7 @@ public class OrderTuiKuanDetailsActivity extends BaseActivity {
                         super.onError(response);
 
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
-
-                        String[] str1 = str.split("：");
-
-                        if (str1.length == 3) {
-                            UIHelper.ToastMessage(OrderTuiKuanDetailsActivity.this, str1[2]);
-                        }
+                        UIHelper.ToastMessage(mContext, str);
 
                     }
 

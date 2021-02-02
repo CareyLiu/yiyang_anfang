@@ -34,8 +34,7 @@ public class MenCiListAdapter extends BaseSectionQuickAdapter<AlarmListBean, Bas
 
     @Override
     protected void convert(BaseViewHolder helper, AlarmListBean item) {
-        helper.setText(R.id.tv_shijianduan, item.device_state_name);
-        helper.setText(R.id.tv_shijian, item.alerm_time);
+        helper.setText(R.id.tv_shijianduan, item.alerm_time);
         helper.setText(R.id.tv_menchuangzhuangtai, item.device_state_name);
     }
 }

@@ -34,6 +34,7 @@ import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuoTIshi;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Success;
 import com.smarthome.magic.dialog.ZhiNengFamilyAddDIalog;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.model.ZhiNengRoomManageBean;
@@ -219,7 +220,7 @@ public class ZhiNengRoomManageActivity extends BaseActivity implements View.OnCl
                     }
                 });
     }
-
+    TishiDialog tishiDialog;
     /**
      * 创建房间
      */
@@ -244,23 +245,26 @@ public class ZhiNengRoomManageActivity extends BaseActivity implements View.OnCl
                     @Override
                     public void onError(Response<AppResponse<ZhiNengRoomManageCreatBean>> response) {
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
-                        String[] str1 = str.split("：");
-                        if (str1.length == 3) {
-                            MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(context,
-                                    "提示", str1[2], "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
-                                @Override
-                                public void clickLeft() {
 
-                                }
+                        tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+                                tishiDialog.dismiss();
+                            }
 
-                                @Override
-                                public void clickRight() {
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
 
-                                }
-                            });
-                            myCarCaoZuoDialog_caoZuoTIshi.show();
-                        }
+                                finish();
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+
+                            }
+                        });
+                        tishiDialog.setTextContent(str);
+                        tishiDialog.show();
                     }
                 });
     }

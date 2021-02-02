@@ -8,13 +8,17 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.add.model.DeviceListModel;
+import com.smarthome.magic.activity.zhinengjiaju.peinet.PeiWangYinDaoPageActivity;
+import com.smarthome.magic.activity.zhinengjiaju.peinet.SheBeiChongZhiActivity;
 import com.smarthome.magic.activity.zijian_shangcheng.FenLeiThirdActivity;
 import com.smarthome.magic.adapter.FenLeiRightAdapter;
+import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.model.FenLeiContentModel;
 import com.smarthome.magic.model.ZiJianFenLeiBean;
 import com.smarthome.magic.project_A.zijian_interface.FenLeiContenInterface;
 import com.smarthome.magic.util.GridSectionAverageGapItemDecoration;
+import com.umeng.commonsdk.UMConfigure;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +52,7 @@ public class DeviceFenLeiFragment extends BaseFragment implements FenLeiContenIn
                 mDatas.add(fenLeiContentModel);
                 for (int j = 0; j < itemBeanXES.get(i).getItem().size(); j++) {
                     DeviceListModel.DataBean.ItemBeanX.ItemBean itemBean = itemBeanXES.get(i).getItem().get(j);
-                    FenLeiContentModel contentModel = new FenLeiContentModel(false, "");
+                    FenLeiContentModel contentModel = new FenLeiContentModel(false, itemBeanXES.get(i).getItem_name());
                     contentModel.setImg_url(itemBean.getImg_url());
                     contentModel.setItem_id(itemBean.getItem_id());
                     contentModel.setItem_name(itemBean.getItem_name());
@@ -77,8 +81,10 @@ public class DeviceFenLeiFragment extends BaseFragment implements FenLeiContenIn
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.constrain:
-                        FenLeiContentModel fenLeiContentModel = (FenLeiContentModel) adapter.getData().get(position);
-                        FenLeiThirdActivity.actionStart(getActivity(), fenLeiContentModel);
+
+
+                        SheBeiChongZhiActivity.actionStart(getActivity(), mDatas.get(position).getItem_name(), mDatas.get(position).getImg_url(), mDatas.get(position).header);
+
                         break;
                 }
             }

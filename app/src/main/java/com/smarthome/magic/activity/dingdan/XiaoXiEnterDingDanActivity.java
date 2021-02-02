@@ -276,15 +276,9 @@ public class XiaoXiEnterDingDanActivity extends BaseActivity {
                     public void onError(Response<AppResponse<Object>> response) {
                         super.onError(response);
                         //   UIHelper.ToastMessage(getActivity(), response.body().msg);
-
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
+                        UIHelper.ToastMessage(XiaoXiEnterDingDanActivity.this, str);
 
-                        String[] str1 = str.split("：");
-
-                        if (str1.length == 3) {
-                            UIHelper.ToastMessage(XiaoXiEnterDingDanActivity.this, str1[2]);
-                        }
 
                     }
 

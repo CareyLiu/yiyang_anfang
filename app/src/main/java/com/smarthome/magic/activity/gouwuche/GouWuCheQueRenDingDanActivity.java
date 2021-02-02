@@ -582,13 +582,7 @@ public class GouWuCheQueRenDingDanActivity extends BaseActivity implements QueRe
                         public void onError(Response<AppResponse<YuZhiFuModel_AliPay.DataBean>> response) {
                             super.onError(response);
                             String str = response.getException().getMessage();
-                            Log.i("cuifahuo", str);
-
-                            String[] str1 = str.split("：");
-
-                            if (str1.length == 3) {
-                                UIHelper.ToastMessage(GouWuCheQueRenDingDanActivity.this, str1[2]);
-                            }
+                            UIHelper.ToastMessage(mContext, str);
                             progressDialog.dismiss();
                         }
                     });
@@ -648,13 +642,7 @@ public class GouWuCheQueRenDingDanActivity extends BaseActivity implements QueRe
                         public void onError(Response<AppResponse<YuZhiFuModel.DataBean>> response) {
                             super.onError(response);
                             String str = response.getException().getMessage();
-                            Log.i("cuifahuo", str);
-
-                            String[] str1 = str.split("：");
-
-                            if (str1.length == 3) {
-                                UIHelper.ToastMessage(GouWuCheQueRenDingDanActivity.this, str1[2]);
-                            }
+                            UIHelper.ToastMessage(mContext, str);
                             progressDialog.dismiss();
                         }
                     });

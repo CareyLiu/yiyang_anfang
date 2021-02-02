@@ -91,7 +91,6 @@ public class ZhiNengChangJingAdapter extends BaseQuickAdapter<ChangJingModel.Dat
                     @Override
                     public void onError(Response<AppResponse<ChangJingXiangQingModel.DataBean>> response) {
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
                         UIHelper.ToastMessage(mContext, str);
                     }
                 });

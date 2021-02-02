@@ -34,6 +34,7 @@ import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuoTIshi;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Success;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.SuiYiTieModel;
 import com.smarthome.magic.model.ZhiNengFamilyEditBean;
@@ -410,17 +411,7 @@ public class ZhiNengChuangLianActivity extends BaseActivity {
                     @Override
                     public void onError(Response<AppResponse<ZhiiNengRoomDeviceRoomBean.DataBean>> response) {
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
-                        String[] str1 = str.split("：");
-//                        if (str1.length == 3) {
-//                            if (srLSmart != null) {
-//                                srLSmart.setEnableRefresh(true);
-//                                srLSmart.finishRefresh();
-//                                srLSmart.setEnableLoadMore(false);
-//                            }
-//                            Toast.makeText(context, str1[2], Toast.LENGTH_SHORT).show();
-//                        }
-                        UIHelper.ToastMessage(mContext, response.getException().getMessage());
+                        UIHelper.ToastMessage(mContext, str);
 
                     }
 
@@ -471,6 +462,7 @@ public class ZhiNengChuangLianActivity extends BaseActivity {
         });
     }
 
+    TishiDialog tishiDialog;
     /**
      * 删除设备
      */
@@ -509,23 +501,26 @@ public class ZhiNengChuangLianActivity extends BaseActivity {
                     @Override
                     public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
-                        String[] str1 = str.split("：");
-                        if (str1.length == 3) {
-                            MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(mContext,
-                                    "提示", str1[2], "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
-                                @Override
-                                public void clickLeft() {
 
-                                }
+                        tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+                                tishiDialog.dismiss();
+                            }
 
-                                @Override
-                                public void clickRight() {
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
 
-                                }
-                            });
-                            myCarCaoZuoDialog_caoZuoTIshi.show();
-                        }
+                                finish();
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+
+                            }
+                        });
+                        tishiDialog.setTextContent(str);
+                        tishiDialog.show();
                     }
                 });
     }
@@ -561,8 +556,6 @@ public class ZhiNengChuangLianActivity extends BaseActivity {
                     @Override
                     public void onError(Response<AppResponse<SuiYiTieModel.DataBean>> response) {
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
-                        String[] str1 = str.split("：");
                         UIHelper.ToastMessage(mContext, response.getException().getMessage());
                     }
 

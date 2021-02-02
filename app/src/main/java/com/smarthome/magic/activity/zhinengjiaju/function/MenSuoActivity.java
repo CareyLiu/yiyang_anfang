@@ -490,7 +490,6 @@ public class MenSuoActivity extends BaseActivity {
                     @Override
                     public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
                         MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(mContext,
                                 "提示", response.getException().getMessage(), "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
                             @Override

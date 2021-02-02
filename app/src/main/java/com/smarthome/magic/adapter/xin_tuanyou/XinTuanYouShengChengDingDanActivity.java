@@ -35,6 +35,7 @@ import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.XinTuanYouShengChengDingDanBean;
 import com.smarthome.magic.model.YuZhiFuModel;
@@ -480,6 +481,7 @@ public class XinTuanYouShengChengDingDanActivity extends BaseActivity {
 
     private String diYongQuanId;
 
+    TishiDialog tishiDialog;
     private void getWeiXinOrZhiFuBao() {
         if (StringUtils.isEmpty(pay_id)) {
             UIHelper.ToastMessage(mContext, "请选择您的支付方式");
@@ -567,7 +569,6 @@ public class XinTuanYouShengChengDingDanActivity extends BaseActivity {
 
                             //  UIHelper.ToastMessage(getActivity(), response.body().msg);
                             String str = response.getException().getMessage();
-                            //    Log.i("cuifahuo", str);
 
                             String[] str1 = str.split("：");
 
@@ -651,13 +652,26 @@ public class XinTuanYouShengChengDingDanActivity extends BaseActivity {
                             progressDialog.dismiss();
                             //  UIHelper.ToastMessage(getActivity(), response.body().msg);
                             String str = response.getException().getMessage();
-                            //    Log.i("cuifahuo", str);
 
-                            String[] str1 = str.split("：");
+                            tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                                @Override
+                                public void onClickCancel(View v, TishiDialog dialog) {
+                                    tishiDialog.dismiss();
+                                }
 
-                            if (str1.length == 3) {
-                                UIHelper.ToastMessage(mContext, str1[2]);
-                            }
+                                @Override
+                                public void onClickConfirm(View v, TishiDialog dialog) {
+
+                                    finish();
+                                }
+
+                                @Override
+                                public void onDismiss(TishiDialog dialog) {
+
+                                }
+                            });
+                            tishiDialog.setTextContent(str);
+                            tishiDialog.show();
                         }
                     });
 

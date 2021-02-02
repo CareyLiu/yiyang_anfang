@@ -266,16 +266,6 @@ public class ShuJuQuXianActivity extends BaseActivity {
                     @Override
                     public void onError(Response<AppResponse<WenShiDuChuanGanQiModel.DataBean>> response) {
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
-                        String[] str1 = str.split("：");
-//                        if (str1.length == 3) {
-//                            if (srLSmart != null) {
-//                                srLSmart.setEnableRefresh(true);
-//                                srLSmart.finishRefresh();
-//                                srLSmart.setEnableLoadMore(false);
-//                            }
-//                            Toast.makeText(context, str1[2], Toast.LENGTH_SHORT).show();
-//                        }
                         UIHelper.ToastMessage(mContext, response.getException().getMessage());
 
                     }

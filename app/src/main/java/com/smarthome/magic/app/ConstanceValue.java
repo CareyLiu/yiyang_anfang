@@ -153,4 +153,5 @@ public interface ConstanceValue {
     int MSG_ZHINENGJIAJU_SHEBEILIEBIAO = 0x10112;//智能家居单个设备列表信息
     int MSG_ZHINENGJIAJU_ICON = 0x10113;//智能家居单个设备列表信息
     int MSG_DINGSHI_NEED = 0x10114;//定时使用
+    int MSG_TIANJIASHEBEI = 0x10115;//添加设备基本参数
 }

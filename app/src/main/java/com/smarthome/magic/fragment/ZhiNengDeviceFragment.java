@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.googlecode.mp4parser.boxes.mp4.objectdescriptors.AudioSpecificConfig;
 import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
 import com.rairmmd.andmqtt.MqttSubscribe;
@@ -41,6 +42,9 @@ import com.smarthome.magic.activity.zckt.AirConditionerActivity;
 
 import com.smarthome.magic.activity.zhinengjiaju.RenTiGanYingActivity;
 import com.smarthome.magic.activity.zhinengjiaju.WenShiDuChuanGanQiActivity;
+import com.smarthome.magic.activity.zhinengjiaju.ZhiNengJiaJuKaiGuanOneActivity;
+import com.smarthome.magic.activity.zhinengjiaju.ZhiNengJiaJuKaiGuanThreeActivity;
+import com.smarthome.magic.activity.zhinengjiaju.ZhiNengJiaJuKaiGuanTwoActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.LouShuiActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.MenCiActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.MenSuoActivity;
@@ -65,6 +69,7 @@ import com.smarthome.magic.model.ZhiNengHomeBean;
 import com.tuya.smart.api.MicroContext;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.panelcaller.api.AbsPanelCallerService;
+import com.umeng.commonsdk.UMConfigure;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
@@ -265,6 +270,17 @@ public class ZhiNengDeviceFragment extends BaseFragment {
 
                         } else if (deviceBean.getDevice_type().equals("34")) {
                             RenTiGanYingActivity.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
+                        } else if (deviceBean.getDevice_type().equals("35")) {
+                            String strJiLian = deviceBean.getDevice_ccid().substring(2, 4);
+                            Log.i("ZhiNengDeviceFragment", "strJiLian:" + strJiLian);
+                            String serverId = deviceBean.getDevice_ccid_up().substring(deviceBean.getDevice_ccid_up().length() - 1) + "/";
+                            if (strJiLian.equals("01")) {
+                                ZhiNengJiaJuKaiGuanOneActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up(), serverId);
+                            } else if (strJiLian.equals("02")) {
+                                ZhiNengJiaJuKaiGuanTwoActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up(), serverId);
+                            } else if (strJiLian.equals("03")) {
+                                ZhiNengJiaJuKaiGuanThreeActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up(), serverId);
+                            }
                         } else {
                             String ty_device_ccid = deviceBean.getTy_device_ccid();
                             if (TextUtils.isEmpty(ty_device_ccid)) {
@@ -411,6 +427,12 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                     PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, "");
                 } else {
                     PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, device.get(0).getServer_id());
+                }
+
+                if (StringUtils.isEmpty(device.get(0).getDevice_ccid_up())) {
+                    PreferenceHelper.getInstance(getActivity()).putString(AppConfig.ZHUJI_DEVICECCID_UP, "");
+                } else {
+                    PreferenceHelper.getInstance(getActivity()).putString(AppConfig.ZHUJI_DEVICECCID_UP, device.get(0).getDevice_ccid_up());
                 }
 
             }

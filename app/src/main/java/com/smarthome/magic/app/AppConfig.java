@@ -110,12 +110,13 @@ public class AppConfig {
     public final static String RONGYUN_TOKEN = "RONGYUN_TOKEN";
     public final static String TANCHUFUWUTANKUANG = "TANCHUFUWUTANKUANG";//弹出服务弹框
     public final static String YUYINZHUSHOU = "YUYINZHUSHOU";//0 否 1 是
-    public final static String SERVERID = "SERVERID";
-    public final static String DEVICECCID = "DEVICECCID";
+    public final static String SERVERID = "SERVERID";//智能家居设备的serverId
+    public final static String DEVICECCID = "DEVICECCID";//切换主机的ccid
     public final static String FAMILY_ID = "FAMILY_ID";//切换家庭主机时候使用的familyid
     public final static String ZHIXING_LEIXING = "ZHIXINGLEIXING";// 1 一键执行 2.定时 3 条件
     public final static String BAOJINGTISHIYIN = "BAOJINGTISHIYIN";//0关1开
     public final static String ZHINENGJIAJUGUANLIYUAN = "ZHINENGJIAJUGUANLIYUAN"; //0 不是 1 是
+    public final static String ZHUJI_DEVICECCID_UP = "ZHUJI_DEVICE_CCID_UP";
     //福利功能  需要的字段
     //作废时间  --待使用
     public static String abolishDate;

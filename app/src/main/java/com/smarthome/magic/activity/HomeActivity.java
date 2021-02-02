@@ -81,7 +81,6 @@ import static com.smarthome.magic.config.MyApplication.getAppContext;
 
 public class HomeActivity extends BaseActivity {
 
-
     BottomNavigationViewEx mBnve;
     @BindView(R.id.vp)
     NoScrollViewPager mVp;
@@ -104,7 +103,6 @@ public class HomeActivity extends BaseActivity {
     @BindView(R.id.tv_shezhi)
     TextView tvShezhi;
     private boolean isExit;
-
     private SparseIntArray items;
     AlarmClass alarmClass;
     private int i = 0;
@@ -178,8 +176,6 @@ public class HomeActivity extends BaseActivity {
                 } else if (notice.type == ConstanceValue.MSG_ZHINENGJIAJU_MENCI) {
                     zhiNengJiaJuCaoZuo(notice);
                 } else if (notice.type == ConstanceValue.MSG_YUYINHUANXING) {//语音唤醒
-                    //String yuYinZhuShouEnable = PreferenceHelper.getInstance(HomeActivity.this).getString(AppConfig.YUYINZHUSHOU, "0");
-                    //wakeUpClick();
                     if (rrlYuyinMianban.getVisibility() == View.VISIBLE) {
 
                     } else {
@@ -293,7 +289,6 @@ public class HomeActivity extends BaseActivity {
 
             @Override
             public void onDismiss(TishiDialog dialog) {
-
             }
         });
         String strBaoJingYin = PreferenceHelper.getInstance(mContext).getString(AppConfig.BAOJINGTISHIYIN, "2");
@@ -302,7 +297,6 @@ public class HomeActivity extends BaseActivity {
         } else {
             SoundPoolUtils.soundPool(mContext, R.raw.baojingyin3);
         }
-
         tishiDialog.setTextContent("您的家庭有新的状况，是否前去查看?");
         tishiDialog.show();
     }
@@ -391,6 +385,8 @@ public class HomeActivity extends BaseActivity {
                 });
                 tishiDialog.setTextContent("您的家庭有新的状况，是否前去查看?");
                 tishiDialog.show();
+
+            } else if (alarmClass.code.equals("jyj_0007")) {
 
             }
         }

@@ -50,6 +50,7 @@ import com.smarthome.magic.config.AppResponse;
 
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.AddressModel;
 import com.smarthome.magic.model.DataIn;
@@ -908,7 +909,7 @@ public class OrderListFragment extends BaseFragment {
                 });
         builder.create().show();
     }
-
+    TishiDialog tishiDialog;
 
     public void getNet_CaoZuo(String form_id, String code, int position) {
         Map<String, String> map = new HashMap<>();
@@ -935,13 +936,25 @@ public class OrderListFragment extends BaseFragment {
                     public void onError(Response<AppResponse<Object>> response) {
                         super.onError(response);
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
+                        tishiDialog = new TishiDialog(getActivity(), 3, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+                                tishiDialog.dismiss();
+                            }
 
-                        String[] str1 = str.split("：");
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
 
-                        if (str1.length == 3) {
-                            UIHelper.ToastMessage(getActivity(), str1[2]);
-                        }
+                                getActivity().finish();
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+
+                            }
+                        });
+                        tishiDialog.setTextContent(str);
+                        tishiDialog.show();
                     }
                 });
 

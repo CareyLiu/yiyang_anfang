@@ -12,6 +12,9 @@ public class FenLeiContentModel extends SectionEntity {
     public String two_item;
     public String three_item;
 
+    public String ccid;
+    public String serverId;
+
     public FenLeiContentModel(boolean isHeader, String header) {
         super(isHeader, header);
         this.header = header;

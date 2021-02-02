@@ -193,9 +193,7 @@ public class RenTiGanYingSetting extends BaseActivity {
                     @Override
                     public void onError(Response<AppResponse<SuiYiTieModel.DataBean>> response) {
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
-                        String[] str1 = str.split("：");
-                        UIHelper.ToastMessage(mContext, response.getException().getMessage());
+                        UIHelper.ToastMessage(mContext, str);
                     }
 
                     @Override
@@ -236,9 +234,7 @@ public class RenTiGanYingSetting extends BaseActivity {
                     @Override
                     public void onError(Response<AppResponse<SuiYiTieModel.DataBean>> response) {
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
-                        String[] str1 = str.split("：");
-                        UIHelper.ToastMessage(mContext, response.getException().getMessage());
+                        UIHelper.ToastMessage(mContext, str);
                     }
 
                     @Override
@@ -279,8 +275,6 @@ public class RenTiGanYingSetting extends BaseActivity {
                     @Override
                     public void onError(Response<AppResponse<SuiYiTieModel.DataBean>> response) {
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
-                        String[] str1 = str.split("：");
                         UIHelper.ToastMessage(mContext, response.getException().getMessage());
                     }
 

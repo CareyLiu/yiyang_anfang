@@ -374,8 +374,6 @@ public class SuiYiTieActivity extends BaseActivity {
                     @Override
                     public void onError(Response<AppResponse<SuiYiTieModel.DataBean>> response) {
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
-                        String[] str1 = str.split("：");
                         UIHelper.ToastMessage(mContext, response.getException().getMessage());
                     }
 
@@ -479,23 +477,6 @@ public class SuiYiTieActivity extends BaseActivity {
     String hardwareData;
 
     public void zhiXingMqtt(int position) {
-//        String topic = "zn/hardware/" + "1/" + mDatas.get(position).getDevice_ccid_up();
-//        String zhiLing = "M02" + mDatas.get(position).getDevice_ccid() + "01" + "2" + ".";
-//        AndMqtt.getInstance().publish(new MqttPublish()
-//                .setMsg(zhiLing)
-//                .setQos(2).setRetained(false)
-//                .setTopic(topic), new IMqttActionListener() {
-//            @Override
-//            public void onSuccess(IMqttToken asyncActionToken) {
-//
-//            }
-//
-//            @Override
-//            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-//
-//            }
-//        });
-
 
         mqttMingLing = new ZnjjMqttMingLing(mContext, mDatas.get(position).getDevice_ccid_up(), mDatas.get(position).getServer_id());
 

@@ -174,8 +174,6 @@ public class SuiYiTieTianJiaSheBeiActivity extends BaseActivity {
                     @Override
                     public void onError(Response<AppResponse<SuiYiTieSheBeiLieBiaoModel.DataBean>> response) {
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
-                        String[] str1 = str.split("：");
                         UIHelper.ToastMessage(mContext, response.getException().getMessage());
                     }
 
@@ -222,8 +220,6 @@ public class SuiYiTieTianJiaSheBeiActivity extends BaseActivity {
                     @Override
                     public void onError(Response<AppResponse<SuiYiTieSheBeiLieBiaoModel.DataBean>> response) {
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
-                        String[] str1 = str.split("：");
                         UIHelper.ToastMessage(mContext, response.getException().getMessage());
                     }
 

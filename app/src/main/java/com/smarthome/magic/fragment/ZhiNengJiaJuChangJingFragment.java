@@ -193,7 +193,6 @@ public class ZhiNengJiaJuChangJingFragment extends BaseFragment {
                     @Override
                     public void onError(Response<AppResponse<ChangJingXiangQingModel.DataBean>> response) {
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
                         UIHelper.ToastMessage(getActivity(), str);
                     }
                 });
@@ -222,7 +221,6 @@ public class ZhiNengJiaJuChangJingFragment extends BaseFragment {
                     @Override
                     public void onError(Response<AppResponse<ChangJingXiangQingModel.DataBean>> response) {
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
                         UIHelper.ToastMessage(getActivity(), str);
                     }
                 });

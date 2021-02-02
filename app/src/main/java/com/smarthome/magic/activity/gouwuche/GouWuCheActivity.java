@@ -254,13 +254,7 @@ public class GouWuCheActivity extends BaseActivity {
                         super.onError(response);
 
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
-
-                        String[] str1 = str.split("：");
-
-                        if (str1.length == 3) {
-                            UIHelper.ToastMessage(GouWuCheActivity.this, str1[2]);
-                        }
+                        UIHelper.ToastMessage(mContext, str);
 
                     }
 
@@ -271,6 +265,7 @@ public class GouWuCheActivity extends BaseActivity {
                     }
                 });
     }
+
 
     private String biaoshi = "0x11";
 

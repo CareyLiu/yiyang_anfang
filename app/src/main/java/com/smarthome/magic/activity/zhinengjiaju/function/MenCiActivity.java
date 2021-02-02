@@ -156,7 +156,7 @@ public class MenCiActivity extends BaseActivity {
 
                     @Override
                     public void onClickConfirm(View v, TishiDialog dialog) {
-                        UIHelper.ToastMessage(mContext, "清空所有数据");
+                       // UIHelper.ToastMessage(mContext, "清空所有数据");
                         getQingKongNet();
                     }
 
@@ -273,6 +273,27 @@ public class MenCiActivity extends BaseActivity {
 
     private void getQingKongNet() {
         //清空所有接口
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16067");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("device_id", device_id);
+        Gson gson = new Gson();
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<MenCiListModel.DataBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<MenCiListModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<MenCiListModel.DataBean>> response) {
+                        UIHelper.ToastMessage(mContext, "清空成功");
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<MenCiListModel.DataBean>> response) {
+                        UIHelper.ToastMessage(mContext, response.getException().getMessage());
+                    }
+                });
     }
 
     private class N9Thread extends Thread {
@@ -573,7 +594,6 @@ public class MenCiActivity extends BaseActivity {
                     @Override
                     public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
                         MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(mContext,
                                 "提示", response.getException().getMessage(), "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
                             @Override

@@ -156,8 +156,6 @@ public class ZhiNengJiaJuZhuangZhiSetting extends BaseActivity {
                     @Override
                     public void onError(Response<AppResponse<ZhiiNengRoomDeviceRoomBean.DataBean>> response) {
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
-                        String[] str1 = str.split("：");
                         UIHelper.ToastMessage(mContext, response.getException().getMessage());
                     }
 
@@ -173,7 +171,7 @@ public class ZhiNengJiaJuZhuangZhiSetting extends BaseActivity {
                     }
                 });
     }
-
+    TishiDialog tishiDialog;
     private void deleteDevice() {
 
         Map<String, String> map = new HashMap<>();
@@ -210,20 +208,26 @@ public class ZhiNengJiaJuZhuangZhiSetting extends BaseActivity {
                     @Override
                     public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
-                        MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(mContext,
-                                "提示", response.getException().getMessage(), "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
-                            @Override
-                            public void clickLeft() {
 
+                        tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+                                tishiDialog.dismiss();
                             }
 
                             @Override
-                            public void clickRight() {
+                            public void onClickConfirm(View v, TishiDialog dialog) {
+
+                                finish();
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
 
                             }
                         });
-                        myCarCaoZuoDialog_caoZuoTIshi.show();
+                        tishiDialog.setTextContent(str);
+                        tishiDialog.show();
                     }
 
                 });

@@ -45,6 +45,17 @@ public class ZnjjMqttMingLing {
         });
     }
 
+    public ZnjjMqttMingLing(Context context) {
+        this.context = context;
+    }
+
+
+    public void setTopic(String serverId, String ccid) {
+        topic = "zn/hardware/" + serverId + ccid;
+        this.serverId = serverId;
+        this.ccid = ccid;
+    }
+
 
     /**
      * 控制装置 M020301011*******.
@@ -336,7 +347,7 @@ public class ZnjjMqttMingLing {
             UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
             return;
         }
-        shishiTopic = "zn/app/" + serverId  + ccid;
+        shishiTopic = "zn/app/" + serverId + ccid;
         Log.i("Rair", "订阅实时数据" + shishiTopic);
         AndMqtt.getInstance().subscribe(new MqttSubscribe()
                 .setTopic(shishiTopic)
@@ -373,9 +384,119 @@ public class ZnjjMqttMingLing {
     }
 
     // TODO: 2020/12/10 解析数据 i12010101197.
-    public  void jieXiZhuangZhi(String str){
+    public void jieXiZhuangZhi(String str) {
 
 
     }
+
+    /**
+     * 通过订阅获得主机的实时信息
+     *
+     * @param listener
+     */
+    public void subscribeShiShiXinXi_WithCanShu(String ccid, String serverId, IMqttActionListener listener) {
+
+        if (!AndMqtt.getInstance().isConnect()) {
+            UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
+            return;
+        }
+        shishiTopic = "zn/hardware/" + serverId + "/" + ccid;
+        Log.i("Rair", "订阅实时数据" + shishiTopic);
+        AndMqtt.getInstance().publish(new MqttPublish()
+                .setMsg("N")
+                .setQos(2)
+                .setRetained(false)
+                .setTopic(shishiTopic), listener);
+//        AndMqtt.getInstance().subscribe(new MqttSubscribe()
+//                .setTopic(shishiTopic)
+//                .setQos(2), listener);
+    }
+
+    /**
+     * 取消订阅主机的实时信息
+     *
+     * @param listener
+     */
+    public void unSubscribeHardware_WithCanShu(String ccid, String serverId, IMqttActionListener listener) {
+        shishiTopic = "zn/hardware/" + serverId + "/" + ccid;
+        if (!AndMqtt.getInstance().isConnect()) {
+            UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
+            return;
+        }
+        AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                .setTopic(shishiTopic)
+                .setQos(2), listener);
+    }
+
+    /**
+     * app 通过订阅获得主机的实时信息
+     */
+    public void subscribeAppShiShiXinXi_WithCanShu(String ccid, String serverId, IMqttActionListener listener) {
+
+        if (!AndMqtt.getInstance().isConnect()) {
+            UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
+            return;
+        }
+        shishiTopic = "zn/app/" + serverId + ccid;
+        Log.i("Rair", "订阅实时数据" + shishiTopic);
+        AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                .setTopic(shishiTopic)
+                .setQos(2), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+                Log.i("Rair", "订阅成功:" + topic);
+
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                Log.i("CAR_NOTIFY", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
+            }
+        });
+//        AndMqtt.getInstance().subscribe(new MqttSubscribe()
+//                .setTopic(shishiTopic)
+//                .setQos(2), listener);
+    }
+
+    /**
+     * 取消订阅主机的实时信息
+     *
+     * @param listener
+     */
+    public void unSubscribeShiShiXinXi_WithCanShu(String ccid, String serverId, IMqttActionListener listener) {
+        if (!AndMqtt.getInstance().isConnect()) {
+            UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
+            return;
+        }
+        shishiTopic = "zn/app/" + serverId + ccid;
+        AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                .setTopic(shishiTopic)
+                .setQos(2), listener);
+    }
+
+    /**
+     * @param str
+     */
+    public void setZhiNengKaiGuan(String zhuangZhiId, String quanshu, IMqttActionListener listener) {
+
+        if (!AndMqtt.getInstance().isConnect()) {
+            UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
+            return;
+        }
+
+        if (quanshu == null) {
+            quanshu = "01";
+        }
+        String zhiLing = "M15" + zhuangZhiId + quanshu + ".";
+        Log.i("Rair", "M02  行为指令  " + "装置id: " + zhuangZhiId + " 控制方式: 2");
+        Log.i("Rair", zhiLing);
+        AndMqtt.getInstance().publish(new MqttPublish()
+                .setMsg(zhiLing)
+                .setQos(2).setRetained(false)
+                .setTopic(topic), listener);
+
+
+    }
+
 
 }

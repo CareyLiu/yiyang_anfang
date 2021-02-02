@@ -33,6 +33,7 @@ import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.DingDanDetailsModel;
 import com.smarthome.magic.model.OrderListModel;
@@ -293,7 +294,7 @@ public class DaiFuKuanDingDanActivity extends BaseActivity {
             }
         });
     }
-
+    TishiDialog tishiDialog;
     private void getNetCuiFaHuo(OrderListModel.DataBean dataBean) {
         Map<String, String> map = new HashMap<>();
         map.put("code", "04167");
@@ -318,13 +319,25 @@ public class DaiFuKuanDingDanActivity extends BaseActivity {
                         //   UIHelper.ToastMessage(getActivity(), response.body().msg);
 
                         String str = response.getException().getMessage();
-                        Log.i("cuifahuo", str);
+                        tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+                                tishiDialog.dismiss();
+                            }
 
-                        String[] str1 = str.split("：");
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
 
-                        if (str1.length == 3) {
-                            UIHelper.ToastMessage(DaiFuKuanDingDanActivity.this, str1[2]);
-                        }
+                                finish();
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+
+                            }
+                        });
+                        tishiDialog.setTextContent(str);
+                        tishiDialog.show();
 
                     }
 

@@ -16,10 +16,12 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.zhinengjiaju.TianJiaPuTongSheBeiActivity;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
+import com.smarthome.magic.model.FenLeiContentModel;
 
 import butterknife.BindView;
 
 public class SheBeiChongZhiActivity extends BaseActivity {
+
     String image;
     String titleName;
     @BindView(R.id.tv_title_name)
@@ -30,7 +32,6 @@ public class SheBeiChongZhiActivity extends BaseActivity {
     TextView tvText;
     @BindView(R.id.rrl_xiayibu)
     RoundRelativeLayout rrlXiayibu;
-
     String header;
     @BindView(R.id.iv_icon)
     ImageView ivIcon;
@@ -38,10 +39,12 @@ public class SheBeiChongZhiActivity extends BaseActivity {
     RelativeLayout rrlQuerencaozuo;
     @BindView(R.id.rrl_zhezhao)
     RoundRelativeLayout rrlZhezhao;
+    @BindView(R.id.tv_miaoshu)
+    TextView tvMiaoshu;
     private String shiGouXuanZhong = "0";
-
     private String ccid;
     private String serverId;
+    private FenLeiContentModel fenLeiContentModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,11 +52,11 @@ public class SheBeiChongZhiActivity extends BaseActivity {
         image = getIntent().getStringExtra("image");
         titleName = getIntent().getStringExtra("titleName");
         header = getIntent().getStringExtra("header");
-        tvTitleName.setText(titleName);
-        Glide.with(mContext).load(image).into(ivImage);
-
+        fenLeiContentModel = (FenLeiContentModel) getIntent().getSerializableExtra("FenLeiContentModel");
+        tvTitleName.setText(fenLeiContentModel.item_name);
+        Glide.with(mContext).load(fenLeiContentModel.img_detail_url).into(ivImage);
+        tvMiaoshu.setText(fenLeiContentModel.item_detail);
         ivIcon.setBackgroundResource(R.mipmap.peiwang_icon_mima_weixuanze);
-
         rrlQuerencaozuo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,12 +79,12 @@ public class SheBeiChongZhiActivity extends BaseActivity {
                     UIHelper.ToastMessage(mContext, "请确认已执行以上操作");
                 } else {
 //                    UIHelper.ToastMessage(mContext, "下一步");
-                    if (header.equals("主机")) {
+                    if (fenLeiContentModel.type.equals("00")) {
                         ZhiNengJiaJuPeiWangActivity.actionStart(mContext);
-                    } else if (header.equals("摄像头")) {
-
+                    } else if (header.equals("18")) {
+                        ZhiNengJiaJuPeiWangActivity.actionStart(mContext);
                     } else {
-                        TianJiaPuTongSheBeiActivity.actionStart(mContext);
+                        TianJiaPuTongSheBeiActivity.actionStart(mContext, fenLeiContentModel);
                     }
                 }
             }
@@ -125,13 +128,13 @@ public class SheBeiChongZhiActivity extends BaseActivity {
      *
      * @param context
      */
-    public static void actionStart(Context context, String titleName, String image, String header) {
+    public static void actionStart(Context context, String titleName, String image, String header, FenLeiContentModel fenLeiContentModel) {
         Intent intent = new Intent(context, SheBeiChongZhiActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("titleName", titleName);
         intent.putExtra("image", image);
         intent.putExtra("header", header);
-
+        intent.putExtra("FenLeiContentModel", fenLeiContentModel);
         context.startActivity(intent);
     }
 }

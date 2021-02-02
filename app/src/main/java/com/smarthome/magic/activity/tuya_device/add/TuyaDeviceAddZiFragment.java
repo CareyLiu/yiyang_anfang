@@ -3,6 +3,7 @@ package com.smarthome.magic.activity.tuya_device.add;
 import android.bluetooth.BluetoothAdapter;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.alibaba.sdk.android.utils.AMSConfigUtils;
+import com.espressif.iot.esptouch.util.ByteUtil;
+import com.espressif.iot.esptouch.util.TouchNetUtil;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -24,16 +31,24 @@ import com.smarthome.magic.activity.tuya_device.add.model.TuyaAddDeviceModel;
 import com.smarthome.magic.activity.tuya_device.utils.OnTuyaItemClickListener;
 import com.smarthome.magic.activity.tuya_device.utils.WifiReceiver;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaHomeManager;
+import com.smarthome.magic.activity.zhinengjiaju.EsptouchAsyncTask4;
+import com.smarthome.magic.activity.zhinengjiaju.peinet.ZhiNengJiaJuPeiWangActivity;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.RxBus;
+import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.ZhiNengHomeBean;
+import com.smarthome.magic.model.ZhiNengJiaJu_0007Model;
+import com.smarthome.magic.model.ZhiNengJiaJu_0009Model;
+import com.smarthome.magic.mqtt_zhiling.ZnjjMqttMingLing;
 import com.tuya.smart.android.ble.ITuyaBleOperator;
 import com.tuya.smart.android.ble.api.ITuyaBleConfigListener;
 import com.tuya.smart.android.ble.api.ScanDeviceBean;
@@ -46,17 +61,17 @@ import com.tuya.smart.android.blemesh.bean.SearchDeviceBean;
 import com.tuya.smart.android.blemesh.builder.SearchBuilder;
 import com.tuya.smart.android.blemesh.builder.TuyaSigMeshActivatorBuilder;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
-import com.tuya.smart.home.sdk.bean.ConfigProductInfoBean;
 import com.tuya.smart.home.sdk.builder.ActivatorBuilder;
 import com.tuya.smart.sdk.api.ITuyaActivator;
 import com.tuya.smart.sdk.api.ITuyaActivatorGetToken;
-import com.tuya.smart.sdk.api.ITuyaDataCallback;
 import com.tuya.smart.sdk.api.ITuyaSmartActivatorListener;
 import com.tuya.smart.sdk.api.bluemesh.ITuyaBlueMeshActivator;
 import com.tuya.smart.sdk.bean.DeviceBean;
-import com.tuya.smart.sdk.bean.ProductBean;
 import com.tuya.smart.sdk.bean.SigMeshBean;
 import com.tuya.smart.sdk.enums.ActivatorModelEnum;
+
+import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttToken;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,8 +79,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -143,6 +156,22 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
         initLanya();
         initHuidiao();
         initAdapter();
+
+        ll_wifi.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                ceShiZhuJi();
+                return false;
+            }
+        });
+        ll_lanya.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                ceShiSheBei();
+                return false;
+            }
+        });
+
         return rootView;
     }
 
@@ -173,6 +202,10 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
             iv_lanya.setVisibility(View.GONE);
         }
     }
+
+    ZhiNengJiaJu_0007Model zhiNengJiaJu_0007Model;
+    ZhiNengJiaJu_0009Model zhiNengJiaJu_0009Model;
+    List<ZhiNengJiaJu_0007Model.DataBean> mDatas = new ArrayList<>();
 
     private void initHuidiao() {
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
@@ -206,6 +239,31 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                 } else if (message.type == ConstanceValue.MSG_WIFI_CLOSE) {
                     isSetWifi = false;
                     iv_wifi.setVisibility(View.GONE);
+                } else if (message.type == ConstanceValue.MSG_TIANJIASHEBEI) {
+                    //添加设备
+                    zhiNengJiaJu_0007Model = (ZhiNengJiaJu_0007Model) message.content;
+                    mDatas.clear();
+                    mDatas.addAll(zhiNengJiaJu_0007Model.getData());
+
+                    UIHelper.ToastMessage(getActivity(), "接收到的图片是：" + zhiNengJiaJu_0007Model.getData().get(0).device_type_pic);
+//                    oneImageAdapter.notifyDataSetChanged();
+                } else if (message.type == ConstanceValue.MSG_TIANJIAZHUJI) {
+                    //添加主机
+                    zhiNengJiaJu_0009Model = (ZhiNengJiaJu_0009Model) message.content;
+                    UIHelper.ToastMessage(getActivity(), "接收到的图片是：" + zhiNengJiaJu_0009Model.mc_device_url);
+                    // TODO: 2021/2/2 获得主机信息后续处理
+                } else if (message.type == ConstanceValue.MSG_PEIWNAG_ESPTOUCH) {
+                    int ob = (int) message.content;
+                    /**
+                     * @param str 0连接失败 1开始连接页面 2连接中3连接成功
+                     */
+                    if (ob == 0) {//连接失败
+                        UIHelper.ToastMessage(getActivity(), "连接失败");
+                    } else if (ob == 2) {//连接中
+                        UIHelper.ToastMessage(getActivity(), "连接中");
+                    } else if (ob == 3) {//连接成功
+                        UIHelper.ToastMessage(getActivity(), "连接成功");
+                    }
                 }
             }
         }));
@@ -234,6 +292,10 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
         isSousuozhong = false;
     }
 
+    String zhuJiDeviceCCidUp;
+    String shiFouTianJiaGuoZhuJieType;
+    String serverId;
+
     @OnClick({R.id.ll_wifi, R.id.ll_lanya, R.id.bt_search_device, R.id.bt_xiugai, R.id.bt_chongxinsousuo, R.id.bt_xiayibu})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -246,6 +308,16 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
             case R.id.bt_search_device:
             case R.id.bt_chongxinsousuo:
                 clickSearch();
+                // TODO: 2021/2/2 待增加参数
+                zhuJiDeviceCCidUp = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.ZHUJI_DEVICECCID_UP, "");
+                if (StringUtils.isEmpty(zhuJiDeviceCCidUp)) {
+                    shiFouTianJiaGuoZhuJieType = "0";
+                } else {
+                    shiFouTianJiaGuoZhuJieType = "1";
+                }
+                serverId = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.SERVERID, "");
+                jiBenPeiWang(shiFouTianJiaGuoZhuJieType, zhuJiDeviceCCidUp, serverId, "00", "00");
+
                 break;
             case R.id.bt_xiugai:
                 break;
@@ -253,6 +325,103 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                 clickXiayibu();
                 break;
         }
+    }
+
+    private ZnjjMqttMingLing znjjMqttMingLing;
+    public EsptouchAsyncTask4 mTask;
+
+    /**
+     * @param zhuJiShiFouTianJiaType  这个家庭是否添加过主机 0否 1 是
+     * @param zhuji_device_ccid_up    主机ccid
+     * @param serverId                serverid  ccid最后一位
+     * @param zhuangZhiLeixing        装置类型 详见mqtt文档
+     * @param zhuangZhiLeiXingXingHao 装置类型型号 a款 b款
+     */
+    private void jiBenPeiWang(String zhuJiShiFouTianJiaType, String zhuji_device_ccid_up, String serverId, String zhuangZhiLeixing, String zhuangZhiLeiXingXingHao) {
+        zhuJiShiFouTianJiaType = "0";
+        if (zhuJiShiFouTianJiaType.equals("1")) {
+            znjjMqttMingLing = new ZnjjMqttMingLing(getActivity());
+
+            znjjMqttMingLing.subscribeAppShiShiXinXi_WithCanShu(zhuji_device_ccid_up, serverId, new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                }
+            });
+            // TODO: 2021/2/2 添加的命令待赋值
+            String str = "M12" + zhuangZhiLeixing + zhuangZhiLeiXingXingHao + "2";
+
+            znjjMqttMingLing.tianJiaSheBei(zhuji_device_ccid_up, serverId, str, new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                }
+            });
+        } else if (zhuJiShiFouTianJiaType.equals("0")) {
+            // TODO: 2021/2/2 接入密码  主机配对
+            executeEsptouch("11111", "", "");
+        }
+    }
+
+//    CharSequence message;
+//    CharSequence mSsid;
+//    byte[] ssidBytes;
+//    CharSequence mBssid;
+
+
+    /**
+     * wifi 密码
+     */
+    private void executeEsptouch(String pwdStr, String mBssid, String mSsid) {
+
+//        byte[] ssid = ByteUtil.getBytesByString(mSsid.toString());
+//        CharSequence pwdStr = mima;
+
+
+        byte[] password = pwdStr == null ? null : ByteUtil.getBytesByString(pwdStr.toString());
+        byte[] bssid = TouchNetUtil.parseBssid2bytes(mBssid.toString());
+        CharSequence devCountStr = String.valueOf(1);
+        byte[] deviceCount = devCountStr == null ? new byte[0] : devCountStr.toString().getBytes();
+        byte[] broadcast = {1};
+
+        if (mTask != null) {
+            mTask.cancelEsptouch();
+        }
+        mTask = new EsptouchAsyncTask4(getActivity());
+
+        int yonghuming_length = mSsid.toString().length();
+        int password_length = password.toString().length();
+
+        String zhengHeYongHuMing = String.format("%02d", yonghuming_length) + mSsid.toString();
+
+        String zhengHePasssword_length = String.format("%02d", password_length);
+
+        String familyId = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.PEIWANG_FAMILYID, "");
+
+        if (familyId == null) {
+            UIHelper.ToastMessage(getActivity(), "请退出应用后重新进入");
+            return;
+        }
+
+        String familyId_length = String.format("%02d", familyId.length());
+
+        Log.i("execute_info", "   mssid  :" + mSsid.toString() + "   mBssid  :" + mBssid + "   password  :" + password);
+
+        String zhengHePassWord = zhengHePasssword_length + familyId_length + password + familyId;
+
+        Log.i("execute_info", zhengHePassWord);
+
+        mTask.execute(zhengHeYongHuMing.getBytes(), bssid, zhengHePassWord.getBytes(), deviceCount, broadcast);
     }
 
     private void clickXiayibu() {
@@ -519,5 +688,45 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
         stopPeiwang();
+        if (znjjMqttMingLing != null) {
+            znjjMqttMingLing.unSubscribeShiShiXinXi_WithCanShu(zhuJiDeviceCCidUp, serverId, new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                }
+            });
+        }
     }
+
+    public void ceShiSheBei() {
+        Notice n = new Notice();
+        n.type = ConstanceValue.MSG_TIANJIASHEBEI;
+
+        ZhiNengJiaJu_0007Model zhiNengJiaJuNotifyJson = new ZhiNengJiaJu_0007Model();
+        ZhiNengJiaJu_0007Model.DataBean dataBean = new ZhiNengJiaJu_0007Model.DataBean();
+        dataBean.device_type_pic = "https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11920";
+
+        List<ZhiNengJiaJu_0007Model.DataBean> list = new ArrayList<>();
+        list.add(dataBean);
+        zhiNengJiaJuNotifyJson.setData(list);
+        n.content = zhiNengJiaJuNotifyJson;
+        RxBus.getDefault().sendRx(n);
+    }
+
+    public void ceShiZhuJi() {
+        Notice n = new Notice();
+        n.type = ConstanceValue.MSG_TIANJIAZHUJI;
+
+        ZhiNengJiaJu_0009Model zhiNengJiaJuNotifyJson = new ZhiNengJiaJu_0009Model();
+        zhiNengJiaJuNotifyJson.mc_device_url = "https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11920";
+        n.content = zhiNengJiaJuNotifyJson;
+        RxBus.getDefault().sendRx(n);
+    }
+
+
 }

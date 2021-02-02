@@ -35,6 +35,7 @@ public class WifiReceiver extends BroadcastReceiver {
                 notice.type = ConstanceValue.MSG_WIFI_INFO;
                 notice.content = WIFI_NAME;
                 RxBus.getDefault().sendRx(notice);
+
             }
         }
         //wifi打开与否

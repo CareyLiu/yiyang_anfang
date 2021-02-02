@@ -276,7 +276,7 @@ public class KaiGuanSettingActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse<SuiYiTieModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<SuiYiTieModel.DataBean>> response) {
-                        UIHelper.ToastMessage(mContext, "随意贴名称修改成功");
+                        UIHelper.ToastMessage(mContext, "名称修改成功");
                         getnet();
                     }
 

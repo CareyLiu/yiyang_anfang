@@ -37,6 +37,7 @@ import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.BianJiDingShiNeedModel;
 import com.smarthome.magic.model.ChangJingZhiXingModel;
+import com.smarthome.magic.model.FenLeiContentModel;
 import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.model.ZhiNengJiaJu_0007Model;
 import com.smarthome.magic.mqtt_zhiling.ZnjjMqttMingLing;
@@ -73,6 +74,7 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
     private String cd_device_ccid;
     private String ccid_up;
     private String zhuji_device_ccid_up;
+    private FenLeiContentModel fenLeiContentModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,6 +84,7 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
         serverId = PreferenceHelper.getInstance(mContext).getString(AppConfig.SERVERID, "");
         zhuji_device_ccid_up = PreferenceHelper.getInstance(mContext).getString(AppConfig.ZHUJI_DEVICECCID_UP, "");
 
+        fenLeiContentModel = (FenLeiContentModel) getIntent().getSerializableExtra("fenLeiContentModel");
         animationView.setAnimation("lottie.json");
         animationView.setImageAssetsFolder("images/");
         animationView.loop(true);
@@ -99,6 +102,8 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
                 switch (view.getId()) {
                     case R.id.iv_image:
                         cd_device_ccid = mDatas.get(position).cd_decice_ccid;
+                        zhuangZhiLeixing = "";
+                        zhuangZhiLeiXingXingHao = "";
                         TishiDialog tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
                             @Override
                             public void onClickCancel(View v, TishiDialog dialog) {
@@ -127,29 +132,46 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //模拟获得列表
-//                Notice n = new Notice();
-//                n.type = ConstanceValue.MSG_TIANJIASHEBEI;
-//
-//                ZhiNengJiaJu_0007Model zhiNengJiaJuNotifyJson = new ZhiNengJiaJu_0007Model();
-//                ZhiNengJiaJu_0007Model.DataBean dataBean = new ZhiNengJiaJu_0007Model.DataBean();
-//                dataBean.device_type_pic = "https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11920";
-//
-//                List<ZhiNengJiaJu_0007Model.DataBean> list = new ArrayList<>();
-//                list.add(dataBean);
-//                zhiNengJiaJuNotifyJson.setData(list);
-//                n.content = zhiNengJiaJuNotifyJson;
-//                RxBus.getDefault().sendRx(n);
+                Notice n = new Notice();
+                n.type = ConstanceValue.MSG_TIANJIASHEBEI;
+
+                ZhiNengJiaJu_0007Model zhiNengJiaJuNotifyJson = new ZhiNengJiaJu_0007Model();
+                ZhiNengJiaJu_0007Model.DataBean dataBean = new ZhiNengJiaJu_0007Model.DataBean();
+                dataBean.device_type_pic = "https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11920";
+
+                List<ZhiNengJiaJu_0007Model.DataBean> list = new ArrayList<>();
+                list.add(dataBean);
+                zhiNengJiaJuNotifyJson.setData(list);
+                n.content = zhiNengJiaJuNotifyJson;
+                RxBus.getDefault().sendRx(n);
             }
         });
     }
 
     private ZnjjMqttMingLing znjjMqttMingLing;
 
+    private String zhuangZhiLeixing;//装置类型
+    private String zhuangZhiLeiXingXingHao;//装置类型的型号
+
     public void sendMqttTianJiaSheBei() {
 
         znjjMqttMingLing = new ZnjjMqttMingLing(mContext);
 
         znjjMqttMingLing.subscribeAppShiShiXinXi_WithCanShu(zhuji_device_ccid_up, serverId, new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+            }
+        });
+        // TODO: 2021/2/2 添加的命令待赋值
+        String str = "M12" + zhuangZhiLeixing + zhuangZhiLeiXingXingHao + "2";
+
+        znjjMqttMingLing.tianJiaSheBei(zhuji_device_ccid_up, serverId, str, new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
 
@@ -210,9 +232,10 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
      *
      * @param context
      */
-    public static void actionStart(Context context) {
+    public static void actionStart(Context context, FenLeiContentModel fenLeiContentModel) {
         Intent intent = new Intent(context, TianJiaPuTongSheBeiActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("fenLeiContentModel", fenLeiContentModel);
         context.startActivity(intent);
     }
 

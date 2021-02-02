@@ -4,14 +4,11 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -27,31 +24,56 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.espressif.iot.esptouch.EsptouchTask;
 import com.espressif.iot.esptouch.IEsptouchResult;
 import com.espressif.iot.esptouch.IEsptouchTask;
 import com.espressif.iot.esptouch.util.ByteUtil;
 import com.espressif.iot.esptouch.util.TouchNetUtil;
 import com.flyco.roundview.RoundLinearLayout;
+import com.flyco.roundview.RoundRelativeLayout;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.v1.EspTouchActivity;
+import com.smarthome.magic.adapter.OneImageAdapter;
 import com.smarthome.magic.app.AppConfig;
+import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
+import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
+import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
+import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
+import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.ZhiNengFamilyEditBean;
+import com.smarthome.magic.model.ZhiNengJiaJu_0007Model;
+import com.smarthome.magic.mqtt_zhiling.ZnjjMqttMingLing;
+
+import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttToken;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 import static com.smarthome.magic.app.ConstanceValue.MSG_PEIWANG_SUCCESS;
+import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
 public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
 
@@ -116,8 +138,23 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
     TextView shibaiBangzhu;
 
 
+    OneImageAdapter oneImageAdapter;
+    List<ZhiNengJiaJu_0007Model.DataBean> mDatas = new ArrayList<>();
+    ZhiNengJiaJu_0007Model zhiNengJiaJu_0007Model;
+
     public EsptouchAsyncTask4 mTask;
+    @BindView(R.id.rrl_xiayibu)
+    RoundRelativeLayout rrlXiayibu;
+    @BindView(R.id.rlv_shebeilist)
+    RecyclerView rlvShebeilist;
     private String jiZhuMiMa = "1";//0 不记住  1 记住
+
+    private String zhuangZhiLeixing;//装置类型
+    private String zhuangZhiLeiXingXingHao;//装置类型的型号
+    private String cd_device_ccid;
+    private ZnjjMqttMingLing znjjMqttMingLing;
+    private String zhuji_device_ccid_up;
+    private String serverId;
 
     @Override
     protected String getEspTouchVersion() {
@@ -183,11 +220,9 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
         });
 
         ivSeeMima.setBackgroundResource(R.mipmap.peiwang_icon_buxianshimima);
-
         ivSeeMima.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (seeMiMa.equals("0")) {
                     seeMiMa = "1";
                     ivSeeMima.setBackgroundResource(R.mipmap.peiwang_icon_xianshimima);
@@ -224,6 +259,62 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
                 PeiWangHelpActivity.actionStart(mContext);
             }
         });
+        oneImageAdapter = new OneImageAdapter(R.layout.item_rlv_shebeilist, mDatas);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+        linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        rlvShebeilist.setLayoutManager(linearLayoutManager);
+        rlvShebeilist.setAdapter(oneImageAdapter);
+
+        oneImageAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.iv_image:
+                        cd_device_ccid = mDatas.get(position).cd_decice_ccid;
+                        zhuangZhiLeixing = "";
+                        zhuangZhiLeiXingXingHao = "";
+                        TishiDialog tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+                            }
+
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
+                                tianJiaSheBeiNet();
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+                            }
+                        });
+                        tishiDialog.setTextContent("已找到您要添加的设备，是否添加此设备？");
+                        tishiDialog.show();
+                        break;
+                }
+            }
+        });
+
+
+        rrlXiayibu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //模拟获得列表
+                Notice n = new Notice();
+                n.type = ConstanceValue.MSG_TIANJIASHEBEI;
+
+                ZhiNengJiaJu_0007Model zhiNengJiaJuNotifyJson = new ZhiNengJiaJu_0007Model();
+                ZhiNengJiaJu_0007Model.DataBean dataBean = new ZhiNengJiaJu_0007Model.DataBean();
+                dataBean.device_type_pic = "https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11920";
+
+                List<ZhiNengJiaJu_0007Model.DataBean> list = new ArrayList<>();
+                list.add(dataBean);
+                zhiNengJiaJuNotifyJson.setData(list);
+                n.content = zhiNengJiaJuNotifyJson;
+                RxBus.getDefault().sendRx(n);
+            }
+        });
+
+        jieShouMqttTianJiaSheBei();
     }
 
     private void setPeiWangMiMa() {
@@ -233,11 +324,9 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
             @Override
             public void onClick(View v) {
                 if (jiZhuMiMa.equals("0")) {
-
                     ivPeiwangMima.setBackgroundResource(R.mipmap.peiwang_icon_mima_jizhu);
                     jiZhuMiMa = "1";
                 } else if (jiZhuMiMa.equals("1")) {
-
                     ivPeiwangMima.setBackgroundResource(R.mipmap.peiwang_icon_mima_weixuanze);
                     jiZhuMiMa = "0";
                 }
@@ -363,27 +452,7 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
         protected void onPreExecute() {
             ZhiNengJiaJuPeiWangActivity activity = mActivity.get();
             activity.setZhuangTaiZhanShi("2");
-
-
             mProgressDialog = new ProgressDialog(activity);
-//            mProgressDialog.setMessage(activity.getString(R.string.esptouch1_configuring_message));
-//            mProgressDialog.setCanceledOnTouchOutside(false);
-//            mProgressDialog.setOnCancelListener(dialog -> {
-//                synchronized (mLock) {
-//                    if (mEsptouchTask != null) {
-//                        mEsptouchTask.interrupt();
-//                    }
-//                }
-//            });
-//            mProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, activity.getText(android.R.string.cancel),
-//                    (dialog, which) -> {
-//                        synchronized (mLock) {
-//                            if (mEsptouchTask != null) {
-//                                mEsptouchTask.interrupt();
-//                            }
-//                        }
-//                    });
-//            mProgressDialog.show();
         }
 
         @Override
@@ -391,30 +460,12 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
             Log.i("ZhiNengJiaJuPeiWang", "onProgressUpdate" + values[0].getBssid() + values[0].getInetAddress());
             Activity context = mActivity.get();
             if (context != null) {
-//                mResultDialog = new AlertDialog.Builder(activity)
-//                        .setTitle(R.string.esptouch1_configure_result_success)
-//                        //.setItems(resultMsgList.toArray(items), null)
-//                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                PreferenceHelper.getInstance(activity).putString(AppConfig.PEIWANG_MIMA, activity.etWifiMima.getText().toString());
-//                                mTask.mResultDialog.dismiss();
-//                                activity.finish();
-//
-//                            }
-//                        })
-//                        .show();
-//                mResultDialog.setCanceledOnTouchOutside(false);
                 Toast.makeText(context, "配网成功", Toast.LENGTH_SHORT).show();
-
                 Notice notice = new Notice();
                 notice.type = MSG_PEIWANG_SUCCESS;
                 RxBus.getDefault().sendRx(notice);
                 context.finish();
-
-
             }
-
         }
 
         @Override
@@ -460,12 +511,6 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
             // executing before receiving enough results
 
             if (!firstResult.isSuc()) {
-//                mResultDialog = new AlertDialog.Builder(activity)
-//                        .setMessage(R.string.esptouch1_configure_result_failed)
-//                        .setPositiveButton(android.R.string.ok, null)
-//                        .show();
-//                mResultDialog.setCanceledOnTouchOutside(false);
-
                 activity.setZhuangTaiZhanShi("0");
                 return;
             }
@@ -477,25 +522,6 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
                 resultMsgList.add(message);
             }
             CharSequence[] items = new CharSequence[resultMsgList.size()];
-//            mResultDialog = new AlertDialog.Builder(activity)
-//                    .setTitle(R.string.esptouch1_configure_result_success)
-//                    //.setItems(resultMsgList.toArray(items), null)
-//                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//
-//                            mEsptouchTask.interrupt();
-//
-//                            if (mResultDialog.isShowing()) {
-//                                mResultDialog.dismiss();
-//                            }
-//
-//
-//
-//                        }
-//                    })
-//                    .show();
-//            mResultDialog.setCanceledOnTouchOutside(false);
 
             Notice notice = new Notice();
             notice.type = MSG_PEIWANG_SUCCESS;
@@ -584,7 +610,6 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
     @Override
     protected void onPause() {
         super.onPause();
-
     }
 
     @Override
@@ -593,5 +618,80 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
         if (mTask != null) {
             mTask.cancelEsptouch();
         }
+    }
+
+    public void sendMqttTianJiaSheBei() {
+
+        znjjMqttMingLing = new ZnjjMqttMingLing(mContext);
+
+        znjjMqttMingLing.subscribeAppShiShiXinXi_WithCanShu(zhuji_device_ccid_up, serverId, new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+            }
+        });
+        // TODO: 2021/2/2 添加的命令待赋值
+        String str = "M12" + zhuangZhiLeixing + zhuangZhiLeiXingXingHao + "2";
+
+        znjjMqttMingLing.tianJiaSheBei(zhuji_device_ccid_up, serverId, str, new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+            }
+        });
+
+
+    }
+
+    public void jieShouMqttTianJiaSheBei() {
+
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_TIANJIASHEBEI) {
+                    zhiNengJiaJu_0007Model = (ZhiNengJiaJu_0007Model) message.content;
+                    mDatas.clear();
+                    mDatas.addAll(zhiNengJiaJu_0007Model.getData());
+                    oneImageAdapter.notifyDataSetChanged();
+                } else if (message.type == ConstanceValue.MSG_PEIWANG_SUCCESS) {
+                    //发送配网命令
+                    sendMqttTianJiaSheBei();
+                    jieShouMqttTianJiaSheBei();
+
+                }
+            }
+        }));
+    }
+
+    private void tianJiaSheBeiNet() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16041");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("add_device_type", "2");
+        map.put("mc_decice_ccid", PreferenceHelper.getInstance(mContext).getString(AppConfig.DEVICECCID, ""));
+        map.put("cd_device_ccid", cd_device_ccid);
+        Gson gson = new Gson();
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<ZhiNengFamilyEditBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ZhiNengFamilyEditBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        UIHelper.ToastMessage(mContext, "设备添加成功");
+                        finish();
+                    }
+                });
     }
 }

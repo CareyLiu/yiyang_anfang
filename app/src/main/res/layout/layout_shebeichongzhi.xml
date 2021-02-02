@@ -17,6 +17,7 @@
         android:textSize="18sp" />
 
     <TextView
+        android:id="@+id/tv_miaoshu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"

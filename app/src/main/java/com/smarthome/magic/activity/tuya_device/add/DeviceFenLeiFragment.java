@@ -35,6 +35,7 @@ public class DeviceFenLeiFragment extends BaseFragment implements FenLeiContenIn
     // boolean flag = true;// true 是第一个 false 不是第一个
     private String one_item;
     private String two_item;
+    FenLeiContentModel fenLeiContentModel;
 
     @Override
     public void getNet() {
@@ -59,6 +60,15 @@ public class DeviceFenLeiFragment extends BaseFragment implements FenLeiContenIn
                     contentModel.two_item = two_item;
                     contentModel.one_item = one_item;
 
+                    contentModel.category = itemBean.getCategory();
+                    contentModel.img_detail_url = itemBean.getImg_detail_url();
+                    contentModel.img_url = itemBean.getImg_url();
+                    contentModel.is_product = itemBean.getIs_product();
+                    contentModel.item_name = itemBean.getItem_name();
+                    contentModel.item_id_up = itemBean.getItem_id_up();
+                    contentModel.item_detail = itemBean.getItem_detail();
+                    contentModel.item_id = itemBean.getItem_id();
+                    contentModel.type = itemBean.getType();
                     mDatas.add(contentModel);
                 }
             }
@@ -81,10 +91,8 @@ public class DeviceFenLeiFragment extends BaseFragment implements FenLeiContenIn
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.constrain:
-
-
-                        SheBeiChongZhiActivity.actionStart(getActivity(), mDatas.get(position).getItem_name(), mDatas.get(position).getImg_url(), mDatas.get(position).header);
-
+                        fenLeiContentModel = mDatas.get(position);
+                        SheBeiChongZhiActivity.actionStart(getActivity(), mDatas.get(position).getItem_name(), mDatas.get(position).getImg_url(), mDatas.get(position).header, fenLeiContentModel);
                         break;
                 }
             }

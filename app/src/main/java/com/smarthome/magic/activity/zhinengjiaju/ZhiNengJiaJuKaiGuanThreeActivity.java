@@ -253,7 +253,7 @@ public class ZhiNengJiaJuKaiGuanThreeActivity extends BaseActivity {
 
     }
 
-    public int chooseTiaoMu;
+    public int chooseTiaoMu = 0;
 
     // 1全开 2全关
     public void setQuanKaiQuanGuanBac(String str, int quanKaiSrc1, int quanKaiSrc0, int quanGuanScr1, int quanGuanScr0) {
@@ -296,7 +296,7 @@ public class ZhiNengJiaJuKaiGuanThreeActivity extends BaseActivity {
         iv_rightTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KaiGuanSettingActivity.actionStart(mContext, "", "");
+                KaiGuanSettingActivity.actionStart(mContext, device_ccid, device_ccid_up);
             }
         });
         mToolbar.setNavigationIcon(R.mipmap.backbutton);

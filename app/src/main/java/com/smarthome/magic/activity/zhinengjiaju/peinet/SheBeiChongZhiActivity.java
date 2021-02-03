@@ -82,7 +82,8 @@ public class SheBeiChongZhiActivity extends BaseActivity {
                     if (fenLeiContentModel.type.equals("00")) {
                         ZhiNengJiaJuPeiWangActivity.actionStart(mContext);
                     } else if (fenLeiContentModel.type.equals("18")) {//摄像头
-                        // TODO: 2021/2/3 添加摄像头 
+                        // TODO: 2021/2/3 添加摄像头
+
                     } else {
                         TianJiaPuTongSheBeiActivity.actionStart(mContext, fenLeiContentModel);
                     }

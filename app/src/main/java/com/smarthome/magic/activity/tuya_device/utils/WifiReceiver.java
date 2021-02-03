@@ -36,6 +36,8 @@ public class WifiReceiver extends BroadcastReceiver {
                 notice.content = WIFI_NAME;
                 RxBus.getDefault().sendRx(notice);
 
+
+                Y.e("艰苦奋斗是大家房贷 " + wifiInfo.getBSSID() + "    " + wifiInfo.getSSID());
             }
         }
         //wifi打开与否

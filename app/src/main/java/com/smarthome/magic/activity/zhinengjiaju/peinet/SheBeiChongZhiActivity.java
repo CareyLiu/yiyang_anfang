@@ -81,8 +81,8 @@ public class SheBeiChongZhiActivity extends BaseActivity {
 //                    UIHelper.ToastMessage(mContext, "下一步");
                     if (fenLeiContentModel.type.equals("00")) {
                         ZhiNengJiaJuPeiWangActivity.actionStart(mContext);
-                    } else if (header.equals("18")) {
-                        ZhiNengJiaJuPeiWangActivity.actionStart(mContext);
+                    } else if (fenLeiContentModel.type.equals("18")) {//摄像头
+                        // TODO: 2021/2/3 添加摄像头 
                     } else {
                         TianJiaPuTongSheBeiActivity.actionStart(mContext, fenLeiContentModel);
                     }

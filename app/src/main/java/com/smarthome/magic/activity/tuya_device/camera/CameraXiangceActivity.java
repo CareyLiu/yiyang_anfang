@@ -65,7 +65,6 @@ public class CameraXiangceActivity extends TuyaBaseCameraDeviceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
         isXuanze = false;
         initAdapter();

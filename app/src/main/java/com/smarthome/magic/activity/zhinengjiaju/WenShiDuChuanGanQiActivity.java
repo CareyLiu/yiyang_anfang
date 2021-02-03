@@ -142,7 +142,6 @@ public class WenShiDuChuanGanQiActivity extends BaseActivity {
         iv_rightTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2021/1/7 添加ccid 和 ccidup
                 ZhiNengJiaJuZhuangZhiSetting.actionStart(mContext, device_id);
             }
         });

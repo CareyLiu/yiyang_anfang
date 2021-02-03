@@ -102,24 +102,6 @@ public class ZhiNengDeviceFragment extends BaseFragment {
 
     @Override
     protected void initLogic() {
-
-    }
-
-    @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_zhineng_device;
-    }
-
-    public static ZhiNengDeviceFragment newInstance(Bundle bundle) {
-        ZhiNengDeviceFragment fragment = new ZhiNengDeviceFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
-    public void initView(View view) {
-        ll_content_bg = view.findViewById(R.id.ll_content_bg);
-        recyclerView = view.findViewById(R.id.recyclerView);
-//        recyclerView.addItemDecoration(new RecycleItemSpance(20, 2));
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.addItemDecoration(new GridAverageUIDecoration(14, 10));
 
@@ -333,6 +315,24 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                 }
             }
         }));
+    }
+
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.fragment_zhineng_device;
+    }
+
+    public static ZhiNengDeviceFragment newInstance(Bundle bundle) {
+        ZhiNengDeviceFragment fragment = new ZhiNengDeviceFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    public void initView(View view) {
+        ll_content_bg = view.findViewById(R.id.ll_content_bg);
+        recyclerView = view.findViewById(R.id.recyclerView);
+//        recyclerView.addItemDecoration(new RecycleItemSpance(20, 2));
+
 
 
     }

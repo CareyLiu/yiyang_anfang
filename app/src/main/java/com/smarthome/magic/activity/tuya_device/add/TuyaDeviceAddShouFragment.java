@@ -63,7 +63,6 @@ public class TuyaDeviceAddShouFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, rootView);
         init();
@@ -87,7 +86,7 @@ public class TuyaDeviceAddShouFragment extends BaseFragment {
 
     public void getNet() {
         Map<String, String> map = new HashMap<>();
-        map.put("code", "00025");
+            map.put("code", "00025");
         map.put("key", Urls.key);
         map.put("subsystem_id", "wit");
         map.put("itemtype_id", "3");

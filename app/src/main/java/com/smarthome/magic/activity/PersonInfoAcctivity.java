@@ -63,7 +63,6 @@ public class PersonInfoAcctivity extends ServiceBaseActivity implements Observer
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
         init();
     }

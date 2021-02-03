@@ -205,7 +205,6 @@ public class HomeActivity extends BaseActivity {
         runnable = new Runnable() {
             @Override
             public void run() {
-                // TODO Auto-generated method stub
                 //要做的事情
                 AndMqtt.getInstance().publish(new MqttPublish()
                         .setMsg("O.")

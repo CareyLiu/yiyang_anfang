@@ -261,7 +261,7 @@ public class OrderListFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
+
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, rootView);
         return rootView;
@@ -969,7 +969,6 @@ public class OrderListFragment extends BaseFragment {
                 .setMessage(quXiaoDingDanHuaShu).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //ToDo: 你想做的事情
                         //Toast.makeText(getActivity(), "确定按钮", Toast.LENGTH_LONG).show();
                         getNet_CaoZuo(dataBean.getShop_form_id(), code, position);
 
@@ -978,8 +977,6 @@ public class OrderListFragment extends BaseFragment {
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //ToDo: 你想做的事情
-                        // Toast.makeText(getActivity(), "关闭按钮", Toast.LENGTH_LONG).show();
                         dialogInterface.dismiss();
                     }
                 });

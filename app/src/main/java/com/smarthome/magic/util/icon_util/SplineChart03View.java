@@ -41,7 +41,6 @@ public class SplineChart03View extends DemoView {
 	
 	public SplineChart03View(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
 		initView();
 	}
 	
@@ -133,7 +132,6 @@ public class SplineChart03View extends DemoView {
 	
 				@Override
 				public String textFormatter(String value) {
-					// TODO Auto-generated method stub						
 					String label = "["+value+"]";
 					return (label);
 				}
@@ -157,7 +155,6 @@ public class SplineChart03View extends DemoView {
 			chart.getPlotLegend().setHorizontalAlign(XEnum.HorizontalAlign.CENTER);
 												
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Log.e(TAG, e.toString());
 		}
@@ -272,7 +269,6 @@ public class SplineChart03View extends DemoView {
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		// TODO Auto-generated method stub		
 		
 		super.onTouchEvent(event);
 				

@@ -82,7 +82,6 @@ public class UIHelper {
 
     public static void showLogin(Context context, int tokenError) {
         if (isEnabled) {
-            // TODO: 2020/3/21   添加登录页面
            // Intent intent = new Intent(context, LoginFirstActivity.class);
             //intent.putExtra("tokenError", tokenError);
             //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

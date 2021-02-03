@@ -113,7 +113,6 @@ public class TuyaDevicePeiwangActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
         initPeizhi();
         initHuidiao();

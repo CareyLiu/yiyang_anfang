@@ -21,7 +21,6 @@ public abstract class BaseFragment<T extends BasicPresenter, E extends BasicMode
     protected Gloading.Holder mHolder;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, rootView);
         _subscriptions = RxUtils.getNewCompositeSubIfUnsubscribed(_subscriptions);

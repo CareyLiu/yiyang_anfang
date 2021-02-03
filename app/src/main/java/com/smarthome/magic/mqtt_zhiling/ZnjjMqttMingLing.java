@@ -383,7 +383,6 @@ public class ZnjjMqttMingLing {
                 .setQos(2), listener);
     }
 
-    // TODO: 2020/12/10 解析数据 i12010101197.
     public void jieXiZhuangZhi(String str) {
 
 

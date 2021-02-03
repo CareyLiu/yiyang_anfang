@@ -83,7 +83,6 @@ public class TuyaChangjingActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: add setContentVxiew(...) invocation
         ButterKnife.bind(this);
         init();
     }

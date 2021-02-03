@@ -178,7 +178,6 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
         init();
         initCcid();

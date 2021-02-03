@@ -17,7 +17,7 @@
         android:paddingRight="14dp"
         android:paddingBottom="17dp">
 
-        <!-- TODO: 收货人姓名 -->
+
         <TextView
             android:id="@+id/tv_harvestName"
             android:layout_width="wrap_content"
@@ -28,7 +28,7 @@
             android:textSize="@dimen/sp_14"
             tools:text="seven" />
 
-        <!-- TODO: 收货人电话 -->
+
         <TextView
             android:id="@+id/tv_harvestPhone"
             android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
             android:textSize="@dimen/sp_14"
             tools:text="15210001000" />
 
-        <!-- TODO: 收货人地址 -->
+
         <TextView
             android:id="@+id/tv_harvestAddress"
             android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
             android:layout_marginBottom="14dp"
             android:background="@color/activity_bg_color" />
 
-        <!-- TODO: 设置默认收货地址 -->
+
         <LinearLayout
             android:id="@+id/ll_harvestDefault"
             android:layout_width="wrap_content"
@@ -91,7 +91,7 @@
             android:layout_alignParentRight="true"
             android:orientation="horizontal">
 
-            <!-- TODO: 编辑收货地址 -->
+
             <LinearLayout
                 android:id="@+id/ll_harvestModify"
                 android:layout_width="wrap_content"
@@ -115,7 +115,6 @@
                     android:textSize="13sp" />
             </LinearLayout>
 
-            <!-- TODO: 删除收货地址 -->
             <LinearLayout
                 android:id="@+id/ll_harvestDelete"
                 android:layout_width="wrap_content"

@@ -884,7 +884,7 @@ public class DaiFuKuanDingDanActivity extends BaseActivity {
                 .setMessage(quXiaoDingDanHuaShu).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //ToDo: 你想做的事情
+
                         //Toast.makeText(getActivity(), "确定按钮", Toast.LENGTH_LONG).show();
                         //    getNet(dataBean.getShop_form_id(), dataBean.getUser_pay_check(), dataBean.getWares_go_type(), dataBean.getWares_type());
                         getNet_CaoZuo(dataBean.getShop_form_id(), code);
@@ -892,8 +892,6 @@ public class DaiFuKuanDingDanActivity extends BaseActivity {
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //ToDo: 你想做的事情
-                        // Toast.makeText(getActivity(), "关闭按钮", Toast.LENGTH_LONG).show();
                         dialogInterface.dismiss();
                     }
                 });

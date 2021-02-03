@@ -77,7 +77,6 @@ public class LoginYzmActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
         timeCount = new TimeCount(60000, 1000, tv_yzm);
     }

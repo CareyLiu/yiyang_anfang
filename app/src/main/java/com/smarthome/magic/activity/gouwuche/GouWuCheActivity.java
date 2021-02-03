@@ -573,7 +573,7 @@ public class GouWuCheActivity extends BaseActivity {
                 .setMessage("是否确定删除订单").setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int j) {
-                        //ToDo: 你想做的事情
+
                         //Toast.makeText(getActivity(), "确定按钮", Toast.LENGTH_LONG).show();
                         String type = "2";   //type	全部删除：1.是2.否
                         formProductIdList = new ArrayList<>();
@@ -598,8 +598,6 @@ public class GouWuCheActivity extends BaseActivity {
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //ToDo: 你想做的事情
-                        // Toast.makeText(getActivity(), "关闭按钮", Toast.LENGTH_LONG).show();
                         dialogInterface.dismiss();
                     }
                 });
@@ -616,7 +614,6 @@ public class GouWuCheActivity extends BaseActivity {
                 .setMessage("是否确定删除订单").setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int j) {
-                        //ToDo: 你想做的事情
                         //Toast.makeText(getActivity(), "确定按钮", Toast.LENGTH_LONG).show();
                         String type = "2";   //type	全部删除：1.是2.否
                         formProductIdList = new ArrayList<>();
@@ -630,8 +627,6 @@ public class GouWuCheActivity extends BaseActivity {
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //ToDo: 你想做的事情
-                        // Toast.makeText(getActivity(), "关闭按钮", Toast.LENGTH_LONG).show();
                         dialogInterface.dismiss();
                     }
                 });

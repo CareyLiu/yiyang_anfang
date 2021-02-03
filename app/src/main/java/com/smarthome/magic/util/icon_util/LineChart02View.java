@@ -73,7 +73,6 @@ public class LineChart02View extends DemoView implements Runnable {
 
     public LineChart02View(Context context, List<WenShiDuChuanGanQiModel.DataBean.HumListBean> humListBeans, List<WenShiDuChuanGanQiModel.DataBean.TemListBean> temListBeans) {
         super(context);
-        // TODO Auto-generated constructor stub
         this.humListBeans = humListBeans;
         this.temListBeans = temListBeans;
         initView();
@@ -155,7 +154,6 @@ public class LineChart02View extends DemoView implements Runnable {
 
                 @Override
                 public String textFormatter(String value) {
-                    // TODO Auto-generated method stub
                     Double tmp = Double.parseDouble(value);
                     DecimalFormat df = new DecimalFormat("#0");
                     String label = df.format(tmp).toString();
@@ -169,7 +167,6 @@ public class LineChart02View extends DemoView implements Runnable {
             chart.setItemLabelFormatter(new IFormatterDoubleCallBack() {
                 @Override
                 public String doubleFormatter(Double value) {
-                    // TODO Auto-generated method stub
                     DecimalFormat df = new DecimalFormat("#0");
                     String label = df.format(value).toString();
                     return label;
@@ -200,7 +197,6 @@ public class LineChart02View extends DemoView implements Runnable {
 
             //chart.getDataAxis().hide();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             Log.e(TAG, e.toString());
         }
     }
@@ -368,7 +364,6 @@ public class LineChart02View extends DemoView implements Runnable {
 
     @Override
     public void run() {
-        // TODO Auto-generated method stub
         try {
             chartAnimation();
         } catch (Exception e) {
@@ -403,7 +398,6 @@ public class LineChart02View extends DemoView implements Runnable {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        // TODO Auto-generated method stub
 
         super.onTouchEvent(event);
 

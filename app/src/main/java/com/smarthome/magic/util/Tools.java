@@ -162,7 +162,6 @@ public class Tools {
             InputStream in;
             in = conn.getInputStream();
             map = BitmapFactory.decodeStream(in);
-            // TODO Auto-generated catch block
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -215,7 +214,6 @@ public class Tools {
     }
 
     /**
-     * TODO: 2019-09-20 拼手快 钱+积分,统一展示
      *
      * @param cx       上下文
      * @param pcLayout 布局 控件
@@ -370,7 +368,6 @@ public class Tools {
             bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
             return bitmap;
         } catch (Exception e) {
-            // TODO: handle exception
             return null;
         }
 

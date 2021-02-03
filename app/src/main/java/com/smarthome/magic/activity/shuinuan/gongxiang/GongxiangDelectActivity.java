@@ -75,7 +75,6 @@ public class GongxiangDelectActivity extends ShuinuanBaseNewActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
         ccid = getIntent().getStringExtra("ccid");
         name = getIntent().getStringExtra("name");

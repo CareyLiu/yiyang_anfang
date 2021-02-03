@@ -61,7 +61,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
 
         if (baseResp instanceof SendAuth.Resp) {
-            // TODO: 2020/6/24 获取code 后，传递给后台，提现的时候 自动提现
             SendAuth.Resp resp = (SendAuth.Resp) baseResp;
             Log.i("sendAuth_code", resp.code);
             getNet(resp.code);

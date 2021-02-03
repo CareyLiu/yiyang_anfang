@@ -58,7 +58,6 @@ public class LineChart01View extends DemoView {
 	
 	public LineChart01View(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
 		initView();
 	}
 	
@@ -174,7 +173,6 @@ public class LineChart01View extends DemoView {
 			
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
 		}
 	}
@@ -306,7 +304,6 @@ public class LineChart01View extends DemoView {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		// TODO Auto-generated method stub		
 				
 		if(event.getAction() == MotionEvent.ACTION_UP)
 		{			

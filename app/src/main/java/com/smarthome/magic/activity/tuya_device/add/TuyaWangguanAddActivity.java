@@ -110,7 +110,6 @@ public class TuyaWangguanAddActivity extends TuyaBaseDeviceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
         homeId = TuyaHomeManager.getHomeManager().getHomeId();
         devId = TuyaDeviceManager.getDeviceManager().getDevId();

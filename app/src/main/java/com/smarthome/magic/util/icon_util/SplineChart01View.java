@@ -63,7 +63,6 @@ public class SplineChart01View extends DemoView {
 	
 	public SplineChart01View(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
 		initView();
 	}
 	
@@ -170,7 +169,6 @@ public class SplineChart01View extends DemoView {
 	
 				@Override
 				public String textFormatter(String value) {
-					// TODO Auto-generated method stub						
 					String label = "("+value+")";
 					return (label);
 				}
@@ -224,7 +222,6 @@ public class SplineChart01View extends DemoView {
 			chart.setAnchorDataPoint(mAnchorSet);	
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Log.e(TAG, e.toString());
 		}
@@ -341,7 +338,6 @@ public class SplineChart01View extends DemoView {
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		// TODO Auto-generated method stub		
 		
 		super.onTouchEvent(event);
 				

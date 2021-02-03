@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
 import com.flyco.roundview.RoundRelativeLayout;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.tuya_device.add.zi.TuyaAddCameraActivity;
 import com.smarthome.magic.activity.zhinengjiaju.TianJiaPuTongSheBeiActivity;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
@@ -83,7 +84,7 @@ public class SheBeiChongZhiActivity extends BaseActivity {
                         ZhiNengJiaJuPeiWangActivity.actionStart(mContext);
                     } else if (fenLeiContentModel.type.equals("18")) {//摄像头
                         // TODO: 2021/2/3 添加摄像头
-
+                        TuyaAddCameraActivity.actionStart(mContext);
                     } else {
                         TianJiaPuTongSheBeiActivity.actionStart(mContext, fenLeiContentModel);
                     }

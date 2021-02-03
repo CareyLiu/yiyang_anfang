@@ -15,10 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.alibaba.sdk.android.utils.AMSConfigUtils;
 import com.espressif.iot.esptouch.util.ByteUtil;
 import com.espressif.iot.esptouch.util.TouchNetUtil;
 import com.google.gson.Gson;
@@ -32,7 +28,6 @@ import com.smarthome.magic.activity.tuya_device.utils.OnTuyaItemClickListener;
 import com.smarthome.magic.activity.tuya_device.utils.WifiReceiver;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaHomeManager;
 import com.smarthome.magic.activity.zhinengjiaju.EsptouchAsyncTask4;
-import com.smarthome.magic.activity.zhinengjiaju.peinet.ZhiNengJiaJuPeiWangActivity;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
@@ -79,6 +74,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -87,7 +84,7 @@ import rx.functions.Action1;
 
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
-public class TuyaDeviceAddZiFragment extends BaseFragment {
+public class TuyaDeviceAddZiFragmentBeifen extends BaseFragment {
     @BindView(R.id.iv_wifi)
     ImageView iv_wifi;
     @BindView(R.id.ll_wifi)
@@ -130,6 +127,8 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
     private ITuyaActivator mTuyaActivator;
     private ITuyaBleOperator bleOperator;
     private String familyId;
+    private ITuyaBlueMeshSearchListener iTuyaBlueMeshSearchListener;
+    private SigMeshBean sigMeshBean;
 
     @Override
     protected void initLogic() {
@@ -245,21 +244,13 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                     mDatas.clear();
                     mDatas.addAll(zhiNengJiaJu_0007Model.getData());
 
-                    //将添加的设备显示出来
-                    for (int i = 0; i <mDatas.size() ; i++) {
-                        DeviceBean devResp=new DeviceBean();
-                        devResp.setIconUrl(mDatas.get(i).device_type_pic);
-                        deviceBeans.add(devResp);
-                    }
-                    adapter.notifyDataSetChanged();
+                    UIHelper.ToastMessage(getActivity(), "接收到的图片是：" + zhiNengJiaJu_0007Model.getData().get(0).device_type_pic);
+//                    oneImageAdapter.notifyDataSetChanged();
                 } else if (message.type == ConstanceValue.MSG_TIANJIAZHUJI) {
                     //添加主机
                     zhiNengJiaJu_0009Model = (ZhiNengJiaJu_0009Model) message.content;
-
-                    DeviceBean devResp=new DeviceBean();
-                    devResp.setIconUrl(zhiNengJiaJu_0009Model.mc_device_url);
-                    deviceBeans.add(devResp);
-                    adapter.notifyDataSetChanged();
+                    UIHelper.ToastMessage(getActivity(), "接收到的图片是：" + zhiNengJiaJu_0009Model.mc_device_url);
+                    // TODO: 2021/2/2 获得主机信息后续处理
                 } else if (message.type == ConstanceValue.MSG_PEIWNAG_ESPTOUCH) {
                     int ob = (int) message.content;
                     /**
@@ -463,6 +454,7 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                         Y.e("获取Token成功：" + token + "   账号：" + wifiSSid + "  密码：" + mima);
                         startWifiPeiwang(token);
                         startLanyaPeiwang(token);
+//                        startLanyaMeshPeiwang();
                     }
 
                     @Override
@@ -471,6 +463,64 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                         stopPeiwang();
                     }
                 });
+    }
+
+    private void startLanyaMeshPeiwang() {
+        sigMeshBean = TuyaHomeManager.getHomeManager().getSigMeshBean();
+        if (isSetLanya && sigMeshBean != null) {
+            iTuyaBlueMeshSearchListener = new ITuyaBlueMeshSearchListener() {
+                @Override
+                public void onSearched(SearchDeviceBean deviceBean) {
+                    stopSearch();
+                    jixua(deviceBean);
+                }
+
+                @Override
+                public void onSearchFinish() {
+
+                }
+            };
+            // 待配网的SigMesh设备UUID是固定的
+            UUID[] MESH_PROVISIONING_UUID = {UUID.fromString("00001827-0000-1000-8000-00805f9b34fb")};
+            SearchBuilder searchBuilder = new SearchBuilder()
+                    .setServiceUUIDs(MESH_PROVISIONING_UUID)    //SigMesh的UUID是固定值
+                    .setTimeOut(100)        //扫描时长 单位秒
+                    .setTuyaBlueMeshSearchListener(iTuyaBlueMeshSearchListener).build();
+            ITuyaBlueMeshSearch mMeshSearch = TuyaHomeSdk.getTuyaBlueMeshConfig().newTuyaBlueMeshSearch(searchBuilder);
+            //开启扫描
+            mMeshSearch.startSearch();
+        }
+    }
+
+    private void jixua(SearchDeviceBean deviceBean) {
+        List<SearchDeviceBean> mSearchDeviceBeanList = new ArrayList<>();
+        mSearchDeviceBeanList.add(deviceBean);
+        TuyaSigMeshActivatorBuilder tuyaSigMeshActivatorBuilder = new TuyaSigMeshActivatorBuilder()
+                .setSearchDeviceBeans(mSearchDeviceBeanList)
+                .setSigMeshBean(sigMeshBean) // Sigmesh基本信息
+                .setTimeOut(120)  //超时时间
+                .setTuyaBlueMeshActivatorListener(new ITuyaBlueMeshActivatorListener() {
+                    @Override
+                    public void onSuccess(String mac, DeviceBean deviceBean) {
+                        getShebei();
+                        addShebei(deviceBean);
+                        deviceBeans.add(deviceBean);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onError(String mac, String errorCode, String errorMsg) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                    }
+                });
+
+        ITuyaBlueMeshActivator iTuyaBlueMeshActivator = TuyaHomeSdk.getTuyaBlueMeshConfig().newSigActivator(tuyaSigMeshActivatorBuilder);
+        iTuyaBlueMeshActivator.startActivator();
     }
 
     private void startLanyaPeiwang(String token) {

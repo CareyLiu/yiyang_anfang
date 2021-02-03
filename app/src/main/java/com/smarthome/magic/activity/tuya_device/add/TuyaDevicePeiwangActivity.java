@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -73,6 +74,7 @@ public class TuyaDevicePeiwangActivity extends BaseActivity {
     private String seeMiMa = "0";//0 隐藏 1显示
     private String jiZhuMiMa = "1";//0 不记住  1 记住
     private boolean isOnWifiConect;
+    private String bssid;
 
     /**
      * 用于其他Activty跳转到该Activity
@@ -141,7 +143,10 @@ public class TuyaDevicePeiwangActivity extends BaseActivity {
                 if (message.type == ConstanceValue.MSG_WIFI_INFO) {
                     rllKaishilianjie.setEnabled(true);
                     isOnWifiConect = true;
-                    String name = (String) message.content;
+
+                    WifiInfo wifiInfo = (WifiInfo) message.content;
+                    String name = wifiInfo.getSSID().replace("\"", "");
+                    bssid = wifiInfo.getBSSID();
                     tvWifiMing.setText(name);
                     String wifiName = PreferenceHelper.getInstance(mContext).getString(AppConfig.TUYA_PEIWANG_ADMIN_GET, "");
                     if (wifiName.equals(name)) {
@@ -155,6 +160,7 @@ public class TuyaDevicePeiwangActivity extends BaseActivity {
                     rllKaishilianjie.setEnabled(false);
                     tvWifiMing.setText("Wifi断开，请连接Wifi");
                     etWifiMima.setText("");
+                    bssid = "";
                 }
             }
         }));
@@ -201,6 +207,7 @@ public class TuyaDevicePeiwangActivity extends BaseActivity {
         } else {
             PreferenceHelper.getInstance(mContext).putString(AppConfig.TUYA_PEIWANG_ADMIN, wifiName);
             PreferenceHelper.getInstance(mContext).putString(AppConfig.TUYA_PEIWANG_MIMA, mima);
+            PreferenceHelper.getInstance(mContext).putString(AppConfig.TUYA_PEIWANG_BSSID, bssid);
             if (jiZhuMiMa.equals("1")) {
                 PreferenceHelper.getInstance(mContext).putString(AppConfig.TUYA_PEIWANG_ADMIN_GET, wifiName);
                 PreferenceHelper.getInstance(mContext).putString(AppConfig.TUYA_PEIWANG_MIMA_GET, mima);

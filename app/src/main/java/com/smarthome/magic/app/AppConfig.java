@@ -283,6 +283,7 @@ public class AppConfig {
 
     public final static String TUYA_PEIWANG_ADMIN = "TUYA_PEIWANG_ADMIN";
     public final static String TUYA_PEIWANG_MIMA = "TUYA_PEIWANG_MIMA";
+    public final static String TUYA_PEIWANG_BSSID = "TUYA_PEIWANG_BSSID";
     public final static String TUYA_PEIWANG_ADMIN_GET = "TUYA_PEIWANG_ADMIN_GET";
     public final static String TUYA_PEIWANG_MIMA_GET = "TUYA_PEIWANG_MIMA_GET";
     public final static String TUYA_HOME_ID = "TUYA_HOME_ID";

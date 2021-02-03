@@ -33,7 +33,7 @@ public class WifiReceiver extends BroadcastReceiver {
                 WIFI_NAME = wifiInfo.getSSID().replace("\"", "");
                 Notice notice = new Notice();
                 notice.type = ConstanceValue.MSG_WIFI_INFO;
-                notice.content = WIFI_NAME;
+                notice.content = wifiInfo;
                 RxBus.getDefault().sendRx(notice);
 
 

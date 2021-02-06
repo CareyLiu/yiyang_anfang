@@ -351,7 +351,7 @@ public class ZhiNengChuangLianActivity extends BaseActivity {
                             tvFamily.setText(dataBean.getFamily_name());
                             tvRoom.setText(dataBean.getRoom_name());
                             tvDeviceName.setText(dataBean.getDevice_name());
-                            tvDeviceType.setText(dataBean.getDevice_name());
+                            tvDeviceType.setText(dataBean.getDevice_type_name());
                             device_ccid = dataBean.getDevice_ccid();
 
 

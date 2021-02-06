@@ -150,6 +150,13 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     }
 
     @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        //UIHelper.ToastMessage(getActivity(), "页面可见");
+        getnet();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
     }
@@ -334,12 +341,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                         } else {
                             PreferenceHelper.getInstance(getActivity()).putString(AppConfig.ZHINENGJIAJUGUANLIYUAN, "0");
                         }
-                        if (zhiNengDeviceFragment != null) {
-                            zhiNengDeviceFragment.onRefresh();
-                        }
-                        if (zhiNengRoomFragment != null) {
-                            zhiNengRoomFragment.onRefresh();
-                        }
+
 
                         String familyId = dataBean.get(0).getFamily_id();
                         PreferenceHelper.getInstance(getActivity()).putString(AppConfig.PEIWANG_FAMILYID, familyId);
@@ -366,13 +368,20 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                             TuyaHomeManager.getHomeManager().setHomeId(Y.getLong(ty_family_id));
                         }
 
+                        for (int i = 0; i < dataBean.get(0).getDevice().size(); i++) {
+                            if (dataBean.get(0).getDevice().get(i).getDevice_type().equals("00")) {
+                                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.HAVEZHUJI, "1");
+                                return;
+                            }
+                            PreferenceHelper.getInstance(getActivity()).putString(AppConfig.HAVEZHUJI, "0");
+                        }
                         /**
                          * online_state	在线状态：1.在线 2.离线
                          */
                         if (dataBean.get(0).getDevice().size() == 0) {
                             ivZhujiZhuangtai.setBackgroundResource(R.mipmap.img_connect_device);
                             tvZhujiZhuangtai.setText("添加主机");
-
+                            PreferenceHelper.getInstance(getActivity()).putString(AppConfig.HAVEZHUJI, "0");
                             llConnectDevice.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {

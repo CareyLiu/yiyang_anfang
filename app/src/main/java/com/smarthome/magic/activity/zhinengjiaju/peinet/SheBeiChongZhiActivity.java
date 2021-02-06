@@ -15,11 +15,18 @@ import com.flyco.roundview.RoundRelativeLayout;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.tuya_device.add.zi.TuyaAddCameraActivity;
 import com.smarthome.magic.activity.zhinengjiaju.TianJiaPuTongSheBeiActivity;
+import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.app.ConstanceValue;
+import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.UIHelper;
+import com.smarthome.magic.common.StringUtils;
+import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.model.FenLeiContentModel;
 
 import butterknife.BindView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 public class SheBeiChongZhiActivity extends BaseActivity {
 
@@ -72,7 +79,6 @@ public class SheBeiChongZhiActivity extends BaseActivity {
                 }
             }
         });
-
         rrlXiayibu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +87,13 @@ public class SheBeiChongZhiActivity extends BaseActivity {
                 } else {
 //                    UIHelper.ToastMessage(mContext, "下一步");
                     if (fenLeiContentModel.type.equals("00")) {
-                        ZhiNengJiaJuPeiWangActivity.actionStart(mContext);
+                        String strZhuJi = PreferenceHelper.getInstance(mContext).getString(AppConfig.HAVEZHUJI, "");
+                        if (strZhuJi.equals("0")) {
+                            ZhiNengJiaJuPeiWangActivity.actionStart(mContext);
+                        } else {
+                            UIHelper.ToastMessage(mContext, "此家庭已有主机,请切换家庭后重新尝试");
+                        }
+
                     } else if (fenLeiContentModel.type.equals("18")) {//摄像头
                         // TODO: 2021/2/3 添加摄像头
                         TuyaAddCameraActivity.actionStart(mContext);
@@ -91,6 +103,14 @@ public class SheBeiChongZhiActivity extends BaseActivity {
                 }
             }
         });
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_PEIWANG_SUCCESS) {
+                    finish();
+                }
+            }
+        }));
     }
 
     @Override

@@ -31,6 +31,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.adapter.SosListAdapter;
 import com.smarthome.magic.app.App;
+import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
@@ -93,6 +94,8 @@ public class SosActivity extends BaseActivity {
     private ImageView ivSos;
     SosThread sosThread;
     boolean sosZhuangTai;
+    private ImageView ivShebeiZaixianzhuangtaiImg;//在线离线 红标
+    private TextView zaiXianLiXian;//在线离线
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -144,6 +147,8 @@ public class SosActivity extends BaseActivity {
         ll_caozuo_jilu = headerView.findViewById(R.id.ll_caozuo_jilu);
         ivSos = headerView.findViewById(R.id.iv_sos);
         ivSos.setBackgroundResource(R.mipmap.tuya_sos_pic_normal);
+        zaiXianLiXian = headerView.findViewById(R.id.tv_shebei_zaixian_huashu);
+        ivShebeiZaixianzhuangtaiImg = headerView.findViewById(R.id.iv_shebei_zaixianzhuangtai_img);
 
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -158,6 +163,29 @@ public class SosActivity extends BaseActivity {
                 }
             }
         });
+
+        Switch switchBaoJingTishiYin = headerView.findViewById(R.id.btn_baojing_tishiyin);
+        String strBaoJing = PreferenceHelper.getInstance(mContext).getString(AppConfig.BOJING_SOS, "2");
+        if (strBaoJing.equals("0")) {
+            switchBaoJingTishiYin.setChecked(false);
+        } else {
+            switchBaoJingTishiYin.setChecked(true);
+        }
+
+        switchBaoJingTishiYin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!buttonView.isPressed()) {
+                    return;
+                }
+                if (isChecked) {
+                    PreferenceHelper.getInstance(mContext).putString(AppConfig.BOJING_SOS, "1");
+                } else {
+                    PreferenceHelper.getInstance(mContext).putString(AppConfig.BOJING_SOS, "0");
+                }
+            }
+        });
+
 
         menCiListAdapter.addHeaderView(headerView);
         menCiListAdapter.setNewData(mDatas);
@@ -429,8 +457,8 @@ public class SosActivity extends BaseActivity {
                         ivSos.setBackgroundResource(R.mipmap.tuya_sos_pic_normal);
 
                         tvJiaTingName.setText(dataBean.getFamily_name());
-                        tvLeiXingName.setText(dataBean.getDevice_name());
-                        tvMingChengName.setText(dataBean.getDevice_type_name());
+                        tvLeiXingName.setText(dataBean.getDevice_type_name());
+                        tvMingChengName.setText(dataBean.getDevice_name());
                         tvRoomName.setText(dataBean.getRoom_name());
 
                         if (dataBean.getIs_alarm().equals("1")) {//1 是
@@ -474,6 +502,20 @@ public class SosActivity extends BaseActivity {
                             Log.i("SosActivity", String.valueOf(sosZhuangTai) + "sosActivity");
                             sosThread = new SosThread();
                             sosThread.start();
+                        }
+
+
+                        String onlineState = dataBean.getOnline_state();
+
+                        if (onlineState.equals("1")) {
+                            zaiXianLiXian.setText("设备在线");
+                            ivShebeiZaixianzhuangtaiImg.setBackgroundResource
+                                    (R.drawable.bg_zhineng_device_online);
+
+                        } else if (onlineState.equals("2")) {
+                            zaiXianLiXian.setText("设备离线");
+                            ivShebeiZaixianzhuangtaiImg.setBackgroundResource
+                                    (R.drawable.bg_zhineng_device_offline);
                         }
                     }
 
@@ -525,7 +567,9 @@ public class SosActivity extends BaseActivity {
                 });
 
     }
+
     TishiDialog tishiDialog;
+
     private void deleteDevice() {
 
         Map<String, String> map = new HashMap<>();

@@ -74,7 +74,7 @@ public interface ConstanceValue {
     int MSG_MQTT_CONNECT_CHONGLIAN_ONFAILE = 0x10049;//重连失败
 
 
-    int MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN = 0x10050;//重连失败
+    int MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN = 0x10050;//智能家居首页刷新
     int MSG_RONGYUN_STATE = 0x10051;//连接状态
 
 
@@ -156,4 +156,5 @@ public interface ConstanceValue {
     int MSG_TIANJIASHEBEI = 0x10115;//添加设备基本参数
     int MSG_TIANJIAZHUJI = 0x10116;//添加主机
     int MSG_PEIWNAG_ESPTOUCH = 0x10117;//配网type
+    int MSG_PEIWANG_ERROR = 0x10118;//配网错误
 }

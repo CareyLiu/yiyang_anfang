@@ -24,12 +24,14 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.adapter.ZhiNengRoomManageAdapter;
+import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuoTIshi;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Success;
@@ -199,7 +201,8 @@ public class ZhiNengRoomManageActivity extends BaseActivity implements View.OnCl
         map.put("code", "16023");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(context).getAppToken());
-        map.put("family_id", family_id);
+        String familyId = PreferenceHelper.getInstance(mContext).getString(AppConfig.FAMILY_ID, "");
+        map.put("family_id", familyId);
         Gson gson = new Gson();
         String a = gson.toJson(map);
         Log.e("map_data", gson.toJson(map));
@@ -220,7 +223,9 @@ public class ZhiNengRoomManageActivity extends BaseActivity implements View.OnCl
                     }
                 });
     }
+
     TishiDialog tishiDialog;
+
     /**
      * 创建房间
      */
@@ -229,7 +234,8 @@ public class ZhiNengRoomManageActivity extends BaseActivity implements View.OnCl
         map.put("code", "16021");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(context).getAppToken());
-        map.put("family_id", family_id);
+        String familyId = PreferenceHelper.getInstance(mContext).getString(AppConfig.FAMILY_ID, "");
+        map.put("family_id", familyId);
         map.put("room_name", roomName);
         Gson gson = new Gson();
         Log.e("map_data", gson.toJson(map));

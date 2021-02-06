@@ -32,6 +32,7 @@ import com.smarthome.magic.activity.RenTiGanYingSetting;
 import com.smarthome.magic.activity.SuiYiTieSetting;
 import com.smarthome.magic.adapter.MenCiListAdapter;
 import com.smarthome.magic.app.App;
+import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
@@ -89,7 +90,8 @@ public class RenTiGanYingActivity extends BaseActivity {
     ZnjjMqttMingLing znjjMqttMingLing;
     private String deviceCCid = "";
     LordingDialog lordingDialog;
-
+    private ImageView ivShebeiZaixianzhuangtaiImg;//在线离线 红标
+    private TextView zaiXianLiXian;//在线离线
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,9 +136,35 @@ public class RenTiGanYingActivity extends BaseActivity {
         switch1 = headerView.findViewById(R.id.btn_gaojing);
         ivYiDong = headerView.findViewById(R.id.iv_yidong);
         ivYiDong.setBackgroundResource(R.mipmap.zanwuyidong);
-
         ll_caozuo_jilu = headerView.findViewById(R.id.ll_caozuo_jilu);
+        zaiXianLiXian = headerView.findViewById(R.id.tv_shebei_zaixian_huashu);
+        ivShebeiZaixianzhuangtaiImg = headerView.findViewById(R.id.iv_shebei_zaixianzhuangtai_img);
+        Switch switchBaoJingTishiYin = headerView.findViewById(R.id.btn_baojing_tishiyin);
 
+
+
+
+
+        String strBaoJing = PreferenceHelper.getInstance(mContext).getString(AppConfig.BAOJINGRENTIGANYING, "2");
+        if (strBaoJing.equals("0")) {
+            switchBaoJingTishiYin.setChecked(false);
+        } else {
+            switchBaoJingTishiYin.setChecked(true);
+        }
+
+        switchBaoJingTishiYin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!buttonView.isPressed()) {
+                    return;
+                }
+                if (isChecked) {
+                    PreferenceHelper.getInstance(mContext).putString(AppConfig.BAOJINGRENTIGANYING, "1");
+                } else {
+                    PreferenceHelper.getInstance(mContext).putString(AppConfig.BAOJINGRENTIGANYING, "0");
+                }
+            }
+        });
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -293,6 +321,15 @@ public class RenTiGanYingActivity extends BaseActivity {
                         srLSmart.finishRefresh();
                         dataBean = response.body().data.get(0);
                         deviceCCid = dataBean.getDevice_ccid();
+                        String onlineState = dataBean.getOnline_state();
+                        if (onlineState.equals("1")) {
+                            zaiXianLiXian.setText("设备在线");
+                            ivShebeiZaixianzhuangtaiImg.setBackgroundResource(R.drawable.bg_zhineng_device_online);
+
+                        } else if (onlineState.equals("2")) {
+                            zaiXianLiXian.setText("设备离线");
+                            ivShebeiZaixianzhuangtaiImg.setBackgroundResource(R.drawable.bg_zhineng_device_offline);
+                        }
                         if (firstEnter) {
                             znjjMqttMingLing = new ZnjjMqttMingLing(mContext, dataBean.getDevice_ccid_up(), dataBean.getServer_id());
                             znjjMqttMingLing.subscribeAppShiShiXinXi(new IMqttActionListener() {
@@ -476,28 +513,31 @@ public class RenTiGanYingActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        znjjMqttMingLing.unSubscribeShiShiXinXi(new IMqttActionListener() {
-            @Override
-            public void onSuccess(IMqttToken asyncActionToken) {
+        if (znjjMqttMingLing!=null){
+            znjjMqttMingLing.unSubscribeShiShiXinXi(new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
 
-            }
+                }
 
-            @Override
-            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
 
-            }
-        });
+                }
+            });
 
-        znjjMqttMingLing.unSubscribeAppShiShiXinXi(new IMqttActionListener() {
-            @Override
-            public void onSuccess(IMqttToken asyncActionToken) {
+            znjjMqttMingLing.unSubscribeAppShiShiXinXi(new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
 
-            }
+                }
 
-            @Override
-            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
 
-            }
-        });
+                }
+            });
+        }
+
     }
 }

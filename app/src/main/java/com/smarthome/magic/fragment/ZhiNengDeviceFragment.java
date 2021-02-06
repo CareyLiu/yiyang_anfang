@@ -16,7 +16,10 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.googlecode.mp4parser.boxes.mp4.objectdescriptors.AudioSpecificConfig;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
 import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
 import com.rairmmd.andmqtt.MqttSubscribe;
@@ -31,6 +34,7 @@ import com.smarthome.magic.activity.ZhiNengJiaJuChaZuoActivity;
 import com.smarthome.magic.activity.ZhiNengJiajuWeiYuAutoActivity;
 import com.smarthome.magic.activity.ZhiNengJiaoHuaAutoActivity;
 import com.smarthome.magic.activity.ZhiNengRoomDeviceDetailAutoActivity;
+import com.smarthome.magic.activity.ZhiNengZhuJiDetailAutoActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.camera.TuyaCameraActivity;
 import com.smarthome.magic.activity.tuya_device.device.DeviceChazuoActivity;
@@ -38,6 +42,7 @@ import com.smarthome.magic.activity.tuya_device.device.DeviceMenciActivity;
 import com.smarthome.magic.activity.tuya_device.device.DeviceWgCzActivity;
 import com.smarthome.magic.activity.tuya_device.utils.TuyaConfig;
 import com.smarthome.magic.activity.tuya_device.device.DeviceWangguanActivity;
+import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaHomeManager;
 import com.smarthome.magic.activity.zckt.AirConditionerActivity;
 
 import com.smarthome.magic.activity.zhinengjiaju.RenTiGanYingActivity;
@@ -60,14 +65,20 @@ import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.basicmvp.BaseFragment;
+import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
+import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
+import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.mqtt_zhiling.ZnjjMqttMingLing;
 import com.smarthome.magic.tools.NetworkUtils;
 import com.smarthome.magic.util.GridAverageUIDecoration;
 import com.smarthome.magic.model.ZhiNengHomeBean;
 import com.tuya.smart.api.MicroContext;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.home.sdk.bean.HomeBean;
+import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
 import com.tuya.smart.panelcaller.api.AbsPanelCallerService;
 import com.umeng.commonsdk.UMConfigure;
 
@@ -75,10 +86,14 @@ import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+
+import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
 
 public class ZhiNengDeviceFragment extends BaseFragment {
@@ -87,7 +102,8 @@ public class ZhiNengDeviceFragment extends BaseFragment {
     private LinearLayout ll_content_bg;
     private RecyclerView recyclerView;
     private ZhiNengDeviceListAdapter zhiNengDeviceListAdapter;
-    private List<ZhiNengHomeBean.DataBean.DeviceBean> dataBean = new ArrayList<>();
+    private List<ZhiNengHomeBean.DataBean.DeviceBean> mDatas = new ArrayList<>();
+
     private String member_type = "";
     public ZnjjMqttMingLing mqttMingLing = null;
     private String family_id;
@@ -101,19 +117,45 @@ public class ZhiNengDeviceFragment extends BaseFragment {
     }
 
     @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        //UIHelper.ToastMessage(getActivity(), "页面可见");
+        getnet();
+    }
+
+    @Override
     protected void initLogic() {
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_SHEBEIZHUANGTAI) {
+                    List<String> messageList = (List<String>) message.content;
+                    String zhuangZhiId = messageList.get(0);
+                    String kaiGuanDengZhuangTai = messageList.get(1);
+                    for (int i = 0; i < mDatas.size(); i++) {
+                        if (mDatas.get(i).getDevice_ccid().equals(zhuangZhiId)) {
+                            mDatas.get(i).setWork_state(kaiGuanDengZhuangTai);
+                        }
+                    }
+                    zhiNengDeviceListAdapter.notifyDataSetChanged();
+                } else if (message.type == ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN) {
+                    getnet();
+                }
+            }
+        }));
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.addItemDecoration(new GridAverageUIDecoration(14, 10));
 
         recyclerView.setLayoutManager(layoutManager);
-        zhiNengDeviceListAdapter = new ZhiNengDeviceListAdapter(R.layout.item_zhineng_device, dataBean);
+        zhiNengDeviceListAdapter = new ZhiNengDeviceListAdapter(R.layout.item_zhineng_device, mDatas);
 
         View view1 = LayoutInflater.from(getActivity()).inflate(R.layout.activity_zhineng_device_none, null);
         TextView tvBangDingZhuJi = view1.findViewById(R.id.tv_bangdingzhuji);
         tvBangDingZhuJi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PeiWangYinDaoPageActivity.actionStart(getActivity());
+                //PeiWangYinDaoPageActivity.actionStart(getActivity());
+
             }
         });
         zhiNengDeviceListAdapter.setEmptyView(view1);
@@ -263,6 +305,13 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                             } else if (strJiLian.equals("03")) {
                                 ZhiNengJiaJuKaiGuanThreeActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up(), serverId);
                             }
+                        } else if (deviceBean.getDevice_type().equals("00")) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("device_id", deviceBean.getDevice_id());
+                            bundle.putString("device_type", deviceBean.getDevice_type());
+                            bundle.putString("member_type", member_type);
+                            bundle.putString("work_state", deviceBean.getWork_state());
+                            startActivity(new Intent(getActivity(), ZhiNengZhuJiDetailAutoActivity.class).putExtras(bundle));
                         } else {
                             String ty_device_ccid = deviceBean.getTy_device_ccid();
                             if (TextUtils.isEmpty(ty_device_ccid)) {
@@ -298,24 +347,70 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                 }
             }
         });
+        getnet();
 
-        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
-            @Override
-            public void call(Notice message) {
-                if (message.type == ConstanceValue.MSG_SHEBEIZHUANGTAI) {
-                    List<String> messageList = (List<String>) message.content;
-                    String zhuangZhiId = messageList.get(0);
-                    String kaiGuanDengZhuangTai = messageList.get(1);
-                    for (int i = 0; i < dataBean.size(); i++) {
-                        if (dataBean.get(i).getDevice_ccid().equals(zhuangZhiId)) {
-                            dataBean.get(i).setWork_state(kaiGuanDengZhuangTai);
+
+    }
+
+    private void getnet() {
+        //访问网络获取数据 下面的列表数据
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16001");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(getActivity()).getAppToken());
+        Gson gson = new Gson();
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<ZhiNengHomeBean.DataBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ZhiNengHomeBean.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ZhiNengHomeBean.DataBean>> response) {
+                        PreferenceHelper.getInstance(getActivity()).putString(AppConfig.FAMILY_ID, response.body().data.get(0).getFamily_id());
+
+                        if (response.body().data.get(0).getDevice().size() == 0) {
+                            PreferenceHelper.getInstance(getActivity()).putString(AppConfig.DEVICECCID, "");
+                            PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, "");
+                        } else {
+                            if (StringUtils.isEmpty(response.body().data.get(0).getDevice().get(0).getDevice_ccid())) {
+                                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.DEVICECCID, "");
+                            } else {
+                                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.DEVICECCID, response.body().data.get(0).getDevice().get(0).getDevice_ccid());
+                            }
+                            if (StringUtils.isEmpty(response.body().data.get(0).getDevice().get(0).getServer_id())) {
+                                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, "");
+                            } else {
+                                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, response.body().data.get(0).getDevice().get(0).getServer_id());
+                            }
+
+                            if (StringUtils.isEmpty(response.body().data.get(0).getDevice().get(0).getDevice_ccid_up())) {
+                                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.ZHUJI_DEVICECCID_UP, "");
+                            } else {
+                                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.ZHUJI_DEVICECCID_UP, response.body().data.get(0).getDevice().get(0).getDevice_ccid_up());
+                            }
+
+                        }
+
+                        mDatas.clear();
+                        mDatas.addAll(response.body().data.get(0).getDevice());
+                        if (zhiNengDeviceListAdapter != null) {
+                            zhiNengDeviceListAdapter.notifyDataSetChanged();
+                        }
+
+                        if (recyclerView != null) {
+                            for (int i = 0; i < recyclerView.getItemDecorationCount(); i++) {
+                                recyclerView.removeItemDecorationAt(i);
+                            }
+                            if (mDatas.size() == 0) {
+                                recyclerView.addItemDecoration(new GridAverageUIDecoration(0, 10));
+                            } else {
+                                recyclerView.addItemDecoration(new GridAverageUIDecoration(14, 10));
+                            }
                         }
                     }
-                    zhiNengDeviceListAdapter.notifyDataSetChanged();
-                }
-            }
-        }));
+                });
     }
+
 
     @Override
     protected int getLayoutRes() {
@@ -332,7 +427,6 @@ public class ZhiNengDeviceFragment extends BaseFragment {
         ll_content_bg = view.findViewById(R.id.ll_content_bg);
         recyclerView = view.findViewById(R.id.recyclerView);
 //        recyclerView.addItemDecoration(new RecycleItemSpance(20, 2));
-
 
 
     }
@@ -366,7 +460,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                 public void onSuccess(IMqttToken asyncActionToken) {
                     Y.t("关闭空调");
                     bean.setWork_state("2");
-                    dataBean.set(pos, bean);
+                    mDatas.set(pos, bean);
                     zhiNengDeviceListAdapter.notifyDataSetChanged();
                 }
 
@@ -384,7 +478,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                 public void onSuccess(IMqttToken asyncActionToken) {
                     Y.t("开启空调");
                     bean.setWork_state("1");
-                    dataBean.set(pos, bean);
+                    mDatas.set(pos, bean);
                     zhiNengDeviceListAdapter.notifyDataSetChanged();
                 }
 
@@ -396,63 +490,4 @@ public class ZhiNengDeviceFragment extends BaseFragment {
         }
     }
 
-    public void onRefresh() {
-        if (getArguments() != null) {
-            List<ZhiNengHomeBean.DataBean.DeviceBean> device = getArguments().getParcelableArrayList("device");
-//            String strPhone = PreferenceHelper.getInstance(getActivity()).getString("user_phone", "");
-//            if (strPhone.equals("15114684672") || strPhone.equals("17645185187")) {
-//                ZhiNengHomeBean.DataBean.DeviceBean kongtiaoBean = new ZhiNengHomeBean.DataBean.DeviceBean();
-//                kongtiaoBean.setDevice_ccid("kkkkkkkkkkkkkkkk90120018");
-//                kongtiaoBean.setDevice_name("智能空調");
-//                kongtiaoBean.setDevice_type("20");
-//                kongtiaoBean.setDevice_type_pic("https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11711");
-//                kongtiaoBean.setOnline_state("1");
-//                kongtiaoBean.setServer_id("8/");
-//                kongtiaoBean.setRoom_name("默认房间");
-//                kongtiaoBean.setWork_state("2");
-//                device.add(kongtiaoBean);
-//            }
-            member_type = getArguments().getString("member_type");
-            family_id = getArguments().getString("family_id");
-            if (device.size() == 0) {
-                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.DEVICECCID, "");
-                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, "");
-            } else {
-                if (StringUtils.isEmpty(device.get(0).getDevice_ccid())) {
-                    PreferenceHelper.getInstance(getActivity()).putString(AppConfig.DEVICECCID, "");
-                } else {
-                    PreferenceHelper.getInstance(getActivity()).putString(AppConfig.DEVICECCID, device.get(0).getDevice_ccid());
-                }
-                if (StringUtils.isEmpty(device.get(0).getServer_id())) {
-                    PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, "");
-                } else {
-                    PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, device.get(0).getServer_id());
-                }
-
-                if (StringUtils.isEmpty(device.get(0).getDevice_ccid_up())) {
-                    PreferenceHelper.getInstance(getActivity()).putString(AppConfig.ZHUJI_DEVICECCID_UP, "");
-                } else {
-                    PreferenceHelper.getInstance(getActivity()).putString(AppConfig.ZHUJI_DEVICECCID_UP, device.get(0).getDevice_ccid_up());
-                }
-
-            }
-
-            dataBean.clear();
-            dataBean.addAll(device);
-            if (zhiNengDeviceListAdapter != null) {
-                zhiNengDeviceListAdapter.notifyDataSetChanged();
-            }
-        }
-
-        if (recyclerView != null) {
-            for (int i = 0; i < recyclerView.getItemDecorationCount(); i++) {
-                recyclerView.removeItemDecorationAt(i);
-            }
-            if (dataBean.size() == 0) {
-                recyclerView.addItemDecoration(new GridAverageUIDecoration(0, 10));
-            } else {
-                recyclerView.addItemDecoration(new GridAverageUIDecoration(14, 10));
-            }
-        }
-    }
 }

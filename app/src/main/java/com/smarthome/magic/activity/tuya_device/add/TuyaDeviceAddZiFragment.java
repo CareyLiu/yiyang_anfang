@@ -204,7 +204,7 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
 
     ZhiNengJiaJu_0007Model zhiNengJiaJu_0007Model;
     ZhiNengJiaJu_0009Model zhiNengJiaJu_0009Model;
-    List<ZhiNengJiaJu_0007Model.DataBean> mDatas = new ArrayList<>();
+    List<ZhiNengJiaJu_0007Model.MatchListBean> mDatas = new ArrayList<>();
 
     private void initHuidiao() {
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
@@ -243,20 +243,22 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                     //添加设备
                     zhiNengJiaJu_0007Model = (ZhiNengJiaJu_0007Model) message.content;
                     mDatas.clear();
-                    mDatas.addAll(zhiNengJiaJu_0007Model.getData());
+                    mDatas.addAll(zhiNengJiaJu_0007Model.getMatch_list());
 
                     //将添加的设备显示出来
-                    for (int i = 0; i <mDatas.size() ; i++) {
-                        DeviceBean devResp=new DeviceBean();
-                        devResp.setIconUrl(mDatas.get(i).device_type_pic);
+                    for (int i = 0; i < mDatas.size(); i++) {
+                        DeviceBean devResp = new DeviceBean();
+                        devResp.setIconUrl(mDatas.get(i).getDevice_type_pic());
                         deviceBeans.add(devResp);
                     }
-                    adapter.notifyDataSetChanged();
+                    if (adapter != null) {
+                        adapter.notifyDataSetChanged();
+                    }
                 } else if (message.type == ConstanceValue.MSG_TIANJIAZHUJI) {
                     //添加主机
                     zhiNengJiaJu_0009Model = (ZhiNengJiaJu_0009Model) message.content;
 
-                    DeviceBean devResp=new DeviceBean();
+                    DeviceBean devResp = new DeviceBean();
                     devResp.setIconUrl(zhiNengJiaJu_0009Model.mc_device_url);
                     deviceBeans.add(devResp);
                     adapter.notifyDataSetChanged();
@@ -646,18 +648,18 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
     }
 
     public void ceShiSheBei() {
-        Notice n = new Notice();
-        n.type = ConstanceValue.MSG_TIANJIASHEBEI;
-
-        ZhiNengJiaJu_0007Model zhiNengJiaJuNotifyJson = new ZhiNengJiaJu_0007Model();
-        ZhiNengJiaJu_0007Model.DataBean dataBean = new ZhiNengJiaJu_0007Model.DataBean();
-        dataBean.device_type_pic = "https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11920";
-
-        List<ZhiNengJiaJu_0007Model.DataBean> list = new ArrayList<>();
-        list.add(dataBean);
-        zhiNengJiaJuNotifyJson.setData(list);
-        n.content = zhiNengJiaJuNotifyJson;
-        RxBus.getDefault().sendRx(n);
+//        Notice n = new Notice();
+//        n.type = ConstanceValue.MSG_TIANJIASHEBEI;
+//
+//        ZhiNengJiaJu_0007Model zhiNengJiaJuNotifyJson = new ZhiNengJiaJu_0007Model();
+//        ZhiNengJiaJu_0007Model.MatchListBean dataBean = new ZhiNengJiaJu_0007Model.MatchListBean();
+//        dataBean.setDevice_type_pic(); = "https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11920";
+//
+//        List<ZhiNengJiaJu_0007Model.MatchListBean> list = new ArrayList<>();
+//        list.add(dataBean);
+//        zhiNengJiaJuNotifyJson.setData(list);
+//        n.content = zhiNengJiaJuNotifyJson;
+//        RxBus.getDefault().sendRx(n);
     }
 
     public void ceShiZhuJi() {

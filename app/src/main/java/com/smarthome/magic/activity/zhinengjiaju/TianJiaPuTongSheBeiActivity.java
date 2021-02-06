@@ -54,6 +54,7 @@ import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
+import static com.smarthome.magic.app.ConstanceValue.MSG_PEIWANG_SUCCESS;
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
 public class TianJiaPuTongSheBeiActivity extends BaseActivity {
@@ -61,13 +62,11 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
     LottieAnimationView animationView;
     @BindView(R.id.tv_text)
     TextView tvText;
-    @BindView(R.id.rrl_xiayibu)
-    RoundRelativeLayout rrlXiayibu;
     @BindView(R.id.rlv_shebeilist)
     RecyclerView rlvShebeilist;
     OneImageAdapter oneImageAdapter;
 
-    List<ZhiNengJiaJu_0007Model.DataBean> mDatas = new ArrayList<>();
+    List<ZhiNengJiaJu_0007Model.MatchListBean> mDatas = new ArrayList<>();
     private String ccid;
     private String serverId;
     ZhiNengJiaJu_0007Model zhiNengJiaJu_0007Model;
@@ -96,56 +95,60 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
         rlvShebeilist.setLayoutManager(linearLayoutManager);
         rlvShebeilist.setAdapter(oneImageAdapter);
 
-        oneImageAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                switch (view.getId()) {
-                    case R.id.iv_image:
-                        cd_device_ccid = mDatas.get(position).cd_decice_ccid;
-                        zhuangZhiLeixing = "";
-                        zhuangZhiLeiXingXingHao = "";
-                        TishiDialog tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
-                            @Override
-                            public void onClickCancel(View v, TishiDialog dialog) {
-                            }
+//        oneImageAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+//            @Override
+//            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+//                switch (view.getId()) {
+//                    case R.id.iv_image:
+//                        cd_device_ccid = mDatas.get(position).cd_decice_ccid;
+//                        zhuangZhiLeixing = "";
+//                        zhuangZhiLeiXingXingHao = "";
+//                        TishiDialog tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+//                            @Override
+//                            public void onClickCancel(View v, TishiDialog dialog) {
+//                            }
+//
+//                            @Override
+//                            public void onClickConfirm(View v, TishiDialog dialog) {
+//                                tianJiaSheBeiNet();
+//                            }
+//
+//                            @Override
+//                            public void onDismiss(TishiDialog dialog) {
+//                            }
+//                        });
+//                        tishiDialog.setTextContent("已找到您要添加的设备，是否添加此设备？");
+//                        tishiDialog.show();
+//                        break;
+//                }
+//            }
+//        });
 
-                            @Override
-                            public void onClickConfirm(View v, TishiDialog dialog) {
-                                tianJiaSheBeiNet();
-                            }
 
-                            @Override
-                            public void onDismiss(TishiDialog dialog) {
-                            }
-                        });
-                        tishiDialog.setTextContent("已找到您要添加的设备，是否添加此设备？");
-                        tishiDialog.show();
-                        break;
-                }
-            }
-        });
+//        rrlXiayibu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //模拟获得列表
+//                Notice n = new Notice();
+//                n.type = ConstanceValue.MSG_TIANJIASHEBEI;
+//
+//                ZhiNengJiaJu_0007Model zhiNengJiaJuNotifyJson = new ZhiNengJiaJu_0007Model();
+//                ZhiNengJiaJu_0007Model.DataBean dataBean = new ZhiNengJiaJu_0007Model.DataBean();
+//                dataBean.device_type_pic = "https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11920";
+//
+//                List<ZhiNengJiaJu_0007Model.DataBean> list = new ArrayList<>();
+//                list.add(dataBean);
+//                zhiNengJiaJuNotifyJson.setData(list);
+//                n.content = zhiNengJiaJuNotifyJson;
+//                RxBus.getDefault().sendRx(n);
+//            }
+//        });
 
+        zhuangZhiLeixing = fenLeiContentModel.type;
+        zhuangZhiLeiXingXingHao = fenLeiContentModel.category;
         sendMqttTianJiaSheBei();
         jieShouMqttTianJiaSheBei();
 
-        rrlXiayibu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //模拟获得列表
-                Notice n = new Notice();
-                n.type = ConstanceValue.MSG_TIANJIASHEBEI;
-
-                ZhiNengJiaJu_0007Model zhiNengJiaJuNotifyJson = new ZhiNengJiaJu_0007Model();
-                ZhiNengJiaJu_0007Model.DataBean dataBean = new ZhiNengJiaJu_0007Model.DataBean();
-                dataBean.device_type_pic = "https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11920";
-
-                List<ZhiNengJiaJu_0007Model.DataBean> list = new ArrayList<>();
-                list.add(dataBean);
-                zhiNengJiaJuNotifyJson.setData(list);
-                n.content = zhiNengJiaJuNotifyJson;
-                RxBus.getDefault().sendRx(n);
-            }
-        });
     }
 
     private ZnjjMqttMingLing znjjMqttMingLing;
@@ -170,6 +173,7 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
         });
         // TODO: 2021/2/2 添加的命令待赋值
         String str = "M12" + zhuangZhiLeixing + zhuangZhiLeiXingXingHao + "2";
+        Log.i("Rair", str);
 
         znjjMqttMingLing.tianJiaSheBei(zhuji_device_ccid_up, serverId, str, new IMqttActionListener() {
             @Override
@@ -192,10 +196,35 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
             @Override
             public void call(Notice message) {
                 if (message.type == ConstanceValue.MSG_TIANJIASHEBEI) {
-                    zhiNengJiaJu_0007Model = (ZhiNengJiaJu_0007Model) message.content;
-                    mDatas.clear();
-                    mDatas.addAll(zhiNengJiaJu_0007Model.getData());
-                    oneImageAdapter.notifyDataSetChanged();
+                    TishiDialog tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                        @Override
+                        public void onClickCancel(View v, TishiDialog dialog) {
+
+                        }
+
+                        @Override
+                        public void onClickConfirm(View v, TishiDialog dialog) {
+                            //tishiDialog.dismiss();
+                            finish();
+
+                        }
+
+                        @Override
+                        public void onDismiss(TishiDialog dialog) {
+
+                        }
+                    });
+                    tishiDialog.setTextContent("添加设备成功");
+                    tishiDialog.setTextCancel("");
+                    tishiDialog.setTextConfirm("知道了");
+                    tishiDialog.show();
+                    Notice notice = new Notice();
+                    notice.type = MSG_PEIWANG_SUCCESS;
+                    RxBus.getDefault().sendRx(notice);
+
+                    Notice notice1 = new Notice();
+                    notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+                    sendRx(notice1);
                 }
             }
         }));

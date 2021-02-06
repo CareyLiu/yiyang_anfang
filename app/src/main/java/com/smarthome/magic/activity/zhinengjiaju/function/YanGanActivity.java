@@ -28,6 +28,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.adapter.YanGanListAdapter;
 import com.smarthome.magic.app.App;
+import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
@@ -78,6 +79,8 @@ public class YanGanActivity extends BaseActivity {
     private View viewZhongJian;
     private ImageView ivYanGan;
     private LordingDialog lordingDialog;
+    private ImageView ivShebeiZaixianzhuangtaiImg;//在线离线 红标
+    private TextView zaiXianLiXian;//在线离线
 
 
     @Override
@@ -125,6 +128,9 @@ public class YanGanActivity extends BaseActivity {
         ivYanGan = view.findViewById(R.id.iv_yangan);
         ivYanGan.setBackgroundResource(R.mipmap.tuya_yanwu_pic_normal);
 
+        zaiXianLiXian = view.findViewById(R.id.tv_shebei_zaixian_huashu);
+        ivShebeiZaixianzhuangtaiImg = view.findViewById(R.id.iv_shebei_zaixianzhuangtai_img);
+
 
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -139,6 +145,30 @@ public class YanGanActivity extends BaseActivity {
                 }
             }
         });
+        Switch switchBaoJingTishiYin = view.findViewById(R.id.btn_baojing_tishiyin);
+
+
+        String strBaoJing = PreferenceHelper.getInstance(mContext).getString(AppConfig.BAOJING_YANGAN, "2");
+        if (strBaoJing.equals("0")) {
+            switchBaoJingTishiYin.setChecked(false);
+        } else {
+            switchBaoJingTishiYin.setChecked(true);
+        }
+
+        switchBaoJingTishiYin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!buttonView.isPressed()) {
+                    return;
+                }
+                if (isChecked) {
+                    PreferenceHelper.getInstance(mContext).putString(AppConfig.BAOJING_YANGAN, "1");
+                } else {
+                    PreferenceHelper.getInstance(mContext).putString(AppConfig.BAOJING_YANGAN, "0");
+                }
+            }
+        });
+
 
         menCiListAdapter.addHeaderView(view);
         menCiListAdapter.setNewData(mDatas);
@@ -192,7 +222,7 @@ public class YanGanActivity extends BaseActivity {
 
     @Override
     public int getContentViewResId() {
-        return R.layout.layout_menci;
+        return R.layout.layout_yangan;
     }
 
 
@@ -270,9 +300,20 @@ public class YanGanActivity extends BaseActivity {
                             ivYanGan.setBackgroundResource(R.mipmap.tuya_yanwu_pic_no);
 
                         }
+                        String onlineState = dataBean.getOnline_state();
+                        if (onlineState.equals("1")) {
+                            zaiXianLiXian.setText("设备在线");
+                            ivShebeiZaixianzhuangtaiImg.setBackgroundResource
+                                    (R.drawable.bg_zhineng_device_online);
+
+                        } else if (onlineState.equals("2")) {
+                            zaiXianLiXian.setText("设备离线");
+                            ivShebeiZaixianzhuangtaiImg.setBackgroundResource
+                                    (R.drawable.bg_zhineng_device_offline);
+                        }
                         tvJiaTingName.setText(dataBean.getFamily_name());
-                        tvLeiXingName.setText(dataBean.getDevice_name());
-                        tvMingChengName.setText(dataBean.getDevice_type_name());
+                        tvLeiXingName.setText(dataBean.getDevice_type_name());
+                        tvMingChengName.setText(dataBean.getDevice_name());
                         tvRoomName.setText(dataBean.getRoom_name());
 
                         if (dataBean.getIs_alarm().equals("1")) {//1 是
@@ -359,6 +400,7 @@ public class YanGanActivity extends BaseActivity {
     }
 
     TishiDialog tishiDialog;
+
     private void deleteDevice() {
 
         Map<String, String> map = new HashMap<>();

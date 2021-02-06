@@ -373,7 +373,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:text="操作记录"
+            android:text="报警记录"
             android:textColor="#ff000000"
             android:textSize="14sp" />
 

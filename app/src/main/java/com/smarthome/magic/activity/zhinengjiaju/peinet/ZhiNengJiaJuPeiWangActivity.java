@@ -13,6 +13,7 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,7 +36,6 @@ import com.espressif.iot.esptouch.IEsptouchTask;
 import com.espressif.iot.esptouch.util.ByteUtil;
 import com.espressif.iot.esptouch.util.TouchNetUtil;
 import com.flyco.roundview.RoundLinearLayout;
-import com.flyco.roundview.RoundRelativeLayout;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -57,6 +57,7 @@ import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.model.ZhiNengJiaJu_0007Model;
+import com.smarthome.magic.model.ZhiNengJiaJu_0009Model;
 import com.smarthome.magic.mqtt_zhiling.ZnjjMqttMingLing;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -139,14 +140,16 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
 
 
     OneImageAdapter oneImageAdapter;
-    List<ZhiNengJiaJu_0007Model.DataBean> mDatas = new ArrayList<>();
+    List<ZhiNengJiaJu_0007Model.MatchListBean> mDatas = new ArrayList<>();
     ZhiNengJiaJu_0007Model zhiNengJiaJu_0007Model;
+    ZhiNengJiaJu_0009Model zhiNengJiaJu_0009Model;
 
     public EsptouchAsyncTask4 mTask;
-    @BindView(R.id.rrl_xiayibu)
-    RoundRelativeLayout rrlXiayibu;
+
     @BindView(R.id.rlv_shebeilist)
     RecyclerView rlvShebeilist;
+//    @BindView(R.id.btn_moni)
+//    Button btnMoni;
     private String jiZhuMiMa = "1";//0 不记住  1 记住
 
     private String zhuangZhiLeixing;//装置类型
@@ -270,7 +273,7 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.iv_image:
-                        cd_device_ccid = mDatas.get(position).cd_decice_ccid;
+                        cd_device_ccid = mDatas.get(position).getCd_device_ccid();
                         zhuangZhiLeixing = "";
                         zhuangZhiLeiXingXingHao = "";
                         TishiDialog tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
@@ -295,26 +298,39 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
         });
 
 
-        rrlXiayibu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //模拟获得列表
-                Notice n = new Notice();
-                n.type = ConstanceValue.MSG_TIANJIASHEBEI;
-
-                ZhiNengJiaJu_0007Model zhiNengJiaJuNotifyJson = new ZhiNengJiaJu_0007Model();
-                ZhiNengJiaJu_0007Model.DataBean dataBean = new ZhiNengJiaJu_0007Model.DataBean();
-                dataBean.device_type_pic = "https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11920";
-
-                List<ZhiNengJiaJu_0007Model.DataBean> list = new ArrayList<>();
-                list.add(dataBean);
-                zhiNengJiaJuNotifyJson.setData(list);
-                n.content = zhiNengJiaJuNotifyJson;
-                RxBus.getDefault().sendRx(n);
-            }
-        });
+//        rrlXiayibu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //模拟获得列表
+//                Notice n = new Notice();
+//                n.type = ConstanceValue.MSG_TIANJIASHEBEI;
+//
+//                ZhiNengJiaJu_0007Model zhiNengJiaJuNotifyJson = new ZhiNengJiaJu_0007Model();
+//                ZhiNengJiaJu_0007Model.DataBean dataBean = new ZhiNengJiaJu_0007Model.DataBean();
+//                dataBean.device_type_pic = "https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11920";
+//
+//                List<ZhiNengJiaJu_0007Model.DataBean> list = new ArrayList<>();
+//                list.add(dataBean);
+//                zhiNengJiaJuNotifyJson.setData(list);
+//                n.content = zhiNengJiaJuNotifyJson;
+//                RxBus.getDefault().sendRx(n);
+//            }
+//        });
 
         jieShouMqttTianJiaSheBei();
+//        btnMoni.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//                Notice notice = new Notice();
+//                notice.type = MSG_PEIWANG_SUCCESS;
+//                RxBus.getDefault().sendRx(notice);
+//
+//                Notice notice1 = new Notice();
+//                notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+//                sendRx(notice1);
+//            }
+//        });
     }
 
     private void setPeiWangMiMa() {
@@ -339,10 +355,10 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
     private void executeEsptouch() {
 
         byte[] ssid = ByteUtil.getBytesByString(mSsid.toString());
-        CharSequence pwdStr = etWifiMima.getText().toString();
+        CharSequence password = etWifiMima.getText().toString();
 
 
-        byte[] password = pwdStr == null ? null : ByteUtil.getBytesByString(pwdStr.toString());
+        //  byte[] password = pwdStr == null ? null : ByteUtil.getBytesByString(pwdStr.toString());
         byte[] bssid = TouchNetUtil.parseBssid2bytes(mBssid.toString());
         CharSequence devCountStr = String.valueOf(1);
         byte[] deviceCount = devCountStr == null ? new byte[0] : devCountStr.toString().getBytes();
@@ -461,10 +477,6 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
             Activity context = mActivity.get();
             if (context != null) {
                 Toast.makeText(context, "配网成功", Toast.LENGTH_SHORT).show();
-                Notice notice = new Notice();
-                notice.type = MSG_PEIWANG_SUCCESS;
-                RxBus.getDefault().sendRx(notice);
-                context.finish();
             }
         }
 
@@ -523,10 +535,6 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
             }
             CharSequence[] items = new CharSequence[resultMsgList.size()];
 
-            Notice notice = new Notice();
-            notice.type = MSG_PEIWANG_SUCCESS;
-            RxBus.getDefault().sendRx(notice);
-            activity.finish();
 
         }
 
@@ -653,20 +661,47 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
 
     }
 
+    TishiDialog tishiDialog;
+
     public void jieShouMqttTianJiaSheBei() {
 
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
             public void call(Notice message) {
-                if (message.type == ConstanceValue.MSG_TIANJIASHEBEI) {
-                    zhiNengJiaJu_0007Model = (ZhiNengJiaJu_0007Model) message.content;
-                    mDatas.clear();
-                    mDatas.addAll(zhiNengJiaJu_0007Model.getData());
-                    oneImageAdapter.notifyDataSetChanged();
-                } else if (message.type == ConstanceValue.MSG_PEIWANG_SUCCESS) {
-                    //发送配网命令
-                    sendMqttTianJiaSheBei();
-                    jieShouMqttTianJiaSheBei();
+                if (message.type == ConstanceValue.MSG_TIANJIAZHUJI) {
+                    zhiNengJiaJu_0009Model = (ZhiNengJiaJu_0009Model) message.content;
+//                    mDatas.clear();
+//                    mDatas.addAll(zhiNengJiaJu_0007Model.getData());
+//                    oneImageAdapter.notifyDataSetChanged();
+                    TishiDialog tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                        @Override
+                        public void onClickCancel(View v, TishiDialog dialog) {
+
+                        }
+
+                        @Override
+                        public void onClickConfirm(View v, TishiDialog dialog) {
+                            //tishiDialog.dismiss();
+                            finish();
+
+                        }
+
+                        @Override
+                        public void onDismiss(TishiDialog dialog) {
+
+                        }
+                    });
+                    tishiDialog.setTextContent("添加主机成功");
+                    tishiDialog.setTextCancel("");
+                    tishiDialog.setTextConfirm("知道了");
+                    tishiDialog.show();
+                    Notice notice = new Notice();
+                    notice.type = MSG_PEIWANG_SUCCESS;
+                    RxBus.getDefault().sendRx(notice);
+
+                    Notice notice1 = new Notice();
+                    notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+                    sendRx(notice1);
 
                 }
             }

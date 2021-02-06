@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 
 
@@ -26,6 +27,7 @@ import com.iflytek.cloud.WakeuperListener;
 import com.iflytek.cloud.WakeuperResult;
 import com.iflytek.cloud.util.ResourceUtil;
 import com.smarthome.magic.R;
+import com.smarthome.magic.about_yu_yin.FucUtil;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
@@ -41,6 +43,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 
 import static com.smarthome.magic.activity.shuinuan.Y.getResources;
 import static com.smarthome.magic.activity.shuinuan.Y.getString;
@@ -950,6 +953,5 @@ public class YuYinChuLiTool {
             }
         }
     }
-
 
 }

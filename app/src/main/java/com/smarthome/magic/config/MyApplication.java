@@ -137,8 +137,8 @@ public class MyApplication extends MultiDexApplication {
 
 
     //String mqttUrl = "tcp://192.168.1.127";//大个本地
-    String mqttUrl = "tcp://mqtt.hljsdkj.com";//正式
-    //String mqttUrl = "tcp://ggw.hljsdkj.com";//ggw
+    //String mqttUrl = "tcp://mqtt.hljsdkj.com";//正式
+    String mqttUrl = "tcp://ggw.hljsdkj.com";//ggw
 
 
     public static List<String> mqttDingyue = new ArrayList<>();
@@ -677,6 +677,14 @@ public class MyApplication extends MultiDexApplication {
                                 n.content = zhiNengJiaJuNotifyJson;
                                 RxBus.getDefault().sendRx(n);
                                 //
+                            } else if (codeClass.code.equals("jyj_0008")) {
+
+
+                                Notice n = new Notice();
+                                n.type = ConstanceValue.MSG_PEIWANG_ERROR;
+                                ZhiNengJiaJu_0009Model zhiNengJiaJuNotifyJson = new Gson().fromJson(message.toString(), ZhiNengJiaJu_0009Model.class);
+                                n.content = zhiNengJiaJuNotifyJson;
+                                RxBus.getDefault().sendRx(n);
                             }
 
                         } else if (message.toString().contains("p.")) {

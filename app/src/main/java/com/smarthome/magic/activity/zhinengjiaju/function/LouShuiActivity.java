@@ -29,6 +29,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.adapter.MenCiListAdapter;
 import com.smarthome.magic.app.App;
+import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
@@ -86,6 +87,8 @@ public class LouShuiActivity extends BaseActivity {
     private String deviceCCid = "";
     LordingDialog lordingDialog;
     private ImageView ivLouShui;
+    private ImageView ivShebeiZaixianzhuangtaiImg;//在线离线 红标
+    private TextView zaiXianLiXian;//在线离线
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -132,7 +135,10 @@ public class LouShuiActivity extends BaseActivity {
         viewZhongJian = headerView.findViewById(R.id.view_zhongjian);
         ll_caozuo_jilu = headerView.findViewById(R.id.ll_caozuo_jilu);
         ivLouShui = headerView.findViewById(R.id.iv_loushui);
+        zaiXianLiXian = headerView.findViewById(R.id.tv_shebei_zaixian_huashu);
+        ivShebeiZaixianzhuangtaiImg = headerView.findViewById(R.id.iv_shebei_zaixianzhuangtai_img);
         ivLouShui.setBackgroundResource(R.mipmap.tuya_loushui_pic_no);
+
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -146,6 +152,29 @@ public class LouShuiActivity extends BaseActivity {
                 }
             }
         });
+
+        Switch switchBaoJingTishiYin = headerView.findViewById(R.id.btn_baojing_tishiyin);
+        String strBaoJing = PreferenceHelper.getInstance(mContext).getString(AppConfig.BAOJINGLOUSHUI, "2");
+        if (strBaoJing.equals("0")) {
+            switchBaoJingTishiYin.setChecked(false);
+        } else {
+            switchBaoJingTishiYin.setChecked(true);
+        }
+
+        switchBaoJingTishiYin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!buttonView.isPressed()) {
+                    return;
+                }
+                if (isChecked) {
+                    PreferenceHelper.getInstance(mContext).putString(AppConfig.BAOJINGLOUSHUI, "1");
+                } else {
+                    PreferenceHelper.getInstance(mContext).putString(AppConfig.BAOJINGLOUSHUI, "0");
+                }
+            }
+        });
+
 
         menCiListAdapter.addHeaderView(headerView);
         menCiListAdapter.setNewData(mDatas);
@@ -339,6 +368,18 @@ public class LouShuiActivity extends BaseActivity {
                         srLSmart.finishRefresh();
                         dataBean = response.body().data.get(0);
                         deviceCCid = dataBean.getDevice_ccid();
+
+                        String onlineState = dataBean.getOnline_state();
+                        if (onlineState.equals("1")) {
+                            zaiXianLiXian.setText("设备在线");
+                            ivShebeiZaixianzhuangtaiImg.setBackgroundResource
+                                    (R.drawable.bg_zhineng_device_online);
+
+                        } else if (onlineState.equals("2")) {
+                            zaiXianLiXian.setText("设备离线");
+                            ivShebeiZaixianzhuangtaiImg.setBackgroundResource
+                                    (R.drawable.bg_zhineng_device_offline);
+                        }
                         if (firstEnter) {
                             znjjMqttMingLing = new ZnjjMqttMingLing(mContext, dataBean.getDevice_ccid_up(), dataBean.getServer_id());
                             znjjMqttMingLing.subscribeAppShiShiXinXi(new IMqttActionListener() {
@@ -459,6 +500,7 @@ public class LouShuiActivity extends BaseActivity {
     }
 
     TishiDialog tishiDialog;
+
     private void deleteDevice() {
 
         Map<String, String> map = new HashMap<>();

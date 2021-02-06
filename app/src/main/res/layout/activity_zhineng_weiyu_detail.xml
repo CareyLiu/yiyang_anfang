@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:background="@color/trans"
             app:srlTextSizeTime="10sp"
-                app:srlTextSizeTitle="12sp" />
+            app:srlTextSizeTitle="12sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -714,8 +714,7 @@
                             android:layout_toEndOf="@+id/iv_tishi"
                             android:layout_toRightOf="@+id/iv_tishi"
                             android:includeFontPadding="false"
-                            android:text="控制设备时，可通过设备的【位置】或【别名】进行控制,如
-有相同【位置】和【别名】的设备存在时，将会同步操作"
+                            android:text="开启自动喂鱼，设置完相关参数后，点击提交按钮，提示设置成功，表示设置自动喂鱼已成功"
                             android:textColor="#999999"
                             android:textSize="12sp" />
                     </RelativeLayout>

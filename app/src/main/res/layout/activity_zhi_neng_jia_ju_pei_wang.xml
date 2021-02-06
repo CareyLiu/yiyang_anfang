@@ -9,9 +9,9 @@
     tools:context=".activity.zhinengjiaju.peinet.ZhiNengJiaJuPeiWangActivity">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rlv_shebeilist"
@@ -577,28 +577,34 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.flyco.roundview.RoundRelativeLayout
-            android:id="@+id/rrl_xiayibu"
-            android:layout_width="match_parent"
-            android:layout_height="47dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginBottom="15dp"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:rv_backgroundColor="@color/blue_ff3a85f8"
-            app:rv_cornerRadius="23.5dp">
+        <!--        <com.flyco.roundview.RoundRelativeLayout-->
+        <!--            android:id="@+id/rrl_xiayibu"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="47dp"-->
+        <!--            android:layout_alignParentBottom="true"-->
+        <!--            android:layout_marginHorizontal="15dp"-->
+        <!--            android:layout_marginBottom="15dp"-->
+        <!--            android:visibility="visible"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--            app:layout_constraintRight_toRightOf="parent"-->
+        <!--            app:rv_backgroundColor="@color/blue_ff3a85f8"-->
+        <!--            app:rv_cornerRadius="23.5dp">-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="下一步"
-                android:textColor="#ffffffff"
-                android:textSize="17sp" />
-        </com.flyco.roundview.RoundRelativeLayout>
+        <!--            <TextView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_centerInParent="true"-->
+        <!--                android:text="下一步"-->
+        <!--                android:textColor="#ffffffff"-->
+        <!--                android:textSize="17sp" />-->
+        <!--        </com.flyco.roundview.RoundRelativeLayout>-->
+
+<!--        <Button-->
+<!--            android:id="@+id/btn_moni"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="模拟发送" />-->
 
     </LinearLayout>
 

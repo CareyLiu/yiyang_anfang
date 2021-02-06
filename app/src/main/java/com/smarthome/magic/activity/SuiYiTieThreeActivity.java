@@ -394,6 +394,8 @@ public class SuiYiTieThreeActivity extends BaseActivity {
     }
 
     private void showAddIcon(Response<AppResponse<SuiYiTieModel.DataBean>> response) {
+
+
         if (response.body().data.get(0).getBinding_type().equals("1")) {
             rlLeft.setVisibility(View.GONE);
             rlCenter.setVisibility(View.GONE);
@@ -404,7 +406,7 @@ public class SuiYiTieThreeActivity extends BaseActivity {
             tvsuiyitie.setText(str);
 
 
-        } else if (response.body().data.get(0).getBinding_type().equals("2")) {
+        } else {
 
             tvsuiyitie.setVisibility(View.GONE);
             if (StringUtils.isEmpty(response.body().data.get(0).getDevice_list().get(0).getBinding_device_name())) {
@@ -457,12 +459,12 @@ public class SuiYiTieThreeActivity extends BaseActivity {
 
 
         }
-        if (StringUtils.isEmpty(response.body().data.get(0).getBinding_type())) {
-            tvsuiyitie.setVisibility(View.GONE);
-            tvAdd1Name.setText("添加");
-            tvAdd2Name.setText("添加");
-            tvAdd3Name.setText("添加");
-        }
+//        if (StringUtils.isEmpty(response.body().data.get(0).getBinding_type())) {
+//            tvsuiyitie.setVisibility(View.GONE);
+//            tvAdd1Name.setText("添加");
+//            tvAdd2Name.setText("添加");
+//            tvAdd3Name.setText("添加");
+//        }
     }
 
     private boolean flag = false;

@@ -7,10 +7,12 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.add.adapter.MainVpAdapter;
@@ -21,6 +23,7 @@ import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.basicmvp.BaseFragment;
 import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tuya.smart.home.sdk.bean.WeatherBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,6 +98,15 @@ public class TuyaDeviceAddActivity extends BaseActivity {
         initWifi();
         initVpg();
         initHuidiao();
+
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_PEIWANG_SUCCESS) {
+                    finish();
+                }
+            }
+        }));
     }
 
     private void initHuidiao() {

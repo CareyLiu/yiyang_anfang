@@ -117,6 +117,11 @@ public class AppConfig {
     public final static String BAOJINGTISHIYIN = "BAOJINGTISHIYIN";//0关1开
     public final static String ZHINENGJIAJUGUANLIYUAN = "ZHINENGJIAJUGUANLIYUAN"; //0 不是 1 是
     public final static String ZHUJI_DEVICECCID_UP = "ZHUJI_DEVICE_CCID_UP";
+    public final static String BAOJING_YANGAN = "BAOJINGYANGAN";
+    public final static String BOJING_SOS = "BAOJINGSOS";//sos报警
+    public final static String BAOJINGLOUSHUI = "BAOJINGLOUSHUI";//漏水
+    public final static String BAOJINGRENTIGANYING = "BAOJINGRENTIGANYING";//报警人体感应
+    public final static String HAVEZHUJI = "HAVEZHUJI";
     //福利功能  需要的字段
     //作废时间  --待使用
     public static String abolishDate;

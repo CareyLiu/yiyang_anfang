@@ -157,4 +157,6 @@ public interface ConstanceValue {
     int MSG_TIANJIAZHUJI = 0x10116;//添加主机
     int MSG_PEIWNAG_ESPTOUCH = 0x10117;//配网type
     int MSG_PEIWANG_ERROR = 0x10118;//配网错误
+    int MSG_TIANJIAZHUJI_ZIDONG = 0x10119;//添加主机自动
+    int MSG_TIANJIASHEBEI_ZIDONG = 0x10120;//添加设备自动
 }

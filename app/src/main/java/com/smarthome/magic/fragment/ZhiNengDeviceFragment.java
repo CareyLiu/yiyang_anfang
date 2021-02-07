@@ -367,7 +367,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                     @Override
                     public void onSuccess(Response<AppResponse<ZhiNengHomeBean.DataBean>> response) {
                         PreferenceHelper.getInstance(getActivity()).putString(AppConfig.FAMILY_ID, response.body().data.get(0).getFamily_id());
-
+                        member_type = response.body().data.get(0).getMember_type();
                         if (response.body().data.get(0).getDevice().size() == 0) {
                             PreferenceHelper.getInstance(getActivity()).putString(AppConfig.DEVICECCID, "");
                             PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, "");

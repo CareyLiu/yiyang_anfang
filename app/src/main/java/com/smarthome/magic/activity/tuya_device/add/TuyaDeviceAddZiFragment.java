@@ -239,7 +239,7 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                 } else if (message.type == ConstanceValue.MSG_WIFI_CLOSE) {
                     isSetWifi = false;
                     iv_wifi.setVisibility(View.GONE);
-                } else if (message.type == ConstanceValue.MSG_TIANJIASHEBEI) {
+                } else if (message.type == ConstanceValue.MSG_TIANJIASHEBEI_ZIDONG) {
                     //添加设备
                     zhiNengJiaJu_0007Model = (ZhiNengJiaJu_0007Model) message.content;
                     mDatas.clear();
@@ -254,14 +254,14 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                     if (adapter != null) {
                         adapter.notifyDataSetChanged();
                     }
-                } else if (message.type == ConstanceValue.MSG_TIANJIAZHUJI) {
+                } else if (message.type == ConstanceValue.MSG_TIANJIAZHUJI_ZIDONG) {
                     //添加主机
-                    zhiNengJiaJu_0009Model = (ZhiNengJiaJu_0009Model) message.content;
-
-                    DeviceBean devResp = new DeviceBean();
-                    devResp.setIconUrl(zhiNengJiaJu_0009Model.mc_device_url);
-                    deviceBeans.add(devResp);
-                    adapter.notifyDataSetChanged();
+//                    zhiNengJiaJu_0009Model = (ZhiNengJiaJu_0009Model) message.content;
+//
+//                    DeviceBean devResp = new DeviceBean();
+//                    devResp.setIconUrl(zhiNengJiaJu_0009Model.mc_device_url);
+//                    deviceBeans.add(devResp);
+//                    adapter.notifyDataSetChanged();
                 } else if (message.type == ConstanceValue.MSG_PEIWNAG_ESPTOUCH) {
                     int ob = (int) message.content;
                     /**

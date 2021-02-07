@@ -1282,7 +1282,7 @@ public class UIHelper {
      * @param msg
      */
     public static void SnackbarMessage(View view, String msg) {
-        Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+        Snackbar.make(view, msg, Snackbar.LENGTH_LONG).setAction("Action", null).show();
     }
 
     public static void SnackbarMessage(View view, int msg) {

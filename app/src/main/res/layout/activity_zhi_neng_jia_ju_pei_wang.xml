@@ -3,6 +3,7 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nes_scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -18,8 +19,52 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:visibility="gone"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/ll_main_tianjia"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:background="#eeeeee"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_image"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp" />
+
+            <TextView
+                android:id="@+id/tv_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/iv_image"
+                android:textColor="#000000" />
+
+            <com.flyco.roundview.RoundRelativeLayout
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:id="@+id/rl_tuichu"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="15dp"
+                app:rv_backgroundColor="@color/white"
+                app:rv_cornerRadius="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="退出"
+                    android:textColor="@color/blue_ff3a85f8" />
+            </com.flyco.roundview.RoundRelativeLayout>
+        </RelativeLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_zhanghaomima"
@@ -600,11 +645,13 @@
         <!--                android:textSize="17sp" />-->
         <!--        </com.flyco.roundview.RoundRelativeLayout>-->
 
-<!--        <Button-->
-<!--            android:id="@+id/btn_moni"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="模拟发送" />-->
+        <Button
+
+            android:id="@+id/btn_moni"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="模拟发送"
+            android:visibility="gone" />
 
     </LinearLayout>
 

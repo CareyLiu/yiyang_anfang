@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -12,15 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.bumptech.glide.Glide;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.roundview.RoundRelativeLayout;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.ZhiNengFamilyMemberDetailActivity;
-import com.smarthome.magic.activity.wode_page.AboutUsActivity;
 import com.smarthome.magic.adapter.OneImageAdapter;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.BaseActivity;
@@ -32,11 +30,8 @@ import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
-import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Success;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
-import com.smarthome.magic.model.BianJiDingShiNeedModel;
-import com.smarthome.magic.model.ChangJingZhiXingModel;
 import com.smarthome.magic.model.FenLeiContentModel;
 import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.model.ZhiNengJiaJu_0007Model;
@@ -67,6 +62,16 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
     OneImageAdapter oneImageAdapter;
 
     List<ZhiNengJiaJu_0007Model.MatchListBean> mDatas = new ArrayList<>();
+    @BindView(R.id.btn_moni)
+    Button btnMoni;
+    @BindView(R.id.rl_main)
+    RelativeLayout rlMain;
+    @BindView(R.id.tv_huashu)
+    TextView tvHuashu;
+    @BindView(R.id.rl_tuichu)
+    RoundRelativeLayout rlTuichu;
+    @BindView(R.id.ll_main_tianjia)
+    RelativeLayout llMainTianjia;
     private String ccid;
     private String serverId;
     ZhiNengJiaJu_0007Model zhiNengJiaJu_0007Model;
@@ -149,6 +154,16 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
         sendMqttTianJiaSheBei();
         jieShouMqttTianJiaSheBei();
 
+        btnMoni.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Notice n = new Notice();
+                n.type = ConstanceValue.MSG_TIANJIASHEBEI;
+                RxBus.getDefault().sendRx(n);
+//            }
+            }
+        });
+
     }
 
     private ZnjjMqttMingLing znjjMqttMingLing;
@@ -190,34 +205,29 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
 
     }
 
+    TishiDialog tishiDialog;
+
     public void jieShouMqttTianJiaSheBei() {
 
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
             public void call(Notice message) {
                 if (message.type == ConstanceValue.MSG_TIANJIASHEBEI) {
-                    TishiDialog tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
-                        @Override
-                        public void onClickCancel(View v, TishiDialog dialog) {
+                    llMainTianjia.setVisibility(View.VISIBLE);
+                    zhiNengJiaJu_0007Model = (ZhiNengJiaJu_0007Model) message.content;
 
-                        }
+                    for (int i = 0; i < zhiNengJiaJu_0007Model.getMatch_list().size(); i++) {
+                        mDatas.add(zhiNengJiaJu_0007Model.getMatch_list().get(i));
+                    }
+                    oneImageAdapter.notifyDataSetChanged();
 
+                    rlTuichu.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClickConfirm(View v, TishiDialog dialog) {
-                            //tishiDialog.dismiss();
+                        public void onClick(View v) {
                             finish();
-
-                        }
-
-                        @Override
-                        public void onDismiss(TishiDialog dialog) {
-
                         }
                     });
-                    tishiDialog.setTextContent("添加设备成功");
-                    tishiDialog.setTextCancel("");
-                    tishiDialog.setTextConfirm("知道了");
-                    tishiDialog.show();
+
                     Notice notice = new Notice();
                     notice.type = MSG_PEIWANG_SUCCESS;
                     RxBus.getDefault().sendRx(notice);
@@ -225,6 +235,63 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
                     Notice notice1 = new Notice();
                     notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
                     sendRx(notice1);
+
+
+//                    ZhiNengJiaJu_0007Model zhiNengJiaJu_0007Model = new ZhiNengJiaJu_0007Model();
+//
+//
+//                    List<ZhiNengJiaJu_0007Model.MatchListBean> matchListBeans = new ArrayList<>();
+//                    ZhiNengJiaJu_0007Model.MatchListBean matchListBean = new ZhiNengJiaJu_0007Model.MatchListBean();
+//
+//                    matchListBean.setDevice_type_pic("https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11709");
+//
+//                    ZhiNengJiaJu_0007Model.MatchListBean matchListBean1 = new ZhiNengJiaJu_0007Model.MatchListBean();
+//
+//                    matchListBean1.setDevice_type_pic("https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11709");
+//
+//                    matchListBeans.add(matchListBean);
+//                    matchListBeans.add(matchListBean1);
+//
+//
+//                    zhiNengJiaJu_0007Model.setMatch_list(matchListBeans);
+//
+//                    View view = View.inflate(mContext, R.layout.layout_duogeshebei_tianjiachenggong, null);
+//                    RecyclerView recyclerView = view.findViewById(R.id.rlv_list);
+//
+//
+//                    oneImageAdapter = new OneImageAdapter(R.layout.item_rlv_shebeilist, mDatas);
+//                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+//                    linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+//                    recyclerView.setLayoutManager(linearLayoutManager);
+//                    recyclerView.setAdapter(oneImageAdapter);
+//                    oneImageAdapter.setNewData(zhiNengJiaJu_0007Model.getMatch_list());
+//
+//
+//                    ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
+//                    SnackbarUtils.addView(view, layoutParams);
+
+                } else if (message.type == ConstanceValue.MSG_PEIWANG_ERROR) {
+                    tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                        @Override
+                        public void onClickCancel(View v, TishiDialog dialog) {
+
+                        }
+
+                        @Override
+                        public void onClickConfirm(View v, TishiDialog dialog) {
+                            tishiDialog.dismiss();
+                        }
+
+                        @Override
+                        public void onDismiss(TishiDialog dialog) {
+
+                        }
+                    });
+                    tishiDialog.setTextContent((String) message.content);
+                    //tishiDialog.setTextCancel("退出");
+                    tishiDialog.setTextCancel("");
+                    tishiDialog.setTextConfirm("退出");
+                    tishiDialog.show();
                 }
             }
         }));

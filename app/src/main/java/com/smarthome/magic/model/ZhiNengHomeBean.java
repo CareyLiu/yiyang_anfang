@@ -67,6 +67,8 @@ public class ZhiNengHomeBean {
         private String family_id;
         private String ty_family_id;
         private String family_name;
+        public String temperature;//温度
+        public String humidity;//湿度
         private ArrayList<DeviceBean> device;
         private ArrayList<RoomBean> room;
 

@@ -140,6 +140,8 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     private Bundle room = new Bundle();
     private boolean isSettianqi;
 
+    private String zhuJiWenShiDu;
+
     @Override
     protected void initLogic() {
 
@@ -275,7 +277,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                         WeatherBean result = (WeatherBean) message.content;
                         tv_tianqi.setText(result.getCondition());
                         Glide.with(getContext()).load(result.getInIconUrl()).into(iv_tianqi);
-                        tv_tianqi_wendu.setText("室外温度:" + result.getTemp() + "℃");
+                        tv_tianqi_wendu.setText(zhuJiWenShiDu + "室外温度:" + result.getTemp() + "℃");
                         iv_tianqi_enter.setVisibility(View.GONE);
                     }
                 } else if (message.type == ConstanceValue.MSG_DEVICE_DELETE) {
@@ -322,6 +324,12 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                             srLSmart.setEnableLoadMore(false);
                         }
                         dataBean = response.body().data;
+                        String wendu = dataBean.get(0).temperature;//温度
+                        String shidu = dataBean.get(0).humidity;//湿度
+
+                        zhuJiWenShiDu = "室内温度" + wendu + "  " + "室内湿度" + shidu + "  ";
+                        tv_tianqi_wendu.setText(zhuJiWenShiDu);
+
                         if (dataBean.get(0).getMember_type().equals("1")) {
                             tv_family_name.setText(dataBean.get(0).getFamily_name());
                         } else {

@@ -193,7 +193,6 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
         znjjMqttMingLing.tianJiaSheBei(zhuji_device_ccid_up, serverId, str, new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
-
             }
 
             @Override

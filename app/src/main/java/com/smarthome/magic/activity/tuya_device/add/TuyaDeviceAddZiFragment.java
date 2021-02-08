@@ -44,6 +44,7 @@ import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.ZhiNengHomeBean;
 import com.smarthome.magic.model.ZhiNengJiaJu_0007Model;
@@ -205,6 +206,7 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
     ZhiNengJiaJu_0007Model zhiNengJiaJu_0007Model;
     ZhiNengJiaJu_0009Model zhiNengJiaJu_0009Model;
     List<ZhiNengJiaJu_0007Model.MatchListBean> mDatas = new ArrayList<>();
+    TishiDialog tishiDialog;
 
     private void initHuidiao() {
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
@@ -254,6 +256,8 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                     if (adapter != null) {
                         adapter.notifyDataSetChanged();
                     }
+
+
                 } else if (message.type == ConstanceValue.MSG_TIANJIAZHUJI_ZIDONG) {
                     //添加主机
 //                    zhiNengJiaJu_0009Model = (ZhiNengJiaJu_0009Model) message.content;
@@ -274,6 +278,28 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                     } else if (ob == 3) {//连接成功
                         UIHelper.ToastMessage(getActivity(), "连接成功");
                     }
+                } else if (message.type == ConstanceValue.MSG_PEIWANG_ERROR) {
+                    tishiDialog = new TishiDialog(getActivity(), 3, new TishiDialog.TishiDialogListener() {
+                        @Override
+                        public void onClickCancel(View v, TishiDialog dialog) {
+
+                        }
+
+                        @Override
+                        public void onClickConfirm(View v, TishiDialog dialog) {
+                            tishiDialog.dismiss();
+                        }
+
+                        @Override
+                        public void onDismiss(TishiDialog dialog) {
+
+                        }
+                    });
+                    tishiDialog.setTextContent((String) message.content);
+                    //tishiDialog.setTextCancel("退出");
+                    tishiDialog.setTextCancel("");
+                    tishiDialog.setTextConfirm("退出");
+                    tishiDialog.show();
                 }
             }
         }));

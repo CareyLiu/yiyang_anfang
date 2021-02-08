@@ -85,7 +85,6 @@ public class SheBeiChongZhiActivity extends BaseActivity {
                 if (rrlZhezhao.getVisibility() == View.VISIBLE) {
                     UIHelper.ToastMessage(mContext, "请确认已执行以上操作");
                 } else {
-//                    UIHelper.ToastMessage(mContext, "下一步");
                     if (fenLeiContentModel.type.equals("00")) {
                         String strZhuJi = PreferenceHelper.getInstance(mContext).getString(AppConfig.HAVEZHUJI, "");
                         if (strZhuJi.equals("0")) {
@@ -131,7 +130,7 @@ public class SheBeiChongZhiActivity extends BaseActivity {
     @Override
     protected void initToolbar() {
         super.initToolbar();
-        tv_title.setText("设备重置");
+        tv_title.setText("添加设备");
         tv_title.setTextSize(17);
         tv_title.setTextColor(getResources().getColor(R.color.black));
         mToolbar.setNavigationIcon(R.mipmap.backbutton);

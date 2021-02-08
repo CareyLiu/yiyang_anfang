@@ -88,7 +88,6 @@ public class KongQiJianCeActvity extends BaseActivity {
         iv_rightTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2021/1/7 添加ccid 和 ccidup
                 //SuiYiTieSetting.actionStart(mContext, "", "");
                 UIHelper.ToastMessage(mContext,"点击空气检测设置");
             }

@@ -37,6 +37,7 @@ import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 
 import com.smarthome.magic.config.PreferenceHelper;
@@ -327,7 +328,12 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                         String wendu = dataBean.get(0).temperature;//温度
                         String shidu = dataBean.get(0).humidity;//湿度
 
-                        zhuJiWenShiDu = "室内温度" + wendu + "℃" + " " + "室内湿度" + shidu + "℃" + " ";
+                        if (StringUtils.isEmpty(wendu) && StringUtils.isEmpty(shidu)) {
+                            zhuJiWenShiDu = "";
+                        } else {
+                            zhuJiWenShiDu = "室内温度" + wendu + "℃" + " " + "室内湿度" + shidu + "℃" + " ";
+                        }
+
                         tv_tianqi_wendu.setText(zhuJiWenShiDu);
 
                         if (dataBean.get(0).getMember_type().equals("1")) {

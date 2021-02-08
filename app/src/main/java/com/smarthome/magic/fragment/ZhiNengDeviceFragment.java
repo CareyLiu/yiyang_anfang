@@ -255,11 +255,11 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                         } else if (deviceBean.getDevice_type().equals("16")) {//窗帘
                             ZhiNengChuangLianActivity.actionStart(getActivity(), deviceBean.getDevice_id());
                         } else if (deviceBean.getDevice_type().equals("01")) {//灯
-                            ZhiNengDianDengActivity.actionStart(getActivity(), deviceBean.getDevice_id(), deviceBean.getDevice_type());
+                            ZhiNengDianDengActivity.actionStart(getActivity(), deviceBean.getDevice_id(), deviceBean.getDevice_type(),member_type);
                         } else if (deviceBean.getDevice_type().equals("03")) {//喂鱼
-                            ZhiNengJiajuWeiYuAutoActivity.actionStart(getActivity(), deviceBean.getDevice_id(), deviceBean.getDevice_type());
+                            ZhiNengJiajuWeiYuAutoActivity.actionStart(getActivity(), deviceBean.getDevice_id(), deviceBean.getDevice_type(),member_type);
                         } else if (deviceBean.getDevice_type().equals("04")) {//浇花
-                            ZhiNengJiaoHuaAutoActivity.actionStart(getActivity(), deviceBean.getDevice_id(), deviceBean.getDevice_type());
+                            ZhiNengJiaoHuaAutoActivity.actionStart(getActivity(), deviceBean.getDevice_id(), deviceBean.getDevice_type(),member_type);
                         } else if (deviceBean.getDevice_type().equals("02")) {
                             Bundle bundle = new Bundle();
                             bundle.putString("device_id", deviceBean.getDevice_id());

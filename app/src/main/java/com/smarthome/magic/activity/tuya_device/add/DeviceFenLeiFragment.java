@@ -10,10 +10,13 @@ import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.add.model.DeviceListModel;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.PeiWangYinDaoPageActivity;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.SheBeiChongZhiActivity;
+import com.smarthome.magic.activity.zhinengjiaju.peinet.ZhiNengJiaJuPeiWangActivity;
 import com.smarthome.magic.activity.zijian_shangcheng.FenLeiThirdActivity;
 import com.smarthome.magic.adapter.FenLeiRightAdapter;
+import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.basicmvp.BaseFragment;
+import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.model.FenLeiContentModel;
 import com.smarthome.magic.model.ZiJianFenLeiBean;
 import com.smarthome.magic.project_A.zijian_interface.FenLeiContenInterface;
@@ -92,7 +95,13 @@ public class DeviceFenLeiFragment extends BaseFragment implements FenLeiContenIn
                 switch (view.getId()) {
                     case R.id.constrain:
                         fenLeiContentModel = mDatas.get(position);
-                        SheBeiChongZhiActivity.actionStart(getActivity(), mDatas.get(position).getItem_name(), mDatas.get(position).getImg_url(), mDatas.get(position).header, fenLeiContentModel);
+                        // TODO: 2021/2/8  添加是否由主机校验
+                        String strZhuJi = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.HAVEZHUJI, "");
+                        if (strZhuJi.equals("0")) {
+                            SheBeiChongZhiActivity.actionStart(getActivity(), mDatas.get(position).getItem_name(), mDatas.get(position).getImg_url(), mDatas.get(position).header, fenLeiContentModel);
+                        } else {
+                            UIHelper.ToastMessage(getActivity(), "此家庭已有主机,请切换家庭后重新尝试");
+                        }
                         break;
                 }
             }

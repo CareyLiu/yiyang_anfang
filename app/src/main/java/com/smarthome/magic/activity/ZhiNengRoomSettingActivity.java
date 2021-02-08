@@ -176,11 +176,11 @@ public class ZhiNengRoomSettingActivity extends BaseActivity implements View.OnC
                 } else if (deviceBean.getDevice_type().equals("16")) {//窗帘
                     ZhiNengChuangLianActivity.actionStart(mContext, deviceBean.getDevice_id());
                 } else if (deviceBean.getDevice_type().equals("01")) {//灯
-                    ZhiNengDianDengActivity.actionStart(mContext, deviceBean.getDevice_id(), deviceBean.getDevice_type());
+                    ZhiNengDianDengActivity.actionStart(mContext, deviceBean.getDevice_id(), deviceBean.getDevice_type(), member_type);
                 } else if (deviceBean.getDevice_type().equals("03")) {//喂鱼
-                    ZhiNengJiajuWeiYuAutoActivity.actionStart(mContext, deviceBean.getDevice_id(), deviceBean.getDevice_type());
+                    ZhiNengJiajuWeiYuAutoActivity.actionStart(mContext, deviceBean.getDevice_id(), deviceBean.getDevice_type(), member_type);
                 } else if (deviceBean.getDevice_type().equals("04")) {//浇花
-                    ZhiNengJiaoHuaAutoActivity.actionStart(mContext, deviceBean.getDevice_id(), deviceBean.getDevice_type());
+                    ZhiNengJiaoHuaAutoActivity.actionStart(mContext, deviceBean.getDevice_id(), deviceBean.getDevice_type(),member_type);
                 } else if (deviceBean.getDevice_type().equals("02")) {
                     Bundle bundle = new Bundle();
                     bundle.putString("device_id", deviceBean.getDevice_id());
@@ -398,6 +398,7 @@ public class ZhiNengRoomSettingActivity extends BaseActivity implements View.OnC
 
 
     TishiDialog tishiDialog;
+
     /**
      * 修改房间名字
      */

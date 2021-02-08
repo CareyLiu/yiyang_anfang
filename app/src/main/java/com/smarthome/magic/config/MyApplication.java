@@ -684,6 +684,11 @@ public class MyApplication extends MultiDexApplication {
                                 PeiWangErrorModel peiWangErrorModel = new Gson().fromJson(message.toString(), PeiWangErrorModel.class);
                                 n.content = peiWangErrorModel.notify_text;
                                 RxBus.getDefault().sendRx(n);
+                            } else if (codeClass.code.equals("yjy_0010")) {
+                                // 主机被重置时候刷新设备列表接口
+                                Notice n = new Notice();
+                                n.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+                                RxBus.getDefault().sendRx(n);
                             }
 
                         } else if (message.toString().contains("p.")) {

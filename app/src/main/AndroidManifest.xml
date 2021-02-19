@@ -1008,6 +1008,24 @@
             </intent-filter>
         </activity>
 
+
+        <!-- 会话故障 -->
+        <activity
+            android:name=".aakefudan.chat.GuzhangHuiActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.smarthome.magic"
+                    android:pathPrefix="/conversationGuzhang"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+
         <!-- 会话界面 -->
         <activity
             android:name=".activity.rongyun_liaotian.ConversationActivity"

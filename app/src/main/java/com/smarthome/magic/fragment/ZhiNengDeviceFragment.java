@@ -71,6 +71,7 @@ import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.mqtt_zhiling.ZnjjMqttMingLing;
 import com.smarthome.magic.tools.NetworkUtils;
 import com.smarthome.magic.util.GridAverageUIDecoration;
@@ -140,6 +141,22 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                     zhiNengDeviceListAdapter.notifyDataSetChanged();
                 } else if (message.type == ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN) {
                     getnet();
+                } else if (message.type == ConstanceValue.MSG_DEVICE_DELETE_TUYA) {
+                    String tuyaId = message.devId;
+                    Y.e("佛为飞机的数量快捷方式发  " + tuyaId);
+                    for (int i = 0; i < mDatas.size(); i++) {
+                        ZhiNengHomeBean.DataBean.DeviceBean deviceBean = mDatas.get(i);
+                        String ty_device_ccid = deviceBean.getTy_device_ccid();
+                        if (tuyaId.equals(ty_device_ccid)) {
+                            String device_type = deviceBean.getDevice_type();
+                            if (device_type.equals(TuyaConfig.CATEGORY_WNYKQ)) {
+                                deleteDevice(deviceBean.getDevice_id());
+                                Y.e("删除了" + deviceBean.getDevice_name());
+                            } else {
+                                Y.e("不执行删除" + deviceBean.getDevice_name());
+                            }
+                        }
+                    }
                 }
             }
         }));
@@ -255,11 +272,11 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                         } else if (deviceBean.getDevice_type().equals("16")) {//窗帘
                             ZhiNengChuangLianActivity.actionStart(getActivity(), deviceBean.getDevice_id());
                         } else if (deviceBean.getDevice_type().equals("01")) {//灯
-                            ZhiNengDianDengActivity.actionStart(getActivity(), deviceBean.getDevice_id(), deviceBean.getDevice_type(),member_type);
+                            ZhiNengDianDengActivity.actionStart(getActivity(), deviceBean.getDevice_id(), deviceBean.getDevice_type(), member_type);
                         } else if (deviceBean.getDevice_type().equals("03")) {//喂鱼
-                            ZhiNengJiajuWeiYuAutoActivity.actionStart(getActivity(), deviceBean.getDevice_id(), deviceBean.getDevice_type(),member_type);
+                            ZhiNengJiajuWeiYuAutoActivity.actionStart(getActivity(), deviceBean.getDevice_id(), deviceBean.getDevice_type(), member_type);
                         } else if (deviceBean.getDevice_type().equals("04")) {//浇花
-                            ZhiNengJiaoHuaAutoActivity.actionStart(getActivity(), deviceBean.getDevice_id(), deviceBean.getDevice_type(),member_type);
+                            ZhiNengJiaoHuaAutoActivity.actionStart(getActivity(), deviceBean.getDevice_id(), deviceBean.getDevice_type(), member_type);
                         } else if (deviceBean.getDevice_type().equals("02")) {
                             Bundle bundle = new Bundle();
                             bundle.putString("device_id", deviceBean.getDevice_id());
@@ -489,5 +506,38 @@ public class ZhiNengDeviceFragment extends BaseFragment {
             });
         }
     }
+
+
+    /**
+     * 删除设备
+     */
+    private void deleteDevice(String device_id) {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16034");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(getContext()).getAppToken());
+        map.put("family_id", family_id);
+        map.put("device_id", device_id);
+        Gson gson = new Gson();
+        OkGo.<AppResponse<ZhiNengFamilyEditBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ZhiNengFamilyEditBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        Y.e("删除成功了啊啊啊啊");
+                        Notice notice = new Notice();
+                        notice.type = ConstanceValue.MSG_DEVICE_DELETE;
+                        notice.devId = device_id;
+                        RxBus.getDefault().sendRx(notice);
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        Y.e("删除是比较宝宝");
+                    }
+                });
+    }
+
 
 }

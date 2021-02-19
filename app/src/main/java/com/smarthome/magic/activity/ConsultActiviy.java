@@ -127,24 +127,23 @@ public class ConsultActiviy extends ServiceBaseActivity {
                 Conversation.ConversationType conversationType = Conversation.ConversationType.PRIVATE;
                 String of_user_accid = dataBean.getOf_user_accid();
                 String service_form_id = dataBean.getService_form_id();
-                String instName = dataBean.getUser_name_car();
+                String user_name_car = dataBean.getUser_name_car();
                 Bundle bundle = new Bundle();
-                bundle.putString("dianpuming", instName);
-                bundle.putString("inst_accid", of_user_accid);
-                bundle.putString("shoptype","1");
-                startConversation(mContext, conversationType, of_user_accid, instName, bundle, service_form_id);
+                bundle.putString("user_name_car", user_name_car);
+                bundle.putString("of_user_accid", of_user_accid);
+                bundle.putString("service_form_id", service_form_id);
+                startConversation(mContext, conversationType, of_user_accid, user_name_car, bundle);
             }
         });
     }
 
-    public void startConversation(Context context, Conversation.ConversationType conversationType, String targetId, String title, Bundle bundle, String service_form_id) {
+    public void startConversation(Context context, Conversation.ConversationType conversationType, String targetId, String title, Bundle bundle) {
         if (context != null && !TextUtils.isEmpty(targetId) && conversationType != null) {
             Uri uri = Uri.parse("rong://" + context.getApplicationInfo().processName).buildUpon().appendPath("conversationnew").appendPath(conversationType.getName().toLowerCase(Locale.US)).appendQueryParameter("targetId", targetId).appendQueryParameter("title", title).build();
             Intent intent = new Intent("android.intent.action.VIEW", uri);
             if (bundle != null) {
                 intent.putExtras(bundle);
             }
-            intent.putExtra("service_form_id", service_form_id);
             context.startActivity(intent);
         }
     }

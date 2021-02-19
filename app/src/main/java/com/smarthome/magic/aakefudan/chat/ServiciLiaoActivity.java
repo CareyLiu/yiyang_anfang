@@ -89,6 +89,7 @@ public class ServiciLiaoActivity extends BaseActivity implements View.OnClickLis
     private List<ZixunModel.DataBean.ListBean> weixiuList;
     private XiuliAdapter xiuliAdapter;
     private String service_form_id;
+    private String user_name_car;
 
     @Override
     public int getContentViewResId() {
@@ -202,9 +203,8 @@ public class ServiciLiaoActivity extends BaseActivity implements View.OnClickLis
 
     private void initView() {
         service_form_id = getIntent().getStringExtra("service_form_id");
-        String str = getIntent().getStringExtra("dianpuming");
-        String inst_accid = getIntent().getStringExtra("inst_accid");
-        tv_title_name.setText(str);
+        user_name_car = getIntent().getStringExtra("user_name_car");
+        tv_title_name.setText(user_name_car);
 
         rl_back.setOnClickListener(new View.OnClickListener() {
             @Override

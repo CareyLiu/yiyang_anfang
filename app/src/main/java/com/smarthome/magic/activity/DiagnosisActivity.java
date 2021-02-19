@@ -4,12 +4,14 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -71,6 +73,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -132,6 +135,8 @@ public class DiagnosisActivity extends BaseActivity {
     String whatUWant = "";
 
     private LordingDialog lordingDialog;
+    private String user_car_id;
+    private String zhu_car_stoppage_no;
 
     @Override
     public int getContentViewResId() {
@@ -379,6 +384,9 @@ public class DiagnosisActivity extends BaseActivity {
                             mTvVoltage.setText(response.body().data.get(0).getMachine_voltage());
                             mTvRate.setText(response.body().data.get(0).getFrequency());
                         }
+
+                        user_car_id = response.body().data.get(0).getUser_car_id();
+                        zhu_car_stoppage_no = response.body().data.get(0).getZhu_car_stoppage_no();
                     }
 
                     @Override
@@ -464,13 +472,19 @@ public class DiagnosisActivity extends BaseActivity {
                         //此处title参数用来区分是车主端还是客服端
                         ServiceModel.DataBean dataBean = list.get(position);
                         Conversation.ConversationType conversationType = Conversation.ConversationType.PRIVATE;
-                        String targetId = dataBean.getSub_accid();
-                        String instName = dataBean.getSub_user_name();
+                        String sub_accid = dataBean.getSub_accid();
+                        String sub_user_name = dataBean.getSub_user_name();
+                        String inst_id = dataBean.getInst_id();
+                        String sub_user_id = dataBean.getSub_user_id();
                         Bundle bundle = new Bundle();
-                        bundle.putString("dianpuming", instName);
-                        bundle.putString("inst_accid", targetId);
-                        bundle.putString("shoptype", "1");
-                        RongIM.getInstance().startConversation(mContext, conversationType, targetId, instName, bundle);
+                        bundle.putString("sub_user_name", sub_user_name);
+                        bundle.putString("sub_accid", sub_accid);
+                        bundle.putString("sub_user_id", sub_user_id);
+                        bundle.putString("inst_id", inst_id);
+                        bundle.putString("user_car_id", user_car_id);
+                        bundle.putString("zhu_car_stoppage_no", zhu_car_stoppage_no);
+//                        RongIM.getInstance().startConversation(mContext, conversationType, targetId, instName, bundle);
+                        startConversation(mContext, conversationType, sub_accid, sub_user_name, bundle);
                         dialog.dismiss();
                     }
                 });
@@ -516,6 +530,18 @@ public class DiagnosisActivity extends BaseActivity {
                     }
                 });
                 clear.show();
+        }
+    }
+
+
+    public void startConversation(Context context, Conversation.ConversationType conversationType, String targetId, String title, Bundle bundle) {
+        if (context != null && !TextUtils.isEmpty(targetId) && conversationType != null) {
+            Uri uri = Uri.parse("rong://" + context.getApplicationInfo().processName).buildUpon().appendPath("conversationGuzhang").appendPath(conversationType.getName().toLowerCase(Locale.US)).appendQueryParameter("targetId", targetId).appendQueryParameter("title", title).build();
+            Intent intent = new Intent("android.intent.action.VIEW", uri);
+            if (bundle != null) {
+                intent.putExtras(bundle);
+            }
+            context.startActivity(intent);
         }
     }
 

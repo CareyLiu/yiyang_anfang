@@ -8,6 +8,8 @@ import com.smarthome.magic.app.RxBus;
 import com.tuya.smart.api.service.MicroServiceManager;
 import com.tuya.smart.commonbiz.bizbundle.family.api.AbsBizBundleFamilyService;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.home.sdk.api.ITuyaHomeDeviceStatusListener;
+import com.tuya.smart.home.sdk.api.ITuyaHomeStatusListener;
 import com.tuya.smart.home.sdk.bean.HomeBean;
 import com.tuya.smart.home.sdk.bean.WeatherBean;
 import com.tuya.smart.home.sdk.callback.IIGetHomeWetherSketchCallBack;
@@ -73,6 +75,9 @@ public class TuyaHomeManager {
                 familyService.setCurrentHomeId(homeId);
 
                 setTianqi(bean);
+
+
+                setHomeListen();
             }
 
             @Override
@@ -80,6 +85,41 @@ public class TuyaHomeManager {
                 Y.e("设置家庭失败了");
             }
         });
+    }
+
+    private void setHomeListen() {
+        TuyaHomeSdk.newHomeInstance(homeId).registerHomeStatusListener(new ITuyaHomeStatusListener() {
+            @Override
+            public void onDeviceAdded(String devId) {
+                Y.e("添加了设备啊啊啊啊  " + devId);
+            }
+
+            @Override
+            public void onDeviceRemoved(String devId) {
+                Y.e("移除了一个设备" + devId);
+                Notice notice = new Notice();
+                notice.type = ConstanceValue.MSG_DEVICE_DELETE_TUYA;
+                notice.devId = devId;
+                RxBus.getDefault().sendRx(notice);
+            }
+
+            @Override
+            public void onGroupAdded(long groupId) {
+
+            }
+
+            @Override
+            public void onGroupRemoved(long groupId) {
+
+            }
+
+            @Override
+            public void onMeshAdded(String meshId) {
+
+            }
+        });
+
+
     }
 
     private void setTianqi(HomeBean bean) {

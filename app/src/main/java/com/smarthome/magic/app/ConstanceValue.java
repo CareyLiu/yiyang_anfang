@@ -156,4 +156,6 @@ public interface ConstanceValue {
     int MSG_TIANJIASHEBEI = 0x10115;//添加设备基本参数
     int MSG_TIANJIAZHUJI = 0x10116;//添加主机
     int MSG_PEIWNAG_ESPTOUCH = 0x10117;//配网type
+
+    int MSG_DEVICE_DELETE_TUYA = 0x10118;//移除设备完全
 }

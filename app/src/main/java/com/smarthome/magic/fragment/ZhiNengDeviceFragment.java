@@ -16,7 +16,10 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.googlecode.mp4parser.boxes.mp4.objectdescriptors.AudioSpecificConfig;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
 import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
 import com.rairmmd.andmqtt.MqttSubscribe;
@@ -36,8 +39,10 @@ import com.smarthome.magic.activity.tuya_device.camera.TuyaCameraActivity;
 import com.smarthome.magic.activity.tuya_device.device.DeviceChazuoActivity;
 import com.smarthome.magic.activity.tuya_device.device.DeviceMenciActivity;
 import com.smarthome.magic.activity.tuya_device.device.DeviceWgCzActivity;
+import com.smarthome.magic.activity.tuya_device.dialog.TuyaTishiDialog;
 import com.smarthome.magic.activity.tuya_device.utils.TuyaConfig;
 import com.smarthome.magic.activity.tuya_device.device.DeviceWangguanActivity;
+import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaDeviceManager;
 import com.smarthome.magic.activity.zckt.AirConditionerActivity;
 
 import com.smarthome.magic.activity.zhinengjiaju.RenTiGanYingActivity;
@@ -60,8 +65,13 @@ import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.basicmvp.BaseFragment;
+import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
+import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
+import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.mqtt_zhiling.ZnjjMqttMingLing;
 import com.smarthome.magic.tools.NetworkUtils;
 import com.smarthome.magic.util.GridAverageUIDecoration;
@@ -69,16 +79,21 @@ import com.smarthome.magic.model.ZhiNengHomeBean;
 import com.tuya.smart.api.MicroContext;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.panelcaller.api.AbsPanelCallerService;
+import com.tuya.smart.sdk.api.IResultCallback;
 import com.umeng.commonsdk.UMConfigure;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+
+import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
 
 public class ZhiNengDeviceFragment extends BaseFragment {
@@ -312,10 +327,58 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                         }
                     }
                     zhiNengDeviceListAdapter.notifyDataSetChanged();
+                } else if (message.type == ConstanceValue.MSG_DEVICE_DELETE_TUYA) {
+                    String tuyaId = message.devId;
+                    Y.e("佛为飞机的数量快捷方式发  " + tuyaId);
+                    for (int i = 0; i < dataBean.size(); i++) {
+                        ZhiNengHomeBean.DataBean.DeviceBean deviceBean = dataBean.get(i);
+                        String ty_device_ccid = deviceBean.getTy_device_ccid();
+                        if (tuyaId.equals(ty_device_ccid)) {
+                            String device_type = deviceBean.getDevice_type();
+                            if (device_type.equals(TuyaConfig.CATEGORY_WNYKQ)) {
+                                deleteDevice(deviceBean.getDevice_id());
+                                Y.e("删除了" + deviceBean.getDevice_name());
+                            } else {
+                                Y.e("不执行删除" + deviceBean.getDevice_name());
+                            }
+                        }
+                    }
                 }
             }
         }));
     }
+
+    /**
+     * 删除设备
+     */
+    private void deleteDevice(String device_id) {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16034");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(getContext()).getAppToken());
+        map.put("family_id", family_id);
+        map.put("device_id", device_id);
+        Gson gson = new Gson();
+        OkGo.<AppResponse<ZhiNengFamilyEditBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ZhiNengFamilyEditBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        Y.e("删除成功了啊啊啊啊");
+                        Notice notice = new Notice();
+                        notice.type = ConstanceValue.MSG_DEVICE_DELETE;
+                        notice.devId = device_id;
+                        RxBus.getDefault().sendRx(notice);
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        Y.e("删除是比较宝宝");
+                    }
+                });
+    }
+
 
     @Override
     protected int getLayoutRes() {
@@ -332,7 +395,6 @@ public class ZhiNengDeviceFragment extends BaseFragment {
         ll_content_bg = view.findViewById(R.id.ll_content_bg);
         recyclerView = view.findViewById(R.id.recyclerView);
 //        recyclerView.addItemDecoration(new RecycleItemSpance(20, 2));
-
 
 
     }

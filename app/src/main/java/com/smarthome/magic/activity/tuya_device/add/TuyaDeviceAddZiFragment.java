@@ -592,7 +592,13 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                 .execute(new JsonCallback<AppResponse<ZhiNengHomeBean.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<ZhiNengHomeBean.DataBean>> response) {
+                        Y.e("添加是开发商的肌肤上的 开发进度是");
+                    }
 
+                    @Override
+                    public void onError(Response<AppResponse<ZhiNengHomeBean.DataBean>> response) {
+                        super.onError(response);
+                        Y.e(" JFK的实力开发商的  "  +response.getException().getMessage());
                     }
                 });
     }

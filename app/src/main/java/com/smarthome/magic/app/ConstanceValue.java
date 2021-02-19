@@ -159,4 +159,6 @@ public interface ConstanceValue {
     int MSG_PEIWANG_ERROR = 0x10118;//配网错误
     int MSG_TIANJIAZHUJI_ZIDONG = 0x10119;//添加主机自动
     int MSG_TIANJIASHEBEI_ZIDONG = 0x10120;//添加设备自动
+
+    int MSG_DEVICE_DELETE_TUYA = 0x10121;//移除设备完全
 }

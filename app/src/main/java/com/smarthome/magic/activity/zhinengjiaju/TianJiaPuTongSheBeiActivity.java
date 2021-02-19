@@ -310,6 +310,7 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
     protected void initToolbar() {
         super.initToolbar();
         tv_title.setText("添加设备");
+
         tv_title.setTextSize(17);
         tv_title.setTextColor(getResources().getColor(R.color.black));
         mToolbar.setNavigationIcon(R.mipmap.backbutton);

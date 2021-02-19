@@ -62,6 +62,7 @@ import com.tuya.smart.home.sdk.bean.MemberWrapperBean;
 import com.tuya.smart.home.sdk.bean.WeatherBean;
 import com.tuya.smart.home.sdk.callback.ITuyaGetHomeListCallback;
 import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
+import com.tuya.smart.sdk.api.IFirmwareUpgradeListener;
 import com.tuya.smart.sdk.api.ITuyaDataCallback;
 
 import java.util.ArrayList;
@@ -472,10 +473,18 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     }
 
     private void clickAddCamera() {
-        PreferenceHelper.getInstance(getActivity()).putString(AppConfig.MC_DEVICE_CCID, "aaaaaaaaaaaaaaaa80140018");
-        TuyaDeviceAddActivity.actionStart(getContext());
 
-        getHomeList();
+        // TODO: 2021/2/19 判断是不是管理员
+        String str = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.ZHINENGJIAJUGUANLIYUAN, "0");
+        if (str.equals("0")) {
+
+        } else if (str.equals("1")) {
+            PreferenceHelper.getInstance(getActivity()).putString(AppConfig.MC_DEVICE_CCID, "aaaaaaaaaaaaaaaa80140018");
+            TuyaDeviceAddActivity.actionStart(getContext());
+            getHomeList();
+        }
+
+
 //        yaoqing("13091891781");
     }
 

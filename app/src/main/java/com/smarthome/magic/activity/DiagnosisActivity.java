@@ -183,7 +183,7 @@ public class DiagnosisActivity extends BaseActivity {
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
         // requestData();
-        // requestData2();
+        requestData2();
         alarmClass = (AlarmClass) getIntent().getSerializableExtra("alarmClass");
         if (alarmClass != null) {
             Log.i("alarmClass", alarmClass.changjia_name + alarmClass.sell_phone);
@@ -446,11 +446,34 @@ public class DiagnosisActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.rl_back, R.id.btn_clean})
+    @OnClick({R.id.rl_back, R.id.btn_clean,R.id.rl_consult})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_back:
                 finish();
+                break;
+            case R.id.rl_consult:
+                final NormalListDialog dialog = new NormalListDialog(this, mMenuItems);
+                dialog.title("请选择")//
+                        .showAnim(mBasIn)//
+                        .dismissAnim(mBasOut)//
+                        .show();
+                dialog.setOnOperItemClickL(new OnOperItemClickL() {
+                    @Override
+                    public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        //此处title参数用来区分是车主端还是客服端
+                        ServiceModel.DataBean dataBean = list.get(position);
+                        Conversation.ConversationType conversationType = Conversation.ConversationType.PRIVATE;
+                        String targetId = dataBean.getSub_accid();
+                        String instName = dataBean.getSub_user_name();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("dianpuming", instName);
+                        bundle.putString("inst_accid", targetId);
+                        bundle.putString("shoptype", "1");
+                        RongIM.getInstance().startConversation(mContext, conversationType, targetId, instName, bundle);
+                        dialog.dismiss();
+                    }
+                });
                 break;
             case R.id.btn_clean:
                 MyCarCaoZuoDialog_CaoZuoTIshi_Clear clear = new MyCarCaoZuoDialog_CaoZuoTIshi_Clear(DiagnosisActivity.this, new MyCarCaoZuoDialog_CaoZuoTIshi_Clear.OnDialogItemClickListener() {

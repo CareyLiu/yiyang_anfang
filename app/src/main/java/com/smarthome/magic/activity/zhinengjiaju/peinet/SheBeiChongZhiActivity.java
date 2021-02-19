@@ -107,6 +107,7 @@ public class SheBeiChongZhiActivity extends BaseActivity {
             public void call(Notice message) {
                 if (message.type == ConstanceValue.MSG_PEIWANG_SUCCESS) {
                     finish();
+                    //配网成功后的后续处理
                 }
             }
         }));

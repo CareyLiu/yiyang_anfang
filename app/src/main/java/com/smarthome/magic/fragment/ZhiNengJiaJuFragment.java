@@ -291,7 +291,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
         srLSmart.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                getnet();
+//                getnet();
                 Notice notice = new Notice();
                 notice.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
                 sendRx(notice);
@@ -477,7 +477,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
         // TODO: 2021/2/19 判断是不是管理员
         String str = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.ZHINENGJIAJUGUANLIYUAN, "0");
         if (str.equals("0")) {
-
+            Y.t("没有管理员权限，无法添加设备！");
         } else if (str.equals("1")) {
             PreferenceHelper.getInstance(getActivity()).putString(AppConfig.MC_DEVICE_CCID, "aaaaaaaaaaaaaaaa80140018");
             TuyaDeviceAddActivity.actionStart(getContext());

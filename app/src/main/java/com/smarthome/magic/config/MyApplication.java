@@ -138,8 +138,8 @@ public class MyApplication extends MultiDexApplication {
 
 
     //String mqttUrl = "tcp://192.168.1.127";//大个本地
-    String mqttUrl = "tcp://mqtt.hljsdkj.com";//正式
-    //String mqttUrl = "tcp://ggw.hljsdkj.com";//ggw
+   // String mqttUrl = "tcp://mqtt.hljsdkj.com";//正式
+    String mqttUrl = "tcp://ggw.hljsdkj.com";//ggw
 
 
     public static List<String> mqttDingyue = new ArrayList<>();
@@ -409,7 +409,7 @@ public class MyApplication extends MultiDexApplication {
         RongIM.registerMessageType(MyMessage.class);
         RongIM.getInstance().registerMessageTemplate(new MyMessageItemProvider());
 
-        String rongYunToken = PreferenceHelper.getInstance(getApplicationContext()).getString("token_rong", "");
+        String rongYunToken =UserManager.getManager(context).getRongYun();
         if (!StringUtils.isEmpty(rongYunToken)) {
             connectRongYun(rongYunToken);
 

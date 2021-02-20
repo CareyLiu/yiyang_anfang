@@ -370,30 +370,22 @@ public class DeviceWgCzActivity extends TuyaBaseDeviceActivity {
                     String device_category = deviceBean.getDevice_category();
 
                     TuyaHomeManager.getHomeManager().isHaveDevice(deviceBean.getTy_device_ccid());
-//                    if (device_type.equals(TuyaConfig.CATEGORY_MENCI)) {//门磁
-//                        DeviceMenciActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
-//                    } else if (device_type.equals(TuyaConfig.CATEGORY_MENCISUO)) {//门磁蓝牙
-//                        DeviceMenciActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
-//                    } else if (device_type.equals(TuyaConfig.CATEGORY_SJ)) {//漏水
-//                        DeviceLoushuiActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
-//                    } else if (device_type.equals(TuyaConfig.CATEGORY_SWITCH)) {//开关
-//                        if (device_category.equals(TuyaConfig.PRODUCTID_SWITCH_THREE)) {//三路开关
-//                            DeviceSwitchThreeActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
-//                        } else if (device_category.equals(TuyaConfig.PRODUCTID_SWITCH_TWO)) {//二路开关
-//                            DeviceSwitchTwoActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
-//                        }
-//                    } else {
-//                        AbsPanelCallerService service = MicroContext.getServiceManager().findServiceByInterface(AbsPanelCallerService.class.getName());
-//                        service.goPanelWithCheckAndTip(DeviceWgCzActivity.this, deviceBean.getTy_device_ccid());
-//                    }
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString("device_id", deviceBean.getDevice_id());
-                    bundle.putString("device_type", deviceBean.getDevice_type());
-                    bundle.putString("member_type", member_type);
-                    bundle.putString("work_state", "1");
-                    startActivity(new Intent(mContext, ZhiNengRoomDeviceDetailAutoActivity.class).putExtras(bundle));
-
+                    if (device_type.equals(TuyaConfig.CATEGORY_MENCI)) {//门磁
+                        DeviceMenciActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
+                    } else if (device_type.equals(TuyaConfig.CATEGORY_MENCISUO)) {//门磁蓝牙
+                        DeviceMenciActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
+                    } else if (device_type.equals(TuyaConfig.CATEGORY_SJ)) {//漏水
+                        DeviceLoushuiActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
+                    } else if (device_type.equals(TuyaConfig.CATEGORY_SWITCH)) {//开关
+                        if (device_category.equals(TuyaConfig.PRODUCTID_SWITCH_THREE)) {//三路开关
+                            DeviceSwitchThreeActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
+                        } else if (device_category.equals(TuyaConfig.PRODUCTID_SWITCH_TWO)) {//二路开关
+                            DeviceSwitchTwoActivity.actionStart(mContext, member_type, deviceBean.getDevice_id(), deviceBean.getTy_device_ccid(), deviceBean.getDevice_name(), deviceBean.getRoom_name());
+                        }
+                    } else {
+                        AbsPanelCallerService service = MicroContext.getServiceManager().findServiceByInterface(AbsPanelCallerService.class.getName());
+                        service.goPanelWithCheckAndTip(DeviceWgCzActivity.this, deviceBean.getTy_device_ccid());
+                    }
                 }
             }
         });

@@ -101,6 +101,7 @@ public class ZhiNengRoomFragment extends BaseFragment implements View.OnClickLis
         }));
         getnet();
     }
+
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
@@ -185,6 +186,9 @@ public class ZhiNengRoomFragment extends BaseFragment implements View.OnClickLis
                         PreferenceHelper.getInstance(getActivity()).putString(AppConfig.FAMILY_ID, response.body().data.get(0).getFamily_id());
                         mDatas.clear();
                         mDatas.addAll(response.body().data.get(0).getRoom());
+
+                        member_type = response.body().data.get(0).getMember_type();
+
                         if (zhiNengRoomListAdapter != null) {
                             zhiNengRoomListAdapter.notifyDataSetChanged();
                         }

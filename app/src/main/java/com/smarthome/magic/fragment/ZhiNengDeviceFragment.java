@@ -143,7 +143,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                     getnet();
                 } else if (message.type == ConstanceValue.MSG_DEVICE_DELETE_TUYA) {
                     String tuyaId = message.devId;
-                    Y.e("佛为飞机的数量快捷方式发  " + tuyaId);
+                    Y.e("删除的涂鸦ID是多少  " + tuyaId);
                     for (int i = 0; i < mDatas.size(); i++) {
                         ZhiNengHomeBean.DataBean.DeviceBean deviceBean = mDatas.get(i);
                         String ty_device_ccid = deviceBean.getTy_device_ccid();
@@ -171,7 +171,6 @@ public class ZhiNengDeviceFragment extends BaseFragment {
         tvBangDingZhuJi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //PeiWangYinDaoPageActivity.actionStart(getActivity());
 
             }
         });
@@ -221,8 +220,6 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                                 mqttMingLing.setAction(bean.getDevice_ccid(), "01", new IMqttActionListener() {
                                     @Override
                                     public void onSuccess(IMqttToken asyncActionToken) {
-                                        //UIHelper.ToastMessage(mContext, "当前装置开启");
-
                                         List<String> stringList = new ArrayList<>();
                                         stringList.add(bean.getDevice_ccid());
                                         stringList.add("1");
@@ -340,7 +337,6 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                                 startActivity(new Intent(getActivity(), ZhiNengRoomDeviceDetailAutoActivity.class).putExtras(bundle));
                             } else {
                                 Y.e("设备的信息是什么啊  " + "device_category:" + deviceBean.getDevice_type() + "  produco:" + deviceBean.getDevice_category() + "  device_category_code:" + deviceBean.getDevice_category_code());
-
                                 if (deviceBean.getDevice_type().equals(TuyaConfig.CATEGORY_CAMERA)) {//涂鸦摄像机
                                     TuyaCameraActivity.actionStart(getActivity(), member_type, deviceBean.getDevice_id(), ty_device_ccid, deviceBean.getDevice_name(), deviceBean.getRoom_name());
                                 } else if (deviceBean.getDevice_type().equals(TuyaConfig.CATEGORY_CHAZUO)) {//涂鸦插座
@@ -443,9 +439,6 @@ public class ZhiNengDeviceFragment extends BaseFragment {
     public void initView(View view) {
         ll_content_bg = view.findViewById(R.id.ll_content_bg);
         recyclerView = view.findViewById(R.id.recyclerView);
-//        recyclerView.addItemDecoration(new RecycleItemSpance(20, 2));
-
-
     }
 
     private void clickTongtiao(ZhiNengHomeBean.DataBean.DeviceBean bean, int pos) {
@@ -516,7 +509,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
         map.put("code", "16034");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(getContext()).getAppToken());
-        map.put("family_id", family_id);
+        map.put("family_id", PreferenceHelper.getInstance(getContext()).getString(AppConfig.PEIWANG_FAMILYID, ""));
         map.put("device_id", device_id);
         Gson gson = new Gson();
         OkGo.<AppResponse<ZhiNengFamilyEditBean>>post(ZHINENGJIAJU)

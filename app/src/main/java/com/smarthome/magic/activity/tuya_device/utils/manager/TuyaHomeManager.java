@@ -23,8 +23,8 @@ import java.util.List;
 public class TuyaHomeManager {
     private static TuyaHomeManager instance;
     private HomeBean homeBean;
-    private SigMeshBean sigMeshBean;
     private long homeId;
+    private ITuyaHomeStatusListener iTuyaHomeStatusListener;
 
     public static TuyaHomeManager getHomeManager() {
         if (null == instance) {
@@ -50,18 +50,9 @@ public class TuyaHomeManager {
         initHome();
     }
 
-    public SigMeshBean getSigMeshBean() {
-        return sigMeshBean;
-    }
-
-    public void setSigMeshBean(SigMeshBean sigMeshBean) {
-        this.sigMeshBean = sigMeshBean;
-        Y.e("设置成功了么" + sigMeshBean.getMeshId());
-    }
-
     private void initHome() {
-        if (sigMeshBean != null) {
-            TuyaHomeSdk.getTuyaSigMeshClient().destroyMesh(sigMeshBean.getMeshId());
+        if (iTuyaHomeStatusListener != null) {
+            TuyaHomeSdk.newHomeInstance(homeId).unRegisterHomeStatusListener(iTuyaHomeStatusListener);
         }
 
         TuyaHomeSdk.newHomeInstance(homeId).getHomeDetail(new ITuyaHomeResultCallback() {
@@ -69,13 +60,11 @@ public class TuyaHomeManager {
             public void onSuccess(HomeBean bean) {
                 Y.e("设置家庭成功了");
                 setHomeBean(bean);
-                setMesh();
 
                 AbsBizBundleFamilyService familyService = MicroServiceManager.getInstance().findServiceByInterface(AbsBizBundleFamilyService.class.getName());
                 familyService.setCurrentHomeId(homeId);
 
                 setTianqi(bean);
-
 
                 setHomeListen();
             }
@@ -88,7 +77,8 @@ public class TuyaHomeManager {
     }
 
     private void setHomeListen() {
-        TuyaHomeSdk.newHomeInstance(homeId).registerHomeStatusListener(new ITuyaHomeStatusListener() {
+        Y.e("设置家庭监听成功");
+        iTuyaHomeStatusListener = new ITuyaHomeStatusListener() {
             @Override
             public void onDeviceAdded(String devId) {
                 Y.e("添加了设备啊啊啊啊  " + devId);
@@ -117,9 +107,8 @@ public class TuyaHomeManager {
             public void onMeshAdded(String meshId) {
 
             }
-        });
-
-
+        };
+        TuyaHomeSdk.newHomeInstance(homeId).registerHomeStatusListener(iTuyaHomeStatusListener);
     }
 
     private void setTianqi(HomeBean bean) {
@@ -127,8 +116,6 @@ public class TuyaHomeManager {
             TuyaHomeSdk.newHomeInstance(bean.getHomeId()).getHomeWeatherSketch(bean.getLon(), bean.getLat(), new IIGetHomeWetherSketchCallBack() {
                 @Override
                 public void onSuccess(WeatherBean result) {
-                    Y.e("我是什么啊啊啊啊  " + result.getTemp() + "    " + result.getCondition() + "    " + result.getInIconUrl() + "    " + result.getIconUrl());
-
                     Notice notice = new Notice();
                     notice.type = ConstanceValue.MSG_TUYA_TIANQI;
                     notice.content = result;
@@ -151,28 +138,6 @@ public class TuyaHomeManager {
         }
     }
 
-    private void setMesh() {
-        List<SigMeshBean> meshList = TuyaHomeSdk.getSigMeshInstance().getSigMeshList();
-        if (meshList.size() > 0) {
-            setSigMeshBean(meshList.get(0));
-        } else {
-            TuyaHomeSdk.newHomeInstance(homeId)
-                    .createSigMesh(new ITuyaResultCallback<SigMeshBean>() {
-                        @Override
-                        public void onError(String errorCode, String errorMsg) {
-                            Y.e("创建SigMeshBean失败：" + errorMsg);
-                        }
-
-                        @Override
-                        public void onSuccess(SigMeshBean sigMeshBean) {
-                            Y.e("创建SigMeshBean成功");
-                            setSigMeshBean(sigMeshBean);
-                        }
-                    });
-
-        }
-    }
-
     public DeviceBean isHaveDevice(String devId) {
         DeviceBean mineDeviceBean = null;
         if (homeBean != null) {
@@ -180,7 +145,7 @@ public class TuyaHomeManager {
 
             for (int i = 0; i < deviceList.size(); i++) {
                 DeviceBean deviceBean = deviceList.get(i);
-                Y.e(" 綁定的设备 " + deviceBean.getName());
+                Y.e(" 绑定的设备 " + deviceBean.getName());
                 Y.e(deviceBean.getDevId());
 
                 if (devId.equals(deviceBean.getDevId())) {

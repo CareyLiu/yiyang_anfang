@@ -165,7 +165,7 @@ public class ServiceConsultFragment extends BaseFragment {
         map.put("code", "03317");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(getActivity()).getAppToken());
-        map.put("state", "2");
+        map.put("state", "21");
         map.put("page_number", page_number + "");
         Gson gson = new Gson();
         OkGo.<AppResponse<ConsultModel.DataBean>>post(Urls.SERVER_URL + "wit/app/car/witAgent")

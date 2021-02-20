@@ -465,33 +465,6 @@ public class TuyaDeviceAddZiFragmentBeifen extends BaseFragment {
                 });
     }
 
-    private void startLanyaMeshPeiwang() {
-        sigMeshBean = TuyaHomeManager.getHomeManager().getSigMeshBean();
-        if (isSetLanya && sigMeshBean != null) {
-            iTuyaBlueMeshSearchListener = new ITuyaBlueMeshSearchListener() {
-                @Override
-                public void onSearched(SearchDeviceBean deviceBean) {
-                    stopSearch();
-                    jixua(deviceBean);
-                }
-
-                @Override
-                public void onSearchFinish() {
-
-                }
-            };
-            // 待配网的SigMesh设备UUID是固定的
-            UUID[] MESH_PROVISIONING_UUID = {UUID.fromString("00001827-0000-1000-8000-00805f9b34fb")};
-            SearchBuilder searchBuilder = new SearchBuilder()
-                    .setServiceUUIDs(MESH_PROVISIONING_UUID)    //SigMesh的UUID是固定值
-                    .setTimeOut(100)        //扫描时长 单位秒
-                    .setTuyaBlueMeshSearchListener(iTuyaBlueMeshSearchListener).build();
-            ITuyaBlueMeshSearch mMeshSearch = TuyaHomeSdk.getTuyaBlueMeshConfig().newTuyaBlueMeshSearch(searchBuilder);
-            //开启扫描
-            mMeshSearch.startSearch();
-        }
-    }
-
     private void jixua(SearchDeviceBean deviceBean) {
         List<SearchDeviceBean> mSearchDeviceBeanList = new ArrayList<>();
         mSearchDeviceBeanList.add(deviceBean);

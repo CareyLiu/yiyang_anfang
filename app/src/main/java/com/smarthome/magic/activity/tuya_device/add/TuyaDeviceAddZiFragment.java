@@ -503,12 +503,12 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
 
     private void startLanyaPeiwang(String token) {
         if (isSetLanya) {
+            Y.e("蓝牙添加设备了么");
             bleOperator = TuyaHomeSdk.getBleOperator();
             bleOperator.startLeScan(60000, ScanType.SINGLE, new TyBleScanResponse() {
                 @Override
                 public void onResult(ScanDeviceBean bean) {
                     stopSearch();
-
                     Map<String, Object> param = new HashMap<>();
                     param.put("ssid", wifiSSid); //wifi ssid
                     param.put("password", mima); //wifi pwd
@@ -525,7 +525,7 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
 
                         @Override
                         public void onFail(String code, String msg, Object handle) {
-                            Y.t("获取设备失败,请重新搜索" + msg);
+                            Y.e("蓝牙获取设备失败,请重新搜索" + msg);
                             stopPeiwang();
                         }
                     });

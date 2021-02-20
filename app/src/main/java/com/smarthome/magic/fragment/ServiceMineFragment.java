@@ -51,6 +51,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.rong.imkit.RongIM;
 
 public class ServiceMineFragment extends BaseFragment implements Observer {
 
@@ -215,6 +216,7 @@ public class ServiceMineFragment extends BaseFragment implements Observer {
                             //退出登录
                             UserManager.getManager(getActivity()).removeUser();
                             startActivity(new Intent(getActivity(), LoginActivity.class));
+                            RongIM.getInstance().logout();
                         }
 
 

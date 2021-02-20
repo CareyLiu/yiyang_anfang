@@ -463,18 +463,16 @@ public class LoginActivity extends BaseActivity {
                 finish();
             }
 
+            String rongYunTouken = UserManager.getManager(mContext).getRongYun();
+            if (!StringUtils.isEmpty(rongYunTouken)) {
+                Notice notice = new Notice();
+                notice.type = ConstanceValue.MSG_RONGYUN_CHONGZHI;
+                RxBus.getDefault().sendRx(notice);
+            }
         } else {
             //登录角色 >1 时，让用户选择要登录的角色
             userlist.addAll(response.body().data);
             startActivity(new Intent(LoginActivity.this, SelectLoginActivity.class));
-        }
-
-        String rongYunTouken = UserManager.getManager(mContext).getRongYun();
-        if (!StringUtils.isEmpty(rongYunTouken)) {
-            //connectRongYun(response.body().data.get(0).getToken_rong());
-            Notice notice = new Notice();
-            notice.type = ConstanceValue.MSG_RONGYUN_CHONGZHI;
-            RxBus.getDefault().sendRx(notice);
         }
     }
 

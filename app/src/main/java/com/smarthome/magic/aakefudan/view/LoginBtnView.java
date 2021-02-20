@@ -19,7 +19,11 @@ import com.smarthome.magic.activity.HomeActivity;
 import com.smarthome.magic.activity.SelectLoginActivity;
 import com.smarthome.magic.activity.ServiceActivity;
 import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.app.ConstanceValue;
+import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
@@ -124,6 +128,13 @@ public class LoginBtnView extends LinearLayout {
                     public void onSuccess(Response<AppResponse<LoginUser.DataBean>> response) {
                         UserManager.getManager(activity).saveUser(response.body().data.get(0));
                         PreferenceHelper.getInstance(activity).putString("power_state", power_state);
+                        String rongYunTouken = UserManager.getManager(mContext).getRongYun();
+                        if (!StringUtils.isEmpty(rongYunTouken)) {
+                            Notice notice = new Notice();
+                            notice.type = ConstanceValue.MSG_RONGYUN_CHONGZHI;
+                            RxBus.getDefault().sendRx(notice);
+                        }
+
                         switch (power_state) {
                             case "1"://聚易佳
                                 activity.startActivity(new Intent(activity, HomeActivity.class));

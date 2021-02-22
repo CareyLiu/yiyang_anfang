@@ -43,6 +43,7 @@ import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.v1.EspTouchActivity;
 import com.smarthome.magic.adapter.OneImageAdapter;
 import com.smarthome.magic.app.AppConfig;
@@ -57,7 +58,9 @@ import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
+import com.smarthome.magic.dialog.newdia.TishiPhoneDialog;
 import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.Message;
 import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.model.ZhiNengJiaJu_0007Model;
 import com.smarthome.magic.model.ZhiNengJiaJu_0009Model;
@@ -77,6 +80,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 import static com.smarthome.magic.app.ConstanceValue.MSG_PEIWANG_SUCCESS;
+import static com.smarthome.magic.get_net.Urls.SERVER_URL;
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
 public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
@@ -659,6 +663,7 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
     }
 
     TishiDialog tishiDialog;
+    TishiPhoneDialog tishiPhoneDialog;
 
     public void jieShouMqttTianJiaSheBei() {
 
@@ -715,9 +720,72 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
                     tishiDialog.setTextCancel("");
                     tishiDialog.setTextConfirm("退出重试");
                     tishiDialog.show();
+                } else if (message.type == 1111111) {
+                    tishiPhoneDialog = new TishiPhoneDialog(mContext, 2, new TishiPhoneDialog.TishiDialogListener() {
+                        @Override
+                        public void onClickCancel(View v, TishiPhoneDialog dialog) {
+
+                        }
+
+                        @Override
+                        public void onClickConfirm(View v, TishiPhoneDialog dialog) {
+
+                        }
+
+                        @Override
+                        public void onDismiss(TishiPhoneDialog dialog) {
+
+                        }
+
+                        @Override
+                        public void onSendYanZhengMa(View v, TishiPhoneDialog dialog) {
+                            get_code("");
+                        }
+
+
+                    });
+                    tishiPhoneDialog.show();
                 }
             }
         }));
+    }
+
+    String smsId;
+
+    private void get_code(String StrPhone) {
+
+        if (StrPhone.equals("") || StrPhone == null) {
+            UIHelper.ToastMessage(this, "手机号码不能为空");
+        } else {
+            Map<String, String> map = new HashMap<>();
+            map.put("code", "00001");
+            map.put("key", Urls.key);
+            map.put("user_phone", StrPhone.toString());
+            map.put("mod_id", "0315");
+            Gson gson = new Gson();
+            OkGo.<AppResponse<Message.DataBean>>post(SERVER_URL + "msg")
+                    .tag(this)//
+                    .upJson(gson.toJson(map))
+                    .execute(new JsonCallback<AppResponse<Message.DataBean>>() {
+                        @Override
+                        public void onSuccess(Response<AppResponse<Message.DataBean>> response) {
+                            Y.t("验证码获取成功");
+
+                            Notice notice = new Notice();
+                            notice.type = ConstanceValue.MSG_SENDCODE_HUIDIAO;
+                            sendRx(notice);
+                            if (response.body().data.size() > 0)
+                                smsId = response.body().data.get(0).getSms_id();
+                            tishiPhoneDialog.startCode();
+                        }
+
+                        @Override
+                        public void onError(Response<AppResponse<Message.DataBean>> response) {
+                            Y.tError(response);
+                            tishiPhoneDialog.errorCode();
+                        }
+                    });
+        }
     }
 
     private void tianJiaSheBeiNet() {

@@ -10,10 +10,10 @@
 
     <RelativeLayout
         android:id="@+id/rl_title"
-        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/blue_3a96e9">
+        android:background="@color/blue_3a96e9"
+        android:fitsSystemWindows="true">
 
         <RelativeLayout
             android:id="@+id/rl_back"
@@ -103,7 +103,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="0"
-                    android:text="壳体传感器开路或短路"
                     android:textColor="@color/yellow" />
             </LinearLayout>
 

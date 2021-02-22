@@ -96,12 +96,21 @@ public class DeviceFenLeiFragment extends BaseFragment implements FenLeiContenIn
                     case R.id.constrain:
                         fenLeiContentModel = mDatas.get(position);
                         // TODO: 2021/2/8  添加是否由主机校验
-                        String strZhuJi = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.HAVEZHUJI, "");
-                        if (strZhuJi.equals("0")) {
-                            SheBeiChongZhiActivity.actionStart(getActivity(), mDatas.get(position).getItem_name(), mDatas.get(position).getImg_url(), mDatas.get(position).header, fenLeiContentModel);
-                        } else {
-                            UIHelper.ToastMessage(getActivity(), "此家庭已有主机,请切换家庭后重新尝试");
-                        }
+//                        String strZhuJi = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.HAVEZHUJI, "");
+//                        if (fenLeiContentModel.type.equals("00")) {
+//                            if (strZhuJi.equals("0")) {
+//                                SheBeiChongZhiActivity.actionStart(getActivity(), mDatas.get(position).getItem_name(), mDatas.get(position).getImg_url(), mDatas.get(position).header, fenLeiContentModel);
+//                            } else {
+//                                UIHelper.ToastMessage(getActivity(), "此家庭已有主机,请切换家庭后重新尝试");
+//                            }
+//                        } else {
+//                            if (strZhuJi.equals("0")) {
+//                                UIHelper.ToastMessage(getActivity(), "此家庭没有主机,请先添加主机后重新尝试");
+//                            } else {
+//
+//                            }
+//                        }
+                        SheBeiChongZhiActivity.actionStart(getActivity(), mDatas.get(position).getItem_name(), mDatas.get(position).getImg_url(), mDatas.get(position).header, fenLeiContentModel);
                         break;
                 }
             }

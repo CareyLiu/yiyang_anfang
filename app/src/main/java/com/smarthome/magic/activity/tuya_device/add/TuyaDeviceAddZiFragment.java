@@ -88,6 +88,9 @@ import rx.functions.Action1;
 
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
+/**
+ * 1.先搜索主机
+ */
 public class TuyaDeviceAddZiFragment extends BaseFragment {
     @BindView(R.id.iv_wifi)
     ImageView iv_wifi;

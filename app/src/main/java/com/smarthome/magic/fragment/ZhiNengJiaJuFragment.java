@@ -42,6 +42,7 @@ import com.smarthome.magic.config.AppResponse;
 
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.ZhiNengFamilyManageBean;
 import com.smarthome.magic.model.ZhiNengHomeBean;
@@ -472,12 +473,33 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
         }
     }
 
+    TishiDialog tishiDialog;
+
     private void clickAddCamera() {
 
         // TODO: 2021/2/19 判断是不是管理员
         String str = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.ZHINENGJIAJUGUANLIYUAN, "0");
         if (str.equals("0")) {
-            Y.t("没有管理员权限，无法添加设备！");
+            tishiDialog = new TishiDialog(getActivity(), 3, new TishiDialog.TishiDialogListener() {
+                @Override
+                public void onClickCancel(View v, TishiDialog dialog) {
+
+                }
+
+                @Override
+                public void onClickConfirm(View v, TishiDialog dialog) {
+                    tishiDialog.dismiss();
+
+                }
+
+                @Override
+                public void onDismiss(TishiDialog dialog) {
+
+                }
+            });
+            tishiDialog.setTextContent("非管理员无法添加主机及设备");
+            tishiDialog.show();
+
         } else if (str.equals("1")) {
             PreferenceHelper.getInstance(getActivity()).putString(AppConfig.MC_DEVICE_CCID, "aaaaaaaaaaaaaaaa80140018");
             TuyaDeviceAddActivity.actionStart(getContext());

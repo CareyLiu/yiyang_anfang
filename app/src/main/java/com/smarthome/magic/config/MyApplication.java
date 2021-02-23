@@ -139,8 +139,15 @@ public class MyApplication extends MultiDexApplication {
 
     //String mqttUrl = "tcp://192.168.1.127";//大个本地
     //String mqttUrl = "tcp://mqtt.hljsdkj.com";//正式
-     String mqttUrl = "tcp://ggw.hljsdkj.com";//ggw
+    String mqttUrl = "tcp://ggw.hljsdkj.com";//ggw
 
+    public String getMqttUrl() {
+        if (Urls.SERVER_URL.equals("https://shop.hljsdkj.com/")) {
+            return "tcp://mqtt.hljsdkj.com";
+        } else {
+            return "tcp://ggw.hljsdkj.com";
+        }
+    }
 
     public static List<String> mqttDingyue = new ArrayList<>();
 
@@ -587,7 +594,7 @@ public class MyApplication extends MultiDexApplication {
                         .setLastWill("K.", "wit/server/" + getUser_id(), 2, true)
                         .setUserName("witandroid")
                         .setUserPassword("aG678om34buysdi")
-                        .setServer(mqttUrl).setTimeout(1);
+                        .setServer(getMqttUrl()).setTimeout(1);
 
                 builder.setMessageListener(new MqttCallbackExtended() {
                     @Override

@@ -696,6 +696,10 @@ public class MyApplication extends MultiDexApplication {
                                 Notice n = new Notice();
                                 n.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
                                 RxBus.getDefault().sendRx(n);
+                            } else if (codeClass.code.equals("jyj_0001")) {// 別人绑定主机
+                                Notice n = new Notice();
+                                n.type = ConstanceValue.MSG_ZHUJIBANG_OTHER;
+                                RxBus.getDefault().sendRx(n);
                             }
 
                         } else if (message.toString().contains("p.")) {

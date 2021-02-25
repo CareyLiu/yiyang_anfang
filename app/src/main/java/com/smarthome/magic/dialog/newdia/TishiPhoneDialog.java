@@ -29,7 +29,7 @@ public class TishiPhoneDialog extends Dialog implements View.OnClickListener {
     private TimeCount timeCount;
 
     private TishiDialogListener mListener;
-    protected boolean dismissAfterClick = true;//是否点击按钮后关闭
+    protected boolean dismissAfterClick = false;//是否点击按钮后关闭
     private int type;//1.消息推送    2.操作失败    3.操作提示    4.操作成功    5.删除
 
     public TishiPhoneDialog(Context context, int type, TishiDialogListener mListener) {
@@ -99,6 +99,8 @@ public class TishiPhoneDialog extends Dialog implements View.OnClickListener {
             clickCancel(v);
         } else if (v == tv_confirm) {
             clickConfirm(v);
+        } else if (v == tvGetCode) {
+            sendYanzhengma(v);
         }
     }
 
@@ -113,7 +115,12 @@ public class TishiPhoneDialog extends Dialog implements View.OnClickListener {
         if (mListener != null) {
             mListener.onClickConfirm(v, TishiPhoneDialog.this);
         }
-        dismissAfterClick();
+    }
+
+    private void sendYanzhengma(View v) {//发送验证码
+        if (mListener != null) {
+            mListener.onSendYanZhengMa(v, TishiPhoneDialog.this);
+        }
     }
 
     protected void dismissAfterClick() {

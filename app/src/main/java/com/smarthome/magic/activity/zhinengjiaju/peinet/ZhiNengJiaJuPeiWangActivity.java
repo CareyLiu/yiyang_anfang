@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -683,9 +684,6 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
                         }
                     });
 
-//                    UIHelper.SnackbarMessage(findViewById(R.id.nes_scroll), "主机已添加成功");
-//                    animationView.pauseAnimation();
-
                     Notice notice = new Notice();
                     notice.type = MSG_PEIWANG_SUCCESS;
                     RxBus.getDefault().sendRx(notice);
@@ -693,21 +691,16 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
                     Notice notice1 = new Notice();
                     notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
                     sendRx(notice1);
-
                 } else if (message.type == ConstanceValue.MSG_PEIWANG_ERROR) {
-
                     animationView.pauseAnimation();
                     tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
                         @Override
                         public void onClickCancel(View v, TishiDialog dialog) {
 
-//                            tishiDialog.dismiss();
-//                            finish();
                         }
 
                         @Override
                         public void onClickConfirm(View v, TishiDialog dialog) {
-                            //tishiDialog.dismiss();
                             finish();
                         }
 
@@ -720,7 +713,7 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
                     tishiDialog.setTextCancel("");
                     tishiDialog.setTextConfirm("退出重试");
                     tishiDialog.show();
-                } else if (message.type == 1111111) {
+                } else if (message.type == ConstanceValue.MSG_ZHUJIBANG_OTHER) {
                     tishiPhoneDialog = new TishiPhoneDialog(mContext, 2, new TishiPhoneDialog.TishiDialogListener() {
                         @Override
                         public void onClickCancel(View v, TishiPhoneDialog dialog) {
@@ -729,7 +722,12 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
 
                         @Override
                         public void onClickConfirm(View v, TishiPhoneDialog dialog) {
+                            if (TextUtils.isEmpty(smsId)) {
+                                Y.t("请发送验证码");
+                                return;
+                            }
 
+                            tianJiaSheBeiNet2();
                         }
 
                         @Override
@@ -741,8 +739,6 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
                         public void onSendYanZhengMa(View v, TishiPhoneDialog dialog) {
                             get_code("");
                         }
-
-
                     });
                     tishiPhoneDialog.show();
                 }
@@ -750,10 +746,9 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
         }));
     }
 
-    String smsId;
+    private String smsId;
 
     private void get_code(String StrPhone) {
-
         if (StrPhone.equals("") || StrPhone == null) {
             UIHelper.ToastMessage(this, "手机号码不能为空");
         } else {
@@ -761,7 +756,7 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
             map.put("code", "00001");
             map.put("key", Urls.key);
             map.put("user_phone", StrPhone.toString());
-            map.put("mod_id", "0315");
+            map.put("mod_id", "0341");
             Gson gson = new Gson();
             OkGo.<AppResponse<Message.DataBean>>post(SERVER_URL + "msg")
                     .tag(this)//
@@ -770,12 +765,12 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
                         @Override
                         public void onSuccess(Response<AppResponse<Message.DataBean>> response) {
                             Y.t("验证码获取成功");
-
                             Notice notice = new Notice();
                             notice.type = ConstanceValue.MSG_SENDCODE_HUIDIAO;
                             sendRx(notice);
-                            if (response.body().data.size() > 0)
+                            if (response.body().data.size() > 0) {
                                 smsId = response.body().data.get(0).getSms_id();
+                            }
                             tishiPhoneDialog.startCode();
                         }
 
@@ -794,6 +789,30 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
         map.put("add_device_type", "2");
+        map.put("mc_decice_ccid", PreferenceHelper.getInstance(mContext).getString(AppConfig.DEVICECCID, ""));
+        map.put("cd_device_ccid", cd_device_ccid);
+        Gson gson = new Gson();
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<ZhiNengFamilyEditBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ZhiNengFamilyEditBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        UIHelper.ToastMessage(mContext, "设备添加成功");
+                        finish();
+                    }
+                });
+    }
+
+
+    private void tianJiaSheBeiNet2() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16041");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("add_device_type", "1");
+        map.put("family_id", PreferenceHelper.getInstance(mContext).getString(AppConfig.FAMILY_ID, ""));
         map.put("mc_decice_ccid", PreferenceHelper.getInstance(mContext).getString(AppConfig.DEVICECCID, ""));
         map.put("cd_device_ccid", cd_device_ccid);
         Gson gson = new Gson();

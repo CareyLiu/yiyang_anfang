@@ -164,4 +164,5 @@ public interface ConstanceValue {
     int MSG_SENDCODE_HUIDIAO = 0x10122;//发送验证码给dialog的回调
 
     int MSG_KAIGUAN_DELETE = 0x10123;//删除开关
+    int MSG_ZHUJIBANG_OTHER = 0x10124;//他人绑主机验证
 }

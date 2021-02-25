@@ -28,6 +28,7 @@ import com.iflytek.cloud.WakeuperResult;
 import com.iflytek.cloud.util.ResourceUtil;
 import com.smarthome.magic.R;
 import com.smarthome.magic.about_yu_yin.FucUtil;
+import com.smarthome.magic.about_yu_yin.UploadUtils;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
@@ -36,6 +37,8 @@ import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.config.Logger;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.inter.YuYinInter;
+import com.smarthome.magic.model.CeShiDongTaiShiTiModel;
+import com.smarthome.magic.model.DongTaiShiTiModel;
 import com.smarthome.magic.model.ResultModel;
 
 import org.json.JSONException;
@@ -372,6 +375,10 @@ public class YuYinChuLiTool {
         } else {
             showTip("AIUIAgent已创建");
         }
+        //上传实体
+        //syncContactsSheBei();
+        //syncContactsRoom();
+        //UploadUtils uploadUtils =new UploadUtils();
     }
 
     private String getAIUIParams() {
@@ -488,7 +495,7 @@ public class YuYinChuLiTool {
                                         Log.i("语义结果", "code" + code);
                                         String deviceCCID = PreferenceHelper.getInstance(context).getString(AppConfig.DEVICECCID, "");
                                         String serverId = PreferenceHelper.getInstance(context).getString(AppConfig.SERVERID, "");
-                                        String topic = "zn/server/" + serverId  + deviceCCID;
+                                        String topic = "zn/server/" + serverId + deviceCCID;
                                         //topic = "zn/server/8/aaaaaaaaaaaaaaaa90140018";
                                         YuYinMqtt yuYinMqtt = new YuYinMqtt(context, topic);
                                         yuYinMqtt.subscribeMingLing();
@@ -515,121 +522,41 @@ public class YuYinChuLiTool {
                                          *      */
 
                                         String msg = "";
-                                        switch (resultModel.getSemantic().get(0).getIntent()) {
-                                            case "dengl":
-
-                                                for (int i = 0; i < semanticBean.getSlots().size(); i++) {
-                                                    if (semanticBean.getSlots().get(i).getName().equals("caozuo")) {
-                                                        caozuo = semanticBean.getSlots().get(i).getNormValue();
-                                                    } else if (semanticBean.getSlots().get(i).getName().equals("shebei")) {
-                                                        shebei = semanticBean.getSlots().get(i).getNormValue();
-                                                    } else if (semanticBean.getSlots().get(i).getName().equals("weizhi")) {
-                                                        weizhi = semanticBean.getSlots().get(i).getNormValue();
-                                                    }
-                                                }
-                                                if (resultModel.getAnswer().getText().equals("正在为您操作")) {
-                                                    msg = "j{'intentName':" + "actionByRoom" + ",'operate':" + caozuo + ",'device':" + shebei + ",'room':" + weizhi + "}.";
-                                                    yuYinMqtt.pushMingLing(msg);
-                                                    caozuo = "";
-                                                    shebei = "";
-                                                    weizhi = "";
-
-                                                }
-
+                                        //获得操作后拼接msg
+                                        String intentName = resultModel.getSemantic().get(0).getIntent();
+                                        if (intentName.equals("weiy")) {
+                                            if (resultModel.getAnswer().getText().equals("正在为您操作")) {
+                                                String circle = "0" + semanticBean.getSlots().get(0).getNormValue() + "c";
+                                                msg = "j{'intentName':" + "feedingFish" + ",'operate':" + "打开" + ",'device':" + "喂鱼" + ",'room':" + "客厅" + ",'time':" + circle + "}.";
                                                 Log.i("语义结果", msg);
-                                                break;
-                                            case "weiy":
-                                                if (resultModel.getAnswer().getText().equals("正在为您操作")) {
-                                                    String circle = "0" + semanticBean.getSlots().get(0).getNormValue() + "c";
-                                                    msg = "j{'intentName':" + "feedingFish" + ",'operate':" + "打开" + ",'device':" + "喂鱼" + ",'room':" + "客厅" + ",'time':" + circle + "}.";
-                                                    Log.i("语义结果", msg);
-                                                    yuYinMqtt.pushMingLing(msg);
-                                                    caozuo = "";
-                                                    shebei = "";
-                                                    weizhi = "";
+                                                yuYinMqtt.pushMingLing(msg);
+                                                caozuo = "";
+                                                shebei = "";
+                                                weizhi = "";
+                                            }
+                                        } else  {
+                                            for (int i = 0; i < semanticBean.getSlots().size(); i++) {
+                                                if (semanticBean.getSlots().get(i).getName().equals("operate")) {
+                                                    caozuo = semanticBean.getSlots().get(i).getNormValue();
+                                                } else if (semanticBean.getSlots().get(i).getName().equals("device")) {
+                                                    shebei = semanticBean.getSlots().get(i).getNormValue();
+                                                } else if (semanticBean.getSlots().get(i).getName().equals("cus_room")) {
+                                                    weizhi = semanticBean.getSlots().get(i).getNormValue();
                                                 }
+                                            }
 
-                                                break;
-                                            case "dkcl":
+                                            if (resultModel.getAnswer().getText().equals("正在为您操作")) {
+                                                String circle = "0" + semanticBean.getSlots().get(0).getNormValue() + "c";
+                                                msg = "j{'intentName':" + resultModel.getSemantic().get(0).getIntent() + ",'operate':" + caozuo + ",'device':" + shebei + ",'room':" + weizhi +  "}.";
+                                                Log.i("语义结果", msg);
+                                                yuYinMqtt.pushMingLing(msg);
+                                                caozuo = "";
+                                                shebei = "";
+                                                weizhi = "";
+                                            }
 
-                                                if (resultModel.getAnswer().getText().equals("正在为您操作")) {
-                                                    String caozuo = semanticBean.getSlots().get(0).getNormValue();
-                                                    msg = "j{'intentName':actionByRoom,'operate':" + caozuo + ",'device':窗帘电机,'room':客厅}.";
-                                                    Log.i("语义结果", msg);
-                                                    yuYinMqtt.pushMingLing(msg);
-                                                }
-                                                break;
-
-                                            case "dkcz":
-
-                                                for (int i = 0; i < semanticBean.getSlots().size(); i++) {
-                                                    if (semanticBean.getSlots().get(i).getName().equals("caozuo")) {
-                                                        caozuo = semanticBean.getSlots().get(i).getNormValue();
-                                                    } else if (semanticBean.getSlots().get(i).getName().equals("chazuo")) {
-                                                        chazuo = semanticBean.getSlots().get(i).getNormValue();
-                                                    } else if (semanticBean.getSlots().get(i).getName().equals("weizhi")) {
-                                                        weizhi = semanticBean.getSlots().get(i).getNormValue();
-                                                    }
-                                                }
-
-                                                if (resultModel.getAnswer().getText().equals("正在为您操作")) {
-                                                    // Log.i("语义结果", "caozuo:" + caozuo + "插座:" + chazuo + "位置:" + weizhi);
-                                                    String msg1 = "j{'intentName':actionByRoom,'operate':" + caozuo + ",'device':插座,'room':" + weizhi + "}.";
-                                                    Log.i("语义结果", msg1);
-                                                    yuYinMqtt.pushMingLing(msg1);
-                                                    caozuo = "";
-                                                    chazuo = "";
-                                                    weizhi = "";
-                                                }
-                                                break;
-
-                                            case "jiaohwy":
-
-                                                for (int i = 0; i < semanticBean.getSlots().size(); i++) {
-
-                                                    if (semanticBean.getSlots().get(i).getName().equals("caozuo")) {
-                                                        caozuo = semanticBean.getSlots().get(i).getNormValue();
-                                                    } else if (semanticBean.getSlots().get(i).getName().equals("chazuo")) {
-                                                        shebei = semanticBean.getSlots().get(i).getNormValue();
-                                                    }
-                                                }
-
-                                                if (resultModel.getAnswer().getText().equals("正在为您操作")) {
-                                                    // Log.i("语义结果", "caozuo:" + caozuo + "插座:" + chazuo + "位置:" + weizhi);
-                                                    String msg1 = "j{'intentName':actionByRoom,'operate':" + caozuo + ",'device':灯,'room':" + "客厅" + "}.";
-                                                    Log.i("语义结果", msg1);
-                                                    yuYinMqtt.pushMingLing(msg1);
-                                                    caozuo = "";
-                                                    shebei = "";
-                                                }
-                                                break;
-                                            case "zhuckt":
-                                                for (int i = 0; i < semanticBean.getSlots().size(); i++) {
-
-                                                    if (semanticBean.getSlots().get(i).getName().equals("caozuo")) {
-                                                        caozuo = semanticBean.getSlots().get(i).getNormValue();
-                                                    } else if (semanticBean.getSlots().get(i).getName().equals("kt")) {
-                                                        shebei = semanticBean.getSlots().get(i).getNormValue();
-                                                    }
-                                                }
-
-                                                if (resultModel.getAnswer().getText().equals("正在为您操作")) {
-                                                    // Log.i("语义结果", "caozuo:" + caozuo + "插座:" + chazuo + "位置:" + weizhi);
-                                                    String msg1 = "j{'intentName':actionByRoom,'operate':" + caozuo + ",'device':空调,'room':" + "客厅" + "}.";
-                                                    Log.i("语义结果", msg1);
-                                                    yuYinMqtt.pushMingLing(msg1);
-                                                    caozuo = "";
-                                                    shebei = "";
-                                                }
-                                                break;
-
-
-                                            default:
-                                                break;
-
+                                            Log.i("语义结果", msg);
                                         }
-
-
                                     }
 
                                 }
@@ -699,6 +626,7 @@ public class YuYinChuLiTool {
                 break;
 
                 case AIUIConstant.EVENT_CMD_RETURN: {
+
                     if (AIUIConstant.CMD_SYNC == event.arg1) {    // 数据同步的返回
                         int dtype = event.data.getInt("sync_dtype", -1);
                         int retCode = event.arg2;
@@ -954,4 +882,148 @@ public class YuYinChuLiTool {
         }
     }
 
+    private void syncContactsSheBei() {
+        if (null == mAIUIAgent) {
+            showTip("AIUIAgent 为空，请先创建");
+            return;
+        }
+        // TODO: 2021/2/22 66666 
+        //经过研究 初步核实认定 是数据问题 数据对了就可以上传成功
+        //明天主要研究数据 对应的键值对是什么
+
+        try {
+            // 从文件中读取联系人示例数据
+            //String dataStr = FucUtil.readFile(context, "data/data_contact.txt", "utf-8");
+            //mNlpText.setText(dataStr);
+            //UIHelper.ToastMessage(context, dataStr);
+
+            DongTaiShiTiModel dongTaiShiTiModel = new DongTaiShiTiModel();
+            dongTaiShiTiModel.setName("余虹婷");
+            // dongTaiShiTiModel.setCus_room("客厅");
+            String str = new Gson().toJson(dongTaiShiTiModel);
+            Log.i("YuYinChuLiTool", str);
+
+
+            // 数据进行no_wrap Base64编码
+            String dataStrBase64 = Base64.encodeToString(str.getBytes("utf-8"), Base64.NO_WRAP);
+
+            JSONObject syncSchemaJson = new JSONObject();
+            JSONObject dataParamJson = new JSONObject();
+
+            // 设置id_name为uid，即用户级个性化资源
+            // 个性化资源使用方法可参见http://doc.xfyun.cn/aiui_mobile/的用户个性化章节
+            dataParamJson.put("id_name", "appid");
+            dataParamJson.put("id_value", "5fc33e7b");
+
+            // 设置res_name为联系人
+            dataParamJson.put("res_name", "OS8569425439.app_device_name");
+
+            syncSchemaJson.put("param", dataParamJson);
+            syncSchemaJson.put("data", dataStrBase64);
+
+            // 传入的数据一定要为utf-8编码
+            byte[] syncData = syncSchemaJson.toString().getBytes("utf-8");
+
+            // 给该次同步加上自定义tag，在返回结果中可通过tag将结果和调用对应起来
+            JSONObject paramJson = new JSONObject();
+            paramJson.put("tag", "sync-tag1");
+
+            // 用schema数据同步上传联系人
+            // 注：数据同步请在连接服务器之后进行，否则可能失败
+            AIUIMessage syncAthena = new AIUIMessage(AIUIConstant.CMD_SYNC,
+                    AIUIConstant.SYNC_DATA_SCHEMA, 0, paramJson.toString(), syncData);
+
+            mAIUIAgent.sendMessage(syncAthena);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void syncContactsRoom() {
+        if (null == mAIUIAgent) {
+            showTip("AIUIAgent 为空，请先创建");
+            return;
+        }
+        // TODO: 2021/2/22 66666
+        //经过研究 初步核实认定 是数据问题 数据对了就可以上传成功
+        //明天主要研究数据 对应的键值对是什么
+
+        try {
+            // 从文件中读取联系人示例数据
+            //String dataStr = FucUtil.readFile(context, "data/data_contact.txt", "utf-8");
+            //mNlpText.setText(dataStr);
+            //UIHelper.ToastMessage(context, dataStr);
+
+            DongTaiShiTiModel dongTaiShiTiModel = new DongTaiShiTiModel();
+            dongTaiShiTiModel.setName("易拉罐");
+
+            // dongTaiShiTiModel.setCus_room("客厅");
+            String str = new Gson().toJson(dongTaiShiTiModel);
+            Log.i("YuYinChuLiTool", str);
+
+
+            // 数据进行no_wrap Base64编码
+            String dataStrBase64 = Base64.encodeToString(str.getBytes("utf-8"), Base64.NO_WRAP);
+
+            JSONObject syncSchemaJson = new JSONObject();
+            JSONObject dataParamJson = new JSONObject();
+
+            // 设置id_name为uid，即用户级个性化资源
+            // 个性化资源使用方法可参见http://doc.xfyun.cn/aiui_mobile/的用户个性化章节
+            dataParamJson.put("id_name", "appid");
+            dataParamJson.put("id_value", "5fc33e7b");
+
+            // 设置res_name为联系人
+            dataParamJson.put("res_name", "OS8569425439.app_room");
+
+            syncSchemaJson.put("param", dataParamJson);
+            syncSchemaJson.put("data", dataStrBase64);
+
+            // 传入的数据一定要为utf-8编码
+            byte[] syncData = syncSchemaJson.toString().getBytes("utf-8");
+
+            // 给该次同步加上自定义tag，在返回结果中可通过tag将结果和调用对应起来
+            JSONObject paramJson = new JSONObject();
+            paramJson.put("tag", "sync-tag");
+
+            // 用schema数据同步上传联系人
+            // 注：数据同步请在连接服务器之后进行，否则可能失败
+            AIUIMessage syncAthena = new AIUIMessage(AIUIConstant.CMD_SYNC,
+                    AIUIConstant.SYNC_DATA_SCHEMA, 0, paramJson.toString(), syncData);
+
+            mAIUIAgent.sendMessage(syncAthena);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void chaXunDaBaoZhuangTai() {
+        if (null == mAIUIAgent) {
+            showTip("AIUIAgent 为空，请先创建");
+            return;
+        }
+
+
+        if (TextUtils.isEmpty(mSyncSid)) {
+            showTip("sid 为空");
+            return;
+        }
+
+        try {
+            // 构造查询json字符串，填入同步schema数据返回的sid
+            JSONObject queryJson = new JSONObject();
+            queryJson.put("sid", mSyncSid);
+
+            // 发送同步数据状态查询消息，设置arg1为schema数据类型，params为查询字符串
+            AIUIMessage syncQuery = new AIUIMessage(AIUIConstant.CMD_QUERY_SYNC_STATUS,
+                    AIUIConstant.SYNC_DATA_SCHEMA, 0, queryJson.toString(), null);
+            mAIUIAgent.sendMessage(syncQuery);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 }

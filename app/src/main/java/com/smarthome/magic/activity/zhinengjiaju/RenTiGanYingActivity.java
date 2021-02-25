@@ -322,13 +322,15 @@ public class RenTiGanYingActivity extends BaseActivity {
                         dataBean = response.body().data.get(0);
                         deviceCCid = dataBean.getDevice_ccid();
                         String onlineState = dataBean.getOnline_state();
-                        if (onlineState.equals("1")) {
-                            zaiXianLiXian.setText("设备在线");
-                            ivShebeiZaixianzhuangtaiImg.setBackgroundResource(R.drawable.bg_zhineng_device_online);
+                        if (onlineState!=null){
+                            if (onlineState.equals("1")) {
+                                zaiXianLiXian.setText("设备在线");
+                                ivShebeiZaixianzhuangtaiImg.setBackgroundResource(R.drawable.bg_zhineng_device_online);
 
-                        } else if (onlineState.equals("2")) {
-                            zaiXianLiXian.setText("设备离线");
-                            ivShebeiZaixianzhuangtaiImg.setBackgroundResource(R.drawable.bg_zhineng_device_offline);
+                            } else if (onlineState.equals("2")) {
+                                zaiXianLiXian.setText("设备离线");
+                                ivShebeiZaixianzhuangtaiImg.setBackgroundResource(R.drawable.bg_zhineng_device_offline);
+                            }
                         }
                         if (firstEnter) {
                             znjjMqttMingLing = new ZnjjMqttMingLing(mContext, dataBean.getDevice_ccid_up(), dataBean.getServer_id());

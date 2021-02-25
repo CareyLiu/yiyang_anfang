@@ -214,8 +214,8 @@ public class ZhiNengJiaJuChangJingFragment extends BaseFragment {
                 .execute(new JsonCallback<AppResponse<ChangJingXiangQingModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<ChangJingXiangQingModel.DataBean>> response) {
-                        // UIHelper.ToastMessage(getActivity(), "场景切换成功");
-                        getnet();
+                       UIHelper.ToastMessage(getActivity(), "场景切换成功");
+                       // getnet();
                     }
 
                     @Override

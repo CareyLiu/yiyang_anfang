@@ -370,10 +370,10 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
             public void onClick(View v) {
 
                 String serverid = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.SERVERID, "");
-                if (StringUtils.isEmpty(serverid)) {
-                    UIHelper.ToastMessage(getActivity(), "请添加主机后重新尝试");
-                    return;
-                }
+//                if (StringUtils.isEmpty(serverid)) {
+//                    UIHelper.ToastMessage(getActivity(), "请添加主机后重新尝试");
+//                    return;
+//                }
                 RxPermissions rxPermissions = new RxPermissions(getActivity());
                 rxPermissions.request(Manifest.permission.RECORD_AUDIO).subscribe(new Action1<Boolean>() {
                     @Override

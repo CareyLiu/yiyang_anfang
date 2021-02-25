@@ -47,18 +47,26 @@ public class ZhiNengChangJingAdapter extends BaseQuickAdapter<ChangJingModel.Dat
          */
         if (item.getScene_type().equals("1")) {
             tvJianJie.setText("一键执行");
-
+            doImage.setVisibility(View.VISIBLE);
         } else if (item.getScene_type().equals("2")) {
-
+            doImage.setVisibility(View.GONE);
             tvJianJie.setText("定时");
         } else if (item.getScene_type().equals("3")) {
-
+            doImage.setVisibility(View.VISIBLE);
             tvJianJie.setText("动作触发");
         }
+
+
+
         SwitchButton switchButton = helper.getView(R.id.csw_switch_button);
         if (item.getScene_state().equals("2")) {
             switchButton.setChecked(true);
-            doImage.setVisibility(View.VISIBLE);
+            if (item.getScene_type().equals("2")) {
+                doImage.setVisibility(View.GONE);
+            }else {
+                doImage.setVisibility(View.VISIBLE);
+
+            }
         } else if (item.getScene_state().equals("3")) {
             switchButton.setChecked(false);
             doImage.setVisibility(View.GONE);
@@ -68,31 +76,5 @@ public class ZhiNengChangJingAdapter extends BaseQuickAdapter<ChangJingModel.Dat
 
     }
 
-    private void kaiOrGuanBiChangJing(String scene_id, String familyId, String scene_state) {
-        Map<String, String> map = new HashMap<>();
-        map.put("code", "16060");
-        map.put("key", Urls.key);
-        map.put("token", UserManager.getManager(mContext).getAppToken());
-        map.put("scene_id", scene_id);
-        map.put("family_id", familyId);
-        map.put("scene_state", scene_state);
-        Gson gson = new Gson();
-        Log.e("map_data", gson.toJson(map));
-        OkGo.<AppResponse<ChangJingXiangQingModel.DataBean>>post(ZHINENGJIAJU)
-                .tag(this)//
-                .upJson(gson.toJson(map))
-                .execute(new JsonCallback<AppResponse<ChangJingXiangQingModel.DataBean>>() {
-                    @Override
-                    public void onSuccess(Response<AppResponse<ChangJingXiangQingModel.DataBean>> response) {
-                        // UIHelper.ToastMessage(getActivity(), "场景切换成功");
 
-                    }
-
-                    @Override
-                    public void onError(Response<AppResponse<ChangJingXiangQingModel.DataBean>> response) {
-                        String str = response.getException().getMessage();
-                        UIHelper.ToastMessage(mContext, str);
-                    }
-                });
-    }
 }

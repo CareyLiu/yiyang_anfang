@@ -25,10 +25,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.flyco.roundview.RoundRelativeLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
-import com.iflytek.cloud.Setting;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.jaeger.library.StatusBarUtil;
 import com.rairmmd.andmqtt.AndMqtt;
@@ -61,8 +59,6 @@ import com.smarthome.magic.util.AppToast;
 import com.smarthome.magic.util.SoundPoolUtils;
 import com.smarthome.magic.util.YuYinChuLiTool;
 import com.smarthome.magic.view.NoScrollViewPager;
-import com.tuya.smart.panel.base.activity.DevBaseInfoActivity;
-import com.tuya.smart.panel.base.activity.DevPanelMoreActivity;
 import com.tuya.smart.wrapper.api.TuyaWrapper;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -103,6 +99,10 @@ public class HomeActivity extends BaseActivity {
     RelativeLayout rrlYuyinMianban;
     @BindView(R.id.tv_shezhi)
     TextView tvShezhi;
+    @BindView(R.id.tv_chaxun_dabao_zhuangtai)
+    TextView tvChaxunDabaoZhuangtai;
+    @BindView(R.id.layout_bg)
+    RelativeLayout layoutBg;
     private boolean isExit;
     private SparseIntArray items;
     AlarmClass alarmClass;
@@ -240,6 +240,13 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 YuYinSheZhiActivity.actionStart(HomeActivity.this);
+            }
+        });
+
+        tvChaxunDabaoZhuangtai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                yuYinChuLiTool.chaXunDaBaoZhuangTai();
             }
         });
     }

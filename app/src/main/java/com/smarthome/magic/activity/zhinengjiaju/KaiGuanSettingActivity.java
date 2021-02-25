@@ -179,7 +179,6 @@ public class KaiGuanSettingActivity extends BaseActivity {
         map.put("device_ccid", device_ccid);
         map.put("device_ccid_up", device_ccidup);
         Gson gson = new Gson();
-        String a = gson.toJson(map);
         Log.e("map_data", gson.toJson(map));
         OkGo.<AppResponse<ZhiNengJiaJuKaiGuanModel.DataBean>>post(ZHINENGJIAJU)
                 .tag(this)//
@@ -197,7 +196,6 @@ public class KaiGuanSettingActivity extends BaseActivity {
 
                     @Override
                     public void onError(Response<AppResponse<ZhiNengJiaJuKaiGuanModel.DataBean>> response) {
-                        String str = response.getException().getMessage();
                         UIHelper.ToastMessage(mContext, response.getException().getMessage());
                     }
 
@@ -205,50 +203,6 @@ public class KaiGuanSettingActivity extends BaseActivity {
                     public void onStart(Request<AppResponse<ZhiNengJiaJuKaiGuanModel.DataBean>, ? extends Request> request) {
                         super.onStart(request);
                         showLoading();
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        super.onFinish();
-                    }
-                });
-    }
-
-
-    private void jiBangSuiYiTie() {
-        //访问网络获取数据 下面的列表数据
-        Map<String, String> map = new HashMap<>();
-        map.put("code", "16051");
-        map.put("key", Urls.key);
-        map.put("token", UserManager.getManager(mContext).getAppToken());
-        map.put("device_ccid", device_ccid);
-        map.put("device_ccid_up", device_ccidup);
-
-        map.put("unbinding_type", "1");
-        map.put("family_id", family_id);
-        Gson gson = new Gson();
-        String a = gson.toJson(map);
-        Log.e("map_data", gson.toJson(map));
-        OkGo.<AppResponse<SuiYiTieModel.DataBean>>post(ZHINENGJIAJU)
-                .tag(this)//
-                .upJson(gson.toJson(map))
-                .execute(new JsonCallback<AppResponse<SuiYiTieModel.DataBean>>() {
-                    @Override
-                    public void onSuccess(Response<AppResponse<SuiYiTieModel.DataBean>> response) {
-                        UIHelper.ToastMessage(mContext, "解除绑定成功");
-                        getnet();
-                    }
-
-                    @Override
-                    public void onError(Response<AppResponse<SuiYiTieModel.DataBean>> response) {
-                        String str = response.getException().getMessage();
-                        UIHelper.ToastMessage(mContext, response.getException().getMessage());
-                    }
-
-                    @Override
-                    public void onStart(Request<AppResponse<SuiYiTieModel.DataBean>, ? extends Request> request) {
-                        super.onStart(request);
-                        //showLoading();
                     }
 
                     @Override
@@ -268,7 +222,6 @@ public class KaiGuanSettingActivity extends BaseActivity {
         map.put("device_ccid_up", device_ccidup);
         map.put("device_name", suiYiTieName);
         Gson gson = new Gson();
-        String a = gson.toJson(map);
         Log.e("map_data", gson.toJson(map));
         OkGo.<AppResponse<SuiYiTieModel.DataBean>>post(ZHINENGJIAJU)
                 .tag(this)//
@@ -282,19 +235,7 @@ public class KaiGuanSettingActivity extends BaseActivity {
 
                     @Override
                     public void onError(Response<AppResponse<SuiYiTieModel.DataBean>> response) {
-                        String str = response.getException().getMessage();
                         UIHelper.ToastMessage(mContext, response.getException().getMessage());
-                    }
-
-                    @Override
-                    public void onStart(Request<AppResponse<SuiYiTieModel.DataBean>, ? extends Request> request) {
-                        super.onStart(request);
-                        //showLoading();
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        super.onFinish();
                     }
                 });
     }
@@ -309,7 +250,6 @@ public class KaiGuanSettingActivity extends BaseActivity {
         map.put("device_ccid_up", device_ccidup);
         map.put("family_id", family_id);
         Gson gson = new Gson();
-        String a = gson.toJson(map);
         Log.e("map_data", gson.toJson(map));
         OkGo.<AppResponse<SuiYiTieModel.DataBean>>post(ZHINENGJIAJU)
                 .tag(this)//
@@ -317,25 +257,16 @@ public class KaiGuanSettingActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse<SuiYiTieModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<SuiYiTieModel.DataBean>> response) {
-                        UIHelper.ToastMessage(mContext, "随意贴解绑成功");
-                        getnet();
+                        UIHelper.ToastMessage(mContext, "解绑成功");
+                        Notice notice = new Notice();
+                        notice.type = ConstanceValue.MSG_KAIGUAN_DELETE;
+                        sendRx(notice);
+                        finish();
                     }
 
                     @Override
                     public void onError(Response<AppResponse<SuiYiTieModel.DataBean>> response) {
-                        String str = response.getException().getMessage();
                         UIHelper.ToastMessage(mContext, response.getException().getMessage());
-                    }
-
-                    @Override
-                    public void onStart(Request<AppResponse<SuiYiTieModel.DataBean>, ? extends Request> request) {
-                        super.onStart(request);
-                        //showLoading();
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        super.onFinish();
                     }
                 });
     }

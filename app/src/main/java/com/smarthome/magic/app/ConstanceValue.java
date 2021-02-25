@@ -162,4 +162,6 @@ public interface ConstanceValue {
 
     int MSG_DEVICE_DELETE_TUYA = 0x10121;//移除设备完全
     int MSG_SENDCODE_HUIDIAO = 0x10122;//发送验证码给dialog的回调
+
+    int MSG_KAIGUAN_DELETE = 0x10123;//删除开关
 }

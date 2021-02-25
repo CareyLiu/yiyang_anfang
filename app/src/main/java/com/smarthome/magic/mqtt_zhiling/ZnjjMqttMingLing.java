@@ -473,28 +473,18 @@ public class ZnjjMqttMingLing {
                 .setQos(2), listener);
     }
 
-    /**
-     * @param str
-     */
     public void setZhiNengKaiGuan(String zhuangZhiId, String quanshu, IMqttActionListener listener) {
-
         if (!AndMqtt.getInstance().isConnect()) {
             UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
             return;
         }
 
-        if (quanshu == null) {
-            quanshu = "01";
-        }
         String zhiLing = "M15" + zhuangZhiId + quanshu + ".";
-        Log.i("Rair", "M02  行为指令  " + "装置id: " + zhuangZhiId + " 控制方式: 2");
         Log.i("Rair", zhiLing);
         AndMqtt.getInstance().publish(new MqttPublish()
                 .setMsg(zhiLing)
                 .setQos(2).setRetained(false)
                 .setTopic(topic), listener);
-
-
     }
 
     /**

@@ -62,7 +62,6 @@ public class ZhiNengJiaJuKaiGuanThreeActivity extends BaseActivity {
     @BindView(R.id.ll_quanguan)
     LinearLayout llQuanguan;
 
-    String device_id;
     @BindView(R.id.view_switch_center)
     View viewSwitchCenter;
     @BindView(R.id.rl_switch_center)
@@ -171,7 +170,7 @@ public class ZhiNengJiaJuKaiGuanThreeActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 setQuanKaiQuanGuanBac("1", R.mipmap.tuya_icon_switch_quankai, R.mipmap.kaiguan_pic_quankai_close, R.mipmap.kaiguan_pic_quanguan_open, R.mipmap.tuya_icon_switch_quanguan);
-                znjjMqttMingLing.setZhiNengKaiGuan(device_ccid, "1", new IMqttActionListener() {
+                znjjMqttMingLing.setZhiNengKaiGuan(leftZhuangZhiId + "012_" + centerZhuangZhiId + "012_" + rightZhuangZhiId, "012", new IMqttActionListener() {
                     @Override
                     public void onSuccess(IMqttToken asyncActionToken) {
 
@@ -189,7 +188,7 @@ public class ZhiNengJiaJuKaiGuanThreeActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 setQuanKaiQuanGuanBac("0", R.mipmap.tuya_icon_switch_quankai, R.mipmap.kaiguan_pic_quankai_close, R.mipmap.kaiguan_pic_quanguan_open, R.mipmap.tuya_icon_switch_quanguan);
-                znjjMqttMingLing.setZhiNengKaiGuan(device_ccid, "2", new IMqttActionListener() {
+                znjjMqttMingLing.setZhiNengKaiGuan(leftZhuangZhiId + "022_" + centerZhuangZhiId + "022_" + rightZhuangZhiId, "022", new IMqttActionListener() {
                     @Override
                     public void onSuccess(IMqttToken asyncActionToken) {
 
@@ -219,6 +218,8 @@ public class ZhiNengJiaJuKaiGuanThreeActivity extends BaseActivity {
 
                 } else if (message.type == ConstanceValue.MSG_SHEBEIZHUANGTAI) {
                     getnet();
+                } else if (message.type == ConstanceValue.MSG_KAIGUAN_DELETE) {
+                    finish();
                 }
 
             }
@@ -462,11 +463,8 @@ public class ZhiNengJiaJuKaiGuanThreeActivity extends BaseActivity {
      */
     /**
      * @param deviceName
-     * @param familyId
-     * @param device_id
-     * @param oldDeviceName
      * @param tvText
-     * @param i             第几个按钮
+     * @param i          第几个按钮
      */
     private void changeDevice(String deviceName, TextView tvText, int i) {
         Map<String, String> map = new HashMap<>();

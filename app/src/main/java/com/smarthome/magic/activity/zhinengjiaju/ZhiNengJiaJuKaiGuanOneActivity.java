@@ -142,7 +142,7 @@ public class ZhiNengJiaJuKaiGuanOneActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 setQuanKaiQuanGuanBac("1", R.mipmap.tuya_icon_switch_quankai, R.mipmap.kaiguan_pic_quankai_close, R.mipmap.kaiguan_pic_quanguan_open, R.mipmap.tuya_icon_switch_quanguan);
-                znjjMqttMingLing.setZhiNengKaiGuan(device_ccid, "1", new IMqttActionListener() {
+                znjjMqttMingLing.setZhiNengKaiGuan(zhuangZhiId, "012", new IMqttActionListener() {
                     @Override
                     public void onSuccess(IMqttToken asyncActionToken) {
 
@@ -160,7 +160,7 @@ public class ZhiNengJiaJuKaiGuanOneActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 setQuanKaiQuanGuanBac("0", R.mipmap.tuya_icon_switch_quankai, R.mipmap.kaiguan_pic_quankai_close, R.mipmap.kaiguan_pic_quanguan_open, R.mipmap.tuya_icon_switch_quanguan);
-                znjjMqttMingLing.setZhiNengKaiGuan(device_ccid, "2", new IMqttActionListener() {
+                znjjMqttMingLing.setZhiNengKaiGuan(zhuangZhiId, "022", new IMqttActionListener() {
                     @Override
                     public void onSuccess(IMqttToken asyncActionToken) {
 
@@ -183,6 +183,8 @@ public class ZhiNengJiaJuKaiGuanOneActivity extends BaseActivity {
                     changeDevice((String) message.content, familyId, device_id, oldDeviceName, tvText);
                 } else if (message.type == ConstanceValue.MSG_SHEBEIZHUANGTAI) {
                     getnet();
+                } else if (message.type == ConstanceValue.MSG_KAIGUAN_DELETE) {
+                    finish();
                 }
             }
         }));

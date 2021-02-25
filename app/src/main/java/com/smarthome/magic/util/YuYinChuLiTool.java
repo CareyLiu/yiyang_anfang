@@ -27,8 +27,7 @@ import com.iflytek.cloud.WakeuperListener;
 import com.iflytek.cloud.WakeuperResult;
 import com.iflytek.cloud.util.ResourceUtil;
 import com.smarthome.magic.R;
-import com.smarthome.magic.about_yu_yin.FucUtil;
-import com.smarthome.magic.about_yu_yin.UploadUtils;
+
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;

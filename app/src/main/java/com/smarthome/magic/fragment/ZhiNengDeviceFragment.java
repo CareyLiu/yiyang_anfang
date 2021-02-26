@@ -120,7 +120,6 @@ public class ZhiNengDeviceFragment extends BaseFragment {
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
-        //UIHelper.ToastMessage(getActivity(), "页面可见");
         getnet();
     }
 

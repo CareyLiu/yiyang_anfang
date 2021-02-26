@@ -157,7 +157,6 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
-        //UIHelper.ToastMessage(getActivity(), "页面可见");
         getnet();
     }
 
@@ -203,7 +202,6 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     }
 
     private void initMagicIndicator() {
-
         CommonNavigator commonNavigator = new CommonNavigator(getActivity());
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
             @Override
@@ -254,16 +252,11 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
             @Override
             public void call(Notice message) {
                 if (message.type == ConstanceValue.MSG_PEIWANG_SUCCESS) {
-
-                    Log.v("MSG_PEIWANG_SUCCESS", "000");
                     ivZhujiZhuangtai.setBackgroundResource(R.mipmap.zhikong_zhujizaixian);
                     tvZhujiZhuangtai.setText("主机在线");
-                    // getnet();
                 } else if (message.type == ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN) {
                     getnet();
                 } else if (message.type == ConstanceValue.MSG_ZHINENGJIAJU_ZHUJI) {
-                    //刷新列表
-                    Log.i("设备离线", "设备离线刷新列表");
                     getnet();
                 } else if (message.type == ConstanceValue.MSG_DEVICE_ADD) {
                     getnet();
@@ -272,7 +265,6 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                     if (content == null) {
                         isSettianqi = false;
                         tv_tianqi.setText("欢迎回家");
-//                        iv_tianqi.setImageResource();
                         tv_tianqi_wendu.setText("设置家庭位置，获取更多信息");
                         iv_tianqi_enter.setVisibility(View.VISIBLE);
                     } else {
@@ -292,7 +284,6 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
         srLSmart.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-//                getnet();
                 Notice notice = new Notice();
                 notice.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
                 sendRx(notice);

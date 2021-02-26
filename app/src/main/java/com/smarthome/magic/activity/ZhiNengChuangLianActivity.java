@@ -27,6 +27,8 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.app.ConstanceValue;
+import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
@@ -34,6 +36,7 @@ import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuoTIshi;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Success;
+import com.smarthome.magic.dialog.ZhiNengFamilyAddDIalog;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.SuiYiTieModel;
@@ -50,6 +53,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
@@ -314,7 +319,94 @@ public class ZhiNengChuangLianActivity extends BaseActivity {
             }
         });
 
+
+        rlDeviceName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ZhiNengFamilyAddDIalog zhiNengFamilyAddDIalog = new ZhiNengFamilyAddDIalog(mContext, ConstanceValue.MSG_ROOM_DEVICE_CHANGENAME);
+                zhiNengFamilyAddDIalog.show();
+            }
+        });
+
+        initHuidiao();
     }
+
+    private void initHuidiao() {
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_ROOM_DEVICE_CHANGENAME) {
+                    changeDevice(message.content.toString());
+                }
+            }
+        }));
+    }
+
+    /**
+     * 修改设备名字
+     */
+    private void changeDevice(String deviceName) {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16033");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("family_id", dataBean.getFamily_id());
+        map.put("device_id", dataBean.getDevice_id());
+        map.put("old_name", dataBean.getDevice_name());
+        map.put("device_name", deviceName);
+        Gson gson = new Gson();
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<ZhiNengFamilyEditBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ZhiNengFamilyEditBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        if (response.body().msg_code.equals("0000")) {
+                            tvDeviceName.setText(deviceName);
+                            MyCarCaoZuoDialog_Success myCarCaoZuoDialog_success = new MyCarCaoZuoDialog_Success(ZhiNengChuangLianActivity.this,
+                                    "成功", "名字修改成功咯", "好的", new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
+                                @Override
+                                public void clickLeft() {
+
+                                }
+
+                                @Override
+                                public void clickRight() {
+
+                                }
+                            });
+                            myCarCaoZuoDialog_success.show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        String str = response.getException().getMessage();
+
+                        tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+                                tishiDialog.dismiss();
+                            }
+
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
+
+                                finish();
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+
+                            }
+                        });
+                        tishiDialog.setTextContent(str);
+                        tishiDialog.show();
+                    }
+                });
+    }
+
 
     @Override
     public int getContentViewResId() {
@@ -463,6 +555,7 @@ public class ZhiNengChuangLianActivity extends BaseActivity {
     }
 
     TishiDialog tishiDialog;
+
     /**
      * 删除设备
      */

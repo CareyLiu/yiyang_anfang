@@ -46,35 +46,28 @@ public class ZhiNengChangJingAdapter extends BaseQuickAdapter<ChangJingModel.Dat
          * 场景类型：1.一键执行  2.定时 3.动作触发
          */
         if (item.getScene_type().equals("1")) {
-            tvJianJie.setText("一键执行");
             doImage.setVisibility(View.VISIBLE);
+            tvJianJie.setText("一键执行");
         } else if (item.getScene_type().equals("2")) {
             doImage.setVisibility(View.GONE);
             tvJianJie.setText("定时");
         } else if (item.getScene_type().equals("3")) {
-            doImage.setVisibility(View.VISIBLE);
+            doImage.setVisibility(View.GONE);
             tvJianJie.setText("动作触发");
         }
 
-
-
         SwitchButton switchButton = helper.getView(R.id.csw_switch_button);
-        if (item.getScene_state().equals("2")) {
+        if (item.getScene_state().equals("3")) {
             switchButton.setChecked(true);
-            if (item.getScene_type().equals("2")) {
-                doImage.setVisibility(View.GONE);
-            }else {
+            if (item.getScene_type().equals("1")) {
                 doImage.setVisibility(View.VISIBLE);
-
+            } else {
+                doImage.setVisibility(View.GONE);
             }
-        } else if (item.getScene_state().equals("3")) {
+        } else if (item.getScene_state().equals("2")) {
             switchButton.setChecked(false);
             doImage.setVisibility(View.GONE);
         }
         helper.addOnClickListener(R.id.view);
-
-
     }
-
-
 }

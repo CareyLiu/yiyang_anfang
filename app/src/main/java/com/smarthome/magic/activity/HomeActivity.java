@@ -263,15 +263,9 @@ public class HomeActivity extends BaseActivity {
          / 25.智能手环 26.排风 27背景音乐显示控制 28.电视遥控 29.空气净化 30.体质检测
          / 31.光敏控制 32.燃气报警 33.风扇 34.雷达
          */
-        ZhiNengJiaJuNotifyJson zhiNengJiaJuNotifyJson = new ZhiNengJiaJuNotifyJson();
-        zhiNengJiaJuNotifyJson = (ZhiNengJiaJuNotifyJson) notice.content;
-
+        ZhiNengJiaJuNotifyJson zhiNengJiaJuNotifyJson = (ZhiNengJiaJuNotifyJson) notice.content;
         ZhiNengJiaJuNotifyJson finalZhiNengJiaJuNotifyJson1 = zhiNengJiaJuNotifyJson;
-        if (tishiDialog != null) {
-            if (tishiDialog.isShowing()) {
-                tishiDialog.dismiss();
-            }
-        }
+
         tishiDialog = new TishiDialog(mContext, 1, new TishiDialog.TishiDialogListener() {
             @Override
             public void onClickCancel(View v, TishiDialog dialog) {
@@ -281,52 +275,16 @@ public class HomeActivity extends BaseActivity {
             public void onClickConfirm(View v, TishiDialog dialog) {
                 if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("12")) {
                     MenCiActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
-                    String strBaoJingYin = PreferenceHelper.getInstance(mContext).getString(AppConfig.BAOJINGTISHIYIN, "2");
-                    if (strBaoJingYin.equals("0")) {
-
-                    } else {
-                        SoundPoolUtils.soundPool(mContext, R.raw.baojingyin3);
-                    }
                 } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("11")) {
                     YanGanActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
-                    String strBaoJingYin = PreferenceHelper.getInstance(mContext).getString(AppConfig.BAOJING_YANGAN, "2");
-                    if (strBaoJingYin.equals("0")) {
-
-                    } else {
-                        SoundPoolUtils.soundPool(mContext, R.raw.baojingyin3);
-                    }
                 } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("15")) {
                     SosActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id(), true);
-                    String strBaoJingYin = PreferenceHelper.getInstance(mContext).getString(AppConfig.BOJING_SOS, "2");
-                    if (strBaoJingYin.equals("0")) {
-
-                    } else {
-                        SoundPoolUtils.soundPool(mContext, R.raw.baojingyin3);
-                    }
                 } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("05")) {
                     MenSuoActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
-                    String strBaoJingYin = PreferenceHelper.getInstance(mContext).getString(AppConfig.BAOJINGTISHIYIN, "2");
-                    if (strBaoJingYin.equals("0")) {
-
-                    } else {
-                        SoundPoolUtils.soundPool(mContext, R.raw.baojingyin3);
-                    }
                 } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("13")) {
                     LouShuiActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
-                    String strBaoJingYin = PreferenceHelper.getInstance(mContext).getString(AppConfig.BAOJINGLOUSHUI, "2");
-                    if (strBaoJingYin.equals("0")) {
-
-                    } else {
-                        SoundPoolUtils.soundPool(mContext, R.raw.baojingyin3);
-                    }
                 } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("34")) {
                     RenTiGanYingActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
-                    String strBaoJingYin = PreferenceHelper.getInstance(mContext).getString(AppConfig.BAOJINGRENTIGANYING, "2");
-                    if (strBaoJingYin.equals("0")) {
-
-                    } else {
-                        SoundPoolUtils.soundPool(mContext, R.raw.baojingyin3);
-                    }
                 }
                 tishiDialog.dismiss();
             }
@@ -337,7 +295,16 @@ public class HomeActivity extends BaseActivity {
         });
 
         tishiDialog.setTextContent("您的家庭有新的状况，是否前去查看?");
-        tishiDialog.show();
+
+        if (tishiDialog!=null&&!tishiDialog.isShowing()){
+            tishiDialog.show();
+            String strBaoJingYin = PreferenceHelper.getInstance(mContext).getString(AppConfig.BAOJING_YANGAN, "2");
+            if (strBaoJingYin.equals("0")) {
+
+            } else {
+                SoundPoolUtils.soundPool(mContext, R.raw.baojingyin3);
+            }
+        }
     }
 
     private void tuiSongTanChuang(Notice notice) {

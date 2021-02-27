@@ -518,4 +518,20 @@ public class ZnjjMqttMingLing {
     }
 
 
+    /**
+     * 取消app订阅
+     *
+     * @param listener
+     */
+    public void unSubscribeShiShiXinXi_App(String ccid, String serverId, IMqttActionListener listener) {
+        if (!AndMqtt.getInstance().isConnect()) {
+            UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
+            return;
+        }
+        shishiTopic = "zn/app/" + serverId + ccid;
+        AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                .setTopic(shishiTopic)
+                .setQos(2), listener);
+    }
+
 }

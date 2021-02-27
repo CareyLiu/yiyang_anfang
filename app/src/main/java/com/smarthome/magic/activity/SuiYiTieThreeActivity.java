@@ -157,6 +157,10 @@ public class SuiYiTieThreeActivity extends BaseActivity {
         ll1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (bangDingLeft.equals("0")) {
+                    UIHelper.ToastMessage(mContext, "请绑定设备后重新尝试");
+                    return;
+                }
                 if (iv1.isSelected()) {
                     zhiXingMqtt(0, "02");
                     iv1.setSelected(false);
@@ -169,6 +173,10 @@ public class SuiYiTieThreeActivity extends BaseActivity {
         ll2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (bangDingCenter.equals("0")) {
+                    UIHelper.ToastMessage(mContext, "请绑定设备后重新尝试");
+                    return;
+                }
                 if (iv2.isSelected()) {
                     zhiXingMqtt(1, "02");
                     iv2.setSelected(false);
@@ -182,11 +190,15 @@ public class SuiYiTieThreeActivity extends BaseActivity {
         ll3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (bangDingRight.equals("0")) {
+                    UIHelper.ToastMessage(mContext, "请绑定设备后重新尝试");
+                    return;
+                }
                 if (iv3.isSelected()) {
-                    zhiXingMqtt(1, "02");
+                    zhiXingMqtt(2, "02");
                     iv3.setSelected(false);
                 } else {
-                    zhiXingMqtt(1, "01");
+                    zhiXingMqtt(2, "01");
                     iv3.setSelected(true);
                 }
 
@@ -228,37 +240,43 @@ public class SuiYiTieThreeActivity extends BaseActivity {
     }
 
     public void tanChuang(String paiwei, String bangDingType) {
-        if (StringUtils.isEmpty(bangDingType)) {
-            return;
-        }
-        if (bangDingType.equals("1")) {
-            String[] items = {"添加新设备", "移除设备"};
-            final ActionSheetDialog dialog = new ActionSheetDialog(this, items, null);
-            dialog.isTitleShow(false).show();
-            dialog.setOnOperItemClickL(new OnOperItemClickL() {
-                @Override
-                public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    File file = new File(Environment.getExternalStorageDirectory(), "/temp/" + System.currentTimeMillis() + ".jpg");
-                    if (!file.getParentFile().exists()) {
-                        file.getParentFile().mkdirs();
+        if (bangDingType != null) {
+            if (bangDingType.equals("1")) {
+                String[] items = {"添加新设备", "移除设备"};
+                final ActionSheetDialog dialog = new ActionSheetDialog(this, items, null);
+                dialog.isTitleShow(false).show();
+                dialog.setOnOperItemClickL(new OnOperItemClickL() {
+                    @Override
+                    public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        File file = new File(Environment.getExternalStorageDirectory(), "/temp/" + System.currentTimeMillis() + ".jpg");
+                        if (!file.getParentFile().exists()) {
+                            file.getParentFile().mkdirs();
+                        }
+                        Uri imageUri = Uri.fromFile(file);
+                        switch (position) {
+                            case 0:
+                                String deviceCcidSt = "";
+                                //UIHelper.ToastMessage(mContext, "绑定设备");
+                                if (mDatas.get(Integer.valueOf(paiwei)) != null) {
+                                    deviceCcidSt = mDatas.get(Integer.valueOf(paiwei)).getDevice_ccid();
+                                }
+                                SuiYiTieTianJiaSheBeiActivity.actionStart(mContext, paiwei, device_ccid, device_ccidup, "2", deviceCcidSt);
+                                break;
+                            case 1:
+                                yiChuSheBei(paiwei);
+                                break;
+                        }
+                        dialog.dismiss();
                     }
-                    Uri imageUri = Uri.fromFile(file);
-                    switch (position) {
-                        case 0:
-                            String deviceCcidSt = "";
-                            //UIHelper.ToastMessage(mContext, "绑定设备");
-                            if (mDatas.get(Integer.valueOf(paiwei)) != null) {
-                                deviceCcidSt = mDatas.get(Integer.valueOf(paiwei)).getDevice_ccid();
-                            }
-                            SuiYiTieTianJiaSheBeiActivity.actionStart(mContext, paiwei, device_ccid, device_ccidup, "2", deviceCcidSt);
-                            break;
-                        case 1:
-                            yiChuSheBei(paiwei);
-                            break;
-                    }
-                    dialog.dismiss();
+                });
+            } else {
+                String deviceCcidSt = "";
+                //UIHelper.ToastMessage(mContext, "绑定设备");
+                if (mDatas.get(Integer.valueOf(paiwei)) != null) {
+                    deviceCcidSt = mDatas.get(Integer.valueOf(paiwei)).getDevice_ccid();
                 }
-            });
+                SuiYiTieTianJiaSheBeiActivity.actionStart(mContext, paiwei, device_ccid, device_ccidup, "2", deviceCcidSt);
+            }
         } else {
             String deviceCcidSt = "";
             //UIHelper.ToastMessage(mContext, "绑定设备");
@@ -402,19 +420,34 @@ public class SuiYiTieThreeActivity extends BaseActivity {
 
     private void showAddIcon(Response<AppResponse<SuiYiTieModel.DataBean>> response) {
 
+        if (response.body().data.get(0).getBinding_type() != null) {
+            if (response.body().data.get(0).getBinding_type().equals("1")) {
+                rlLeft.setVisibility(View.GONE);
+                rlCenter.setVisibility(View.GONE);
+                rlRight.setVisibility(View.GONE);
+                tvsuiyitie.setVisibility(View.VISIBLE);
+                String str1 = response.body().data.get(0).getDevice_list().get(0).getBinding_device_name();
+                String str = "该随意贴已与" + str1 + "绑定，如需解绑请去设置页设置";
+                tvsuiyitie.setText(str);
 
-        if (response.body().data.get(0).getBinding_type().equals("1")) {
-            rlLeft.setVisibility(View.GONE);
-            rlCenter.setVisibility(View.GONE);
-            rlRight.setVisibility(View.GONE);
-            tvsuiyitie.setVisibility(View.VISIBLE);
-            String str1 = response.body().data.get(0).getDevice_list().get(0).getBinding_device_name();
-            String str = "该随意贴已与" + str1 + "绑定，如需解绑请去设置页设置";
-            tvsuiyitie.setText(str);
-
-
+            } else {
+                showSuiYiTie(response);
+            }
         } else {
+            showSuiYiTie(response);
+        }
 
+//        if (StringUtils.isEmpty(response.body().data.get(0).getBinding_type())) {
+//            tvsuiyitie.setVisibility(View.GONE);
+//            tvAdd1Name.setText("添加");
+//            tvAdd2Name.setText("添加");
+//            tvAdd3Name.setText("添加");
+//        }
+    }
+
+
+    public void showSuiYiTie(Response<AppResponse<SuiYiTieModel.DataBean>> response) {
+        {
             tvsuiyitie.setVisibility(View.GONE);
             if (StringUtils.isEmpty(response.body().data.get(0).getDevice_list().get(0).getBinding_device_name())) {
                 Glide.with(mContext).load(R.mipmap.tuya_nav_icon_add).into(ivAdd1);
@@ -466,12 +499,6 @@ public class SuiYiTieThreeActivity extends BaseActivity {
 
 
         }
-//        if (StringUtils.isEmpty(response.body().data.get(0).getBinding_type())) {
-//            tvsuiyitie.setVisibility(View.GONE);
-//            tvAdd1Name.setText("添加");
-//            tvAdd2Name.setText("添加");
-//            tvAdd3Name.setText("添加");
-//        }
     }
 
     private boolean flag = false;
@@ -488,9 +515,15 @@ public class SuiYiTieThreeActivity extends BaseActivity {
     public ZnjjMqttMingLing mqttMingLing = null;
     String nowData;
 
+    private String device_ccid_up = null;
+    private String serverId = null;
 
     public void zhiXingMqtt(int position, String caoZuoFangShi) {
         if (mqttMingLing == null) {
+            device_ccid_up = mDatas.get(position).getDevice_ccid_up();
+            serverId = mDatas.get(position).getServer_id();
+
+
             mqttMingLing = new ZnjjMqttMingLing(mContext, mDatas.get(position).getDevice_ccid_up(), mDatas.get(position).getServer_id());
             nowData = "zn/app/" + mDatas.get(position).getServer_id() + mDatas.get(position).getDevice_ccid_up();
             //     hardwareData = "zn/hardware/" + mDatas.get(position).getServer_id() + mDatas.get(position).getDevice_ccid_up();
@@ -508,17 +541,7 @@ public class SuiYiTieThreeActivity extends BaseActivity {
                     Log.i("CAR_NOTIFY", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
                 }
             });
-            mqttMingLing.subscribeShiShiXinXi(new IMqttActionListener() {
-                @Override
-                public void onSuccess(IMqttToken asyncActionToken) {
-                    Log.i("Rair", "请求实时数据");
-                }
 
-                @Override
-                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-
-                }
-            });
         }
 
         String zhuangZhiId = mDatas.get(position).getDevice_ccid();
@@ -540,5 +563,34 @@ public class SuiYiTieThreeActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mqttMingLing != null) {
+            mqttMingLing.unSubscribeShiShiXinXi_App(device_ccid_up, serverId, new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Log.i("Rair", "接收app信息取消订阅成功");
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                }
+            });
+
+            mqttMingLing.unSubscribeHardware_WithCanShu(device_ccid_up, serverId, new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Log.i("Rair", "发送硬件信息订阅取消成功");
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                }
+            });
+        }
+    }
 }
 

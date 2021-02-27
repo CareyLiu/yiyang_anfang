@@ -523,21 +523,11 @@ public class YuYinChuLiTool {
                                         String msg = "";
                                         //获得操作后拼接msg
                                         String intentName = resultModel.getSemantic().get(0).getIntent();
-                                        if (intentName.equals("weiy")) {
-
-                                            for (int i = 0; i < semanticBean.getSlots().size(); i++) {
-                                                if (semanticBean.getSlots().get(i).getName().equals("operate")) {
-                                                    caozuo = semanticBean.getSlots().get(i).getNormValue();
-                                                } else if (semanticBean.getSlots().get(i).getName().equals("device_name")) {
-                                                    shebei = semanticBean.getSlots().get(i).getNormValue();
-                                                } else if (semanticBean.getSlots().get(i).getName().equals("cus_room")) {
-                                                    weizhi = semanticBean.getSlots().get(i).getNormValue();
-                                                }
-                                            }
+                                        if (intentName.equals("feedingFish")) {
 
                                             if (resultModel.getAnswer().getText().equals("正在为您操作")) {
                                                 String circle = "0" + semanticBean.getSlots().get(0).getNormValue() + "c";
-                                                msg = "j{'intentName':" + "feedingFish" + ",'operate':" + caozuo + ",'device':" + shebei + ",'room':" + weizhi + ",'time':" + circle + "}.";
+                                                msg = "j{'intentName':" + "feedingFish" + ",'operate':" + "打开" + ",'device':" + "喂鱼" + ",'room':" + "客厅" + ",'time':" + circle + "}.";
                                                 Log.i("语义结果", msg);
                                                 yuYinMqtt.pushMingLing(msg);
                                                 caozuo = "";

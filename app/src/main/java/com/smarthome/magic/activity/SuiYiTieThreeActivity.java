@@ -253,7 +253,7 @@ public class SuiYiTieThreeActivity extends BaseActivity {
                             SuiYiTieTianJiaSheBeiActivity.actionStart(mContext, paiwei, device_ccid, device_ccidup, "2", deviceCcidSt);
                             break;
                         case 1:
-                            yiChuSheBei();
+                            yiChuSheBei(paiwei);
                             break;
                     }
                     dialog.dismiss();
@@ -270,15 +270,22 @@ public class SuiYiTieThreeActivity extends BaseActivity {
     }
 
 
-    public void yiChuSheBei() {
+    public void yiChuSheBei(String paiwei) {
 
 
         //访问网络获取数据 下面的列表数据
         Map<String, String> map = new HashMap<>();
-        map.put("code", "16055");
+        map.put("code", "16051");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
-        map.put("device_ccid", device_ccid);
+        String kaiGuanType = mDatas.get(Integer.valueOf(paiwei)).getDevice_type();
+        if (kaiGuanType.equals("35")) {
+            map.put("unbinding_type", "1");
+        } else {
+            map.put("unbinding_type", "2");
+        }
+
+        map.put("device_ccid", mDatas.get(Integer.valueOf(paiwei)).getDevice_ccid());
         map.put("device_ccid_up", device_ccidup);
         String familyId = PreferenceHelper.getInstance(mContext).getString(AppConfig.FAMILY_ID, "0");
         map.put("family_id", familyId);

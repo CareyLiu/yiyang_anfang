@@ -254,13 +254,10 @@ public class ZhiNengChangJingDetailsActivity extends BaseActivity {
     }
 
     private void initRecycleView() {
-
-
         zhiNengChangJingSheBeiAdapter = new ZhiNengChangJingSheBeiAdapter(R.layout.item_zhinengchangjing_shebei, mDatas);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         rrlShebei.setLayoutManager(linearLayoutManager);
         rrlShebei.setAdapter(zhiNengChangJingSheBeiAdapter);
-
 
         View view = View.inflate(mContext, R.layout.item_zhinengchangjing_shebei_fotter, null);
         icIcon = view.findViewById(R.id.iv_icon);

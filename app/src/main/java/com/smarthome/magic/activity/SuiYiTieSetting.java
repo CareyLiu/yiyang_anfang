@@ -236,6 +236,7 @@ public class SuiYiTieSetting extends BaseActivity {
                         tvFamilyName.setText(response.body().data.get(0).getFamily_name());
                         tvShebeiming.setText(response.body().data.get(0).getDevice_name());
                         tvShebeileixing.setText(response.body().data.get(0).getDevice_type_name());
+                        family_id = response.body().data.get(0).getDevice_list().get(0).getFamily_id();
 
                     }
 

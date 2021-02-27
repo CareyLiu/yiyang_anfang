@@ -426,6 +426,7 @@ public class LouShuiActivity extends BaseActivity {
                             return;
                         }
 
+                        mDatas.clear();
                         for (int i = 0; i < dataBean.getAlarm_list().size(); i++) {
 
                             AlarmListBean alarmListBean = new AlarmListBean(true, dataBean.getAlarm_list().get(i).getAlarm_date());

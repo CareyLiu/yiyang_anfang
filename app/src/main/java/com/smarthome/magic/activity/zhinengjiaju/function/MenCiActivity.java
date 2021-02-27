@@ -104,6 +104,7 @@ public class MenCiActivity extends BaseActivity {
         srLSmart.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                pageNumber = pageNumber + 1;
                 getNet();
             }
         });
@@ -156,7 +157,7 @@ public class MenCiActivity extends BaseActivity {
 
                     @Override
                     public void onClickConfirm(View v, TishiDialog dialog) {
-                       // UIHelper.ToastMessage(mContext, "清空所有数据");
+                        // UIHelper.ToastMessage(mContext, "清空所有数据");
                         getQingKongNet();
                     }
 
@@ -208,6 +209,7 @@ public class MenCiActivity extends BaseActivity {
         menCiListAdapter.addHeaderView(headerView);
         menCiListAdapter.setNewData(mDatas);
         srLSmart.setEnableLoadMore(false);
+        srLSmart.setEnableRefresh(true);
         getNet();
 
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
@@ -257,17 +259,18 @@ public class MenCiActivity extends BaseActivity {
             }
         });
 
-        srLSmart.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                pageNumber = pageNumber + 1;
-            }
-
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-
-            }
-        });
+//        srLSmart.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+//            @Override
+//            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+//
+//                getNet();
+//            }
+//
+//            @Override
+//            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+//
+//            }
+//        });
 
     }
 
@@ -408,6 +411,7 @@ public class MenCiActivity extends BaseActivity {
     MenCiListModel.DataBean dataBean;
 
     private boolean firstEnter = true;
+    View view;
 
     public void getNet() {
         Map<String, String> map = new HashMap<>();
@@ -471,14 +475,6 @@ public class MenCiActivity extends BaseActivity {
                         }
 
 
-                        if (dataBean.getAlarm_list().size() == 0) {
-                            View view = View.inflate(mContext, R.layout.zhinneng_jiaju_empty_view, null);
-                            //ll_caozuo_jilu.addView(view);
-                            menCiListAdapter.addFooterView(view);
-                            menCiListAdapter.notifyDataSetChanged();
-                            return;
-                        }
-
                         for (int i = 0; i < dataBean.getAlarm_list().size(); i++) {
 
                             AlarmListBean alarmListBean = new AlarmListBean(true, dataBean.getAlarm_list().get(i).getAlarm_date());
@@ -498,7 +494,15 @@ public class MenCiActivity extends BaseActivity {
                             }
 
                         }
+                        if (dataBean.getAlarm_list().size() == 0) {
+                            if (view == null) {
+                                view = View.inflate(mContext, R.layout.zhinneng_jiaju_empty_view, null);
+                                //ll_caozuo_jilu.addView(view);
+                                menCiListAdapter.addFooterView(view);
+                                menCiListAdapter.notifyDataSetChanged();
+                            }
 
+                        }
                         menCiListAdapter.notifyDataSetChanged();
 
                         if (response.body().next.equals("1")) {
@@ -512,6 +516,7 @@ public class MenCiActivity extends BaseActivity {
                     @Override
                     public void onError(Response<AppResponse<MenCiListModel.DataBean>> response) {
                         UIHelper.ToastMessage(mContext, response.getException().getMessage());
+                        srLSmart.finishRefresh();
                     }
 
                     @Override

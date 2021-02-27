@@ -148,7 +148,11 @@ public class SheBeiBianHuaActivity extends BaseActivity {
 
     private void getZhiXingSheBeiLieBiao() {
         Map<String, String> map = new HashMap<>();
-        map.put("code", "16059");
+        if (!StringUtils.isEmpty(leiXingSanBiaoShi)) {
+            map.put("code", "16058");
+        } else {
+            map.put("code", "16059");
+        }
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
         map.put("family_id", familyid);

@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
-
 import com.google.gson.Gson;
 import com.iflytek.aiui.AIUIAgent;
 import com.iflytek.aiui.AIUIConstant;
@@ -27,7 +26,6 @@ import com.iflytek.cloud.WakeuperListener;
 import com.iflytek.cloud.WakeuperResult;
 import com.iflytek.cloud.util.ResourceUtil;
 import com.smarthome.magic.R;
-
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
@@ -36,7 +34,6 @@ import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.config.Logger;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.inter.YuYinInter;
-import com.smarthome.magic.model.CeShiDongTaiShiTiModel;
 import com.smarthome.magic.model.DongTaiShiTiModel;
 import com.smarthome.magic.model.ResultModel;
 
@@ -49,7 +46,6 @@ import java.io.UnsupportedEncodingException;
 
 import static com.smarthome.magic.activity.shuinuan.Y.getResources;
 import static com.smarthome.magic.activity.shuinuan.Y.getString;
-
 
 public class YuYinChuLiTool {
     private String TAG = YuYinChuLiTool.class.getSimpleName();
@@ -73,8 +69,6 @@ public class YuYinChuLiTool {
     //当前状态，取值参考Constant中STATE定义
     private int mState;
     private int mAIUIState = AIUIConstant.STATE_IDLE;
-
-
     private AIUIAgent mAIUIAgent = null;
     private String mSyncSid = "";
 
@@ -84,22 +78,18 @@ public class YuYinChuLiTool {
         return resPath;
     }
 
-
     public YuYinChuLiTool(Context context, YuYinInter yuYinInter) {
         this.context = context;
         mIvw = VoiceWakeuper.createWakeuper(context, null);
         // 初始化合成对象
         mTts = SpeechSynthesizer.createSynthesizer(context, mTtsInitListener);
         this.yuYinInter = yuYinInter;
-
     }
 
     YuYinInter yuYinInter = null;
 
     //唤醒功能
     public void beginWakeUp() {
-
-
         //   非空判断，防止因空指针使程序崩溃
         mIvw = VoiceWakeuper.getWakeuper();
         if (mIvw != null) {
@@ -126,7 +116,6 @@ public class YuYinChuLiTool {
             //mIvw.setParameter( SpeechConstant.NOTIFY_RECORD_DATA, "1" );
             // 启动唤醒
             /*	mIvw.setParameter(SpeechConstant.AUDIO_SOURCE, "-1");*/
-
             mIvw.startListening(mWakeuperListener);
 				/*File file = new File(Environment.getExternalStorageDirectory().getPath() + "/msc/ivw1.wav");
 				byte[] byetsFromFile = getByetsFromFile(file);
@@ -148,7 +137,6 @@ public class YuYinChuLiTool {
             Log.d(TAG, "InitListener init() code = " + code);
             if (code != ErrorCode.SUCCESS) {
                 showTip("初始化失败,错误码：" + code + ",请点击网址https://www.xfyun.cn/document/error-code查询解决方案");
-
             } else {
                 // 初始化成功，之后可以调用startSpeaking方法
                 // 注：有的开发者在onCreate方法中创建完合成对象之后马上就调用startSpeaking进行合成，
@@ -158,7 +146,6 @@ public class YuYinChuLiTool {
     };
 
     private void showTip(final String str) {
-        //UIHelper.ToastMessage(context, str);
     }
 
     private WakeuperListener mWakeuperListener = new WakeuperListener() {
@@ -192,16 +179,11 @@ public class YuYinChuLiTool {
             }
             //textView.setText(resultString);
             Log.i("RESULT_STRING", resultString);
-
             beginYuYIn();
 //            mIvw.stopListening();
-//
-//
-//
 //            int code = mTts.startSpeaking("在呢", mTtsListener);
-////            Intent nlpIntent = new Intent(getActivity(), NlpDemo.class);
-////            startActivity(nlpIntent);
-//
+//           Intent nlpIntent = new Intent(getActivity(), NlpDemo.class);
+//           startActivity(nlpIntent);
 //            //激活唤醒，开启语音识别
 //            createAgent();
 //            startVoiceNlp();
@@ -534,7 +516,7 @@ public class YuYinChuLiTool {
                                                 shebei = "";
                                                 weizhi = "000";
                                             }
-                                        } else  {
+                                        } else {
                                             for (int i = 0; i < semanticBean.getSlots().size(); i++) {
                                                 if (semanticBean.getSlots().get(i).getName().equals("operate")) {
                                                     caozuo = semanticBean.getSlots().get(i).getNormValue();
@@ -546,7 +528,7 @@ public class YuYinChuLiTool {
                                             }
 
                                             if (resultModel.getAnswer().getText().equals("正在为您操作")) {
-                                                msg = "j{'intentName':" + resultModel.getSemantic().get(0).getIntent() + ",'operate':" + caozuo + ",'device':" + shebei + ",'room':" + weizhi +  "}.";
+                                                msg = "j{'intentName':" + resultModel.getSemantic().get(0).getIntent() + ",'operate':" + caozuo + ",'device':" + shebei + ",'room':" + weizhi + "}.";
                                                 Log.i("语义结果", msg);
                                                 yuYinMqtt.pushMingLing(msg);
                                                 caozuo = "";

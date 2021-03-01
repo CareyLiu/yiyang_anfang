@@ -356,10 +356,6 @@ public class YuYinChuLiTool {
         } else {
             showTip("AIUIAgent已创建");
         }
-        //上传实体
-        //syncContactsSheBei();
-        //syncContactsRoom();
-        //UploadUtils uploadUtils =new UploadUtils();
     }
 
     private String getAIUIParams() {
@@ -432,17 +428,7 @@ public class YuYinChuLiTool {
                             if (TextUtils.isEmpty(cntStr)) {
                                 return;
                             }
-
                             JSONObject cntJson = new JSONObject(cntStr);
-
-                            // if (mNlpText.getLineCount() > 1000) {
-                            //     mNlpText.setText("");
-                            // }
-
-                            // mNlpText.append("\n");
-                            // mNlpText.append(cntJson.toString());
-                            // mNlpText.setSelection(mNlpText.getText().length());
-
                             String sub = params.optString("sub");
                             if ("nlp".equals(sub)) {
                                 // 解析得到语义结果
@@ -520,10 +506,12 @@ public class YuYinChuLiTool {
                                             for (int i = 0; i < semanticBean.getSlots().size(); i++) {
                                                 if (semanticBean.getSlots().get(i).getName().equals("operate")) {
                                                     caozuo = semanticBean.getSlots().get(i).getNormValue();
-                                                } else if (semanticBean.getSlots().get(i).getName().equals("device_name")) {
+                                                } else if (semanticBean.getSlots().get(i).getName().equals("device")) {
                                                     shebei = semanticBean.getSlots().get(i).getNormValue();
                                                 } else if (semanticBean.getSlots().get(i).getName().equals("cus_room")) {
                                                     weizhi = semanticBean.getSlots().get(i).getNormValue();
+                                                } else if (semanticBean.getSlots().get(i).getName().equals("device_name")) {
+                                                    shebei = semanticBean.getSlots().get(i).getNormValue();
                                                 }
                                             }
 
@@ -546,11 +534,9 @@ public class YuYinChuLiTool {
                         }
                     } catch (Throwable e) {
                         e.printStackTrace();
-                        // mNlpText.append("\n");
-                        // mNlpText.append(e.getLocalizedMessage());
+
                     }
 
-                    // mNlpText.append("\n");
                 }
                 break;
 

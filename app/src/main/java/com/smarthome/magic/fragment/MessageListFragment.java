@@ -149,18 +149,7 @@ public class MessageListFragment extends BaseFragment {
     RelativeLayout rlMain;
     View view;
 
-    @Override
-    protected void immersionInit(ImmersionBar mImmersionBar) {
-        mImmersionBar
-                .statusBarColor(R.color.white)
-                .statusBarDarkFont(true)
-                .init();
-    }
 
-    @Override
-    protected boolean immersionEnabled() {
-        return true;
-    }
 
     @Override
     protected int getLayoutRes() {

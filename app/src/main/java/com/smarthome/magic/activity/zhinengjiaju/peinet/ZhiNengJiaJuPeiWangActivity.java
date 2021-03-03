@@ -813,10 +813,19 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
         map.put("token", UserManager.getManager(mContext).getAppToken());
         map.put("add_device_type", "1");
         map.put("family_id", PreferenceHelper.getInstance(mContext).getString(AppConfig.FAMILY_ID, ""));
-        map.put("mc_decice_ccid", PreferenceHelper.getInstance(mContext).getString(AppConfig.DEVICECCID, ""));
-        map.put("cd_device_ccid", cd_device_ccid);
+
+        map.put("xf_device_id", "1");
+        map.put("access_token", "1");
+        map.put("wifi_user", "1");
+        map.put("wifi_pwd", "1");
+        map.put("mc_decice_ccid", "1");
+        map.put("server_id", "1");
+        map.put("sms_id", "1");
+        map.put("sms_code", "1");
+
+
+
         Gson gson = new Gson();
-        Log.e("map_data", gson.toJson(map));
         OkGo.<AppResponse<ZhiNengFamilyEditBean>>post(ZHINENGJIAJU)
                 .tag(this)//
                 .upJson(gson.toJson(map))

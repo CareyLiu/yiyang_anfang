@@ -116,6 +116,7 @@ public class ZhiNengHomeListActivity extends BaseActivity implements View.OnClic
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 ZhiNengHomeListBean.DataBean dataBean = (ZhiNengHomeListBean.DataBean) adapter.getItem(position);
+                showProgressDialog();
                 checkFamily(dataBean);
             }
         });
@@ -173,6 +174,12 @@ public class ZhiNengHomeListActivity extends BaseActivity implements View.OnClic
                             notice.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
                             sendRx(notice);
                         }
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
                     }
                 });
     }

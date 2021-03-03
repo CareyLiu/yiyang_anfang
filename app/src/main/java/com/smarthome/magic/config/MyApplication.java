@@ -647,6 +647,7 @@ public class MyApplication extends MultiDexApplication {
                     @Override
                     public void messageArrived(String topic, MqttMessage message) throws Exception {
                         System.out.println("Rair-MqttMessage    " + "收到的消息的主题是   ： 订阅的主题：" + topic + "  收到的数据信息：  " + message.toString());
+                        Y.e(" 別人绑定主机 " + message.toString());
                         if (message.toString().contains("{")) {
                             //解析对象 code
                             Gson gson = new Gson();
@@ -678,7 +679,6 @@ public class MyApplication extends MultiDexApplication {
                                 n.content = zhiNengJiaJuNotifyJson;
                                 RxBus.getDefault().sendRx(n);
                             } else if (codeClass.code.equals("jyj_0009")) {
-
                                 Notice n = new Notice();
                                 n.type = ConstanceValue.MSG_TIANJIAZHUJI;
                                 ZhiNengJiaJu_0009Model zhiNengJiaJuNotifyJson = new Gson().fromJson(message.toString(), ZhiNengJiaJu_0009Model.class);
@@ -691,7 +691,7 @@ public class MyApplication extends MultiDexApplication {
                                 PeiWangErrorModel peiWangErrorModel = new Gson().fromJson(message.toString(), PeiWangErrorModel.class);
                                 n.content = peiWangErrorModel.notify_text;
                                 RxBus.getDefault().sendRx(n);
-                            } else if (codeClass.code.equals("yjy_0010")) {
+                            } else if (codeClass.code.equals("jyj_0010")) {
                                 // 主机被重置时候刷新设备列表接口
                                 Notice n = new Notice();
                                 n.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;

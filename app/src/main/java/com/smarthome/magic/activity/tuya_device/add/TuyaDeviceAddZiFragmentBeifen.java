@@ -359,6 +359,7 @@ public class TuyaDeviceAddZiFragmentBeifen extends BaseFragment {
             });
         } else if (zhuJiShiFouTianJiaType.equals("0")) {
             // TODO: 2021/2/2 接入密码  主机配对
+            Y.e("我是什么啊啊啊啊" + mima);
             executeEsptouch(mima, bssid, wifiSSid);
         }
     }
@@ -366,8 +367,8 @@ public class TuyaDeviceAddZiFragmentBeifen extends BaseFragment {
     /**
      * wifi 密码
      */
-    private void executeEsptouch(String pwdStr, String mBssid, String mSsid) {
-        byte[] password = pwdStr == null ? null : ByteUtil.getBytesByString(pwdStr.toString());
+    private void executeEsptouch(String password, String mBssid, String mSsid) {
+        Y.e("我是发看见大师傅但是  "+password);
         byte[] bssid = TouchNetUtil.parseBssid2bytes(mBssid.toString());
         CharSequence devCountStr = String.valueOf(1);
         byte[] deviceCount = devCountStr == null ? new byte[0] : devCountStr.toString().getBytes();
@@ -435,6 +436,7 @@ public class TuyaDeviceAddZiFragmentBeifen extends BaseFragment {
             shiFouTianJiaGuoZhuJieType = "1";
         }
         serverId = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.SERVERID, "");
+        Y.e("烦烦烦烦烦烦" + mima);
         jiBenPeiWang(shiFouTianJiaGuoZhuJieType, zhuJiDeviceCCidUp, serverId, "00", "00");
     }
 

@@ -116,7 +116,7 @@ public class AppConfig {
     public final static String ZHIXING_LEIXING = "ZHIXINGLEIXING";// 1 一键执行 2.定时 3 条件
     public final static String BAOJINGTISHIYIN = "BAOJINGTISHIYIN";//0关1开
     public final static String ZHINENGJIAJUGUANLIYUAN = "ZHINENGJIAJUGUANLIYUAN"; //0 不是 1 是
-    public final static String ZHUJI_DEVICECCID_UP = "ZHUJI_DEVICE_CCID_UP";
+
     public final static String BAOJING_YANGAN = "BAOJINGYANGAN";
     public final static String BOJING_SOS = "BAOJINGSOS";//sos报警
     public final static String BAOJINGLOUSHUI = "BAOJINGLOUSHUI";//漏水

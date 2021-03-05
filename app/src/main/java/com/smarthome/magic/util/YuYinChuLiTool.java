@@ -31,6 +31,7 @@ import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
+import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.Logger;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.inter.YuYinInter;
@@ -346,6 +347,8 @@ public class YuYinChuLiTool {
             Log.i(TAG, "create aiui agent");
 
             mAIUIAgent = AIUIAgent.createAgent(context, getAIUIParams(), mAIUIListener);
+
+            //  syncContactsRoom();
         }
 
         if (null == mAIUIAgent) {
@@ -372,7 +375,7 @@ public class YuYinChuLiTool {
             params = new String(buffer);
 
             JSONObject paramsJson = new JSONObject(params);
-
+            //paramsJson.put("pers_param", "{\"uid\":\"d3b6d50a9f8194b623b5e2d4e298c9d6\"}");
             params = paramsJson.toString();
         } catch (IOException e) {
             e.printStackTrace();
@@ -383,6 +386,7 @@ public class YuYinChuLiTool {
         return params;
     }
 
+    String uid;
     private AIUIListener mAIUIListener = new AIUIListener() {
 
         @Override
@@ -391,6 +395,9 @@ public class YuYinChuLiTool {
 
             switch (event.eventType) {
                 case AIUIConstant.EVENT_CONNECTED_TO_SERVER:
+                    uid = event.data.getString("uid");
+                    Log.i("YuYinCHuLiTool_Uid:", uid);
+
                     showTip("已连接服务器");
                     break;
 
@@ -631,6 +638,7 @@ public class YuYinChuLiTool {
                             String result = event.data.getString("result");
 
                             showTip(result);
+                            Log.i("YuYinLiTool", result);
                         }
                     }
                 }
@@ -849,7 +857,7 @@ public class YuYinChuLiTool {
         }
     }
 
-    private void syncContactsSheBei() {
+    public void syncContactsSheBei() {
         if (null == mAIUIAgent) {
             showTip("AIUIAgent 为空，请先创建");
             return;
@@ -879,8 +887,8 @@ public class YuYinChuLiTool {
 
             // 设置id_name为uid，即用户级个性化资源
             // 个性化资源使用方法可参见http://doc.xfyun.cn/aiui_mobile/的用户个性化章节
-            dataParamJson.put("id_name", "appid");
-            dataParamJson.put("id_value", "5fc33e7b");
+            dataParamJson.put("id_name", "uid");
+            dataParamJson.put("id_value", uid);
 
             // 设置res_name为联系人
             dataParamJson.put("res_name", "OS8569425439.app_device_name");
@@ -908,7 +916,7 @@ public class YuYinChuLiTool {
         }
     }
 
-    private void syncContactsRoom() {
+    public void syncContactsRoom() {
         if (null == mAIUIAgent) {
             showTip("AIUIAgent 为空，请先创建");
             return;
@@ -939,8 +947,12 @@ public class YuYinChuLiTool {
 
             // 设置id_name为uid，即用户级个性化资源
             // 个性化资源使用方法可参见http://doc.xfyun.cn/aiui_mobile/的用户个性化章节
-            dataParamJson.put("id_name", "appid");
-            dataParamJson.put("id_value", "5fc33e7b");
+            dataParamJson.put("id_name", "uid");
+            if (StringUtils.isEmpty(uid)) {
+                UIHelper.ToastMessage(context, "uid不能为空");
+                return;
+            }
+            dataParamJson.put("id_value", uid);
 
             // 设置res_name为联系人
             dataParamJson.put("res_name", "OS8569425439.app_room");

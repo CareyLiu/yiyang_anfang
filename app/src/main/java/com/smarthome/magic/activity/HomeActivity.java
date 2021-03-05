@@ -103,6 +103,8 @@ public class HomeActivity extends BaseActivity {
     TextView tvChaxunDabaoZhuangtai;
     @BindView(R.id.layout_bg)
     RelativeLayout layoutBg;
+    @BindView(R.id.tv_shangchuan)
+    TextView tvShangchuan;
     private boolean isExit;
     private SparseIntArray items;
     AlarmClass alarmClass;
@@ -249,6 +251,12 @@ public class HomeActivity extends BaseActivity {
                 yuYinChuLiTool.chaXunDaBaoZhuangTai();
             }
         });
+        tvShangchuan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                yuYinChuLiTool.syncContactsSheBei();
+            }
+        });
     }
 
     private void zhiNengJiaJuCaoZuo(Notice notice) {
@@ -296,7 +304,7 @@ public class HomeActivity extends BaseActivity {
 
         tishiDialog.setTextContent("您的家庭有新的状况，是否前去查看?");
 
-        if (tishiDialog!=null&&!tishiDialog.isShowing()){
+        if (tishiDialog != null && !tishiDialog.isShowing()) {
             tishiDialog.show();
             String strBaoJingYin = PreferenceHelper.getInstance(mContext).getString(AppConfig.BAOJING_YANGAN, "2");
             if (strBaoJingYin.equals("0")) {

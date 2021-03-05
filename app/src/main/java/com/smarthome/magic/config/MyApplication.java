@@ -229,7 +229,6 @@ public class MyApplication extends MultiDexApplication {
     public void onCreate() {
         StringBuffer param = new StringBuffer();
         param.append("appid=" + getString(R.string.app_id));
-        param.append(",");
         // 设置使用v5+
         param.append(SpeechConstant.ENGINE_MODE + "=" + SpeechConstant.MODE_MSC);
         SpeechUtility.createUtility(MyApplication.this, param.toString());

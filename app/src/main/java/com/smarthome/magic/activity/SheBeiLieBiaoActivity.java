@@ -61,7 +61,7 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         device_type = getIntent().getStringExtra("device_type");
         sheBeiListAdapter = new SheBeiListAdapter(R.layout.item_shebei, R.layout.item_shebei_header, mDatas);
-
+        //这里初始化设备
 //        carListAdapter = new CarList1Adapter(carList);
         rlvList.setLayoutManager(new LinearLayoutManager(mContext));
         rlvList.setAdapter(sheBeiListAdapter);
@@ -114,7 +114,7 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
                                 } else {
                                     UIHelper.ToastMessage(mContext, "请连接网络后重新尝试");
                                 }
-                            }else if (mDatas.get(position).device_type.equals("5")) {
+                            } else if (mDatas.get(position).device_type.equals("5")) {
                                 String ccid = mDatas.get(position).ccid;
                                 PreferenceHelper.getInstance(mContext).putString("ccid", mDatas.get(position).ccid);
                                 PreferenceHelper.getInstance(mContext).putString("share_type", mDatas.get(position).share_type);
@@ -122,7 +122,7 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
                                 if (NetworkUtils.isConnected(mContext)) {
                                     Activity currentActivity = AppManager.getAppManager().currentActivity();
                                     if (currentActivity != null) {
-                                        AirConditionerActivity.actionStart(mContext, ccid,"驻车空调");
+                                        AirConditionerActivity.actionStart(mContext, ccid, "驻车空调");
                                     }
                                 } else {
                                     UIHelper.ToastMessage(mContext, "请连接网络后重新尝试");

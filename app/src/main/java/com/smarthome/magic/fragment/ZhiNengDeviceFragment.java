@@ -36,6 +36,7 @@ import com.smarthome.magic.activity.ZhiNengJiaoHuaAutoActivity;
 import com.smarthome.magic.activity.ZhiNengRoomDeviceDetailAutoActivity;
 import com.smarthome.magic.activity.ZhiNengZhuJiDetailAutoActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
+import com.smarthome.magic.activity.tuya_device.add.TuyaDeviceAddActivity;
 import com.smarthome.magic.activity.tuya_device.camera.TuyaCameraActivity;
 import com.smarthome.magic.activity.tuya_device.device.DeviceChazuoActivity;
 import com.smarthome.magic.activity.tuya_device.device.DeviceMenciActivity;
@@ -70,6 +71,8 @@ import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
+import com.smarthome.magic.dialog.newdia.TishiPhoneDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.mqtt_zhiling.ZnjjMqttMingLing;
@@ -79,6 +82,7 @@ import com.smarthome.magic.model.ZhiNengHomeBean;
 import com.tuya.smart.api.MicroContext;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.bean.HomeBean;
+import com.tuya.smart.home.sdk.callback.ITuyaGetHomeListCallback;
 import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
 import com.tuya.smart.panelcaller.api.AbsPanelCallerService;
 import com.umeng.commonsdk.UMConfigure;
@@ -170,7 +174,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
         tvBangDingZhuJi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                clickAddCamera();
             }
         });
         zhiNengDeviceListAdapter.setEmptyView(view1);
@@ -364,6 +368,75 @@ public class ZhiNengDeviceFragment extends BaseFragment {
 
     }
 
+    TishiDialog tishiDialog;
+
+    private void clickAddCamera() {
+
+        // TODO: 2021/2/19 判断是不是管理员
+        String str = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.ZHINENGJIAJUGUANLIYUAN, "0");
+        if (str.equals("0")) {
+            tishiDialog = new TishiDialog(getActivity(), 3, new TishiDialog.TishiDialogListener() {
+                @Override
+                public void onClickCancel(View v, TishiDialog dialog) {
+
+                }
+
+                @Override
+                public void onClickConfirm(View v, TishiDialog dialog) {
+                    tishiDialog.dismiss();
+
+                }
+
+                @Override
+                public void onDismiss(TishiDialog dialog) {
+
+                }
+            });
+            tishiDialog.setTextContent("非管理员无法添加主机及设备");
+            tishiDialog.show();
+
+        } else if (str.equals("1")) {
+            PreferenceHelper.getInstance(getActivity()).putString(AppConfig.MC_DEVICE_CCID, "aaaaaaaaaaaaaaaa80140018");
+            TuyaDeviceAddActivity.actionStart(getContext());
+            getHomeList();
+        }
+
+
+//        yaoqing("13091891781");
+    }
+
+    private void getHomeList() {
+        TuyaHomeSdk.getHomeManagerInstance().queryHomeList(new ITuyaGetHomeListCallback() {
+            @Override
+            public void onSuccess(List<HomeBean> homeBeans) {
+                for (int i = 0; i < homeBeans.size(); i++) {
+                    HomeBean homeBean = homeBeans.get(i);
+                    long homeId = homeBean.getHomeId();
+                    String name = homeBean.getName();
+
+                    Y.e("家庭名称  " + name + "  " + homeId);
+
+//                    TuyaHomeSdk.newHomeInstance(homeId).dismissHome(new IResultCallback() {
+//                        @Override
+//                        public void onSuccess() {
+//                            Y.e("解散涂鸦家庭成功 " + homeId);
+//                        }
+//
+//                        @Override
+//                        public void onError(String code, String error) {
+//                            Y.t("解散家庭失败:" + error);
+//                        }
+//                    });
+                }
+            }
+
+            @Override
+            public void onError(String errorCode, String error) {
+
+            }
+        });
+    }
+
     private void getnet() {
         //访问网络获取数据 下面的列表数据
         Map<String, String> map = new HashMap<>();
@@ -395,11 +468,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                                 PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, response.body().data.get(0).getDevice().get(0).getServer_id());
                             }
 
-                            if (StringUtils.isEmpty(response.body().data.get(0).getDevice().get(0).getDevice_ccid_up())) {
-                                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.ZHUJI_DEVICECCID_UP, "");
-                            } else {
-                                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.ZHUJI_DEVICECCID_UP, response.body().data.get(0).getDevice().get(0).getDevice_ccid_up());
-                            }
+
 
                         }
 

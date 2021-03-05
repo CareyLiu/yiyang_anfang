@@ -443,7 +443,7 @@ public class ZnjjMqttMingLing {
                 .setQos(2), new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("Rair", "订阅成功:" + topic);
+                Log.i("Rair", "订阅成功:" + shishiTopic);
 
             }
 
@@ -452,9 +452,7 @@ public class ZnjjMqttMingLing {
                 Log.i("CAR_NOTIFY", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
             }
         });
-//        AndMqtt.getInstance().subscribe(new MqttSubscribe()
-//                .setTopic(shishiTopic)
-//                .setQos(2), listener);
+
     }
 
     /**
@@ -492,18 +490,22 @@ public class ZnjjMqttMingLing {
      * @param serverId
      * @param listener
      * @param str      发送的信息
-     *
-     *  App等终端添加装置命令M1201011.
-     * M12:命令码【添加装置】
-     * 01：装置类型 例如：00全部装置 01、02、03、04 对应各装置类型
-     * 011：装置类型的型号 例如： 01 是装置的A款 02 表示装置的B款
-     * 1：主机语音添加 2：app添加 3:pc添加 4:小程序添加
+     *                 <p>
+     *                 App等终端添加装置命令M1201011.
+     *                 M12:命令码【添加装置】
+     *                 01：装置类型 例如：00全部装置 01、02、03、04 对应各装置类型
+     *                 011：装置类型的型号 例如： 01 是装置的A款 02 表示装置的B款
+     *                 1：主机语音添加 2：app添加 3:pc添加 4:小程序添加
      */
     public void tianJiaSheBei(String ccid_up, String serverId, String str, IMqttActionListener listener) {
 
         if (!AndMqtt.getInstance().isConnect()) {
             UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
             return;
+        }
+
+        if (serverId.contains("/")) {
+            serverId = serverId.substring(0, 1);
         }
         shishiTopic = "zn/hardware/" + serverId + "/" + ccid_up;
         Log.i("Rair", "订阅实时数据" + shishiTopic);

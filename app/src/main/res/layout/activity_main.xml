@@ -35,7 +35,7 @@
         android:layout_margin="15dp"
         android:background="@mipmap/yuyinbackground"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_top"
@@ -64,15 +64,26 @@
                 app:layout_constraintLeft_toRightOf="@+id/tv_yuyin_image"
                 app:layout_constraintTop_toTopOf="@+id/tv_yuyin_image" />
 
+            <TextView
+                android:id="@+id/tv_shangchuan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:text="上传"
+                android:textColor="@color/white"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_yuyin_image"
+                app:layout_constraintRight_toLeftOf="@+id/tv_chaxun_dabao_zhuangtai"
+                app:layout_constraintTop_toTopOf="@+id/tv_yuyin_image" />
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/tv_chaxun_dabao_zhuangtai"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
                 android:text="查询打包状态"
                 android:textColor="@color/white"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_yuyin_image"
                 app:layout_constraintRight_toLeftOf="@+id/tv_shezhi"
                 app:layout_constraintTop_toTopOf="@+id/tv_yuyin_image">

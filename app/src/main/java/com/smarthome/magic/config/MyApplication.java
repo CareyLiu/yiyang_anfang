@@ -73,6 +73,7 @@ import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.PeiWangErrorModel;
+import com.smarthome.magic.model.PeiwangOtherModel;
 import com.smarthome.magic.model.ZhiNengJiaJuNotifyJson;
 import com.smarthome.magic.model.ZhiNengJiaJu_0007Model;
 import com.smarthome.magic.model.ZhiNengJiaJu_0009Model;
@@ -696,9 +697,11 @@ public class MyApplication extends MultiDexApplication {
                                 Notice n = new Notice();
                                 n.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
                                 RxBus.getDefault().sendRx(n);
-                            } else if (codeClass.code.equals("jyj_0001")) {// 別人绑定主机
+                            } else if (codeClass.code.equals("jyj_0011")) {// 別人绑定主机
+                                PeiwangOtherModel peiwangOtherModel = new Gson().fromJson(message.toString(), PeiwangOtherModel.class);
                                 Notice n = new Notice();
                                 n.type = ConstanceValue.MSG_ZHUJIBANG_OTHER;
+                                n.content = peiwangOtherModel;
                                 RxBus.getDefault().sendRx(n);
                             }
 

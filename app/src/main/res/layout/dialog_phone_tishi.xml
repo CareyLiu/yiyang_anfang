@@ -51,6 +51,7 @@
                 app:rv_cornerRadius="25dp">
 
                 <EditText
+                    android:id="@+id/ed_code"
                     android:layout_width="@dimen/dp_180"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"

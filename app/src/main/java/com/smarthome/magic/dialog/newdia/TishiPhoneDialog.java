@@ -5,6 +5,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ public class TishiPhoneDialog extends Dialog implements View.OnClickListener {
     public final static int TYPE_DELETE = 5;
 
     public TextView tv_content;
+    public EditText ed_code;
     public TextView tv_title;
     public TextView tv_cancel;
     public TextView tv_confirm;
@@ -45,12 +47,13 @@ public class TishiPhoneDialog extends Dialog implements View.OnClickListener {
 
     private void init() {
         setContentView(R.layout.dialog_phone_tishi);
-        setCanceledOnTouchOutside(true);
-        setCancelable(true);
+        setCanceledOnTouchOutside(false);
+        setCancelable(false);
 
         iv_img = findViewById(R.id.iv_img);
         tv_title = findViewById(R.id.tv_title);
         tv_content = findViewById(R.id.tv_content);
+        ed_code = findViewById(R.id.ed_code);
         tv_cancel = findViewById(R.id.tv_cancel);
         tv_confirm = findViewById(R.id.tv_confirm);
         tvGetCode = findViewById(R.id.get_code);
@@ -91,6 +94,10 @@ public class TishiPhoneDialog extends Dialog implements View.OnClickListener {
     public TishiPhoneDialog setImgPic(int imageResource) {//设置本地图片
         iv_img.setImageResource(imageResource);
         return this;
+    }
+
+    public String getEdContent() {
+        return ed_code.getText().toString();
     }
 
     @Override

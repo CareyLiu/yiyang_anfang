@@ -62,6 +62,7 @@ import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.dialog.newdia.TishiPhoneDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.Message;
+import com.smarthome.magic.model.PeiwangOtherModel;
 import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.model.ZhiNengJiaJu_0007Model;
 import com.smarthome.magic.model.ZhiNengJiaJu_0009Model;
@@ -177,6 +178,7 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
     private ZnjjMqttMingLing znjjMqttMingLing;
     private String zhuji_device_ccid_up;
     private String serverId;
+    private PeiwangOtherModel peiwangOtherModel;
 
     @Override
     protected String getEspTouchVersion() {
@@ -305,25 +307,25 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.iv_image:
-                        cd_device_ccid = mDatas.get(position).getCd_device_ccid();
-                        zhuangZhiLeixing = "";
-                        zhuangZhiLeiXingXingHao = "";
-                        TishiDialog tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
-                            @Override
-                            public void onClickCancel(View v, TishiDialog dialog) {
-                            }
-
-                            @Override
-                            public void onClickConfirm(View v, TishiDialog dialog) {
-                                tianJiaSheBeiNet();
-                            }
-
-                            @Override
-                            public void onDismiss(TishiDialog dialog) {
-                            }
-                        });
-                        tishiDialog.setTextContent("已找到您要添加的设备，是否添加此设备？");
-                        tishiDialog.show();
+//                        cd_device_ccid = mDatas.get(position).getCd_device_ccid();
+//                        zhuangZhiLeixing = "";
+//                        zhuangZhiLeiXingXingHao = "";
+//                        TishiDialog tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+//                            @Override
+//                            public void onClickCancel(View v, TishiDialog dialog) {
+//                            }
+//
+//                            @Override
+//                            public void onClickConfirm(View v, TishiDialog dialog) {
+//                                tianJiaSheBeiNet();
+//                            }
+//
+//                            @Override
+//                            public void onDismiss(TishiDialog dialog) {
+//                            }
+//                        });
+//                        tishiDialog.setTextContent("已找到您要添加的设备，是否添加此设备？");
+//                        tishiDialog.show();
                         break;
                 }
             }
@@ -714,10 +716,11 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
                     tishiDialog.setTextConfirm("退出重试");
                     tishiDialog.show();
                 } else if (message.type == ConstanceValue.MSG_ZHUJIBANG_OTHER) {
+                    peiwangOtherModel = (PeiwangOtherModel) message.content;
                     tishiPhoneDialog = new TishiPhoneDialog(mContext, 2, new TishiPhoneDialog.TishiDialogListener() {
                         @Override
                         public void onClickCancel(View v, TishiPhoneDialog dialog) {
-
+                            dialog.dismiss();
                         }
 
                         @Override
@@ -727,7 +730,12 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
                                 return;
                             }
 
-                            tianJiaSheBeiNet2();
+                            if (TextUtils.isEmpty(dialog.getEdContent())) {
+                                Y.t("请输入验证码");
+                                return;
+                            }
+
+                            tianJiaSheBeiNet2(dialog.getEdContent());
                         }
 
                         @Override
@@ -737,9 +745,10 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
 
                         @Override
                         public void onSendYanZhengMa(View v, TishiPhoneDialog dialog) {
-                            get_code("");
+                            get_code();
                         }
                     });
+                    tishiPhoneDialog.setTextContent("该设备已被绑定到账号为" + peiwangOtherModel.getPhone() + "的家庭，如继续操作请手机验证");
                     tishiPhoneDialog.show();
                 }
             }
@@ -748,83 +757,52 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
 
     private String smsId;
 
-    private void get_code(String StrPhone) {
-        if (StrPhone.equals("") || StrPhone == null) {
-            UIHelper.ToastMessage(this, "手机号码不能为空");
-        } else {
-            Map<String, String> map = new HashMap<>();
-            map.put("code", "00001");
-            map.put("key", Urls.key);
-            map.put("user_phone", StrPhone.toString());
-            map.put("mod_id", "0341");
-            Gson gson = new Gson();
-            OkGo.<AppResponse<Message.DataBean>>post(SERVER_URL + "msg")
-                    .tag(this)//
-                    .upJson(gson.toJson(map))
-                    .execute(new JsonCallback<AppResponse<Message.DataBean>>() {
-                        @Override
-                        public void onSuccess(Response<AppResponse<Message.DataBean>> response) {
-                            Y.t("验证码获取成功");
-                            Notice notice = new Notice();
-                            notice.type = ConstanceValue.MSG_SENDCODE_HUIDIAO;
-                            sendRx(notice);
-                            if (response.body().data.size() > 0) {
-                                smsId = response.body().data.get(0).getSms_id();
-                            }
-                            tishiPhoneDialog.startCode();
-                        }
-
-                        @Override
-                        public void onError(Response<AppResponse<Message.DataBean>> response) {
-                            Y.tError(response);
-                            tishiPhoneDialog.errorCode();
-                        }
-                    });
-        }
-    }
-
-    private void tianJiaSheBeiNet() {
+    private void get_code() {
         Map<String, String> map = new HashMap<>();
-        map.put("code", "16041");
+        map.put("code", "00001");
         map.put("key", Urls.key);
-        map.put("token", UserManager.getManager(mContext).getAppToken());
-        map.put("add_device_type", "2");
-        map.put("mc_decice_ccid", PreferenceHelper.getInstance(mContext).getString(AppConfig.DEVICECCID, ""));
-        map.put("cd_device_ccid", cd_device_ccid);
+        map.put("user_phone", peiwangOtherModel.getPhone());
+        map.put("mod_id", "0341");
         Gson gson = new Gson();
-        Log.e("map_data", gson.toJson(map));
-        OkGo.<AppResponse<ZhiNengFamilyEditBean>>post(ZHINENGJIAJU)
+        OkGo.<AppResponse<Message.DataBean>>post(SERVER_URL + "msg")
                 .tag(this)//
                 .upJson(gson.toJson(map))
-                .execute(new JsonCallback<AppResponse<ZhiNengFamilyEditBean>>() {
+                .execute(new JsonCallback<AppResponse<Message.DataBean>>() {
                     @Override
-                    public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
-                        UIHelper.ToastMessage(mContext, "设备添加成功");
-                        finish();
+                    public void onSuccess(Response<AppResponse<Message.DataBean>> response) {
+                        Y.t("验证码获取成功");
+                        Notice notice = new Notice();
+                        notice.type = ConstanceValue.MSG_SENDCODE_HUIDIAO;
+                        sendRx(notice);
+                        if (response.body().data.size() > 0) {
+                            smsId = response.body().data.get(0).getSms_id();
+                        }
+                        tishiPhoneDialog.startCode();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<Message.DataBean>> response) {
+                        Y.tError(response);
+                        tishiPhoneDialog.errorCode();
                     }
                 });
     }
 
-
-    private void tianJiaSheBeiNet2() {
+    private void tianJiaSheBeiNet2(String smsCode) {
         Map<String, String> map = new HashMap<>();
         map.put("code", "16041");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
-        map.put("add_device_type", "1");
+        map.put("add_device_path", "1");
         map.put("family_id", PreferenceHelper.getInstance(mContext).getString(AppConfig.FAMILY_ID, ""));
-
-        map.put("xf_device_id", "1");
-        map.put("access_token", "1");
-        map.put("wifi_user", "1");
-        map.put("wifi_pwd", "1");
-        map.put("mc_decice_ccid", "1");
-        map.put("server_id", "1");
-        map.put("sms_id", "1");
-        map.put("sms_code", "1");
-
-
-
+        map.put("xf_device_id", peiwangOtherModel.getXf_device_id());
+        map.put("access_token", peiwangOtherModel.getAccess_token());
+        map.put("wifi_user", peiwangOtherModel.getWifi_user());
+        map.put("wifi_pwd", peiwangOtherModel.getWifi_pwd());
+        map.put("mc_device_ccid", peiwangOtherModel.getMc_device_ccid());
+        map.put("server_id", peiwangOtherModel.getServer_id());
+        map.put("sms_id", smsId);
+        map.put("sms_code", smsCode);
         Gson gson = new Gson();
         OkGo.<AppResponse<ZhiNengFamilyEditBean>>post(ZHINENGJIAJU)
                 .tag(this)//
@@ -833,7 +811,18 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
                     @Override
                     public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
                         UIHelper.ToastMessage(mContext, "设备添加成功");
+
+                        Notice notice = new Notice();
+                        notice.type = MSG_PEIWANG_SUCCESS;
+                        RxBus.getDefault().sendRx(notice);
+
                         finish();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        super.onError(response);
+                        Y.tError(response);
                     }
                 });
     }

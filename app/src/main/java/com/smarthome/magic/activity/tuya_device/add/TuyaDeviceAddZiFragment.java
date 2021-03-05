@@ -406,8 +406,7 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
     /**
      * wifi 密码
      */
-    private void executeEsptouch(String pwdStr, String mBssid, String mSsid) {
-        byte[] password = pwdStr == null ? null : ByteUtil.getBytesByString(pwdStr.toString());
+    private void executeEsptouch(String password, String mBssid, String mSsid) {
         byte[] bssid = TouchNetUtil.parseBssid2bytes(mBssid.toString());
         CharSequence devCountStr = String.valueOf(1);
         byte[] deviceCount = devCountStr == null ? new byte[0] : devCountStr.toString().getBytes();

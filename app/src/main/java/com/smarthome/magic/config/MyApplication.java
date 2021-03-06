@@ -647,7 +647,7 @@ public class MyApplication extends MultiDexApplication {
                     @Override
                     public void messageArrived(String topic, MqttMessage message) throws Exception {
                         System.out.println("Rair-MqttMessage    " + "收到的消息的主题是   ： 订阅的主题：" + topic + "  收到的数据信息：  " + message.toString());
-                        Y.e(" 別人绑定主机 " + message.toString());
+                        Y.e(" 主机的消息是 " + message.toString());
                         if (message.toString().contains("{")) {
                             //解析对象 code
                             Gson gson = new Gson();

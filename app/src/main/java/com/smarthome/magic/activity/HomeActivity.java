@@ -52,6 +52,7 @@ import com.smarthome.magic.fragment.MessagerFragment;
 import com.smarthome.magic.fragment.MineFragment;
 import com.smarthome.magic.fragment.OnlineFragment;
 import com.smarthome.magic.fragment.ZhiNengJiaJuFragment;
+import com.smarthome.magic.fragment.znjj.ZhiNengJiaJuGaiFragment;
 import com.smarthome.magic.inter.YuYinInter;
 import com.smarthome.magic.model.AlarmClass;
 import com.smarthome.magic.model.ZhiNengJiaJuNotifyJson;
@@ -541,7 +542,8 @@ public class HomeActivity extends BaseActivity {
         items = new SparseIntArray(5);
 
         HomeFragment_New homeFragment = new HomeFragment_New();
-        ZhiNengJiaJuFragment zhiNengJiaJuFragment = new ZhiNengJiaJuFragment();
+//        ZhiNengJiaJuFragment zhiNengJiaJuFragment = new ZhiNengJiaJuFragment();
+        ZhiNengJiaJuGaiFragment zhiNengJiaJuFragment = new ZhiNengJiaJuGaiFragment();
         OnlineFragment onlineFragment = new OnlineFragment();
         MessagerFragment messagerFragment = new MessagerFragment();
         MineFragment mineFragment = new MineFragment();
@@ -561,7 +563,7 @@ public class HomeActivity extends BaseActivity {
         // set adapter
         VpAdapter adapter = new VpAdapter(getSupportFragmentManager(), fragments);
         //禁用懒加载，不然每次切换页面都会重新获取数据
-        mVp.setOffscreenPageLimit(4);
+        mVp.setOffscreenPageLimit(5);
         //viewPage禁止滑动
         mVp.setScroll(false);
         mVp.setAdapter(adapter);

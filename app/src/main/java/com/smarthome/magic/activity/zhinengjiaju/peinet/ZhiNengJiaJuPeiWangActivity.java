@@ -717,7 +717,7 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
                     tishiDialog.show();
                 } else if (message.type == ConstanceValue.MSG_ZHUJIBANG_OTHER) {
                     peiwangOtherModel = (PeiwangOtherModel) message.content;
-                    tishiPhoneDialog = new TishiPhoneDialog(mContext, 2, new TishiPhoneDialog.TishiDialogListener() {
+                    tishiPhoneDialog = new TishiPhoneDialog(mContext, new TishiPhoneDialog.TishiDialogListener() {
                         @Override
                         public void onClickCancel(View v, TishiPhoneDialog dialog) {
                             dialog.dismiss();

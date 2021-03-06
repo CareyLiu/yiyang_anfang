@@ -165,4 +165,7 @@ public interface ConstanceValue {
 
     int MSG_KAIGUAN_DELETE = 0x10123;//删除开关
     int MSG_ZHUJIBANG_OTHER = 0x10124;//他人绑主机验证
+
+
+    int MSG_ZHINENGJIAJU_ZI_SHUAXIN = 0x10125;//智能家居子页面刷新
 }

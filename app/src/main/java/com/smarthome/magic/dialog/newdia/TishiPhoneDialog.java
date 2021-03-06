@@ -15,12 +15,6 @@ import com.smarthome.magic.util.TimeCount;
 
 
 public class TishiPhoneDialog extends Dialog implements View.OnClickListener {
-    public final static int TYPE_XIAOXI = 1;
-    public final static int TYPE_FAILED = 2;
-    public final static int TYPE_CAOZUO = 3;
-    public final static int TYPE_SUCESS = 4;
-    public final static int TYPE_DELETE = 5;
-
     public TextView tv_content;
     public EditText ed_code;
     public TextView tv_title;
@@ -32,12 +26,10 @@ public class TishiPhoneDialog extends Dialog implements View.OnClickListener {
 
     private TishiDialogListener mListener;
     protected boolean dismissAfterClick = false;//是否点击按钮后关闭
-    private int type;//1.消息推送    2.操作失败    3.操作提示    4.操作成功    5.删除
 
-    public TishiPhoneDialog(Context context, int type, TishiDialogListener mListener) {
+    public TishiPhoneDialog(Context context,TishiDialogListener mListener) {
         this(context, R.style.dialogBaseBlur);
         this.mListener = mListener;
-        this.type = type;
         init();
     }
 

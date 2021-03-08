@@ -887,8 +887,10 @@ public class YuYinChuLiTool {
 
             // 设置id_name为uid，即用户级个性化资源
             // 个性化资源使用方法可参见http://doc.xfyun.cn/aiui_mobile/的用户个性化章节
+            dataParamJson.put("appid", "5fc33e7b");
             dataParamJson.put("id_name", "uid");
             dataParamJson.put("id_value", uid);
+
 
             // 设置res_name为联系人
             dataParamJson.put("res_name", "OS8569425439.app_device_name");
@@ -896,12 +898,14 @@ public class YuYinChuLiTool {
             syncSchemaJson.put("param", dataParamJson);
             syncSchemaJson.put("data", dataStrBase64);
 
+
+            Log.i(TAG, "上传的设备名：  " + syncSchemaJson.toString());
             // 传入的数据一定要为utf-8编码
             byte[] syncData = syncSchemaJson.toString().getBytes("utf-8");
 
             // 给该次同步加上自定义tag，在返回结果中可通过tag将结果和调用对应起来
             JSONObject paramJson = new JSONObject();
-            paramJson.put("tag", "sync-tag1");
+            //paramJson.put("tag", "sync-tag1");
 
             // 用schema数据同步上传联系人
             // 注：数据同步请在连接服务器之后进行，否则可能失败
@@ -960,12 +964,14 @@ public class YuYinChuLiTool {
             syncSchemaJson.put("param", dataParamJson);
             syncSchemaJson.put("data", dataStrBase64);
 
+
+            Log.i(TAG, "上传的房间名：  " + syncSchemaJson.toString());
             // 传入的数据一定要为utf-8编码
             byte[] syncData = syncSchemaJson.toString().getBytes("utf-8");
 
             // 给该次同步加上自定义tag，在返回结果中可通过tag将结果和调用对应起来
             JSONObject paramJson = new JSONObject();
-            paramJson.put("tag", "sync-tag");
+           // paramJson.put("tag", "sync-tag");
 
             // 用schema数据同步上传联系人
             // 注：数据同步请在连接服务器之后进行，否则可能失败

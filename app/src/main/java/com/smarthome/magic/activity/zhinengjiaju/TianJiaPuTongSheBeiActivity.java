@@ -191,8 +191,6 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
         Log.i("Rair", str);
 
 
-
-
         znjjMqttMingLing.tianJiaSheBei(zhuji_device_ccid_up, serverId, str, new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
@@ -217,6 +215,7 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
                 if (message.type == ConstanceValue.MSG_TIANJIASHEBEI) {
                     llMainTianjia.setVisibility(View.VISIBLE);
                     zhiNengJiaJu_0007Model = (ZhiNengJiaJu_0007Model) message.content;
+                    //不做判断
 
                     for (int i = 0; i < zhiNengJiaJu_0007Model.getMatch_list().size(); i++) {
                         mDatas.add(zhiNengJiaJu_0007Model.getMatch_list().get(i));

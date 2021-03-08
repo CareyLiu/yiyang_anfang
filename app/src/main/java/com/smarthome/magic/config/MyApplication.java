@@ -229,6 +229,7 @@ public class MyApplication extends MultiDexApplication {
     public void onCreate() {
         StringBuffer param = new StringBuffer();
         param.append("appid=" + getString(R.string.app_id));
+        param.append(",");
         // 设置使用v5+
         param.append(SpeechConstant.ENGINE_MODE + "=" + SpeechConstant.MODE_MSC);
         SpeechUtility.createUtility(MyApplication.this, param.toString());
@@ -792,6 +793,8 @@ public class MyApplication extends MultiDexApplication {
                     context = activity;
                 }
                 activity_main = activity;
+                Log.i(TAG, "ONACTIVITYCREATED  activityName:"+activity_main.getClass().getSimpleName());
+
             }
 
             @Override
@@ -802,6 +805,7 @@ public class MyApplication extends MultiDexApplication {
                     context = activity;
                 }
                 activity_main = activity;
+                Log.i(TAG, "onActivityStarted  activityName:"+activity_main.getClass().getSimpleName());
             }
 
             @Override
@@ -811,27 +815,29 @@ public class MyApplication extends MultiDexApplication {
                 } else {
                     context = activity;
                 }
-
+                Log.i(TAG, "onActivityResumed  activityName:"+activity_main.getClass().getSimpleName());
             }
 
             @Override
             public void onActivityPaused(Activity activity) {
+                Log.i(TAG, "onActivityPaused  activityName:"+activity_main.getClass().getSimpleName());
 
             }
 
             @Override
             public void onActivityStopped(Activity activity) {
+                Log.i(TAG, "onActivityStopped  activityName:"+activity_main.getClass().getSimpleName());
 
             }
 
             @Override
             public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
-
+                Log.i(TAG, "onActivitySaveInstanceState  activityName:"+activity_main.getClass().getSimpleName());
             }
 
             @Override
             public void onActivityDestroyed(Activity activity) {
-
+                Log.i(TAG, "onActivityDestroyed  activityName:"+activity_main.getClass().getSimpleName());
             }
             //.....
         });

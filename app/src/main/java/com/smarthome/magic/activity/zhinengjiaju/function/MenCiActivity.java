@@ -451,18 +451,23 @@ public class MenCiActivity extends BaseActivity {
 //                        N9Thread n9Thread = new N9Thread();
 //                        n9Thread.start();
 
+                        if (dataBean.getWarn_state() != null) {
+                            if (dataBean.getWarn_state().equals("1")) {
+                                viewZhongJian.setVisibility(View.GONE);
+                            } else if (dataBean.getWarn_state().equals("2")) {
+                                viewZhongJian.setVisibility(View.VISIBLE);
 
-                        if (dataBean.getWarn_state().equals("1")) {
-                            viewZhongJian.setVisibility(View.GONE);
-                        } else if (dataBean.getWarn_state().equals("2")) {
-                            viewZhongJian.setVisibility(View.VISIBLE);
+                            }
+                        }
 
+                        if (dataBean.getOnline_state() != null) {
+                            if (dataBean.getOnline_state().equals("1")) {
+                                tvSheBeiZaiXianHuaShu.setText("设备在线");
+                            } else if (dataBean.getOnline_state().equals("2")) {
+                                tvSheBeiZaiXianHuaShu.setText("设备离线");
+                            }
                         }
-                        if (dataBean.getOnline_state().equals("1")) {
-                            tvSheBeiZaiXianHuaShu.setText("设备在线");
-                        } else if (dataBean.getOnline_state().equals("2")) {
-                            tvSheBeiZaiXianHuaShu.setText("设备离线");
-                        }
+
                         tvJiaTingName.setText(dataBean.getFamily_name());
                         tvLeiXingName.setText(dataBean.getDevice_name());
                         tvMingChengName.setText(dataBean.getDevice_type_name());

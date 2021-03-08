@@ -256,6 +256,7 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 yuYinChuLiTool.syncContactsSheBei();
+                //yuYinChuLiTool.syncContactsRoom();
             }
         });
     }
@@ -303,7 +304,29 @@ public class HomeActivity extends BaseActivity {
             }
         });
 
-        tishiDialog.setTextContent("您的家庭有新的状况，是否前去查看?");
+
+        if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("12")) {
+            tishiDialog.setTextContent("您家庭中的门磁有新的状况，是否前去查看?");
+            //MenCiActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
+        } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("11")) {
+            tishiDialog.setTextContent("您家庭中的烟雾感应器有新的状况，是否前去查看?");
+            //YanGanActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
+        } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("15")) {
+            tishiDialog.setTextContent("您家庭中的sos紧急报警有新的状况，是否前去查看?");
+            //SosActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id(), true);
+        } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("05")) {
+            tishiDialog.setTextContent("您家庭中的门锁有新的状况，是否前去查看?");
+            //MenSuoActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
+        } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("13")) {
+            tishiDialog.setTextContent("您家庭中的漏水有新的状况，是否前去查看?");
+            //LouShuiActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
+        } else if (finalZhiNengJiaJuNotifyJson1.getDevice_type().equals("34")) {
+            tishiDialog.setTextContent("您家庭中的人体感应有新的状况，是否前去查看?");
+            //RenTiGanYingActivity.actionStart(mContext, finalZhiNengJiaJuNotifyJson1.getDevice_id());
+        } else {
+            tishiDialog.setTextContent("您家庭中有新的状况，是否前去查看?");
+        }
+
 
         if (tishiDialog != null && !tishiDialog.isShowing()) {
             tishiDialog.show();

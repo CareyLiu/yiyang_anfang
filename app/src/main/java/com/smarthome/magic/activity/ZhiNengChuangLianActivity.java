@@ -328,6 +328,18 @@ public class ZhiNengChuangLianActivity extends BaseActivity {
             }
         });
 
+
+        rlRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("device_id", dataBean.getDevice_id());
+                bundle.putString("family_id", dataBean.getFamily_id());
+                bundle.putString("member_type", member_type);
+                startActivity(new Intent(mContext, ZhiNengRoomManageActivity.class).putExtras(bundle));
+            }
+        });
+
         initHuidiao();
     }
 
@@ -526,10 +538,12 @@ public class ZhiNengChuangLianActivity extends BaseActivity {
      *
      * @param context
      */
-    public static void actionStart(Context context, String device_id) {
+    public static void actionStart(Context context, String device_id, String device_type, String member_type) {
         Intent intent = new Intent(context, ZhiNengChuangLianActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("device_id", device_id);
+        intent.putExtra("device_type", device_type);
+        intent.putExtra("member_type", member_type);
         context.startActivity(intent);
     }
 

@@ -87,6 +87,7 @@ public class ZhiNengJiaJuKaiGuanOneActivity extends BaseActivity {
     private String deviceId;
     private String deViceName;
     private String familyId;
+    private String member_type;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,6 +96,7 @@ public class ZhiNengJiaJuKaiGuanOneActivity extends BaseActivity {
         device_ccid = getIntent().getStringExtra("device_ccid");
         device_ccid_up = getIntent().getStringExtra("device_ccid_up");
         serverId = getIntent().getStringExtra("serverId");
+        member_type = getIntent().getStringExtra("member_type");
         getnet();
 
         znjjMqttMingLing = new ZnjjMqttMingLing(mContext);
@@ -237,7 +239,7 @@ public class ZhiNengJiaJuKaiGuanOneActivity extends BaseActivity {
         iv_rightTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KaiGuanSettingActivity.actionStart(mContext, "", "");
+                KaiGuanSettingActivity.actionStart(mContext, device_ccid, device_ccid_up,member_type);
             }
         });
         mToolbar.setNavigationIcon(R.mipmap.backbutton);
@@ -256,12 +258,13 @@ public class ZhiNengJiaJuKaiGuanOneActivity extends BaseActivity {
      *
      * @param context
      */
-    public static void actionStart(Context context, String device_ccid, String device_ccid_up, String serverId) {
+    public static void actionStart(Context context, String device_ccid, String device_ccid_up, String serverId, String member_type) {
         Intent intent = new Intent(context, ZhiNengJiaJuKaiGuanOneActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("device_ccid", device_ccid);
         intent.putExtra("device_ccid_up", device_ccid_up);
         intent.putExtra("serverId", serverId);
+        intent.putExtra("member_type", member_type);
         context.startActivity(intent);
     }
 

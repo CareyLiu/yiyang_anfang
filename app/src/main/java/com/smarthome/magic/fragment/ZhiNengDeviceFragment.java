@@ -270,7 +270,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                                 UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
                             }
                         } else if (deviceBean.getDevice_type().equals("16")) {//窗帘
-                            ZhiNengChuangLianActivity.actionStart(getActivity(), deviceBean.getDevice_id());
+                            ZhiNengChuangLianActivity.actionStart(getActivity(), deviceBean.getDevice_id(), deviceBean.getDevice_type(), member_type);
                         } else if (deviceBean.getDevice_type().equals("01")) {//灯
                             ZhiNengDianDengActivity.actionStart(getActivity(), deviceBean.getDevice_id(), deviceBean.getDevice_type(), member_type);
                         } else if (deviceBean.getDevice_type().equals("03")) {//喂鱼
@@ -316,11 +316,11 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                             Log.i("ZhiNengDeviceFragment", "strJiLian:" + strJiLian);
                             String serverId = deviceBean.getDevice_ccid_up().substring(deviceBean.getDevice_ccid_up().length() - 1) + "/";
                             if (strJiLian.equals("01")) {
-                                ZhiNengJiaJuKaiGuanOneActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up(), serverId);
+                                ZhiNengJiaJuKaiGuanOneActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up(), serverId,member_type);
                             } else if (strJiLian.equals("02")) {
-                                ZhiNengJiaJuKaiGuanTwoActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up(), serverId);
+                                ZhiNengJiaJuKaiGuanTwoActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up(), serverId,member_type);
                             } else if (strJiLian.equals("03")) {
-                                ZhiNengJiaJuKaiGuanThreeActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up(), serverId);
+                                ZhiNengJiaJuKaiGuanThreeActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up(), serverId,member_type);
                             }
                         } else if (deviceBean.getDevice_type().equals("00")) {
                             Bundle bundle = new Bundle();

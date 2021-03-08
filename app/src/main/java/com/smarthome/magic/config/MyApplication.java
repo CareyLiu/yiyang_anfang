@@ -147,6 +147,7 @@ public class MyApplication extends MultiDexApplication {
             return "tcp://mqtt.hljsdkj.com";
         } else {
             return "tcp://ggw.hljsdkj.com";
+//            return "ws://ggw.hljsdkj.com";
         }
     }
 
@@ -588,6 +589,7 @@ public class MyApplication extends MultiDexApplication {
                 MqttConnect builder = new MqttConnect();
                 builder.setClientId(HardWareValue.CLIENT_ID + getUser_id() + System.currentTimeMillis())//连接服务器
                         .setPort(9096)
+//                        .setPort(9093)
                         .setAutoReconnect(true)
                         .setCleanSession(true)
                         .setKeepAlive(60)

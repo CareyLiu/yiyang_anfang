@@ -65,12 +65,14 @@ public class KaiGuanSettingActivity extends BaseActivity {
     private String device_ccid;
     private String device_ccidup;
     private String device_id;
+    private String member_type;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         device_ccid = getIntent().getStringExtra("device_ccid");
         device_ccidup = getIntent().getStringExtra("device_ccidup");
+        member_type = getIntent().getStringExtra("member_type");
         getnet();
         tvRoomDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +116,7 @@ public class KaiGuanSettingActivity extends BaseActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString("device_id", device_id);
                 bundle.putString("family_id", family_id);
+                bundle.putString("member_type", member_type);
                 startActivity(new Intent(mContext, ZhiNengRoomManageActivity.class).putExtras(bundle));
             }
         });
@@ -154,11 +157,12 @@ public class KaiGuanSettingActivity extends BaseActivity {
      *
      * @param context
      */
-    public static void actionStart(Context context, String device_ccid, String device_ccidup) {
+    public static void actionStart(Context context, String device_ccid, String device_ccidup,String member_type) {
         Intent intent = new Intent(context, KaiGuanSettingActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("device_ccid", device_ccid);
         intent.putExtra("device_ccidup", device_ccidup);
+        intent.putExtra("member_type", member_type);
         context.startActivity(intent);
     }
 

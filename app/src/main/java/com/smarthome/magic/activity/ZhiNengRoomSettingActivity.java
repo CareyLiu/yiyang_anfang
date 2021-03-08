@@ -174,13 +174,13 @@ public class ZhiNengRoomSettingActivity extends BaseActivity implements View.OnC
                         UIHelper.ToastMessage(mContext, "请连接网络后重新尝试");
                     }
                 } else if (deviceBean.getDevice_type().equals("16")) {//窗帘
-                    ZhiNengChuangLianActivity.actionStart(mContext, deviceBean.getDevice_id());
+                    ZhiNengChuangLianActivity.actionStart(mContext, deviceBean.getDevice_id(), "", member_type);
                 } else if (deviceBean.getDevice_type().equals("01")) {//灯
                     ZhiNengDianDengActivity.actionStart(mContext, deviceBean.getDevice_id(), deviceBean.getDevice_type(), member_type);
                 } else if (deviceBean.getDevice_type().equals("03")) {//喂鱼
                     ZhiNengJiajuWeiYuAutoActivity.actionStart(mContext, deviceBean.getDevice_id(), deviceBean.getDevice_type(), member_type);
                 } else if (deviceBean.getDevice_type().equals("04")) {//浇花
-                    ZhiNengJiaoHuaAutoActivity.actionStart(mContext, deviceBean.getDevice_id(), deviceBean.getDevice_type(),member_type);
+                    ZhiNengJiaoHuaAutoActivity.actionStart(mContext, deviceBean.getDevice_id(), deviceBean.getDevice_type(), member_type);
                 } else if (deviceBean.getDevice_type().equals("02")) {
                     Bundle bundle = new Bundle();
                     bundle.putString("device_id", deviceBean.getDevice_id());

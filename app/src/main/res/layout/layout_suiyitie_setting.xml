@@ -36,6 +36,7 @@
         android:layout_height="1dp"
         android:background="@color/split" />
 
+
     <RelativeLayout
         android:id="@+id/rl_fangjian"
         android:layout_width="match_parent"
@@ -62,7 +63,6 @@
             android:textColor="#ff999999"
             android:textSize="15sp" />
     </RelativeLayout>
-
 
     <View
         android:layout_width="match_parent"

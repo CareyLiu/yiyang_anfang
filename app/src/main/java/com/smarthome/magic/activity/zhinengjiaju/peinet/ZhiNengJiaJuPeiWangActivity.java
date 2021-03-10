@@ -648,7 +648,7 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
             }
         });
         // TODO: 2021/2/2 添加的命令待赋值
-        String str = "M12" + zhuangZhiLeixing + zhuangZhiLeiXingXingHao + "2";
+        String str = "M12" + zhuangZhiLeixing + zhuangZhiLeiXingXingHao + "2.";
 
         znjjMqttMingLing.tianJiaSheBei(zhuji_device_ccid_up, serverId, str, new IMqttActionListener() {
             @Override

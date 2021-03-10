@@ -109,7 +109,7 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
 //            }
 //        });
         // TODO: 2021/2/2 添加的命令待赋值
-        String str = "M12" + zhuangZhiLeixing + zhuangZhiLeiXingXingHao + "2";
+        String str = "M12" + zhuangZhiLeixing + zhuangZhiLeiXingXingHao + "2.";
         Log.i("Rair", str);
 
 

@@ -475,6 +475,10 @@ public class ZhiNengRoomSettingActivity extends BaseActivity implements View.OnC
                 .execute(new JsonCallback<AppResponse<ZhiNengFamilyEditBean>>() {
                     @Override
                     public void onSuccess(final Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        Notice notice = new Notice();
+                        notice.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+                        sendRx(notice);
+
                         if (response.body().msg.equals("ok")) {
                             MyCarCaoZuoDialog_Success dialog_success = new MyCarCaoZuoDialog_Success(ZhiNengRoomSettingActivity.this,
                                     "成功", "您已经成功删除该房间", new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {

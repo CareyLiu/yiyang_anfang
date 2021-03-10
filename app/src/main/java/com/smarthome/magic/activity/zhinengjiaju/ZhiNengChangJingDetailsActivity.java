@@ -241,7 +241,9 @@ public class ZhiNengChangJingDetailsActivity extends BaseActivity {
                         UIHelper.ToastMessage(mContext, "场景删除成功");
                         Notice notice = new Notice();
                         notice.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+                        sendRx(notice);
                         finish();
+
 
                     }
 

@@ -267,6 +267,8 @@ public class ZhiNengJiaJuGaiFragment extends BaseFragment implements View.OnClic
                     getnet();
                 } else if (message.type == ConstanceValue.MSG_TIANJIASHEBEI) {//添加普通设备
                     getnet();
+                } else if (message.type == ConstanceValue.MSG_DEVICE_ROOM_NAME_CHANGE) {//设备转移
+                    getnet();
                 }
             }
         }));

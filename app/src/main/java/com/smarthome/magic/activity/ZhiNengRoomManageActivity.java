@@ -246,6 +246,10 @@ public class ZhiNengRoomManageActivity extends BaseActivity implements View.OnCl
                     @Override
                     public void onSuccess(Response<AppResponse<ZhiNengRoomManageCreatBean>> response) {
                         getnet();
+
+                        Notice notice = new Notice();
+                        notice.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+                        sendRx(notice);
                     }
 
                     @Override

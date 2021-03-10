@@ -375,7 +375,6 @@ public class ZhiNengJiaJuKaiGuanThreeActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse<ZhiNengJiaJuKaiGuanModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<ZhiNengJiaJuKaiGuanModel.DataBean>> response) {
-                        showLoadSuccess();
                         ZhiNengJiaJuKaiGuanThreeActivity.this.response = response;
                         leftZhuangZhiId = response.body().data.get(0).getDevice_list().get(0).getDevice_ccid();
                         centerZhuangZhiId = response.body().data.get(0).getDevice_list().get(1).getDevice_ccid();
@@ -404,16 +403,7 @@ public class ZhiNengJiaJuKaiGuanThreeActivity extends BaseActivity {
 
                     @Override
                     public void onError(Response<AppResponse<ZhiNengJiaJuKaiGuanModel.DataBean>> response) {
-                        String str = response.getException().getMessage();
                         UIHelper.ToastMessage(mContext, response.getException().getMessage());
-
-
-                    }
-
-                    @Override
-                    public void onStart(Request<AppResponse<ZhiNengJiaJuKaiGuanModel.DataBean>, ? extends Request> request) {
-                        super.onStart(request);
-                        showLoading();
                     }
 
                     @Override

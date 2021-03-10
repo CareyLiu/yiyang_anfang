@@ -122,6 +122,7 @@ public class AppConfig {
     public final static String BAOJINGLOUSHUI = "BAOJINGLOUSHUI";//漏水
     public final static String BAOJINGRENTIGANYING = "BAOJINGRENTIGANYING";//报警人体感应
     public final static String HAVEZHUJI = "HAVEZHUJI";
+    public final static String FIRSTINSTALLDONGTAISHITI = "FIRSTINSTALLDONGTAISHITI";//首次安装校验动态实体 0非首次 1首次
     //福利功能  需要的字段
     //作废时间  --待使用
     public static String abolishDate;

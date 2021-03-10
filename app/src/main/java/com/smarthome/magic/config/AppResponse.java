@@ -28,6 +28,7 @@ public class AppResponse<T> implements Serializable {
     public String msg;
     public String next;//0 否 1 是
     public String typeNext;//
+    public String change_state;
     public List<T> data;
     public String wares_id_data;//商品列表
     public String mqtt_connect_state;

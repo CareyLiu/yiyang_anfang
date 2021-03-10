@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.ZhiNengRoomManageActivity;
 import com.smarthome.magic.adapter.YanGanListAdapter;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.AppConfig;
@@ -40,6 +42,7 @@ import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.LordingDialog;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuoTIshi;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Success;
+import com.smarthome.magic.dialog.ZhiNengFamilyAddDIalog;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.AlarmListBean;
@@ -81,7 +84,8 @@ public class YanGanActivity extends BaseActivity {
     private LordingDialog lordingDialog;
     private ImageView ivShebeiZaixianzhuangtaiImg;//在线离线 红标
     private TextView zaiXianLiXian;//在线离线
-
+    private RelativeLayout rlMingCheng;
+    private RelativeLayout rlFangJian;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -127,7 +131,25 @@ public class YanGanActivity extends BaseActivity {
         viewZhongJian = view.findViewById(R.id.view_zhongjian);
         ivYanGan = view.findViewById(R.id.iv_yangan);
         ivYanGan.setBackgroundResource(R.mipmap.tuya_yanwu_pic_normal);
-
+        rlMingCheng = view.findViewById(R.id.rl_mingcheng);
+        rlMingCheng.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ZhiNengFamilyAddDIalog zhiNengFamilyAddDIalog = new ZhiNengFamilyAddDIalog(mContext, ConstanceValue.MSG_ROOM_DEVICE_CHANGENAME);
+                zhiNengFamilyAddDIalog.show();
+            }
+        });
+        rlFangJian = view.findViewById(R.id.rl_fangjian);
+        rlFangJian.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("device_id", dataBean.getDevice_id());
+                bundle.putString("family_id", dataBean.getFamily_id());
+                bundle.putString("member_type", memberType);
+                startActivity(new Intent(mContext, ZhiNengRoomManageActivity.class).putExtras(bundle));
+            }
+        });
         zaiXianLiXian = view.findViewById(R.id.tv_shebei_zaixian_huashu);
         ivShebeiZaixianzhuangtaiImg = view.findViewById(R.id.iv_shebei_zaixianzhuangtai_img);
 
@@ -189,6 +211,8 @@ public class YanGanActivity extends BaseActivity {
                     } else if (kaiGuanDengZhuangTai.equals("1")) {//关
                         ivYanGan.setBackgroundResource(R.mipmap.tuya_yanwu_pic_no);
                     }
+                } else if (notice.type == ConstanceValue.MSG_ROOM_DEVICE_CHANGENAME) {
+                    changeDevice(notice.content.toString());
                 }
             }
         }));
@@ -218,6 +242,75 @@ public class YanGanActivity extends BaseActivity {
                 myCarCaoZuoDialog_caoZuoTIshi.show();
             }
         });
+    }
+
+    TishiDialog tishiDialog;
+
+    /**
+     * 修改设备名字
+     */
+    private void changeDevice(String deviceName) {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16033");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("family_id", dataBean.getFamily_id());
+        map.put("device_id", dataBean.getDevice_id());
+        map.put("old_name", dataBean.getDevice_name());
+        map.put("device_name", deviceName);
+        Gson gson = new Gson();
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<ZhiNengFamilyEditBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ZhiNengFamilyEditBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        if (response.body().msg_code.equals("0000")) {
+                            tvMingChengName.setText(deviceName);
+                            MyCarCaoZuoDialog_Success myCarCaoZuoDialog_success = new MyCarCaoZuoDialog_Success(YanGanActivity.this,
+                                    "成功", "名字修改成功咯", "好的", new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
+                                @Override
+                                public void clickLeft() {
+
+                                }
+
+                                @Override
+                                public void clickRight() {
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_CAOZUODONGTAISHITI;
+                                    sendRx(notice);
+                                }
+                            });
+                            myCarCaoZuoDialog_success.show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        String str = response.getException().getMessage();
+
+                        tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+                                tishiDialog.dismiss();
+                            }
+
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
+
+                                finish();
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+
+                            }
+                        });
+                        tishiDialog.setTextContent(str);
+                        tishiDialog.show();
+                    }
+                });
     }
 
     @Override
@@ -399,7 +492,6 @@ public class YanGanActivity extends BaseActivity {
 
     }
 
-    TishiDialog tishiDialog;
 
     private void deleteDevice() {
 

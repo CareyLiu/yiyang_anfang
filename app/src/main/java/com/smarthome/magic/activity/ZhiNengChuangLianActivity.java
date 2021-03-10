@@ -385,7 +385,9 @@ public class ZhiNengChuangLianActivity extends BaseActivity {
 
                                 @Override
                                 public void clickRight() {
-
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_CAOZUODONGTAISHITI;
+                                    sendRx(notice);
                                 }
                             });
                             myCarCaoZuoDialog_success.show();

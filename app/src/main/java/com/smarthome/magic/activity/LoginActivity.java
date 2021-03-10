@@ -474,6 +474,8 @@ public class LoginActivity extends BaseActivity {
             userlist.addAll(response.body().data);
             startActivity(new Intent(LoginActivity.this, SelectLoginActivity.class));
         }
+
+        PreferenceHelper.getInstance(mContext).putString(AppConfig.FIRSTINSTALLDONGTAISHITI, "1");//登陆成功后第一次上传动态实体
     }
 
     public void connectRongYun(String token) {

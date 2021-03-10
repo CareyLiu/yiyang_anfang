@@ -80,6 +80,7 @@ import com.smarthome.magic.model.ZhiNengJiaJu_0009Model;
 import com.smarthome.magic.util.DoMqttValue;
 import com.smarthome.magic.util.JinChengUtils;
 import com.smarthome.magic.util.SerializeUtil;
+import com.smarthome.magic.util.ShangChuanDongTaiShiTiTool;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tuya.smart.api.router.UrlBuilder;
@@ -347,6 +348,15 @@ public class MyApplication extends MultiDexApplication {
         //view
         Gloading.initDefault(new GlobalAdapter());
         Logger.addLogAdapter(new AndroidLogAdapter());
+
+//        List<String> roomList = new ArrayList<>();
+//        roomList.add("茶杯");
+//        roomList.add("缸子");
+//        List<String> sheBeiList = new ArrayList<>();
+//        sheBeiList.add("英雄");
+//        sheBeiList.add("大熊猫");
+
+      //  new ShangChuanDongTaiShiTiTool(context, roomList, sheBeiList);
     }
 
     private void initYoumeng() {
@@ -795,7 +805,7 @@ public class MyApplication extends MultiDexApplication {
                     context = activity;
                 }
                 activity_main = activity;
-                Log.i(TAG, "ONACTIVITYCREATED  activityName:"+activity_main.getClass().getSimpleName());
+                Log.i(TAG, "ONACTIVITYCREATED  activityName:" + activity_main.getClass().getSimpleName());
 
             }
 
@@ -807,7 +817,7 @@ public class MyApplication extends MultiDexApplication {
                     context = activity;
                 }
                 activity_main = activity;
-                Log.i(TAG, "onActivityStarted  activityName:"+activity_main.getClass().getSimpleName());
+                Log.i(TAG, "onActivityStarted  activityName:" + activity_main.getClass().getSimpleName());
             }
 
             @Override
@@ -817,29 +827,29 @@ public class MyApplication extends MultiDexApplication {
                 } else {
                     context = activity;
                 }
-                Log.i(TAG, "onActivityResumed  activityName:"+activity_main.getClass().getSimpleName());
+                Log.i(TAG, "onActivityResumed  activityName:" + activity_main.getClass().getSimpleName());
             }
 
             @Override
             public void onActivityPaused(Activity activity) {
-                Log.i(TAG, "onActivityPaused  activityName:"+activity_main.getClass().getSimpleName());
+                Log.i(TAG, "onActivityPaused  activityName:" + activity_main.getClass().getSimpleName());
 
             }
 
             @Override
             public void onActivityStopped(Activity activity) {
-                Log.i(TAG, "onActivityStopped  activityName:"+activity_main.getClass().getSimpleName());
+                Log.i(TAG, "onActivityStopped  activityName:" + activity_main.getClass().getSimpleName());
 
             }
 
             @Override
             public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
-                Log.i(TAG, "onActivitySaveInstanceState  activityName:"+activity_main.getClass().getSimpleName());
+                Log.i(TAG, "onActivitySaveInstanceState  activityName:" + activity_main.getClass().getSimpleName());
             }
 
             @Override
             public void onActivityDestroyed(Activity activity) {
-                Log.i(TAG, "onActivityDestroyed  activityName:"+activity_main.getClass().getSimpleName());
+                Log.i(TAG, "onActivityDestroyed  activityName:" + activity_main.getClass().getSimpleName());
             }
             //.....
         });

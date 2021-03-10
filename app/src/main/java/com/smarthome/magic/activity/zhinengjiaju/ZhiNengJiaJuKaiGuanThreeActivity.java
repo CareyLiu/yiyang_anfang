@@ -503,7 +503,9 @@ public class ZhiNengJiaJuKaiGuanThreeActivity extends BaseActivity {
 
                                 @Override
                                 public void onClickConfirm(View v, TishiDialog dialog) {
-
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_CAOZUODONGTAISHITI;
+                                    sendRx(notice);
                                     finish();
                                 }
 

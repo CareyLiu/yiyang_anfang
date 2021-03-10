@@ -30,6 +30,8 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.ZhiNengDianDengActivity;
+import com.smarthome.magic.activity.ZhiNengJiaJuChaZuoActivity;
+import com.smarthome.magic.activity.ZhiNengRoomManageActivity;
 import com.smarthome.magic.adapter.MenCiListAdapter;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.AppConfig;
@@ -45,6 +47,7 @@ import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.LordingDialog;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuoTIshi;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Success;
+import com.smarthome.magic.dialog.ZhiNengFamilyAddDIalog;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.AlarmListBean;
@@ -95,6 +98,8 @@ public class MenCiActivity extends BaseActivity {
     RelativeLayout rlGaoJingSheZhi;
     TextView tvSheBeiZaiXianHuaShu;
     private int pageNumber = 0;
+    RelativeLayout rlDeviceName;
+    RelativeLayout rl_fangjian;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -145,6 +150,27 @@ public class MenCiActivity extends BaseActivity {
         tvSheBeiZaiXianHuaShu = headerView.findViewById(R.id.tv_shebei_zaixian_huashu);
         Switch switchBaoJingTishiYin = headerView.findViewById(R.id.btn_baojing_tishiyin);
         rlQingKong = headerView.findViewById(R.id.rl_qingkong);
+        rlDeviceName = headerView.findViewById(R.id.rl_device_name);
+        rl_fangjian = headerView.findViewById(R.id.rl_fangjian);
+        rl_fangjian.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("device_id", dataBean.getDevice_id());
+                bundle.putString("family_id", dataBean.getFamily_id());
+                bundle.putString("member_type", memberType);
+                startActivity(new Intent(mContext, ZhiNengRoomManageActivity.class).putExtras(bundle));
+            }
+        });
+        rlDeviceName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ZhiNengFamilyAddDIalog zhiNengFamilyAddDIalog = new ZhiNengFamilyAddDIalog(mContext, ConstanceValue.MSG_ROOM_DEVICE_CHANGENAME);
+                zhiNengFamilyAddDIalog.show();
+            }
+        });
+
+
         rlQingKong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -230,7 +256,10 @@ public class MenCiActivity extends BaseActivity {
                         }
                     }
 
+                } else if (notice.type == ConstanceValue.MSG_ROOM_DEVICE_CHANGENAME) {
+                    changeDevice(notice.content.toString());
                 }
+
             }
         }));
 
@@ -272,6 +301,75 @@ public class MenCiActivity extends BaseActivity {
 //            }
 //        });
 
+    }
+
+    TishiDialog tishiDialog;
+
+    /**
+     * 修改设备名字
+     */
+    private void changeDevice(String deviceName) {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16033");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("family_id", dataBean.getFamily_id());
+        map.put("device_id", dataBean.getDevice_id());
+        map.put("old_name", dataBean.getDevice_name());
+        map.put("device_name", deviceName);
+        Gson gson = new Gson();
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<ZhiNengFamilyEditBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ZhiNengFamilyEditBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        if (response.body().msg_code.equals("0000")) {
+                            tvMingChengName.setText(deviceName);
+                            MyCarCaoZuoDialog_Success myCarCaoZuoDialog_success = new MyCarCaoZuoDialog_Success(MenCiActivity.this,
+                                    "成功", "名字修改成功咯", "好的", new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
+                                @Override
+                                public void clickLeft() {
+
+                                }
+
+                                @Override
+                                public void clickRight() {
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_CAOZUODONGTAISHITI;
+                                    sendRx(notice);
+                                }
+                            });
+                            myCarCaoZuoDialog_success.show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        String str = response.getException().getMessage();
+
+                        tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+                                tishiDialog.dismiss();
+                            }
+
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
+
+                                finish();
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+
+                            }
+                        });
+                        tishiDialog.setTextContent(str);
+                        tishiDialog.show();
+                    }
+                });
     }
 
     private void getQingKongNet() {
@@ -469,14 +567,16 @@ public class MenCiActivity extends BaseActivity {
                         }
 
                         tvJiaTingName.setText(dataBean.getFamily_name());
-                        tvLeiXingName.setText(dataBean.getDevice_name());
-                        tvMingChengName.setText(dataBean.getDevice_type_name());
+                        tvLeiXingName.setText(dataBean.getDevice_type_name());
+                        tvMingChengName.setText(dataBean.getDevice_name());
                         tvRoomName.setText(dataBean.getRoom_name());
 
-                        if (dataBean.getIs_alarm().equals("1")) {//1 是
-                            switch1.setChecked(true);
-                        } else if (dataBean.getIs_alarm().equals("2")) { //2 否
-                            switch1.setChecked(false);
+                        if (dataBean.getIs_alarm() != null) {
+                            if (dataBean.getIs_alarm().equals("1")) {//1 是
+                                switch1.setChecked(true);
+                            } else if (dataBean.getIs_alarm().equals("2")) { //2 否
+                                switch1.setChecked(false);
+                            }
                         }
 
 

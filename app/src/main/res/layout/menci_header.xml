@@ -202,6 +202,7 @@
         android:background="#cccccc" />
 
     <RelativeLayout
+        android:id="@+id/rl_device_name"
         android:layout_width="match_parent"
         android:layout_height="47dp">
 

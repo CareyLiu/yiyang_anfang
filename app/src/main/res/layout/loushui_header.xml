@@ -211,6 +211,7 @@
         android:background="#cccccc" />
 
     <RelativeLayout
+        android:id="@+id/rl_mingcheng"
         android:layout_width="match_parent"
         android:layout_height="47dp">
 

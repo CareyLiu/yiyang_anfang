@@ -25,10 +25,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.jaeger.library.StatusBarUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
 import com.smarthome.magic.R;
@@ -44,8 +48,12 @@ import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.UIHelper;
+import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.AudioFocusManager;
 import com.smarthome.magic.config.PreferenceHelper;
+import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Notify;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.fragment.MessagerFragment;
@@ -53,10 +61,15 @@ import com.smarthome.magic.fragment.MineFragment;
 import com.smarthome.magic.fragment.OnlineFragment;
 import com.smarthome.magic.fragment.ZhiNengJiaJuFragment;
 import com.smarthome.magic.fragment.znjj.ZhiNengJiaJuGaiFragment;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.inter.YuYinInter;
 import com.smarthome.magic.model.AlarmClass;
+import com.smarthome.magic.model.DongTaiShiTiFamilListModel;
+import com.smarthome.magic.model.DongTaiShiTiZhuangTaiModel;
+import com.smarthome.magic.model.SuiYiTieModel;
 import com.smarthome.magic.model.ZhiNengJiaJuNotifyJson;
 import com.smarthome.magic.util.AppToast;
+import com.smarthome.magic.util.ShangChuanDongTaiShiTiTool;
 import com.smarthome.magic.util.SoundPoolUtils;
 import com.smarthome.magic.util.YuYinChuLiTool;
 import com.smarthome.magic.view.NoScrollViewPager;
@@ -66,7 +79,9 @@ import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,7 +89,9 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 import static com.smarthome.magic.config.MyApplication.CAR_NOTIFY;
+import static com.smarthome.magic.config.MyApplication.context;
 import static com.smarthome.magic.config.MyApplication.getAppContext;
+import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
 
 public class HomeActivity extends BaseActivity {
@@ -194,6 +211,10 @@ public class HomeActivity extends BaseActivity {
                 } else if (notice.type == ConstanceValue.MSG_YUYINXIAOSHI) {
                     yuYinChuLiTool.closeMianBan();
                     rrlYuyinMianban.setVisibility(View.GONE);
+                } else if (notice.type == ConstanceValue.MSG_CAOZUODONGTAISHITI) {
+                    dognTaiShiTiUrl();
+                }else if (notice.type== ConstanceValue.MSG_XIUGAIDONGTAISHITIFINISH){
+                    xiuGaiDongTaiShiTiFinish();
                 }
             }
         }));
@@ -255,11 +276,127 @@ public class HomeActivity extends BaseActivity {
         tvShangchuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                yuYinChuLiTool.syncContactsSheBei();
-                //yuYinChuLiTool.syncContactsRoom();
+//                List<String> roomList = new ArrayList<>();
+//                roomList.add("茶杯");
+//                roomList.add("缸子");
+//                List<String> sheBeiList = new ArrayList<>();
+//                sheBeiList.add("英雄");
+//                sheBeiList.add("大熊猫");
+//
+//                ShangChuanDongTaiShiTiTool shangChuanDongTaiShiTiTool = new ShangChuanDongTaiShiTiTool(context, roomList, sheBeiList);
+//                shangChuanDongTaiShiTiTool.syncContactsRoom(roomList);
+//                shangChuanDongTaiShiTiTool.syncContactsSheBei(sheBeiList);
+//
+//
+//                yuYinChuLiTool.syncContactsSheBei();
+//                yuYinChuLiTool.syncContactsRoom();
             }
         });
+        dognTaiShiTiUrl();
     }
+
+    private List<String> roomList = new ArrayList<>();
+    private List<String> deviceList = new ArrayList<>();
+
+
+    private void dognTaiShiTiUrl() {
+        //访问网络获取数据 下面的列表数据
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16069");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("family_id", PreferenceHelper.getInstance(mContext).getString(AppConfig.FAMILY_ID, ""));
+        Gson gson = new Gson();
+        String a = gson.toJson(map);
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<DongTaiShiTiZhuangTaiModel.DataBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<DongTaiShiTiZhuangTaiModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<DongTaiShiTiZhuangTaiModel.DataBean>> response) {
+                        roomList.clear();
+                        deviceList.clear();
+
+                        if (response.body().data.get(0).getRoom_list().size() > 0) {
+                            for (int i = 0; i < response.body().data.get(0).getRoom_list().size(); i++) {
+                                roomList.add(response.body().data.get(0).getRoom_list().get(i).getName());
+                            }
+                        }
+
+                        if (response.body().data.get(0).getDevice_list().size() > 0) {
+                            for (int i = 0; i < response.body().data.get(0).getDevice_list().size(); i++) {
+                                deviceList.add(response.body().data.get(0).getDevice_list().get(i).getName());
+                            }
+
+                        }
+
+                        String firstInstallDongTaiShiTi = PreferenceHelper.getInstance(mContext).getString(AppConfig.FIRSTINSTALLDONGTAISHITI, "1");
+
+
+                        if (firstInstallDongTaiShiTi.equals("0")) {
+                            //非首次
+                            if (response.body().change_state.equals("1")) {//1.没有改动过 2.改动过
+
+                            } else {
+                                new ShangChuanDongTaiShiTiTool(context, roomList, deviceList);
+                            }
+
+                        } else if (firstInstallDongTaiShiTi.equals("1")) {
+                            //首次
+                            new ShangChuanDongTaiShiTiTool(context, roomList, deviceList);
+
+                        }
+
+                        PreferenceHelper.getInstance(mContext).putString(AppConfig.FIRSTINSTALLDONGTAISHITI, "0");
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<DongTaiShiTiZhuangTaiModel.DataBean>> response) {
+                        String str = response.getException().getMessage();
+                        UIHelper.ToastMessage(mContext, response.getException().getMessage());
+                    }
+
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                    }
+                });
+    }
+
+    private void xiuGaiDongTaiShiTiFinish() {
+        //访问网络获取数据 下面的列表数据
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16070");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("family_id", PreferenceHelper.getInstance(mContext).getString(AppConfig.FAMILY_ID, ""));
+        Gson gson = new Gson();
+        String a = gson.toJson(map);
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<DongTaiShiTiZhuangTaiModel.DataBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<DongTaiShiTiZhuangTaiModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<DongTaiShiTiZhuangTaiModel.DataBean>> response) {
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<DongTaiShiTiZhuangTaiModel.DataBean>> response) {
+                        String str = response.getException().getMessage();
+                        UIHelper.ToastMessage(mContext, response.getException().getMessage());
+                    }
+
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                    }
+                });
+    }
+
 
     private void zhiNengJiaJuCaoZuo(Notice notice) {
         if (tishiDialog != null && tishiDialog.isShowing()) {

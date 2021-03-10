@@ -173,6 +173,10 @@ public class ZhiNengHomeListActivity extends BaseActivity implements View.OnClic
                             Notice notice = new Notice();
                             notice.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
                             sendRx(notice);
+
+                            Notice notice1 = new Notice();
+                            notice1.type = ConstanceValue.MSG_CAOZUODONGTAISHITI;
+                            sendRx(notice1);
                         }
                     }
 

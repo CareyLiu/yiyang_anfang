@@ -269,14 +269,19 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         tvReMenShangPinMiddle = middlePanel.findViewById(R.id.remenshangpin);
         //吃喝玩乐相关列表
         chiHeWanLeList = view.findViewById(R.id.rv_chihe_wanle_list);
+        chiHeWanLeList.setFocusable(false);
         zhiKongList = view.findViewById(R.id.zhikong_list);
+        zhiKongList.setFocusable(false);
+
         ivZiJian = view.findViewById(R.id.iv_zijian);
         tianMaoOrTaoBao = view.findViewById(R.id.iv_tianmao_or_taobao);
         nestedScrollView.setScrollViewListener(this);
         rlv_ziYing = view.findViewById(R.id.rlv_ziying_or_remen);
+        rlv_ziYing.setFocusable(false);
         viewLineTop = topPanel.findViewById(R.id.view_line);
         // viewLineMiddle = middlePanel.findViewById(R.id.view_line);
         rlvRemen = view.findViewById(R.id.rlv_remen);
+        rlvRemen.setFocusable(false);
         remenViewLineTop = topPanel.findViewById(R.id.view_line_remen);
         rlXiuPeiChang = view.findViewById(R.id.rl_xiupeichang);
         rlXiuPeiChang.setOnClickListener(new View.OnClickListener() {

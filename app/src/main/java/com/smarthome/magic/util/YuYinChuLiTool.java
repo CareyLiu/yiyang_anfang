@@ -391,7 +391,7 @@ public class YuYinChuLiTool {
 
         @Override
         public void onEvent(AIUIEvent event) {
-            //Log.i(TAG, "on event: " + event.eventType);
+            Log.i(TAG, "on event: " + event.eventType);
 
             switch (event.eventType) {
                 case AIUIConstant.EVENT_CONNECTED_TO_SERVER:
@@ -623,6 +623,7 @@ public class YuYinChuLiTool {
                                     }
 
                                     showTip("上传成功，sid=" + mSyncSid + "，tag=" + tag + "，你可以试着说“打电话给刘德华”");
+                                    Log.i("YuYin", "打包成功_sid=" + mSyncSid);
                                 } else {
                                     mSyncSid = "";
                                     showTip("上传失败，错误码：" + retCode);
@@ -862,7 +863,7 @@ public class YuYinChuLiTool {
             showTip("AIUIAgent 为空，请先创建");
             return;
         }
-        // TODO: 2021/2/22 66666 
+        // TODO: 2021/2/22 66666
         //经过研究 初步核实认定 是数据问题 数据对了就可以上传成功
         //明天主要研究数据 对应的键值对是什么
 
@@ -873,7 +874,8 @@ public class YuYinChuLiTool {
             //UIHelper.ToastMessage(context, dataStr);
 
             DongTaiShiTiModel dongTaiShiTiModel = new DongTaiShiTiModel();
-            dongTaiShiTiModel.setName("余虹婷");
+            dongTaiShiTiModel.setName("大熊猫");
+
             // dongTaiShiTiModel.setCus_room("客厅");
             String str = new Gson().toJson(dongTaiShiTiModel);
             Log.i("YuYinChuLiTool", str);
@@ -887,10 +889,12 @@ public class YuYinChuLiTool {
 
             // 设置id_name为uid，即用户级个性化资源
             // 个性化资源使用方法可参见http://doc.xfyun.cn/aiui_mobile/的用户个性化章节
-            dataParamJson.put("appid", "5fc33e7b");
             dataParamJson.put("id_name", "uid");
+            if (StringUtils.isEmpty(uid)) {
+                UIHelper.ToastMessage(context, "uid不能为空");
+                return;
+            }
             dataParamJson.put("id_value", uid);
-
 
             // 设置res_name为联系人
             dataParamJson.put("res_name", "OS8569425439.app_device_name");
@@ -905,7 +909,7 @@ public class YuYinChuLiTool {
 
             // 给该次同步加上自定义tag，在返回结果中可通过tag将结果和调用对应起来
             JSONObject paramJson = new JSONObject();
-            //paramJson.put("tag", "sync-tag1");
+            paramJson.put("tag", "sync-tag1");
 
             // 用schema数据同步上传联系人
             // 注：数据同步请在连接服务器之后进行，否则可能失败
@@ -936,7 +940,7 @@ public class YuYinChuLiTool {
             //UIHelper.ToastMessage(context, dataStr);
 
             DongTaiShiTiModel dongTaiShiTiModel = new DongTaiShiTiModel();
-            dongTaiShiTiModel.setName("易拉罐");
+            dongTaiShiTiModel.setName("咸鸭蛋");
 
             // dongTaiShiTiModel.setCus_room("客厅");
             String str = new Gson().toJson(dongTaiShiTiModel);
@@ -971,7 +975,7 @@ public class YuYinChuLiTool {
 
             // 给该次同步加上自定义tag，在返回结果中可通过tag将结果和调用对应起来
             JSONObject paramJson = new JSONObject();
-           // paramJson.put("tag", "sync-tag");
+             paramJson.put("tag", "sync-tag");
 
             // 用schema数据同步上传联系人
             // 注：数据同步请在连接服务器之后进行，否则可能失败

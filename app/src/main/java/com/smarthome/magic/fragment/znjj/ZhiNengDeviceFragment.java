@@ -92,7 +92,7 @@ import rx.functions.Action1;
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
 
-public class ZhiNengZiDeviceFragment extends BaseFragment {
+public class ZhiNengDeviceFragment extends BaseFragment {
 
     private View viewLayout;
     private LinearLayout ll_content_bg;
@@ -174,7 +174,7 @@ public class ZhiNengZiDeviceFragment extends BaseFragment {
         if (zhiNengDeviceListAdapter != null) {
             zhiNengDeviceListAdapter.setNewData(mDatas);
             zhiNengDeviceListAdapter.notifyDataSetChanged();
-        }else {
+        } else {
             Y.e("没有获取到设备");
         }
 
@@ -297,7 +297,7 @@ public class ZhiNengZiDeviceFragment extends BaseFragment {
                                 UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
                             }
                         } else if (deviceBean.getDevice_type().equals("16")) {//窗帘
-                            ZhiNengChuangLianActivity.actionStart(getActivity(), deviceBean.getDevice_id(),"",member_type);
+                            ZhiNengChuangLianActivity.actionStart(getActivity(), deviceBean.getDevice_id(), "", member_type);
                         } else if (deviceBean.getDevice_type().equals("01")) {//灯
                             ZhiNengDianDengActivity.actionStart(getActivity(), deviceBean.getDevice_id(), deviceBean.getDevice_type(), member_type);
                         } else if (deviceBean.getDevice_type().equals("03")) {//喂鱼
@@ -324,7 +324,6 @@ public class ZhiNengZiDeviceFragment extends BaseFragment {
                         } else if (deviceBean.getDevice_type().equals("08")) {//随意贴
                             //SuiYiTieActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up());
                             String strJiLian = deviceBean.getDevice_ccid().substring(2, 4);
-                            Log.i("ZhiNengDeviceFragment", "strJiLian:" + strJiLian);
                             if (strJiLian.equals("01")) {
                                 SuiYiTieOneActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up());
                             } else if (strJiLian.equals("02")) {
@@ -340,14 +339,13 @@ public class ZhiNengZiDeviceFragment extends BaseFragment {
                             RenTiGanYingActivity.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
                         } else if (deviceBean.getDevice_type().equals("35")) {
                             String strJiLian = deviceBean.getDevice_ccid().substring(2, 4);
-                            Log.i("ZhiNengDeviceFragment", "strJiLian:" + strJiLian);
                             String serverId = deviceBean.getDevice_ccid_up().substring(deviceBean.getDevice_ccid_up().length() - 1) + "/";
                             if (strJiLian.equals("01")) {
-                                ZhiNengJiaJuKaiGuanOneActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up(), serverId,member_type);
+                                ZhiNengJiaJuKaiGuanOneActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up(), serverId, member_type);
                             } else if (strJiLian.equals("02")) {
-                                ZhiNengJiaJuKaiGuanTwoActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up(), serverId,member_type);
+                                ZhiNengJiaJuKaiGuanTwoActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up(), serverId, member_type);
                             } else if (strJiLian.equals("03")) {
-                                ZhiNengJiaJuKaiGuanThreeActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up(), serverId,member_type);
+                                ZhiNengJiaJuKaiGuanThreeActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up(), serverId, member_type);
                             }
                         } else if (deviceBean.getDevice_type().equals("00")) {
                             Bundle bundle = new Bundle();

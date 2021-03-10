@@ -201,7 +201,6 @@ public class ZhiNengRoomSettingActivity extends BaseActivity implements View.OnC
                 } else if (deviceBean.getDevice_type().equals("08")) {//随意贴
                     //SuiYiTieActivity.actionStart(mContext, deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up());
                     String strJiLian = deviceBean.getDevice_ccid().substring(2, 4);
-                    Log.i("ZhiNengDeviceFragment", "strJiLian:" + strJiLian);
                     if (strJiLian.equals("01")) {
                         SuiYiTieOneActivity.actionStart(mContext, deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up());
                     } else if (strJiLian.equals("02")) {

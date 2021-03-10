@@ -32,7 +32,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 
-public class ZhiNengZiRoomFragment extends BaseFragment implements View.OnClickListener {
+public class ZhiNengRoomFragment extends BaseFragment implements View.OnClickListener {
     private View viewLayout;
     private View footerView;
     private XRecyclerView recyclerView;

@@ -78,8 +78,7 @@ import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
  * Created by Administrator on 2018/3/29 0029.
  */
 
-public class ZhiNengJiaJuGaiFragment extends BaseFragment implements View.OnClickListener {
-    private static final String TAG = "ZhiNengJiaJuFragment";
+public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickListener {
     @BindView(R.id.rl_title)
     RelativeLayout rlTitle;
     @BindView(R.id.srL_smart)
@@ -123,9 +122,9 @@ public class ZhiNengJiaJuGaiFragment extends BaseFragment implements View.OnClic
     private ArrayList<Fragment> fragmentList = new ArrayList<>();
     private NewsFragmentPagerAdapter viewPagerAdapter;
 
-    private ZhiNengZiDeviceFragment zhiNengDeviceFragment;
-    private ZhiNengZiRoomFragment zhiNengRoomFragment;
-    private ZhiNengZiChangJingFragment zhiNengJiaJuChangJingFragment;
+    private ZhiNengDeviceFragment zhiNengDeviceFragment;
+    private ZhiNengRoomFragment zhiNengRoomFragment;
+    private ZhiNengChangJingFragment zhiNengJiaJuChangJingFragment;
 
     private List<ZhiNengModel.DataBean> dataBean = new ArrayList<>();
     private String zhuJiWenShiDu;
@@ -175,11 +174,11 @@ public class ZhiNengJiaJuGaiFragment extends BaseFragment implements View.OnClic
 
     private void initViewpager() {
         viewPager.setScroll(false);
-        zhiNengDeviceFragment = new ZhiNengZiDeviceFragment();
+        zhiNengDeviceFragment = new ZhiNengDeviceFragment();
         fragmentList.add(zhiNengDeviceFragment);
-        zhiNengRoomFragment = new ZhiNengZiRoomFragment();
+        zhiNengRoomFragment = new ZhiNengRoomFragment();
         fragmentList.add(zhiNengRoomFragment);
-        zhiNengJiaJuChangJingFragment = new ZhiNengZiChangJingFragment();
+        zhiNengJiaJuChangJingFragment = new ZhiNengChangJingFragment();
         fragmentList.add(zhiNengJiaJuChangJingFragment);
         tabs.add("设备");
         tabs.add("房间");

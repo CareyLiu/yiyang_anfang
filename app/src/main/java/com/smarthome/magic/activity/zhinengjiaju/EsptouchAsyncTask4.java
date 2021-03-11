@@ -22,7 +22,6 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.smarthome.magic.app.ConstanceValue.MSG_PEIWANG_SUCCESS;
 import static com.smarthome.magic.app.ConstanceValue.MSG_PEIWNAG_ESPTOUCH;
 
 public class EsptouchAsyncTask4 extends AsyncTask<byte[], IEsptouchResult, List<IEsptouchResult>> {

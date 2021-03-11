@@ -545,6 +545,10 @@ public class LouShuiActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
                         if (response.body().msg_code.equals("0000")) {
+                            Notice notice = new Notice();
+                            notice.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+                            sendRx(notice);
+
                             MyCarCaoZuoDialog_Success myCarCaoZuoDialog_success = new MyCarCaoZuoDialog_Success(LouShuiActivity.this,
                                     "成功", "设备删除成功", "好的", new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
                                 @Override

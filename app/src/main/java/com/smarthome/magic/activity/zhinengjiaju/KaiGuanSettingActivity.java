@@ -73,7 +73,6 @@ public class KaiGuanSettingActivity extends BaseActivity {
         device_ccid = getIntent().getStringExtra("device_ccid");
         device_ccidup = getIntent().getStringExtra("device_ccidup");
         member_type = getIntent().getStringExtra("member_type");
-        getnet();
         tvRoomDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,13 +165,13 @@ public class KaiGuanSettingActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
-    private String family_id = "";
-
     @Override
     protected void onResume() {
         super.onResume();
         getnet();
     }
+
+    private String family_id = "";
 
     private void getnet() {
         //访问网络获取数据 下面的列表数据
@@ -196,6 +195,7 @@ public class KaiGuanSettingActivity extends BaseActivity {
                         tvFamilyName.setText(response.body().data.get(0).getFamily_name());
                         tvShebeiming.setText(response.body().data.get(0).getDevice_name());
                         tvShebeileixing.setText(response.body().data.get(0).getDevice_type_name());
+                        tvFangjianMing.setText(response.body().data.get(0).getRoom_name());
                     }
 
                     @Override
@@ -234,7 +234,7 @@ public class KaiGuanSettingActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Response<AppResponse<SuiYiTieModel.DataBean>> response) {
                         UIHelper.ToastMessage(mContext, "名称修改成功");
-                        getnet();
+                        tvShebeiming.setText(suiYiTieName);
                     }
 
                     @Override

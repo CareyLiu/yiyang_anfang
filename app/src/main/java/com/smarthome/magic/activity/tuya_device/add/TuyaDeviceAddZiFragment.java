@@ -159,22 +159,6 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
         initLanya();
         initHuidiao();
         initAdapter();
-
-        ll_wifi.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                ceShiZhuJi();
-                return false;
-            }
-        });
-        ll_lanya.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                ceShiSheBei();
-                return false;
-            }
-        });
-
         return rootView;
     }
 
@@ -680,31 +664,4 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
             });
         }
     }
-
-    public void ceShiSheBei() {
-//        Notice n = new Notice();
-//        n.type = ConstanceValue.MSG_TIANJIASHEBEI;
-//
-//        ZhiNengJiaJu_0007Model zhiNengJiaJuNotifyJson = new ZhiNengJiaJu_0007Model();
-//        ZhiNengJiaJu_0007Model.MatchListBean dataBean = new ZhiNengJiaJu_0007Model.MatchListBean();
-//        dataBean.setDevice_type_pic(); = "https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11920";
-//
-//        List<ZhiNengJiaJu_0007Model.MatchListBean> list = new ArrayList<>();
-//        list.add(dataBean);
-//        zhiNengJiaJuNotifyJson.setData(list);
-//        n.content = zhiNengJiaJuNotifyJson;
-//        RxBus.getDefault().sendRx(n);
-    }
-
-    public void ceShiZhuJi() {
-        Notice n = new Notice();
-        n.type = ConstanceValue.MSG_TIANJIAZHUJI;
-
-        ZhiNengJiaJu_0009Model zhiNengJiaJuNotifyJson = new ZhiNengJiaJu_0009Model();
-        zhiNengJiaJuNotifyJson.mc_device_url = "https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=11920";
-        n.content = zhiNengJiaJuNotifyJson;
-        RxBus.getDefault().sendRx(n);
-    }
-
-
 }

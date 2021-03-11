@@ -88,6 +88,16 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
         zhuangZhiLeiXingXingHao = fenLeiContentModel.category;
         sendMqttTianJiaSheBei();
         initHuidiao();
+
+        rlTuichu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Notice notice = new Notice();
+                notice.type = MSG_PEIWANG_SUCCESS;
+                RxBus.getDefault().sendRx(notice);
+                finish();
+            }
+        });
     }
 
     private ZnjjMqttMingLing znjjMqttMingLing;
@@ -137,14 +147,6 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
                     }
                     oneImageAdapter.notifyDataSetChanged();
 
-                    rlTuichu.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            finish();
-                        }
-                    });
-
-
                     Notice notice1 = new Notice();
                     notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
                     sendRx(notice1);
@@ -161,7 +163,7 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
 
                         @Override
                         public void onClickConfirm(View v, TishiDialog dialog) {
-
+                            sendMqttTianJiaSheBei();
                         }
 
                         @Override
@@ -188,7 +190,7 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
 
                         @Override
                         public void onClickConfirm(View v, TishiDialog dialog) {
-
+                            sendMqttTianJiaSheBei();
                         }
 
                         @Override
@@ -197,8 +199,8 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
                         }
                     });
                     tishiDialog.setTextContent((String) message.content);
-                    tishiDialog.setTextCancel("重试");
-                    tishiDialog.setTextConfirm("退出");
+                    tishiDialog.setTextCancel("退出");
+                    tishiDialog.setTextConfirm("重试");
                     tishiDialog.setCancelable(false);
                     tishiDialog.setCanceledOnTouchOutside(false);
                     tishiDialog.setDismissAfterClick(true);

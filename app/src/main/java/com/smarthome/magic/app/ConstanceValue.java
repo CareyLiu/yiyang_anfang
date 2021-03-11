@@ -169,4 +169,6 @@ public interface ConstanceValue {
     int MSG_ZHINENGJIAJU_ZI_SHUAXIN = 0x10125;//智能家居子页面刷新
     int MSG_CAOZUODONGTAISHITI = 0x10126;//操作动态实体
     int MSG_XIUGAIDONGTAISHITIFINISH = 0x10127;//修改动态实体成功
+
+    int MSG_ZHUJICHONGZHI = 0x10128;//主机重置
 }

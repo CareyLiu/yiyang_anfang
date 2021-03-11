@@ -356,7 +356,7 @@ public class MyApplication extends MultiDexApplication {
 //        sheBeiList.add("英雄");
 //        sheBeiList.add("大熊猫");
 
-      //  new ShangChuanDongTaiShiTiTool(context, roomList, sheBeiList);
+        //  new ShangChuanDongTaiShiTiTool(context, roomList, sheBeiList);
     }
 
     private void initYoumeng() {
@@ -709,6 +709,28 @@ public class MyApplication extends MultiDexApplication {
                                 Notice n = new Notice();
                                 n.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
                                 RxBus.getDefault().sendRx(n);
+                                PeiWangErrorModel peiWangErrorModel = new Gson().fromJson(message.toString(), PeiWangErrorModel.class);
+
+                                TishiDialog tishiDialog = new TishiDialog(MyApplication.getAppContext(), 3, new TishiDialog.TishiDialogListener() {
+                                    @Override
+                                    public void onClickCancel(View v, TishiDialog dialog) {
+
+                                    }
+
+                                    @Override
+                                    public void onClickConfirm(View v, TishiDialog dialog) {
+
+                                    }
+
+                                    @Override
+                                    public void onDismiss(TishiDialog dialog) {
+
+                                    }
+                                });
+                                tishiDialog.setTextContent(peiWangErrorModel.notify_text);
+                                tishiDialog.setTextCancel("");
+                                tishiDialog.setTextConfirm("确定");
+                                tishiDialog.show();
                             } else if (codeClass.code.equals("jyj_0011")) {// 別人绑定主机
                                 PeiwangOtherModel peiwangOtherModel = new Gson().fromJson(message.toString(), PeiwangOtherModel.class);
                                 Notice n = new Notice();

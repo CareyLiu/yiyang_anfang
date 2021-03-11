@@ -60,6 +60,7 @@ public class ZhiNengJiaJuKaiGuanModel {
          */
 
         private String room_id;
+        private String room_name;
         private String device_name;
         private String family_id;
         private String device_type_name;
@@ -67,6 +68,14 @@ public class ZhiNengJiaJuKaiGuanModel {
         private String device_ccid;
         private String family_name;
         private List<DeviceListBean> device_list;
+
+        public String getRoom_name() {
+            return room_name;
+        }
+
+        public void setRoom_name(String room_name) {
+            this.room_name = room_name;
+        }
 
         public String getRoom_id() {
             return room_id;

@@ -98,15 +98,6 @@ public class TuyaDeviceAddActivity extends BaseActivity {
         initWifi();
         initVpg();
         initHuidiao();
-
-        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
-            @Override
-            public void call(Notice message) {
-                if (message.type == ConstanceValue.MSG_PEIWANG_SUCCESS) {
-                    finish();
-                }
-            }
-        }));
     }
 
     private void initHuidiao() {
@@ -114,6 +105,8 @@ public class TuyaDeviceAddActivity extends BaseActivity {
             @Override
             public void call(Notice message) {
                 if (message.type == ConstanceValue.MSG_DEVICE_ADD) {
+                    finish();
+                } else if (message.type == ConstanceValue.MSG_PEIWANG_SUCCESS) {
                     finish();
                 }
             }

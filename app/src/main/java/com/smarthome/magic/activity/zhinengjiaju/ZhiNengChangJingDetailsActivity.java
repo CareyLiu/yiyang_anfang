@@ -238,12 +238,29 @@ public class ZhiNengChangJingDetailsActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse<ChangJingXiangQingModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<ChangJingXiangQingModel.DataBean>> response) {
-                        UIHelper.ToastMessage(mContext, "场景删除成功");
                         Notice notice = new Notice();
                         notice.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
                         sendRx(notice);
-                        finish();
 
+                        TishiDialog dialog = new TishiDialog(mContext, TishiDialog.TYPE_DELETE, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+
+                            }
+
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
+                                finish();
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+
+                            }
+                        });
+                        dialog.setTextContent("场景删除成功");
+                        dialog.setTextConfirm("确定");
+                        dialog.show();
 
                     }
 

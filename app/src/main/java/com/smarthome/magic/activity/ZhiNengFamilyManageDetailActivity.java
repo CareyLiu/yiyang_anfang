@@ -34,6 +34,7 @@ import com.smarthome.magic.adapter.ZhiNengFamilyManageDetailAdapter;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
@@ -327,6 +328,10 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                     @Override
                     public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
                         if (response.body().msg.equals("ok")) {
+                            Notice notice = new Notice();
+                            notice.type = ConstanceValue.MSG_DELETE_FAMILY;
+                            RxBus.getDefault().sendRx(notice);
+
                             String title = "";
                             if (dataBean.getMember_type().equals("1")) {
                                 title = "删除家庭";

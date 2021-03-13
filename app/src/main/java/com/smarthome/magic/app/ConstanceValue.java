@@ -171,4 +171,6 @@ public interface ConstanceValue {
     int MSG_XIUGAIDONGTAISHITIFINISH = 0x10127;//修改动态实体成功
 
     int MSG_ZHUJICHONGZHI = 0x10128;//主机重置
+
+    int MSG_DELETE_FAMILY = 0x10129;//删除家庭
 }

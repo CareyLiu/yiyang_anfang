@@ -244,7 +244,7 @@ public class DoMqttValue {
     }
 
     private void kongtiao(String topic, String message) {
-        if (topic.contains("zckt")) {
+            if (topic.contains("zckt")) {
             Notice n = new Notice();
             n.type = ConstanceValue.MSG_ZCKT;
             n.content = message.toString();

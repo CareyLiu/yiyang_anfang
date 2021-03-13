@@ -268,6 +268,8 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                     getnet();
                 } else if (message.type == ConstanceValue.MSG_DEVICE_ROOM_NAME_CHANGE) {//设备转移
                     getnet();
+                }else if (message.type == ConstanceValue.MSG_DELETE_FAMILY) {//删除家庭刷新
+                    getnet();
                 }
             }
         }));

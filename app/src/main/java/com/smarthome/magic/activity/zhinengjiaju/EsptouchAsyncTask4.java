@@ -70,12 +70,12 @@ public class EsptouchAsyncTask4 extends AsyncTask<byte[], IEsptouchResult, List<
         Log.i("ZhiNengJiaJuPeiWang", "onProgressUpdate" + values[0].getBssid() + values[0].getInetAddress());
         Activity context = mActivity.get();
         if (context != null) {
-            Toast.makeText(context, "配网成功", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "配网成功", Toast.LENGTH_SHORT).show();
             Notice notice = new Notice();
             notice.type = MSG_PEIWNAG_ESPTOUCH;
             notice.type = 3;
             RxBus.getDefault().sendRx(notice);
-            context.finish();
+//            context.finish();
         }
     }
 

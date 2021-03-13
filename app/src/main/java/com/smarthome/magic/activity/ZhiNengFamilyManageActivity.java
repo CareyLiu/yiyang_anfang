@@ -29,6 +29,7 @@ import com.smarthome.magic.adapter.ZhiNengRoomListAdapter;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
@@ -217,6 +218,10 @@ public class ZhiNengFamilyManageActivity extends BaseActivity implements View.On
                     @Override
                     public void onSuccess(final Response<AppResponse<ZhiNengFamilyManageBean.DataBean>> response) {
                         if (response.body().msg.equals("ok")) {
+                            Notice notice = new Notice();
+                            notice.type = ConstanceValue.MSG_DELETE_FAMILY;
+                            RxBus.getDefault().sendRx(notice);
+
                             Bundle bundle = new Bundle();
                             bundle.putString("family_id", response.body().data.get(0).getFamily_id());
                             bundle.putString("ty_family_id", response.body().data.get(0).getTy_family_id());

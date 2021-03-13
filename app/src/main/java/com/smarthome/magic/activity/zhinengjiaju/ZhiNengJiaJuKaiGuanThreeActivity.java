@@ -17,6 +17,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
@@ -210,14 +211,13 @@ public class ZhiNengJiaJuKaiGuanThreeActivity extends BaseActivity {
             @Override
             public void call(Notice message) {
                 if (message.type == ConstanceValue.MSG_ROOM_DEVICE_CHANGENAME) {
-                    if (chooseTiaoMu == 1) {
+                    if (chooseTiaoMu == 0) {
                         changeDevice((String) message.content, tvLeft, chooseTiaoMu);
-                    } else if (chooseTiaoMu == 2) {
+                    } else if (chooseTiaoMu == 1) {
                         changeDevice((String) message.content, tvCenter, chooseTiaoMu);
-                    } else if (chooseTiaoMu == 3) {
+                    } else if (chooseTiaoMu == 2) {
                         changeDevice((String) message.content, tvRight, chooseTiaoMu);
                     }
-
                 } else if (message.type == ConstanceValue.MSG_SHEBEIZHUANGTAI) {
                     getnet();
                 } else if (message.type == ConstanceValue.MSG_KAIGUAN_DELETE) {
@@ -229,7 +229,7 @@ public class ZhiNengJiaJuKaiGuanThreeActivity extends BaseActivity {
         rlSwitchLeft.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                chooseTiaoMu = 1;
+                chooseTiaoMu = 0;
                 ZhiNengFamilyAddDIalog zhiNengFamilyAddDIalog = new ZhiNengFamilyAddDIalog(mContext, ConstanceValue.MSG_ROOM_DEVICE_CHANGENAME);
                 zhiNengFamilyAddDIalog.show();
                 return false;
@@ -238,7 +238,7 @@ public class ZhiNengJiaJuKaiGuanThreeActivity extends BaseActivity {
         rlSwitchCenter.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                chooseTiaoMu = 2;
+                chooseTiaoMu = 1;
                 ZhiNengFamilyAddDIalog zhiNengFamilyAddDIalog = new ZhiNengFamilyAddDIalog(mContext, ConstanceValue.MSG_ROOM_DEVICE_CHANGENAME);
                 zhiNengFamilyAddDIalog.show();
                 return false;
@@ -247,7 +247,7 @@ public class ZhiNengJiaJuKaiGuanThreeActivity extends BaseActivity {
         rlSwitchRight.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                chooseTiaoMu = 3;
+                chooseTiaoMu = 2;
                 ZhiNengFamilyAddDIalog zhiNengFamilyAddDIalog = new ZhiNengFamilyAddDIalog(mContext, ConstanceValue.MSG_ROOM_DEVICE_CHANGENAME);
                 zhiNengFamilyAddDIalog.show();
                 return false;
@@ -299,7 +299,7 @@ public class ZhiNengJiaJuKaiGuanThreeActivity extends BaseActivity {
         iv_rightTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KaiGuanSettingActivity.actionStart(mContext, device_ccid, device_ccid_up,member_type);
+                KaiGuanSettingActivity.actionStart(mContext, device_ccid, device_ccid_up, member_type);
             }
         });
         mToolbar.setNavigationIcon(R.mipmap.backbutton);
@@ -318,7 +318,7 @@ public class ZhiNengJiaJuKaiGuanThreeActivity extends BaseActivity {
      *
      * @param context
      */
-    public static void actionStart(Context context, String device_ccid, String device_ccid_up, String serverId,String member_type) {
+    public static void actionStart(Context context, String device_ccid, String device_ccid_up, String serverId, String member_type) {
         Intent intent = new Intent(context, ZhiNengJiaJuKaiGuanThreeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("device_ccid", device_ccid);
@@ -377,8 +377,13 @@ public class ZhiNengJiaJuKaiGuanThreeActivity extends BaseActivity {
                     public void onSuccess(Response<AppResponse<ZhiNengJiaJuKaiGuanModel.DataBean>> response) {
                         ZhiNengJiaJuKaiGuanThreeActivity.this.response = response;
                         leftZhuangZhiId = response.body().data.get(0).getDevice_list().get(0).getDevice_ccid();
+                        tvLeft.setText(response.body().data.get(0).getDevice_list().get(0).getDevice_name());
+
                         centerZhuangZhiId = response.body().data.get(0).getDevice_list().get(1).getDevice_ccid();
+                        tvCenter.setText(response.body().data.get(0).getDevice_list().get(1).getDevice_name());
+
                         rightZhuangZhiId = response.body().data.get(0).getDevice_list().get(2).getDevice_ccid();
+                        tvRight.setText(response.body().data.get(0).getDevice_list().get(2).getDevice_name());
                         //1开 2 关
                         if (response.body().data.get(0).getDevice_list().get(0).getWork_state().equals("1")) {
 
@@ -464,7 +469,7 @@ public class ZhiNengJiaJuKaiGuanThreeActivity extends BaseActivity {
         map.put("code", "16033");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
-
+        Y.e("科技發達的方式  " + i);
 
         String familyId = response.body().data.get(0).getDevice_list().get(i).getFamily_id();
         String device_id = response.body().data.get(0).getDevice_list().get(i).getDevice_id();

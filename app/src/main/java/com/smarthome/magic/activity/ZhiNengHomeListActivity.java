@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.jaeger.library.StatusBarUtil;
 import com.lzy.okgo.OkGo;
@@ -38,6 +39,7 @@ import com.smarthome.magic.model.ZhiNengHomeBean;
 import com.smarthome.magic.model.ZhiNengHomeListBean;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.bean.HomeBean;
+import com.tuya.smart.home.sdk.bean.WeatherBean;
 import com.tuya.smart.home.sdk.callback.ITuyaGetHomeListCallback;
 
 import java.util.ArrayList;
@@ -46,6 +48,8 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
@@ -81,6 +85,18 @@ public class ZhiNengHomeListActivity extends BaseActivity implements View.OnClic
         initView();
         showLoadFailed();
         getnet();
+        initHuidiao();
+    }
+
+    private void initHuidiao() {
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_DELETE_FAMILY) {//删除家庭刷新
+                    getnet();
+                }
+            }
+        }));
     }
 
     @Override

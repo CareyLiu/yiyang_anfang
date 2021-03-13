@@ -42,6 +42,7 @@ import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
@@ -467,24 +468,23 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
         rl_shuoming.setVisibility(View.VISIBLE);
         rv_shebei.setVisibility(View.GONE);
         bt_chongxinsousuo.setVisibility(View.GONE);
-
         isSousuozhong = true;
         startAnimation();
-        TuyaHomeSdk.getActivatorInstance().getActivatorToken(homeId,
-                new ITuyaActivatorGetToken() {
-                    @Override
-                    public void onSuccess(String token) {
-                        Y.e("获取Token成功：" + token + "   账号：" + wifiSSid + "  密码：" + mima);
-                        startWifiPeiwang(token);
-                        startLanyaPeiwang(token);
-                    }
-
-                    @Override
-                    public void onFailure(String s, String s1) {
-                        Y.t(s1);
-                        stopPeiwang();
-                    }
-                });
+//        TuyaHomeSdk.getActivatorInstance().getActivatorToken(homeId,
+//                new ITuyaActivatorGetToken() {
+//                    @Override
+//                    public void onSuccess(String token) {
+//                        Y.e("获取Token成功：" + token + "   账号：" + wifiSSid + "  密码：" + mima);
+//                        startWifiPeiwang(token);
+//                        startLanyaPeiwang(token);
+//                    }
+//
+//                    @Override
+//                    public void onFailure(String s, String s1) {
+//                        Y.t(s1);
+//                        stopPeiwang();
+//                    }
+//                });
     }
 
     private void startLanyaPeiwang(String token) {

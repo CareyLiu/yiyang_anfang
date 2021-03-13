@@ -48,6 +48,7 @@ import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.AudioFocusManager;
 import com.smarthome.magic.config.PreferenceHelper;
@@ -208,7 +209,7 @@ public class HomeActivity extends BaseActivity {
                     rrlYuyinMianban.setVisibility(View.GONE);
                 } else if (notice.type == ConstanceValue.MSG_CAOZUODONGTAISHITI) {
                     dognTaiShiTiUrl();
-                }else if (notice.type== ConstanceValue.MSG_XIUGAIDONGTAISHITIFINISH){
+                } else if (notice.type == ConstanceValue.MSG_XIUGAIDONGTAISHITIFINISH) {
                     xiuGaiDongTaiShiTiFinish();
                 }
             }
@@ -300,7 +301,12 @@ public class HomeActivity extends BaseActivity {
         map.put("code", "16069");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
-        map.put("family_id", PreferenceHelper.getInstance(mContext).getString(AppConfig.FAMILY_ID, ""));
+        String str = PreferenceHelper.getInstance(mContext).getString(AppConfig.FAMILY_ID, "");
+        if (!StringUtils.isEmpty(str)) {
+            map.put("family_id", PreferenceHelper.getInstance(mContext).getString(AppConfig.FAMILY_ID, ""));
+        } else {
+            return;
+        }
         Gson gson = new Gson();
         String a = gson.toJson(map);
         Log.e("map_data", gson.toJson(map));
@@ -334,12 +340,12 @@ public class HomeActivity extends BaseActivity {
                             if (response.body().change_state.equals("1")) {//1.没有改动过 2.改动过
 
                             } else {
-                                new ShangChuanDongTaiShiTiTool(context, roomList, deviceList);
+                                new YuYinChuLiTool(context, roomList, deviceList);
                             }
 
                         } else if (firstInstallDongTaiShiTi.equals("1")) {
                             //首次
-                            new ShangChuanDongTaiShiTiTool(context, roomList, deviceList);
+                            new YuYinChuLiTool(context, roomList, deviceList);
 
                         }
 

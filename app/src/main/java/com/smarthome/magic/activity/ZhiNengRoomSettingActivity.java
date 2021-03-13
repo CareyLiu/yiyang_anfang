@@ -426,6 +426,10 @@ public class ZhiNengRoomSettingActivity extends BaseActivity implements View.OnC
                         if (response.body().msg.equals("ok")) {
                             room_name = roomName;
                             tv_room_name.setText(room_name);
+
+                            Notice notice = new Notice();
+                            notice.type = ConstanceValue.MSG_CAOZUODONGTAISHITI;
+                            sendRx(notice);
                         }
                     }
 

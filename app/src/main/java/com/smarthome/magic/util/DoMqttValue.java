@@ -8,6 +8,7 @@ import com.smarthome.magic.app.ConfigValue;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
+import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.config.PreferenceHelper;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class DoMqttValue {
         switch (chooseXiangMu) {
             case ZHINENGJIAJU:
                 //  收到的数据信息：  i01082.
-                //UIHelper.ToastMessage(context, "接收到的message信息： " + message);
+                UIHelper.ToastMessage(context, "接收到的message信息： " + message);
                 if (message.contains("i")) {
 
                     if (message.contains("_")) {
@@ -75,6 +76,23 @@ public class DoMqttValue {
                         RxBus.getDefault().sendRx(notice);
                     }
 
+                } else if (message.contains("m0528")) {
+
+                    String str = message.substring(message.length() - 3, message.length() - 1);
+                    //遥控器配对
+                    Notice notice = new Notice();
+                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQIPEIWANG;
+                    notice.content =str;
+                    Log.i("Rair", notice.content.toString());
+                    RxBus.getDefault().sendRx(notice);
+                }else if (message.contains("m0628")){
+                    String str = message.substring(message.length() - 2, message.length() - 1);
+                    //遥控器配对
+                    Notice notice = new Notice();
+                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQICHENGGONGSHIBAI;
+                    notice.content =str;
+                    Log.i("Rair", notice.content.toString());
+                    RxBus.getDefault().sendRx(notice);
                 }
 
 

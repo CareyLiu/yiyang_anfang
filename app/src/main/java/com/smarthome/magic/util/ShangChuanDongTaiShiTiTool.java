@@ -8,6 +8,7 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.google.gson.Gson;
+
 import com.iflytek.aiui.AIUIAgent;
 import com.iflytek.aiui.AIUIConstant;
 import com.iflytek.aiui.AIUIEvent;
@@ -48,15 +49,9 @@ public class ShangChuanDongTaiShiTiTool {
     String uid;
     private Context context;
 
-    List<String> roomList = new ArrayList<>();
-    List<String> sheBeiList = new ArrayList<>();
 
-    public ShangChuanDongTaiShiTiTool(Context context, List<String> roomList, List<String> sheBeiList) {
-        this.context = context;
-        this.roomList = roomList;
-        this.sheBeiList = sheBeiList;
-        createAgent();
-    }
+
+
 
     private void showTip(final String str) {
     }
@@ -102,142 +97,7 @@ public class ShangChuanDongTaiShiTiTool {
         return params;
     }
 
-    public void syncContactsSheBei(List<String> sheBeiList) {
-        if (null == mAIUIAgent) {
-            showTip("AIUIAgent 为空，请先创建");
-            return;
-        }
-        // TODO: 2021/2/22 66666
-        //经过研究 初步核实认定 是数据问题 数据对了就可以上传成功
-        //明天主要研究数据 对应的键值对是什么
 
-        try {
-            // 从文件中读取联系人示例数据
-            //String dataStr = FucUtil.readFile(context, "data/data_contact.txt", "utf-8");
-            //mNlpText.setText(dataStr);
-            //UIHelper.ToastMessage(context, dataStr);
-
-//            DongTaiShiTiModel dongTaiShiTiModel = new DongTaiShiTiModel();
-//            dongTaiShiTiModel.setName("大熊猫");
-//
-//            // dongTaiShiTiModel.setCus_room("客厅");
-//            String str = new Gson().toJson(dongTaiShiTiModel);
-//            Log.i("YuYinChuLiTool", str);
-
-            ShuJuJieXiZhuanHuaTool shuJuJieXiZhuanHuaTool = new ShuJuJieXiZhuanHuaTool(sheBeiList);
-            String str = shuJuJieXiZhuanHuaTool.jieXiShuJu();
-
-            // 数据进行no_wrap Base64编码
-            String dataStrBase64 = Base64.encodeToString(str.getBytes("utf-8"), Base64.NO_WRAP);
-
-            JSONObject syncSchemaJson = new JSONObject();
-            JSONObject dataParamJson = new JSONObject();
-
-            // 设置id_name为uid，即用户级个性化资源
-            // 个性化资源使用方法可参见http://doc.xfyun.cn/aiui_mobile/的用户个性化章节
-            dataParamJson.put("id_name", "uid");
-            if (StringUtils.isEmpty(uid)) {
-                // UIHelper.ToastMessage(context, "uid不能为空");
-                return;
-            }
-            dataParamJson.put("id_value", uid);
-
-            // 设置res_name为联系人
-            dataParamJson.put("res_name", "OS8569425439.app_device_name");
-
-            syncSchemaJson.put("param", dataParamJson);
-            syncSchemaJson.put("data", dataStrBase64);
-
-
-            Log.i(TAG, "上传的设备名：  " + syncSchemaJson.toString());
-            // 传入的数据一定要为utf-8编码
-            byte[] syncData = syncSchemaJson.toString().getBytes("utf-8");
-
-            // 给该次同步加上自定义tag，在返回结果中可通过tag将结果和调用对应起来
-            JSONObject paramJson = new JSONObject();
-            paramJson.put("tag", "sync-tag1");
-
-            // 用schema数据同步上传联系人
-            // 注：数据同步请在连接服务器之后进行，否则可能失败
-            AIUIMessage syncAthena = new AIUIMessage(AIUIConstant.CMD_SYNC,
-                    AIUIConstant.SYNC_DATA_SCHEMA, 0, paramJson.toString(), syncData);
-
-            mAIUIAgent.sendMessage(syncAthena);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void syncContactsRoom(List<String> roomList) {
-        if (null == mAIUIAgent) {
-            showTip("AIUIAgent 为空，请先创建");
-            return;
-        }
-        // TODO: 2021/2/22 66666
-        //经过研究 初步核实认定 是数据问题 数据对了就可以上传成功
-        //明天主要研究数据 对应的键值对是什么
-
-        try {
-            // 从文件中读取联系人示例数据
-            //String dataStr = FucUtil.readFile(context, "data/data_contact.txt", "utf-8");
-            //mNlpText.setText(dataStr);
-            //UIHelper.ToastMessage(context, dataStr);
-
-//            DongTaiShiTiModel dongTaiShiTiModel = new DongTaiShiTiModel();
-//            dongTaiShiTiModel.setName("咸鸭蛋");
-//
-//            // dongTaiShiTiModel.setCus_room("客厅");
-//            String str = new Gson().toJson(dongTaiShiTiModel);
-//            Log.i("YuYinChuLiTool", str);
-
-            ShuJuJieXiZhuanHuaTool shuJuJieXiZhuanHuaTool = new ShuJuJieXiZhuanHuaTool(roomList);
-            String str = shuJuJieXiZhuanHuaTool.jieXiShuJu();
-
-
-            // 数据进行no_wrap Base64编码
-            String dataStrBase64 = Base64.encodeToString(str.getBytes("utf-8"), Base64.NO_WRAP);
-
-            JSONObject syncSchemaJson = new JSONObject();
-            JSONObject dataParamJson = new JSONObject();
-
-            // 设置id_name为uid，即用户级个性化资源
-            // 个性化资源使用方法可参见http://doc.xfyun.cn/aiui_mobile/的用户个性化章节
-            dataParamJson.put("id_name", "uid");
-            if (StringUtils.isEmpty(uid)) {
-                // UIHelper.ToastMessage(context, "uid不能为空");
-                return;
-            }
-            dataParamJson.put("id_value", uid);
-
-            // 设置res_name为联系人
-            dataParamJson.put("res_name", "OS8569425439.app_room");
-
-            syncSchemaJson.put("param", dataParamJson);
-            syncSchemaJson.put("data", dataStrBase64);
-
-
-            Log.i(TAG, "上传的房间名：  " + syncSchemaJson.toString());
-            // 传入的数据一定要为utf-8编码
-            byte[] syncData = syncSchemaJson.toString().getBytes("utf-8");
-
-            // 给该次同步加上自定义tag，在返回结果中可通过tag将结果和调用对应起来
-            JSONObject paramJson = new JSONObject();
-            paramJson.put("tag", "sync-tag");
-
-            // 用schema数据同步上传联系人
-            // 注：数据同步请在连接服务器之后进行，否则可能失败
-            AIUIMessage syncAthena = new AIUIMessage(AIUIConstant.CMD_SYNC,
-                    AIUIConstant.SYNC_DATA_SCHEMA, 0, paramJson.toString(), syncData);
-
-            mAIUIAgent.sendMessage(syncAthena);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-    }
 
     public String zhiXingYiCi = "1";
 
@@ -253,13 +113,12 @@ public class ShangChuanDongTaiShiTiTool {
                     Log.i("YuYinCHuLiTool_Uid:", uid);
                     showTip("已连接服务器");
                     if (zhiXingYiCi.equals("1")) {
-                        syncContactsSheBei(sheBeiList);
-                        syncContactsRoom(roomList);
-
-                        YanChi5ZhiXing();
+//                        syncContactsSheBei(sheBeiList);
+//                        syncContactsRoom(roomList);
+//
+//                        YanChi5ZhiXing();
                         zhiXingYiCi = "0";
                     }
-
 
 
                     break;
@@ -359,23 +218,7 @@ public class ShangChuanDongTaiShiTiTool {
                             break;
                         }
                     } else if (AIUIConstant.CMD_QUERY_SYNC_STATUS == event.arg1) {    // 数据同步状态查询的返回
-                        // 获取同步类型
-                        int syncType = event.data.getInt("sync_dtype", -1);
-                        if (AIUIConstant.SYNC_DATA_QUERY == syncType) {
-                            // 若是同步数据查询，则获取查询结果，结果中error字段为0则表示上传数据打包成功，否则为错误码
-                            String result = event.data.getString("result");
 
-                            showTip(result);
-
-                            Notice notice = new Notice();
-                            notice.type = ConstanceValue.MSG_XIUGAIDONGTAISHITIFINISH;
-                            RxBus.getDefault().sendRx(notice);
-
-
-                            Log.i(TAG, result);
-                        }
-                        mAIUIAgent.destroy();
-                        mAIUIAgent = null;
                     }
                 }
                 break;
@@ -386,45 +229,7 @@ public class ShangChuanDongTaiShiTiTool {
         }
 
     };
-    Handler handler;
-    Runnable runnable;
-
-    private void YanChi5ZhiXing() {
-        handler = new Handler();
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                chaXunDaBaoZhuangTai();
-
-            }
-        };
-
-        handler.postDelayed(runnable, 5000);
-    }
-
-    public void chaXunDaBaoZhuangTai() {
-        if (null == mAIUIAgent) {
-            showTip("AIUIAgent 为空，请先创建");
-            return;
-        }
 
 
-        if (TextUtils.isEmpty(mSyncSid)) {
-            showTip("sid 为空");
-            return;
-        }
 
-        try {
-            // 构造查询json字符串，填入同步schema数据返回的sid
-            JSONObject queryJson = new JSONObject();
-            queryJson.put("sid", mSyncSid);
-
-            // 发送同步数据状态查询消息，设置arg1为schema数据类型，params为查询字符串
-            AIUIMessage syncQuery = new AIUIMessage(AIUIConstant.CMD_QUERY_SYNC_STATUS,
-                    AIUIConstant.SYNC_DATA_SCHEMA, 0, queryJson.toString(), null);
-            mAIUIAgent.sendMessage(syncQuery);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
 }

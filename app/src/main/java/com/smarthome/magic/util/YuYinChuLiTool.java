@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -25,6 +26,8 @@ import com.iflytek.cloud.VoiceWakeuper;
 import com.iflytek.cloud.WakeuperListener;
 import com.iflytek.cloud.WakeuperResult;
 import com.iflytek.cloud.util.ResourceUtil;
+import com.rairmmd.andmqtt.AndMqtt;
+import com.rairmmd.andmqtt.MqttPublish;
 import com.smarthome.magic.R;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.ConstanceValue;
@@ -38,15 +41,20 @@ import com.smarthome.magic.inter.YuYinInter;
 import com.smarthome.magic.model.DongTaiShiTiModel;
 import com.smarthome.magic.model.ResultModel;
 
+import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.smarthome.magic.activity.shuinuan.Y.getResources;
 import static com.smarthome.magic.activity.shuinuan.Y.getString;
+import static com.smarthome.magic.config.MyApplication.CAR_NOTIFY;
 
 public class YuYinChuLiTool {
     private String TAG = YuYinChuLiTool.class.getSimpleName();
@@ -70,7 +78,7 @@ public class YuYinChuLiTool {
     //当前状态，取值参考Constant中STATE定义
     private int mState;
     private int mAIUIState = AIUIConstant.STATE_IDLE;
-    private AIUIAgent mAIUIAgent = null;
+    public AIUIAgent mAIUIAgent = null;
     private String mSyncSid = "";
 
     private String getResource() {
@@ -86,6 +94,15 @@ public class YuYinChuLiTool {
         mTts = SpeechSynthesizer.createSynthesizer(context, mTtsInitListener);
         this.yuYinInter = yuYinInter;
     }
+
+    public YuYinChuLiTool(Context context, List<String> roomList, List<String> sheBeiList) {
+        this.context = context;
+        this.roomList = roomList;
+        this.sheBeiList = sheBeiList;
+        createAgent();
+        zhiXingYiCi = "1";
+    }
+
 
     YuYinInter yuYinInter = null;
 
@@ -343,14 +360,15 @@ public class YuYinChuLiTool {
     }
 
     private void createAgent() {
-        if (null == mAIUIAgent) {
-            Log.i(TAG, "create aiui agent");
+//        if (null == mAIUIAgent) {
+//
+//
+//            //  syncContactsRoom();
+//        }
 
-            mAIUIAgent = AIUIAgent.createAgent(context, getAIUIParams(), mAIUIListener);
+        Log.i(TAG, "create aiui agent");
 
-            //  syncContactsRoom();
-        }
-
+        mAIUIAgent = AIUIAgent.createAgent(context, getAIUIParams(), mAIUIListener);
         if (null == mAIUIAgent) {
             final String strErrorTip = "创建AIUIAgent失败！";
             showTip(strErrorTip);
@@ -387,6 +405,9 @@ public class YuYinChuLiTool {
     }
 
     String uid;
+    public String zhiXingYiCi = "0";
+    List<String> roomList = new ArrayList<>();
+    List<String> sheBeiList = new ArrayList<>();
     private AIUIListener mAIUIListener = new AIUIListener() {
 
         @Override
@@ -397,8 +418,14 @@ public class YuYinChuLiTool {
                 case AIUIConstant.EVENT_CONNECTED_TO_SERVER:
                     uid = event.data.getString("uid");
                     Log.i("YuYinCHuLiTool_Uid:", uid);
-
                     showTip("已连接服务器");
+                    if (zhiXingYiCi.equals("1")) {
+                        syncContactsSheBei(sheBeiList);
+                        syncContactsRoom(roomList);
+
+                        YanChi5ZhiXing();
+                        zhiXingYiCi = "0";
+                    }
                     break;
 
                 case AIUIConstant.EVENT_SERVER_DISCONNECTED:
@@ -502,14 +529,14 @@ public class YuYinChuLiTool {
 
                                             if (resultModel.getAnswer().getText().equals("正在为您操作")) {
                                                 String circle = "0" + semanticBean.getSlots().get(0).getNormValue() + "c";
-                                                msg = "j{'intentName':" + "feedingFish" + ",'operate':" + "打开" + ",'device':" + "喂鱼" + ",'room':" + "客厅" + ",'time':" + circle + "}.";
+                                                msg = "v{'intentName':" + "feedingFish" + ",'operate':" + "打开" + ",'device':" + "喂鱼" + ",'room':" + "客厅" + ",'time':" + circle + "}.";
                                                 Log.i("语义结果", msg);
                                                 yuYinMqtt.pushMingLing(msg);
                                                 caozuo = "";
                                                 shebei = "";
                                                 weizhi = "000";
                                             }
-                                        } else {
+                                        } else if (intentName.equals("actionByName") || intentName.equals("actionByRoom")) {
                                             for (int i = 0; i < semanticBean.getSlots().size(); i++) {
                                                 if (semanticBean.getSlots().get(i).getName().equals("operate")) {
                                                     caozuo = semanticBean.getSlots().get(i).getNormValue();
@@ -519,11 +546,13 @@ public class YuYinChuLiTool {
                                                     weizhi = semanticBean.getSlots().get(i).getNormValue();
                                                 } else if (semanticBean.getSlots().get(i).getName().equals("device_name")) {
                                                     shebei = semanticBean.getSlots().get(i).getNormValue();
+                                                } else if (semanticBean.getSlots().get(i).getName().equals("device_operate")) {
+                                                    caozuo = semanticBean.getSlots().get(i).getNormValue();
                                                 }
                                             }
 
                                             if (resultModel.getAnswer().getText().equals("正在为您操作")) {
-                                                msg = "j{'intentName':" + resultModel.getSemantic().get(0).getIntent() + ",'operate':" + caozuo + ",'device':" + shebei + ",'room':" + weizhi + "}.";
+                                                msg = "v{'intentName':" + resultModel.getSemantic().get(0).getIntent() + ",'operate':" + caozuo + ",'device':" + shebei + ",'room':" + weizhi + "}.";
                                                 Log.i("语义结果", msg);
                                                 yuYinMqtt.pushMingLing(msg);
                                                 caozuo = "";
@@ -532,6 +561,9 @@ public class YuYinChuLiTool {
                                             }
 
                                             Log.i("语义结果", msg);
+                                        } else {
+                                            //控车相关
+                                            faSongKongCheFangFa(resultModel);
                                         }
                                     }
 
@@ -639,8 +671,16 @@ public class YuYinChuLiTool {
                             String result = event.data.getString("result");
 
                             showTip(result);
-                            Log.i("YuYinLiTool", result);
+
+                            Notice notice = new Notice();
+                            notice.type = ConstanceValue.MSG_XIUGAIDONGTAISHITIFINISH;
+                            RxBus.getDefault().sendRx(notice);
+
+
+                            Log.i(TAG, result);
                         }
+                        mAIUIAgent.destroy();
+                        mAIUIAgent = null;
                     }
                 }
                 break;
@@ -651,6 +691,153 @@ public class YuYinChuLiTool {
         }
 
     };
+
+    String sheBeiMing = null;
+    String chekong_caozuo = null;
+    String caoZuoMoShi = null;
+    String wenDu = null;
+    String snShuiYou = null;//水暖水泵或油泵
+    String dangwei = null;//档位
+
+    private void faSongKongCheFangFa(ResultModel resultModel) {
+        String caoZuoZhiLing = null;
+        List<ResultModel.SemanticBean.SlotsBean> slotsBeans = resultModel.getSemantic().get(0).getSlots();
+        String intengName = resultModel.getSemantic().get(0).getIntent();
+
+
+        switch (intengName) {
+            case "fengnuan_tiaojiewendu":
+
+                for (int i = 0; i < slotsBeans.size(); i++) {
+                    if (slotsBeans.get(i).getName().equals("Number")) {
+                        wenDu = slotsBeans.get(i).getNormValue();
+                    } else if (slotsBeans.get(i).getName().equals("fengnuanshebei")) {
+                        sheBeiMing = slotsBeans.get(i).getNormValue();
+                    }
+                }
+
+                caoZuoZhiLing = "v{'intentName':" + intengName + ",'wendu':" + wenDu + "}.";
+                intengName = null;
+                wenDu = null;
+                break;
+
+            case "fengnuan_kaiji":
+
+                for (int i = 0; i < slotsBeans.size(); i++) {
+                    if (slotsBeans.get(i).getName().equals("zhikong_caozuo")) {
+                        chekong_caozuo = slotsBeans.get(i).getNormValue();
+                    } else if (slotsBeans.get(i).getName().equals("dakaifangshi")) {
+                        caoZuoMoShi = slotsBeans.get(i).getNormValue();
+                    }
+                }
+
+                caoZuoZhiLing = "v{'intentName':" + intengName + ",'caoZuoMoShi':" + caoZuoMoShi + "}.";
+                break;
+            case "fengnuan_guanji":
+                caoZuoZhiLing = "v{'intentName':" + intengName + "}.";
+                break;
+            case "shuinuan_kaiguanji":
+                for (int i = 0; i < slotsBeans.size(); i++) {
+                    if (slotsBeans.get(i).getName().equals("zhikong_caozuo")) {
+                        chekong_caozuo = slotsBeans.get(i).getNormValue();
+                    }
+                }
+                caoZuoZhiLing = "v{'intentName':" + intengName + ",'chekong_caozuo':" + chekong_caozuo + "}.";
+                break;
+            case "shuinuan_shuiyou_caozuo":
+                for (int i = 0; i < slotsBeans.size(); i++) {
+
+                    if (slotsBeans.get(i).getName().equals("chekong_caozuo")) {
+                        chekong_caozuo = slotsBeans.get(i).getNormValue();
+                    } else if (slotsBeans.get(i).getName().equals("sn_shuiyou")) {
+                        snShuiYou = slotsBeans.get(i).getNormValue();
+                    }
+
+                }
+                caoZuoZhiLing = "v{'intentName':" + intengName + ",'chekong_caozuo':" + chekong_caozuo + ",'sn_shuiyou':" + snShuiYou + "}.";
+                break;
+
+            case "shuinuan_wendutiaojie":
+                for (int i = 0; i < slotsBeans.size(); i++) {
+                    if (slotsBeans.get(i).getName().equals("wendu")) {
+                        wenDu = slotsBeans.get(i).getNormValue();
+                    }
+                }
+                caoZuoZhiLing = "v{'intentName':" + intengName + ",'wenDu':" + wenDu + "}.";
+                break;
+
+            case "kongtiao_kaiguanji":
+                for (int i = 0; i < slotsBeans.size(); i++) {
+
+                    if (slotsBeans.get(i).getName().equals("chekong_caozuo")) {
+                        chekong_caozuo = slotsBeans.get(i).getNormValue();
+                    }
+                }
+
+                caoZuoZhiLing = "v{'intentName':" + intengName + ",'chekong_caozuo':" + chekong_caozuo + "}.";
+                break;
+
+            case "kogntiao_wendutiaojie":
+                for (int i = 0; i < slotsBeans.size(); i++) {
+                    if (slotsBeans.get(i).getName().equals("wendu")) {
+                        wenDu = slotsBeans.get(i).getNormValue();
+                    }
+                }
+                caoZuoZhiLing = "v{'intentName':" + intengName + ",'wenDu':" + wenDu + "}.";
+                break;
+            case "kongtiaodeng_tiaojie":
+
+                for (int i = 0; i < slotsBeans.size(); i++) {
+                    if (slotsBeans.get(i).getName().equals("chekong_caozuo")) {
+                        chekong_caozuo = slotsBeans.get(i).getNormValue();
+                    }
+                }
+                caoZuoZhiLing = "v{'intentName':" + intengName + ",'chekong_caozuo':" + chekong_caozuo + "}.";
+                break;
+
+            case "qiehuan_kongtiao_moshi":
+                for (int i = 0; i < slotsBeans.size(); i++) {
+                    if (slotsBeans.get(i).getName().equals("kongtiao_moshi")) {
+                        caoZuoMoShi = slotsBeans.get(i).getNormValue();
+                    }
+                }
+                caoZuoZhiLing = "v{'intentName':" + intengName + ",'caoZuoMoShi':" + caoZuoMoShi + "}.";
+                break;
+            case "shuinuan_dangweitiaojie":
+                for (int i = 0; i < slotsBeans.size(); i++) {
+                    if (slotsBeans.get(i).getName().equals("dangwei")) {
+                        dangwei = slotsBeans.get(i).getNormValue();
+                    }
+                }
+                caoZuoZhiLing = "v{'intentName':" + intengName + ",'dangwei':" + dangwei + "}.";
+                break;
+        }
+
+
+        //技能结束了执行发送操作
+        if (resultModel.isSessionIsEnd()) {
+
+            Log.i("语义结果", caoZuoZhiLing);
+            AndMqtt.getInstance().publish(new MqttPublish()
+                    .setMsg(caoZuoZhiLing)
+                    .setQos(2).setRetained(false)
+                    .setTopic(CAR_NOTIFY), new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Log.i("Rair", "订阅O.成功");
+
+
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                    Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+                }
+            });
+        }
+
+
+    }
 
 
     // 引擎类型
@@ -975,7 +1162,7 @@ public class YuYinChuLiTool {
 
             // 给该次同步加上自定义tag，在返回结果中可通过tag将结果和调用对应起来
             JSONObject paramJson = new JSONObject();
-             paramJson.put("tag", "sync-tag");
+            paramJson.put("tag", "sync-tag");
 
             // 用schema数据同步上传联系人
             // 注：数据同步请在连接服务器之后进行，否则可能失败
@@ -988,6 +1175,160 @@ public class YuYinChuLiTool {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public void syncContactsSheBei(List<String> sheBeiList) {
+        if (null == mAIUIAgent) {
+            showTip("AIUIAgent 为空，请先创建");
+            return;
+        }
+        // TODO: 2021/2/22 66666
+        //经过研究 初步核实认定 是数据问题 数据对了就可以上传成功
+        //明天主要研究数据 对应的键值对是什么
+
+        try {
+            // 从文件中读取联系人示例数据
+            //String dataStr = FucUtil.readFile(context, "data/data_contact.txt", "utf-8");
+            //mNlpText.setText(dataStr);
+            //UIHelper.ToastMessage(context, dataStr);
+
+//            DongTaiShiTiModel dongTaiShiTiModel = new DongTaiShiTiModel();
+//            dongTaiShiTiModel.setName("大熊猫");
+//
+//            // dongTaiShiTiModel.setCus_room("客厅");
+//            String str = new Gson().toJson(dongTaiShiTiModel);
+//            Log.i("YuYinChuLiTool", str);
+
+            ShuJuJieXiZhuanHuaTool shuJuJieXiZhuanHuaTool = new ShuJuJieXiZhuanHuaTool(sheBeiList);
+            String str = shuJuJieXiZhuanHuaTool.jieXiShuJu();
+
+            // 数据进行no_wrap Base64编码
+            String dataStrBase64 = Base64.encodeToString(str.getBytes("utf-8"), Base64.NO_WRAP);
+
+            JSONObject syncSchemaJson = new JSONObject();
+            JSONObject dataParamJson = new JSONObject();
+
+            // 设置id_name为uid，即用户级个性化资源
+            // 个性化资源使用方法可参见http://doc.xfyun.cn/aiui_mobile/的用户个性化章节
+            dataParamJson.put("id_name", "uid");
+            if (StringUtils.isEmpty(uid)) {
+                // UIHelper.ToastMessage(context, "uid不能为空");
+                return;
+            }
+            dataParamJson.put("id_value", uid);
+
+            // 设置res_name为联系人
+            dataParamJson.put("res_name", "OS8569425439.app_device_name");
+
+            syncSchemaJson.put("param", dataParamJson);
+            syncSchemaJson.put("data", dataStrBase64);
+
+
+            Log.i(TAG, "上传的设备名：  " + syncSchemaJson.toString());
+            // 传入的数据一定要为utf-8编码
+            byte[] syncData = syncSchemaJson.toString().getBytes("utf-8");
+
+            // 给该次同步加上自定义tag，在返回结果中可通过tag将结果和调用对应起来
+            JSONObject paramJson = new JSONObject();
+            paramJson.put("tag", "sync-tag1");
+
+            // 用schema数据同步上传联系人
+            // 注：数据同步请在连接服务器之后进行，否则可能失败
+            AIUIMessage syncAthena = new AIUIMessage(AIUIConstant.CMD_SYNC,
+                    AIUIConstant.SYNC_DATA_SCHEMA, 0, paramJson.toString(), syncData);
+
+            mAIUIAgent.sendMessage(syncAthena);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void syncContactsRoom(List<String> roomList) {
+        if (null == mAIUIAgent) {
+            showTip("AIUIAgent 为空，请先创建");
+            return;
+        }
+        // TODO: 2021/2/22 66666
+        //经过研究 初步核实认定 是数据问题 数据对了就可以上传成功
+        //明天主要研究数据 对应的键值对是什么
+
+        try {
+            // 从文件中读取联系人示例数据
+            //String dataStr = FucUtil.readFile(context, "data/data_contact.txt", "utf-8");
+            //mNlpText.setText(dataStr);
+            //UIHelper.ToastMessage(context, dataStr);
+
+//            DongTaiShiTiModel dongTaiShiTiModel = new DongTaiShiTiModel();
+//            dongTaiShiTiModel.setName("咸鸭蛋");
+//
+//            // dongTaiShiTiModel.setCus_room("客厅");
+//            String str = new Gson().toJson(dongTaiShiTiModel);
+//            Log.i("YuYinChuLiTool", str);
+
+            ShuJuJieXiZhuanHuaTool shuJuJieXiZhuanHuaTool = new ShuJuJieXiZhuanHuaTool(roomList);
+            String str = shuJuJieXiZhuanHuaTool.jieXiShuJu();
+
+            Log.i(TAG, str);
+            // 数据进行no_wrap Base64编码
+            String dataStrBase64 = Base64.encodeToString(str.getBytes("utf-8"), Base64.NO_WRAP);
+
+            JSONObject syncSchemaJson = new JSONObject();
+            JSONObject dataParamJson = new JSONObject();
+
+            // 设置id_name为uid，即用户级个性化资源
+            // 个性化资源使用方法可参见http://doc.xfyun.cn/aiui_mobile/的用户个性化章节
+            dataParamJson.put("id_name", "uid");
+            if (StringUtils.isEmpty(uid)) {
+                // UIHelper.ToastMessage(context, "uid不能为空");
+                return;
+            }
+            dataParamJson.put("id_value", uid);
+
+            // 设置res_name为联系人
+            dataParamJson.put("res_name", "OS8569425439.app_room");
+
+            syncSchemaJson.put("param", dataParamJson);
+            syncSchemaJson.put("data", dataStrBase64);
+
+
+            Log.i(TAG, "上传的房间名：  " + syncSchemaJson.toString());
+            // 传入的数据一定要为utf-8编码
+            byte[] syncData = syncSchemaJson.toString().getBytes("utf-8");
+
+            // 给该次同步加上自定义tag，在返回结果中可通过tag将结果和调用对应起来
+            JSONObject paramJson = new JSONObject();
+            paramJson.put("tag", "sync-tag");
+
+            // 用schema数据同步上传联系人
+            // 注：数据同步请在连接服务器之后进行，否则可能失败
+            AIUIMessage syncAthena = new AIUIMessage(AIUIConstant.CMD_SYNC,
+                    AIUIConstant.SYNC_DATA_SCHEMA, 0, paramJson.toString(), syncData);
+
+            mAIUIAgent.sendMessage(syncAthena);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    Handler handler;
+    Runnable runnable;
+
+    private void YanChi5ZhiXing() {
+        handler = new Handler();
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                chaXunDaBaoZhuangTai();
+
+            }
+        };
+
+        handler.postDelayed(runnable, 5000);
     }
 
     public void chaXunDaBaoZhuangTai() {

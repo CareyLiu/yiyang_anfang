@@ -436,7 +436,35 @@ public class ZnjjMqttMingLing {
             UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
             return;
         }
-        shishiTopic = "zn/app/" + serverId + ccid;
+        shishiTopic = "zn/haredware/" + serverId + ccid;
+        Log.i("Rair", "订阅实时数据" + shishiTopic);
+        AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                .setTopic(shishiTopic)
+                .setQos(2), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+                Log.i("Rair", "订阅成功:" + shishiTopic);
+
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                Log.i("CAR_NOTIFY", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
+            }
+        });
+
+    }
+
+    /**
+     * app 通过订阅获得主机的实时信息
+     */
+    public void subscribeServerShiShiXinXi_WithCanShu(String ccid, String serverId, IMqttActionListener listener) {
+
+        if (!AndMqtt.getInstance().isConnect()) {
+            UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
+            return;
+        }
+        shishiTopic = "zn/server/" + serverId + ccid;
         Log.i("Rair", "订阅实时数据" + shishiTopic);
         AndMqtt.getInstance().subscribe(new MqttSubscribe()
                 .setTopic(shishiTopic)
@@ -535,5 +563,32 @@ public class ZnjjMqttMingLing {
                 .setTopic(shishiTopic)
                 .setQos(2), listener);
     }
+
+
+    public void yaoKongQiPeiDui(String topic, IMqttActionListener listener) {
+        if (!AndMqtt.getInstance().isConnect()) {
+            UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
+            return;
+        }
+        String zhiLing = "M1728.";
+        AndMqtt.getInstance().publish(new MqttPublish()
+                .setMsg(zhiLing)
+                .setQos(2).setRetained(false)
+                .setTopic(topic), listener);
+    }
+
+
+    public void yaoKongQiMingLing(String mingLingMa, String topic, IMqttActionListener listener) {
+        if (!AndMqtt.getInstance().isConnect()) {
+            UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
+            return;
+        }
+        String zhiLing = mingLingMa;
+        AndMqtt.getInstance().publish(new MqttPublish()
+                .setMsg(zhiLing)
+                .setQos(2).setRetained(false)
+                .setTopic(topic), listener);
+    }
+
 
 }

@@ -41,18 +41,15 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.DefaultX5WebViewActivity;
 import com.smarthome.magic.activity.DefaultX5WebView_HaveNameActivity;
 import com.smarthome.magic.activity.SheBeiLieBiaoActivity;
 import com.smarthome.magic.activity.TuanYouWebView;
-import com.smarthome.magic.activity.fenxiang_tuisong.HuoDongTanCengActivity;
 import com.smarthome.magic.activity.gouwuche.GouWuCheActivity;
 import com.smarthome.magic.activity.homepage.DaLiBaoActivity;
 import com.smarthome.magic.activity.jd_taobao_pinduoduo.TaoBao_Jd_PinDuoDuoActivity;
 import com.smarthome.magic.activity.saoma.ScanActivity;
 import com.smarthome.magic.activity.tuangou.TuanGouShangJiaListActivity;
 import com.smarthome.magic.activity.xin_tuanyou.TuanYouList;
-import com.smarthome.magic.activity.zhinengjiaju.WenShiDuChuanGanQiActivity;
 import com.smarthome.magic.activity.zijian_shangcheng.FenLeiThirdActivity;
 import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallActivity;
 import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallDetailsActivity;
@@ -71,7 +68,6 @@ import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
-import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.Radius_GlideImageLoader;
@@ -375,6 +371,8 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
             public void onClick(View v) {
 
                 String serverid = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.SERVERID, "");
+
+
 //                if (StringUtils.isEmpty(serverid)) {
 //                    UIHelper.ToastMessage(getActivity(), "请添加主机后重新尝试");
 //                    return;
@@ -415,6 +413,9 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
 //                        tvResult.setText(result);
 //                    }
 //                });
+//                Intent intent = new Intent(getActivity(), YanShiActivity.class);
+//                getActivity().startActivity(intent);
+                //WanNengYaoKongQi.actionStart(getActivity());
             }
         });
 

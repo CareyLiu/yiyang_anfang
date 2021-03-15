@@ -19,6 +19,7 @@ import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.model.FenLeiContentModel;
+import com.smarthome.magic.model.YaoKongQiGongNengModel;
 import com.smarthome.magic.mqtt_zhiling.ZnjjMqttMingLing;
 import com.smarthome.magic.util.DoMqttValue;
 
@@ -84,7 +85,7 @@ public class WanNengYaoKongQiPeiDui extends BaseActivity {
 
             }
         });
-        znjjMqttMingLing.subscribeAppShiShiXinXi_WithCanShu(ccid, serverId, new IMqttActionListener() {
+        znjjMqttMingLing.subscribeLastAppShiShiXinXi_WithCanShu(ccid, serverId, new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
 
@@ -205,13 +206,36 @@ public class WanNengYaoKongQiPeiDui extends BaseActivity {
                 }
             }
         }));
+
+        YaoKongQiGongNengModel yaoKongQiGongNengModel = new YaoKongQiGongNengModel();
+
+        for (int i = 0; i < 5; i++) {
+            yaoKongQiGongNengModel.id = String.valueOf(i);
+            switch (i) {
+                case 1:
+                    yaoKongQiGongNengModel.name = "电源";
+                    break;
+                case 2:
+                    yaoKongQiGongNengModel.name = "温度加";
+                    break;
+                case 3:
+                    yaoKongQiGongNengModel.name = "温度减";
+                    break;
+                case 4:
+                    yaoKongQiGongNengModel.name = "频道加";
+                    break;
+                case 5:
+                    yaoKongQiGongNengModel.name = "频道减";
+                    break;
+            }
+        }
     }
 
     TishiDialog tishiDialog;
 
     @Override
     public int getContentViewResId() {
-        return R.layout.layout_wanneng_yaokongqi;
+        return R.layout.layout_wanneng_yaokongqi_peidui;
     }
 
     @Override

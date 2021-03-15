@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grayfff5f5f5">
+
+    <RelativeLayout
+        android:id="@+id/rl_top_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="19dp"
+        android:layout_marginTop="12dp">
+
+        <ImageView
+            android:layout_width="211dp"
+            android:layout_height="211dp"
+            android:background="@mipmap/shoudong_pic_sos" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/jieshou_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="56dp" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_top_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="65dp"
+            android:layout_height="176dp"
+            android:layout_alignParentLeft="true"
+            android:background="@mipmap/yaokong_bg_roundedrectangle"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_yinliangjia"
+                android:layout_width="65dp"
+                android:layout_height="69dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/yaokong_icon_add" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_yinliang_jia_mengban"
+                android:layout_width="65dp"
+                android:layout_height="69dp"
+                android:background="@mipmap/yaokong_bg_roundedrectangle_gradual_up">
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rl_yinliang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:includeFontPadding="false"
+                    android:text="音量"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_yinliangjian"
+                android:layout_width="65dp"
+                android:layout_height="69dp"
+                android:layout_alignParentBottom="true">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/yaokong_icon_reduce" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rl_yinliang_jian_mengban"
+                android:layout_width="65dp"
+                android:layout_height="69dp"
+                android:layout_alignParentBottom="true"
+                android:background="@mipmap/yaokong_bg_roundedrectangle_gradual_down"></RelativeLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="156dp"
+            android:layout_height="176dp">
+
+            <ImageView
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/yaokong_bg_round">
+
+            </ImageView>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/yaokong_icon_guanbi" />
+
+            <ImageView
+                android:id="@+id/iv_kaiguan_mengban"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/yaokong_bg_round_gradual">
+
+            </ImageView>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="65dp"
+            android:layout_height="176dp"
+            android:layout_alignParentLeft="true"
+            android:background="@mipmap/yaokong_bg_roundedrectangle"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_pindaojia"
+                android:layout_width="65dp"
+                android:layout_height="69dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/yaokong_icon_add" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_pindao_jia_mengban"
+                android:layout_width="65dp"
+                android:layout_height="69dp"
+                android:background="@mipmap/yaokong_bg_roundedrectangle_gradual_up">
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rl_pindao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:includeFontPadding="false"
+                    android:text="频道"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_pindaojian"
+                android:layout_width="65dp"
+                android:layout_height="69dp"
+                android:layout_alignParentBottom="true">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/yaokong_icon_reduce" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rl_pindao_jian_mengban"
+                android:layout_width="65dp"
+                android:layout_height="69dp"
+                android:layout_alignParentBottom="true"
+                android:background="@mipmap/yaokong_bg_roundedrectangle_gradual_down"></RelativeLayout>
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

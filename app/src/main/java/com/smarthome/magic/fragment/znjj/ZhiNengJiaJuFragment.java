@@ -17,6 +17,8 @@ import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.rairmmd.andmqtt.AndMqtt;
+import com.rairmmd.andmqtt.MqttSubscribe;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -29,6 +31,7 @@ import com.smarthome.magic.activity.tuya_device.changjing.TuyaTianqiActivity;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaHomeManager;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.PeiWangYinDaoPageActivity;
 import com.smarthome.magic.adapter.NewsFragmentPagerAdapter;
+import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
@@ -42,6 +45,7 @@ import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.fragment.znjj.model.ZhiNengModel;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.ZhiNengFamilyManageBean;
+import com.smarthome.magic.util.DoMqttValue;
 import com.smarthome.magic.view.NoSlidingViewPager;
 import com.smarthome.magic.view.magicindicator.MagicIndicator;
 import com.smarthome.magic.view.magicindicator.ViewPagerHelper;
@@ -57,6 +61,9 @@ import com.tuya.smart.home.sdk.bean.HomeBean;
 import com.tuya.smart.home.sdk.bean.WeatherBean;
 import com.tuya.smart.home.sdk.callback.ITuyaGetHomeListCallback;
 import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
+
+import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttToken;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -268,7 +275,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                     getnet();
                 } else if (message.type == ConstanceValue.MSG_DEVICE_ROOM_NAME_CHANGE) {//设备转移
                     getnet();
-                }else if (message.type == ConstanceValue.MSG_DELETE_FAMILY) {//删除家庭刷新
+                } else if (message.type == ConstanceValue.MSG_DELETE_FAMILY) {//删除家庭刷新
                     getnet();
                 }
             }
@@ -323,6 +330,30 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                         } else {
                             PreferenceHelper.getInstance(getActivity()).putString(AppConfig.ZHINENGJIAJUGUANLIYUAN, "0");
                         }
+
+                        PreferenceHelper.getInstance(getActivity()).putString(App.CHOOSE_KONGZHI_XIANGMU, DoMqttValue.ZHINENGJIAJU);
+                        List<ZhiNengModel.DataBean.DeviceBean> device = dataBean.get(0).getDevice();
+                        if (device.size() > 0) {
+                            ZhiNengModel.DataBean.DeviceBean deviceBean = device.get(0);
+                            if (TextUtils.isEmpty(deviceBean.getTy_device_ccid())) {
+                                String nowData = "zn/app/" + deviceBean.getServer_id() + deviceBean.getDevice_ccid();
+                                AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                                        .setTopic(nowData)
+                                        .setQos(2), new IMqttActionListener() {
+                                    @Override
+                                    public void onSuccess(IMqttToken asyncActionToken) {
+                                        Y.e("Rair" + "订阅的地址:  " + nowData);
+                                    }
+
+                                    @Override
+                                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                                        Log.i("CAR_NOTIFY", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
+                                    }
+                                });
+                            }
+                        }
+
+
 
                         String familyId = dataBean.get(0).getFamily_id();
                         PreferenceHelper.getInstance(getActivity()).putString(AppConfig.PEIWANG_FAMILYID, familyId);
@@ -381,6 +412,8 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                                 tvZhujiZhuangtai.setText("主机离线");
                             }
                         }
+
+
                     }
 
                     @Override

@@ -3,6 +3,7 @@ package com.smarthome.magic.util;
 import android.content.Context;
 import android.util.Log;
 
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.ConfigValue;
 import com.smarthome.magic.app.ConstanceValue;
@@ -38,7 +39,6 @@ public class DoMqttValue {
                 //  收到的数据信息：  i01082.
                 //UIHelper.ToastMessage(context, "接收到的message信息： " + message);
                 if (message.contains("i")) {
-
                     if (message.contains("_")) {
 
                         String[] messageSplit = message.split("_");
@@ -58,6 +58,9 @@ public class DoMqttValue {
                             Log.i("Rair", notice.content.toString());
                             RxBus.getDefault().sendRx(notice);
 
+                            Notice notice1 = new Notice();
+                            notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+                            RxBus.getDefault().sendRx(notice1);
                         }
 
                     } else {
@@ -73,6 +76,10 @@ public class DoMqttValue {
                         notice.content = stringList;
                         Log.i("Rair", notice.content.toString());
                         RxBus.getDefault().sendRx(notice);
+
+                        Notice notice1 = new Notice();
+                        notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+                        RxBus.getDefault().sendRx(notice1);
                     }
 
                 }

@@ -7,28 +7,31 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
-import androidx.annotation.Nullable;
+import android.widget.TextView;
 
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.model.FenLeiContentModel;
-import com.smarthome.magic.model.YaoKongQiGongNengModel;
 import com.smarthome.magic.mqtt_zhiling.ZnjjMqttMingLing;
 import com.smarthome.magic.util.DoMqttValue;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+
+import static com.smarthome.magic.app.ConstanceValue.MSG_PEIWANG_SUCCESS;
 
 
 public class WanNengYaoKongQiPeiDui extends BaseActivity {
@@ -56,11 +59,62 @@ public class WanNengYaoKongQiPeiDui extends BaseActivity {
     RelativeLayout rlPindaoJianMengban;
     @BindView(R.id.iv_kaiguan_mengban)
     ImageView ivKaiguanMengban;
-    private String zhuangZhiId;
+    @BindView(R.id.iv_pic)
+    ImageView ivPic;
 
-    String ccid;
-    String serverId;
-    FenLeiContentModel fenLeiContentModel;
+    @BindView(R.id.iv_peidui_dianyuan)
+    ImageView iv_peidui_dianyuan;
+    @BindView(R.id.tv_peidui_dianyuan)
+    TextView tv_peidui_dianyuan;
+    @BindView(R.id.iv_peidui_yinliang_add)
+    ImageView iv_peidui_yinliang_add;
+    @BindView(R.id.tv_peidui_yinliang_add)
+    TextView tv_peidui_yinliang_add;
+    @BindView(R.id.iv_peidui_yinliang_jian)
+    ImageView iv_peidui_yinliang_jian;
+    @BindView(R.id.tv_peidui_yinliang_jian)
+    TextView tv_peidui_yinliang_jian;
+    @BindView(R.id.iv_peidui_pindao_add)
+    ImageView iv_peidui_pindao_add;
+    @BindView(R.id.tv_peidui_pindao_add)
+    TextView tv_peidui_pindao_add;
+    @BindView(R.id.iv_peidui_pindao_jian)
+    ImageView iv_peidui_pindao_jian;
+    @BindView(R.id.tv_peidui_pindao_jian)
+    TextView tv_peidui_pindao_jian;
+
+    private String zhuangZhiId;
+    private String ccid;
+    private String serverId;
+    private FenLeiContentModel fenLeiContentModel;
+    private String topic;
+    private ZnjjMqttMingLing znjjMqttMingLing;
+
+
+    @Override
+    public int getContentViewResId() {
+        return R.layout.layout_wanneng_yaokongqi_peidui_dianshi;
+    }
+
+    @Override
+    public boolean showToolBar() {
+        return true;
+    }
+
+    @Override
+    protected void initToolbar() {
+        super.initToolbar();
+        tv_title.setText("电视遥控器配网");
+        tv_title.setTextSize(17);
+        tv_title.setTextColor(getResources().getColor(R.color.black));
+        mToolbar.setNavigationIcon(R.mipmap.backbutton);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,9 +125,8 @@ public class WanNengYaoKongQiPeiDui extends BaseActivity {
 
         ccid = PreferenceHelper.getInstance(mContext).getString(AppConfig.DEVICECCID, "");
         serverId = PreferenceHelper.getInstance(mContext).getString(AppConfig.SERVERID, "");
-        ZnjjMqttMingLing znjjMqttMingLing = new ZnjjMqttMingLing(mContext);
-
-        String topic = "zn/hardware/" + serverId + ccid;
+        znjjMqttMingLing = new ZnjjMqttMingLing(mContext);
+        topic = "zn/hardware/" + serverId + ccid;
         znjjMqttMingLing.yaoKongQiPeiDui(topic, new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
@@ -97,7 +150,6 @@ public class WanNengYaoKongQiPeiDui extends BaseActivity {
             }
         });
 
-
         znjjMqttMingLing.subscribeServerShiShiXinXi_WithCanShu(ccid, serverId, new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
@@ -112,49 +164,38 @@ public class WanNengYaoKongQiPeiDui extends BaseActivity {
 
 
         setAllWeiPeiDui();
-        ivKaiguanMengban.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-//                znjjMqttMingLing.yaoKongQiMingLing("", topic, new IMqttActionListener() {
-//                    @Override
-//                    public void onSuccess(IMqttToken asyncActionToken) {
-//                        Log.i("rair", "发送配电视命令" + topic);
-//                    }
+//        YaoKongQiGongNengModel yaoKongQiGongNengModel = new YaoKongQiGongNengModel();
 //
-//                    @Override
-//                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-//
-//                    }
-//                });
-            }
-        });
-        rlYinliangjia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //音量加
-            }
-        });
-        rlYinliangjian.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //音量减
-            }
-        });
+//        for (int i = 0; i < 5; i++) {
+//            yaoKongQiGongNengModel.id = String.valueOf(i);
+//            switch (i) {
+//                case 1:
+//                    yaoKongQiGongNengModel.name = "电源";
+//                    break;
+//                case 2:
+//                    yaoKongQiGongNengModel.name = "温度加";
+//                    break;
+//                case 3:
+//                    yaoKongQiGongNengModel.name = "温度减";
+//                    break;
+//                case 4:
+//                    yaoKongQiGongNengModel.name = "频道加";
+//                    break;
+//                case 5:
+//                    yaoKongQiGongNengModel.name = "频道减";
+//                    break;
+//            }
+//        }
 
-        rlPindaojia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //频道加
-            }
-        });
-        rlPindaojian.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //频道减
-            }
-        });
 
+        initHuidiao();
+    }
+
+    private boolean[] peiduiNum = {false, false, false, false, false};
+    private boolean peiwang = false;
+
+    private void initHuidiao() {
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
             public void call(Notice message) {
@@ -179,86 +220,138 @@ public class WanNengYaoKongQiPeiDui extends BaseActivity {
                             break;
                     }
                 } else if (message.type == ConstanceValue.MSG_WANNENGYAOKONGQICHENGGONGSHIBAI) {
-                    tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
-                        @Override
-                        public void onClickCancel(View v, TishiDialog dialog) {
-
-                        }
-
-                        @Override
-                        public void onClickConfirm(View v, TishiDialog dialog) {
-
-                        }
-
-                        @Override
-                        public void onDismiss(TishiDialog dialog) {
-
-                        }
-                    });
                     String wangNengPeiWangState = (String) message.content;
                     if (wangNengPeiWangState.equals("1")) {
+                        Notice notice1 = new Notice();
+                        notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+                        sendRx(notice1);
+
+                        TishiDialog tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+
+                            }
+
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
+
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+                                Notice notice = new Notice();
+                                notice.type = MSG_PEIWANG_SUCCESS;
+                                RxBus.getDefault().sendRx(notice);
+                                finish();
+                            }
+                        });
+
                         tishiDialog.setTextContent("电视配网成功");
+                        tishiDialog.setTextCancel("");
+                        tishiDialog.setTextConfirm("确定");
+                        tishiDialog.setCancelable(false);
+                        tishiDialog.setCanceledOnTouchOutside(false);
+                        tishiDialog.show();
                     } else if (wangNengPeiWangState.equals("2")) {
-                        tishiDialog.setTextContent("电视配网失败");
+                        TishiDialog tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+                                finish();
+                            }
+
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
+                                znjjMqttMingLing.yaoKongQiPeiDui(topic, new IMqttActionListener() {
+                                    @Override
+                                    public void onSuccess(IMqttToken asyncActionToken) {
+                                        Log.i("rair", "发送配电视命令" + topic);
+                                    }
+
+                                    @Override
+                                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+
+                            }
+                        });
+                        tishiDialog.setTextContent("电视配网失败,是否重试？");
+                        tishiDialog.setTextCancel("取消");
+                        tishiDialog.setTextConfirm("重试");
+                        tishiDialog.setCancelable(false);
+                        tishiDialog.setCanceledOnTouchOutside(false);
+                        tishiDialog.show();
                     }
-                    tishiDialog.setTextCancel("");
-                    tishiDialog.show();
                 }
             }
         }));
+    }
 
-        YaoKongQiGongNengModel yaoKongQiGongNengModel = new YaoKongQiGongNengModel();
+    private void yinLiangJia() {
+        peiduiNum[1] = true;
+        tv_peidui_yinliang_add.setTextColor(Y.getColor(R.color.color_main));
+        iv_peidui_yinliang_add.setImageResource(R.mipmap.tuya_faxian_icon_selector_sel_1);
+        check();
+    }
 
-        for (int i = 0; i < 5; i++) {
-            yaoKongQiGongNengModel.id = String.valueOf(i);
-            switch (i) {
-                case 1:
-                    yaoKongQiGongNengModel.name = "电源";
-                    break;
-                case 2:
-                    yaoKongQiGongNengModel.name = "温度加";
-                    break;
-                case 3:
-                    yaoKongQiGongNengModel.name = "温度减";
-                    break;
-                case 4:
-                    yaoKongQiGongNengModel.name = "频道加";
-                    break;
-                case 5:
-                    yaoKongQiGongNengModel.name = "频道减";
-                    break;
-            }
+    private void yinLiangJian() {
+        peiduiNum[2] = true;
+        tv_peidui_yinliang_jian.setTextColor(Y.getColor(R.color.color_main));
+        iv_peidui_yinliang_jian.setImageResource(R.mipmap.tuya_faxian_icon_selector_sel_1);
+        check();
+    }
+
+    private void pinDaoJia() {
+        peiduiNum[3] = true;
+        tv_peidui_pindao_add.setTextColor(Y.getColor(R.color.color_main));
+        iv_peidui_pindao_add.setImageResource(R.mipmap.tuya_faxian_icon_selector_sel_1);
+        check();
+    }
+
+    private void pinDaoJian() {
+        peiduiNum[4] = true;
+        tv_peidui_pindao_jian.setTextColor(Y.getColor(R.color.color_main));
+        iv_peidui_pindao_jian.setImageResource(R.mipmap.tuya_faxian_icon_selector_sel_1);
+        check();
+    }
+
+    private void dianYuanJian() {
+        peiduiNum[0] = true;
+        tv_peidui_dianyuan.setTextColor(Y.getColor(R.color.color_main));
+        iv_peidui_dianyuan.setImageResource(R.mipmap.tuya_faxian_icon_selector_sel_1);
+        check();
+    }
+
+    private void check() {
+        if (!peiduiNum[0]) {
+            return;
         }
+
+        if (!peiduiNum[1]) {
+            return;
+        }
+
+        if (!peiduiNum[2]) {
+            return;
+        }
+
+        if (!peiduiNum[3]) {
+            return;
+        }
+
+        if (!peiduiNum[4]) {
+            return;
+        }
+        Y.t("配对成功了啊啊啊啊啊");
+        Y.e("配对成功了啊啊啊啊啊");
+
+        peiwang = true;
     }
 
-    TishiDialog tishiDialog;
-
-    @Override
-    public int getContentViewResId() {
-        return R.layout.layout_wanneng_yaokongqi_peidui;
-    }
-
-    @Override
-    public boolean showToolBar() {
-        return true;
-    }
-
-
-    @Override
-    protected void initToolbar() {
-        super.initToolbar();
-        tv_title.setText("万能遥控器");
-        tv_title.setTextSize(17);
-        tv_title.setTextColor(getResources().getColor(R.color.black));
-        mToolbar.setNavigationIcon(R.mipmap.backbutton);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-    }
 
     public void setAllWeiPeiDui() {
         rlPindaoJiaMengban.setVisibility(View.GONE);
@@ -284,29 +377,6 @@ public class WanNengYaoKongQiPeiDui extends BaseActivity {
         context.startActivity(intent);
     }
 
-    private void yinLiangJia() {
-        rlYinliangJiaMengban.setVisibility(View.VISIBLE);
-    }
-
-    private void yinLiangJian() {
-        rlYinliangJianMengban.setVisibility(View.VISIBLE);
-    }
-
-    private void pinDaoJia() {
-        rlPindaoJiaMengban.setVisibility(View.VISIBLE);
-    }
-
-    private void pinDaoJian() {
-        rlPindaoJianMengban.setVisibility(View.VISIBLE);
-    }
-
-    private void dianYuanJian() {
-        ivKaiguanMengban.setVisibility(View.VISIBLE);
-    }
-
-    private void peiDuiFinish() {
-
-    }
 
     @Override
     protected void onDestroy() {

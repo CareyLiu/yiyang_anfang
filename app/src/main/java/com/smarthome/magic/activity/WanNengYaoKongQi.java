@@ -57,34 +57,20 @@ public class WanNengYaoKongQi extends BaseActivity {
     ImageView ivKaiguanMengban;
     private String zhuangZhiId;
 
-    String ccid;
-    String serverId;
-    FenLeiContentModel fenLeiContentModel;
+    private String ccid;
+    private String serverId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PreferenceHelper.getInstance(mContext).putString(App.CHOOSE_KONGZHI_XIANGMU, DoMqttValue.ZHINENGJIAJU);
-        zhuangZhiId = getIntent().getStringExtra("zhuangZhiId");
-        fenLeiContentModel = (FenLeiContentModel) getIntent().getSerializableExtra("fenLeiContentModel");
+        zhuangZhiId = getIntent().getStringExtra("device_ccid");
 
         ccid = PreferenceHelper.getInstance(mContext).getString(AppConfig.DEVICECCID, "");
         serverId = PreferenceHelper.getInstance(mContext).getString(AppConfig.SERVERID, "");
         ZnjjMqttMingLing znjjMqttMingLing = new ZnjjMqttMingLing(mContext);
 
         String topic = "zn/hardware/" + serverId + ccid;
-
-        znjjMqttMingLing.yaoKongQiPeiDui(topic, new IMqttActionListener() {
-            @Override
-            public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("rair", "发送配电视命令" + topic);
-            }
-
-            @Override
-            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-
-            }
-        });
         znjjMqttMingLing.subscribeAppShiShiXinXi_WithCanShu(ccid, serverId, new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
@@ -96,7 +82,6 @@ public class WanNengYaoKongQi extends BaseActivity {
 
             }
         });
-
 
         znjjMqttMingLing.subscribeServerShiShiXinXi_WithCanShu(ccid, serverId, new IMqttActionListener() {
             @Override
@@ -115,7 +100,7 @@ public class WanNengYaoKongQi extends BaseActivity {
         ivKaiguanMengban.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String mingLingMa = "M18" + zhuangZhiId + "01";
+                String mingLingMa = "M18" + zhuangZhiId + "01.";
                 znjjMqttMingLing.yaoKongQiMingLing(mingLingMa, topic, new IMqttActionListener() {
                     @Override
                     public void onSuccess(IMqttToken asyncActionToken) {
@@ -133,7 +118,7 @@ public class WanNengYaoKongQi extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //音量加
-                String mingLingMa = "M18" + zhuangZhiId + "02";
+                String mingLingMa = "M18" + zhuangZhiId + "02.";
                 znjjMqttMingLing.yaoKongQiMingLing(mingLingMa, topic, new IMqttActionListener() {
                     @Override
                     public void onSuccess(IMqttToken asyncActionToken) {
@@ -151,7 +136,7 @@ public class WanNengYaoKongQi extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //音量减
-                String mingLingMa = "M18" + zhuangZhiId + "03";
+                String mingLingMa = "M18" + zhuangZhiId + "03.";
                 znjjMqttMingLing.yaoKongQiMingLing(mingLingMa, topic, new IMqttActionListener() {
                     @Override
                     public void onSuccess(IMqttToken asyncActionToken) {
@@ -171,7 +156,7 @@ public class WanNengYaoKongQi extends BaseActivity {
             public void onClick(View v) {
                 //频道加
 
-                String mingLingMa = "M18" + zhuangZhiId + "04";
+                String mingLingMa = "M18" + zhuangZhiId + "04.";
                 znjjMqttMingLing.yaoKongQiMingLing(mingLingMa, topic, new IMqttActionListener() {
                     @Override
                     public void onSuccess(IMqttToken asyncActionToken) {
@@ -189,7 +174,7 @@ public class WanNengYaoKongQi extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //频道减
-                String mingLingMa = "M18" + zhuangZhiId + "05";
+                String mingLingMa = "M18" + zhuangZhiId + "05.";
                 znjjMqttMingLing.yaoKongQiMingLing(mingLingMa, topic, new IMqttActionListener() {
                     @Override
                     public void onSuccess(IMqttToken asyncActionToken) {
@@ -273,7 +258,7 @@ public class WanNengYaoKongQi extends BaseActivity {
     @Override
     protected void initToolbar() {
         super.initToolbar();
-        tv_title.setText("万能遥控器");
+        tv_title.setText("电视遥控器");
         tv_title.setTextSize(17);
         tv_title.setTextColor(getResources().getColor(R.color.black));
         mToolbar.setNavigationIcon(R.mipmap.backbutton);
@@ -303,10 +288,10 @@ public class WanNengYaoKongQi extends BaseActivity {
         ivKaiguanMengban.setVisibility(View.VISIBLE);
     }
 
-    public static void actionStart(Context context, FenLeiContentModel fenLeiContentModel) {
+    public static void actionStart(Context context, String device_ccid) {
         Intent intent = new Intent(context, WanNengYaoKongQi.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("fenLeiContentModel", fenLeiContentModel);
+        intent.putExtra("device_ccid", device_ccid);
         context.startActivity(intent);
     }
 

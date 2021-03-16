@@ -63,6 +63,7 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
 
     private List<ZhiNengJiaJu_0007Model.MatchListBean> mDatas = new ArrayList<>();
     private OneImageAdapter oneImageAdapter;
+    private TishiDialog tishiDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -152,7 +153,7 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
                     sendRx(notice1);
 
 
-                    TishiDialog tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                    tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
                         @Override
                         public void onClickCancel(View v, TishiDialog dialog) {
                             Notice notice = new Notice();
@@ -177,7 +178,9 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
                     tishiDialog.setCancelable(false);
                     tishiDialog.setCanceledOnTouchOutside(false);
                     tishiDialog.setDismissAfterClick(true);
-                    tishiDialog.show();
+                    if (!tishiDialog.isShowing()) {
+                        tishiDialog.show();
+                    }
                 } else if (message.type == ConstanceValue.MSG_PEIWANG_ERROR) {
                     TishiDialog tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
                         @Override

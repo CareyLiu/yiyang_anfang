@@ -38,7 +38,7 @@ public class DoMqttValue {
         switch (chooseXiangMu) {
             case ZHINENGJIAJU:
                 //  收到的数据信息：  i01082.
-                UIHelper.ToastMessage(context, "接收到的message信息： " + message);
+//                UIHelper.ToastMessage(context, "接收到的message信息： " + message);
                 if (message.contains("i")) {
                     if (message.contains("_")) {
 
@@ -84,7 +84,7 @@ public class DoMqttValue {
                     }
 
                 } else if (message.contains("m0528")) {
-
+                    Y.t(message);
                     String str = message.substring(message.length() - 3, message.length() - 1);
                     //遥控器配对
                     Notice notice = new Notice();
@@ -93,6 +93,7 @@ public class DoMqttValue {
                     Log.i("Rair", notice.content.toString());
                     RxBus.getDefault().sendRx(notice);
                 }else if (message.contains("m0628")){
+                    Y.t(message);
                     String str = message.substring(message.length() - 2, message.length() - 1);
                     //遥控器配对
                     Notice notice = new Notice();

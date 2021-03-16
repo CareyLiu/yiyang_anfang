@@ -21,6 +21,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.SuiYiTieOneActivity;
 import com.smarthome.magic.activity.SuiYiTieThreeActivity;
 import com.smarthome.magic.activity.SuiYiTieTwoActivity;
+import com.smarthome.magic.activity.WanNengYaoKongQi;
 import com.smarthome.magic.activity.ZhiNengChuangLianActivity;
 import com.smarthome.magic.activity.ZhiNengDianDengActivity;
 import com.smarthome.magic.activity.ZhiNengJiaJuChaZuoActivity;
@@ -128,7 +129,6 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                     zhiNengDeviceListAdapter.notifyDataSetChanged();
                 } else if (message.type == ConstanceValue.MSG_DEVICE_DELETE_TUYA) {
                     String tuyaId = message.devId;
-                    Y.e("删除的涂鸦ID是多少  " + tuyaId);
                     for (int i = 0; i < mDatas.size(); i++) {
                         ZhiNengModel.DataBean.DeviceBean deviceBean = mDatas.get(i);
                         String ty_device_ccid = deviceBean.getTy_device_ccid();
@@ -136,9 +136,6 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                             String device_type = deviceBean.getDevice_type();
                             if (device_type.equals(TuyaConfig.CATEGORY_WNYKQ)) {
                                 deleteDevice(deviceBean.getDevice_id());
-                                Y.e("删除了" + deviceBean.getDevice_name());
-                            } else {
-                                Y.e("不执行删除" + deviceBean.getDevice_name());
                             }
                         }
                     }
@@ -151,44 +148,34 @@ public class ZhiNengDeviceFragment extends BaseFragment {
     }
 
     public void getData(List<ZhiNengModel.DataBean> dataBean) {
-        PreferenceHelper.getInstance(getActivity()).putString(AppConfig.FAMILY_ID, dataBean.get(0).getFamily_id());
-        member_type = dataBean.get(0).getMember_type();
-        if (dataBean.get(0).getDevice().size() == 0) {
-            PreferenceHelper.getInstance(getActivity()).putString(AppConfig.DEVICECCID, "");
-            PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, "");
-        } else {
-            if (StringUtils.isEmpty(dataBean.get(0).getDevice().get(0).getDevice_ccid())) {
-                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.DEVICECCID, "");
-            } else {
-                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.DEVICECCID, dataBean.get(0).getDevice().get(0).getDevice_ccid());
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.FAMILY_ID, dataBean.get(0).getFamily_id());
+                member_type = dataBean.get(0).getMember_type();
+                if (dataBean.get(0).getDevice().size() == 0) {
+                    PreferenceHelper.getInstance(getActivity()).putString(AppConfig.DEVICECCID, "");
+                    PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, "");
+                } else {
+                    if (StringUtils.isEmpty(dataBean.get(0).getDevice().get(0).getDevice_ccid())) {
+                        PreferenceHelper.getInstance(getActivity()).putString(AppConfig.DEVICECCID, "");
+                    } else {
+                        PreferenceHelper.getInstance(getActivity()).putString(AppConfig.DEVICECCID, dataBean.get(0).getDevice().get(0).getDevice_ccid());
+                    }
+                    if (StringUtils.isEmpty(dataBean.get(0).getDevice().get(0).getServer_id())) {
+                        PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, "");
+                    } else {
+                        PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, dataBean.get(0).getDevice().get(0).getServer_id());
+                    }
+                }
+                mDatas.clear();
+                mDatas.addAll(dataBean.get(0).getDevice());
+                if (zhiNengDeviceListAdapter != null) {
+                    Y.e("我执行了么啊啊啊");
+                    zhiNengDeviceListAdapter.notifyDataSetChanged();
+                }
             }
-            if (StringUtils.isEmpty(dataBean.get(0).getDevice().get(0).getServer_id())) {
-                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, "");
-            } else {
-                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, dataBean.get(0).getDevice().get(0).getServer_id());
-            }
-        }
-
-        mDatas = dataBean.get(0).getDevice();
-        Y.e("设备的数量是  " + mDatas.size());
-        if (zhiNengDeviceListAdapter != null) {
-            zhiNengDeviceListAdapter.setNewData(mDatas);
-            zhiNengDeviceListAdapter.notifyDataSetChanged();
-        } else {
-            Y.e("没有获取到设备");
-        }
-
-//        if (recyclerView != null) {
-//            for (int i = 0; i < recyclerView.getItemDecorationCount(); i++) {
-//                recyclerView.removeItemDecorationAt(i);
-//            }
-//
-//            if (mDatas.size() == 0) {
-//                recyclerView.addItemDecoration(new GridAverageUIDecoration(0, 10));
-//            } else {
-//                recyclerView.addItemDecoration(new GridAverageUIDecoration(14, 10));
-//            }
-//        }
+        });
     }
 
 
@@ -212,6 +199,9 @@ public class ZhiNengDeviceFragment extends BaseFragment {
 
         zhiNengDeviceListAdapter.openLoadAnimation();//默认为渐显效果
         recyclerView.setAdapter(zhiNengDeviceListAdapter);
+
+        zhiNengDeviceListAdapter.setNewData(mDatas);
+        zhiNengDeviceListAdapter.notifyDataSetChanged();
 
         zhiNengDeviceListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
@@ -321,6 +311,8 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                             MenSuoActivity.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
                         } else if (deviceBean.getDevice_type().equals("13")) {
                             LouShuiActivity.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
+                        } else if (deviceBean.getDevice_type().equals("28")) {
+                            WanNengYaoKongQi.actionStart(getActivity(), deviceBean.getDevice_ccid());
                         } else if (deviceBean.getDevice_type().equals("08")) {//随意贴
                             //SuiYiTieActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up());
                             String strJiLian = deviceBean.getDevice_ccid().substring(2, 4);
@@ -506,7 +498,6 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                 .execute(new JsonCallback<AppResponse<ZhiNengFamilyEditBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
-                        Y.e("删除成功了啊啊啊啊");
                         Notice notice = new Notice();
                         notice.type = ConstanceValue.MSG_DEVICE_DELETE;
                         notice.devId = device_id;
@@ -515,7 +506,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
 
                     @Override
                     public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
-                        Y.e("设备删除失败");
+
                     }
                 });
     }

@@ -25,6 +25,7 @@ import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuoTIshi;
+import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Success;
 import com.smarthome.magic.dialog.ZhiNengFamilyAddDIalog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.SuiYiTieModel;
@@ -156,7 +157,7 @@ public class KaiGuanSettingActivity extends BaseActivity {
      *
      * @param context
      */
-    public static void actionStart(Context context, String device_ccid, String device_ccidup,String member_type) {
+    public static void actionStart(Context context, String device_ccid, String device_ccidup, String member_type) {
         Intent intent = new Intent(context, KaiGuanSettingActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("device_ccid", device_ccid);
@@ -261,11 +262,28 @@ public class KaiGuanSettingActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse<SuiYiTieModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<SuiYiTieModel.DataBean>> response) {
-                        UIHelper.ToastMessage(mContext, "解绑成功");
-                        Notice notice = new Notice();
-                        notice.type = ConstanceValue.MSG_KAIGUAN_DELETE;
-                        sendRx(notice);
-                        finish();
+                        if (response.body().msg_code.equals("0000")) {
+                            Notice notice = new Notice();
+                            notice.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+                            sendRx(notice);
+
+                            MyCarCaoZuoDialog_Success myCarCaoZuoDialog_success = new MyCarCaoZuoDialog_Success(KaiGuanSettingActivity.this,
+                                    "成功", "设备删除成功", "好的", new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
+                                @Override
+                                public void clickLeft() {
+
+                                }
+
+                                @Override
+                                public void clickRight() {
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_KAIGUAN_DELETE;
+                                    sendRx(notice);
+                                    finish();
+                                }
+                            });
+                            myCarCaoZuoDialog_success.show();
+                        }
                     }
 
                     @Override

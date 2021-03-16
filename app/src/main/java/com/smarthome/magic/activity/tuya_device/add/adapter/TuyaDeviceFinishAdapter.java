@@ -62,12 +62,6 @@ public class TuyaDeviceFinishAdapter extends BaseAdapter {
             TuyaAddDeviceModel model = deviceModels.get(i);
             Glide.with(context).load(model.getIcon()).into(holder.iv_device);
             holder.tv_name.setText(model.getName());
-
-//            if (model.isSelect()) {
-//                holder.iv_select.setImageResource(R.mipmap.tuya_faxian_icon_selector_sel);
-//            } else {
-//                holder.iv_select.setImageResource(R.mipmap.tuya_faxian_icon_selector_nor);
-//            }
         }
         return view;
     }

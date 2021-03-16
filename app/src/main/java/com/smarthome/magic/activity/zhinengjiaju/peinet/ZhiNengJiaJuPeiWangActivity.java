@@ -562,7 +562,7 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
         mBssid = stateResult.bssid;
 
 
-        if (mSsid != null || mSsid.length() != 0) {
+        if (mSsid != null && mSsid.length() != 0) {
             tvWifiMing.setText(mSsid.toString());
         }
 
@@ -686,13 +686,33 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
                         }
                     });
 
-                    Notice notice = new Notice();
-                    notice.type = MSG_PEIWANG_SUCCESS;
-                    RxBus.getDefault().sendRx(notice);
-
                     Notice notice1 = new Notice();
                     notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
                     sendRx(notice1);
+
+                    tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                        @Override
+                        public void onClickCancel(View v, TishiDialog dialog) {
+
+                        }
+
+                        @Override
+                        public void onClickConfirm(View v, TishiDialog dialog) {
+                            Notice notice = new Notice();
+                            notice.type = MSG_PEIWANG_SUCCESS;
+                            RxBus.getDefault().sendRx(notice);
+                            finish();
+                        }
+
+                        @Override
+                        public void onDismiss(TishiDialog dialog) {
+
+                        }
+                    });
+                    tishiDialog.setTextContent("主机配网成功");
+                    tishiDialog.setTextCancel("");
+                    tishiDialog.setTextConfirm("完成");
+                    tishiDialog.show();
                 } else if (message.type == ConstanceValue.MSG_PEIWANG_ERROR) {
                     animationView.pauseAnimation();
                     tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {

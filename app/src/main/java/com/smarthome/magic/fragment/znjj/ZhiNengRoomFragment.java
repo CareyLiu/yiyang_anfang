@@ -105,7 +105,6 @@ public class ZhiNengRoomFragment extends BaseFragment implements View.OnClickLis
     }
 
     private void init(View view) {
-        Y.e("考了几分但是舒服的地方是");
         recyclerView = view.findViewById(R.id.recyclerView);
         footerView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_zhineng_room_footer, null);
         ll_room_add = footerView.findViewById(R.id.ll_room_add);

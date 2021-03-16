@@ -353,8 +353,6 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                             }
                         }
 
-
-
                         String familyId = dataBean.get(0).getFamily_id();
                         PreferenceHelper.getInstance(getActivity()).putString(AppConfig.PEIWANG_FAMILYID, familyId);
                         String ty_family_id = dataBean.get(0).getTy_family_id();
@@ -526,5 +524,11 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
 
             }
         });
+    }
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        getnet();
     }
 }

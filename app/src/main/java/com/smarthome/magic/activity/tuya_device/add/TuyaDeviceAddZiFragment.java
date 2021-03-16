@@ -46,7 +46,11 @@ import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
+import com.smarthome.magic.dialog.newdia.TishiPhoneDialog;
 import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.Message;
+import com.smarthome.magic.model.PeiwangOtherModel;
+import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.model.ZhiNengHomeBean;
 import com.smarthome.magic.model.ZhiNengJiaJu_0007Model;
 import com.smarthome.magic.model.ZhiNengJiaJu_0009Model;
@@ -87,6 +91,8 @@ import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
+import static com.smarthome.magic.app.ConstanceValue.MSG_PEIWANG_SUCCESS;
+import static com.smarthome.magic.get_net.Urls.SERVER_URL;
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
 /**
@@ -255,17 +261,17 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
 //                    deviceBeans.add(devResp);
 //                    adapter.notifyDataSetChanged();
                 } else if (message.type == ConstanceValue.MSG_PEIWNAG_ESPTOUCH) {
-                    int ob = (int) message.content;
-                    /**
-                     * @param str 0连接失败 1开始连接页面 2连接中3连接成功
-                     */
-                    if (ob == 0) {//连接失败
-                        UIHelper.ToastMessage(getActivity(), "连接失败");
-                    } else if (ob == 2) {//连接中
-                        UIHelper.ToastMessage(getActivity(), "连接中");
-                    } else if (ob == 3) {//连接成功
-                        UIHelper.ToastMessage(getActivity(), "连接成功");
-                    }
+//                    int ob = (int) message.content;
+//                    /**
+//                     * @param str 0连接失败 1开始连接页面 2连接中3连接成功
+//                     */
+//                    if (ob == 0) {//连接失败
+//                        UIHelper.ToastMessage(getActivity(), "连接失败");
+//                    } else if (ob == 2) {//连接中
+//                        UIHelper.ToastMessage(getActivity(), "连接中");
+//                    } else if (ob == 3) {//连接成功
+//                        UIHelper.ToastMessage(getActivity(), "连接成功");
+//                    }
                 } else if (message.type == ConstanceValue.MSG_PEIWANG_ERROR) {
                     tishiDialog = new TishiDialog(getActivity(), 3, new TishiDialog.TishiDialogListener() {
                         @Override
@@ -284,13 +290,119 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                         }
                     });
                     tishiDialog.setTextContent((String) message.content);
-                    //tishiDialog.setTextCancel("退出");
                     tishiDialog.setTextCancel("");
                     tishiDialog.setTextConfirm("退出");
                     tishiDialog.show();
+                } else if (message.type == ConstanceValue.MSG_ZHUJIBANG_OTHER) {
+                    peiwangOtherModel = (PeiwangOtherModel) message.content;
+                    tishiPhoneDialog = new TishiPhoneDialog(getActivity(), new TishiPhoneDialog.TishiDialogListener() {
+                        @Override
+                        public void onClickCancel(View v, TishiPhoneDialog dialog) {
+                            dialog.dismiss();
+                        }
+
+                        @Override
+                        public void onClickConfirm(View v, TishiPhoneDialog dialog) {
+                            if (TextUtils.isEmpty(smsId)) {
+                                Y.t("请发送验证码");
+                                return;
+                            }
+
+                            if (TextUtils.isEmpty(dialog.getEdContent())) {
+                                Y.t("请输入验证码");
+                                return;
+                            }
+
+                            tianJiaSheBeiNet2(dialog.getEdContent());
+                        }
+
+                        @Override
+                        public void onDismiss(TishiPhoneDialog dialog) {
+
+                        }
+
+                        @Override
+                        public void onSendYanZhengMa(View v, TishiPhoneDialog dialog) {
+                            get_code();
+                        }
+                    });
+                    tishiPhoneDialog.setTextContent("该设备已被绑定到账号为" + peiwangOtherModel.getPhone() + "的家庭，如继续操作请手机验证");
+                    tishiPhoneDialog.show();
                 }
             }
         }));
+    }
+
+    private PeiwangOtherModel peiwangOtherModel;
+    private TishiPhoneDialog tishiPhoneDialog;
+    private String smsId;
+
+    private void get_code() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "00001");
+        map.put("key", Urls.key);
+        map.put("user_phone", peiwangOtherModel.getPhone());
+        map.put("mod_id", "0341");
+        Gson gson = new Gson();
+        OkGo.<AppResponse<Message.DataBean>>post(SERVER_URL + "msg")
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<Message.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<Message.DataBean>> response) {
+                        Y.t("验证码获取成功");
+                        Notice notice = new Notice();
+                        notice.type = ConstanceValue.MSG_SENDCODE_HUIDIAO;
+                        sendRx(notice);
+                        if (response.body().data.size() > 0) {
+                            smsId = response.body().data.get(0).getSms_id();
+                        }
+                        tishiPhoneDialog.startCode();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<Message.DataBean>> response) {
+                        Y.tError(response);
+                        tishiPhoneDialog.errorCode();
+                    }
+                });
+    }
+
+    private void tianJiaSheBeiNet2(String smsCode) {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16041");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(getActivity()).getAppToken());
+        map.put("add_device_path", "1");
+        map.put("family_id", PreferenceHelper.getInstance(getActivity()).getString(AppConfig.FAMILY_ID, ""));
+        map.put("xf_device_id", peiwangOtherModel.getXf_device_id());
+        map.put("access_token", peiwangOtherModel.getAccess_token());
+        map.put("wifi_user", peiwangOtherModel.getWifi_user());
+        map.put("wifi_pwd", peiwangOtherModel.getWifi_pwd());
+        map.put("mc_device_ccid", peiwangOtherModel.getMc_device_ccid());
+        map.put("server_id", peiwangOtherModel.getServer_id());
+        map.put("sms_id", smsId);
+        map.put("sms_code", smsCode);
+        Gson gson = new Gson();
+        OkGo.<AppResponse<ZhiNengFamilyEditBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ZhiNengFamilyEditBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        UIHelper.ToastMessage(getContext(), "设备添加成功");
+
+                        Notice notice = new Notice();
+                        notice.type = MSG_PEIWANG_SUCCESS;
+                        RxBus.getDefault().sendRx(notice);
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        super.onError(response);
+                        Y.tError(response);
+                    }
+                });
     }
 
     private void init() {
@@ -584,7 +696,7 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                     @Override
                     public void onError(Response<AppResponse<ZhiNengHomeBean.DataBean>> response) {
                         super.onError(response);
-                        Y.e(" JFK的实力开发商的  "  +response.getException().getMessage());
+                        Y.e(" JFK的实力开发商的  " + response.getException().getMessage());
                     }
                 });
     }

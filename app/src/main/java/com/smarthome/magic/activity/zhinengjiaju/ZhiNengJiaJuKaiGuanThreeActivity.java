@@ -375,35 +375,39 @@ public class ZhiNengJiaJuKaiGuanThreeActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse<ZhiNengJiaJuKaiGuanModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<ZhiNengJiaJuKaiGuanModel.DataBean>> response) {
-                        ZhiNengJiaJuKaiGuanThreeActivity.this.response = response;
-                        leftZhuangZhiId = response.body().data.get(0).getDevice_list().get(0).getDevice_ccid();
-                        tvLeft.setText(response.body().data.get(0).getDevice_list().get(0).getDevice_name());
+                        try {
+                            ZhiNengJiaJuKaiGuanThreeActivity.this.response = response;
+                            leftZhuangZhiId = response.body().data.get(0).getDevice_list().get(0).getDevice_ccid();
+                            tvLeft.setText(response.body().data.get(0).getDevice_list().get(0).getDevice_name());
 
-                        centerZhuangZhiId = response.body().data.get(0).getDevice_list().get(1).getDevice_ccid();
-                        tvCenter.setText(response.body().data.get(0).getDevice_list().get(1).getDevice_name());
+                            centerZhuangZhiId = response.body().data.get(0).getDevice_list().get(1).getDevice_ccid();
+                            tvCenter.setText(response.body().data.get(0).getDevice_list().get(1).getDevice_name());
 
-                        rightZhuangZhiId = response.body().data.get(0).getDevice_list().get(2).getDevice_ccid();
-                        tvRight.setText(response.body().data.get(0).getDevice_list().get(2).getDevice_name());
-                        //1开 2 关
-                        if (response.body().data.get(0).getDevice_list().get(0).getWork_state().equals("1")) {
+                            rightZhuangZhiId = response.body().data.get(0).getDevice_list().get(2).getDevice_ccid();
+                            tvRight.setText(response.body().data.get(0).getDevice_list().get(2).getDevice_name());
+                            //1开 2 关
+                            if (response.body().data.get(0).getDevice_list().get(0).getWork_state().equals("1")) {
 
-                            kaiGuanZhuagnTai1 = "1";
-                        } else if (response.body().data.get(0).getDevice_list().get(0).getWork_state().equals("2")) {
-                            kaiGuanZhuagnTai1 = "0";
+                                kaiGuanZhuagnTai1 = "1";
+                            } else if (response.body().data.get(0).getDevice_list().get(0).getWork_state().equals("2")) {
+                                kaiGuanZhuagnTai1 = "0";
+                            }
+
+                            if (response.body().data.get(0).getDevice_list().get(1).getWork_state().equals("1")) {
+                                kaiGuanZhuangTai2 = "1";
+                            } else {
+                                kaiGuanZhuangTai2 = "0";
+                            }
+
+                            if (response.body().data.get(0).getDevice_list().get(2).getWork_state().equals("1")) {
+                                kaiGuanZhuangTai3 = "1";
+                            } else {
+                                kaiGuanZhuangTai3 = "0";
+                            }
+                            setKaiGuanZhuangTai(kaiGuanZhuagnTai1, kaiGuanZhuangTai2, kaiGuanZhuangTai3);
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-
-                        if (response.body().data.get(0).getDevice_list().get(1).getWork_state().equals("1")) {
-                            kaiGuanZhuangTai2 = "1";
-                        } else {
-                            kaiGuanZhuangTai2 = "0";
-                        }
-
-                        if (response.body().data.get(0).getDevice_list().get(2).getWork_state().equals("1")) {
-                            kaiGuanZhuangTai3 = "1";
-                        } else {
-                            kaiGuanZhuangTai3 = "0";
-                        }
-                        setKaiGuanZhuangTai(kaiGuanZhuagnTai1, kaiGuanZhuangTai2, kaiGuanZhuangTai3);
                     }
 
                     @Override

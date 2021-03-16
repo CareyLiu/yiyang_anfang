@@ -51,15 +51,16 @@ public class ZhiNengDeviceListNewAdapter extends BaseQuickAdapter<ZhiNengModel.D
             }
         }
 
+        ImageView ivImage = helper.getView(R.id.iv_switch);
+
         if (item.getWork_state().equals("1")) {
             helper.setBackgroundRes(R.id.iv_switch, R.mipmap.img_device_switch_open);
+            ivImage.setVisibility(View.VISIBLE);
         } else if (item.getWork_state().equals("2")) {
             helper.setBackgroundRes(R.id.iv_switch, R.mipmap.img_device_switch_close);
+            ivImage.setVisibility(View.VISIBLE);
         } else if (item.getWork_state().equals("3")) {
-            //helper.setInVisible(R.id.iv_switch, false);
-            ImageView ivImage = helper.getView(R.id.iv_switch);
             ivImage.setVisibility(View.INVISIBLE);
-
         }
         helper.addOnClickListener(R.id.ll_content);
         helper.addOnClickListener(R.id.iv_switch);

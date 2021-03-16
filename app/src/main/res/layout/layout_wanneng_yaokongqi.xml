@@ -90,8 +90,6 @@
                 android:layout_height="69dp"
                 android:layout_alignParentBottom="true"
                 android:background="@mipmap/yaokong_bg_roundedrectangle_gradual_down"></RelativeLayout>
-
-
         </RelativeLayout>
 
         <RelativeLayout
@@ -102,27 +100,21 @@
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_centerInParent="true"
-                android:src="@mipmap/yaokong_bg_round">
-
-            </ImageView>
+                android:src="@mipmap/yaokong_bg_round" />
 
             <ImageView
+                android:id="@+id/iv_kaiguan_mengban"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:src="@mipmap/yaokong_icon_guanbi" />
 
             <ImageView
-                android:id="@+id/iv_kaiguan_mengban"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_centerInParent="true"
-                android:src="@mipmap/yaokong_bg_round_gradual">
-
-            </ImageView>
-
+                android:src="@mipmap/yaokong_bg_round_gradual" />
         </RelativeLayout>
-
 
         <RelativeLayout
             android:layout_width="65dp"

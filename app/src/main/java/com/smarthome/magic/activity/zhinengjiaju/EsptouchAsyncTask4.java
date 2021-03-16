@@ -146,7 +146,7 @@ public class EsptouchAsyncTask4 extends AsyncTask<byte[], IEsptouchResult, List<
          * @param str 0连接失败 1开始连接页面 2连接中3连接成功
          */
 
-        activity.finish();
+//        activity.finish();
 
     }
 

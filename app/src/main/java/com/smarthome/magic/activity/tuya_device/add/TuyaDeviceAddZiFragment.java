@@ -252,14 +252,41 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                     }
 
 
-                } else if (message.type == ConstanceValue.MSG_TIANJIAZHUJI_ZIDONG) {
-                    //添加主机
-//                    zhiNengJiaJu_0009Model = (ZhiNengJiaJu_0009Model) message.content;
-//
-//                    DeviceBean devResp = new DeviceBean();
-//                    devResp.setIconUrl(zhiNengJiaJu_0009Model.mc_device_url);
-//                    deviceBeans.add(devResp);
-//                    adapter.notifyDataSetChanged();
+                } else if (message.type == ConstanceValue.MSG_TIANJIAZHUJI) {//添加主机
+                    if (isOnFrag) {
+                        Notice notice1 = new Notice();
+                        notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+                        sendRx(notice1);
+
+                        zhiNengJiaJu_0009Model = (ZhiNengJiaJu_0009Model) message.content;
+                        DeviceBean devResp = new DeviceBean();
+                        devResp.setIconUrl(zhiNengJiaJu_0009Model.mc_device_url);
+                        deviceBeans.add(devResp);
+                        adapter.notifyDataSetChanged();
+
+                        tishiDialog = new TishiDialog(getActivity(), 3, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+                                Notice notice = new Notice();
+                                notice.type = MSG_PEIWANG_SUCCESS;
+                                RxBus.getDefault().sendRx(notice);
+                            }
+
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
+
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+
+                            }
+                        });
+                        tishiDialog.setTextContent("主机配网成功");
+                        tishiDialog.setTextCancel("退出");
+                        tishiDialog.setTextConfirm("继续");
+                        tishiDialog.show();
+                    }
                 } else if (message.type == ConstanceValue.MSG_PEIWNAG_ESPTOUCH) {
 //                    int ob = (int) message.content;
 //                    /**
@@ -775,5 +802,19 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                 }
             });
         }
+    }
+
+    private boolean isOnFrag;
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        isOnFrag = true;
+    }
+
+    @Override
+    public void onSupportInvisible() {
+        super.onSupportInvisible();
+        isOnFrag = false;
     }
 }

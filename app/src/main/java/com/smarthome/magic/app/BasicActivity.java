@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewStub;
@@ -32,6 +33,7 @@ public abstract class BasicActivity<T extends BasicPresenter, E extends BasicMod
     protected Toolbar mToolbar;
     protected TextView tv_title, tv_rightTitle, tv_leftTitle;
     protected ImageView iv_rightTitle, iv_leftTitle;
+    protected View viewLine;
 
 
     @Override
@@ -68,7 +70,7 @@ public abstract class BasicActivity<T extends BasicPresenter, E extends BasicMod
      */
     protected void initToolbar() {
         mToolbar.setTitle("");
-     // mToolbar.setTitleTextColor(getResources().getColor(R.color.black));
+        // mToolbar.setTitleTextColor(getResources().getColor(R.color.black));
         tv_title = (TextView) rootView.findViewById(R.id.toolbar_title);
         tv_title.setVisibility(View.VISIBLE);
         tv_rightTitle = (TextView) rootView.findViewById(R.id.tv_toolbar_right);
@@ -76,6 +78,11 @@ public abstract class BasicActivity<T extends BasicPresenter, E extends BasicMod
         iv_rightTitle = (ImageView) rootView.findViewById(R.id.iv_toolbar_right);
         tv_leftTitle = (TextView) rootView.findViewById(R.id.tv_toolbar_left);
         iv_leftTitle = (ImageView) rootView.findViewById(R.id.iv_toolbar_left);
+        viewLine = rootView.findViewById(R.id.view_line);
+        if (showToolBar()) {
+            viewLine.setVisibility(View.VISIBLE);
+        }
+
         mToolbar.collapseActionView();
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
@@ -124,6 +131,14 @@ public abstract class BasicActivity<T extends BasicPresenter, E extends BasicMod
     public boolean showToolBar() {
         return false;
     }
+
+    /**
+     * 是否显示toolbar 下面边线
+     */
+    public boolean showToolBarLine() {
+        return false;
+    }
+
 
     //获取自定义toolbarview 资源id 默认为-1，showToolBar()方法必须返回true才有效
     public int getToolBarResId() {

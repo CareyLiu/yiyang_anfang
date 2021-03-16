@@ -40,6 +40,7 @@ public class DoMqttValue {
                 //  收到的数据信息：  i01082.
 //                UIHelper.ToastMessage(context, "接收到的message信息： " + message);
                 if (message.contains("i")) {
+
                     if (message.contains("_")) {
 
                         String[] messageSplit = message.split("_");

@@ -11,7 +11,7 @@
         android:id="@+id/view"
         android:layout_width="wrap_content"
         android:layout_height="1dp"
-        android:background="@color/white" />
+        android:background="@color/grayeeeeeee" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/srL_smart"

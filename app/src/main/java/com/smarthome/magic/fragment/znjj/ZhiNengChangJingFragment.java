@@ -81,13 +81,10 @@ public class ZhiNengChangJingFragment extends BaseFragment {
 
     public void getData(List<ZhiNengModel.DataBean> dataBean) {
         PreferenceHelper.getInstance(getActivity()).putString(AppConfig.FAMILY_ID, dataBean.get(0).getFamily_id());
-        mDatas = dataBean.get(0).getScene();
-        Y.e("场景的数量是  " + mDatas.size());
+        mDatas.clear();
+        mDatas.addAll(dataBean.get(0).getScene());
         if (zhiNengChangJingAdapter != null) {
-            zhiNengChangJingAdapter.setNewData(mDatas);
             zhiNengChangJingAdapter.notifyDataSetChanged();
-        } else {
-            Y.e("没有获取到场景");
         }
     }
 
@@ -110,6 +107,7 @@ public class ZhiNengChangJingFragment extends BaseFragment {
         });
         zhiNengChangJingAdapter.addFooterView(view);
         zhiNengChangJingAdapter.setNewData(mDatas);
+        zhiNengChangJingAdapter.notifyDataSetChanged();
 
         zhiNengChangJingAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override

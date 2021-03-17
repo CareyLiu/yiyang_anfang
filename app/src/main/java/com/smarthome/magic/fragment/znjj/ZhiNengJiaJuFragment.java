@@ -58,9 +58,12 @@ import com.smarthome.magic.view.magicindicator.buildins.commonnavigator.titles.C
 import com.smarthome.magic.view.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.bean.HomeBean;
+import com.tuya.smart.home.sdk.bean.MemberBean;
 import com.tuya.smart.home.sdk.bean.WeatherBean;
 import com.tuya.smart.home.sdk.callback.ITuyaGetHomeListCallback;
+import com.tuya.smart.home.sdk.callback.ITuyaGetMemberListCallback;
 import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
+import com.tuya.smart.sdk.api.IResultCallback;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
@@ -503,8 +506,43 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
         } else if (str.equals("1")) {
             PreferenceHelper.getInstance(getActivity()).putString(AppConfig.MC_DEVICE_CCID, "aaaaaaaaaaaaaaaa80140018");
             TuyaDeviceAddActivity.actionStart(getContext());
-//            getHomeList();
         }
+//        getHomefff();
+        getHomeList();
+    }
+
+    private void getHomefff() {
+        TuyaHomeSdk.getMemberInstance().queryMemberList(28846708, new ITuyaGetMemberListCallback() {
+            @Override
+            public void onSuccess(List<MemberBean> memberBeans) {
+                // do something
+                Y.e("看了艰苦奋斗是 " + memberBeans.size());
+                for (int i = 0; i < memberBeans.size(); i++) {
+                    MemberBean bean = memberBeans.get(i);
+                    Y.e("家庭成员的信息  " + bean.getMemberId() + "   " + bean.getAccount() + "   " + bean.getNickName());
+                }
+
+                TuyaHomeSdk.getMemberInstance().removeMember(31948111, new IResultCallback() {
+                    @Override
+                    public void onSuccess() {
+                        // do something
+                        Y.e("离开家庭成功");
+                    }
+
+                    @Override
+                    public void onError(String code, String error) {
+                        // do something
+                        Y.e("离开家庭失败  " + error);
+                    }
+                });
+            }
+
+            @Override
+            public void onError(String errorCode, String error) {
+                // do something
+                Y.e("我是范德萨范德萨  " + error);
+            }
+        });
     }
 
     private void getHomeList() {
@@ -516,6 +554,13 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                     long homeId = homeBean.getHomeId();
                     String name = homeBean.getName();
                     Y.e("家庭名称  " + name + "  " + homeId);
+
+                    if (homeId == 31193089 || homeId == 31190326) {
+
+                    } else {
+//                        deleteTuyaJiating(homeId + "");
+                    }
+
                 }
             }
 
@@ -530,5 +575,20 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     public void onSupportVisible() {
         super.onSupportVisible();
         getnet();
+    }
+
+    private void deleteTuyaJiating(String ty_family_id) {
+        Y.e("解散的涂鸦家庭是多少啊 " + ty_family_id);
+        TuyaHomeSdk.newHomeInstance(Y.getLong(ty_family_id)).dismissHome(new IResultCallback() {
+            @Override
+            public void onSuccess() {
+                Y.e("解散涂鸦家庭成功 ");
+            }
+
+            @Override
+            public void onError(String code, String error) {
+                Y.e("解散家庭失败:" + error);
+            }
+        });
     }
 }

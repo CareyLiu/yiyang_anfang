@@ -83,15 +83,11 @@ public class ZhiNengRoomFragment extends BaseFragment implements View.OnClickLis
         PreferenceHelper.getInstance(getActivity()).putString(AppConfig.FAMILY_ID, dataBean.get(0).getFamily_id());
         member_type = dataBean.get(0).getMember_type();
 
-        mDatas = dataBean.get(0).getRoom();
-        Y.e("房间的数量是  " + mDatas.size());
+        mDatas.clear();
+        mDatas.addAll(dataBean.get(0).getRoom());
         if (zhiNengRoomListAdapter != null) {
-            zhiNengRoomListAdapter.setNewData(mDatas);
             zhiNengRoomListAdapter.notifyDataSetChanged();
-        } else {
-            Y.e("没有获取到房间");
         }
-
 //        if (recyclerView != null) {
 //            for (int i = 0; i < recyclerView.getItemDecorationCount(); i++) {
 //                recyclerView.removeItemDecorationAt(i);
@@ -118,6 +114,9 @@ public class ZhiNengRoomFragment extends BaseFragment implements View.OnClickLis
         zhiNengRoomListAdapter.openLoadAnimation();//默认为渐显效果
         zhiNengRoomListAdapter.addFooterView(footerView);
         recyclerView.setAdapter(zhiNengRoomListAdapter);
+        zhiNengRoomListAdapter.setNewData(mDatas);
+        zhiNengRoomListAdapter.notifyDataSetChanged();
+
         zhiNengRoomListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {

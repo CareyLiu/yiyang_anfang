@@ -2,187 +2,253 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grayfff5f5f5">
+    android:background="@color/bg_app">
 
-    <RelativeLayout
-        android:id="@+id/rl_top_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp">
+    <ImageView
+        android:layout_width="240pt"
+        android:layout_height="84pt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="66pt"
+        android:src="@mipmap/logo_japn" />
+
+    <LinearLayout
+        android:id="@+id/ll_dianyuan"
+        android:layout_width="146pt"
+        android:layout_height="146pt"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="18pt"
+        android:layout_marginRight="63pt"
+        android:background="@mipmap/yaokong_bg_round_gradual_2"
+        android:gravity="center">
 
         <ImageView
-            android:layout_width="211dp"
-            android:layout_height="211dp"
-            android:layout_centerHorizontal="true"
-            android:background="@mipmap/shoudong_pic_sos" />
-    </RelativeLayout>
+            android:layout_width="46pt"
+            android:layout_height="46pt"
+            android:src="@mipmap/yaokong_icon_guanbi" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="146pt"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_dianyuan"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="3pt"
+        android:layout_marginRight="63pt"
+        android:gravity="center"
+        android:text="ON/OFF"
+        android:textColor="@color/text_color3"
+        android:textSize="27pt"
+        android:textStyle="bold" />
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_top_view"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        android:orientation="horizontal">
+        android:id="@+id/ll_jingyin"
+        android:layout_width="146pt"
+        android:layout_height="146pt"
+        android:layout_marginLeft="54pt"
+        android:layout_marginTop="18pt"
+        android:background="@mipmap/yaokong_bg_round_gradual_2"
+        android:gravity="center">
 
-        <RelativeLayout
-            android:layout_width="65dp"
-            android:layout_height="176dp"
-            android:layout_alignParentLeft="true"
-            android:background="@mipmap/yaokong_bg_roundedrectangle"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:id="@+id/rl_yinliangjia"
-                android:layout_width="65dp"
-                android:layout_height="69dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@mipmap/yaokong_icon_add" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_yinliang_jia_mengban"
-                android:layout_width="65dp"
-                android:layout_height="69dp"
-                android:background="@mipmap/yaokong_bg_roundedrectangle_gradual_up">
-
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:id="@+id/rl_yinliang"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:includeFontPadding="false"
-                    android:text="音量"
-                    android:textColor="#ff333333"
-                    android:textSize="13sp" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_yinliangjian"
-                android:layout_width="65dp"
-                android:layout_height="69dp"
-                android:layout_alignParentBottom="true">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@mipmap/yaokong_icon_reduce" />
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:id="@+id/rl_yinliang_jian_mengban"
-                android:layout_width="65dp"
-                android:layout_height="69dp"
-                android:layout_alignParentBottom="true"
-                android:background="@mipmap/yaokong_bg_roundedrectangle_gradual_down"></RelativeLayout>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="156dp"
-            android:layout_height="176dp">
-
-            <ImageView
-                android:layout_width="65dp"
-                android:layout_height="65dp"
-                android:layout_centerInParent="true"
-                android:src="@mipmap/yaokong_bg_round" />
-
-            <ImageView
-                android:id="@+id/iv_kaiguan_mengban"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:src="@mipmap/yaokong_icon_guanbi" />
-
-            <ImageView
-                android:layout_width="65dp"
-                android:layout_height="65dp"
-                android:layout_centerInParent="true"
-                android:src="@mipmap/yaokong_bg_round_gradual" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="65dp"
-            android:layout_height="176dp"
-            android:layout_alignParentLeft="true"
-            android:background="@mipmap/yaokong_bg_roundedrectangle"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:id="@+id/rl_pindaojia"
-                android:layout_width="65dp"
-                android:layout_height="69dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@mipmap/yaokong_icon_add" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_pindao_jia_mengban"
-                android:layout_width="65dp"
-                android:layout_height="69dp"
-                android:background="@mipmap/yaokong_bg_roundedrectangle_gradual_up">
-
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:id="@+id/rl_pindao"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:includeFontPadding="false"
-                    android:text="频道"
-                    android:textColor="#ff333333"
-                    android:textSize="13sp" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_pindaojian"
-                android:layout_width="65dp"
-                android:layout_height="69dp"
-                android:layout_alignParentBottom="true">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@mipmap/yaokong_icon_reduce" />
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:id="@+id/rl_pindao_jian_mengban"
-                android:layout_width="65dp"
-                android:layout_height="69dp"
-                android:layout_alignParentBottom="true"
-                android:background="@mipmap/yaokong_bg_roundedrectangle_gradual_down"></RelativeLayout>
-
-
-        </RelativeLayout>
+        <ImageView
+            android:layout_width="46pt"
+            android:layout_height="46pt"
+            android:src="@mipmap/yaokong_icon_guanbi" />
     </LinearLayout>
 
+    <TextView
+        android:layout_width="146pt"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_jingyin"
+        android:layout_marginLeft="54pt"
+        android:layout_marginTop="3pt"
+        android:gravity="center"
+        android:text="静音"
+        android:textColor="@color/text_color3"
+        android:textSize="27pt"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="393pt"
+        android:layout_marginLeft="54pt"
+        android:layout_marginTop="216pt"
+        android:layout_marginRight="63pt">
+
+        <RelativeLayout
+            android:layout_width="146pt"
+            android:layout_height="match_parent"
+            android:background="@mipmap/yaokong_bg_roundedrectangle_2"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:includeFontPadding="false"
+                android:text="音量"
+                android:textColor="@color/text_color3"
+                android:textSize="27pt"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/ll_yinliang_add"
+                android:layout_width="146pt"
+                android:layout_height="146pt"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="46pt"
+                    android:layout_height="46pt"
+                    android:layout_marginTop="10pt"
+                    android:src="@mipmap/yaokong_icon_add" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_yinliang_jian"
+                android:layout_width="146pt"
+                android:layout_height="146pt"
+                android:layout_alignParentBottom="true"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="46pt"
+                    android:layout_height="46pt"
+                    android:layout_marginBottom="10pt"
+                    android:src="@mipmap/yaokong_icon_reduce" />
+            </LinearLayout>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="146pt"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@mipmap/yaokong_bg_roundedrectangle_2"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:includeFontPadding="false"
+                android:text="频道"
+                android:textColor="@color/text_color3"
+                android:textSize="27pt"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/ll_pindao_add"
+                android:layout_width="146pt"
+                android:layout_height="146pt"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="46pt"
+                    android:layout_height="46pt"
+                    android:layout_marginTop="10pt"
+                    android:src="@mipmap/yaokong_icon_add" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_pindao_jian"
+                android:layout_width="146pt"
+                android:layout_height="146pt"
+                android:layout_alignParentBottom="true"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="46pt"
+                    android:layout_height="46pt"
+                    android:layout_marginBottom="10pt"
+                    android:src="@mipmap/yaokong_icon_reduce" />
+            </LinearLayout>
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_caidan"
+            android:layout_width="146pt"
+            android:layout_height="146pt"
+            android:layout_centerHorizontal="true"
+            android:background="@mipmap/yaokong_bg_round_gradual_2"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="46pt"
+                android:layout_height="46pt"
+                android:src="@mipmap/yaokong_icon_menu" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_caidan"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5pt"
+            android:includeFontPadding="false"
+            android:text="菜单"
+            android:textSize="27pt"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/ll_shuchu"
+            android:layout_width="146pt"
+            android:layout_height="146pt"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@mipmap/yaokong_bg_round_gradual_2"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5pt"
+                android:includeFontPadding="false"
+                android:text="AV/TV"
+                android:textSize="33pt"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="391pt"
+        android:layout_height="391pt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="663pt"
+        android:background="@mipmap/yaokong_jianpan">
+
+        <View
+            android:id="@+id/bt_up"
+            android:layout_width="130pt"
+            android:layout_height="130pt"
+            android:layout_centerHorizontal="true" />
+
+        <View
+            android:id="@+id/bt_down"
+            android:layout_width="130pt"
+            android:layout_height="130pt"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+        <View
+            android:id="@+id/bt_left"
+            android:layout_width="130pt"
+            android:layout_height="130pt"
+            android:layout_centerVertical="true" />
+
+        <View
+            android:id="@+id/bt_right"
+            android:layout_width="130pt"
+            android:layout_height="130pt"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+
+        <View
+            android:id="@+id/bt_ok"
+            android:layout_width="130pt"
+            android:layout_height="130pt"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
 </RelativeLayout>

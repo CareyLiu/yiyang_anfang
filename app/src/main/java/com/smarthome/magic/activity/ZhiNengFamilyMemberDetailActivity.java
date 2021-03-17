@@ -70,6 +70,7 @@ public class ZhiNengFamilyMemberDetailActivity extends BaseActivity implements V
         StatusBarUtil.setLightMode(this);
         initToolbar();
         initView();
+        Y.e("我是多少啊"+ty_family_id);
         initMember();
     }
 

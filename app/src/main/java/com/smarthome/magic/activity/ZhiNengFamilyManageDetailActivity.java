@@ -38,6 +38,7 @@ import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuoTIshi;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Success;
@@ -87,6 +88,7 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
     private View footerView;
     private String family_id = "";
     private String ty_family_id;
+    private String member_type;
 
     @Override
     public int getContentViewResId() {
@@ -111,7 +113,6 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
         super.onResume();
         family_id = getIntent().getStringExtra("family_id");
         ty_family_id = getIntent().getStringExtra("ty_family_id");
-        Y.e("涂鸦家庭Id是多少啊  " + ty_family_id);
         if (family_id == null) {
             family_id = "";
         }
@@ -194,21 +195,32 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                 startActivity(new Intent(context, ZhiNengFamilyAddShareActivity.class).putExtras(bundle));
                 break;
             case R.id.tv_family_delete:
-                MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(ZhiNengFamilyManageDetailActivity.this,
-                        "提示", "确定要删除该家庭吗？", "取消", "确定", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
-                    @Override
-                    public void clickLeft() {
-
-                    }
-
-                    @Override
-                    public void clickRight() {
-                        deleteFamily();
-                    }
-                });
-                myCarCaoZuoDialog_caoZuoTIshi.show();
+                delete();
                 break;
         }
+    }
+
+    private void delete() {
+        String tishi;
+        if (member_type.equals("1")) {
+            tishi = "确定要删除该家庭吗？";
+        } else {
+            tishi = "确定要退出该家庭吗？";
+        }
+
+        MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(ZhiNengFamilyManageDetailActivity.this,
+                "提示", tishi, "取消", "确定", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+            @Override
+            public void clickLeft() {
+
+            }
+
+            @Override
+            public void clickRight() {
+                deleteFamily();
+            }
+        });
+        myCarCaoZuoDialog_caoZuoTIshi.show();
     }
 
     private void getnet() {
@@ -227,10 +239,8 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                     @Override
                     public void onSuccess(Response<AppResponse<ZhiNengFamilyMAnageDetailBean.DataBean>> response) {
                         dataBean = response.body().data.get(0);
-                        tv_family_name.setText(dataBean.getFamily_name());
-                        tv_family_device_num.setText(dataBean.getDevice_num() + "个设备");
-                        tv_family_room_num.setText(dataBean.getRoom_num() + "个房间");
-                        if (dataBean.getMember_type().equals("1")) {
+                        member_type = dataBean.getMember_type();
+                        if (member_type.equals("1")) {
                             tv_family_delete.setText("删除家庭");
                             if (zhiNengFamilyManageDetailAdapter.getFooterViewsCount() == 0) {
                                 zhiNengFamilyManageDetailAdapter.addFooterView(footerView);
@@ -238,6 +248,11 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                         } else {
                             tv_family_delete.setText("退出家庭");
                         }
+
+                        tv_family_name.setText(dataBean.getFamily_name());
+                        tv_family_device_num.setText(dataBean.getDevice_num() + "个设备");
+                        tv_family_room_num.setText(dataBean.getRoom_num() + "个房间");
+
                         memberBeans.clear();
                         memberBeans.addAll(dataBean.getMember());
                         zhiNengFamilyManageDetailAdapter.notifyDataSetChanged();
@@ -333,11 +348,12 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                             RxBus.getDefault().sendRx(notice);
 
                             String title = "";
-                            if (dataBean.getMember_type().equals("1")) {
+                            if (member_type.equals("1")) {
                                 title = "删除家庭";
                                 deleteTuyaJiating();
                             } else {
                                 title = "退出家庭";
+                                memberTuichu();
                             }
                             MyCarCaoZuoDialog_Success dialog_success = new MyCarCaoZuoDialog_Success(ZhiNengFamilyManageDetailActivity.this,
                                     "成功", title, new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
@@ -363,6 +379,28 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                 });
     }
 
+    private void memberTuichu() {
+        String phone = PreferenceHelper.getInstance(mContext).getString("user_phone", "");
+        for (int i = 0; i < memberBeans.size(); i++) {
+            ZhiNengFamilyMAnageDetailBean.DataBean.MemberBean memberBean = memberBeans.get(i);
+            String member_phone = memberBean.getMember_phone();
+            if (phone.equals(member_phone)) {
+                TuyaHomeSdk.getMemberInstance().removeMember(Y.getLong(memberBean.getTy_member_id()), new IResultCallback() {
+                    @Override
+                    public void onSuccess() {
+                        // do something
+                        Y.e("离开家庭成功");
+                    }
+
+                    @Override
+                    public void onError(String code, String error) {
+                        // do something
+                        Y.e("离开家庭失败  " + error);
+                    }
+                });
+            }
+        }
+    }
 
     private void deleteTuyaJiating() {
         Y.e("解散的涂鸦家庭是多少啊 " + ty_family_id);
@@ -425,7 +463,6 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
         List<Object> names1 = new ArrayList<>();
         List<List<Object>> names2 = new ArrayList<>();
         List<List<List<Object>>> names3 = new ArrayList<>();
-
 
         for (int i = 0; i < chandiModels.size(); i++) {
             ChandiModel.DataBean bean = chandiModels.get(i);

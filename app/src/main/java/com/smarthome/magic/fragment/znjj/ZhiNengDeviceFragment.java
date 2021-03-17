@@ -171,7 +171,6 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                 mDatas.clear();
                 mDatas.addAll(dataBean.get(0).getDevice());
                 if (zhiNengDeviceListAdapter != null) {
-                    Y.e("我执行了么啊啊啊");
                     zhiNengDeviceListAdapter.notifyDataSetChanged();
                 }
             }

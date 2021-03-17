@@ -68,4 +68,11 @@
             android:scaleType="centerCrop"
             android:visibility="gone" />
     </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:visibility="gone"
+        android:background="@color/grayeeeeeee"
+        android:id="@+id/view_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
 </LinearLayout>

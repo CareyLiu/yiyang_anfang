@@ -250,6 +250,11 @@ public class ZhiNengRoomManageActivity extends BaseActivity implements View.OnCl
                         Notice notice = new Notice();
                         notice.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
                         sendRx(notice);
+
+                        //重新上传动态实体
+                        Notice notice1 = new Notice();
+                        notice1.type = ConstanceValue.MSG_CAOZUODONGTAISHITI;
+                        sendRx(notice1);
                     }
 
                     @Override

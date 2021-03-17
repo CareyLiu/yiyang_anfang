@@ -698,6 +698,7 @@ public class YuYinChuLiTool {
     String wenDu = null;
     String snShuiYou = null;//水暖水泵或油泵
     String dangwei = null;//档位
+    String cheKongSheBei = null;//车控温度调节
 
     private void faSongKongCheFangFa(ResultModel resultModel) {
         String caoZuoZhiLing = null;
@@ -810,6 +811,26 @@ public class YuYinChuLiTool {
                     }
                 }
                 caoZuoZhiLing = "v{'intentName':" + intengName + ",'dangwei':" + dangwei + "}.";
+                break;
+            case "chekong_wendutiaojie":
+                for (int i = 0; i < slotsBeans.size(); i++) {
+                    if (slotsBeans.get(i).getName().equals("chekongshebei")) {
+                        cheKongSheBei = slotsBeans.get(i).getNormValue();
+                    } else if (slotsBeans.get(i).getName().equals("Number")) {
+                        wenDu = slotsBeans.get(i).getNormValue();
+                    }
+                }
+                caoZuoZhiLing = "v{'intentName':" + intengName + ",'cheKongSheBei':" + cheKongSheBei + ",'wenDu':" + wenDu + "}.";
+                break;
+            case "chekong_qeihuandangwei":
+                for (int i = 0; i < slotsBeans.size(); i++) {
+                    if (slotsBeans.get(i).getName().equals("chekongshebei")) {
+                        cheKongSheBei = slotsBeans.get(i).getNormValue();
+                    } else if (slotsBeans.get(i).getName().equals("dangwei")) {
+                        dangwei = slotsBeans.get(i).getNormValue();
+                    }
+                }
+                caoZuoZhiLing = "v{'intentName':" + intengName + ",'cheKongSheBei':" + cheKongSheBei + ",'dangWei':" + dangwei + "}.";
                 break;
         }
 

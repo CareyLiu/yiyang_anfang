@@ -263,7 +263,6 @@ public class RenTiGanYingActivity extends BaseActivity {
         Intent intent = new Intent(context, RenTiGanYingActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("device_id", device_id);
-
         context.startActivity(intent);
     }
 

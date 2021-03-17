@@ -854,23 +854,43 @@ public class MyApplication extends MultiDexApplication {
 
             @Override
             public void onActivityPaused(Activity activity) {
+                if (activity.getParent() != null) {
+                    context = activity.getParent();
+                } else {
+                    context = activity;
+                }
                 Log.i(TAG, "onActivityPaused  activityName:" + activity_main.getClass().getSimpleName());
 
             }
 
             @Override
             public void onActivityStopped(Activity activity) {
+                if (activity.getParent() != null) {
+                    context = activity.getParent();
+                } else {
+                    context = activity;
+                }
                 Log.i(TAG, "onActivityStopped  activityName:" + activity_main.getClass().getSimpleName());
 
             }
 
             @Override
             public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
+                if (activity.getParent() != null) {
+                    context = activity.getParent();
+                } else {
+                    context = activity;
+                }
                 Log.i(TAG, "onActivitySaveInstanceState  activityName:" + activity_main.getClass().getSimpleName());
             }
 
             @Override
             public void onActivityDestroyed(Activity activity) {
+                if (activity.getParent() != null) {
+                    context = activity.getParent();
+                } else {
+                    context = activity;
+                }
                 Log.i(TAG, "onActivityDestroyed  activityName:" + activity_main.getClass().getSimpleName());
             }
             //.....

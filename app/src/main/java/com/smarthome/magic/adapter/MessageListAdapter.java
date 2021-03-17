@@ -39,10 +39,10 @@ public class MessageListAdapter extends BaseQuickAdapter<MessageModel.DataBean, 
 
         } else if (item.getNotify_type().equals("2")) {
             Glide.with(mContext).load(R.mipmap.xiaoxi_icon_shuinuan).into(ivImage);
-         //   ivImage.setBackgroundResource(R.mipmap.xiaoxi_icon_shuinuan);
+            //   ivImage.setBackgroundResource(R.mipmap.xiaoxi_icon_shuinuan);
         } else if (item.getNotify_type().equals("3")) {
             Glide.with(mContext).load(R.mipmap.xiaoxi_icon_car).into(ivImage);
-           // ivImage.setBackgroundResource(R.mipmap.xiaoxi_icon_car);
+            // ivImage.setBackgroundResource(R.mipmap.xiaoxi_icon_car);
         } else if (item.getNotify_type().equals("8")) {
             Glide.with(mContext).load(R.mipmap.xiaoxi_icon_tonghzhi).into(ivImage);
             //ivImage.setBackgroundResource(R.mipmap.xiaoxi_icon_tonghzhi);
@@ -60,6 +60,8 @@ public class MessageListAdapter extends BaseQuickAdapter<MessageModel.DataBean, 
             Glide.with(mContext)
                     .load(item.getOther_img_url())
                     .into((ImageView) ivImage);
+        } else {
+            Glide.with(mContext).load(R.mipmap.preview_shop_ffffff).into(ivImage);
         }
 
 

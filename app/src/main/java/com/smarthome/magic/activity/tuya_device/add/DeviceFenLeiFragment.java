@@ -110,7 +110,14 @@ public class DeviceFenLeiFragment extends BaseFragment implements FenLeiContenIn
 //
 //                            }
 //                        }
-                        SheBeiChongZhiActivity.actionStart(getActivity(), mDatas.get(position).getItem_name(), mDatas.get(position).getImg_url(), mDatas.get(position).header, fenLeiContentModel);
+
+                        //1 是可用 2是不可用
+                        if (fenLeiContentModel.is_product.equals("2")) {
+                            //暂未开放此设备，敬请期待
+                            UIHelper.ToastMessage(getActivity(), "暂未开放此设备，敬请期待");
+                        } else {
+                            SheBeiChongZhiActivity.actionStart(getActivity(), mDatas.get(position).getItem_name(), mDatas.get(position).getImg_url(), mDatas.get(position).header, fenLeiContentModel);
+                        }
                         break;
                 }
             }

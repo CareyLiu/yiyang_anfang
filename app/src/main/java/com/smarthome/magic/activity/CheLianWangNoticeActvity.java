@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.maps.AMapOptions;
 
 
@@ -207,6 +209,8 @@ public class CheLianWangNoticeActvity extends BaseActivity {
                         com.amap.api.maps2d.model.Marker marker = aMap.addMarker(new MarkerOptions().position(marker1).icon(bitmapDescriptor));
 
 
+
+
                     }
 
                     @Override
@@ -215,6 +219,7 @@ public class CheLianWangNoticeActvity extends BaseActivity {
                     }
                 });
     }
+
 
 
     @Override

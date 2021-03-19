@@ -48,6 +48,9 @@ import com.smarthome.magic.activity.gouwuche.GouWuCheActivity;
 import com.smarthome.magic.activity.homepage.DaLiBaoActivity;
 import com.smarthome.magic.activity.jd_taobao_pinduoduo.TaoBao_Jd_PinDuoDuoActivity;
 import com.smarthome.magic.activity.saoma.ScanActivity;
+import com.smarthome.magic.activity.tongcheng58.BianMinFaBuActivity;
+import com.smarthome.magic.activity.tongcheng58.GongJiangLieBiaoNewActivity;
+import com.smarthome.magic.activity.tongcheng58.GongJiangYeActivity;
 import com.smarthome.magic.activity.tuangou.TuanGouShangJiaListActivity;
 import com.smarthome.magic.activity.xin_tuanyou.TuanYouList;
 import com.smarthome.magic.activity.zijian_shangcheng.FenLeiThirdActivity;
@@ -68,12 +71,14 @@ import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.Radius_GlideImageLoader;
 import com.smarthome.magic.config.Radius_XiuPeiChangImageLoader;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.LordingDialog;
+import com.smarthome.magic.dialog.newdia.YuYinZhiFuDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.Home;
 import com.smarthome.magic.model.TuiGuangMaModel;
@@ -369,30 +374,36 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         iv_home_xiaoxi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String serverid = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.SERVERID, "");
-
-
+                UIHelper.ToastMessage(getActivity(), "暂未开放此功能，敬请期待");
+//                String serverid = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.SERVERID, "");
+//
 //                if (StringUtils.isEmpty(serverid)) {
 //                    UIHelper.ToastMessage(getActivity(), "请添加主机后重新尝试");
 //                    return;
 //                }
-                RxPermissions rxPermissions = new RxPermissions(getActivity());
-                rxPermissions.request(Manifest.permission.RECORD_AUDIO).subscribe(new Action1<Boolean>() {
-                    @Override
-                    public void call(Boolean granted) {
-                        if (granted) { // 在android 6.0之前会默认返回true
-                            Notice n = new Notice();
-                            n.type = ConstanceValue.MSG_YUYINHUANXING;
-                            //  n.content = message.toString();
-                            RxBus.getDefault().sendRx(n);
-
-                            //YanShiActivity.actionStart(getActivity());
-                        } else {
-                            Toast.makeText(getActivity(), "该应用需要赋予访问相机的权限，不开启将无法正常工作！", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+//                RxPermissions rxPermissions = new RxPermissions(getActivity());
+//                rxPermissions.request(Manifest.permission.RECORD_AUDIO).subscribe(new Action1<Boolean>() {
+//                    @Override
+//                    public void call(Boolean granted) {
+//                        if (granted) { // 在android 6.0之前会默认返回true
+////                            Notice n = new Notice();
+////                            n.type = ConstanceValue.MSG_YUYINHUANXING;
+////                            //  n.content = message.toString();
+////                            RxBus.getDefault().sendRx(n);
+//
+//                            YuYinZhiFuDialog yuYinZhiFuDialog = new YuYinZhiFuDialog(getActivity(), new YuYinZhiFuDialog.YuYinZhiFuDialogListener() {
+//                                @Override
+//                                public void kaiTong(View v, YuYinZhiFuDialog dialog) {
+//
+//                                }
+//                            });
+//                            yuYinZhiFuDialog.show();
+//                            //YanShiActivity.actionStart(getActivity());
+//                        } else {
+//                            Toast.makeText(getActivity(), "该应用需要赋予访问相机的权限，不开启将无法正常工作！", Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//                });
 
                 //   WenShiDuChuanGanQiActivity.actionStart(getActivity());
 
@@ -430,8 +441,9 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                     public void call(Boolean granted) {
                         if (granted) { // 在android 6.0之前会默认返回true
                             ScanActivity.actionStart(getActivity());
-
                             //YanShiActivity.actionStart(getActivity());
+                            //GongJiangLieBiaoNewActivity.actionStart(getActivity());
+                            // BianMinFaBuActivity.actionStart(getActivity());
                         } else {
                             Toast.makeText(getActivity(), "该应用需要赋予访问相机的权限，不开启将无法正常工作！", Toast.LENGTH_LONG).show();
                         }

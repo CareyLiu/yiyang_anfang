@@ -460,43 +460,7 @@ public class ZhiNengChuangLianActivity extends BaseActivity {
                             tvDeviceType.setText(dataBean.getDevice_type_name());
                             device_ccid = dataBean.getDevice_ccid();
 
-
-//                            if (dataBean.getWork_state() != null) {
-//                                if (dataBean.getWork_state().equals("1")) {
-//                                    animationView.setBackgroundDrawable(mContext.getResources().getDrawable(R.mipmap.chuanglian_pic_chuanglian_open));
-//                                } else if (dataBean.getWork_state().equals("2")) {
-//                                    animationView.setBackgroundDrawable(mContext.getResources().getDrawable(R.mipmap.chuanglian_pic_chuanglian_close1));
-//                                }
-//                            }
-
                             mqttMingLing = new ZnjjMqttMingLing(mContext, dataBean.getDevice_ccid_up(), dataBean.getServer_id());
-                            //       nowData = "zn/app/" + dataBean.getServer_id() + dataBean.getDevice_ccid_up();
-//                            AndMqtt.getInstance().subscribe(new MqttSubscribe()
-//                                    .setTopic(nowData)
-//                                    .setQos(2), new IMqttActionListener() {
-//                                @Override
-//                                public void onSuccess(IMqttToken asyncActionToken) {
-//                                    Log.i("Rair", "订阅的地址:  " + nowData);
-//
-//
-//                                }
-//
-//                                @Override
-//                                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-//                                    Log.i("CAR_NOTIFY", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
-//                                }
-//                            });
-//                            mqttMingLing.subscribeShiShiXinXi(new IMqttActionListener() {
-//                                @Override
-//                                public void onSuccess(IMqttToken asyncActionToken) {
-//                                    Log.i("Rair", "请求实时数据");
-//                                }
-//
-//                                @Override
-//                                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-//
-//                                }
-//                            });
                         }
 
                         if (StringUtils.isEmpty(response.body().data.get(0).is_voice)) {

@@ -9,7 +9,6 @@ import com.smarthome.magic.app.ConfigValue;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
-import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.config.PreferenceHelper;
 
 import java.util.ArrayList;
@@ -90,17 +89,22 @@ public class DoMqttValue {
                     //遥控器配对
                     Notice notice = new Notice();
                     notice.type = ConstanceValue.MSG_WANNENGYAOKONGQIPEIWANG;
-                    notice.content =str;
+                    notice.content = str;
                     Log.i("Rair", notice.content.toString());
                     RxBus.getDefault().sendRx(notice);
-                }else if (message.contains("m0628")){
+                } else if (message.contains("m0628")) {
+
+                } else if (message.contains("m0728")) {//电视配对类型
                     Y.t(message);
-                    String str = message.substring(message.length() - 2, message.length() - 1);
-                    //遥控器配对
                     Notice notice = new Notice();
-                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQICHENGGONGSHIBAI;
-                    notice.content =str;
-                    Log.i("Rair", notice.content.toString());
+                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_DIANSHI;
+                    notice.content = message;
+                    RxBus.getDefault().sendRx(notice);
+                } else if (message.contains("m0737")) {//空调配对类型
+                    Y.t(message);
+                    Notice notice = new Notice();
+                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_KONGTIAO;
+                    notice.content = message;
                     RxBus.getDefault().sendRx(notice);
                 }
 
@@ -271,7 +275,7 @@ public class DoMqttValue {
     }
 
     private void kongtiao(String topic, String message) {
-            if (topic.contains("zckt")) {
+        if (topic.contains("zckt")) {
             Notice n = new Notice();
             n.type = ConstanceValue.MSG_ZCKT;
             n.content = message.toString();

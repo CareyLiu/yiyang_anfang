@@ -33,6 +33,7 @@ import com.smarthome.magic.activity.tuya_device.utils.WifiReceiver;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaHomeManager;
 import com.smarthome.magic.activity.zhinengjiaju.EsptouchAsyncTask4;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.ZhiNengJiaJuPeiWangActivity;
+import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
@@ -141,6 +142,7 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
     private ITuyaActivator mTuyaActivator;
     private ITuyaBleOperator bleOperator;
     private String familyId;
+    private String isHaiZhuji;
 
     @Override
     protected void initLogic() {
@@ -159,7 +161,6 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, rootView);
         init();
@@ -288,17 +289,17 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                         tishiDialog.show();
                     }
                 } else if (message.type == ConstanceValue.MSG_PEIWNAG_ESPTOUCH) {
-//                    int ob = (int) message.content;
-//                    /**
-//                     * @param str 0连接失败 1开始连接页面 2连接中3连接成功
-//                     */
-//                    if (ob == 0) {//连接失败
-//                        UIHelper.ToastMessage(getActivity(), "连接失败");
-//                    } else if (ob == 2) {//连接中
-//                        UIHelper.ToastMessage(getActivity(), "连接中");
-//                    } else if (ob == 3) {//连接成功
-//                        UIHelper.ToastMessage(getActivity(), "连接成功");
-//                    }
+                    int ob = (int) message.content;
+                    /**
+                     * @param str 0连接失败 1开始连接页面 2连接中3连接成功
+                     */
+                    if (ob == 0) {//连接失败
+                        Y.e("连接失败");
+                    } else if (ob == 2) {//连接中
+                        Y.e("连接中");
+                    } else if (ob == 3) {//连接成功
+                        Y.e("连接成功");
+                    }
                 } else if (message.type == ConstanceValue.MSG_PEIWANG_ERROR) {
                     tishiDialog = new TishiDialog(getActivity(), 3, new TishiDialog.TishiDialogListener() {
                         @Override
@@ -418,7 +419,6 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                     @Override
                     public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
                         UIHelper.ToastMessage(getContext(), "设备添加成功");
-
                         Notice notice = new Notice();
                         notice.type = MSG_PEIWANG_SUCCESS;
                         RxBus.getDefault().sendRx(notice);
@@ -456,9 +456,6 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
         isSousuozhong = false;
     }
 
-    String zhuJiDeviceCCidUp;
-    String shiFouTianJiaGuoZhuJieType;
-    String serverId;
 
     @OnClick({R.id.ll_wifi, R.id.ll_lanya, R.id.bt_search_device, R.id.bt_xiugai, R.id.bt_chongxinsousuo, R.id.bt_xiayibu})
     public void onViewClicked(View view) {
@@ -485,15 +482,13 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
     public EsptouchAsyncTask4 mTask;
 
     /**
-     * @param zhuJiShiFouTianJiaType  这个家庭是否添加过主机 0否 1 是
      * @param zhuji_device_ccid_up    主机ccid
      * @param serverId                serverid  ccid最后一位
      * @param zhuangZhiLeixing        装置类型 详见mqtt文档
      * @param zhuangZhiLeiXingXingHao 装置类型型号 a款 b款
      */
-    private void jiBenPeiWang(String zhuJiShiFouTianJiaType, String zhuji_device_ccid_up, String serverId, String zhuangZhiLeixing, String zhuangZhiLeiXingXingHao) {
-        zhuJiShiFouTianJiaType = "0";
-        if (zhuJiShiFouTianJiaType.equals("1")) {
+    private void jiBenPeiWang(String zhuji_device_ccid_up, String serverId, String zhuangZhiLeixing, String zhuangZhiLeiXingXingHao) {
+        if (isHaiZhuji.equals("1")) {
             znjjMqttMingLing = new ZnjjMqttMingLing(getActivity());
 
             znjjMqttMingLing.subscribeAppShiShiXinXi_WithCanShu(zhuji_device_ccid_up, serverId, new IMqttActionListener() {
@@ -521,7 +516,7 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
 
                 }
             });
-        } else if (zhuJiShiFouTianJiaType.equals("0")) {
+        } else {
             // TODO: 2021/2/2 接入密码  主机配对
             executeEsptouch(mima, bssid, wifiSSid);
         }
@@ -589,16 +584,17 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
         }
     }
 
+    private String zhuJiDeviceCCidUp;
+    private String serverId;
+
     private void startJyjSearch() {
         // TODO: 2021/2/2 待增加参数
+        isHaiZhuji = PreferenceHelper.getInstance(getActivity()).getString(App.HAS_ZHUJI, "");
         zhuJiDeviceCCidUp = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.DEVICECCID, "");
-        if (StringUtils.isEmpty(zhuJiDeviceCCidUp)) {
-            shiFouTianJiaGuoZhuJieType = "0";
-        } else {
-            shiFouTianJiaGuoZhuJieType = "1";
-        }
         serverId = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.SERVERID, "");
-        jiBenPeiWang(shiFouTianJiaGuoZhuJieType, zhuJiDeviceCCidUp, serverId, "00", "00");
+
+        Y.e("我是什么啊啊啊  " + isHaiZhuji + "   " + zhuJiDeviceCCidUp + "   " + serverId);
+        jiBenPeiWang(zhuJiDeviceCCidUp, serverId, "00", "00");
     }
 
     private void starPeiwang() {

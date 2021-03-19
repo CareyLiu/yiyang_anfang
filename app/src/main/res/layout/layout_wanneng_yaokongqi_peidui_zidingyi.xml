@@ -34,27 +34,55 @@
         android:id="@+id/rl1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="54pt"
         android:layout_marginTop="85pt">
+
+        <TextView
+            android:id="@+id/ll_key1"
+            android:layout_width="146pt"
+            android:layout_height="146pt"
+            android:layout_marginLeft="54pt"
+            android:layout_marginTop="18pt"
+            android:background="@mipmap/yaokong_bg_round_gradual_2"
+            android:gravity="center"
+            android:paddingHorizontal="5pt"
+            android:text="自定义"
+            android:textColor="@color/text_color3"
+            android:textSize="25pt"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_key1"
+            android:layout_width="146pt"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_key1"
+            android:layout_marginLeft="54pt"
+            android:layout_marginTop="3pt"
+            android:gravity="center"
+            android:text="自定义按钮"
+            android:textColor="@color/text_color3"
+            android:textSize="27pt"
+            android:textStyle="bold" />
 
 
         <TextView
-            android:id="@+id/ll_zidingyi"
+            android:id="@+id/ll_key2"
             android:layout_width="146pt"
             android:layout_height="146pt"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="18pt"
             android:background="@mipmap/yaokong_bg_round_gradual_2"
             android:gravity="center"
+            android:paddingHorizontal="5pt"
             android:text="自定义"
             android:textColor="@color/text_color3"
-            android:textSize="33pt"
+            android:textSize="25pt"
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/tv_key2"
             android:layout_width="146pt"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ll_zidingyi"
+            android:layout_below="@id/ll_key2"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="3pt"
             android:gravity="center"
@@ -64,57 +92,31 @@
             android:textStyle="bold" />
 
 
-        <LinearLayout
-            android:id="@+id/ll_dianyuan"
+        <TextView
+            android:id="@+id/ll_key3"
             android:layout_width="146pt"
             android:layout_height="146pt"
             android:layout_alignParentRight="true"
             android:layout_marginTop="18pt"
+            android:layout_marginRight="54pt"
             android:background="@mipmap/yaokong_bg_round_gradual_2"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/iv_dianyuan"
-                android:layout_width="46pt"
-                android:layout_height="46pt"
-                android:src="@mipmap/yaokong_icon_guanbi" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="146pt"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ll_dianyuan"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="3pt"
             android:gravity="center"
-            android:text="ON/OFF"
+            android:paddingHorizontal="5pt"
+            android:text="自定义"
             android:textColor="@color/text_color3"
-            android:textSize="27pt"
+            android:textSize="25pt"
             android:textStyle="bold" />
 
-
-        <LinearLayout
-            android:id="@+id/ll_moshi"
-            android:layout_width="146pt"
-            android:layout_height="146pt"
-            android:layout_marginTop="18pt"
-            android:background="@mipmap/yaokong_bg_round_gradual_2"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/iv_moshi"
-                android:layout_width="46pt"
-                android:layout_height="46pt"
-                android:src="@mipmap/yaokong_icon_moshi_grey" />
-        </LinearLayout>
-
         <TextView
+            android:id="@+id/tv_key3"
             android:layout_width="146pt"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ll_moshi"
+            android:layout_below="@id/ll_key3"
+            android:layout_alignParentRight="true"
             android:layout_marginTop="3pt"
+            android:layout_marginRight="54pt"
             android:gravity="center"
-            android:text="模式"
+            android:text="自定义按钮"
             android:textColor="@color/text_color3"
             android:textSize="27pt"
             android:textStyle="bold" />
@@ -125,107 +127,88 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl1"
-        android:layout_marginHorizontal="54pt"
-        android:layout_marginTop="40pt">
-
-        <LinearLayout
-            android:id="@+id/ll_fengsu"
-            android:layout_width="146pt"
-            android:layout_height="146pt"
-            android:layout_marginTop="18pt"
-            android:background="@mipmap/yaokong_bg_round_gradual_2"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/iv_fengsu"
-                android:layout_width="46pt"
-                android:layout_height="46pt"
-                android:src="@mipmap/yaokong_icon_fengsu_grey" />
-        </LinearLayout>
+        android:layout_marginTop="10pt">
 
         <TextView
+            android:id="@+id/ll_key4"
+            android:layout_width="146pt"
+            android:layout_height="146pt"
+            android:layout_marginLeft="54pt"
+            android:layout_marginTop="18pt"
+            android:background="@mipmap/yaokong_bg_round_gradual_2"
+            android:gravity="center"
+            android:paddingHorizontal="5pt"
+            android:text="自定义"
+            android:textColor="@color/text_color3"
+            android:textSize="25pt"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_key4"
             android:layout_width="146pt"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ll_fengsu"
+            android:layout_below="@id/ll_key4"
+            android:layout_marginLeft="54pt"
             android:layout_marginTop="3pt"
             android:gravity="center"
-            android:text="风速"
+            android:text="自定义按钮"
             android:textColor="@color/text_color3"
             android:textSize="27pt"
             android:textStyle="bold" />
 
-        <RelativeLayout
+
+        <TextView
+            android:id="@+id/ll_key5"
             android:layout_width="146pt"
-            android:layout_height="393pt"
+            android:layout_height="146pt"
             android:layout_centerHorizontal="true"
-            android:background="@mipmap/yaokong_bg_roundedrectangle_2"
-            android:orientation="vertical">
+            android:layout_marginTop="18pt"
+            android:background="@mipmap/yaokong_bg_round_gradual_2"
+            android:gravity="center"
+            android:paddingHorizontal="5pt"
+            android:text="自定义"
+            android:textColor="@color/text_color3"
+            android:textSize="25pt"
+            android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:includeFontPadding="false"
-                android:text="温度"
-                android:textColor="@color/text_color3"
-                android:textSize="27pt"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tv_key5"
+            android:layout_width="146pt"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_key5"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="3pt"
+            android:gravity="center"
+            android:text="自定义按钮"
+            android:textColor="@color/text_color3"
+            android:textSize="27pt"
+            android:textStyle="bold" />
 
-            <LinearLayout
-                android:id="@+id/ll_wendu_add"
-                android:layout_width="146pt"
-                android:layout_height="146pt"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/tv_wendu_add"
-                    android:layout_width="46pt"
-                    android:layout_height="46pt"
-                    android:layout_marginTop="10pt"
-                    android:src="@mipmap/yaokong_icon_add" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_wendu_jian"
-                android:layout_width="146pt"
-                android:layout_height="146pt"
-                android:layout_alignParentBottom="true"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/tv_wendu_jian"
-                    android:layout_width="46pt"
-                    android:layout_height="46pt"
-                    android:layout_marginBottom="10pt"
-                    android:src="@mipmap/yaokong_icon_reduce" />
-            </LinearLayout>
-        </RelativeLayout>
-
-
-        <LinearLayout
-            android:id="@+id/ll_fengxiang"
+        <TextView
+            android:id="@+id/ll_key6"
             android:layout_width="146pt"
             android:layout_height="146pt"
             android:layout_alignParentRight="true"
             android:layout_marginTop="18pt"
+            android:layout_marginRight="54pt"
             android:background="@mipmap/yaokong_bg_round_gradual_2"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/iv_fengxiang"
-                android:layout_width="46pt"
-                android:layout_height="42dp"
-                android:src="@mipmap/yaokong_icon_fengxiang_grey" />
-        </LinearLayout>
+            android:gravity="center"
+            android:paddingHorizontal="5pt"
+            android:text="自定义"
+            android:textColor="@color/text_color3"
+            android:textSize="25pt"
+            android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/tv_key6"
             android:layout_width="146pt"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ll_fengxiang"
+            android:layout_below="@id/ll_key6"
             android:layout_alignParentRight="true"
             android:layout_marginTop="3pt"
+            android:layout_marginRight="54pt"
             android:gravity="center"
-            android:text="风向"
+            android:text="自定义按钮"
             android:textColor="@color/text_color3"
             android:textSize="27pt"
             android:textStyle="bold" />

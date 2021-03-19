@@ -23,6 +23,7 @@ import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
+import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.FenLeiContentModel;
 import com.smarthome.magic.model.ZhiNengJiaJu_0007Model;
 import com.smarthome.magic.mqtt_zhiling.ZnjjMqttMingLing;
@@ -152,7 +153,6 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
                     notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
                     sendRx(notice1);
 
-
                     tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
                         @Override
                         public void onClickCancel(View v, TishiDialog dialog) {
@@ -178,9 +178,7 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
                     tishiDialog.setCancelable(false);
                     tishiDialog.setCanceledOnTouchOutside(false);
                     tishiDialog.setDismissAfterClick(true);
-                    if (!tishiDialog.isShowing()) {
-                        tishiDialog.show();
-                    }
+                    tishiDialog.show();
                 } else if (message.type == ConstanceValue.MSG_PEIWANG_ERROR) {
                     TishiDialog tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
                         @Override

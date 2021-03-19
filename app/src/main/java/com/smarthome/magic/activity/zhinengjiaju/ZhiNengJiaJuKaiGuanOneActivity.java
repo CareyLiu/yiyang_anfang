@@ -447,10 +447,4 @@ public class ZhiNengJiaJuKaiGuanOneActivity extends BaseActivity {
                     }
                 });
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        PreferenceHelper.getInstance(mContext).removeKey(App.CHOOSE_KONGZHI_XIANGMU);
-    }
 }

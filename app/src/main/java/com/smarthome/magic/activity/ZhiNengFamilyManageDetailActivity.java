@@ -249,6 +249,10 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                             tv_family_delete.setText("退出家庭");
                         }
 
+                        province_name_pro = dataBean.getProvince_name();
+                        city_name_pro = dataBean.getCity_name();
+                        code_name = dataBean.getArea_name();
+
                         tv_family_name.setText(dataBean.getFamily_name());
                         tv_family_device_num.setText(dataBean.getDevice_num() + "个设备");
                         tv_family_room_num.setText(dataBean.getRoom_num() + "个房间");
@@ -286,6 +290,23 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                     public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
                         if (response.body().msg.equals("ok")) {
                             tv_family_name.setText(family_name);
+                            dataBean.setFamily_name(family_name);
+
+                            if (TextUtils.isEmpty(province_name_pro)) {
+                                TuyaHomeSdk.newHomeInstance(Y.getLong(ty_family_id)).updateHome(family_name, 0, 0, "", new IResultCallback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        Y.e("涂鸦家庭设置成功");
+                                    }
+
+                                    @Override
+                                    public void onError(String code, String error) {
+                                        Y.e("涂鸦家庭设置失败:" + error);
+                                    }
+                                });
+                            } else {
+                                changeTuyaCity();
+                            }
                             MyCarCaoZuoDialog_Success dialog_success = new MyCarCaoZuoDialog_Success(ZhiNengFamilyManageDetailActivity.this,
                                     "成功", "修改成功", new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
                                 @Override
@@ -323,6 +344,20 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                         }
                     }
                 });
+    }
+
+    private void setTuyaFamilyName(String family_name, double latitude, double longititude) {
+        TuyaHomeSdk.newHomeInstance(Y.getLong(ty_family_id)).updateHome(dataBean.getFamily_name(), longititude, latitude, province_name_pro + city_name_pro + code_name, new IResultCallback() {
+            @Override
+            public void onSuccess() {
+                Y.e("涂鸦家庭设置成功");
+            }
+
+            @Override
+            public void onError(String code, String error) {
+                Y.e("涂鸦家庭设置失败:" + error);
+            }
+        });
     }
 
     /**

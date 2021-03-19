@@ -339,21 +339,43 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                         if (device.size() > 0) {
                             ZhiNengModel.DataBean.DeviceBean deviceBean = device.get(0);
                             if (TextUtils.isEmpty(deviceBean.getTy_device_ccid())) {
+                                PreferenceHelper.getInstance(getActivity()).putString(App.HAS_ZHUJI, "1");
                                 String nowData = "zn/app/" + deviceBean.getServer_id() + deviceBean.getDevice_ccid();
+                                String hardwareData = "zn/hardware/" + deviceBean.getServer_id() + deviceBean.getDevice_ccid();
+
                                 AndMqtt.getInstance().subscribe(new MqttSubscribe()
                                         .setTopic(nowData)
                                         .setQos(2), new IMqttActionListener() {
                                     @Override
                                     public void onSuccess(IMqttToken asyncActionToken) {
-                                        Y.e("Rair" + "订阅的地址:  " + nowData);
+
                                     }
 
                                     @Override
                                     public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                                        Log.i("CAR_NOTIFY", "(MainActivity.java:68)-onFailure:-&gt;订阅失败");
+
                                     }
                                 });
+
+
+                                AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                                        .setTopic(hardwareData)
+                                        .setQos(2), new IMqttActionListener() {
+                                    @Override
+                                    public void onSuccess(IMqttToken asyncActionToken) {
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                                    }
+                                });
+                            } else {
+                                PreferenceHelper.getInstance(getActivity()).putString(App.HAS_ZHUJI, "");
                             }
+                        } else {
+                            PreferenceHelper.getInstance(getActivity()).putString(App.HAS_ZHUJI, "");
                         }
 
                         String familyId = dataBean.get(0).getFamily_id();

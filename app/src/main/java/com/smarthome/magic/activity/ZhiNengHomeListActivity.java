@@ -84,24 +84,11 @@ public class ZhiNengHomeListActivity extends BaseActivity implements View.OnClic
         initToolbar();
         initView();
         showLoadFailed();
-        getnet();
-        initHuidiao();
-    }
-
-    private void initHuidiao() {
-        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
-            @Override
-            public void call(Notice message) {
-                if (message.type == ConstanceValue.MSG_DELETE_FAMILY) {//删除家庭刷新
-                    getnet();
-                }
-            }
-        }));
     }
 
     @Override
-    protected void onLoadRetry() {
-        super.onLoadRetry();
+    protected void onResume() {
+        super.onResume();
         getnet();
     }
 

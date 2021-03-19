@@ -426,7 +426,6 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
 //                });
 //                Intent intent = new Intent(getActivity(), YanShiActivity.class);
 //                getActivity().startActivity(intent);
-                //WanNengYaoKongQi.actionStart(getActivity());
             }
         });
 

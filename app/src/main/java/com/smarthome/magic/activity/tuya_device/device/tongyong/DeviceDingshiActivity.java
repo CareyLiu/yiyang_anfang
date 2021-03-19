@@ -104,7 +104,6 @@ public class DeviceDingshiActivity extends TuyaBaseDeviceActivity {
             @Override
             public void onSuccess(TimerTask timerTask) {
                 dismissProgressDialog();
-                Y.e("我成功了啊啊啊 ");
                 timerList = timerTask.getTimerList();
                 if (timerList.size() > 0) {
                     bt_add_two.setVisibility(View.VISIBLE);
@@ -123,7 +122,6 @@ public class DeviceDingshiActivity extends TuyaBaseDeviceActivity {
             @Override
             public void onError(String errorCode, String errorMessage) {
                 dismissProgressDialog();
-                Y.e("我是什么啊啊啊 " + errorMessage);
             }
         });
     }

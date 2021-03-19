@@ -61,6 +61,7 @@ import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.utils.BizBundleFamilyServiceImpl;
 import com.smarthome.magic.adapter.view.GlobalAdapter;
 import com.smarthome.magic.app.AppConfig;
+import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.CodeClass;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.HardWareValue;
@@ -660,7 +661,6 @@ public class MyApplication extends MultiDexApplication {
                     @Override
                     public void messageArrived(String topic, MqttMessage message) throws Exception {
                         System.out.println("Rair-MqttMessage    " + "收到的消息的主题是   ： 订阅的主题：" + topic + "  收到的数据信息：  " + message.toString());
-                        Y.e(" 主机的消息是 " + message.toString());
                         if (message.toString().contains("{")) {
                             //解析对象 code
                             Gson gson = new Gson();
@@ -711,7 +711,7 @@ public class MyApplication extends MultiDexApplication {
                                 RxBus.getDefault().sendRx(n);
                                 PeiWangErrorModel peiWangErrorModel = new Gson().fromJson(message.toString(), PeiWangErrorModel.class);
 
-                                TishiDialog tishiDialog = new TishiDialog(MyApplication.getAppContext(), 3, new TishiDialog.TishiDialogListener() {
+                                TishiDialog tishiDialog = new TishiDialog(	AppManager.getAppManager().currentActivity(), 3, new TishiDialog.TishiDialogListener() {
                                     @Override
                                     public void onClickCancel(View v, TishiDialog dialog) {
 

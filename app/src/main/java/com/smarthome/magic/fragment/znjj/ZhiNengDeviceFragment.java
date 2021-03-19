@@ -21,7 +21,6 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.SuiYiTieOneActivity;
 import com.smarthome.magic.activity.SuiYiTieThreeActivity;
 import com.smarthome.magic.activity.SuiYiTieTwoActivity;
-import com.smarthome.magic.activity.WanNengYaoKongQi;
 import com.smarthome.magic.activity.ZhiNengChuangLianActivity;
 import com.smarthome.magic.activity.ZhiNengDianDengActivity;
 import com.smarthome.magic.activity.ZhiNengJiaJuChaZuoActivity;
@@ -36,6 +35,7 @@ import com.smarthome.magic.activity.tuya_device.device.DeviceChazuoActivity;
 import com.smarthome.magic.activity.tuya_device.device.DeviceWangguanActivity;
 import com.smarthome.magic.activity.tuya_device.device.DeviceWgCzActivity;
 import com.smarthome.magic.activity.tuya_device.utils.TuyaConfig;
+import com.smarthome.magic.activity.yaokongqi.WanNengYaoKongQi;
 import com.smarthome.magic.activity.zckt.AirConditionerActivity;
 import com.smarthome.magic.activity.zhinengjiaju.RenTiGanYingActivity;
 import com.smarthome.magic.activity.zhinengjiaju.WenShiDuChuanGanQiActivity;
@@ -47,7 +47,6 @@ import com.smarthome.magic.activity.zhinengjiaju.function.MenCiActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.MenSuoActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.SosActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.YanGanActivity;
-import com.smarthome.magic.adapter.ZhiNengDeviceListAdapter;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.ConstanceValue;
@@ -70,9 +69,6 @@ import com.smarthome.magic.mqtt_zhiling.ZnjjMqttMingLing;
 import com.smarthome.magic.tools.NetworkUtils;
 import com.smarthome.magic.util.GridAverageUIDecoration;
 import com.tuya.smart.api.MicroContext;
-import com.tuya.smart.home.sdk.TuyaHomeSdk;
-import com.tuya.smart.home.sdk.bean.HomeBean;
-import com.tuya.smart.home.sdk.callback.ITuyaGetHomeListCallback;
 import com.tuya.smart.panelcaller.api.AbsPanelCallerService;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -311,7 +307,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                         } else if (deviceBean.getDevice_type().equals("13")) {
                             LouShuiActivity.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
                         } else if (deviceBean.getDevice_type().equals("28")) {
-                            WanNengYaoKongQi.actionStart(getActivity(), deviceBean.getDevice_ccid());
+                            WanNengYaoKongQi.actionStart(getActivity(), deviceBean.getDevice_id());
                         } else if (deviceBean.getDevice_type().equals("08")) {//随意贴
                             //SuiYiTieActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up());
                             String strJiLian = deviceBean.getDevice_ccid().substring(2, 4);
@@ -367,8 +363,15 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                                 } else if (deviceBean.getDevice_type().equals(TuyaConfig.CATEGORY_WANGGUAN)) {//涂鸦网关
                                     DeviceWangguanActivity.actionStart(getActivity(), member_type, deviceBean.getDevice_id(), ty_device_ccid, deviceBean.getDevice_name(), deviceBean.getRoom_name());
                                 } else if (deviceBean.getDevice_type().equals(TuyaConfig.CATEGORY_WNYKQ)) {//万能遥控器
-                                    AbsPanelCallerService service = MicroContext.getServiceManager().findServiceByInterface(AbsPanelCallerService.class.getName());
-                                    service.goPanelWithCheckAndTip(getActivity(), ty_device_ccid);
+//                                    AbsPanelCallerService service = MicroContext.getServiceManager().findServiceByInterface(AbsPanelCallerService.class.getName());
+//                                    service.goPanelWithCheckAndTip(getActivity(), ty_device_ccid);
+
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("device_id", deviceBean.getDevice_id());
+                                    bundle.putString("device_type", deviceBean.getDevice_type());
+                                    bundle.putString("member_type", member_type);
+                                    bundle.putString("work_state", deviceBean.getWork_state());
+                                    startActivity(new Intent(getActivity(), ZhiNengRoomDeviceDetailAutoActivity.class).putExtras(bundle));
                                 } else {//其他涂鸦设备
                                     AbsPanelCallerService service = MicroContext.getServiceManager().findServiceByInterface(AbsPanelCallerService.class.getName());
                                     service.goPanelWithCheckAndTip(getActivity(), ty_device_ccid);

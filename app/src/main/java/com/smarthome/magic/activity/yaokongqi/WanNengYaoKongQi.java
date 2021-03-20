@@ -16,6 +16,7 @@ import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.yaokongqi.model.YaokongDetailsModel;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
@@ -87,7 +88,7 @@ public class WanNengYaoKongQi extends BaseActivity {
     TextView bt_right;
     @BindView(R.id.bt_ok)
     TextView bt_ok;
-    private String zhuangZhiId;
+    private String device_id;
     private String ccid;
     private String serverId;
     private ZnjjMqttMingLing znjjMqttMingLing;
@@ -96,6 +97,7 @@ public class WanNengYaoKongQi extends BaseActivity {
     private YaokongDetailsModel.DataBean dataBean;
     private String label_header;
     private List<YaokongDetailsModel.DataBean.ControlKeysListBean> control_keys_list;
+    private String member_type;
 
     @Override
     public int getContentViewResId() {
@@ -135,14 +137,14 @@ public class WanNengYaoKongQi extends BaseActivity {
     }
 
     private void set() {
-
-
+        WanNengYaoKongQiSet.actionStart(mContext,device_id, member_type);
     }
 
-    public static void actionStart(Context context, String device_ccid) {
+    public static void actionStart(Context context, String device_id,String member_type) {
         Intent intent = new Intent(context, WanNengYaoKongQi.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("device_ccid", device_ccid);
+        intent.putExtra("device_id", device_id);
+        intent.putExtra("member_type", member_type);
         context.startActivity(intent);
     }
 
@@ -177,7 +179,7 @@ public class WanNengYaoKongQi extends BaseActivity {
         map.put("code", "16035");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
-        map.put("device_id", zhuangZhiId);
+        map.put("device_id", device_id);
         Gson gson = new Gson();
         OkGo.<AppResponse<YaokongDetailsModel.DataBean>>post(ZHINENGJIAJU)
                 .tag(this)//
@@ -230,7 +232,7 @@ public class WanNengYaoKongQi extends BaseActivity {
                 }
             } else if (mark_id.equals(label_header + "05")) {
                 if (mark_status.equals("1")) {
-                    iv_caidan.setImageResource(R.mipmap.yaokong_icon_reduce_blue);
+                    iv_caidan.setImageResource(R.mipmap.yaokong_icon_menu_blue);
                     ll_caidan.setEnabled(true);
                 } else {
                     ll_caidan.setEnabled(false);
@@ -299,13 +301,16 @@ public class WanNengYaoKongQi extends BaseActivity {
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
             public void call(Notice message) {
-
+                if (message.type == ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_DELETE) {
+                    finish();
+                }
             }
         }));
     }
 
     private void initMqtt() {
-        zhuangZhiId = getIntent().getStringExtra("device_ccid");
+        device_id = getIntent().getStringExtra("device_id");
+        member_type = getIntent().getStringExtra("member_type");
         ccid = PreferenceHelper.getInstance(mContext).getString(AppConfig.DEVICECCID, "");
         serverId = PreferenceHelper.getInstance(mContext).getString(AppConfig.SERVERID, "");
         znjjMqttMingLing = new ZnjjMqttMingLing(mContext);
@@ -378,7 +383,7 @@ public class WanNengYaoKongQi extends BaseActivity {
                 sendMsg(12);
                 break;
             case R.id.ll_zidingyi:
-                WanNengYaoKongQiZidingyi.actionStart(mContext, zhuangZhiId, label_header, control_keys_list);
+                WanNengYaoKongQiZidingyi.actionStart(mContext, device_id, label_header, control_keys_list);
                 break;
         }
     }
@@ -386,7 +391,6 @@ public class WanNengYaoKongQi extends BaseActivity {
     private void sendMsg(int pos) {
         YaokongDetailsModel.DataBean.ControlKeysListBean bean = control_keys_list.get(pos);
         String mingLingMa = "M18" + bean.getMark_id() + ".";
-        Y.t("发送的命令是什么啊啊啊  " + mingLingMa);
         znjjMqttMingLing.yaoKongQiMingLing(mingLingMa, topic, new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {

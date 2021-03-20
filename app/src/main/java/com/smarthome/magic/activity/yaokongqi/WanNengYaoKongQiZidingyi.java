@@ -59,6 +59,7 @@ public class WanNengYaoKongQiZidingyi extends BaseActivity {
     private String deviceID;
     private String shebeima;
     private List<YaokongDetailsModel.DataBean.ControlKeysListBean> control_keys_list;
+    private String shebeiMaTwo;
 
     @Override
     public int getContentViewResId() {
@@ -108,72 +109,133 @@ public class WanNengYaoKongQiZidingyi extends BaseActivity {
         topic = "zn/hardware/" + serverId + ccid;
         deviceID = getIntent().getStringExtra("device_ccid");
         shebeima = getIntent().getStringExtra("shebeima");
+        shebeiMaTwo = shebeima.substring(0, 2);
         control_keys_list = (List<YaokongDetailsModel.DataBean.ControlKeysListBean>) getIntent().getSerializableExtra("keyModels");
     }
 
     private void initView() {
-        for (int i = 0; i < control_keys_list.size(); i++) {
-            YaokongDetailsModel.DataBean.ControlKeysListBean bean = control_keys_list.get(i);
-            String mark_id = bean.getMark_id();
-            String mark_name = bean.getMark_name();
-            String mark_status = bean.getMark_status();
-
-            Y.e("设备码是啥啊啊  " + mark_id + "    " + shebeima + "14");
-
-            if (mark_id.equals(shebeima + "14")) {
-                Y.e("我是啥啊啊啊"+mark_status);
-                if (mark_status.equals("1")) {
-                    tv_key1.setText(mark_name);
-                    ll_key1.setText(mark_name);
-                    ll_key1.setTextColor(Y.getColor(R.color.color_main));
-                    ll_key1.setEnabled(true);
-                } else {
-                    ll_key1.setEnabled(false);
+        if (shebeiMaTwo.equals("28")) {
+            for (int i = 0; i < control_keys_list.size(); i++) {
+                YaokongDetailsModel.DataBean.ControlKeysListBean bean = control_keys_list.get(i);
+                String mark_id = bean.getMark_id();
+                String mark_name = bean.getMark_name();
+                String mark_status = bean.getMark_status();
+                if (mark_id.equals(shebeima + "14")) {
+                    if (mark_status.equals("1")) {
+                        tv_key1.setText(mark_name);
+                        ll_key1.setText(mark_name);
+                        ll_key1.setTextColor(Y.getColor(R.color.color_main));
+                        ll_key1.setEnabled(true);
+                    } else {
+                        ll_key1.setEnabled(false);
+                    }
+                } else if (mark_id.equals(shebeima + "15")) {
+                    if (mark_status.equals("1")) {
+                        tv_key2.setText(mark_name);
+                        ll_key2.setText(mark_name);
+                        ll_key2.setTextColor(Y.getColor(R.color.color_main));
+                        ll_key2.setEnabled(true);
+                    } else {
+                        ll_key2.setEnabled(false);
+                    }
+                } else if (mark_id.equals(shebeima + "16")) {
+                    if (mark_status.equals("1")) {
+                        tv_key3.setText(mark_name);
+                        ll_key3.setText(mark_name);
+                        ll_key3.setTextColor(Y.getColor(R.color.color_main));
+                        ll_key3.setEnabled(true);
+                    } else {
+                        ll_key3.setEnabled(false);
+                    }
+                } else if (mark_id.equals(shebeima + "17")) {
+                    if (mark_status.equals("1")) {
+                        tv_key4.setText(mark_name);
+                        ll_key4.setText(mark_name);
+                        ll_key4.setTextColor(Y.getColor(R.color.color_main));
+                        ll_key4.setEnabled(true);
+                    } else {
+                        ll_key4.setEnabled(false);
+                    }
+                } else if (mark_id.equals(shebeima + "18")) {
+                    if (mark_status.equals("1")) {
+                        tv_key5.setText(mark_name);
+                        ll_key5.setText(mark_name);
+                        ll_key5.setTextColor(Y.getColor(R.color.color_main));
+                        ll_key5.setEnabled(true);
+                    } else {
+                        ll_key5.setEnabled(false);
+                    }
+                } else if (mark_id.equals(shebeima + "19")) {
+                    if (mark_status.equals("1")) {
+                        tv_key6.setText(mark_name);
+                        ll_key6.setText(mark_name);
+                        ll_key6.setTextColor(Y.getColor(R.color.color_main));
+                        ll_key6.setEnabled(true);
+                    } else {
+                        ll_key6.setEnabled(false);
+                    }
                 }
-            } else if (mark_id.equals(shebeima + "15")) {
-                if (mark_status.equals("1")) {
-                    tv_key2.setText(mark_name);
-                    ll_key2.setText(mark_name);
-                    ll_key2.setTextColor(Y.getColor(R.color.color_main));
-                    ll_key2.setEnabled(true);
-                } else {
-                    ll_key2.setEnabled(false);
-                }
-            } else if (mark_id.equals(shebeima + "16")) {
-                if (mark_status.equals("1")) {
-                    tv_key3.setText(mark_name);
-                    ll_key3.setText(mark_name);
-                    ll_key3.setTextColor(Y.getColor(R.color.color_main));
-                    ll_key3.setEnabled(true);
-                } else {
-                    ll_key3.setEnabled(false);
-                }
-            } else if (mark_id.equals(shebeima + "17")) {
-                if (mark_status.equals("1")) {
-                    tv_key4.setText(mark_name);
-                    ll_key4.setText(mark_name);
-                    ll_key4.setTextColor(Y.getColor(R.color.color_main));
-                    ll_key4.setEnabled(true);
-                } else {
-                    ll_key4.setEnabled(false);
-                }
-            } else if (mark_id.equals(shebeima + "18")) {
-                if (mark_status.equals("1")) {
-                    tv_key5.setText(mark_name);
-                    ll_key5.setText(mark_name);
-                    ll_key5.setTextColor(Y.getColor(R.color.color_main));
-                    ll_key5.setEnabled(true);
-                } else {
-                    ll_key5.setEnabled(false);
-                }
-            } else if (mark_id.equals(shebeima + "19")) {
-                if (mark_status.equals("1")) {
-                    tv_key6.setText(mark_name);
-                    ll_key6.setText(mark_name);
-                    ll_key6.setTextColor(Y.getColor(R.color.color_main));
-                    ll_key6.setEnabled(true);
-                } else {
-                    ll_key6.setEnabled(false);
+            }
+        } else {
+            for (int i = 0; i < control_keys_list.size(); i++) {
+                YaokongDetailsModel.DataBean.ControlKeysListBean bean = control_keys_list.get(i);
+                String mark_id = bean.getMark_id();
+                String mark_name = bean.getMark_name();
+                String mark_status = bean.getMark_status();
+                if (mark_id.equals(shebeima + "07")) {
+                    if (mark_status.equals("1")) {
+                        tv_key1.setText(mark_name);
+                        ll_key1.setText(mark_name);
+                        ll_key1.setTextColor(Y.getColor(R.color.color_main));
+                        ll_key1.setEnabled(true);
+                    } else {
+                        ll_key1.setEnabled(false);
+                    }
+                } else if (mark_id.equals(shebeima + "08")) {
+                    if (mark_status.equals("1")) {
+                        tv_key2.setText(mark_name);
+                        ll_key2.setText(mark_name);
+                        ll_key2.setTextColor(Y.getColor(R.color.color_main));
+                        ll_key2.setEnabled(true);
+                    } else {
+                        ll_key2.setEnabled(false);
+                    }
+                } else if (mark_id.equals(shebeima + "09")) {
+                    if (mark_status.equals("1")) {
+                        tv_key3.setText(mark_name);
+                        ll_key3.setText(mark_name);
+                        ll_key3.setTextColor(Y.getColor(R.color.color_main));
+                        ll_key3.setEnabled(true);
+                    } else {
+                        ll_key3.setEnabled(false);
+                    }
+                } else if (mark_id.equals(shebeima + "10")) {
+                    if (mark_status.equals("1")) {
+                        tv_key4.setText(mark_name);
+                        ll_key4.setText(mark_name);
+                        ll_key4.setTextColor(Y.getColor(R.color.color_main));
+                        ll_key4.setEnabled(true);
+                    } else {
+                        ll_key4.setEnabled(false);
+                    }
+                } else if (mark_id.equals(shebeima + "11")) {
+                    if (mark_status.equals("1")) {
+                        tv_key5.setText(mark_name);
+                        ll_key5.setText(mark_name);
+                        ll_key5.setTextColor(Y.getColor(R.color.color_main));
+                        ll_key5.setEnabled(true);
+                    } else {
+                        ll_key5.setEnabled(false);
+                    }
+                } else if (mark_id.equals(shebeima + "12")) {
+                    if (mark_status.equals("1")) {
+                        tv_key6.setText(mark_name);
+                        ll_key6.setText(mark_name);
+                        ll_key6.setTextColor(Y.getColor(R.color.color_main));
+                        ll_key6.setEnabled(true);
+                    } else {
+                        ll_key6.setEnabled(false);
+                    }
                 }
             }
         }
@@ -183,29 +245,52 @@ public class WanNengYaoKongQiZidingyi extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_key1:
-                sendMsg("14");
+                if (shebeiMaTwo.equals("28")) {
+                    sendMsg("14");
+                } else {
+                    sendMsg("07");
+                }
                 break;
             case R.id.ll_key2:
-                sendMsg("15");
+                if (shebeiMaTwo.equals("28")) {
+                    sendMsg("15");
+                } else {
+                    sendMsg("08");
+                }
                 break;
             case R.id.ll_key3:
-                sendMsg("16");
+                if (shebeiMaTwo.equals("28")) {
+                    sendMsg("16");
+                } else {
+                    sendMsg("09");
+                }
                 break;
             case R.id.ll_key4:
-                sendMsg("17");
+                if (shebeiMaTwo.equals("28")) {
+                    sendMsg("17");
+                } else {
+                    sendMsg("10");
+                }
                 break;
             case R.id.ll_key5:
-                sendMsg("18");
+                if (shebeiMaTwo.equals("28")) {
+                    sendMsg("18");
+                } else {
+                    sendMsg("11");
+                }
                 break;
             case R.id.ll_key6:
-                sendMsg("19");
+                if (shebeiMaTwo.equals("28")) {
+                    sendMsg("19");
+                } else {
+                    sendMsg("12");
+                }
                 break;
         }
     }
 
     private void sendMsg(String code) {
         String mingLingMa = "M18" + shebeima + code + ".";
-        Y.t("发送的命令是什么啊啊啊  " + mingLingMa);
         znjjMqttMingLing.yaoKongQiMingLing(mingLingMa, topic, new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {

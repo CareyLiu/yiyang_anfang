@@ -36,6 +36,7 @@ import com.smarthome.magic.activity.tuya_device.device.DeviceWangguanActivity;
 import com.smarthome.magic.activity.tuya_device.device.DeviceWgCzActivity;
 import com.smarthome.magic.activity.tuya_device.utils.TuyaConfig;
 import com.smarthome.magic.activity.yaokongqi.WanNengYaoKongQi;
+import com.smarthome.magic.activity.yaokongqi.YaokongKT;
 import com.smarthome.magic.activity.zckt.AirConditionerActivity;
 import com.smarthome.magic.activity.zhinengjiaju.RenTiGanYingActivity;
 import com.smarthome.magic.activity.zhinengjiaju.WenShiDuChuanGanQiActivity;
@@ -307,7 +308,9 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                         } else if (deviceBean.getDevice_type().equals("13")) {
                             LouShuiActivity.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
                         } else if (deviceBean.getDevice_type().equals("28")) {
-                            WanNengYaoKongQi.actionStart(getActivity(), deviceBean.getDevice_id());
+                            WanNengYaoKongQi.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
+                        } else if (deviceBean.getDevice_type().equals("37")) {
+                            YaokongKT.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
                         } else if (deviceBean.getDevice_type().equals("08")) {//随意贴
                             //SuiYiTieActivity.actionStart(getActivity(), deviceBean.getDevice_ccid(), deviceBean.getDevice_ccid_up());
                             String strJiLian = deviceBean.getDevice_ccid().substring(2, 4);

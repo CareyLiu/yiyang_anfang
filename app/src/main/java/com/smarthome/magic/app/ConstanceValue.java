@@ -178,5 +178,6 @@ public interface ConstanceValue {
     int MSG_WANNENGYAOKONGQI_CODE_DIANSHI = 0x10131;//万能遥控器配网码(电视)
     int MSG_WANNENGYAOKONGQI_CODE_KONGTIAO = 0x10132;//万能遥控器配网码(空调)
     int MSG_WANNENGYAOKONGQI_CODE_DIANSHI_ZIDINGYI = 0x10133;//万能遥控器配网码(电视自定义按键)
+    int MSG_WANNENGYAOKONGQI_CODE_DELETE = 0x10134;//万能遥控器配网码(电视自定义按键)
 
 }

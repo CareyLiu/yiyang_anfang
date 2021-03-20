@@ -1512,7 +1512,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
-            android:name=".activity.WanNengYaoKongQiSet"
+            android:name=".activity.yaokongqi.WanNengYaoKongQiSet"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
@@ -1521,7 +1521,11 @@
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-
+        <activity
+            android:name=".activity.yaokongqi.YaokongKT"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".activity.tongcheng58.GongJiangYeActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"

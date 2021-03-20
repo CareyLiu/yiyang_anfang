@@ -161,9 +161,6 @@ public class YaokongKTPei extends BaseActivity {
         jsonObject.put("label_header", shebeiMa);
         jsonObject.put("ccid", ccid);
         jsonObject.put("pro", keyModels);
-        Y.e("保存配对  " + jsonObject.toJSONString());
-        //访问网络获取数据 下面的列表数据
-
         OkGo.<YaokongTagModel>post(ZHINENGJIAJU)
                 .tag(this)//
                 .upJson(jsonObject.toJSONString())
@@ -223,7 +220,6 @@ public class YaokongKTPei extends BaseActivity {
             @Override
             public void onClickConfirm(View v, TishiDialog dialog) {
                 String mingLingMa = "M22" + shebeiMa + ".";
-                Y.e("发送的命令是什么啊啊啊  " + mingLingMa);
                 znjjMqttMingLing.yaoKongQiMingLing(mingLingMa, topic, new IMqttActionListener() {
                     @Override
                     public void onSuccess(IMqttToken asyncActionToken) {
@@ -351,9 +347,6 @@ public class YaokongKTPei extends BaseActivity {
                     String shebeiCode = msg.substring(3, 7);
                     String keyCode = msg.substring(7, 9);
                     String isOk = msg.substring(9, 10);
-
-                    Y.e("我是什么啊啊啊啊" + shebeiCode + "   " + keyCode + "   " + isOk);
-
                     if (shebeiMa.equals(shebeiCode)) {
                         peiDialog.dismiss();
                         if (isOk.equals("1")) {
@@ -416,7 +409,6 @@ public class YaokongKTPei extends BaseActivity {
                 } else if (message.type == ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_DIANSHI_ZIDINGYI) {
                     YaokongKeyModel keyModel = (YaokongKeyModel) message.content;
                     keyModels.add(keyModel);
-                    Y.e("我执行了么啊啊啊  " + keyModels.size());
                 }
             }
         }));
@@ -503,7 +495,6 @@ public class YaokongKTPei extends BaseActivity {
 
     private void sendMsg(String code) {
         String mingLingMa = "M19" + shebeiMa + code + ".";
-        Y.e("发送的命令是什么啊啊啊  " + mingLingMa);
         znjjMqttMingLing.yaoKongQiMingLing(mingLingMa, topic, new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {

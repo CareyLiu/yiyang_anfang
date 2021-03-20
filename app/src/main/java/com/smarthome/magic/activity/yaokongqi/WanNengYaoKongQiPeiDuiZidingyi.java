@@ -132,9 +132,6 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
                     String shebeiCode = msg.substring(3, 7);
                     String keyCode = msg.substring(7, 9);
                     String isOk = msg.substring(9, 10);
-
-                    Y.e("我是什么啊啊啊啊" + shebeiCode + "   " + keyCode + "   " + isOk);
-
                     if (shebeiMa.equals(shebeiCode)) {
                         peiDialog.dismiss();
                         if (isOk.equals("1")) {
@@ -511,7 +508,6 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
 
     private void sendMsg(String code) {
         String mingLingMa = "M19" + shebeiMa + code + ".";
-        Y.e("发送的命令是什么啊啊啊  " + mingLingMa);
         znjjMqttMingLing.yaoKongQiMingLing(mingLingMa, topic, new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {

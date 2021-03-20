@@ -166,7 +166,6 @@ public class WanNengYaoKongQiPeiDui extends BaseActivity {
             @Override
             public void onClickConfirm(View v, TishiDialog dialog) {
                 String mingLingMa = "M22" + shebeiMa + ".";
-                Y.e("发送的命令是什么啊啊啊  " + mingLingMa);
                 znjjMqttMingLing.yaoKongQiMingLing(mingLingMa, topic, new IMqttActionListener() {
                     @Override
                     public void onSuccess(IMqttToken asyncActionToken) {
@@ -302,8 +301,6 @@ public class WanNengYaoKongQiPeiDui extends BaseActivity {
                     String keyCode = msg.substring(7, 9);
                     String isOk = msg.substring(9, 10);
 
-                    Y.e("我是什么啊啊啊啊" + shebeiCode + "   " + keyCode + "   " + isOk);
-
                     if (shebeiMa.equals(shebeiCode)) {
                         peiDialog.dismiss();
                         if (isOk.equals("1")) {
@@ -422,7 +419,6 @@ public class WanNengYaoKongQiPeiDui extends BaseActivity {
                 } else if (message.type == ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_DIANSHI_ZIDINGYI) {
                     YaokongKeyModel keyModel = (YaokongKeyModel) message.content;
                     keyModels.add(keyModel);
-                    Y.e("我执行了么啊啊啊  " + keyModels.size());
                 }
             }
         }));
@@ -491,7 +487,6 @@ public class WanNengYaoKongQiPeiDui extends BaseActivity {
 
     private void sendMsg(String code) {
         String mingLingMa = "M19" + shebeiMa + code + ".";
-        Y.e("发送的命令是什么啊啊啊  " + mingLingMa);
         znjjMqttMingLing.yaoKongQiMingLing(mingLingMa, topic, new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
@@ -572,9 +567,6 @@ public class WanNengYaoKongQiPeiDui extends BaseActivity {
         jsonObject.put("label_header", shebeiMa);
         jsonObject.put("ccid", ccid);
         jsonObject.put("pro", keyModels);
-        Y.e("保存配对  " + jsonObject.toJSONString());
-        //访问网络获取数据 下面的列表数据
-
         OkGo.<YaokongTagModel>post(ZHINENGJIAJU)
                 .tag(this)//
                 .upJson(jsonObject.toJSONString())

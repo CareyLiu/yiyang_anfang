@@ -95,20 +95,16 @@ public class DoMqttValue {
                 } else if (message.contains("m0628")) {
 
                 } else if (message.contains("m0728")) {//电视配对类型
-                    Y.t(message);
                     Notice notice = new Notice();
                     notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_DIANSHI;
                     notice.content = message;
                     RxBus.getDefault().sendRx(notice);
                 } else if (message.contains("m0737")) {//空调配对类型
-                    Y.t(message);
                     Notice notice = new Notice();
                     notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_KONGTIAO;
                     notice.content = message;
                     RxBus.getDefault().sendRx(notice);
                 }
-
-
                 break;
             case FENGNUAN:
                 if (message.contains("_")) {

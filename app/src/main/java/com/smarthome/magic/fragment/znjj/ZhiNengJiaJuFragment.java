@@ -46,6 +46,7 @@ import com.smarthome.magic.fragment.znjj.model.ZhiNengModel;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.ZhiNengFamilyManageBean;
 import com.smarthome.magic.util.DoMqttValue;
+import com.smarthome.magic.util.GlideShowImageUtils;
 import com.smarthome.magic.view.NoSlidingViewPager;
 import com.smarthome.magic.view.magicindicator.MagicIndicator;
 import com.smarthome.magic.view.magicindicator.ViewPagerHelper;
@@ -268,7 +269,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                         isSettianqi = true;
                         WeatherBean result = (WeatherBean) message.content;
                         tv_tianqi.setText(result.getCondition());
-                        Glide.with(getContext()).load(result.getInIconUrl()).into(iv_tianqi);
+                        Glide.with(getContext()).applyDefaultRequestOptions(GlideShowImageUtils.showNull()).load(result.getInIconUrl()).into(iv_tianqi);
                         tv_tianqi_wendu.setText(zhuJiWenShiDu + "室外温度:" + result.getTemp() + "℃");
                         iv_tianqi_enter.setVisibility(View.GONE);
                     }

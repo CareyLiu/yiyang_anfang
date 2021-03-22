@@ -560,7 +560,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         //设置图片加载器
         banner.setImageLoader(new Radius_GlideImageLoader());
         bannerXiuPeiChang.setImageLoader(new Radius_XiuPeiChangImageLoader());
-//        getData();
+        getData();
         ///getYaoQingNet(getActivity());
         //   getNet();
         hotLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {

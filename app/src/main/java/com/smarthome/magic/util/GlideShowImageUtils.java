@@ -26,4 +26,12 @@ public class GlideShowImageUtils {
                 .error(R.mipmap.home_pic_touxiang_man);
         return requestOptions;
     }
+
+
+    public static RequestOptions showNull() {
+        RequestOptions requestOptions = new RequestOptions()
+                .placeholder(null)
+                .error(null);
+        return requestOptions;
+    }
 }

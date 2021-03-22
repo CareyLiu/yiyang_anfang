@@ -9,6 +9,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseViewHolder;
 import com.smarthome.magic.fragment.znjj.model.ZhiNengModel;
+import com.smarthome.magic.util.GlideShowImageUtils;
 
 import java.util.List;
 
@@ -22,7 +23,8 @@ public class ZhiNengDeviceListNewAdapter extends BaseQuickAdapter<ZhiNengModel.D
 
     @Override
     protected void convert(BaseViewHolder helper, ZhiNengModel.DataBean.DeviceBean item) {
-        Glide.with(mContext).load(item.getDevice_type_pic()).into((ImageView) helper.getView(R.id.iv_device));
+        Glide.with(mContext).applyDefaultRequestOptions(GlideShowImageUtils.showZhengFangXing()).load(item.getDevice_type_pic()).into((ImageView) helper.getView(R.id.iv_device));
+
         helper.setText(R.id.tv_device_name, item.getDevice_name());
         helper.setText(R.id.tv_room_name, item.getRoom_name());
         if (item.getOnline_state() == null) {

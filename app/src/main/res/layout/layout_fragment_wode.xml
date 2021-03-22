@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlTextSizeTime="10sp"
-                app:srlTextSizeTitle="12sp" />
+            app:srlTextSizeTitle="12sp" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -91,19 +91,18 @@
                     app:layout_constraintTop_toBottomOf="@id/riv_image" />
 
                 <TextView
-
                     android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="7dp"
                     android:includeFontPadding="false"
-                    android:text="秦朗"
                     android:textColor="#ff000111"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintLeft_toRightOf="@+id/riv_image"
-                    app:layout_constraintTop_toTopOf="@+id/riv_image" />
+                    app:layout_constraintTop_toTopOf="@+id/riv_image"
+                    tools:text="姓名" />
 
 
                 <TextView
@@ -112,12 +111,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:includeFontPadding="false"
-                    android:text="13845027319"
                     android:textColor="#ff000111"
                     android:textSize="13sp"
                     android:textStyle="bold"
                     app:layout_constraintLeft_toLeftOf="@+id/tv_name"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_name"
+                    tools:text="15112345678" />
 
                 <TextView
                     android:id="@+id/tv_shoucangjia_number"
@@ -127,7 +126,7 @@
                     android:layout_marginTop="18dp"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="18"
+                    android:text="0"
                     android:textColor="#ff111111"
                     android:textSize="13sp"
                     android:textStyle="bold"
@@ -166,7 +165,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="106"
+                    android:text="0"
                     android:textColor="#ff111111"
                     android:textSize="13sp"
                     android:textStyle="bold"
@@ -193,7 +192,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="500"
+                    android:text="0"
                     android:textColor="#ff111111"
                     android:textSize="13sp"
                     android:textStyle="bold"
@@ -213,13 +212,12 @@
                     app:layout_constraintLeft_toRightOf="@+id/tv_zhanghu_jifen_number"
                     app:layout_constraintTop_toTopOf="@+id/tv_zhanghu_jifen" />
 
-
                 <TextView
                     android:id="@+id/tv_kajuan_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:includeFontPadding="false"
-                    android:text="18"
+                    android:text="0"
                     android:textColor="#ff111111"
                     android:textSize="13sp"
                     android:textStyle="bold"
@@ -903,7 +901,6 @@
 
 
                         <TextView
-
                             android:id="@+id/tv_bazism"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -919,7 +916,6 @@
 
 
                         <ImageView
-
                             android:id="@+id/iv_tongji"
                             android:layout_width="31dp"
                             android:layout_height="31dp"
@@ -961,7 +957,7 @@
                     android:layout_marginTop="21dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:background="@color/blue" />
+                    tools:src="@mipmap/touxiangnan" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
@@ -970,9 +966,8 @@
             android:layout_height="wrap_content"
             android:background="#ffeeeeee"
             app:srlTextSizeTime="10sp"
-                app:srlTextSizeTitle="12sp" />
+            app:srlTextSizeTitle="12sp" />
 
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
 </RelativeLayout>

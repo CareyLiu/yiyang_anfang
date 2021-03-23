@@ -149,7 +149,7 @@ public class MyApplication extends MultiDexApplication {
             return "tcp://mqtt.hljsdkj.com";
         } else {
             return "tcp://ggw.hljsdkj.com";
-//            return "ws://ggw.hljsdkj.com";
+//            return "tcp://mqtt.hljsdkj.com";
         }
     }
 

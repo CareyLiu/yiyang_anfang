@@ -295,7 +295,7 @@ public class WanNengYaoKongQiPeiDui extends BaseActivity {
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
             public void call(Notice message) {
-                if (message.type == ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_DIANSHI) {
+                if (message.type == ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI) {
                     String msg = message.content.toString();
                     String shebeiCode = msg.substring(3, 7);
                     String keyCode = msg.substring(7, 9);
@@ -416,7 +416,7 @@ public class WanNengYaoKongQiPeiDui extends BaseActivity {
                             tishiDialog.show();
                         }
                     }
-                } else if (message.type == ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_DIANSHI_ZIDINGYI) {
+                } else if (message.type == ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI_ZIDINGYI) {
                     YaokongKeyModel keyModel = (YaokongKeyModel) message.content;
                     keyModels.add(keyModel);
                 }
@@ -573,33 +573,36 @@ public class WanNengYaoKongQiPeiDui extends BaseActivity {
                 .execute(new JsonCallback<YaokongTagModel>() {
                     @Override
                     public void onSuccess(Response<YaokongTagModel> response) {
-                        TishiDialog dialog = new TishiDialog(mContext, TishiDialog.TYPE_SUCESS, new TishiDialog.TishiDialogListener() {
-                            @Override
-                            public void onClickCancel(View v, TishiDialog dialog) {
+                        if (response.body().getMsg_code().equals("0000")) {
+                            TishiDialog dialog = new TishiDialog(mContext, TishiDialog.TYPE_SUCESS, new TishiDialog.TishiDialogListener() {
+                                @Override
+                                public void onClickCancel(View v, TishiDialog dialog) {
 
-                            }
+                                }
 
-                            @Override
-                            public void onClickConfirm(View v, TishiDialog dialog) {
+                                @Override
+                                public void onClickConfirm(View v, TishiDialog dialog) {
 
-                            }
+                                }
 
-                            @Override
-                            public void onDismiss(TishiDialog dialog) {
-                                Notice notice = new Notice();
-                                notice.type = MSG_PEIWANG_SUCCESS;
-                                RxBus.getDefault().sendRx(notice);
-                                finish();
-                            }
-                        });
-                        dialog.setTextContent("遥控器配对成功");
-                        dialog.show();
-
+                                @Override
+                                public void onDismiss(TishiDialog dialog) {
+                                    Notice notice = new Notice();
+                                    notice.type = MSG_PEIWANG_SUCCESS;
+                                    RxBus.getDefault().sendRx(notice);
+                                    finish();
+                                }
+                            });
+                            dialog.setTextContent("遥控器配对成功");
+                            dialog.show();
+                        } else {
+                            Y.t(response.body().getMsg());
+                        }
                     }
 
                     @Override
                     public void onError(Response<YaokongTagModel> response) {
-
+                        Y.tError(response);
                     }
 
                     @Override

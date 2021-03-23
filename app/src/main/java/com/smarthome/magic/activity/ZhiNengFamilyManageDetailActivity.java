@@ -325,39 +325,21 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
 
                     @Override
                     public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
-                        String str = response.getException().getMessage();
-                        String[] str1 = str.split("：");
-                        if (str1.length == 3) {
-                            MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(context,
-                                    "提示", str1[2], "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
-                                @Override
-                                public void clickLeft() {
+                        MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(context,
+                                "提示",response.getException().getMessage(), "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+                            @Override
+                            public void clickLeft() {
 
-                                }
+                            }
 
-                                @Override
-                                public void clickRight() {
+                            @Override
+                            public void clickRight() {
 
-                                }
-                            });
-                            myCarCaoZuoDialog_caoZuoTIshi.show();
-                        }
+                            }
+                        });
+                        myCarCaoZuoDialog_caoZuoTIshi.show();
                     }
                 });
-    }
-
-    private void setTuyaFamilyName(String family_name, double latitude, double longititude) {
-        TuyaHomeSdk.newHomeInstance(Y.getLong(ty_family_id)).updateHome(dataBean.getFamily_name(), longititude, latitude, province_name_pro + city_name_pro + code_name, new IResultCallback() {
-            @Override
-            public void onSuccess() {
-                Y.e("涂鸦家庭设置成功");
-            }
-
-            @Override
-            public void onError(String code, String error) {
-                Y.e("涂鸦家庭设置失败:" + error);
-            }
-        });
     }
 
     /**
@@ -409,7 +391,19 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                     @Override
                     public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
                         super.onError(response);
-                        Y.tError(response);
+                        MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(context,
+                                "提示",response.getException().getMessage(), "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+                            @Override
+                            public void clickLeft() {
+
+                            }
+
+                            @Override
+                            public void clickRight() {
+
+                            }
+                        });
+                        myCarCaoZuoDialog_caoZuoTIshi.show();
                     }
                 });
     }
@@ -438,7 +432,6 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
     }
 
     private void deleteTuyaJiating() {
-        Y.e("解散的涂鸦家庭是多少啊 " + ty_family_id);
         TuyaHomeSdk.newHomeInstance(Y.getLong(ty_family_id)).dismissHome(new IResultCallback() {
             @Override
             public void onSuccess() {
@@ -447,7 +440,7 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
 
             @Override
             public void onError(String code, String error) {
-                Y.t("解散家庭失败:" + error);
+                Y.e("解散家庭失败:" + error);
             }
         });
     }
@@ -568,12 +561,37 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                 .execute(new JsonCallback<AppResponse<ZhiNengFamilyEditBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        MyCarCaoZuoDialog_Success dialog_success = new MyCarCaoZuoDialog_Success(ZhiNengFamilyManageDetailActivity.this,
+                                "成功", "修改成功", new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
+                            @Override
+                            public void clickLeft() {
+
+                            }
+
+                            @Override
+                            public void clickRight() {
+
+                            }
+                        });
+                        dialog_success.show();
                         changeTuyaCity();
                     }
 
                     @Override
                     public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
+                        MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(context,
+                                "提示",response.getException().getMessage(), "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+                            @Override
+                            public void clickLeft() {
 
+                            }
+
+                            @Override
+                            public void clickRight() {
+
+                            }
+                        });
+                        myCarCaoZuoDialog_caoZuoTIshi.show();
                     }
                 });
     }

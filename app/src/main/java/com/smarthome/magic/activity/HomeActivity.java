@@ -226,22 +226,26 @@ public class HomeActivity extends BaseActivity {
         runnable = new Runnable() {
             @Override
             public void run() {
-                //要做的事情
-                AndMqtt.getInstance().publish(new MqttPublish()
-                        .setMsg("O.")
-                        .setQos(2).setRetained(false)
-                        .setTopic(CAR_NOTIFY), new IMqttActionListener() {
-                    @Override
-                    public void onSuccess(IMqttToken asyncActionToken) {
-                        Log.i("Rair", "订阅O.成功");
+                try {
+                    //要做的事情
+                    AndMqtt.getInstance().publish(new MqttPublish()
+                            .setMsg("O.")
+                            .setQos(2).setRetained(false)
+                            .setTopic(CAR_NOTIFY), new IMqttActionListener() {
+                        @Override
+                        public void onSuccess(IMqttToken asyncActionToken) {
+                            Log.i("Rair", "订阅O.成功");
 
-                    }
+                        }
 
-                    @Override
-                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                        Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
-                    }
-                });
+                        @Override
+                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                            Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 handler.postDelayed(this, 5000);
             }
         };

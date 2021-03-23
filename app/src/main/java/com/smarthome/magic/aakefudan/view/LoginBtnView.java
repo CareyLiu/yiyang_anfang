@@ -129,6 +129,9 @@ public class LoginBtnView extends LinearLayout {
                         UserManager.getManager(activity).saveUser(response.body().data.get(0));
                         PreferenceHelper.getInstance(activity).putString("power_state", power_state);
                         String rongYunTouken = UserManager.getManager(mContext).getRongYun();
+                        Notice n = new Notice();
+                        n.type = ConstanceValue.MSG_CONNET_MQTT;
+                        RxBus.getDefault().sendRx(n);
                         if (!StringUtils.isEmpty(rongYunTouken)) {
                             Notice notice = new Notice();
                             notice.type = ConstanceValue.MSG_RONGYUN_CHONGZHI;

@@ -343,35 +343,38 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                                 PreferenceHelper.getInstance(getActivity()).putString(App.HAS_ZHUJI, "1");
                                 String nowData = "zn/app/" + deviceBean.getServer_id() + deviceBean.getDevice_ccid();
                                 String hardwareData = "zn/hardware/" + deviceBean.getServer_id() + deviceBean.getDevice_ccid();
+                                try {
+                                    AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                                            .setTopic(nowData)
+                                            .setQos(2), new IMqttActionListener() {
+                                        @Override
+                                        public void onSuccess(IMqttToken asyncActionToken) {
 
-                                AndMqtt.getInstance().subscribe(new MqttSubscribe()
-                                        .setTopic(nowData)
-                                        .setQos(2), new IMqttActionListener() {
-                                    @Override
-                                    public void onSuccess(IMqttToken asyncActionToken) {
+                                        }
 
-                                    }
+                                        @Override
+                                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
 
-                                    @Override
-                                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-
-                                    }
-                                });
+                                        }
+                                    });
 
 
-                                AndMqtt.getInstance().subscribe(new MqttSubscribe()
-                                        .setTopic(hardwareData)
-                                        .setQos(2), new IMqttActionListener() {
-                                    @Override
-                                    public void onSuccess(IMqttToken asyncActionToken) {
+                                    AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                                            .setTopic(hardwareData)
+                                            .setQos(2), new IMqttActionListener() {
+                                        @Override
+                                        public void onSuccess(IMqttToken asyncActionToken) {
 
-                                    }
+                                        }
 
-                                    @Override
-                                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                                        @Override
+                                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
 
-                                    }
-                                });
+                                        }
+                                    });
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             } else {
                                 PreferenceHelper.getInstance(getActivity()).putString(App.HAS_ZHUJI, "");
                             }

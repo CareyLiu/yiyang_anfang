@@ -70,7 +70,7 @@ public class JsonConvert<T> implements Converter<T> {
                 return parseClass(response, clazz);
             }
         }
-        Log.d("AppType",type+"");
+        Log.d("AppType", type + "");
         if (type instanceof ParameterizedType) {
             return parseParameterizedType(response, (ParameterizedType) type);
         } else if (type instanceof Class) {
@@ -136,7 +136,6 @@ public class JsonConvert<T> implements Converter<T> {
                 return (T) simpleResponse.toAppResponse();
             } else {
                 // 泛型格式如下： new JsonCallback<AppResponse<内层JavaBean>>(this)
-
                 AppResponse appResponse = Convert.fromJson(body.string(), type);
                 response.close();
                 String msg_code = appResponse.msg_code;
@@ -145,15 +144,13 @@ public class JsonConvert<T> implements Converter<T> {
                 if (msg_code.equals("0000")) {
                     //noinspection unchecked
                     return (T) appResponse;
-                }
-                else if (msg_code.equals("0003")){
-                    MyApplication.getAppContext().startActivity(new Intent( MyApplication.getAppContext(), LoginActivity.class));
+                } else if (msg_code.equals("0003")) {
+                    MyApplication.getAppContext().startActivity(new Intent(MyApplication.getAppContext(), LoginActivity.class));
                     UserManager.getManager(MyApplication.getAppContext()).removeUser();
                     throw new IllegalStateException(appResponse.msg);
-                }
-                else {
+                } else {
                     //直接将服务端的错误信息抛出，onError中可以获取
-                    throw new IllegalStateException( appResponse.msg);
+                    throw new IllegalStateException(appResponse.msg);
                 }
             }
         }

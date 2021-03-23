@@ -96,7 +96,7 @@ public class YaokongKT extends BaseActivity {
     @Override
     protected void initToolbar() {
         super.initToolbar();
-        tv_title.setText("电视遥控器");
+        tv_title.setText("空调遥控器");
         tv_title.setTextSize(17);
         tv_title.setTextColor(getResources().getColor(R.color.black));
 

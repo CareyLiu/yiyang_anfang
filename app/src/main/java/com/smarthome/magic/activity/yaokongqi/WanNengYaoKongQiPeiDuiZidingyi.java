@@ -3,7 +3,6 @@ package com.smarthome.magic.activity.yaokongqi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -13,7 +12,6 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.yaokongqi.dialog.YaokongNameDialog;
 import com.smarthome.magic.activity.yaokongqi.dialog.YaokongPeiDialog;
-import com.smarthome.magic.activity.yaokongqi.dialog.YaokongPeiFirstDialog;
 import com.smarthome.magic.activity.yaokongqi.model.YaokongKeyModel;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.BaseActivity;
@@ -127,7 +125,7 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
             public void call(Notice message) {
-                if (message.type == ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_DIANSHI) {
+                if (message.type == ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI) {
                     String msg = message.content.toString();
                     String shebeiCode = msg.substring(3, 7);
                     String keyCode = msg.substring(7, 9);
@@ -137,167 +135,171 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
                         if (isOk.equals("1")) {
                             SoundPoolUtils.soundPool(mContext, R.raw.hongwai_learn_suc);
                             tishiDialog.setTextContent(keyName + "键配对成功!");
-                        if (shebeiMaTwo.equals("28")){
-                            if (keyCode.equals("14")) {
-                                llKey1.setEnabled(false);
-                                llKey1.setTextColor(Y.getColor(R.color.color_main));
-                                llKey1.setText(keyName);
-                                tvKey1.setText(keyName);
+                            Y.e("我是什么啊啊啊 "+shebeiMaTwo);
+                            if (shebeiMaTwo.equals("28")) {
+                                Y.e("附件为翻开历史的反思的 "+shebeiMaTwo);
+                                if (keyCode.equals("14")) {
+                                    llKey1.setEnabled(false);
+                                    llKey1.setTextColor(Y.getColor(R.color.color_main));
+                                    llKey1.setText(keyName);
+                                    tvKey1.setText(keyName);
 
-                                YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "14", keyName, "1");
-                                Notice notice = new Notice();
-                                notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_DIANSHI_ZIDINGYI;
-                                notice.content = keyModel;
-                                sendRx(notice);
+                                    YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "14", keyName, "1");
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI_ZIDINGYI;
+                                    notice.content = keyModel;
+                                    sendRx(notice);
 
-                                tishiDialog.show();
-                            } else if (keyCode.equals("15")) {
-                                llKey2.setEnabled(false);
-                                llKey2.setTextColor(Y.getColor(R.color.color_main));
-                                llKey2.setText(keyName);
-                                tvKey2.setText(keyName);
+                                    tishiDialog.show();
+                                } else if (keyCode.equals("15")) {
+                                    llKey2.setEnabled(false);
+                                    llKey2.setTextColor(Y.getColor(R.color.color_main));
+                                    llKey2.setText(keyName);
+                                    tvKey2.setText(keyName);
 
-                                YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "15", keyName, "1");
-                                Notice notice = new Notice();
-                                notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_DIANSHI_ZIDINGYI;
-                                notice.content = keyModel;
-                                sendRx(notice);
+                                    YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "15", keyName, "1");
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI_ZIDINGYI;
+                                    notice.content = keyModel;
+                                    sendRx(notice);
 
-                                tishiDialog.show();
-                            } else if (keyCode.equals("16")) {
-                                llKey3.setEnabled(false);
-                                llKey3.setTextColor(Y.getColor(R.color.color_main));
-                                llKey3.setText(keyName);
-                                tvKey3.setText(keyName);
+                                    tishiDialog.show();
+                                } else if (keyCode.equals("16")) {
+                                    llKey3.setEnabled(false);
+                                    llKey3.setTextColor(Y.getColor(R.color.color_main));
+                                    llKey3.setText(keyName);
+                                    tvKey3.setText(keyName);
 
-                                YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "16", keyName, "1");
-                                Notice notice = new Notice();
-                                notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_DIANSHI_ZIDINGYI;
-                                notice.content = keyModel;
-                                sendRx(notice);
+                                    YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "16", keyName, "1");
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI_ZIDINGYI;
+                                    notice.content = keyModel;
+                                    sendRx(notice);
 
-                                tishiDialog.show();
-                            } else if (keyCode.equals("17")) {
-                                llKey4.setEnabled(false);
-                                llKey4.setTextColor(Y.getColor(R.color.color_main));
-                                llKey4.setText(keyName);
-                                tvKey4.setText(keyName);
+                                    tishiDialog.show();
+                                } else if (keyCode.equals("17")) {
+                                    llKey4.setEnabled(false);
+                                    llKey4.setTextColor(Y.getColor(R.color.color_main));
+                                    llKey4.setText(keyName);
+                                    tvKey4.setText(keyName);
 
-                                YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "17", keyName, "1");
-                                Notice notice = new Notice();
-                                notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_DIANSHI_ZIDINGYI;
-                                notice.content = keyModel;
-                                sendRx(notice);
+                                    YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "17", keyName, "1");
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI_ZIDINGYI;
+                                    notice.content = keyModel;
+                                    sendRx(notice);
 
-                                tishiDialog.show();
-                            } else if (keyCode.equals("18")) {
-                                llKey5.setEnabled(false);
-                                llKey5.setTextColor(Y.getColor(R.color.color_main));
-                                llKey5.setText(keyName);
-                                tvKey5.setText(keyName);
+                                    tishiDialog.show();
+                                } else if (keyCode.equals("18")) {
+                                    llKey5.setEnabled(false);
+                                    llKey5.setTextColor(Y.getColor(R.color.color_main));
+                                    llKey5.setText(keyName);
+                                    tvKey5.setText(keyName);
 
-                                YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "18", keyName, "1");
-                                Notice notice = new Notice();
-                                notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_DIANSHI_ZIDINGYI;
-                                notice.content = keyModel;
-                                sendRx(notice);
+                                    YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "18", keyName, "1");
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI_ZIDINGYI;
+                                    notice.content = keyModel;
+                                    sendRx(notice);
 
-                                tishiDialog.show();
-                            } else if (keyCode.equals("06")) {
-                                llKey6.setEnabled(false);
-                                llKey6.setTextColor(Y.getColor(R.color.color_main));
-                                llKey6.setText(keyName);
-                                tvKey6.setText(keyName);
+                                    tishiDialog.show();
+                                } else if (keyCode.equals("06")) {
+                                    llKey6.setEnabled(false);
+                                    llKey6.setTextColor(Y.getColor(R.color.color_main));
+                                    llKey6.setText(keyName);
+                                    tvKey6.setText(keyName);
 
-                                YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "06", keyName, "1");
-                                Notice notice = new Notice();
-                                notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_DIANSHI_ZIDINGYI;
-                                notice.content = keyModel;
-                                sendRx(notice);
+                                    YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "06", keyName, "1");
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI_ZIDINGYI;
+                                    notice.content = keyModel;
+                                    sendRx(notice);
 
-                                tishiDialog.show();
+                                    tishiDialog.show();
+                                }
+                            } else {
+                                Y.e("九回复迪斯科解放士大夫但是 "+shebeiMaTwo);
+
+                                if (keyCode.equals("07")) {
+                                    llKey1.setEnabled(false);
+                                    llKey1.setTextColor(Y.getColor(R.color.color_main));
+                                    llKey1.setText(keyName);
+                                    tvKey1.setText(keyName);
+
+                                    YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "07", keyName, "1");
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI_ZIDINGYI;
+                                    notice.content = keyModel;
+                                    sendRx(notice);
+
+                                    tishiDialog.show();
+                                } else if (keyCode.equals("08")) {
+                                    llKey2.setEnabled(false);
+                                    llKey2.setTextColor(Y.getColor(R.color.color_main));
+                                    llKey2.setText(keyName);
+                                    tvKey2.setText(keyName);
+
+                                    YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "08", keyName, "1");
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI_ZIDINGYI;
+                                    notice.content = keyModel;
+                                    sendRx(notice);
+
+                                    tishiDialog.show();
+                                } else if (keyCode.equals("09")) {
+                                    llKey3.setEnabled(false);
+                                    llKey3.setTextColor(Y.getColor(R.color.color_main));
+                                    llKey3.setText(keyName);
+                                    tvKey3.setText(keyName);
+
+                                    YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "09", keyName, "1");
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI_ZIDINGYI;
+                                    notice.content = keyModel;
+                                    sendRx(notice);
+
+                                    tishiDialog.show();
+                                } else if (keyCode.equals("10")) {
+                                    llKey4.setEnabled(false);
+                                    llKey4.setTextColor(Y.getColor(R.color.color_main));
+                                    llKey4.setText(keyName);
+                                    tvKey4.setText(keyName);
+
+                                    YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "10", keyName, "1");
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI_ZIDINGYI;
+                                    notice.content = keyModel;
+                                    sendRx(notice);
+
+                                    tishiDialog.show();
+                                } else if (keyCode.equals("11")) {
+                                    llKey5.setEnabled(false);
+                                    llKey5.setTextColor(Y.getColor(R.color.color_main));
+                                    llKey5.setText(keyName);
+                                    tvKey5.setText(keyName);
+
+                                    YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "11", keyName, "1");
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI_ZIDINGYI;
+                                    notice.content = keyModel;
+                                    sendRx(notice);
+
+                                    tishiDialog.show();
+                                } else if (keyCode.equals("12")) {
+                                    llKey6.setEnabled(false);
+                                    llKey6.setTextColor(Y.getColor(R.color.color_main));
+                                    llKey6.setText(keyName);
+                                    tvKey6.setText(keyName);
+
+                                    YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "12", keyName, "1");
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI_ZIDINGYI;
+                                    notice.content = keyModel;
+                                    sendRx(notice);
+
+                                    tishiDialog.show();
+                                }
                             }
-                        }else {
-                            if (keyCode.equals("07")) {
-                                llKey1.setEnabled(false);
-                                llKey1.setTextColor(Y.getColor(R.color.color_main));
-                                llKey1.setText(keyName);
-                                tvKey1.setText(keyName);
-
-                                YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "07", keyName, "1");
-                                Notice notice = new Notice();
-                                notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_DIANSHI_ZIDINGYI;
-                                notice.content = keyModel;
-                                sendRx(notice);
-
-                                tishiDialog.show();
-                            } else if (keyCode.equals("08")) {
-                                llKey2.setEnabled(false);
-                                llKey2.setTextColor(Y.getColor(R.color.color_main));
-                                llKey2.setText(keyName);
-                                tvKey2.setText(keyName);
-
-                                YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "08", keyName, "1");
-                                Notice notice = new Notice();
-                                notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_DIANSHI_ZIDINGYI;
-                                notice.content = keyModel;
-                                sendRx(notice);
-
-                                tishiDialog.show();
-                            } else if (keyCode.equals("09")) {
-                                llKey3.setEnabled(false);
-                                llKey3.setTextColor(Y.getColor(R.color.color_main));
-                                llKey3.setText(keyName);
-                                tvKey3.setText(keyName);
-
-                                YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "09", keyName, "1");
-                                Notice notice = new Notice();
-                                notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_DIANSHI_ZIDINGYI;
-                                notice.content = keyModel;
-                                sendRx(notice);
-
-                                tishiDialog.show();
-                            } else if (keyCode.equals("10")) {
-                                llKey4.setEnabled(false);
-                                llKey4.setTextColor(Y.getColor(R.color.color_main));
-                                llKey4.setText(keyName);
-                                tvKey4.setText(keyName);
-
-                                YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "10", keyName, "1");
-                                Notice notice = new Notice();
-                                notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_DIANSHI_ZIDINGYI;
-                                notice.content = keyModel;
-                                sendRx(notice);
-
-                                tishiDialog.show();
-                            } else if (keyCode.equals("11")) {
-                                llKey5.setEnabled(false);
-                                llKey5.setTextColor(Y.getColor(R.color.color_main));
-                                llKey5.setText(keyName);
-                                tvKey5.setText(keyName);
-
-                                YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "11", keyName, "1");
-                                Notice notice = new Notice();
-                                notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_DIANSHI_ZIDINGYI;
-                                notice.content = keyModel;
-                                sendRx(notice);
-
-                                tishiDialog.show();
-                            } else if (keyCode.equals("12")) {
-                                llKey6.setEnabled(false);
-                                llKey6.setTextColor(Y.getColor(R.color.color_main));
-                                llKey6.setText(keyName);
-                                tvKey6.setText(keyName);
-
-                                YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "12", keyName, "1");
-                                Notice notice = new Notice();
-                                notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_DIANSHI_ZIDINGYI;
-                                notice.content = keyModel;
-                                sendRx(notice);
-
-                                tishiDialog.show();
-                            }
-                        }
                         } else {
                             tishiDialog.setTextContent(keyName + "键配对失败，请重新配对!");
                             tishiDialog.show();
@@ -319,11 +321,11 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
         shebeiMa = getIntent().getStringExtra("shebeiMa");
         shebeiMaTwo = shebeiMa.substring(0, 2);
 
-       initView();
+        initView();
     }
 
     private void initView() {
-        if (shebeiMa.equals("28")){
+        if (shebeiMa.equals("28")) {
             for (int i = 12; i < keyModels.size(); i++) {
                 YaokongKeyModel keyModel = keyModels.get(i);
                 String mark_id = keyModel.getMark_id();
@@ -363,7 +365,7 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
                     }
                 }
             }
-        }else {
+        } else {
             for (int i = 5; i < keyModels.size(); i++) {
                 YaokongKeyModel keyModel = keyModels.get(i);
                 String mark_id = keyModel.getMark_id();
@@ -434,44 +436,44 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_key1:
-                if (shebeiMaTwo.equals("28")){
+                if (shebeiMaTwo.equals("28")) {
                     showNameDialog("14");
-                }else {
+                } else {
                     showNameDialog("07");
                 }
                 break;
             case R.id.ll_key2:
-                if (shebeiMaTwo.equals("28")){
+                if (shebeiMaTwo.equals("28")) {
                     showNameDialog("15");
-                }else {
+                } else {
                     showNameDialog("08");
                 }
                 break;
             case R.id.ll_key3:
-                if (shebeiMaTwo.equals("28")){
+                if (shebeiMaTwo.equals("28")) {
                     showNameDialog("16");
-                }else {
+                } else {
                     showNameDialog("09");
                 }
                 break;
             case R.id.ll_key4:
-                if (shebeiMaTwo.equals("28")){
+                if (shebeiMaTwo.equals("28")) {
                     showNameDialog("17");
-                }else {
+                } else {
                     showNameDialog("10");
                 }
                 break;
             case R.id.ll_key5:
-                if (shebeiMaTwo.equals("28")){
+                if (shebeiMaTwo.equals("28")) {
                     showNameDialog("18");
-                }else {
+                } else {
                     showNameDialog("11");
                 }
                 break;
             case R.id.ll_key6:
-                if (shebeiMaTwo.equals("28")){
+                if (shebeiMaTwo.equals("28")) {
                     showNameDialog("19");
-                }else {
+                } else {
                     showNameDialog("20");
                 }
                 break;

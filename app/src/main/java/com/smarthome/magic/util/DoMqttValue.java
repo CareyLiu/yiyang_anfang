@@ -94,14 +94,9 @@ public class DoMqttValue {
                     RxBus.getDefault().sendRx(notice);
                 } else if (message.contains("m0628")) {
 
-                } else if (message.contains("m0728")) {//电视配对类型
+                } else if (message.contains("m07")) {//电视配对类型
                     Notice notice = new Notice();
-                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_DIANSHI;
-                    notice.content = message;
-                    RxBus.getDefault().sendRx(notice);
-                } else if (message.contains("m0737")) {//空调配对类型
-                    Notice notice = new Notice();
-                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_KONGTIAO;
+                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI;
                     notice.content = message;
                     RxBus.getDefault().sendRx(notice);
                 }

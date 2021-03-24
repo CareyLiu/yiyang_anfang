@@ -264,7 +264,7 @@ public class MyApplication extends MultiDexApplication {
 
 
         Bugly.init(getApplicationContext(), "9aef7d7467", false);
-
+        AndMqtt.getInstance().init(MyApplication.this);
 
         CompositeSubscription _subscriptions = new CompositeSubscription();
         _subscriptions = RxUtils.getNewCompositeSubIfUnsubscribed(_subscriptions);
@@ -711,7 +711,7 @@ public class MyApplication extends MultiDexApplication {
                                 RxBus.getDefault().sendRx(n);
                                 PeiWangErrorModel peiWangErrorModel = new Gson().fromJson(message.toString(), PeiWangErrorModel.class);
 
-                                TishiDialog tishiDialog = new TishiDialog(	AppManager.getAppManager().currentActivity(), 3, new TishiDialog.TishiDialogListener() {
+                                TishiDialog tishiDialog = new TishiDialog(AppManager.getAppManager().currentActivity(), 3, new TishiDialog.TishiDialogListener() {
                                     @Override
                                     public void onClickCancel(View v, TishiDialog dialog) {
 

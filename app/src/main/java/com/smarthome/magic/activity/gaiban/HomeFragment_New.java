@@ -2,6 +2,7 @@ package com.smarthome.magic.activity.gaiban;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -50,7 +51,9 @@ import com.smarthome.magic.activity.jd_taobao_pinduoduo.TaoBao_Jd_PinDuoDuoActiv
 import com.smarthome.magic.activity.saoma.ScanActivity;
 import com.smarthome.magic.activity.tongcheng58.BianMinFaBuActivity;
 import com.smarthome.magic.activity.tongcheng58.GongJiangLieBiaoNewActivity;
+import com.smarthome.magic.activity.tongcheng58.GongJiangRuZhuActivity;
 import com.smarthome.magic.activity.tongcheng58.GongJiangYeActivity;
+import com.smarthome.magic.activity.tongcheng58.PoiKeywordSearchActivity;
 import com.smarthome.magic.activity.tuangou.TuanGouShangJiaListActivity;
 import com.smarthome.magic.activity.xin_tuanyou.TuanYouList;
 import com.smarthome.magic.activity.zijian_shangcheng.FenLeiThirdActivity;
@@ -442,7 +445,10 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                             ScanActivity.actionStart(getActivity());
                             //YanShiActivity.actionStart(getActivity());
                             //GongJiangLieBiaoNewActivity.actionStart(getActivity());
-                            // BianMinFaBuActivity.actionStart(getActivity());
+                            //BianMinFaBuActivity.actionStart(getActivity());
+                            //GongJiangRuZhuActivity.actionStart(getActivity());
+//                            Intent intent = new Intent(getActivity(), PoiKeywordSearchActivity.class);
+//                            startActivity(intent);
                         } else {
                             Toast.makeText(getActivity(), "该应用需要赋予访问相机的权限，不开启将无法正常工作！", Toast.LENGTH_LONG).show();
                         }
@@ -742,8 +748,9 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                         chiHeWanLeListBeans = new ArrayList<>();
                         //下面展示首页顶部图片
                         intellectListBeanList.addAll(response.body().data.get(0).getIntellectList());
-                        chiHeWanLeListBeans.addAll(response.body().data.get(0).getIconList());
-
+                        if (response.body().data.get(0).getIconList() != null) {
+                            chiHeWanLeListBeans.addAll(response.body().data.get(0).getIconList());
+                        }
                         chiHeWanLeListAdapter.setNewData(chiHeWanLeListBeans);
                         zhiKongListAdapter.setNewData(intellectListBeanList);
 

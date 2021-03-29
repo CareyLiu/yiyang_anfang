@@ -3,15 +3,18 @@ package com.smarthome.magic.activity.tongcheng58;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
-import com.smarthome.magic.activity.yaokongqi.WanNengYaoKongQi;
 import com.smarthome.magic.adapter.NewsFragmentPagerAdapter;
 import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.dialog.newdia.FaBuDialog;
 import com.smarthome.magic.view.NoSlidingViewPager;
 
 import java.util.ArrayList;
@@ -43,6 +46,8 @@ public class TongChengMainActivity extends BaseActivity {
     RelativeLayout llTitle3;
     @BindView(R.id.viewPager)
     NoSlidingViewPager viewPager;
+    @BindView(R.id.iv_add)
+    ImageView ivAdd;
 
     @Override
     public int getContentViewResId() {
@@ -93,7 +98,7 @@ public class TongChengMainActivity extends BaseActivity {
         viewPager.setOffscreenPageLimit(3);
     }
 
-    @OnClick({R.id.ll_title1, R.id.ll_title2, R.id.ll_title3})
+    @OnClick({R.id.iv_add, R.id.ll_title1, R.id.ll_title2, R.id.ll_title3})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_title1:
@@ -105,7 +110,36 @@ public class TongChengMainActivity extends BaseActivity {
             case R.id.ll_title3:
                 select(2);
                 break;
+            case R.id.iv_add:
+                clickAdd();
+                break;
         }
+    }
+
+    private void clickAdd() {
+        FaBuDialog faBuDialog = new FaBuDialog(mContext, new FaBuDialog.FaBuDialogListener() {
+            @Override
+            public void shangJiaFaBu() {
+                ShangjiaruzhuActivity.actionStart(mContext);
+            }
+
+            @Override
+            public void gongJiangFaBu() {
+                GongJiangRuZhuActivity.actionStart(mContext);
+            }
+
+            @Override
+            public void bianMinFabu() {
+                BianMinFaBuActivity.actionStart(mContext);
+            }
+        });
+        faBuDialog.show();
+
+        WindowManager windowManager = getWindowManager();
+        Display display = windowManager.getDefaultDisplay();
+        WindowManager.LayoutParams lp = faBuDialog.getWindow().getAttributes();
+        lp.width = (int) (display.getWidth()); //设置宽度
+        faBuDialog.getWindow().setAttributes(lp);
     }
 
     private void select(int pos) {

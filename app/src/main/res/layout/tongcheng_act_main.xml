@@ -90,11 +90,24 @@
         android:layout_height="1pt"
         android:background="@color/line" />
 
-    <com.smarthome.magic.view.NoSlidingViewPager
-        android:id="@+id/viewPager"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="10dp"
-        android:layout_weight="1"
-        android:overScrollMode="never" />
+        android:layout_weight="1">
+
+        <com.smarthome.magic.view.NoSlidingViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never" />
+
+        <ImageView
+            android:id="@+id/iv_add"
+            android:layout_width="96pt"
+            android:layout_height="96pt"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="36pt"
+            android:layout_marginBottom="160pt"
+            android:src="@mipmap/product_tianjiasahngpin" />
+    </FrameLayout>
 </LinearLayout>

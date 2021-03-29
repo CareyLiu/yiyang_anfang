@@ -38,7 +38,7 @@
     <declare-styleable name="LoadMoreFooterView">
         <attr name="foot_view_id" format="reference"/>
     </declare-styleable>
-    
+
     <declare-styleable name="CircleImageView">
         <attr name="border_width" format="dimension" />
         <attr name="border_color" format="color" />

@@ -61,8 +61,6 @@ public class TongchengTabHomeFragment extends BaseFragment {
     MagicIndicator magic_title;
     @BindView(R.id.viewpager)
     CustomViewPager viewpager;
-    @BindView(R.id.iv_add)
-    ImageView iv_add;
     @BindView(R.id.rv_list)
     RecyclerView rv_list;
     @BindView(R.id.vpg_tag_list)
@@ -336,11 +334,5 @@ public class TongchengTabHomeFragment extends BaseFragment {
                         smartRefreshLayout.finishLoadMore();
                     }
                 });
-    }
-
-
-    @OnClick(R.id.iv_add)
-    public void onViewClicked() {
-        ShangjiaruzhuActivity.actionStart(getContext());
     }
 }

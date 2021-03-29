@@ -1,14 +1,14 @@
 package com.smarthome.magic.activity.tongcheng58;
 
 import android.app.ProgressDialog;
-import android.content.pm.ApplicationInfo;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
-
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -19,18 +19,15 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.AMap.InfoWindowAdapter;
 import com.amap.api.maps.AMap.OnMarkerClickListener;
 import com.amap.api.maps.AMapUtils;
-
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.NaviPara;
-
 import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.core.SuggestionCity;
@@ -41,21 +38,35 @@ import com.amap.api.services.help.Tip;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.amap.api.services.poisearch.PoiSearch.OnPoiSearchListener;
-
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.tongcheng58.overlay.PoiOverlay;
+import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.app.ConstanceValue;
+import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 
 /**
  * AMapV1地图中简单介绍poisearch搜索
  */
-public class PoiKeywordSearchActivity extends FragmentActivity implements
+public class PoiKeywordSearchActivity extends BaseActivity implements
         OnMarkerClickListener, InfoWindowAdapter, TextWatcher,
         OnPoiSearchListener, OnClickListener, InputtipsListener {
+
+    @BindView(R.id.city)
+    EditText city;
+    @BindView(R.id.searchButton)
+    Button searchButton;
+    @BindView(R.id.nextButton)
+    Button nextButton;
+    @BindView(R.id.map)
+    MapView map;
     private AMap aMap;
     private Fragment aMapFragment;
     private MapView mapView;
@@ -72,8 +83,12 @@ public class PoiKeywordSearchActivity extends FragmentActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.poikeywordsearch_activity);
         init();
+    }
+
+    @Override
+    public int getContentViewResId() {
+        return R.layout.poikeywordsearch_activity;
     }
 
     /**
@@ -81,7 +96,7 @@ public class PoiKeywordSearchActivity extends FragmentActivity implements
      */
     private void init() {
         if (aMap == null) {
-			mapView = findViewById(R.id.map);
+            mapView = findViewById(R.id.map);
             aMap = mapView.getMap();
             setUpMap();
         }
@@ -131,18 +146,6 @@ public class PoiKeywordSearchActivity extends FragmentActivity implements
         }
     }
 
-    /**
-     * 显示进度框
-     */
-    private void showProgressDialog() {
-        if (progDialog == null)
-            progDialog = new ProgressDialog(this);
-        progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progDialog.setIndeterminate(false);
-        progDialog.setCancelable(false);
-        progDialog.setMessage("正在搜索:\n" + keyWord);
-        progDialog.show();
-    }
 
     /**
      * 隐藏进度框
@@ -191,7 +194,7 @@ public class PoiKeywordSearchActivity extends FragmentActivity implements
         ImageButton button = (ImageButton) view
                 .findViewById(R.id.start_amap_app);
         // 调起高德地图app
-        button.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 startAMapNavi(marker);
@@ -245,23 +248,6 @@ public class PoiKeywordSearchActivity extends FragmentActivity implements
         }
     }
 
-    /**
-     * 获取当前app的应用名字
-     */
-    public String getApplicationName() {
-        PackageManager packageManager = null;
-        ApplicationInfo applicationInfo = null;
-        try {
-            packageManager = getApplicationContext().getPackageManager();
-            applicationInfo = packageManager.getApplicationInfo(
-                    getPackageName(), 0);
-        } catch (PackageManager.NameNotFoundException e) {
-            applicationInfo = null;
-        }
-        String applicationName = (String) packageManager
-                .getApplicationLabel(applicationInfo);
-        return applicationName;
-    }
 
     /**
      * poi没有搜索到数据，返回一些推荐城市的信息
@@ -310,24 +296,36 @@ public class PoiKeywordSearchActivity extends FragmentActivity implements
             if (result != null && result.getQuery() != null) {// 搜索poi的结果
                 if (result.getQuery().equals(query)) {// 是否是同一条
                     poiResult = result;
-                    // 取得搜索到的poiitems有多少页
-                    List<PoiItem> poiItems = poiResult.getPois();// 取得第一页的poiitem数据，页数从数字0开始
-                    List<SuggestionCity> suggestionCities = poiResult
-                            .getSearchSuggestionCitys();// 当搜索不到poiitem数据时，会返回含有搜索关键字的城市信息
+//                    // 取得搜索到的poiitems有多少页
+//                    List<PoiItem> poiItems = poiResult.getPois();// 取得第一页的poiitem数据，页数从数字0开始
+//                    List<SuggestionCity> suggestionCities = poiResult
+//                            .getSearchSuggestionCitys();// 当搜索不到poiitem数据时，会返回含有搜索关键字的城市信息
+//
+//                    if (poiItems != null && poiItems.size() > 0) {
+//                        aMap.clear();// 清理之前的图标
+//                        PoiOverlay poiOverlay = new PoiOverlay(aMap, poiItems);
+//                        poiOverlay.removeFromMap();
+//                        poiOverlay.addToMap();
+//                        poiOverlay.zoomToSpan();
+//                    } else if (suggestionCities != null
+//                            && suggestionCities.size() > 0) {
+//                        showSuggestCity(suggestionCities);
+//                    } else {
+//                        UIHelper.ToastMessage(PoiKeywordSearchActivity.this,
+//                                "无结果");
+//                    }
 
-                    if (poiItems != null && poiItems.size() > 0) {
-                        aMap.clear();// 清理之前的图标
-                        PoiOverlay poiOverlay = new PoiOverlay(aMap, poiItems);
-                        poiOverlay.removeFromMap();
-                        poiOverlay.addToMap();
-                        poiOverlay.zoomToSpan();
-                    } else if (suggestionCities != null
-                            && suggestionCities.size() > 0) {
-                        showSuggestCity(suggestionCities);
-                    } else {
-                        UIHelper.ToastMessage(PoiKeywordSearchActivity.this,
-                                "无结果");
-                    }
+                    Log.i(PoiKeywordSearchActivity.class.getSimpleName(), keyWord);
+                    Log.i(PoiKeywordSearchActivity.class.getSimpleName(), poiResult.getPois().get(0).getLatLonPoint().getLatitude() + "");
+                    List<Object> list = new ArrayList<>();
+                    Notice notice = new Notice();
+                    notice.type = ConstanceValue.MSG_BIANMINFABU_HUICHUANDIZHI;
+                    list.add(keyWord);
+                    list.add(poiResult.getPois().get(0).getLatLonPoint());
+                    notice.content = list;
+                    sendRx(notice);
+                    finish();
+
                 }
             } else {
                 UIHelper.ToastMessage(PoiKeywordSearchActivity.this,
@@ -385,5 +383,43 @@ public class PoiKeywordSearchActivity extends FragmentActivity implements
             UIHelper.ToastMessage(this, rCode);
         }
 
+    }
+
+    @Override
+    public boolean showToolBarLine() {
+        return true;
+    }
+
+    @Override
+    public boolean showToolBar() {
+        return true;
+    }
+
+    @Override
+    protected void initToolbar() {
+        super.initToolbar();
+        tv_title.setText("选择地址");
+        tv_title.setTextSize(17);
+        tv_title.setTextColor(getResources().getColor(R.color.black));
+        mToolbar.setNavigationIcon(R.mipmap.backbutton);
+        mToolbar.setNavigationOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //imm.hideSoftInputFromWindow(findViewById(R.id.cl_layout).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                finish();
+            }
+        });
+    }
+
+
+    /**
+     * 用于其他Activty跳转到该Activity
+     *
+     * @param context
+     */
+    public static void actionStart(Context context) {
+        Intent intent = new Intent(context, PoiKeywordSearchActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }

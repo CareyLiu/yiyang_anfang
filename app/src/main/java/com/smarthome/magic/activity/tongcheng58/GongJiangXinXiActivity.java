@@ -77,31 +77,7 @@ public class GongJiangXinXiActivity extends BaseActivity {
             }
         });
 
-        FaBuDialog faBuDialog = new FaBuDialog(mContext, new FaBuDialog.FaBuDialogListener() {
-            @Override
-            public void shangJiaFaBu() {
-                UIHelper.ToastMessage(mContext, "shangjiafabu");
-            }
 
-            @Override
-            public void gongJiangFaBu() {
-
-                UIHelper.ToastMessage(mContext, "gongjiang");
-            }
-
-            @Override
-            public void bianMinFabu() {
-                //UIHelper.ToastMessage(mContext, "便民");
-                BianMinFaBuActivity.actionStart(mContext);
-            }
-        });
-        faBuDialog.show();
-
-        WindowManager windowManager = getWindowManager();
-        Display display = windowManager.getDefaultDisplay();
-        WindowManager.LayoutParams lp = faBuDialog.getWindow().getAttributes();
-        lp.width = (int) (display.getWidth()); //设置宽度
-        faBuDialog.getWindow().setAttributes(lp);
     }
 
     @Override

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -41,7 +42,7 @@
                             android:layout_height="wrap_content"
                             android:text="甲醛"
                             android:textColor="#ffffffff"
-                            android:textSize="13sp" />
+                            android:textSize="15sp" />
 
                         <com.flyco.roundview.RoundRelativeLayout
                             android:layout_width="71dp"
@@ -57,9 +58,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:text="0.063"
                                 android:textColor="#ffffffff"
-                                android:textSize="15sp" />
+                                android:textSize="15sp"
+                                tools:text="0.063" />
 
                         </com.flyco.roundview.RoundRelativeLayout>
 
@@ -83,7 +84,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TVOC"
+                            android:text="pm2.5"
                             android:textColor="#ffffffff"
                             android:textSize="15sp" />
 
@@ -97,13 +98,13 @@
                             app:rv_strokeWidth="3dp">
 
                             <TextView
-                                android:id="@+id/tv_tvoc"
+                                android:id="@+id/tv_pm"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:text="0.063"
                                 android:textColor="#ffffffff"
-                                android:textSize="15sp" />
+                                android:textSize="15sp"
+                                tools:text="0.063" />
 
                         </com.flyco.roundview.RoundRelativeLayout>
 
@@ -127,7 +128,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="AQI"
+                            android:text="空气质量"
                             android:textColor="#ffffffff"
                             android:textSize="15sp" />
 
@@ -141,13 +142,13 @@
                             app:rv_strokeWidth="3dp">
 
                             <TextView
-                                android:id="@+id/tv_AQI"
+                                android:id="@+id/tv_kongqi_zhiliang"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:text="0.063"
                                 android:textColor="#ffffffff"
-                                android:textSize="15sp" />
+                                android:textSize="15sp"
+                                tools:text="0.063" />
 
                         </com.flyco.roundview.RoundRelativeLayout>
 
@@ -189,9 +190,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:text="0.063"
                                 android:textColor="#ffffffff"
-                                android:textSize="15sp" />
+                                android:textSize="15sp"
+                                tools:text="0.063" />
 
                         </com.flyco.roundview.RoundRelativeLayout>
 
@@ -232,10 +233,20 @@
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <View
+                    <RelativeLayout
                         android:layout_width="60dp"
                         android:layout_height="19dp"
-                        android:background="#58B7FF" />
+                        android:background="#58B7FF">
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="0-50"
+                            android:textColor="#ffffffff"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -254,10 +265,20 @@
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <View
+
+                    <RelativeLayout
                         android:layout_width="60dp"
                         android:layout_height="19dp"
-                        android:background="#36FF00" />
+                        android:background="#36FF00">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="51-100"
+                            android:textColor="#ffffffff"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -276,10 +297,20 @@
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <View
+
+                    <RelativeLayout
                         android:layout_width="60dp"
                         android:layout_height="19dp"
-                        android:background="#F9E04B" />
+                        android:background="#F9E04B">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="101-150"
+                            android:textColor="#ffffffff"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -298,10 +329,20 @@
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <View
+
+                    <RelativeLayout
                         android:layout_width="60dp"
                         android:layout_height="19dp"
-                        android:background="#EC5F2A" />
+                        android:background="#EC5F2A">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="151-200"
+                            android:textColor="#ffffffff"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -320,10 +361,22 @@
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <View
+
+                    <RelativeLayout
                         android:layout_width="60dp"
                         android:layout_height="19dp"
-                        android:background="#EA3324" />
+                        android:background="#EA3324">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="151-200"
+                            android:textColor="#ffffffff"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+
+
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -342,13 +395,95 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
 
-            <RelativeLayout
-
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_horizontal"
                 android:orientation="vertical">
 
+
+                <RelativeLayout
+                    android:id="@+id/rl_jiaquan"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="17dp"
+                        android:text="甲醛、PM2.5指数统计"
+                        android:textColor="#ff172434"
+                        android:textSize="15sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="17dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="一月"
+                            android:textColor="#ff999999"
+                            android:textSize="13sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:src="@mipmap/push_gray_999" />
+                    </LinearLayout>
+                </RelativeLayout>
+
                 <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_29"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/white"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
+                        android:layout_marginLeft="17dp"
+                        android:background="@drawable/yuanhuan_zise">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:text="甲醛"
+                        android:textColor="#ff666666"
+                        android:textSize="13sp" />
+
+                    <ImageView
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
+                        android:layout_marginLeft="17dp"
+                        android:background="@drawable/yuanhuan_qianlanse">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        android:text="pm2.5(细颗粒物)"
+                        android:textColor="#ff666666"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+
                     android:id="@+id/ll_main"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -356,7 +491,101 @@
                     android:orientation="vertical">
 
                 </LinearLayout>
-            </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/grayfff5f5f5">
+
+                </View>
+
+                <RelativeLayout
+                    android:id="@+id/rl_kongqizhiliang"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="17dp"
+                        android:text="空气质量、CO2指数统计"
+                        android:textColor="#ff172434"
+                        android:textSize="15sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="17dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="一月"
+                            android:textColor="#ff999999"
+                            android:textSize="13sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:src="@mipmap/push_gray_999" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_29"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/white"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
+                        android:layout_marginLeft="17dp"
+                        android:background="@drawable/yuanhuan_zise">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:text="空气质量"
+                        android:textColor="#ff666666"
+                        android:textSize="13sp" />
+
+                    <ImageView
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
+                        android:layout_marginLeft="17dp"
+                        android:background="@drawable/yuanhuan_qianlanse">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        android:text="CO2指数"
+                        android:textColor="#ff666666"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_main2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="vertical" />
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"

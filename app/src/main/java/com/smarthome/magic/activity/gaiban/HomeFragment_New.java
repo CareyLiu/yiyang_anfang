@@ -56,6 +56,7 @@ import com.smarthome.magic.activity.tongcheng58.GongJiangYeActivity;
 import com.smarthome.magic.activity.tongcheng58.PoiKeywordSearchActivity;
 import com.smarthome.magic.activity.tuangou.TuanGouShangJiaListActivity;
 import com.smarthome.magic.activity.xin_tuanyou.TuanYouList;
+import com.smarthome.magic.activity.zhinengjiaju.KongQiJianCeActvity;
 import com.smarthome.magic.activity.zijian_shangcheng.FenLeiThirdActivity;
 import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallActivity;
 import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallDetailsActivity;
@@ -442,13 +443,14 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                     @Override
                     public void call(Boolean granted) {
                         if (granted) { // 在android 6.0之前会默认返回true
-                            ScanActivity.actionStart(getActivity());
+                            //ScanActivity.actionStart(getActivity());
                             //YanShiActivity.actionStart(getActivity());
                             //GongJiangLieBiaoNewActivity.actionStart(getActivity());
-                            //BianMinFaBuActivity.actionStart(getActivity());
+                            BianMinFaBuActivity.actionStart(getActivity());
                             //GongJiangRuZhuActivity.actionStart(getActivity());
 //                            Intent intent = new Intent(getActivity(), PoiKeywordSearchActivity.class);
 //                            startActivity(intent);
+                           // KongQiJianCeActvity.actionStart(getActivity(),"0x1100033");
                         } else {
                             Toast.makeText(getActivity(), "该应用需要赋予访问相机的权限，不开启将无法正常工作！", Toast.LENGTH_LONG).show();
                         }

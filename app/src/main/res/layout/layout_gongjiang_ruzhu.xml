@@ -354,11 +354,11 @@
                 android:gravity="center_vertical">
 
                 <ImageView
-                    android:layout_width="19dp"
-                    android:layout_height="19dp"
+                    android:id="@+id/iv_yuedu"
+                    android:layout_width="@dimen/dp_18"
+                    android:layout_height="@dimen/dp_18"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:src="@mipmap/weixuanze" />
+                    android:layout_marginLeft="15dp" />
 
                 <TextView
                     android:layout_width="wrap_content"

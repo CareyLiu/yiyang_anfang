@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <ScrollView
@@ -244,7 +245,7 @@
                         android:id="@+id/tv_xiangxidizhi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="黑龙江省哈尔滨市南岗区电缆街58号"
+                        tools:text=""
                         android:textColor="#ff999999"
                         android:textSize="13sp" />
 

@@ -25,7 +25,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SplineChart03View extends DemoView {
+public class SplineChart03View_xiangxi extends DemoView {
 
 
     private String TAG = "SplineChart03View";
@@ -43,20 +43,29 @@ public class SplineChart03View extends DemoView {
     private List<KongQiJianCeModel.DataBean.GdListBean> listBeans;
 
     private String jiaQuanOrKongQi; //1甲醛那一行 2.空气指数那一行
+    private String laber;
 
-    public SplineChart03View(Context context, List<KongQiJianCeModel.DataBean.GdListBean> listBeans, String jiaQuanOrKongQi) {
+    public SplineChart03View_xiangxi(Context context, List<KongQiJianCeModel.DataBean.GdListBean> listBeans, String jiaQuanOrKongQi) {
         super(context);
         this.listBeans = listBeans;
         this.jiaQuanOrKongQi = jiaQuanOrKongQi;
         initView();
     }
 
-    public SplineChart03View(Context context, AttributeSet attrs, List<KongQiJianCeModel.DataBean.GdListBean> listBeans) {
+    public SplineChart03View_xiangxi(Context context, List<KongQiJianCeModel.DataBean.GdListBean> listBeans, String jiaQuanOrKongQi, String laber) {
+        super(context);
+        this.listBeans = listBeans;
+        this.jiaQuanOrKongQi = jiaQuanOrKongQi;
+        this.laber = laber;
+        initView();
+    }
+
+    public SplineChart03View_xiangxi(Context context, AttributeSet attrs, List<KongQiJianCeModel.DataBean.GdListBean> listBeans) {
         super(context, attrs);
         initView();
     }
 
-    public SplineChart03View(Context context, AttributeSet attrs, int defStyle) {
+    public SplineChart03View_xiangxi(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initView();
     }
@@ -238,8 +247,16 @@ public class SplineChart03View extends DemoView {
     }
 
     private void chartLabels() {
+        int x = 0;
+        if (laber.equals("3")) {
+            x = 12;
+        } else if (laber.equals("2")) {
 
-        for (int i = 0; i < 30; i++) {
+            x = 30;
+        } else if (laber.equals("1")) {
+            x = 12;
+        }
+        for (int i = 0; i < x; i++) {
             labels.add(String.valueOf(i + 1));
         }
 

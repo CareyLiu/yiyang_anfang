@@ -59,6 +59,10 @@ public class GongJiangRuZhuActivity extends BaseActivity {
     TextView tvGerenJianjie;
     @BindView(R.id.tv_fuwu_gongzhong)
     TextView tvFuwuGongzhong;
+    @BindView(R.id.iv_yuedu)
+    ImageView ivYuedu;
+
+    private String xuanZe = "0";//0未选择 1已选择
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,7 +96,8 @@ public class GongJiangRuZhuActivity extends BaseActivity {
         llFuwugongzhong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gongJiangGongZhong();
+                ChooseFuWuGongZhongActivity.actionStart(mContext);
+                //gongJiangGongZhong();
             }
         });
 
@@ -135,7 +140,20 @@ public class GongJiangRuZhuActivity extends BaseActivity {
             }
         });
 
+        llYuedu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (xuanZe1.equals("0")) {
+                    ivYuedu.setBackgroundResource(R.mipmap.yixuanze);
+                    xuanZe1 = "1";
+                } else if (xuanZe1.equals("1")) {
+                    ivYuedu.setBackgroundResource(R.mipmap.weixuanze);
+                    xuanZe1 = "0";
+                }
 
+            }
+        });
+        ivYuedu.setBackgroundResource(R.mipmap.weixuanze);
     }
 
     @Override
@@ -169,7 +187,7 @@ public class GongJiangRuZhuActivity extends BaseActivity {
         });
     }
 
-    private String xuanZe = "0";//0为选择 1选择
+    private String xuanZe1 = "0";//0为选择 1选择
     private String gongZhong = "";
 
     private void gongJiangGongZhong() {

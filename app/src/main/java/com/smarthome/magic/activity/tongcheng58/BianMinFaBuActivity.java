@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -13,19 +16,66 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.amap.api.services.core.LatLonPoint;
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
 import com.flyco.roundview.RoundRelativeLayout;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
+import com.orhanobut.logger.Logger;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.DefaultX5WebView_HaveNameActivity;
+import com.smarthome.magic.activity.SettingActivity;
 import com.smarthome.magic.activity.ShuRuInterView;
+import com.smarthome.magic.activity.homepage.DaLiBaoActivity;
+import com.smarthome.magic.activity.tuangou.TuanGouShangJiaListActivity;
+import com.smarthome.magic.activity.zijian_shangcheng.FenLeiThirdActivity;
+import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallActivity;
+import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallDetailsActivity;
 import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.app.ConstanceValue;
+import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.UIHelper;
+import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.PreferenceHelper;
+import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.LordingDialog;
 import com.smarthome.magic.dialog.TongYongShuRuDIalog;
 import com.smarthome.magic.dialog.TongYongShuRuEditTextDIalog;
+import com.smarthome.magic.dialog.newdia.FaBuDialog;
+import com.smarthome.magic.dialog.newdia.FaBuLanMuDialog;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
+import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.BianMinFaBuBean;
+import com.smarthome.magic.model.Home;
+import com.smarthome.magic.model.JingYingXiangBean;
+import com.smarthome.magic.util.AlertUtil;
+import com.smarthome.magic.util.GlideShowImageUtils;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+
+import static com.smarthome.magic.app.App.JINGDU;
+import static com.smarthome.magic.app.App.WEIDU;
+import static com.smarthome.magic.get_net.Urls.HOME_PICTURE;
+import static com.smarthome.magic.get_net.Urls.TONGCHENG;
 
 public class BianMinFaBuActivity extends BaseActivity {
     @BindView(R.id.tv_tian_xie_biao_ti)
@@ -69,10 +119,33 @@ public class BianMinFaBuActivity extends BaseActivity {
     TextView tvFabuxuzhi;
     @BindView(R.id.rl_baocunxinxi)
     RoundRelativeLayout rlBaocunxinxi;
+    public BianMinFaBuBean bianMinFaBuBean = new BianMinFaBuBean();
+    private OptionsPickerView pvOptions;
+    private int index = 0;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_BIANMINFABU_HUICHUANDIZHI) {
+                    //bianMinFaBuBean.diZhi = (String) message.content;
+                    List<Object> list = (List<Object>) message.content;
+
+                    bianMinFaBuBean.diZhi = (String) list.get(0);
+                    LatLonPoint latLonPoint = (LatLonPoint) list.get(1);
+
+                    bianMinFaBuBean.weiDu = String.valueOf(latLonPoint.getLatitude());
+                    bianMinFaBuBean.jingDu = String.valueOf(latLonPoint.getLongitude());
+
+                    tvXiangxidizhi.setText((CharSequence) list.get(0));
+                }
+            }
+        }));
+
+
         rlFabubiaoti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,6 +160,7 @@ public class BianMinFaBuActivity extends BaseActivity {
                         tvTianXieBiaoTi.setText(str);
                         //   bianJiChangJingMingCheng(str);
                         biaoTi = str;
+                        bianMinFaBuBean.biaoTi = biaoTi;
                     }
                 }, "请输入标题");
                 shuRuDIalog.show();
@@ -98,7 +172,11 @@ public class BianMinFaBuActivity extends BaseActivity {
             public void onClick(View v) {
 //                FaBuLanMuDialog faBuLanMuDialog = new FaBuLanMuDialog(BianMinFaBuActivity.this);
 //                faBuLanMuDialog.show();
-                faBuLanMu();
+                // faBuLanMu();
+
+
+                pvOptions.show();
+
             }
         });
 
@@ -113,6 +191,7 @@ public class BianMinFaBuActivity extends BaseActivity {
             public void submit(String str) {
                 tvShurugonggao.setText(str);
                 miaoShuNeiRong = str;
+                bianMinFaBuBean.neiRongMiaoShu = miaoShuNeiRong;
             }
         };
         rlMiaoshuNeirong.setOnClickListener(new View.OnClickListener() {
@@ -136,6 +215,7 @@ public class BianMinFaBuActivity extends BaseActivity {
                     @Override
                     public void submit(String str) {
                         tvShuruLianxiren.setText(str);
+                        bianMinFaBuBean.lianXiDianHua = str;
                     }
                 }, "请输入联系人");
                 tongYongShuRuDIalog.show();
@@ -145,19 +225,23 @@ public class BianMinFaBuActivity extends BaseActivity {
         rlXiangxidizhi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TongYongShuRuDIalog tongYongShuRuDIalog = new TongYongShuRuDIalog(mContext, new ShuRuInterView() {
-                    @Override
-                    public void cannel() {
 
-                    }
+                Intent intent = new Intent(mContext, PoiKeywordSearchActivity.class);
+                startActivity(intent);
 
-                    @Override
-                    public void submit(String str) {
-                        tvXiangxidizhi.setText(str);
-                        xiangXiDiZhi = str;
-
-                    }
-                }, "详细地址");
+//                TongYongShuRuDIalog tongYongShuRuDIalog = new TongYongShuRuDIalog(mContext, new ShuRuInterView() {
+//                    @Override
+//                    public void cannel() {
+//
+//                    }
+//
+//                    @Override
+//                    public void submit(String str) {
+//                        tvXiangxidizhi.setText(str);
+//                        xiangXiDiZhi = str;
+//
+//                    }
+//                }, "详细地址");
 
             }
         });
@@ -184,49 +268,218 @@ public class BianMinFaBuActivity extends BaseActivity {
                     UIHelper.ToastMessage(mContext, "请您先选择阅读再进行保存信息操作");
                 } else if (xuanZe.equals("1")) {
                     //UIHelper.ToastMessage(mContext, "");
+                    saveData();
                 }
             }
         });
+
+        getJingYingXiang();
+    }
+
+
+    private void zhengHeLanMuData() {
+
+
+    }
+
+    private TishiDialog tishiDialog;
+
+    public void saveData() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", "17001");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("x", PreferenceHelper.getInstance(mContext).getString(WEIDU, ""));
+        map.put("y", PreferenceHelper.getInstance(mContext).getString(JINGDU, ""));
+        map.put("ir_type", "3");
+
+        //便民发布标题
+        map.put("ir_title", bianMinFaBuBean.biaoTi);
+        //便民发布栏目类型
+        map.put("ir_column_type", bianMinFaBuBean.lanMuLeiXing);
+        //便民发布栏目类型名称
+        map.put("ir_column_type_name", bianMinFaBuBean.lanMuLeiXingMingCheng);
+        //便民发布栏目类别
+        map.put("ir_column_category", bianMinFaBuBean.lanMuLeiBie);
+        //便民发布栏目类别名称
+        map.put("ir_column_category_name", bianMinFaBuBean.lanMuLeiBieMingCheng);
+        //pro
+        map.put("pro", bianMinFaBuBean.proBeanList);
+        //信息简介/内容描述
+        map.put("ir_validity", bianMinFaBuBean.neiRongMiaoShu);
+        //地址
+        map.put("addr", bianMinFaBuBean.diZhi);
+        //联系电话
+        map.put("ir_contact_phone", bianMinFaBuBean.lianXiDianHua);
+        //微信号
+        map.put("ir_wx_number", bianMinFaBuBean.weiXinHao);
+
+        Gson gson = new Gson();
+        OkGo.<AppResponse<Home.DataBean>>post(TONGCHENG)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<Home.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<Home.DataBean>> response) {
+
+                        Logger.d(gson.toJson(response.body()));
+                        tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+
+                            }
+
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
+
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+
+                            }
+                        });
+                        tishiDialog.setTextContent("已提交成功");
+                        tishiDialog.setTextCancel("");
+                        tishiDialog.show();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<Home.DataBean>> response) {
+
+                        AlertUtil.t(mContext, response.getException().getMessage());
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<Home.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                    }
+                });
+
+
+    }
+
+    private List<Object> dataBeanList = new ArrayList<>();
+    private List<List<Object>> dataBeanList1 = new ArrayList<>();
+
+    public void getJingYingXiang() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", "17003");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("itemtype_id", "4");
+        Gson gson = new Gson();
+        OkGo.<AppResponse<JingYingXiangBean.DataBean>>post(TONGCHENG)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<JingYingXiangBean.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<JingYingXiangBean.DataBean>> response) {
+
+
+                        pvOptions = new OptionsPickerBuilder(mContext, new OnOptionsSelectListener() {
+                            @Override
+                            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                                //返回的分别是三个级别的选中位置
+//                                UIHelper.ToastMessage(mContext, dataBeanList.get(options1) + "");
+//                                UIHelper.ToastMessage(mContext, dataBeanList1.get(options2) + "");
+
+                                Log.i("BianMinFaBuActivity", "dataBeanList的值" + dataBeanList.get(options1) + "");
+                                Log.i("BianMinFaBuActivity", "dataBeanList1的值" + dataBeanList1.get(options2) + "");
+
+                                for (int i = 0; i < response.body().data.size(); i++) {
+                                    if (response.body().data.get(i).getItem_name().equals(dataBeanList.get(options1))) {
+                                        bianMinFaBuBean.lanMuLeiBie = response.body().data.get(i).getItem_id();
+                                        bianMinFaBuBean.lanMuLeiBieMingCheng = response.body().data.get(i).getItem_name();
+
+                                        for (int j = 0; j < response.body().data.get(i).getItem().size(); j++) {
+                                            bianMinFaBuBean.lanMuLeiXing = response.body().data.get(i).getItem().get(j).getItem_id();
+                                            bianMinFaBuBean.lanMuLeiXingMingCheng = response.body().data.get(i).getItem().get(j).getItem_name();
+                                        }
+                                    }
+                                }
+
+
+                            }
+                        }).build();
+
+                        pvOptions.setTitleText("请选择栏目内容");
+
+                        for (int i = 0; i < response.body().data.size(); i++) {
+//                            JingYingXiangBean.DataBean jingYingXiangBean = new JingYingXiangBean.DataBean();
+//                            jingYingXiangBean.setItem_name(response.body().data.get(i).getItem_name());
+//                            jingYingXiangBean.setItem_id(response.body().data.get(i).getItem_id());
+
+                            for (int j = 0; j < response.body().data.get(i).getItem().size(); j++) {
+                                List<Object> list = new ArrayList<>();
+                                list.add(response.body().data.get(i).getItem().get(j).getItem_name());
+                                dataBeanList1.add(list);
+
+                            }
+
+                            dataBeanList.add(response.body().data.get(i).getItem_name());
+                        }
+
+
+                        pvOptions.setPicker(dataBeanList, dataBeanList1);
+                        pvOptions.setSelectOptions(index);
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<JingYingXiangBean.DataBean>> response) {
+
+                        AlertUtil.t(mContext, response.getException().getMessage());
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<JingYingXiangBean.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                    }
+                });
+
+
     }
 
     private String xuanZe = "0";//0为选择 1选择
 
     private void faBuLanMu() {
-        String[] items = {"拍照", "相册"};
-        final ActionSheetDialog dialog = new ActionSheetDialog(this, items, null);
-        dialog.isTitleShow(false).show();
-        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+        FaBuLanMuDialog faBuDialog = new FaBuLanMuDialog(mContext, new FaBuLanMuDialog.FaBuDialogListener() {
             @Override
-            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
-                File file = new File(Environment.getExternalStorageDirectory(), "/temp/" + System.currentTimeMillis() + ".jpg");
-                if (!file.getParentFile().exists()) {
-                    file.getParentFile().mkdirs();
-                }
-                Uri imageUri = Uri.fromFile(file);
-                switch (position) {
-                    case 0:
+            public void shangJiaFaBu() {
+                UIHelper.ToastMessage(mContext, "shangjiafabu");
+            }
 
+            @Override
+            public void gongJiangFaBu() {
 
-                        break;
-                    case 1:
+                UIHelper.ToastMessage(mContext, "gongjiang");
+            }
 
-                        break;
-
-
-                }
-
-                faBuLanMu = items[position];
-                dialog.dismiss();
-
+            @Override
+            public void bianMinFabu() {
+                //UIHelper.ToastMessage(mContext, "便民");
+                BianMinFaBuActivity.actionStart(mContext);
             }
         });
+        faBuDialog.show();
 
-        rlBaocunxinxi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UIHelper.ToastMessage(mContext, "保存信息");
-            }
-        });
+        WindowManager windowManager = getWindowManager();
+        Display display = windowManager.getDefaultDisplay();
+        WindowManager.LayoutParams lp = faBuDialog.getWindow().getAttributes();
+        lp.width = (int) (display.getWidth()); //设置宽度
+        faBuDialog.getWindow().setAttributes(lp);
     }
 
 

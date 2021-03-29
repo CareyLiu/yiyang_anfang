@@ -145,33 +145,28 @@ public class ZhiNengDeviceFragment extends BaseFragment {
     }
 
     public void getData(List<ZhiNengModel.DataBean> dataBean) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.FAMILY_ID, dataBean.get(0).getFamily_id());
-                member_type = dataBean.get(0).getMember_type();
-                if (dataBean.get(0).getDevice().size() == 0) {
-                    PreferenceHelper.getInstance(getActivity()).putString(AppConfig.DEVICECCID, "");
-                    PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, "");
-                } else {
-                    if (StringUtils.isEmpty(dataBean.get(0).getDevice().get(0).getDevice_ccid())) {
-                        PreferenceHelper.getInstance(getActivity()).putString(AppConfig.DEVICECCID, "");
-                    } else {
-                        PreferenceHelper.getInstance(getActivity()).putString(AppConfig.DEVICECCID, dataBean.get(0).getDevice().get(0).getDevice_ccid());
-                    }
-                    if (StringUtils.isEmpty(dataBean.get(0).getDevice().get(0).getServer_id())) {
-                        PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, "");
-                    } else {
-                        PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, dataBean.get(0).getDevice().get(0).getServer_id());
-                    }
-                }
-                mDatas.clear();
-                mDatas.addAll(dataBean.get(0).getDevice());
-                if (zhiNengDeviceListAdapter != null) {
-                    zhiNengDeviceListAdapter.notifyDataSetChanged();
-                }
+        PreferenceHelper.getInstance(getActivity()).putString(AppConfig.FAMILY_ID, dataBean.get(0).getFamily_id());
+        member_type = dataBean.get(0).getMember_type();
+        if (dataBean.get(0).getDevice().size() == 0) {
+            PreferenceHelper.getInstance(getActivity()).putString(AppConfig.DEVICECCID, "");
+            PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, "");
+        } else {
+            if (StringUtils.isEmpty(dataBean.get(0).getDevice().get(0).getDevice_ccid())) {
+                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.DEVICECCID, "");
+            } else {
+                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.DEVICECCID, dataBean.get(0).getDevice().get(0).getDevice_ccid());
             }
-        });
+            if (StringUtils.isEmpty(dataBean.get(0).getDevice().get(0).getServer_id())) {
+                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, "");
+            } else {
+                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.SERVERID, dataBean.get(0).getDevice().get(0).getServer_id());
+            }
+        }
+        mDatas.clear();
+        mDatas.addAll(dataBean.get(0).getDevice());
+        if (zhiNengDeviceListAdapter != null) {
+            zhiNengDeviceListAdapter.notifyDataSetChanged();
+        }
     }
 
 

@@ -26,6 +26,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.ZhiNengFamilyManageDetailActivity;
 import com.smarthome.magic.activity.ZhiNengHomeListActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
+import com.smarthome.magic.activity.tongcheng58.TongChengMainActivity;
 import com.smarthome.magic.activity.tuya_device.add.TuyaDeviceAddActivity;
 import com.smarthome.magic.activity.tuya_device.changjing.TuyaTianqiActivity;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaHomeManager;
@@ -534,7 +535,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
             TuyaDeviceAddActivity.actionStart(getContext());
         }
 //        getHomefff();
-        getHomeList();
+//        getHomeList();
     }
 
     private void getHomefff() {
@@ -601,15 +602,6 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     public void onSupportVisible() {
         super.onSupportVisible();
         getnet();
-        Log.i("Rair", "页面可见");
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            Log.i("Rair", "setUserVisibleHint" + "页面可见");
-        }
     }
 
     private void deleteTuyaJiating(String ty_family_id) {

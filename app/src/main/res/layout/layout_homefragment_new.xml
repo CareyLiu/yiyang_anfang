@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             app:srlTextSizeTime="10sp"
-                app:srlTextSizeTitle="12sp" />
+            app:srlTextSizeTitle="12sp" />
 
         <com.smarthome.magic.view.ObservableScrollView
             android:id="@+id/scrollView"
@@ -152,6 +152,47 @@
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/iv_tuan" />
 
+                    <RelativeLayout
+                        android:id="@+id/ll_shenghuo1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toBottomOf="@+id/rv_chihe_wanle_list">
+
+
+                        <LinearLayout
+                            android:id="@+id/ll_shenghuo"
+                            android:layout_width="match_parent"
+                            android:layout_height="27dp"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_marginLeft="14dp"
+                                android:src="@mipmap/home_shenghuo_title" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:text="生活"
+                                android:textColor="#ff333333"
+                                android:textSize="13sp" />
+
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_below="@+id/ll_shenghuo"
+                            android:id="@+id/rlv_shenghuo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        </androidx.recyclerview.widget.RecyclerView>
+
+
+                    </RelativeLayout>
+
 
                     <View
                         android:id="@+id/view"
@@ -159,7 +200,7 @@
                         android:layout_height="10dp"
                         android:background="@color/grayfff5f5f5"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/rv_chihe_wanle_list" />
+                        app:layout_constraintTop_toBottomOf="@+id/ll_shenghuo" />
 
                     <ImageView
                         android:id="@+id/iv_zhikong"
@@ -416,7 +457,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlTextSizeTime="10sp"
-                app:srlTextSizeTitle="12sp" />
+            app:srlTextSizeTitle="12sp" />
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
@@ -478,7 +519,6 @@
 
 
     </RelativeLayout>
-
 
 
 </RelativeLayout>

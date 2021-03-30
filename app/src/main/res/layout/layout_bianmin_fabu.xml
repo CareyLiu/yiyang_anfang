@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <ScrollView
@@ -156,7 +156,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="115dp">
+                android:layout_height="wrap_content">
 
                 <RelativeLayout
                     android:id="@+id/rl_xiangqingtu_huashu"
@@ -175,14 +175,24 @@
                 </RelativeLayout>
 
 
-                <ImageView
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rlv_tupian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rl_xiangqingtu_huashu"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="19dp">
 
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <ImageView
                     android:layout_width="77dp"
                     android:layout_height="77dp"
                     android:layout_below="@+id/rl_xiangqingtu_huashu"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="19dp"
-                    android:src="@mipmap/shoppicture_icon_add" />
+                    android:src="@mipmap/shoppicture_icon_add"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
@@ -223,9 +233,10 @@
             <RelativeLayout
                 android:id="@+id/rl_xiangxidizhi"
                 android:layout_width="match_parent"
-                android:layout_height="52dp">
+                android:layout_height="wrap_content">
 
                 <TextView
+                    android:layout_marginVertical="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -235,6 +246,7 @@
                     android:textSize="15sp" />
 
                 <LinearLayout
+                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
@@ -243,11 +255,11 @@
 
                     <TextView
                         android:id="@+id/tv_xiangxidizhi"
-                        android:layout_width="wrap_content"
+                        android:layout_width="200dp"
                         android:layout_height="wrap_content"
-                        tools:text=""
                         android:textColor="#ff999999"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        tools:text="" />
 
                     <ImageView
                         android:layout_width="wrap_content"

@@ -26,7 +26,8 @@ public class BianMinFaBuBean {
     //联系人姓名
     public String lianXiRenXingMing;
 
-    public class ProBean {
+    public static class ProBean {
+        public String type;
         public String ir_img_id;
         public String ir_img_url;
     }

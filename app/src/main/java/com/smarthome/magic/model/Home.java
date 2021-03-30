@@ -97,6 +97,7 @@ public class Home {
         public String activity_id;//活动id
         private List<WaresTypeListBean> waresTypeList;
         private List<BigGiftListBean> big_gift_list;
+        public List<LifeListBean> lifeList;
 
         public List<WaresTypeListBean> getWaresTypeList() {
             return waresTypeList;
@@ -744,6 +745,20 @@ public class Home {
             public void setHref_url(String href_url) {
                 this.href_url = href_url;
             }
+        }
+
+        public static class LifeListBean {
+            /**
+             * {
+             * "service_type": "6",
+             * "service_type_img": "http://znjj-img.oss-cn-hangzhou.aliyuncs.com/home_button30_banjia.png",
+             * "more_type": "1",
+             * "service_type_name": "搬家搬运",
+             */
+            public String service_type;
+            public String service_type_img;
+            public String more_type;
+            public String service_type_name;
         }
 
         public static class IndexShowListBean {

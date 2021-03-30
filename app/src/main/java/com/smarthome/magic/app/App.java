@@ -71,8 +71,9 @@ public class App extends MultiDexApplication {
     public static final String CUN_GEREN_TOUXIANG = "0X1119";//存储个人头像
     public static final String CHOOSE_KONGZHI_XIANGMU = "0X1120";//我选择硬件控制项目
     public static final String WEIYUQUANSHU = "0X1121";//喂鱼圈数
-
     public static final String HAS_ZHUJI = "0X1122";//是否家庭里有主机
+
+    public static final String ADDRESS = "0X1123";
 
     //发送通知
     public static final int TOKEN_ERROR = 0x04;

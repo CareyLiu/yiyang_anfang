@@ -13,6 +13,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.fragment.znjj.ZhiNengJiaJuFragment;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -29,6 +30,7 @@ public class TcInputActivity extends BaseActivity {
     TextView bt_save;
 
     private String type;
+    private String text;
 
     @Override
     public int getContentViewResId() {
@@ -55,10 +57,11 @@ public class TcInputActivity extends BaseActivity {
         });
     }
 
-    public static void actionStart(Context context, String type) {
+    public static void actionStart(Context context, String type, String text) {
         Intent intent = new Intent(context, TcInputActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("type", type);
+        intent.putExtra("text", text);
         context.startActivity(intent);
     }
 
@@ -66,6 +69,8 @@ public class TcInputActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         type = getIntent().getStringExtra("type");
+        text = getIntent().getStringExtra("text");
+        ed_input.setText(text);
         ed_input.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

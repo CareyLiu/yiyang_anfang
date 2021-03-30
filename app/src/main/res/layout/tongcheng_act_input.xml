@@ -24,7 +24,6 @@
             android:background="@null"
             android:gravity="top"
             android:hint="请输入"
-            android:inputType="text"
             android:maxLength="200"
             android:padding="31pt"
             android:textColor="@color/color_3"

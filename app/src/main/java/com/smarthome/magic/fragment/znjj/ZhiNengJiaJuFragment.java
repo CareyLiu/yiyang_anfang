@@ -26,7 +26,6 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.ZhiNengFamilyManageDetailActivity;
 import com.smarthome.magic.activity.ZhiNengHomeListActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
-import com.smarthome.magic.activity.tongcheng58.TongChengMainActivity;
 import com.smarthome.magic.activity.tuya_device.add.TuyaDeviceAddActivity;
 import com.smarthome.magic.activity.tuya_device.changjing.TuyaTianqiActivity;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaHomeManager;
@@ -494,17 +493,15 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     }
 
     private void clickSetTianqi() {
-        TongChengMainActivity.actionStart(getContext());
-
-//        if (isSettianqi) {
-//            TuyaTianqiActivity.actionStart(getContext());
-////            TuyaChangjingActivity.actionStart(getContext());
-//        } else {
-//            Bundle bundle = new Bundle();
-//            bundle.putString("family_id", dataBean.get(0).getFamily_id());
-//            bundle.putString("ty_family_id", dataBean.get(0).getTy_family_id());
-//            startActivity(new Intent(getContext(), ZhiNengFamilyManageDetailActivity.class).putExtras(bundle));
-//        }
+        if (isSettianqi) {
+            TuyaTianqiActivity.actionStart(getContext());
+//            TuyaChangjingActivity.actionStart(getContext());
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putString("family_id", dataBean.get(0).getFamily_id());
+            bundle.putString("ty_family_id", dataBean.get(0).getTy_family_id());
+            startActivity(new Intent(getContext(), ZhiNengFamilyManageDetailActivity.class).putExtras(bundle));
+        }
     }
 
     private TishiDialog tishiDialog;

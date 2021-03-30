@@ -318,10 +318,10 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
                 save();
                 break;
             case R.id.ll_shangjiagonggao:
-                TcInputActivity.actionStart(mContext, gonggao);
+                TcInputActivity.actionStart(mContext, gonggao, edShangjiagonggao.getText().toString());
                 break;
             case R.id.ll_shangjiajieshao:
-                TcInputActivity.actionStart(mContext, jieshao);
+                TcInputActivity.actionStart(mContext, jieshao, edShangjiajieshao.getText().toString());
                 break;
         }
     }

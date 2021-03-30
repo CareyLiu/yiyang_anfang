@@ -181,4 +181,6 @@ public interface ConstanceValue {
 
     int MSG_BIANMINFABU_HUICHUANDIZHI = 0x10134;//回传地址
 
+    int MSG_TONGYONG_INPUT = 0x10135;//通用输入
+
 }

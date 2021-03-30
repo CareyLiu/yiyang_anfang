@@ -24,5 +24,7 @@ public class Notice {
     public Notice() {
     }
 
-    public String  devId;
+    public String devId;
+
+    public String input_type;
 }

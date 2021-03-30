@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
@@ -28,13 +29,18 @@ import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
+import com.smarthome.magic.activity.tongcheng58.model.TcBannerModel;
+import com.smarthome.magic.activity.tongcheng58.model.TcHomeModel;
 import com.smarthome.magic.activity.tongcheng58.model.TcLeimuModel;
+import com.smarthome.magic.activity.tongcheng58.model.TcSheshiModel;
 import com.smarthome.magic.activity.tongcheng58.model.TcUpLoadModel;
-import com.smarthome.magic.activity.yaokongqi.WanNengYaoKongQi;
+import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 
 import org.devio.takephoto.app.TakePhoto;
@@ -80,36 +86,6 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
     LinearLayout llAdress;
     @BindView(R.id.ed_weixinhao)
     EditText edWeixinhao;
-    @BindView(R.id.iv_select1)
-    ImageView ivSelect1;
-    @BindView(R.id.tv_select1)
-    TextView tvSelect1;
-    @BindView(R.id.ll_select1)
-    LinearLayout llSelect1;
-    @BindView(R.id.iv_select2)
-    ImageView ivSelect2;
-    @BindView(R.id.tv_select2)
-    TextView tvSelect2;
-    @BindView(R.id.ll_select2)
-    LinearLayout llSelect2;
-    @BindView(R.id.iv_select3)
-    ImageView ivSelect3;
-    @BindView(R.id.tv_select3)
-    TextView tvSelect3;
-    @BindView(R.id.ll_select3)
-    LinearLayout llSelect3;
-    @BindView(R.id.iv_select4)
-    ImageView ivSelect4;
-    @BindView(R.id.tv_select4)
-    TextView tvSelect4;
-    @BindView(R.id.ll_select4)
-    LinearLayout llSelect4;
-    @BindView(R.id.iv_select5)
-    ImageView ivSelect5;
-    @BindView(R.id.tv_select5)
-    TextView tvSelect5;
-    @BindView(R.id.ll_select5)
-    LinearLayout llSelect5;
     @BindView(R.id.ed_shangjiagonggao)
     EditText edShangjiagonggao;
     @BindView(R.id.ed_shangjiajieshao)
@@ -132,6 +108,8 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
     TextView tvXieyi;
     @BindView(R.id.bt_save)
     TextView btSave;
+    @BindView(R.id.ed_phone)
+    EditText edPhone;
 
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
@@ -148,11 +126,22 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
     private String ir_inst_close_time;              //闭业时间
     private String ir_inst_begin_time;              //公司信息发布开始时间
     private String ir_inst_end_time;                //公司信息发布结束时间
+    private String ir_contact_phone;                //联系电话
+    private String x;                               //纬度
+    private String y;                               //经度
+    private String addr;                            //地址
+    private String ir_wx_number;                    //微信号
+    private String ir_inst_notice;                  //公司公告
+    private String ir_validity;                     //公司简介
+    private String ir_agio;                         //折扣
+    private String ir_inst_device;                  //店内设备（多选传1,2,3,4）
+    private String ir_inst_settled_time;            //公司入驻时间
+    private boolean isXieyi;
+    private List<TcBannerModel> bannerModels = new ArrayList<>();
 
     private int type = 0;//  1.ir_inst_logo  2.banner
     private OptionsPickerView<Object> leimuPicker;
     private List<TcLeimuModel.DataBean> leimuModels;
-    private ActionSheetDialog qizhiriqiDialog;
 
     @Override
     public int getContentViewResId() {
@@ -189,9 +178,45 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getTakePhoto().onCreate(savedInstanceState);
+        initStart();
     }
 
-    @OnClick({R.id.iv_logo_add, R.id.ll_hangyefenlei, R.id.ll_yingye_time, R.id.ll_adress, R.id.ll_select1, R.id.ll_select2, R.id.ll_select3, R.id.ll_select4, R.id.ll_select5, R.id.iv_banner_add, R.id.ll_qizhi_time, R.id.ll_ruzhu_time, R.id.iv_xieyi, R.id.tv_xieyi, R.id.bt_save})
+    private void initStart() {
+        ir_inst_open_time = "";
+        ir_inst_close_time = "";
+        ir_inst_begin_time = "";
+        ir_inst_end_time = "";
+        ir_inst_notice = "";
+        ir_validity = "";
+
+        isXieyi = false;
+
+        x = PreferenceHelper.getInstance(mContext).getString(App.JINGDU, "");
+        y = PreferenceHelper.getInstance(mContext).getString(App.WEIDU, "");
+
+        getSheshi();
+    }
+
+    private void getSheshi() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "17013");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(this).getAppToken());
+        map.put("screening_condition", "shop_device");
+        Gson gson = new Gson();
+        OkGo.<AppResponse<TcSheshiModel.DataBean>>post(Urls.TONG_CHENG)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<TcSheshiModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<TcSheshiModel.DataBean>> response) {
+                        ir_inst_device = "1,2";
+                    }
+                });
+    }
+
+
+    @OnClick({R.id.iv_logo_add, R.id.ll_hangyefenlei, R.id.ll_yingye_time, R.id.ll_adress, R.id.iv_banner_add, R.id.ll_qizhi_time, R.id.ll_ruzhu_time, R.id.iv_xieyi, R.id.tv_xieyi, R.id.bt_save})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_logo_add:
@@ -204,25 +229,20 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
                 showYingyeDialog();
                 break;
             case R.id.ll_adress:
-                break;
-            case R.id.ll_select1:
-                break;
-            case R.id.ll_select2:
-                break;
-            case R.id.ll_select3:
-                break;
-            case R.id.ll_select4:
-                break;
-            case R.id.ll_select5:
+                tvAddress.setText("神灯科技");
                 break;
             case R.id.iv_banner_add:
+                bannerModels.add(new TcBannerModel("12053", "http://yjn-znjj.oss-cn-hangzhou.aliyuncs.com/20210329163025000001.jpg"));
+                Y.t("添加了轮播图" + bannerModels.size());
                 break;
             case R.id.ll_qizhi_time:
                 showQizhiDialog();
                 break;
             case R.id.ll_ruzhu_time:
+                clickRuzhuTime();
                 break;
             case R.id.iv_xieyi:
+                clickXiyiSelect();
                 break;
             case R.id.tv_xieyi:
                 break;
@@ -232,32 +252,217 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
         }
     }
 
+    private void clickRuzhuTime() {
+        String[] items = {"3个月", "6个月", "12个月"};
+        ActionSheetDialog dialog = new ActionSheetDialog(mContext, items, null);
+        dialog.isTitleShow(false);
+        dialog.cancelText("完成");
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        ir_inst_settled_time = "3";
+                        break;
+                    case 1:
+                        ir_inst_settled_time = "6";
+                        break;
+                    case 2:
+                        ir_inst_settled_time = "12";
+                        break;
+                }
+                tvStartTime.setText(ir_inst_settled_time + "个月");
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    private void save() {
+        ir_inst_name = edName.getText().toString();
+        ir_wx_number = edWeixinhao.getText().toString();
+        ir_contact_phone = edPhone.getText().toString();
+        ir_agio = edZhekou.getText().toString();
+        addr = tvAddress.getText().toString();
+
+        if (TextUtils.isEmpty(ir_inst_logo)) {
+            Y.t("请上传企业标志");
+            return;
+        }
+
+        if (TextUtils.isEmpty(ir_inst_name)) {
+            Y.t("请输入商家名称");
+            return;
+        }
+
+        if (TextUtils.isEmpty(ir_industry_type)) {
+            Y.t("请选择行业分类");
+            return;
+        }
+
+        if (TextUtils.isEmpty(addr)) {
+            Y.t("请选择详细地址");
+            return;
+        }
+
+        if (TextUtils.isEmpty(ir_contact_phone)) {
+            Y.t("请输入联系电话");
+            return;
+        }
+
+        if (TextUtils.isEmpty(ir_inst_device)) {
+            Y.t("请选择店内设施");
+            return;
+        }
+
+        if (bannerModels.size() == 0) {
+            Y.t("请上传轮播图");
+            return;
+        }
+
+        if (TextUtils.isEmpty(ir_inst_settled_time)) {
+            Y.t("请选择入驻时间");
+            return;
+        }
+
+        if (!isXieyi) {
+            Y.t("请同意商家发布须知");
+            return;
+        }
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", "17001");
+        jsonObject.put("key", Urls.key);
+        jsonObject.put("token", UserManager.getManager(mContext).getAppToken());
+        jsonObject.put("ir_type", "2");
+        jsonObject.put("ir_inst_logo", ir_inst_logo);
+        jsonObject.put("ir_inst_logo_id", ir_inst_logo_id);
+        jsonObject.put("ir_inst_name", ir_inst_name);
+        jsonObject.put("ir_industry_type", ir_industry_type);
+        jsonObject.put("ir_industry_type_name", ir_industry_type_name);
+        jsonObject.put("ir_industry_category", ir_industry_category);
+        jsonObject.put("ir_industry_category_name", ir_industry_category_name);
+        jsonObject.put("ir_contact_phone", ir_contact_phone);
+        jsonObject.put("x", x);
+        jsonObject.put("y", y);
+        jsonObject.put("addr", addr);
+        jsonObject.put("ir_wx_number", ir_wx_number);
+        jsonObject.put("pro", bannerModels);
+        jsonObject.put("ir_validity", ir_validity);
+        jsonObject.put("ir_inst_notice", ir_inst_notice);
+        jsonObject.put("ir_agio", ir_agio);
+        jsonObject.put("ir_inst_device", ir_inst_device);
+        jsonObject.put("ir_inst_settled_time", ir_inst_settled_time);
+
+        if (TextUtils.isEmpty(ir_inst_open_time) || TextUtils.isEmpty(ir_inst_close_time)) {
+            jsonObject.put("ir_inst_open_time", "");
+            jsonObject.put("ir_inst_close_time", "");
+        } else {
+            jsonObject.put("ir_inst_open_time", ir_inst_open_time);
+            jsonObject.put("ir_inst_close_time", ir_inst_close_time);
+        }
+
+        if (TextUtils.isEmpty(ir_inst_begin_time) || TextUtils.isEmpty(ir_inst_end_time)) {
+            jsonObject.put("ir_inst_begin_time", "");
+            jsonObject.put("ir_inst_end_time", "");
+        } else {
+            jsonObject.put("ir_inst_begin_time", ir_inst_begin_time);
+            jsonObject.put("ir_inst_end_time", ir_inst_end_time);
+        }
+
+
+        showProgressDialog();
+        OkGo.<AppResponse<TcHomeModel.DataBean>>post(Urls.TONG_CHENG)
+                .tag(this)//
+                .upJson(jsonObject.toJSONString())
+                .execute(new JsonCallback<AppResponse<TcHomeModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(final Response<AppResponse<TcHomeModel.DataBean>> response) {
+                        TishiDialog dialog = new TishiDialog(mContext, TishiDialog.TYPE_SUCESS, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+
+                            }
+
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
+                                finish();
+
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+
+                            }
+                        });
+                        dialog.show();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<TcHomeModel.DataBean>> response) {
+                        super.onError(response);
+                        Y.tError(response);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
+                    }
+                });
+    }
+
+    private void clickXiyiSelect() {
+        isXieyi = !isXieyi;
+        if (isXieyi) {
+            ivXieyi.setImageResource(R.mipmap.tuya_faxian_icon_selector_sel_1);
+        } else {
+            ivXieyi.setImageResource(R.mipmap.tuya_faxian_icon_selector_sel);
+        }
+    }
+
     private void showQizhiDialog() {
         String[] items = {"开始时间", "结束时间"};
-        if (qizhiriqiDialog == null) {
-            qizhiriqiDialog = new ActionSheetDialog(mContext, items, null);
-            qizhiriqiDialog.isTitleShow(true);
-            qizhiriqiDialog.cancelText("完成");
-            qizhiriqiDialog.setTitle("选择日期");
-            qizhiriqiDialog.setOnOperItemClickL(new OnOperItemClickL() {
-                @Override
-                public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    switch (position) {
-                        case 0:
-                            clickData(0);
-                            break;
-                        case 1:
-                            clickData(1);
-                            break;
-                    }
+        ActionSheetDialog dialog = new ActionSheetDialog(mContext, items, null);
+        dialog.isTitleShow(false);
+        dialog.cancelText("完成");
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        clickData(0);
+                        break;
+                    case 1:
+                        clickData(1);
+                        break;
                 }
-            });
-        }
-        qizhiriqiDialog.show();
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     private void showYingyeDialog() {
-
+        String[] items = {"开业时间", "闭业时间"};
+        ActionSheetDialog dialog = new ActionSheetDialog(mContext, items, null);
+        dialog.isTitleShow(false);
+        dialog.cancelText("完成");
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        clickTime(0);
+                        break;
+                    case 1:
+                        clickTime(1);
+                        break;
+                }
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     private void clickFenlei() {
@@ -293,7 +498,6 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
                     }
                 });
     }
-
 
     private void initLeimu() {
         if (leimuModels.size() > 0) {
@@ -337,7 +541,7 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
         }
     }
 
-    private void clickTime() {
+    private void clickTime(int pos) {
         boolean[] select = {false, false, false, true, true, false};
         TimePickerView timePicker = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
@@ -358,7 +562,12 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
                         time = hours + ":" + minutes;
                     }
                 }
-                tvYingyeTime.setText(time);
+                if (pos == 0) {
+                    ir_inst_open_time = time;
+                } else {
+                    ir_inst_close_time = time;
+                }
+                tvYingyeTime.setText(ir_inst_open_time + " 至 " + ir_inst_close_time);
             }
         })
                 .setType(select)// 默认全部显示
@@ -375,40 +584,19 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
         TimePickerView timePicker = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
-                String dataS = Y.getDataS(date);
+                String dataS = Y.getData(date);
                 if (pos == 0) {
                     ir_inst_begin_time = dataS;
                 } else {
                     ir_inst_end_time = dataS;
                 }
-                qizhiriqiDialog.setTitle(ir_inst_begin_time+" 至 "+ir_inst_end_time);
-                tvStopTime.setText(ir_inst_begin_time+" 至 "+ir_inst_end_time);
+                tvStopTime.setText(ir_inst_begin_time + " 至 " + ir_inst_end_time);
             }
         })
                 .setType(select)// 默认全部显示
                 .setRangDate(startTime, endTime)
                 .build();
         timePicker.show();
-    }
-
-    private void save() {
-        if (TextUtils.isEmpty(ir_inst_logo)) {
-            Y.t("请上传企业标志");
-            return;
-        }
-
-        ir_inst_name = edName.getText().toString();
-        if (TextUtils.isEmpty(ir_inst_name)) {
-            Y.t("请输入商家名称");
-            return;
-        }
-
-        if (TextUtils.isEmpty(ir_industry_type)) {
-            Y.t("请选择行业分类");
-            return;
-        }
-
-        Y.t("保存成功");
     }
 
     /**
@@ -492,6 +680,12 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
                     public void onFinish() {
                         super.onFinish();
                         dismissProgressDialog();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<TcUpLoadModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showProgressDialog();
                     }
                 });
     }

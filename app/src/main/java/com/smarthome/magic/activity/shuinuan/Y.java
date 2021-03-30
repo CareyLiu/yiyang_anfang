@@ -320,4 +320,13 @@ public class Y {
         format.setTimeZone(TimeZone.getTimeZone("GMT+08"));
         return format.format(date);
     }
+
+    /**
+     * 获取日期精确
+     */
+    public static String getData(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        format.setTimeZone(TimeZone.getTimeZone("GMT+08"));
+        return format.format(date);
+    }
 }

@@ -366,12 +366,12 @@ public class MyApplication extends MultiDexApplication {
         mPushAgent.register(new IUmengRegisterCallback() {
             @Override
             public void onSuccess(String token) {
-                Y.e("友盟连接成功获取Token是  " + token);
+
             }
 
             @Override
             public void onFailure(String s, String s1) {
-                Y.e("友盟连接失败 " + s + "   " + s1);
+
             }
         });
 
@@ -382,7 +382,7 @@ public class MyApplication extends MultiDexApplication {
 
                     @Override
                     public void run() {
-                        Y.e("获取到推送数据了么啊  " + msg.custom);
+
                     }
                 });
             }

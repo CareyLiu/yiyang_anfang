@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.amap.api.services.core.LatLonPoint;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
@@ -36,6 +37,8 @@ import com.smarthome.magic.activity.tongcheng58.model.TcSheshiModel;
 import com.smarthome.magic.activity.tongcheng58.model.TcUpLoadModel;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.app.ConstanceValue;
+import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
@@ -64,6 +67,8 @@ import java.util.Map;
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.TakeResultListener, InvokeListener {
 
@@ -87,9 +92,9 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
     @BindView(R.id.ed_weixinhao)
     EditText edWeixinhao;
     @BindView(R.id.ed_shangjiagonggao)
-    EditText edShangjiagonggao;
+    TextView edShangjiagonggao;
     @BindView(R.id.ed_shangjiajieshao)
-    EditText edShangjiajieshao;
+    TextView edShangjiajieshao;
     @BindView(R.id.iv_banner_add)
     ImageView ivBannerAdd;
     @BindView(R.id.ed_zhekou)
@@ -110,6 +115,40 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
     TextView btSave;
     @BindView(R.id.ed_phone)
     EditText edPhone;
+    @BindView(R.id.iv_select1)
+    ImageView ivSelect1;
+    @BindView(R.id.tv_select1)
+    TextView tvSelect1;
+    @BindView(R.id.ll_select1)
+    LinearLayout llSelect1;
+    @BindView(R.id.iv_select2)
+    ImageView ivSelect2;
+    @BindView(R.id.tv_select2)
+    TextView tvSelect2;
+    @BindView(R.id.ll_select2)
+    LinearLayout llSelect2;
+    @BindView(R.id.iv_select3)
+    ImageView ivSelect3;
+    @BindView(R.id.tv_select3)
+    TextView tvSelect3;
+    @BindView(R.id.ll_select3)
+    LinearLayout llSelect3;
+    @BindView(R.id.iv_select4)
+    ImageView ivSelect4;
+    @BindView(R.id.tv_select4)
+    TextView tvSelect4;
+    @BindView(R.id.ll_select4)
+    LinearLayout llSelect4;
+    @BindView(R.id.iv_select5)
+    ImageView ivSelect5;
+    @BindView(R.id.tv_select5)
+    TextView tvSelect5;
+    @BindView(R.id.ll_select5)
+    LinearLayout llSelect5;
+    @BindView(R.id.ll_shangjiagonggao)
+    LinearLayout llShangjiagonggao;
+    @BindView(R.id.ll_shangjiajieshao)
+    LinearLayout llShangjiajieshao;
 
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
@@ -142,6 +181,9 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
     private int type = 0;//  1.ir_inst_logo  2.banner
     private OptionsPickerView<Object> leimuPicker;
     private List<TcLeimuModel.DataBean> leimuModels;
+
+    final static private String gonggao = "gonggao";
+    final static private String jieshao = "jieshao";
 
     @Override
     public int getContentViewResId() {
@@ -179,6 +221,33 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
         super.onCreate(savedInstanceState);
         getTakePhoto().onCreate(savedInstanceState);
         initStart();
+        initHuidiao();
+    }
+
+    private void initHuidiao() {
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_BIANMINFABU_HUICHUANDIZHI) {
+                    List<Object> list = (List<Object>) message.content;
+
+                    String dizhi = (String) list.get(0);
+
+                    LatLonPoint latLonPoint = (LatLonPoint) list.get(1);
+                    String x = String.valueOf(latLonPoint.getLatitude());
+                    String y = String.valueOf(latLonPoint.getLongitude());
+
+                } else if (message.type == ConstanceValue.MSG_TONGYONG_INPUT) {
+                    String content = (String) message.content;
+                    String input_type = message.input_type;
+                    if (input_type.equals(gonggao)) {
+                        edShangjiagonggao.setText(content);
+                    } else if (input_type.equals(jieshao)) {
+                        edShangjiajieshao.setText(content);
+                    }
+                }
+            }
+        }));
     }
 
     private void initStart() {
@@ -186,8 +255,6 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
         ir_inst_close_time = "";
         ir_inst_begin_time = "";
         ir_inst_end_time = "";
-        ir_inst_notice = "";
-        ir_validity = "";
 
         isXieyi = false;
 
@@ -216,7 +283,7 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
     }
 
 
-    @OnClick({R.id.iv_logo_add, R.id.ll_hangyefenlei, R.id.ll_yingye_time, R.id.ll_adress, R.id.iv_banner_add, R.id.ll_qizhi_time, R.id.ll_ruzhu_time, R.id.iv_xieyi, R.id.tv_xieyi, R.id.bt_save})
+    @OnClick({R.id.ll_shangjiagonggao, R.id.ll_shangjiajieshao, R.id.iv_logo_add, R.id.ll_hangyefenlei, R.id.ll_yingye_time, R.id.ll_adress, R.id.iv_banner_add, R.id.ll_qizhi_time, R.id.ll_ruzhu_time, R.id.iv_xieyi, R.id.tv_xieyi, R.id.bt_save})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_logo_add:
@@ -245,9 +312,16 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
                 clickXiyiSelect();
                 break;
             case R.id.tv_xieyi:
+
                 break;
             case R.id.bt_save:
                 save();
+                break;
+            case R.id.ll_shangjiagonggao:
+                TcInputActivity.actionStart(mContext, gonggao);
+                break;
+            case R.id.ll_shangjiajieshao:
+                TcInputActivity.actionStart(mContext, jieshao);
                 break;
         }
     }
@@ -284,6 +358,8 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
         ir_contact_phone = edPhone.getText().toString();
         ir_agio = edZhekou.getText().toString();
         addr = tvAddress.getText().toString();
+        ir_inst_notice = edShangjiagonggao.getText().toString();
+        ir_validity = edShangjiajieshao.getText().toString();
 
         if (TextUtils.isEmpty(ir_inst_logo)) {
             Y.t("请上传企业标志");

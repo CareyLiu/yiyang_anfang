@@ -1575,6 +1575,13 @@
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!--    同城首页    -->
+        <activity
+            android:name=".activity.tongcheng58.TcInputActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".activity.tongcheng58.ChooseFuWuGongZhongActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"

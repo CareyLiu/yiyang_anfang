@@ -412,7 +412,7 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
                                         PushAgent.getInstance(SettingActivity.this).deleteAlias(strPhone, "TUYA_SMART", new UTrack.ICallBack() {
                                             @Override
                                             public void onMessage(boolean isSuccess, String message) {
-                                                Y.e("解除涂鸦推送成功了么 " + isSuccess + "   " + message);
+
                                             }
                                         });
                                     }

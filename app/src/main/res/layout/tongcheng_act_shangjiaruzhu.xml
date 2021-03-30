@@ -78,10 +78,10 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:inputType="text"
                         android:background="@null"
                         android:gravity="right|center_vertical"
                         android:hint="请输入商家名称"
+                        android:inputType="text"
                         android:textColor="@color/color_9"
                         android:textColorHint="@color/color_9"
                         android:textSize="27pt" />
@@ -229,9 +229,9 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@null"
-                        android:inputType="text"
                         android:gravity="right|center_vertical"
                         android:hint="请输入老板微信"
+                        android:inputType="text"
                         android:textColor="@color/color_9"
                         android:textColorHint="@color/color_9"
                         android:textSize="27pt" />
@@ -262,9 +262,9 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@null"
-                        android:inputType="number"
                         android:gravity="right|center_vertical"
                         android:hint="请输入联系电话"
+                        android:inputType="number"
                         android:textColor="@color/color_9"
                         android:textColorHint="@color/color_9"
                         android:textSize="27pt" />
@@ -439,18 +439,20 @@
                     android:textStyle="bold" />
 
                 <LinearLayout
+                    android:id="@+id/ll_shangjiagonggao"
                     android:layout_width="match_parent"
-                    android:layout_height="84pt"
+                    android:layout_height="wrap_content"
                     android:gravity="center_vertical">
 
-                    <EditText
+                    <TextView
                         android:id="@+id/ed_shangjiagonggao"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@null"
                         android:gravity="center_vertical"
                         android:hint="商家公告(可选填)"
+                        android:paddingVertical="27pt"
                         android:textColor="@color/color_9"
                         android:textColorHint="@color/color_9"
                         android:textSize="27pt" />
@@ -458,7 +460,7 @@
                     <ImageView
                         android:layout_width="31pt"
                         android:layout_height="31pt"
-                        android:layout_marginLeft="16pt"
+                        android:layout_marginHorizontal="16pt"
                         android:src="@drawable/arrow_more" />
                 </LinearLayout>
 
@@ -477,18 +479,20 @@
                     android:textStyle="bold" />
 
                 <LinearLayout
+                    android:id="@+id/ll_shangjiajieshao"
                     android:layout_width="match_parent"
-                    android:layout_height="84pt"
+                    android:layout_height="wrap_content"
                     android:gravity="center_vertical">
 
-                    <EditText
+                    <TextView
                         android:id="@+id/ed_shangjiajieshao"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@null"
                         android:gravity="center_vertical"
                         android:hint="商家介绍(可选填)"
+                        android:paddingVertical="27pt"
                         android:textColor="@color/color_9"
                         android:textColorHint="@color/color_9"
                         android:textSize="27pt" />
@@ -496,7 +500,7 @@
                     <ImageView
                         android:layout_width="31pt"
                         android:layout_height="31pt"
-                        android:layout_marginLeft="16pt"
+                        android:layout_marginHorizontal="16pt"
                         android:src="@drawable/arrow_more" />
                 </LinearLayout>
 

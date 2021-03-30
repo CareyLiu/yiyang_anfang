@@ -382,16 +382,15 @@ public class LoginActivity extends BaseActivity {
         PushAgent.getInstance(this).setAlias(phone, "TUYA_SMART", new UTrack.ICallBack() {
             @Override
             public void onMessage(boolean isSuccess, String message) {
-                Y.e("友盟设置别名成功了么 " + isSuccess + "   " + message);
                 TuyaHomeSdk.getPushInstance().registerDevice(phone, "umeng", new IResultCallback() {
                     @Override
                     public void onError(String code, String error) {
-                        Y.e("涂鸦设置别名失败了 " + code + "   " + error);
+
                     }
 
                     @Override
                     public void onSuccess() {
-                        Y.e("涂鸦设置别名成功了  ");
+
                     }
                 });
             }

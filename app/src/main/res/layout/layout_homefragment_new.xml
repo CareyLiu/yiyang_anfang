@@ -200,7 +200,7 @@
                         android:layout_height="10dp"
                         android:background="@color/grayfff5f5f5"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/ll_shenghuo" />
+                        app:layout_constraintTop_toBottomOf="@+id/ll_shenghuo1" />
 
                     <ImageView
                         android:id="@+id/iv_zhikong"

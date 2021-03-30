@@ -281,7 +281,33 @@ public class BianMinFaBuActivity extends BaseActivity implements TakePhoto.TakeR
                     UIHelper.ToastMessage(mContext, "请您先选择阅读再进行保存信息操作");
                 } else if (xuanZe.equals("1")) {
                     //UIHelper.ToastMessage(mContext, "");
+                    if (StringUtils.isEmpty(bianMinFaBuBean.biaoTi)) {
+                        UIHelper.ToastMessage(mContext, "您发布的标题不能为空");
+                        return;
+                    }
+                    if (StringUtils.isEmpty(bianMinFaBuBean.lanMuLeiBieMingCheng)) {
+                        UIHelper.ToastMessage(mContext, "请选择发布栏目");
+                        return;
+                    }
+                    if (StringUtils.isEmpty(bianMinFaBuBean.neiRongMiaoShu)) {
+                        UIHelper.ToastMessage(mContext, "描述内容不能为空");
+                        return;
+                    }
 
+
+                    if (bianMinFaBuBean.proBeanList.size() == 0) {
+                        UIHelper.ToastMessage(mContext, "请您上传详情图");
+                        return;
+                    }
+                    if (StringUtils.isEmpty(bianMinFaBuBean.lianXiRenXingMing)) {
+                        UIHelper.ToastMessage(mContext, "联系人不能为空");
+                        return;
+                    }
+
+                    if (StringUtils.isEmpty(bianMinFaBuBean.diZhi)) {
+                        UIHelper.ToastMessage(mContext, "请选择您的地址");
+                        return;
+                    }
                     tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
                         @Override
                         public void onClickCancel(View v, TishiDialog dialog) {
@@ -290,6 +316,7 @@ public class BianMinFaBuActivity extends BaseActivity implements TakePhoto.TakeR
 
                         @Override
                         public void onClickConfirm(View v, TishiDialog dialog) {
+
                             saveData();
                         }
 
@@ -502,33 +529,7 @@ public class BianMinFaBuActivity extends BaseActivity implements TakePhoto.TakeR
         map.put("y", bianMinFaBuBean.jingDu);
         map.put("ir_type", "3");
 
-        if (StringUtils.isEmpty(bianMinFaBuBean.biaoTi)) {
-            UIHelper.ToastMessage(mContext, "您发布的标题不能为空");
-            return;
-        }
-        if (StringUtils.isEmpty(bianMinFaBuBean.lanMuLeiBieMingCheng)) {
-            UIHelper.ToastMessage(mContext, "请选择发布栏目");
-            return;
-        }
-        if (StringUtils.isEmpty(bianMinFaBuBean.neiRongMiaoShu)) {
-            UIHelper.ToastMessage(mContext, "描述内容不能为空");
-            return;
-        }
 
-
-        if (bianMinFaBuBean.proBeanList.size() == 0) {
-            UIHelper.ToastMessage(mContext, "请您上传详情图");
-            return;
-        }
-        if (StringUtils.isEmpty(bianMinFaBuBean.lianXiRenXingMing)) {
-            UIHelper.ToastMessage(mContext, "联系人不能为空");
-            return;
-        }
-
-        if (StringUtils.isEmpty(bianMinFaBuBean.diZhi)) {
-            UIHelper.ToastMessage(mContext, "请选择您的地址");
-            return;
-        }
         //便民发布标题
         map.put("ir_title", bianMinFaBuBean.biaoTi);
 
@@ -597,8 +598,6 @@ public class BianMinFaBuActivity extends BaseActivity implements TakePhoto.TakeR
                         super.onFinish();
                     }
                 });
-
-
     }
 
     private List<Object> dataBeanList = new ArrayList<>();

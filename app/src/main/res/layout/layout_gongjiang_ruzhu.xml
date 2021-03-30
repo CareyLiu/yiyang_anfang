@@ -50,12 +50,13 @@
 
 
                 <ImageView
+                    android:id="@+id/iv_touxiang"
                     android:layout_width="52dp"
                     android:layout_height="@dimen/dp_52"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
-                    android:src="@mipmap/shoppicture_icon_add" />
+                />
 
             </RelativeLayout>
 
@@ -170,18 +171,31 @@
                     android:textSize="13sp" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/ll_tianjia"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="115dp">
+                android:layout_height="wrap_content">
 
-                <ImageView
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_marginBottom="19dp"
+                    android:id="@+id/rlv_tupian"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="14dp"
+                    android:layout_below="@+id/rl_xiangqingtu_huashu"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="19dp">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <ImageView
+                    android:layout_width="77dp"
+                    android:layout_height="77dp"
+                    android:layout_below="@+id/rl_xiangqingtu_huashu"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="19dp"
-                    android:src="@mipmap/shoppicture_icon_add" />
-            </LinearLayout>
+                    android:src="@mipmap/shoppicture_icon_add"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"

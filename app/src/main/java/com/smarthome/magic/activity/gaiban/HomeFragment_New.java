@@ -54,6 +54,7 @@ import com.smarthome.magic.activity.tongcheng58.GongJiangLieBiaoNewActivity;
 import com.smarthome.magic.activity.tongcheng58.GongJiangRuZhuActivity;
 import com.smarthome.magic.activity.tongcheng58.GongJiangYeActivity;
 import com.smarthome.magic.activity.tongcheng58.PoiKeywordSearchActivity;
+import com.smarthome.magic.activity.tongcheng58.TongChengMainActivity;
 import com.smarthome.magic.activity.tuangou.TuanGouShangJiaListActivity;
 import com.smarthome.magic.activity.xin_tuanyou.TuanYouList;
 import com.smarthome.magic.activity.zhinengjiaju.KongQiJianCeActvity;
@@ -63,6 +64,7 @@ import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallDetailsActiv
 import com.smarthome.magic.adapter.ChiHeWanLeListAdapter;
 import com.smarthome.magic.adapter.DirectAdapter;
 import com.smarthome.magic.adapter.HotGoodsAdapter;
+import com.smarthome.magic.adapter.ShengHuoListAdapter;
 import com.smarthome.magic.adapter.ZhiKongListAdapter;
 import com.smarthome.magic.adapter.gaiban.HomeReMenAdapter;
 import com.smarthome.magic.adapter.gaiban.HomeZiYingAdapter;
@@ -92,6 +94,7 @@ import com.smarthome.magic.util.GridAverageUIDecoration;
 import com.smarthome.magic.util.Utils;
 import com.smarthome.magic.view.ObservableScrollView;
 import com.tbruyelle.rxpermissions.RxPermissions;
+import com.umeng.commonsdk.UMConfigure;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
@@ -149,7 +152,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
 
 
     private View viewLineTop, viewLineMiddle, remenViewLineTop;
-    RecyclerView chiHeWanLeList, zhiKongList;//吃喝玩乐和智控
+    RecyclerView chiHeWanLeList, zhiKongList, shengHuoList;//吃喝玩乐和智控
     /**
      * 每一页展示多少条数据
      */
@@ -159,7 +162,9 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
     List<Home.DataBean.IconListBean> chiHeWanLeListBeans;
 
     ZhiKongListAdapter zhiKongListAdapter;
+    ShengHuoListAdapter shengHuoListAdapter;
     List<Home.DataBean.IntellectListBean> intellectListBeanList;
+    List<Home.DataBean.LifeListBean> lifeListBeans;
     ImageView ivDaLiBao;//大礼包
     ImageView ivZiJian;
     ImageView tianMaoOrTaoBao;
@@ -277,6 +282,9 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         chiHeWanLeList.setFocusable(false);
         zhiKongList = view.findViewById(R.id.zhikong_list);
         zhiKongList.setFocusable(false);
+
+        shengHuoList = view.findViewById(R.id.rlv_shenghuo);
+        shengHuoList.setFocusable(false);
 
         ivZiJian = view.findViewById(R.id.iv_zijian);
         tianMaoOrTaoBao = view.findViewById(R.id.iv_tianmao_or_taobao);
@@ -443,14 +451,14 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                     @Override
                     public void call(Boolean granted) {
                         if (granted) { // 在android 6.0之前会默认返回true
-                            //ScanActivity.actionStart(getActivity());
+                            ScanActivity.actionStart(getActivity());
                             //YanShiActivity.actionStart(getActivity());
                             //GongJiangLieBiaoNewActivity.actionStart(getActivity());
-                            BianMinFaBuActivity.actionStart(getActivity());
+                            //BianMinFaBuActivity.actionStart(getActivity());
                             //GongJiangRuZhuActivity.actionStart(getActivity());
 //                            Intent intent = new Intent(getActivity(), PoiKeywordSearchActivity.class);
 //                            startActivity(intent);
-                           // KongQiJianCeActvity.actionStart(getActivity(),"0x1100033");
+                            // KongQiJianCeActvity.actionStart(getActivity(),"0x1100033");
                         } else {
                             Toast.makeText(getActivity(), "该应用需要赋予访问相机的权限，不开启将无法正常工作！", Toast.LENGTH_LONG).show();
                         }
@@ -476,7 +484,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         chiHeWanLeListAdapter.openLoadAnimation();//默认为渐显效果
         chiHeWanLeList.setAdapter(chiHeWanLeListAdapter);
 
-
+        shengHuoListFuc();
         // ivJd = header.findViewById(R.id.iv_jd);
         //  LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getActivity());
         // linearLayoutManager1.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -619,6 +627,40 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
 
     }
 
+    private void shengHuoListFuc() {
+        GridLayoutManager gridLayoutManagerZHiKong = new GridLayoutManager(getActivity(), 5, GridLayoutManager.VERTICAL, false);
+        //    gridLayoutManagerZHiKong.setOrientation(LinearLayoutManager.VERTICAL);
+        shengHuoList.setLayoutManager(gridLayoutManagerZHiKong);
+
+        shengHuoListAdapter = new ShengHuoListAdapter(R.layout.item_zhikong, lifeListBeans);
+        shengHuoListAdapter.openLoadAnimation();//默认为渐显效果
+        shengHuoList.setAdapter(shengHuoListAdapter);
+        shengHuoListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.constrain:
+                        //UIHelper.ToastMessage(getActivity(), "生活");
+                        String service_type = lifeListBeans.get(position).service_type;
+                        switch (service_type) {
+
+                            case "6":
+                            case "11":
+                            case "8":
+                            case "3":
+                                GongJiangLieBiaoNewActivity.actionStart(getActivity(), service_type);
+                                break;
+                            case "31"://
+                                TongChengMainActivity.actionStart(getActivity());
+                                break;
+
+                        }
+                        break;
+                }
+            }
+        });
+    }
+
 
     @Override
     protected boolean immersionEnabled() {
@@ -747,14 +789,18 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
 
 
                         intellectListBeanList = new ArrayList<>();
+                        lifeListBeans = new ArrayList<>();
                         chiHeWanLeListBeans = new ArrayList<>();
                         //下面展示首页顶部图片
                         intellectListBeanList.addAll(response.body().data.get(0).getIntellectList());
+                        lifeListBeans.addAll(response.body().data.get(0).lifeList);
+
                         if (response.body().data.get(0).getIconList() != null) {
                             chiHeWanLeListBeans.addAll(response.body().data.get(0).getIconList());
                         }
                         chiHeWanLeListAdapter.setNewData(chiHeWanLeListBeans);
                         zhiKongListAdapter.setNewData(intellectListBeanList);
+                        shengHuoListAdapter.setNewData(lifeListBeans);
 
                         chiHeWanLeListAdapter.notifyDataSetChanged();
                         zhiKongListAdapter.notifyDataSetChanged();
@@ -927,6 +973,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                     PreferenceHelper.getInstance(getActivity()).putString(JINGDU, String.valueOf(location.getLongitude()));
                     PreferenceHelper.getInstance(getActivity()).putString(WEIDU, String.valueOf(location.getLatitude()));
                     PreferenceHelper.getInstance(getActivity()).putString(AppConfig.LOCATION_CITY_NAME, location.getCity());
+                    PreferenceHelper.getInstance(getActivity()).putString(AppConfig.ADDRESS, location.getAddress());
 
                     stopLocation();
                 } else {

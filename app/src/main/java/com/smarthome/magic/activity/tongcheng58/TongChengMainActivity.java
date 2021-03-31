@@ -115,22 +115,25 @@ public class TongChengMainActivity extends BaseActivity {
                 break;
         }
     }
-
+    FaBuDialog faBuDialog;
     private void clickAdd() {
-        FaBuDialog faBuDialog = new FaBuDialog(mContext, new FaBuDialog.FaBuDialogListener() {
+         faBuDialog = new FaBuDialog(mContext, new FaBuDialog.FaBuDialogListener() {
             @Override
             public void shangJiaFaBu() {
                 ShangjiaruzhuActivity.actionStart(mContext);
+                faBuDialog.dismiss();
             }
 
             @Override
             public void gongJiangFaBu() {
                 GongJiangRuZhuActivity.actionStart(mContext);
+                faBuDialog.dismiss();
             }
 
             @Override
             public void bianMinFabu() {
                 BianMinFaBuActivity.actionStart(mContext);
+                faBuDialog.dismiss();
             }
         });
         faBuDialog.show();

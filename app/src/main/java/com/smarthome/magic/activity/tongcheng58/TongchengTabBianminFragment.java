@@ -49,6 +49,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -147,7 +148,8 @@ public class TongchengTabBianminFragment extends BaseFragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 TcBianminModel.DataBean.IrNoticeListBean bean = irNoticeList.get(position);
                 String ir_id = bean.getIr_id();
-                Y.t("我的ID是" + ir_id);
+               // Y.t("我的ID是" + ir_id);
+                BianMinXinXiActivity.actionStart(getActivity(), ir_id);
             }
         });
 

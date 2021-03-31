@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amap.api.services.core.LatLonPoint;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.dialog.listener.OnOperItemClickL;
@@ -31,10 +32,15 @@ import com.smarthome.magic.activity.ShuRuInterView;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tongcheng58.model.TcUpLoadModel;
 import com.smarthome.magic.adapter.XiangQingTuAdapter;
+import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.app.ConstanceValue;
+import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.TongYongShuRuDIalog;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
@@ -61,7 +67,11 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
+import static com.smarthome.magic.app.App.JINGDU;
+import static com.smarthome.magic.app.App.WEIDU;
 import static com.smarthome.magic.get_net.Urls.TONGCHENG;
 
 public class GongJiangRuZhuActivity extends BaseActivity implements TakePhoto.TakeResultListener, InvokeListener {
@@ -101,13 +111,18 @@ public class GongJiangRuZhuActivity extends BaseActivity implements TakePhoto.Ta
     RecyclerView rlvTupian;
     @BindView(R.id.iv_touxiang)
     ImageView ivTouxiang;
+    @BindView(R.id.tv_weixinhao)
+    TextView tvWeixinhao;
+    @BindView(R.id.tv_dizhi)
+    TextView tvDizhi;
 
     private String xuanZe = "0";//0未选择 1已选择
     GongJiangRuZhuBean gongJiangRuZhuBean = new GongJiangRuZhuBean();
     XiangQingTuAdapter xiangQingTuAdapter;
     List<BianMinFaBuBean.ProBean> list = new ArrayList<>();
 
-    private String shangChuanTuPianLeiXing = "0";//0是头像 1是服务项目
+    private String shangChuanTuPianLeiXing = "0";//0是头像 1是服务项目 2是身份证正面 3.身份证反面
+    TishiDialog tishiDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -118,15 +133,51 @@ public class GongJiangRuZhuActivity extends BaseActivity implements TakePhoto.Ta
             @Override
             public void onClick(View v) {
                 shangChuanTuPianLeiXing = "0";
+                getPaiZhaoPhone();
             }
         });
 
         rrlTijiao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (StringUtils.isEmpty(gongJiangRuZhuBean.touXiang)) {
+                    UIHelper.ToastMessage(mContext, "头像不能为空");
+                    return;
+                } else if (StringUtils.isEmpty(gongJiangRuZhuBean.lianXiRenMingCheng)) {
+                    UIHelper.ToastMessage(mContext, "联系人名称不能为空");
+                } else if (StringUtils.isEmpty(gongJiangRuZhuBean.fuWuGongZhong)) {
+                    UIHelper.ToastMessage(mContext, "服务工种不能为空");
+                } else if (gongJiangRuZhuBean.proBeanList.size() == 0) {
+                    UIHelper.ToastMessage(mContext, "上传图片不能为空");
+                } else if (StringUtils.isEmpty(gongJiangRuZhuBean.shenFenZhengZhengMian)) {
+                    UIHelper.ToastMessage(mContext, "请上传身份证正面");
+                } else if (StringUtils.isEmpty(gongJiangRuZhuBean.shenFenZhengFanMian)) {
+                    UIHelper.ToastMessage(mContext, "请上传身份证反面");
+                } else if (StringUtils.isEmpty(gongJiangRuZhuBean.diZhi)) {
+                    UIHelper.ToastMessage(mContext, "请上传地址");
+                } else if (StringUtils.isEmpty(gongJiangRuZhuBean.weiXinHao)) {
+                    UIHelper.ToastMessage(mContext, "请上传微信号");
+                }
 
+                tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                    @Override
+                    public void onClickCancel(View v, TishiDialog dialog) {
 
-                saveData();
+                    }
+
+                    @Override
+                    public void onClickConfirm(View v, TishiDialog dialog) {
+                        saveData();
+                    }
+
+                    @Override
+                    public void onDismiss(TishiDialog dialog) {
+
+                    }
+                });
+                tishiDialog.setTextContent("是否确认提交当前内容");
+                tishiDialog.show();
+
             }
         });
 
@@ -142,6 +193,7 @@ public class GongJiangRuZhuActivity extends BaseActivity implements TakePhoto.Ta
                     @Override
                     public void submit(String str) {
                         tvGongjiangXingming.setText(str);
+                        gongJiangRuZhuBean.lianXiRenMingCheng = str;
 
                     }
                 }, "请输入姓名");
@@ -162,12 +214,15 @@ public class GongJiangRuZhuActivity extends BaseActivity implements TakePhoto.Ta
             @Override
             public void onClick(View v) {
 
+                shangChuanTuPianLeiXing = "2";
+                getPaiZhaoPhone();
             }
         });
         ivShenfengzhengFanmian.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                shangChuanTuPianLeiXing = "3";
+                getPaiZhaoPhone();
             }
         });
 
@@ -175,18 +230,20 @@ public class GongJiangRuZhuActivity extends BaseActivity implements TakePhoto.Ta
             @Override
             public void onClick(View v) {
 
-                TongYongShuRuDIalog tongYongShuRuDIalog = new TongYongShuRuDIalog(mContext, new ShuRuInterView() {
-                    @Override
-                    public void cannel() {
+//                TongYongShuRuDIalog tongYongShuRuDIalog = new TongYongShuRuDIalog(mContext, new ShuRuInterView() {
+//                    @Override
+//                    public void cannel() {
+//
+//                    }
+//
+//                    @Override
+//                    public void submit(String str) {
+//                        tvGerenJianjie.setText(str);
+//                    }
+//                }, "请填写简介");
+//                tongYongShuRuDIalog.show();
 
-                    }
-
-                    @Override
-                    public void submit(String str) {
-                        tvGerenJianjie.setText(str);
-                    }
-                }, "请填写简介");
-                tongYongShuRuDIalog.show();
+                TcInputActivity.actionStart(mContext, "jieshao", tvGerenJianjie.getText().toString());
             }
         });
 
@@ -229,7 +286,72 @@ public class GongJiangRuZhuActivity extends BaseActivity implements TakePhoto.Ta
         });
 
         Glide.with(mContext).load(R.mipmap.shoppicture_icon_add).into(ivTouxiang);
+        rlWeixin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TongYongShuRuDIalog tongYongShuRuDIalog = new TongYongShuRuDIalog(mContext, new ShuRuInterView() {
+                    @Override
+                    public void cannel() {
+
+                    }
+
+                    @Override
+                    public void submit(String str) {
+                        tvWeixinhao.setText(str);
+                        gongJiangRuZhuBean.weiXinHao = str;
+                    }
+                }, "请输入微信号");
+
+                tongYongShuRuDIalog.show();
+            }
+        });
+
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_FUWUGONGZHONG) {
+                    fuWuGongZhongList = (List<String>) message.content;
+                    tvFuwuGongzhong.setText(fuWuGongZhongList.get(0));
+                    gongJiangRuZhuBean.fuWuGongZhong = fuWuGongZhongList.get(1);
+                } else if (message.type == ConstanceValue.MSG_BIANMINFABU_HUICHUANDIZHI) {
+                    //bianMinFaBuBean.diZhi = (String) message.content;
+                    List<Object> list = (List<Object>) message.content;
+
+                    gongJiangRuZhuBean.diZhi = (String) list.get(0);
+                    LatLonPoint latLonPoint = (LatLonPoint) list.get(1);
+
+                    gongJiangRuZhuBean.weiDu = String.valueOf(latLonPoint.getLatitude());
+                    gongJiangRuZhuBean.jingDu = String.valueOf(latLonPoint.getLongitude());
+
+                    tvDizhi.setText((CharSequence) list.get(0));
+                } else if (message.type == ConstanceValue.MSG_TONGYONG_INPUT) {
+                    String content = (String) message.content;
+                    String input_type = message.input_type;
+                    if (input_type.equals("jieshao")) {
+                        tvGerenJianjie.setText(content);
+                        gongJiangRuZhuBean.geRenJianJie = content;
+                    }
+                }
+            }
+        }));
+
+        rlFuwuQuyu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, PoiKeywordSearchActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        String dizhi = PreferenceHelper.getInstance(mContext).getString(AppConfig.ADDRESS, "");
+        gongJiangRuZhuBean.weiDu = PreferenceHelper.getInstance(mContext).getString(WEIDU, "");
+        gongJiangRuZhuBean.jingDu = PreferenceHelper.getInstance(mContext).getString(JINGDU, "");
+        tvDizhi.setText(dizhi);
+        gongJiangRuZhuBean.diZhi = dizhi;
     }
+
+    List<String> fuWuGongZhongList;
+    String fuWuGongZhong;
 
     private TakePhoto takePhoto;
 
@@ -328,7 +450,7 @@ public class GongJiangRuZhuActivity extends BaseActivity implements TakePhoto.Ta
                                 Glide.with(mContext).load(response.body().data.get(0).getImg_url()).into(ivTouxiang);
                                 gongJiangRuZhuBean.touXiang = response.body().data.get(0).getImg_url();
                                 gongJiangRuZhuBean.touXiangId = response.body().data.get(0).getImg_id();
-                            } else {
+                            } else if (shangChuanTuPianLeiXing.equals("1")) {
                                 BianMinFaBuBean.ProBean xiangQingTuBean = new BianMinFaBuBean.ProBean();
                                 xiangQingTuBean.type = "1";
                                 xiangQingTuBean.ir_img_url = response.body().data.get(0).getImg_url();
@@ -343,6 +465,14 @@ public class GongJiangRuZhuActivity extends BaseActivity implements TakePhoto.Ta
                                 xiangQingTuBean1.type = "0";
                                 list.add(xiangQingTuBean1);
                                 xiangQingTuAdapter.notifyDataSetChanged();
+                            } else if (shangChuanTuPianLeiXing.equals("2")) {
+                                Glide.with(mContext).load(response.body().data.get(0).getImg_url()).into(ivShenfenzhengZhengmian);
+                                gongJiangRuZhuBean.shenFenZhengZhengMian = response.body().data.get(0).getImg_url();
+                                gongJiangRuZhuBean.shenFenZhengZhengMianId = response.body().data.get(0).getImg_id();
+                            } else if (shangChuanTuPianLeiXing.equals("3")) {
+                                Glide.with(mContext).load(response.body().data.get(0).getImg_url()).into(ivShenfengzhengFanmian);
+                                gongJiangRuZhuBean.shenFenZhengFanMian = response.body().data.get(0).getImg_url();
+                                gongJiangRuZhuBean.shenFenZhengFanMianId = response.body().data.get(0).getImg_id();
                             }
 
                         }
@@ -465,7 +595,24 @@ public class GongJiangRuZhuActivity extends BaseActivity implements TakePhoto.Ta
                     @Override
                     public void onSuccess(Response<AppResponse<Home.DataBean>> response) {
                         Logger.d(gson.toJson(response.body()));
+                        tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
 
+                            }
+
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
+                                finish();
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+
+                            }
+                        });
+                        tishiDialog.setTextContent("提交成功");
+                        tishiDialog.show();
                     }
 
                     @Override

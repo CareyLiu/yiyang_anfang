@@ -52,19 +52,19 @@
                 </View>
 
                 <RelativeLayout
+                    android:id="@+id/tv_rl_queding"
                     android:layout_width="159dp"
                     android:layout_height="42dp"
                     android:layout_weight="1"
                     android:background="@drawable/que_ding_pink">
 
                     <TextView
-                        android:layout_centerInParent="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
                         android:text="确定"
                         android:textColor="#ffffffff"
-                        android:textSize="14sp"
-                        />
+                        android:textSize="14sp" />
 
                 </RelativeLayout>
 

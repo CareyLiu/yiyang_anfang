@@ -14,15 +14,53 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <RelativeLayout
+                android:id="@+id/rl_shenhezhuangtai"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="审核状态"
+                    android:textColor="#ff333333"
+                    android:textSize="15sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp">
+
+                    <ImageView
+                        android:id="@+id/iv_shenhe_icon"
+                        android:layout_width="23dp"
+                        android:layout_height="23dp" />
+
+                    <TextView
+                        android:id="@+id/tv_shenhe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="审核中"
+                        android:textColor="#ff15d78e"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </RelativeLayout>
 
             <TextView
+                android:id="@+id/tv_title_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
-                android:text="专业清洗地暖及家电"
                 android:textColor="#ff111111"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                tools:text="专业清洗地暖及家电" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -71,6 +109,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_jianjie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -79,13 +118,22 @@
                 android:textColor="#ff333333"
                 android:textSize="15sp" />
 
-            <ImageView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_206"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="15dp">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
 
-            </ImageView>
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

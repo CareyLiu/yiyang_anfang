@@ -22,7 +22,6 @@ import com.amap.api.services.core.LatLonPoint;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
@@ -33,12 +32,10 @@ import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.orhanobut.logger.Logger;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.SettingActivity;
 import com.smarthome.magic.activity.ShuRuInterView;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tongcheng58.model.TcUpLoadModel;
 import com.smarthome.magic.adapter.XiangQingTuAdapter;
-import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
@@ -50,15 +47,12 @@ import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.TongYongShuRuDIalog;
-import com.smarthome.magic.dialog.TongYongShuRuEditTextDIalog;
 import com.smarthome.magic.dialog.newdia.FaBuLanMuDialog;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.BianMinFaBuBean;
 import com.smarthome.magic.model.Home;
 import com.smarthome.magic.model.JingYingXiangBean;
-import com.smarthome.magic.model.Upload;
-import com.smarthome.magic.model.XiangQingTuBean;
 import com.smarthome.magic.util.AlertUtil;
 
 import org.devio.takephoto.app.TakePhoto;
@@ -83,10 +77,9 @@ import rx.functions.Action1;
 
 import static com.smarthome.magic.app.App.JINGDU;
 import static com.smarthome.magic.app.App.WEIDU;
-import static com.smarthome.magic.app.App.getInstance;
 import static com.smarthome.magic.get_net.Urls.TONGCHENG;
 
-public class BianMinFaBuActivity extends BaseActivity implements TakePhoto.TakeResultListener, InvokeListener {
+public class BianMinFaBuBianJiActivity extends BaseActivity implements TakePhoto.TakeResultListener, InvokeListener {
     @BindView(R.id.tv_tian_xie_biao_ti)
     TextView tvTianXieBiaoTi;
     @BindView(R.id.rl_fabubiaoti)
@@ -718,7 +711,7 @@ public class BianMinFaBuActivity extends BaseActivity implements TakePhoto.TakeR
             @Override
             public void bianMinFabu() {
                 //UIHelper.ToastMessage(mContext, "便民");
-                BianMinFaBuActivity.actionStart(mContext);
+                BianMinFaBuBianJiActivity.actionStart(mContext);
             }
         });
         faBuDialog.show();
@@ -771,7 +764,7 @@ public class BianMinFaBuActivity extends BaseActivity implements TakePhoto.TakeR
      * @param context
      */
     public static void actionStart(Context context, String irId) {
-        Intent intent = new Intent(context, BianMinFaBuActivity.class);
+        Intent intent = new Intent(context, BianMinFaBuBianJiActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("irid", irId);
         context.startActivity(intent);
@@ -783,8 +776,12 @@ public class BianMinFaBuActivity extends BaseActivity implements TakePhoto.TakeR
      * @param context
      */
     public static void actionStart(Context context) {
-        Intent intent = new Intent(context, BianMinFaBuActivity.class);
+        Intent intent = new Intent(context, BianMinFaBuBianJiActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+    }
+
+    public void getData() {
+
     }
 }

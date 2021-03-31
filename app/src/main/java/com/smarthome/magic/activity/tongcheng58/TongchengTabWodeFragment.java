@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.sdk.android.utils.AMSConfigUtils;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
@@ -140,6 +141,7 @@ public class TongchengTabWodeFragment extends BaseFragment {
                     Y.t("商家的详情  " + ir_id);
                 } else if (ir_type.equals("3")) {
                     Y.t("便民的详情  " + ir_id);
+                    BianMinXinXiActivity.actionStart(getActivity(),ir_id,bean.getIr_audit_state(),bean.getIr_audit_state_name());
                 }
             }
         });

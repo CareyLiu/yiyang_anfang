@@ -27,6 +27,8 @@ public class GongJiangRuZhuBean {
     public String diZhi;
     //微信号
     public String weiXinHao;
+    //个人简介
+    public String geRenJianJie;
 
     //pro
     public List<BianMinFaBuBean.ProBean> proBeanList;

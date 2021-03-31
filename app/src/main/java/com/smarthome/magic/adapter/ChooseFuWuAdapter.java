@@ -9,14 +9,14 @@ import com.smarthome.magic.model.FuWuGongZhongBean;
 
 import java.util.List;
 
-public class ChooseFuWuAdapter extends BaseQuickAdapter<FuWuGongZhongBean, BaseViewHolder> {
-    public ChooseFuWuAdapter(int layoutResId, @Nullable List<FuWuGongZhongBean> data) {
+public class ChooseFuWuAdapter extends BaseQuickAdapter<FuWuGongZhongBean.DataBean, BaseViewHolder> {
+    public ChooseFuWuAdapter(int layoutResId, @Nullable List<FuWuGongZhongBean.DataBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, FuWuGongZhongBean item) {
-        // helper.setText(R.id.tv_text, item);
+    protected void convert(BaseViewHolder helper, FuWuGongZhongBean.DataBean item) {
+        helper.setText(R.id.tv_text, item.getName());
         helper.addOnClickListener(R.id.ll_main);
         if (item.type.equals("0")) {
             helper.setTextColor(R.id.tv_text, mContext.getResources().getColor(R.color.color_FFFC0100));

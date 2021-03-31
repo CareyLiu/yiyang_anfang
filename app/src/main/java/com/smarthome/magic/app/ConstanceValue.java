@@ -180,7 +180,7 @@ public interface ConstanceValue {
     int MSG_WANNENGYAOKONGQI_CODE_DELETE = 0x10133;//万能遥控器配网码
 
     int MSG_BIANMINFABU_HUICHUANDIZHI = 0x10134;//回传地址
-
     int MSG_TONGYONG_INPUT = 0x10135;//通用输入
+    int MSG_FUWUGONGZHONG = 0x10136;//服务工种
 
 }

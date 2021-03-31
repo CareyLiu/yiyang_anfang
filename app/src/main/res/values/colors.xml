@@ -563,6 +563,10 @@
     <color name="tongcheng_yjj">#FC0100</color>
     <color name="tongchneg_shz">#15D78E</color>
 
+    <color name="tongcheng_yjj_beijing">#1AFC0100</color>
+    <color name="tongcheng_yfb_beijing">#1AFA7E00</color>
+    <color name="tongchneg_shz_beijing">#1A15D78E</color>
+
 
 
 </resources>

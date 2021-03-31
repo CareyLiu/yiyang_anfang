@@ -22,5 +22,6 @@ public class TcBianminAdapter extends BaseQuickAdapter<TcBianminModel.DataBean.I
         Glide.with(mContext).load(item.getNotice_img_url()).into((ImageView) helper.getView(R.id.iv_img));
         helper.setText(R.id.tv_name, item.getIr_title());
         helper.setText(R.id.tv_juli, item.getMeter() + "m");
+        helper.addOnClickListener(R.id.ll_lianxi);
     }
 }

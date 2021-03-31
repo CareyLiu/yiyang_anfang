@@ -29,6 +29,8 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.DefaultX5WebViewActivity;
+import com.smarthome.magic.activity.LoginActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tongcheng58.model.TcBannerModel;
 import com.smarthome.magic.activity.tongcheng58.model.TcHomeModel;
@@ -312,7 +314,7 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
                 clickXiyiSelect();
                 break;
             case R.id.tv_xieyi:
-
+                DefaultX5WebViewActivity.actionStart(mContext, Urls.SERVER_URL+"ir/gjIssueNotice");
                 break;
             case R.id.bt_save:
                 save();

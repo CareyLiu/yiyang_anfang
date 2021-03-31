@@ -10,7 +10,7 @@ public class TcWodeModel {
      * msg_code : 0000
      * msg : ok
      * row_num : 2
-     * data : [{"infor_list":[{"ir_title":"咕哒之家","ir_audit_state":"1","ir_img_url":"http://yjn-znjj.oss-cn-hangzhou.aliyuncs.com/20210329165142000001.jpg","ir_audit_state_name":"审核中","ir_id":"16"},{"ir_title":"国尚公司","ir_audit_state":"2","ir_img_url":"https://test.hljsdkj.com/Frame/uploadFile/showImg?file_id=12016","ir_audit_state_name":"已发布","ir_id":"12"}],"user_name":"咕哒王","user_phone":"15114684672"}]
+     * data : [{"infor_list":[{"ir_title":"咕哒之家","ir_audit_state":"2","ir_img_url":"http://yjn-znjj.oss-cn-hangzhou.aliyuncs.com/20210329165142000001.jpg","ir_audit_state_name":"已发布","ir_id":"16"},{"ir_title":"国尚公司","ir_audit_state":"2","ir_img_url":"https://test.hljsdkj.com/Frame/uploadFile/showImg?file_id=12016","ir_audit_state_name":"已发布","ir_id":"12"}],"is_sj":"1","is_gj":"0","user_name":"咕哒王","user_phone":"15114684672","user_img_url":"https://shop.hljsdkj.com/commons/easyui/images/weishezhitouxiang.png"}]
      */
 
     private String next;
@@ -61,14 +61,36 @@ public class TcWodeModel {
 
     public static class DataBean {
         /**
-         * infor_list : [{"ir_title":"咕哒之家","ir_audit_state":"1","ir_img_url":"http://yjn-znjj.oss-cn-hangzhou.aliyuncs.com/20210329165142000001.jpg","ir_audit_state_name":"审核中","ir_id":"16"},{"ir_title":"国尚公司","ir_audit_state":"2","ir_img_url":"https://test.hljsdkj.com/Frame/uploadFile/showImg?file_id=12016","ir_audit_state_name":"已发布","ir_id":"12"}]
+         * infor_list : [{"ir_title":"咕哒之家","ir_audit_state":"2","ir_img_url":"http://yjn-znjj.oss-cn-hangzhou.aliyuncs.com/20210329165142000001.jpg","ir_audit_state_name":"已发布","ir_id":"16"},{"ir_title":"国尚公司","ir_audit_state":"2","ir_img_url":"https://test.hljsdkj.com/Frame/uploadFile/showImg?file_id=12016","ir_audit_state_name":"已发布","ir_id":"12"}]
+         * is_sj : 1
+         * is_gj : 0
          * user_name : 咕哒王
          * user_phone : 15114684672
+         * user_img_url : https://shop.hljsdkj.com/commons/easyui/images/weishezhitouxiang.png
          */
 
+        private String is_sj;
+        private String is_gj;
         private String user_name;
         private String user_phone;
+        private String user_img_url;
         private List<InforListBean> infor_list;
+
+        public String getIs_sj() {
+            return is_sj;
+        }
+
+        public void setIs_sj(String is_sj) {
+            this.is_sj = is_sj;
+        }
+
+        public String getIs_gj() {
+            return is_gj;
+        }
+
+        public void setIs_gj(String is_gj) {
+            this.is_gj = is_gj;
+        }
 
         public String getUser_name() {
             return user_name;
@@ -86,6 +108,14 @@ public class TcWodeModel {
             this.user_phone = user_phone;
         }
 
+        public String getUser_img_url() {
+            return user_img_url;
+        }
+
+        public void setUser_img_url(String user_img_url) {
+            this.user_img_url = user_img_url;
+        }
+
         public List<InforListBean> getInfor_list() {
             return infor_list;
         }
@@ -97,9 +127,9 @@ public class TcWodeModel {
         public static class InforListBean {
             /**
              * ir_title : 咕哒之家
-             * ir_audit_state : 1
+             * ir_audit_state : 2
              * ir_img_url : http://yjn-znjj.oss-cn-hangzhou.aliyuncs.com/20210329165142000001.jpg
-             * ir_audit_state_name : 审核中
+             * ir_audit_state_name : 已发布
              * ir_id : 16
              */
 

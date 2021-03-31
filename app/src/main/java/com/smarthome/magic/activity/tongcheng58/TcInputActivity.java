@@ -13,7 +13,6 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
-import com.smarthome.magic.fragment.znjj.ZhiNengJiaJuFragment;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -70,6 +69,7 @@ public class TcInputActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         type = getIntent().getStringExtra("type");
         text = getIntent().getStringExtra("text");
+        tv_input.setText(text.length() + "/200");
         ed_input.setText(text);
         ed_input.addTextChangedListener(new TextWatcher() {
             @Override

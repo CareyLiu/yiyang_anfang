@@ -42,42 +42,31 @@
                 android:gravity="center_vertical"
                 android:paddingHorizontal="15pt">
 
-                <ImageView
-                    android:layout_width="31pt"
-                    android:layout_height="31pt"
-                    android:layout_marginRight="8pt"
-                    android:src="@mipmap/gongjiang_pic_weizhi" />
-
                 <TextView
-                    android:id="@+id/tv_juli"
+                    android:id="@+id/tv_state"
+                    android:layout_width="100pt"
+                    android:layout_height="38pt"
+                    android:background="@drawable/bg_tongcheng_state_yfb"
+                    android:gravity="center"
+                    android:text="已发布"
+                    android:textColor="@color/tongcheng_yfb"
+                    android:textSize="23pt"
+                    android:textStyle="bold" />
+
+                <View
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:includeFontPadding="false"
-                    android:text="3.0km"
-                    android:textColor="@color/color_6"
-                    android:textSize="23pt" />
+                    android:layout_weight="1" />
 
-                <LinearLayout
-                    android:id="@+id/ll_lianxi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
-
-                    <ImageView
-                        android:layout_width="31pt"
-                        android:layout_height="31pt"
-                        android:layout_marginRight="8pt"
-                        android:src="@mipmap/icon_58_dianhua_small" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:includeFontPadding="false"
-                        android:text="咨询"
-                        android:textColor="@color/color_6"
-                        android:textSize="23pt" />
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/bt_bianjie"
+                    android:layout_width="100pt"
+                    android:layout_height="38pt"
+                    android:gravity="center"
+                    android:text="编辑"
+                    android:textColor="@color/text_red"
+                    android:textSize="23pt"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

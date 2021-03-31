@@ -64,7 +64,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:paddingLeft="19pt" />
+                    android:paddingLeft="19pt"
+                    android:paddingTop="10pt" />
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

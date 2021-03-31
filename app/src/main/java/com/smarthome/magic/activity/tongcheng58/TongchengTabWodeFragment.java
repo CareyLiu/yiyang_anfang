@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -17,6 +19,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
+import com.smarthome.magic.activity.tongcheng58.adapter.TcWodeAdapter;
 import com.smarthome.magic.activity.tongcheng58.model.TcWodeModel;
 import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
@@ -24,11 +27,13 @@ import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,7 +75,8 @@ public class TongchengTabWodeFragment extends BaseFragment {
     private String ir_type;
     private int page_number;
     private TcWodeModel.DataBean wodeBean;
-    private List<TcWodeModel.DataBean.InforListBean> infor_list;
+    private List<TcWodeModel.DataBean.InforListBean> wodeBeanInfor_list = new ArrayList<>();
+    private TcWodeAdapter adapter;
 
     @Override
     protected void initLogic() {
@@ -104,7 +110,44 @@ public class TongchengTabWodeFragment extends BaseFragment {
     }
 
     private void initAdapter() {
+        adapter = new TcWodeAdapter(R.layout.tongcheng_item_wode, wodeBeanInfor_list);
+        rvList.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        rvList.setAdapter(adapter);
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.bt_bianjie) {
+                    TcWodeModel.DataBean.InforListBean bean = wodeBeanInfor_list.get(position);
+                    String ir_id = bean.getIr_id();
+                    if (ir_type.equals("1")) {
+                        Y.t("工匠的编辑  " + ir_id);
+                    } else if (ir_type.equals("2")) {
+                        Y.t("商家的编辑  " + ir_id);
+                    } else if (ir_type.equals("3")) {
+                        Y.t("便民的编辑  " + ir_id);
+                    }
+                }
+            }
+        });
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                TcWodeModel.DataBean.InforListBean bean = wodeBeanInfor_list.get(position);
+                String ir_id = bean.getIr_id();
+                if (ir_type.equals("1")) {
+                    Y.t("工匠的详情  " + ir_id);
+                } else if (ir_type.equals("2")) {
+                    Y.t("商家的详情  " + ir_id);
+                } else if (ir_type.equals("3")) {
+                    Y.t("便民的详情  " + ir_id);
+                }
+            }
+        });
 
+        View view = View.inflate(getContext(), R.layout.empty_view, null);
+        ImageView noneImage = view.findViewById(R.id.iv_image);
+        noneImage.setBackgroundResource(R.mipmap.shop_pic_none);
+        adapter.setEmptyView(view);
     }
 
     private void initSM() {
@@ -141,9 +184,27 @@ public class TongchengTabWodeFragment extends BaseFragment {
                     public void onSuccess(final Response<AppResponse<TcWodeModel.DataBean>> response) {
                         if (response.body().msg_code.equals("0000")) {
                             wodeBean = response.body().data.get(0);
-                            infor_list = wodeBean.getInfor_list();
-//                            itemAdapter.setNewData(shopListBeans);
-//                            itemAdapter.notifyDataSetChanged();
+
+                            Glide.with(getContext()).load(wodeBean.getUser_img_url()).into(ivIcon);
+                            rvName.setText(wodeBean.getUser_name());
+
+                            String is_gj = wodeBean.getIs_gj();
+                            if (is_gj.equals("1")) {
+                                ivGongjing.setVisibility(View.VISIBLE);
+                            } else {
+                                ivGongjing.setVisibility(View.GONE);
+                            }
+
+                            String is_sj = wodeBean.getIs_sj();
+                            if (is_sj.equals("1")) {
+                                ivShangjia.setVisibility(View.VISIBLE);
+                            } else {
+                                ivShangjia.setVisibility(View.GONE);
+                            }
+
+                            wodeBeanInfor_list = wodeBean.getInfor_list();
+                            adapter.setNewData(wodeBeanInfor_list);
+                            adapter.notifyDataSetChanged();
                         }
                     }
 
@@ -171,11 +232,12 @@ public class TongchengTabWodeFragment extends BaseFragment {
                 .execute(new JsonCallback<AppResponse<TcWodeModel.DataBean>>() {
                     @Override
                     public void onSuccess(final Response<AppResponse<TcWodeModel.DataBean>> response) {
-                        if (response.body().msg_code.equals("0000"))
+                        if (response.body().msg_code.equals("0000")) {
                             wodeBean = response.body().data.get(0);
-                        List<TcWodeModel.DataBean.InforListBean> inforList = wodeBean.getInfor_list();
-                        infor_list.addAll(inforList);
-
+                            List<TcWodeModel.DataBean.InforListBean> inforList = wodeBean.getInfor_list();
+                            wodeBeanInfor_list.addAll(inforList);
+                            adapter.notifyDataSetChanged();
+                        }
                     }
 
                     @Override

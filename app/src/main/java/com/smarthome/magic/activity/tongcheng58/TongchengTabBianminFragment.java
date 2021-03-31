@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -131,6 +133,28 @@ public class TongchengTabBianminFragment extends BaseFragment {
         adapter = new TcBianminAdapter(R.layout.tongcheng_item_bianmin, irNoticeList);
         rv_list.setLayoutManager(new GridLayoutManager(getContext(), 2));
         rv_list.setAdapter(adapter);
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.ll_lianxi) {
+                    Y.t("联系方式");
+                }
+            }
+        });
+
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                TcBianminModel.DataBean.IrNoticeListBean bean = irNoticeList.get(position);
+                String ir_id = bean.getIr_id();
+                Y.t("我的ID是" + ir_id);
+            }
+        });
+
+        View view = View.inflate(getContext(), R.layout.empty_view, null);
+        ImageView noneImage = view.findViewById(R.id.iv_image);
+        noneImage.setBackgroundResource(R.mipmap.shop_pic_none);
+        adapter.setEmptyView(view);
     }
 
     private void getData() {

@@ -36,6 +36,7 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -126,6 +127,7 @@ public class TongchengTabWodeFragment extends BaseFragment {
                         ShangjiaBianjiActivity.actionStart(getContext(),ir_id);
                     } else if (ir_type.equals("3")) {
                         Y.t("便民的编辑  " + ir_id);
+                        BianMinFaBuBianJiActivity.actionStart(getActivity(), wodeBeanInfor_list.get(position).getIr_id());
                     }
                 }
             }
@@ -136,12 +138,14 @@ public class TongchengTabWodeFragment extends BaseFragment {
                 TcWodeModel.DataBean.InforListBean bean = wodeBeanInfor_list.get(position);
                 String ir_id = bean.getIr_id();
                 if (ir_type.equals("1")) {
-                    Y.t("工匠的详情  " + ir_id);
+                    // Y.t("工匠的详情  " + ir_id);
+                    GongJiangXinXiActivity.actionStart(getActivity(), bean.getIr_id());
                 } else if (ir_type.equals("2")) {
+                    //Y.t("商家的详情  " + ir_id);
                     ShangjiaWodeActivity.actionStart(getContext(),ir_id);
                 } else if (ir_type.equals("3")) {
-                    Y.t("便民的详情  " + ir_id);
-                    BianMinXinXiActivity.actionStart(getActivity(),ir_id,bean.getIr_audit_state(),bean.getIr_audit_state_name());
+                    // Y.t("便民的详情  " + ir_id);
+                    BianMinXinXiActivity.actionStart(getActivity(), ir_id, bean.getIr_audit_state(), bean.getIr_audit_state_name());
                 }
             }
         });

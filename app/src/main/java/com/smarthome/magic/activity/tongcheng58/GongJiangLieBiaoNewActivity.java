@@ -50,6 +50,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 
 public class GongJiangLieBiaoNewActivity extends BaseActivity {
@@ -153,7 +154,7 @@ public class GongJiangLieBiaoNewActivity extends BaseActivity {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+                GongJiangXinXiActivity.actionStart(mContext, craftsManList.get(position).ir_id);
             }
         });
 

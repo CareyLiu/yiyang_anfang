@@ -22,6 +22,8 @@ import com.amap.api.services.core.LatLonPoint;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
@@ -32,6 +34,7 @@ import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.orhanobut.logger.Logger;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.DefaultX5WebView_HaveNameActivity;
 import com.smarthome.magic.activity.ShuRuInterView;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tongcheng58.model.TcUpLoadModel;
@@ -51,6 +54,7 @@ import com.smarthome.magic.dialog.newdia.FaBuLanMuDialog;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.BianMinFaBuBean;
+import com.smarthome.magic.model.BianMinXinXiModel;
 import com.smarthome.magic.model.Home;
 import com.smarthome.magic.model.JingYingXiangBean;
 import com.smarthome.magic.util.AlertUtil;
@@ -64,6 +68,7 @@ import org.devio.takephoto.model.TResult;
 import org.devio.takephoto.permission.InvokeListener;
 import org.devio.takephoto.permission.PermissionManager;
 import org.devio.takephoto.permission.TakePhotoInvocationHandler;
+import org.w3c.dom.CDATASection;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -77,6 +82,7 @@ import rx.functions.Action1;
 
 import static com.smarthome.magic.app.App.JINGDU;
 import static com.smarthome.magic.app.App.WEIDU;
+import static com.smarthome.magic.get_net.Urls.BIANMINXUZHI;
 import static com.smarthome.magic.get_net.Urls.TONGCHENG;
 
 public class BianMinFaBuBianJiActivity extends BaseActivity implements TakePhoto.TakeResultListener, InvokeListener {
@@ -369,6 +375,86 @@ public class BianMinFaBuBianJiActivity extends BaseActivity implements TakePhoto
         tvXiangxidizhi.setText(dizhi);
         bianMinFaBuBean.diZhi = dizhi;
 
+        if (!StringUtils.isEmpty(irId)) {
+            getBianJiData();
+        }
+
+        tvFabuxuzhi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DefaultX5WebView_HaveNameActivity.actionStart(mContext, BIANMINXUZHI, "发布须知");
+            }
+        });
+    }
+
+    public void getBianJiData() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", "17008");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("ir_id", irId);
+        map.put("operate_type", "2");
+        Gson gson = new Gson();
+        OkGo.<AppResponse<BianMinXinXiModel.DataBean>>post(TONGCHENG)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<BianMinXinXiModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<BianMinXinXiModel.DataBean>> response) {
+                        Logger.d(gson.toJson(response.body()));
+                        BianMinXinXiModel.DataBean dataBean = response.body().data.get(0);
+                        bianMinFaBuBean.biaoTi = dataBean.getIr_title();
+                        bianMinFaBuBean.neiRongMiaoShu = dataBean.getIr_validity();
+                        bianMinFaBuBean.lianXiRenXingMing = dataBean.getIr_contact_name();
+                        for (int i = 0; i < dataBean.getImgList().size(); i++) {
+                            BianMinFaBuBean.ProBean proBean = new BianMinFaBuBean.ProBean();
+                            proBean.ir_img_id = dataBean.getImgList().get(i).getIr_img_id();
+                            proBean.ir_img_url = dataBean.getImgList().get(i).getIr_img_url();
+                            proBean.type = "1";
+                            bianMinFaBuBean.proBeanList.add(proBean);
+                        }
+                        bianMinFaBuBean.jingDu = dataBean.getY();
+                        bianMinFaBuBean.weiDu = dataBean.getX();
+                        bianMinFaBuBean.lanMuLeiXing = dataBean.getIr_column_type();
+                        bianMinFaBuBean.lanMuLeiXingMingCheng = dataBean.getIr_column_type_name();
+                        bianMinFaBuBean.lanMuLeiBie = dataBean.getIr_column_category();
+                        bianMinFaBuBean.lanMuLeiBieMingCheng = dataBean.getIr_column_category_name();
+                        bianMinFaBuBean.diZhi = dataBean.getAddr();
+
+                        tvTianXieBiaoTi.setText(bianMinFaBuBean.biaoTi);
+                        tvQingxuanze.setText(bianMinFaBuBean.lanMuLeiXingMingCheng + "-" + bianMinFaBuBean.lanMuLeiBieMingCheng);
+                        tvShurugonggao.setText(bianMinFaBuBean.neiRongMiaoShu);
+                        list.clear();
+                        for (int i = 0; i < bianMinFaBuBean.proBeanList.size(); i++) {
+                            list.add(bianMinFaBuBean.proBeanList.get(i));
+                        }
+                        BianMinFaBuBean.ProBean xiangQingTuBean1 = new BianMinFaBuBean.ProBean();
+                        xiangQingTuBean1.type = "0";
+                        list.add(xiangQingTuBean1);
+
+                        xiangQingTuAdapter.notifyDataSetChanged();
+                        tvShuruLianxiren.setText(bianMinFaBuBean.lianXiRenXingMing);
+                        tvXiangxidizhi.setText(bianMinFaBuBean.diZhi);
+
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<BianMinXinXiModel.DataBean>> response) {
+
+                        AlertUtil.t(mContext, response.getException().getMessage());
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<BianMinXinXiModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                    }
+                });
     }
 
     private TakePhoto takePhoto;
@@ -525,12 +611,10 @@ public class BianMinFaBuBianJiActivity extends BaseActivity implements TakePhoto
 
     public void saveData() {
         Map<String, Object> map = new HashMap<>();
-        map.put("code", "17001");
+        map.put("code", "17011");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
-        if (!StringUtils.isEmpty(irId)) {
-            map.put("", "");
-        }
+        map.put("ir_id", irId);
         map.put("x", bianMinFaBuBean.weiDu);
         map.put("y", bianMinFaBuBean.jingDu);
         map.put("ir_type", "3");
@@ -766,7 +850,7 @@ public class BianMinFaBuBianJiActivity extends BaseActivity implements TakePhoto
     public static void actionStart(Context context, String irId) {
         Intent intent = new Intent(context, BianMinFaBuBianJiActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("irid", irId);
+        intent.putExtra("irId", irId);
         context.startActivity(intent);
     }
 

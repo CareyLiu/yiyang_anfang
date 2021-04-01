@@ -90,7 +90,7 @@ public class TcGongjiangModel {
              * ir_personnal_name : 小朱
              * addr : 黑龙江省哈尔滨市道里区
              */
-
+            public String ir_id;
             private String ir_audit_state;
             private String meter;
             private String x;

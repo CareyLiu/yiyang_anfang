@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.flyco.roundview.RoundRelativeLayout;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -25,6 +26,7 @@ import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.BianMinXinXiModel;
 import com.smarthome.magic.util.AlertUtil;
@@ -55,6 +57,12 @@ public class BianMinXinXiActivity extends BaseActivity {
     TextView tvShenhe;
     @BindView(R.id.rl_shenhezhuangtai)
     RelativeLayout rlShenhezhuangtai;
+    @BindView(R.id.rrl_chongxinfabu)
+    RoundRelativeLayout rrlChongxinfabu;
+    @BindView(R.id.ll_jujue)
+    LinearLayout llJujue;
+    @BindView(R.id.tv_jujue_yuanyin)
+    TextView tvJujueYuanyin;
     private String irId;
     private String state;
     private String stateName;
@@ -85,6 +93,18 @@ public class BianMinXinXiActivity extends BaseActivity {
                 tvShenhe.setTextColor(mContext.getResources().getColor(R.color.tongcheng_yjj));
                 tvShenhe.setText("已拒绝");
                 ivShenheIcon.setBackgroundResource(R.mipmap.gongjiangxinxi_pic_yijujue);
+                rrlChongxinfabu.setVisibility(View.VISIBLE);
+
+                rrlChongxinfabu.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //重新发布
+                        BianMinFaBuBianJiActivity.actionStart(mContext, irId);
+                    }
+                });
+                llJujue.setVisibility(View.VISIBLE);
+
+
             }
         } else {
             operate_type = "1";
@@ -98,6 +118,12 @@ public class BianMinXinXiActivity extends BaseActivity {
     }
 
     private String operate_type = "2";//默认查询审核类型
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
+    }
 
     public void getData() {
         Map<String, Object> map = new HashMap<>();
@@ -116,6 +142,7 @@ public class BianMinXinXiActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Response<AppResponse<BianMinXinXiModel.DataBean>> response) {
                         Logger.d(gson.toJson(response.body()));
+                        irId = response.body().data.get(0).getIr_id();
                         //标题
                         tvTitleName.setText(response.body().data.get(0).getIr_title());
 
@@ -140,6 +167,7 @@ public class BianMinXinXiActivity extends BaseActivity {
                             }
                             linearLayout.addView(view);
                         }
+                        tvJujueYuanyin.setText(response.body().data.get(0).getIr_manage_text());
                     }
 
                     @Override
@@ -187,12 +215,53 @@ public class BianMinXinXiActivity extends BaseActivity {
         return true;
     }
 
+    TishiDialog tishiDialog;
+
     @Override
     protected void initToolbar() {
         super.initToolbar();
         tv_title.setText("便民信息");
         tv_title.setTextSize(17);
         tv_title.setTextColor(getResources().getColor(R.color.black));
+        iv_rightTitle.setVisibility(View.VISIBLE);
+        iv_rightTitle.setImageResource(R.mipmap.def_more);
+        iv_rightTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //1.待审核 2.已审核 2.审核拒绝
+
+                tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                    @Override
+                    public void onClickCancel(View v, TishiDialog dialog) {
+
+                    }
+
+                    @Override
+                    public void onClickConfirm(View v, TishiDialog dialog) {
+                        deleteNet();
+                    }
+
+                    @Override
+                    public void onDismiss(TishiDialog dialog) {
+
+                    }
+                });
+
+                tishiDialog.setTextContent("是否确定删除此信息");
+                tishiDialog.show();
+
+//                if (state.equals("1")) {
+//
+//
+//                } else if (state.equals("2")) {
+//
+//
+//                } else if (state.equals("3")) {
+//
+//
+//                }
+            }
+        });
         mToolbar.setNavigationIcon(R.mipmap.backbutton);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,5 +270,41 @@ public class BianMinXinXiActivity extends BaseActivity {
                 finish();
             }
         });
+    }
+
+    private void deleteNet() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", "17014");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("ir_id", irId);
+        Gson gson = new Gson();
+        OkGo.<AppResponse<BianMinXinXiModel.DataBean>>post(TONGCHENG)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<BianMinXinXiModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<BianMinXinXiModel.DataBean>> response) {
+                        Logger.d(gson.toJson(response.body()));
+                        finish();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<BianMinXinXiModel.DataBean>> response) {
+
+                        AlertUtil.t(mContext, response.getException().getMessage());
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<BianMinXinXiModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                    }
+                });
     }
 }

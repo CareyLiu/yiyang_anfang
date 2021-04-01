@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,7 +19,7 @@
                 android:id="@+id/rl_shenhezhuangtai"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -51,6 +52,24 @@
                         android:textSize="15sp" />
                 </LinearLayout>
             </RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_jujue"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_jujue_yuanyin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="拒绝原因：图片模糊"
+                    android:textColor="#ff333333"
+                    android:textSize="15sp" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_title_name"
@@ -136,4 +155,24 @@
 
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+
+    <com.flyco.roundview.RoundRelativeLayout
+        android:id="@+id/rrl_chongxinfabu"
+        android:layout_width="331dp"
+        android:layout_height="47dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:visibility="gone"
+        app:rv_backgroundColor="@color/FC0100"
+        app:rv_cornerRadius="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="重新发布"
+            android:textColor="#ffffffff"
+            android:textSize="15sp" />
+    </com.flyco.roundview.RoundRelativeLayout>
+</RelativeLayout>

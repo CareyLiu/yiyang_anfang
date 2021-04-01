@@ -34,5 +34,7 @@ public class Urls {
     public static String TONG_CHENG = SERVER_URL + "ir/app/user";//同城接口
     public static String TONG_CHENG_UPLOAD = SERVER_URL + "ir/app/upload";//同城上传图片
 
+    public static String GONGJIANGXUZHI = SERVER_URL + "ir/gjIssueNotice";//工匠发布须知
+    public static String BIANMINXUZHI = SERVER_URL + "ir/bmIssueNotice";//便民发布须知
 
 }

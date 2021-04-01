@@ -586,6 +586,8 @@ public class GongJiangRuZhuActivity extends BaseActivity implements TakePhoto.Ta
         map.put("addr", gongJiangRuZhuBean.diZhi);
         //微信号
         map.put("ir_wx_number", gongJiangRuZhuBean.weiXinHao);
+        // TODO: 2021/4/1 待调试
+        map.put("ir_validity", gongJiangRuZhuBean.geRenJianJie);
 
         Gson gson = new Gson();
         OkGo.<AppResponse<Home.DataBean>>post(TONGCHENG)

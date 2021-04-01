@@ -98,6 +98,7 @@ public class TcHomeModel {
              * ir_inst_name : 国尚公司
              * ir_contact_phone : 15248494682
              * addr : 黑龙江省哈尔滨市南岗区
+             * ir_id : 1
              */
 
             private String meter;
@@ -107,7 +108,16 @@ public class TcHomeModel {
             private String ir_inst_name;
             private String ir_contact_phone;
             private String addr;
+            private String ir_id;
             private List<InstDeviceListBean> inst_device_list;
+
+            public String getIr_id() {
+                return ir_id;
+            }
+
+            public void setIr_id(String ir_id) {
+                this.ir_id = ir_id;
+            }
 
             public String getMeter() {
                 return meter;

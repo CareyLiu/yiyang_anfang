@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -140,6 +141,14 @@ public class TongchengTabHomeFragment extends BaseFragment {
         itemAdapter = new TcHomeItemAdapter(R.layout.tongcheng_item_home_item, shopListBeans);
         rv_list.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_list.setAdapter(itemAdapter);
+        itemAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                String ir_id = shopListBeans.get(position).getIr_id();
+                ShangjiaDetailsActivity.actionStart(getContext(),ir_id);
+            }
+        });
+
 
         View view = View.inflate(getContext(), R.layout.empty_view, null);
         ImageView noneImage = view.findViewById(R.id.iv_image);

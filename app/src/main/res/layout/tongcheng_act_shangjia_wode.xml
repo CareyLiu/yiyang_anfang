@@ -25,6 +25,44 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <LinearLayout
+                    android:id="@+id/ll_shenhe_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="104pt"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="31pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="审核状态"
+                        android:textColor="@color/color_1"
+                        android:textSize="31pt"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:id="@+id/iv_shenhe_state"
+                        android:layout_width="46pt"
+                        android:layout_height="46pt"
+                        android:layout_marginRight="15pt" />
+
+                    <TextView
+                        android:id="@+id/tv_shenhe_state"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="审核状态"
+                        android:textColor="@color/color_1"
+                        android:textSize="31pt"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
                 <com.youth.banner.Banner
                     android:id="@+id/banner"
                     android:layout_width="match_parent"
@@ -172,7 +210,7 @@
                     android:id="@+id/tv_jieshao"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="140pt"
+                    android:layout_marginBottom="40pt"
                     android:background="@color/white"
                     android:hint="暂无商家介绍"
                     android:includeFontPadding="false"
@@ -190,59 +228,4 @@
             app:srlTextSizeTime="10sp"
             app:srlTextSizeTitle="12sp" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="96pt"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="23pt"
-        android:gravity="center">
-
-        <TextView
-            android:id="@+id/bt_phone"
-            android:layout_width="154pt"
-            android:layout_height="96pt"
-            android:layout_marginRight="17pt"
-            android:background="@color/black_22242C"
-            android:gravity="center"
-            android:text="打电话"
-            android:textColor="@color/white"
-            android:textSize="31pt"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/bt_weixin"
-            android:layout_width="154pt"
-            android:layout_height="96pt"
-            android:layout_marginRight="17pt"
-            android:background="@color/black_22242C"
-            android:gravity="center"
-            android:text="加微信"
-            android:textColor="@color/white"
-            android:textSize="31pt"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/bt_daohang"
-            android:layout_width="154pt"
-            android:layout_height="96pt"
-            android:layout_marginRight="17pt"
-            android:background="@color/black_22242C"
-            android:gravity="center"
-            android:text="导航"
-            android:textColor="@color/white"
-            android:textSize="31pt"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/bt_fenxiang"
-            android:layout_width="154pt"
-            android:layout_height="96pt"
-            android:background="@color/black_22242C"
-            android:gravity="center"
-            android:text="分享"
-            android:textColor="@color/white"
-            android:textSize="31pt"
-            android:textStyle="bold" />
-    </LinearLayout>
 </FrameLayout>

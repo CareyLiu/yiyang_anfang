@@ -126,6 +126,7 @@ public class GongJiangLieBiaoNewActivity extends BaseActivity {
         initStart();
         initAdapter();
         getData();
+        initSM();
     }
 
     private void initSM() {
@@ -167,6 +168,12 @@ public class GongJiangLieBiaoNewActivity extends BaseActivity {
         iconList = gongjiangBean.getIconList();
         setThisAdapter();
         initMagicIndicator1();
+        for (int i = 0; i < iconList.size(); i++) {
+            String serviceType = iconList.get(i).getService_type();
+            if (service_type.equals(serviceType)) {
+                viewPager.setCurrentItem(i);
+            }
+        }
     }
 
     private void initStart() {
@@ -201,7 +208,6 @@ public class GongJiangLieBiaoNewActivity extends BaseActivity {
                             }
 
                             craftsManList = gongjiangBean.getCraftsManList();
-                            Y.e("我是都是到付  " + craftsManList.size());
                             adapter.setNewData(craftsManList);
                             adapter.notifyDataSetChanged();
                         }

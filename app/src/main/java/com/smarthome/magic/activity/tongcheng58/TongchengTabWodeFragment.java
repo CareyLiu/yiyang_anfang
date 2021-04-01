@@ -123,7 +123,7 @@ public class TongchengTabWodeFragment extends BaseFragment {
                     if (ir_type.equals("1")) {
                         Y.t("工匠的编辑  " + ir_id);
                     } else if (ir_type.equals("2")) {
-                        Y.t("商家的编辑  " + ir_id);
+                        ShangjiaBianjiActivity.actionStart(getContext(),ir_id);
                     } else if (ir_type.equals("3")) {
                         Y.t("便民的编辑  " + ir_id);
                     }
@@ -138,7 +138,7 @@ public class TongchengTabWodeFragment extends BaseFragment {
                 if (ir_type.equals("1")) {
                     Y.t("工匠的详情  " + ir_id);
                 } else if (ir_type.equals("2")) {
-                    Y.t("商家的详情  " + ir_id);
+                    ShangjiaWodeActivity.actionStart(getContext(),ir_id);
                 } else if (ir_type.equals("3")) {
                     Y.t("便民的详情  " + ir_id);
                     BianMinXinXiActivity.actionStart(getActivity(),ir_id,bean.getIr_audit_state(),bean.getIr_audit_state_name());

@@ -22,6 +22,7 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
 import com.google.gson.Gson;
@@ -31,11 +32,11 @@ import com.lzy.okgo.request.base.Request;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.DefaultX5WebViewActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
+import com.smarthome.magic.activity.tongcheng58.adapter.TcSheshiAdapter;
 import com.smarthome.magic.activity.tongcheng58.model.ShangjiaDetailModel;
 import com.smarthome.magic.activity.tongcheng58.model.TcBannerModel;
 import com.smarthome.magic.activity.tongcheng58.model.TcHomeModel;
 import com.smarthome.magic.activity.tongcheng58.model.TcLeimuModel;
-import com.smarthome.magic.activity.tongcheng58.model.TcSheshiModel;
 import com.smarthome.magic.activity.tongcheng58.model.TcUpLoadModel;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.BaseActivity;
@@ -67,6 +68,8 @@ import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
@@ -117,40 +120,12 @@ public class ShangjiaBianjiActivity extends BaseActivity implements TakePhoto.Ta
     TextView btSave;
     @BindView(R.id.ed_phone)
     EditText edPhone;
-    @BindView(R.id.iv_select1)
-    ImageView ivSelect1;
-    @BindView(R.id.tv_select1)
-    TextView tvSelect1;
-    @BindView(R.id.ll_select1)
-    LinearLayout llSelect1;
-    @BindView(R.id.iv_select2)
-    ImageView ivSelect2;
-    @BindView(R.id.tv_select2)
-    TextView tvSelect2;
-    @BindView(R.id.ll_select2)
-    LinearLayout llSelect2;
-    @BindView(R.id.iv_select3)
-    ImageView ivSelect3;
-    @BindView(R.id.tv_select3)
-    TextView tvSelect3;
-    @BindView(R.id.ll_select3)
-    LinearLayout llSelect3;
-    @BindView(R.id.iv_select4)
-    ImageView ivSelect4;
-    @BindView(R.id.tv_select4)
-    TextView tvSelect4;
-    @BindView(R.id.ll_select4)
-    LinearLayout llSelect4;
-    @BindView(R.id.iv_select5)
-    ImageView ivSelect5;
-    @BindView(R.id.tv_select5)
-    TextView tvSelect5;
-    @BindView(R.id.ll_select5)
-    LinearLayout llSelect5;
     @BindView(R.id.ll_shangjiagonggao)
     LinearLayout llShangjiagonggao;
     @BindView(R.id.ll_shangjiajieshao)
     LinearLayout llShangjiajieshao;
+    @BindView(R.id.rv_shebei)
+    RecyclerView rvShebei;
 
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
@@ -188,6 +163,8 @@ public class ShangjiaBianjiActivity extends BaseActivity implements TakePhoto.Ta
     final static private String jieshao = "jieshao";
     private String ir_id;
     private ShangjiaDetailModel.DataBean dataBean;
+    private TcSheshiAdapter adapter;
+    private List<ShangjiaDetailModel.DataBean.TypeArrayBean> dianneisheshi = new ArrayList<>();
 
     @Override
     public int getContentViewResId() {
@@ -263,8 +240,34 @@ public class ShangjiaBianjiActivity extends BaseActivity implements TakePhoto.Ta
         x = PreferenceHelper.getInstance(mContext).getString(App.JINGDU, "");
         y = PreferenceHelper.getInstance(mContext).getString(App.WEIDU, "");
 
+        initAdapter();
         getNet();
     }
+
+    private void initAdapter() {
+        adapter = new TcSheshiAdapter(R.layout.tongcheng_item_shangjia_sheshi, dianneisheshi);
+        rvShebei.setLayoutManager(new GridLayoutManager(mContext, 3));
+        rvShebei.setAdapter(adapter);
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ShangjiaDetailModel.DataBean.TypeArrayBean bean = dianneisheshi.get(position);
+                String defaultX = bean.getDefaultX();
+                if (TextUtils.isEmpty(defaultX)) {
+                    bean.setDefaultX("1");
+                } else {
+                    if (defaultX.equals("1")) {
+                        bean.setDefaultX("0");
+                    } else {
+                        bean.setDefaultX("1");
+                    }
+                }
+                dianneisheshi.set(position, bean);
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
 
     private void getNet() {
         Map<String, String> map = new HashMap<>();
@@ -315,22 +318,24 @@ public class ShangjiaBianjiActivity extends BaseActivity implements TakePhoto.Ta
                             x = dataBean.getX();
                             y = dataBean.getY();
 
-                            ir_wx_number=dataBean.getIr_wx_number();
+                            ir_wx_number = dataBean.getIr_wx_number();
                             edWeixinhao.setText(ir_wx_number);
 
-                            ir_inst_notice=dataBean.getIr_inst_notice();
+                            ir_inst_notice = dataBean.getIr_inst_notice();
                             edShangjiagonggao.setText(ir_inst_notice);
 
-                            ir_validity=dataBean.getIr_validity();
+                            ir_validity = dataBean.getIr_validity();
                             edShangjiajieshao.setText(ir_validity);
 
-                            ir_agio=dataBean.getIr_agio();
+                            ir_agio = dataBean.getIr_agio();
                             edZhekou.setText(ir_agio);
 
-                            ir_inst_settled_time=dataBean.getIr_inst_settled_time();
+                            ir_inst_settled_time = dataBean.getIr_inst_settled_time();
                             tvStartTime.setText(ir_inst_settled_time + "个月");
 
-                            List<ShangjiaDetailModel.DataBean.TypeArrayBean> type_array = dataBean.getType_array();
+                            dianneisheshi = dataBean.getType_array();
+                            adapter.setNewData(dianneisheshi);
+                            adapter.notifyDataSetChanged();
                         }
                     }
                 });
@@ -445,10 +450,24 @@ public class ShangjiaBianjiActivity extends BaseActivity implements TakePhoto.Ta
             return;
         }
 
+        ir_inst_device = "";
+        if (dianneisheshi.size() > 0) {
+            for (int i = 0; i < dianneisheshi.size(); i++) {
+                String defaultX = dianneisheshi.get(i).getDefaultX();
+                String id = dianneisheshi.get(i).getId();
+                if (!TextUtils.isEmpty(defaultX)) {
+                    if (defaultX.equals("1")) {
+                        ir_inst_device = ir_inst_device + id + ",";
+                    }
+                }
+            }
+        }
+
         if (TextUtils.isEmpty(ir_inst_device)) {
             Y.t("请选择店内设施");
             return;
         }
+        ir_inst_device = ir_inst_device.substring(0, ir_inst_device.length() - 1);
 
         if (bannerModels.size() == 0) {
             Y.t("请上传轮播图");

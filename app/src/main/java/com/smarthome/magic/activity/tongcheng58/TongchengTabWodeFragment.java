@@ -295,4 +295,10 @@ public class TongchengTabWodeFragment extends BaseFragment {
 
         getData();
     }
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        getData();
+    }
 }

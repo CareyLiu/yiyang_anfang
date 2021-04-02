@@ -31,6 +31,11 @@
                     android:layout_height="720pt"
                     android:background="@color/white" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1pt"
+                    android:background="@color/line" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -143,6 +148,7 @@
                     android:textSize="31pt"
                     android:textStyle="bold" />
 
+
                 <TextView
                     android:id="@+id/tv_gonggao"
                     android:layout_width="match_parent"
@@ -198,51 +204,79 @@
         android:layout_marginBottom="23pt"
         android:gravity="center">
 
-        <TextView
+
+        <com.flyco.roundview.RoundRelativeLayout
             android:id="@+id/bt_phone"
             android:layout_width="154pt"
             android:layout_height="96pt"
             android:layout_marginRight="17pt"
-            android:background="@color/black_22242C"
-            android:gravity="center"
-            android:text="打电话"
-            android:textColor="@color/white"
-            android:textSize="31pt"
-            android:textStyle="bold" />
+            app:rv_backgroundColor="#FA7E00"
+            app:rv_cornerRadius="8dp">
 
-        <TextView
+            <TextView
+                android:layout_width="154pt"
+                android:layout_height="96pt"
+                android:gravity="center"
+                android:text="打电话"
+                android:textColor="@color/white"
+                android:textSize="31pt"
+                android:textStyle="bold" />
+        </com.flyco.roundview.RoundRelativeLayout>
+
+
+        <com.flyco.roundview.RoundRelativeLayout
             android:id="@+id/bt_weixin"
             android:layout_width="154pt"
             android:layout_height="96pt"
             android:layout_marginRight="17pt"
-            android:background="@color/black_22242C"
-            android:gravity="center"
-            android:text="加微信"
-            android:textColor="@color/white"
-            android:textSize="31pt"
-            android:textStyle="bold" />
+            app:rv_backgroundColor="#05D083"
+            app:rv_cornerRadius="8dp">
 
-        <TextView
+            <TextView
+                android:layout_width="154pt"
+                android:layout_height="96pt"
+                android:gravity="center"
+                android:text="加微信"
+                android:textColor="@color/white"
+                android:textSize="31pt"
+                android:textStyle="bold" />
+        </com.flyco.roundview.RoundRelativeLayout>
+
+
+        <com.flyco.roundview.RoundRelativeLayout
             android:id="@+id/bt_daohang"
             android:layout_width="154pt"
             android:layout_height="96pt"
             android:layout_marginRight="17pt"
-            android:background="@color/black_22242C"
-            android:gravity="center"
-            android:text="导航"
-            android:textColor="@color/white"
-            android:textSize="31pt"
-            android:textStyle="bold" />
+            app:rv_backgroundColor="#3A85F8"
+            app:rv_cornerRadius="8dp">
 
-        <TextView
+            <TextView
+                android:layout_width="154pt"
+                android:layout_height="96pt"
+                android:gravity="center"
+                android:text="导航"
+                android:textColor="@color/white"
+                android:textSize="31pt"
+                android:textStyle="bold" />
+        </com.flyco.roundview.RoundRelativeLayout>
+
+        <com.flyco.roundview.RoundRelativeLayout
             android:id="@+id/bt_fenxiang"
             android:layout_width="154pt"
             android:layout_height="96pt"
-            android:background="@color/black_22242C"
-            android:gravity="center"
-            android:text="分享"
-            android:textColor="@color/white"
-            android:textSize="31pt"
-            android:textStyle="bold" />
+            android:layout_marginRight="17pt"
+            app:rv_backgroundColor="#FF5100"
+            app:rv_cornerRadius="8dp">
+
+            <TextView
+                android:layout_width="154pt"
+                android:layout_height="96pt"
+                android:gravity="center"
+                android:text="分享"
+                android:textColor="@color/white"
+                android:textSize="31pt"
+                android:textStyle="bold" />
+        </com.flyco.roundview.RoundRelativeLayout>
     </LinearLayout>
 </FrameLayout>

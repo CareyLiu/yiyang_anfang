@@ -154,7 +154,7 @@ public class GongJiangLieBiaoNewActivity extends BaseActivity {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                GongJiangXinXiActivity.actionStart(mContext, craftsManList.get(position).ir_id);
+                GongJiangXinXiActivity.actionStart(mContext, craftsManList.get(position).ir_id,"1");
             }
         });
 

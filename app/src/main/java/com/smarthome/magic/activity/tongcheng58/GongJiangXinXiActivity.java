@@ -6,9 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -26,6 +24,7 @@ import com.lzy.okgo.request.base.Request;
 import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.tongcheng58.model.ShangjiaDetailModel;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
@@ -33,13 +32,15 @@ import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
-import com.smarthome.magic.dialog.newdia.FaBuDialog;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.BianMinXinXiModel;
 import com.smarthome.magic.model.GongJiangXinXiModel;
 import com.smarthome.magic.util.AlertUtil;
+import com.smarthome.magic.view.AutoNextLineLinearlayout;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -55,7 +56,7 @@ public class GongJiangXinXiActivity extends BaseActivity {
     @BindView(R.id.tv_gongjiang_ming)
     TextView tvGongjiangMing;
     @BindView(R.id.ll_tag)
-    LinearLayout llTag;
+    AutoNextLineLinearlayout llTag;
     @BindView(R.id.rl_item)
     RelativeLayout rlItem;
     @BindView(R.id.smartRefreshLayout)
@@ -68,25 +69,56 @@ public class GongJiangXinXiActivity extends BaseActivity {
     RoundRelativeLayout rlYuefuwu;
     @BindView(R.id.rl_fenxiang)
     RoundRelativeLayout rlFenxiang;
-    String phoneNumber = "13888888888888";
+
+    @BindView(R.id.iv_shenhe_icon)
+    ImageView ivShenheIcon;
+    @BindView(R.id.tv_shenhe)
+    TextView tvShenhe;
+    @BindView(R.id.rl_shenhezhuangtai)
+    RelativeLayout rlShenhezhuangtai;
+    @BindView(R.id.tv_jujue_yuanyin)
+    TextView tvJujueYuanyin;
+    @BindView(R.id.ll_jujue)
+    LinearLayout llJujue;
+    @BindView(R.id.tv_gonglishu)
+    TextView tvGonglishu;
+    @BindView(R.id.ll_tupianheji)
+    LinearLayout llTupianheji;
+    @BindView(R.id.tv_jianjie)
+    TextView tvJianjie;
+    @BindView(R.id.ll_bottom)
+    LinearLayout llBottom;
+    @BindView(R.id.rrl_chongxinfabu)
+    RoundRelativeLayout rrlChongxinfabu;
+    @BindView(R.id.iv_dizhi_icon)
+    ImageView ivDizhiIcon;
+
+    private String state;
+
+    String phone;
+    String weiXinHao;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         smartRefreshLayout.setEnableLoadMore(false);
         irId = getIntent().getStringExtra("irId");
+        operate_type = getIntent().getStringExtra("operate_type");
+        state = getIntent().getStringExtra("state");
         rlDadianhua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIHelper.ToastMessage(mContext, "打电话");
-                callPhone(phoneNumber);
+                //UIHelper.ToastMessage(mContext, "打电话");
+                callPhone(phone);
             }
         });
         rlJiaweixin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //UIHelper.ToastMessage(mContext, "加微信");
-                copyContentToClipboard("11", mContext);
+
+                copyContentToClipboard(weiXinHao, mContext);
             }
         });
         rlYuefuwu.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +135,48 @@ public class GongJiangXinXiActivity extends BaseActivity {
         });
 
         getData();
+
+        if (!StringUtils.isEmpty(state)) {
+            //1.待审核 2.已审核 2.审核拒绝
+            rlShenhezhuangtai.setVisibility(View.VISIBLE);
+
+            if (state.equals("1")) {
+                rlShenhezhuangtai.setBackgroundResource(R.color.tongchneg_shz_beijing);
+                tvShenhe.setTextColor(mContext.getResources().getColor(R.color.tongchneg_shz));
+                tvShenhe.setText("审核中");
+                ivShenheIcon.setBackgroundResource(R.mipmap.gongjiangxinxi_pic_shenhezhong);
+            } else if (state.equals("2")) {
+                rlShenhezhuangtai.setBackgroundResource(R.color.tongcheng_yfb_beijing);
+                tvShenhe.setTextColor(mContext.getResources().getColor(R.color.tongcheng_yfb));
+                tvShenhe.setText("已发布");
+                ivShenheIcon.setBackgroundResource(R.mipmap.gongjiangxinxi_pic_yifabu);
+            } else if (state.equals("3")) {
+                rlShenhezhuangtai.setBackgroundResource(R.color.tongcheng_yjj_beijing);
+                tvShenhe.setTextColor(mContext.getResources().getColor(R.color.tongcheng_yjj));
+                tvShenhe.setText("已拒绝");
+                ivShenheIcon.setBackgroundResource(R.mipmap.gongjiangxinxi_pic_yijujue);
+                rrlChongxinfabu.setVisibility(View.VISIBLE);
+
+                rrlChongxinfabu.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //重新发布
+                        BianMinFaBuBianJiActivity.actionStart(mContext, irId);
+                    }
+                });
+                llJujue.setVisibility(View.VISIBLE);
+            }
+
+            llBottom.setVisibility(View.GONE);
+            rlShenhezhuangtai.setVisibility(View.VISIBLE);
+
+        } else {
+            rlShenhezhuangtai.setVisibility(View.GONE);
+            iv_rightTitle.setVisibility(View.GONE);
+            llBottom.setVisibility(View.VISIBLE);
+            rrlChongxinfabu.setVisibility(View.GONE);
+            operate_type = "1";
+        }
     }
 
     @Override
@@ -120,6 +194,7 @@ public class GongJiangXinXiActivity extends BaseActivity {
         return true;
     }
 
+    TishiDialog tishiDialog;
 
     @Override
     protected void initToolbar() {
@@ -127,6 +202,45 @@ public class GongJiangXinXiActivity extends BaseActivity {
         tv_title.setText("工匠信息");
         tv_title.setTextSize(17);
         tv_title.setTextColor(getResources().getColor(R.color.black));
+        iv_rightTitle.setVisibility(View.VISIBLE);
+        iv_rightTitle.setImageResource(R.mipmap.def_more);
+        iv_rightTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //1.待审核 2.已审核 2.审核拒绝
+
+                tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                    @Override
+                    public void onClickCancel(View v, TishiDialog dialog) {
+
+                    }
+
+                    @Override
+                    public void onClickConfirm(View v, TishiDialog dialog) {
+                        deleteNet();
+                    }
+
+                    @Override
+                    public void onDismiss(TishiDialog dialog) {
+
+                    }
+                });
+
+                tishiDialog.setTextContent("是否确定删除此信息");
+                tishiDialog.show();
+
+//                if (state.equals("1")) {
+//
+//
+//                } else if (state.equals("2")) {
+//
+//
+//                } else if (state.equals("3")) {
+//
+//
+//                }
+            }
+        });
         mToolbar.setNavigationIcon(R.mipmap.backbutton);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,10 +256,26 @@ public class GongJiangXinXiActivity extends BaseActivity {
      *
      * @param context
      */
-    public static void actionStart(Context context, String irId) {
+    public static void actionStart(Context context, String irId, String operate_type, String state, String stateName) {
         Intent intent = new Intent(context, GongJiangXinXiActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("irId", irId);
+        intent.putExtra("operate_type", operate_type);
+        intent.putExtra("state", state);
+        intent.putExtra("stateName", stateName);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 用于其他Activty跳转到该Activity
+     *
+     * @param context
+     */
+    public static void actionStart(Context context, String irId, String operate_type) {
+        Intent intent = new Intent(context, GongJiangXinXiActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("irId", irId);
+        intent.putExtra("operate_type", operate_type);
         context.startActivity(intent);
     }
 
@@ -174,14 +304,16 @@ public class GongJiangXinXiActivity extends BaseActivity {
         ClipData mClipData = ClipData.newPlainText("Label", content);
         // 将ClipData内容放到系统剪贴板里。
         cm.setPrimaryClip(mClipData);
+
+        UIHelper.ToastMessage(mContext, "已复制微信号");
     }
 
     public String irId;
-    public String operate_type = "1";
+    public String operate_type = "2";
 
     public void getData() {
         Map<String, Object> map = new HashMap<>();
-        map.put("code", "17008");
+        map.put("code", "17006");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
         map.put("x", PreferenceHelper.getInstance(mContext).getString(WEIDU, ""));
@@ -196,32 +328,48 @@ public class GongJiangXinXiActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Response<AppResponse<GongJiangXinXiModel.DataBean>> response) {
                         Logger.d(gson.toJson(response.body()));
-                        //irId = response.body().data.get(0).getIr_id();
-//                        //标题
-//                        tvTitleName.setText(response.body().data.get(0).getIr_title());
-//
-//                        //距离和地址
-//                        if (!StringUtils.isEmpty(response.body().data.get(0).getMeter())) {
-//                            tvDizhi.setText(response.body().data.get(0).getMeter() + "km" + "  " + response.body().data.get(0).getAddr());
-//                        } else {
-//                            tvDizhi.setText(response.body().data.get(0).getAddr());
-//                        }
-//                        lianxiFangshi.setText(response.body().data.get(0).getIr_contact_name() + response.body().data.get(0).getIr_contact_phone());
-//
-//                        tvJianjie.setText(response.body().data.get(0).getIr_validity());
-//
-//                        for (int i = 0; i < response.body().data.get(0).getImgList().size(); i++) {
-//                            View view = View.inflate(mContext, R.layout.item_big_image, null);
-//                            ImageView iv = view.findViewById(R.id.iv_img);
-//
-//                            if (!StringUtils.isEmpty(response.body().data.get(0).getImgList().get(i).getHeight())) {
-//                                RequestOptions requestOptions = new RequestOptions();
-//                                requestOptions.override(Integer.valueOf(response.body().data.get(0).getImgList().get(i).getWidth()), Integer.valueOf(response.body().data.get(0).getImgList().get(i).getHeight()));
-//                                Glide.with(mContext).load(response.body().data.get(0).getImgList().get(i).getIr_img_url()).apply(requestOptions).into(iv);
-//                            }
-//                            linearLayout.addView(view);
-//                        }
-//                        tvJujueYuanyin.setText(response.body().data.get(0).getIr_manage_text());
+                        irId = response.body().data.get(0).getIr_id();
+
+                        GongJiangXinXiModel.DataBean dataBean = response.body().data.get(0);
+                        Glide.with(mContext).load(dataBean.getIr_personnal_img_url()).into(ivImage);
+                        tvGongjiangMing.setText(dataBean.getIr_personnal_name());
+                        tvJianjie.setText(dataBean.getIr_validity());
+
+                        if (StringUtils.isEmpty(dataBean.meter)) {
+                            ivDizhiIcon.setVisibility(View.GONE);
+                        } else {
+                            tvGonglishu.setText(dataBean.meter + "km");
+                        }
+
+
+                        llTupianheji.removeAllViews();
+                        for (int i = 0; i < response.body().data.get(0).getImgList().size(); i++) {
+                            View view = View.inflate(mContext, R.layout.item_big_image, null);
+                            ImageView iv = view.findViewById(R.id.iv_img);
+
+                            if (!StringUtils.isEmpty(response.body().data.get(0).getImgList().get(i).getHeight())) {
+                                RequestOptions requestOptions = new RequestOptions();
+                                requestOptions.override(Integer.valueOf(response.body().data.get(0).getImgList().get(i).getWidth()), Integer.valueOf(response.body().data.get(0).getImgList().get(i).getHeight()));
+                                Glide.with(mContext).load(response.body().data.get(0).getImgList().get(i).getIr_img_url()).apply(requestOptions).into(iv);
+                            }
+                            llTupianheji.addView(view);
+                        }
+                        tvJujueYuanyin.setText(response.body().data.get(0).getIr_manage_text());
+
+                        llTag.removeAllViews();
+
+                        if (dataBean.getType_array() != null) {
+                            for (int i = 0; i < dataBean.getType_array().size(); i++) {
+                                String inst_device_name = dataBean.getType_array().get(i).getName();
+                                View view = View.inflate(mContext, R.layout.tongcheng_item_home_item_type, null);
+                                TextView tv_tag = view.findViewById(R.id.tv_tag);
+                                tv_tag.setText(inst_device_name);
+                                llTag.addView(view);
+                            }
+                        }
+                        tvJujueYuanyin.setText(dataBean.getIr_manage_text());
+                        phone = dataBean.getIr_contact_phone();
+                        weiXinHao = dataBean.getIr_wx_number();
                     }
 
                     @Override
@@ -243,5 +391,40 @@ public class GongJiangXinXiActivity extends BaseActivity {
                 });
     }
 
+    private void deleteNet() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", "17014");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("ir_id", irId);
+        Gson gson = new Gson();
+        OkGo.<AppResponse<BianMinXinXiModel.DataBean>>post(TONGCHENG)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<BianMinXinXiModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<BianMinXinXiModel.DataBean>> response) {
+                        Logger.d(gson.toJson(response.body()));
+                        finish();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<BianMinXinXiModel.DataBean>> response) {
+
+                        AlertUtil.t(mContext, response.getException().getMessage());
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<BianMinXinXiModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                    }
+                });
+    }
 
 }

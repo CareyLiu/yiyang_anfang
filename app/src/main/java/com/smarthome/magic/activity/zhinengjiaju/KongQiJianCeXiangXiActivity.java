@@ -68,7 +68,7 @@ public class KongQiJianCeXiangXiActivity extends BaseActivity {
     TextView tvTwo;
 
     private String deviceId;
-    private String dataType = "3";
+    private String dataType = "1";
 
     private TimePickerView pvDate, pvTime;
     private String chooseHour = "";//小时
@@ -290,7 +290,6 @@ public class KongQiJianCeXiangXiActivity extends BaseActivity {
         }
         String nianYueRi = now.get(Calendar.YEAR) + "-" + month_last + "-" + now.get(Calendar.DAY_OF_MONTH);
         map.put("time", nianYueRi);
-        map.put("time", time);
         Gson gson = new Gson();
         String a = gson.toJson(map);
         Log.e("map_data", gson.toJson(map));

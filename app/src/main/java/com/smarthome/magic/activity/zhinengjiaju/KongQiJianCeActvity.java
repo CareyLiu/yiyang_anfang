@@ -62,8 +62,7 @@ public class KongQiJianCeActvity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         device_id = getIntent().getStringExtra("device_id");
-
-        UIHelper.ToastMessage(mContext, "我的device_id是" + device_id);
+        // UIHelper.ToastMessage(mContext, "我的device_id是" + device_id);
         FrameLayout content = new FrameLayout(this);
 
         //缩放控件放置在FrameLayout的上层，用于放大缩小图表
@@ -95,14 +94,14 @@ public class KongQiJianCeActvity extends BaseActivity {
         rlJiaquan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KongQiJianCeXiangXiActivity.actionStart(mContext, device_id,"1");
+                KongQiJianCeXiangXiActivity.actionStart(mContext, device_id, "1");
             }
         });
 
         rlKongqizhiliang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KongQiJianCeXiangXiActivity.actionStart(mContext, device_id,"2");
+                KongQiJianCeXiangXiActivity.actionStart(mContext, device_id, "2");
             }
         });
         getnet();
@@ -115,7 +114,7 @@ public class KongQiJianCeActvity extends BaseActivity {
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
         map.put("device_id", device_id);
-        map.put("date_type", "2");
+        map.put("date_type", "1");
         Calendar now = Calendar.getInstance();
 
         int month = now.get(Calendar.MONTH) + 1;
@@ -143,11 +142,12 @@ public class KongQiJianCeActvity extends BaseActivity {
                         llMain2.addView(splineChart03View1, layoutParams);
 
 
-
                         tvJiaquan.setText(response.body().data.get(0).getGd_list().get(0).getGd_cascophen());
                         tvPm.setText(response.body().data.get(0).getGd_list().get(0).getGd_particulate_matter());
                         tvKongqiZhiliang.setText(response.body().data.get(0).getGd_list().get(0).getGd_air_quality());
                         tvCo2.setText(response.body().data.get(0).getGd_list().get(0).getGd_carbon_dioxide());
+
+
                     }
 
                     @Override

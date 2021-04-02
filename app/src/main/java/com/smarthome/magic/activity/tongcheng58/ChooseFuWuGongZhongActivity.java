@@ -85,8 +85,8 @@ public class ChooseFuWuGongZhongActivity extends BaseActivity {
                 for (int i = 0; i < mDatas.size(); i++) {
 
                     if (mDatas.get(i).type.equals("1")) {
-                        fuWuGongZhong = fuWuGongZhong + mDatas.get(i).getName()+"  ";
-                        fuWuGongZhongChuanZhi = fuWuGongZhongChuanZhi + ",";
+                        fuWuGongZhong = fuWuGongZhong + mDatas.get(i).getName() + "  ";
+                        fuWuGongZhongChuanZhi = fuWuGongZhongChuanZhi + mDatas.get(i).getId() + ",";
                     }
                 }
 

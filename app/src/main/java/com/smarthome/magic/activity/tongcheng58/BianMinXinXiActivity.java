@@ -106,7 +106,10 @@ public class BianMinXinXiActivity extends BaseActivity {
 
 
             }
+            rlShenhezhuangtai.setVisibility(View.VISIBLE);
         } else {
+            iv_rightTitle.setVisibility(View.GONE);
+            rlShenhezhuangtai.setVisibility(View.GONE);
             operate_type = "1";
         }
         getData();
@@ -156,6 +159,7 @@ public class BianMinXinXiActivity extends BaseActivity {
 
                         tvJianjie.setText(response.body().data.get(0).getIr_validity());
 
+                        linearLayout.removeAllViews();
                         for (int i = 0; i < response.body().data.get(0).getImgList().size(); i++) {
                             View view = View.inflate(mContext, R.layout.item_big_image, null);
                             ImageView iv = view.findViewById(R.id.iv_img);

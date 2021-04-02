@@ -125,6 +125,8 @@
                     android:gravity="center_vertical">
 
                     <TextView
+                        android:gravity="right"
+                        android:layout_gravity="right"
                         android:id="@+id/tv_fuwu_gongzhong"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"

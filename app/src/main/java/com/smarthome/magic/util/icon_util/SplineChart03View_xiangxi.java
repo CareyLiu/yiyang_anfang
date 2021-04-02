@@ -113,10 +113,19 @@ public class SplineChart03View_xiangxi extends DemoView {
             chart.setCustomLines(mYCustomLineDataset); //y轴
 
 
-            //标签轴最大值
-            chart.setCategoryAxisMax(9999);
-            //标签轴最小值
-            chart.setCategoryAxisMin(0);
+            if (jiaQuanOrKongQi.equals("2")) {
+                chart.getDataAxis().setAxisMax(5000);
+                //chart.getDataAxis().setAxisMin(0);
+                //数据轴刻度间隔
+                chart.getDataAxis().setAxisSteps(1000);
+            } else {
+                chart.getDataAxis().setAxisMax(1000);
+                //chart.getDataAxis().setAxisMin(0);
+                //数据轴刻度间隔
+                chart.getDataAxis().setAxisSteps(100);
+            }
+
+
             //chart.setCustomLines(mXCustomLineDataset); //y轴
             chart.setCategoryAxisCustomLines(mXCustomLineDataset); //x轴
 
@@ -181,14 +190,16 @@ public class SplineChart03View_xiangxi extends DemoView {
         if (jiaQuanOrKongQi.equals("1")) {
 
             for (int i = 0; i < listBeans.size(); i++) {
-                linePoint1.add(new PointD(Double.valueOf(listBeans.get(i).getTime()), Double.valueOf(listBeans.get(i).getGd_cascophen())));
+                String strHeng = listBeans.get(i).getTime().substring(0, 2);
+                linePoint1.add(new PointD(Double.valueOf(strHeng), Double.valueOf(listBeans.get(i).getGd_cascophen())));
 
             }
 
         } else if (jiaQuanOrKongQi.equals("2")) {
 
             for (int i = 0; i < listBeans.size(); i++) {
-                linePoint1.add(new PointD(Double.valueOf(listBeans.get(i).getTime()), Double.valueOf(listBeans.get(i).getGd_air_quality())));
+                String strHeng = listBeans.get(i).getTime().substring(0, 2);
+                linePoint1.add(new PointD(Double.valueOf(strHeng), Double.valueOf(listBeans.get(i).getGd_air_quality())));
 
             }
         }
@@ -205,12 +216,14 @@ public class SplineChart03View_xiangxi extends DemoView {
 
         if (jiaQuanOrKongQi.equals("1")) {
             for (int i = 0; i < listBeans.size(); i++) {
-                linePoint2.add(new PointD(Double.valueOf(listBeans.get(i).getTime()), Double.valueOf(listBeans.get(i).getGd_particulate_matter())));
+                String strHeng = listBeans.get(i).getTime().substring(0, 2);
+                linePoint2.add(new PointD(Double.valueOf(strHeng), Double.valueOf(listBeans.get(i).getGd_particulate_matter())));
             }
 
         } else {
             for (int i = 0; i < listBeans.size(); i++) {
-                linePoint2.add(new PointD(Double.valueOf(listBeans.get(i).getTime()), Double.valueOf(listBeans.get(i).getGd_carbon_dioxide())));
+                String strHeng = listBeans.get(i).getTime().substring(0, 2);
+                linePoint2.add(new PointD(Double.valueOf(strHeng), Double.valueOf(listBeans.get(i).getGd_carbon_dioxide())));
             }
 
         }
@@ -248,12 +261,12 @@ public class SplineChart03View_xiangxi extends DemoView {
 
     private void chartLabels() {
         int x = 0;
-        if (laber.equals("3")) {
-            x = 12;
+        if (laber.equals("1")) {
+            x = 24;
         } else if (laber.equals("2")) {
 
             x = 30;
-        } else if (laber.equals("1")) {
+        } else if (laber.equals("3")) {
             x = 12;
         }
         for (int i = 0; i < x; i++) {

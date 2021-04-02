@@ -25,7 +25,7 @@ public class TcHomeItemAdapter extends BaseQuickAdapter<TcHomeModel.DataBean.Sho
         Glide.with(mContext).load(item.getIr_inst_logo()).into((ImageView) helper.getView(R.id.iv_img));
         helper.setText(R.id.tv_name, item.getIr_inst_name());
         helper.setText(R.id.tv_juli, item.getMeter() + "m");
-
+        helper.addOnClickListener(R.id.rl_lianxi);
 
         LinearLayout ll_tag = helper.getView(R.id.ll_tag);
         ll_tag.removeAllViews();

@@ -183,4 +183,6 @@ public interface ConstanceValue {
     int MSG_TONGYONG_INPUT = 0x10135;//通用输入
     int MSG_FUWUGONGZHONG = 0x10136;//服务工种
 
+    int MSG_ADD_BANNER = 0x10137;//添加轮播图
+
 }

@@ -11,10 +11,13 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
+import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tongcheng58.model.ShangjiaDetailModel;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.BaseActivity;
@@ -23,7 +26,10 @@ import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.Radius_GlideImageLoader;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.BianMinXinXiModel;
+import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.view.AutoNextLineLinearlayout;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
@@ -37,6 +43,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.smarthome.magic.get_net.Urls.TONGCHENG;
 
 public class ShangjiaWodeActivity extends BaseActivity {
 
@@ -91,6 +99,33 @@ public class ShangjiaWodeActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        iv_rightTitle.setVisibility(View.VISIBLE);
+        iv_rightTitle.setImageResource(R.mipmap.def_more);
+        iv_rightTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //1.待审核 2.已审核 2.审核拒绝
+                TishiDialog tishiDialog = new TishiDialog(mContext, TishiDialog.TYPE_DELETE, new TishiDialog.TishiDialogListener() {
+                    @Override
+                    public void onClickCancel(View v, TishiDialog dialog) {
+
+                    }
+
+                    @Override
+                    public void onClickConfirm(View v, TishiDialog dialog) {
+                        deleteNet();
+                    }
+
+                    @Override
+                    public void onDismiss(TishiDialog dialog) {
+
+                    }
+                });
+                tishiDialog.setTextContent("是否确定删除此信息");
+                tishiDialog.show();
             }
         });
     }
@@ -176,6 +211,24 @@ public class ShangjiaWodeActivity extends BaseActivity {
                                 tv_tag.setText(inst_device_list.get(i).getInst_device_name());
                                 ll_dianneisheshi_add.addView(view);
                             }
+
+                            String ir_audit_state = dataBean.getIr_audit_state();
+                            String ir_audit_state_name = dataBean.getIr_audit_state_name();
+                            tv_shenhe_state.setText(ir_audit_state_name);
+                            if (ir_audit_state.equals("2")) {
+                                ll_shenhe_state.setBackgroundResource(R.color.tongcheng_yfb_beijing);
+                                tv_shenhe_state.setTextColor(mContext.getResources().getColor(R.color.tongcheng_yfb));
+                                iv_shenhe_state.setBackgroundResource(R.mipmap.gongjiangxinxi_pic_yifabu);
+                            } else if (ir_audit_state.equals("3")) {
+                                ll_shenhe_state.setBackgroundResource(R.color.tongcheng_yjj_beijing);
+                                tv_shenhe_state.setTextColor(mContext.getResources().getColor(R.color.tongcheng_yjj));
+                                iv_shenhe_state.setBackgroundResource(R.mipmap.gongjiangxinxi_pic_yijujue);
+                            } else {
+                                ll_shenhe_state.setBackgroundResource(R.color.tongchneg_shz_beijing);
+                                tv_shenhe_state.setTextColor(mContext.getResources().getColor(R.color.tongchneg_shz));
+                                iv_shenhe_state.setBackgroundResource(R.mipmap.gongjiangxinxi_pic_shenhezhong);
+                            }
+
                         }
                     }
 
@@ -183,6 +236,47 @@ public class ShangjiaWodeActivity extends BaseActivity {
                     public void onFinish() {
                         super.onFinish();
                         smartRefreshLayout.finishRefresh();
+                    }
+                });
+    }
+
+    private void deleteNet() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", "17014");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("ir_id", ir_id);
+        Gson gson = new Gson();
+        OkGo.<AppResponse<BianMinXinXiModel.DataBean>>post(TONGCHENG)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<BianMinXinXiModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<BianMinXinXiModel.DataBean>> response) {
+                        TishiDialog dialog = new TishiDialog(mContext, TishiDialog.TYPE_SUCESS, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+
+                            }
+
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
+
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+                                finish();
+                            }
+                        });
+                        dialog.setTextTitle("提示");
+                        dialog.setTextContent("刪除成功");
+                        dialog.show();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<BianMinXinXiModel.DataBean>> response) {
+                        Y.tError(response);
                     }
                 });
     }

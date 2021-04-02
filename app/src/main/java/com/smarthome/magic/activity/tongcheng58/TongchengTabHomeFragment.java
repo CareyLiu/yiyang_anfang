@@ -2,6 +2,8 @@ package com.smarthome.magic.activity.tongcheng58;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,6 +31,7 @@ import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.view.CustomViewPager;
 import com.smarthome.magic.view.magicindicator.MagicIndicator;
@@ -145,7 +148,37 @@ public class TongchengTabHomeFragment extends BaseFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 String ir_id = shopListBeans.get(position).getIr_id();
-                ShangjiaDetailsActivity.actionStart(getContext(),ir_id);
+                ShangjiaDetailsActivity.actionStart(getContext(), ir_id);
+            }
+        });
+        itemAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.rl_lianxi) {
+                    String ir_contact_phone = shopListBeans.get(position).getIr_contact_phone();
+                    TishiDialog dialog = new TishiDialog(getContext(), TishiDialog.TYPE_CAOZUO, new TishiDialog.TishiDialogListener() {
+                        @Override
+                        public void onClickCancel(View v, TishiDialog dialog) {
+
+                        }
+
+                        @Override
+                        public void onClickConfirm(View v, TishiDialog dialog) {
+                            Intent intent = new Intent(Intent.ACTION_DIAL);
+                            Uri data = Uri.parse("tel:" + ir_contact_phone);
+                            intent.setData(data);
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onDismiss(TishiDialog dialog) {
+
+                        }
+                    });
+                    dialog.setTextTitle("拨打电话");
+                    dialog.setTextContent(ir_contact_phone);
+                    dialog.show();
+                }
             }
         });
 

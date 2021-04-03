@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
-import com.lzy.okgo.request.base.Request;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -65,8 +64,8 @@ public class GongJiangLieBiaoNewActivity extends BaseActivity {
 
 
     private String service_type;
-    private String x_jingdu;
-    private String y_weidu;
+    private String x_weidu;
+    private String y_jingdu;
     private int page_number;
 
     private TcGongjiangModel.DataBean gongjiangBean;
@@ -180,8 +179,8 @@ public class GongJiangLieBiaoNewActivity extends BaseActivity {
 
     private void initStart() {
         service_type = getIntent().getStringExtra("service_type");
-        x_jingdu = PreferenceHelper.getInstance(mContext).getString(App.JINGDU, "");
-        y_weidu = PreferenceHelper.getInstance(mContext).getString(App.WEIDU, "");
+        x_weidu = PreferenceHelper.getInstance(mContext).getString(App.WEIDU, "");
+        y_jingdu = PreferenceHelper.getInstance(mContext).getString(App.JINGDU, "");
         page_number = 0;
         isFirst = true;
     }
@@ -193,8 +192,8 @@ public class GongJiangLieBiaoNewActivity extends BaseActivity {
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
         map.put("service_type", service_type);
-        map.put("x", x_jingdu);
-        map.put("y", y_weidu);
+        map.put("x", x_weidu);
+        map.put("y", y_jingdu);
         map.put("page_number", page_number + "");
         Gson gson = new Gson();
         OkGo.<AppResponse<TcGongjiangModel.DataBean>>post(Urls.TONG_CHENG)
@@ -288,8 +287,8 @@ public class GongJiangLieBiaoNewActivity extends BaseActivity {
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
         map.put("service_type", service_type);
-        map.put("x", x_jingdu);
-        map.put("y", y_weidu);
+        map.put("x", x_weidu);
+        map.put("y", y_jingdu);
         map.put("page_number", page_number + "");
         Gson gson = new Gson();
         OkGo.<AppResponse<TcGongjiangModel.DataBean>>post(Urls.TONG_CHENG)

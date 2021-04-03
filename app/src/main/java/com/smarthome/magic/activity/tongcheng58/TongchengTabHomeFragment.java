@@ -56,7 +56,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class TongchengTabHomeFragment extends BaseFragment {
 
@@ -76,8 +75,8 @@ public class TongchengTabHomeFragment extends BaseFragment {
 
     private List<TcHomeModel.DataBean.ShopTypeListBean> shop_type_list = new ArrayList<>();
     private ArrayList<Fragment> messageListFragments = new ArrayList<>();
-    private String x_jingdu;
-    private String y_weidu;
+    private String x_weidu;
+    private String y_jingdu;
     private int page_number;
     private TcHomeModel.DataBean homeBean;
 
@@ -112,8 +111,8 @@ public class TongchengTabHomeFragment extends BaseFragment {
     }
 
     private void initStart() {
-        x_jingdu = PreferenceHelper.getInstance(getActivity()).getString(App.JINGDU, "");
-        y_weidu = PreferenceHelper.getInstance(getActivity()).getString(App.WEIDU, "");
+        x_weidu = PreferenceHelper.getInstance(getActivity()).getString(App.WEIDU, "");
+        y_jingdu = PreferenceHelper.getInstance(getActivity()).getString(App.JINGDU, "");
         page_number = 0;
         isFirst = true;
         ir_industry_type = "1851";
@@ -258,8 +257,8 @@ public class TongchengTabHomeFragment extends BaseFragment {
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(getContext()).getAppToken());
         map.put("ir_industry_type", ir_industry_type);
-        map.put("x", x_jingdu);
-        map.put("y", y_weidu);
+        map.put("x", x_weidu);
+        map.put("y", y_jingdu);
         map.put("page_number", page_number + "");
         Gson gson = new Gson();
         OkGo.<AppResponse<TcHomeModel.DataBean>>post(Urls.TONG_CHENG)
@@ -355,8 +354,8 @@ public class TongchengTabHomeFragment extends BaseFragment {
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(getContext()).getAppToken());
         map.put("ir_industry_type", ir_industry_type);
-        map.put("x", x_jingdu);
-        map.put("y", y_weidu);
+        map.put("x", x_weidu);
+        map.put("y", y_jingdu);
         map.put("page_number", page_number + "");
         Gson gson = new Gson();
         OkGo.<AppResponse<TcHomeModel.DataBean>>post(Urls.TONG_CHENG)

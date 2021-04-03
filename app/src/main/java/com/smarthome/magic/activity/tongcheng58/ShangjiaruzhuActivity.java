@@ -152,8 +152,8 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
     private String ir_inst_begin_time;              //公司信息发布开始时间
     private String ir_inst_end_time;                //公司信息发布结束时间
     private String ir_contact_phone;                //联系电话
-    private String x;                               //纬度
-    private String y;                               //经度
+    private String x_weidu;                               //纬度
+    private String y_jingdu;                               //经度
     private String addr;                            //地址
     private String ir_wx_number;                    //微信号
     private String ir_inst_notice;                  //公司公告
@@ -222,8 +222,8 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
                     List<Object> list = (List<Object>) message.content;
                     addr = (String) list.get(0);
                     LatLonPoint latLonPoint = (LatLonPoint) list.get(1);
-                    x = String.valueOf(latLonPoint.getLatitude());
-                    y = String.valueOf(latLonPoint.getLongitude());
+                    x_weidu = String.valueOf(latLonPoint.getLatitude());
+                    y_jingdu = String.valueOf(latLonPoint.getLongitude());
                     tvAddress.setText(addr);
                 } else if (message.type == ConstanceValue.MSG_TONGYONG_INPUT) {
                     String content = (String) message.content;
@@ -250,8 +250,8 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
 
         isXieyi = false;
 
-        x = PreferenceHelper.getInstance(mContext).getString(App.JINGDU, "");
-        y = PreferenceHelper.getInstance(mContext).getString(App.WEIDU, "");
+        x_weidu = PreferenceHelper.getInstance(mContext).getString(App.WEIDU, "");
+        y_jingdu = PreferenceHelper.getInstance(mContext).getString(App.JINGDU, "");
         initAdapter();
         getSheshi();
     }
@@ -534,8 +534,8 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
         jsonObject.put("ir_industry_category", ir_industry_category);
         jsonObject.put("ir_industry_category_name", ir_industry_category_name);
         jsonObject.put("ir_contact_phone", ir_contact_phone);
-        jsonObject.put("x", x);
-        jsonObject.put("y", y);
+        jsonObject.put("x", x_weidu);
+        jsonObject.put("y", y_jingdu);
         jsonObject.put("addr", addr);
         jsonObject.put("ir_wx_number", ir_wx_number);
         jsonObject.put("pro", bannerModels);

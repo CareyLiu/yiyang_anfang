@@ -4,19 +4,13 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amap.api.maps2d.model.LatLng;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.flyco.roundview.RoundRelativeLayout;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
@@ -25,13 +19,9 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.DefaultX5WebView_HaveNameActivity;
 import com.smarthome.magic.activity.fenxiang_tuisong.ShareActivity;
-import com.smarthome.magic.activity.fenxiang_tuisong.ShouYeFenXiang_Url_Activity;
-import com.smarthome.magic.activity.homepage.DaLiBaoActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tongcheng58.model.ShangjiaDetailModel;
-import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallDetailsActivity;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
@@ -45,15 +35,11 @@ import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.util.NavigationUtils;
 import com.smarthome.magic.view.AutoNextLineLinearlayout;
-import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
-import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
-import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -64,7 +50,6 @@ import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.smarthome.magic.activity.fenxiang_tuisong.FenXiangTuiSongActivity.IMAGE_SIZE;
 import static com.smarthome.magic.config.Wetch_S.APP_ID;
 
 public class ShangjiaDetailsActivity extends BaseActivity {
@@ -96,8 +81,8 @@ public class ShangjiaDetailsActivity extends BaseActivity {
     @BindView(R.id.tv_name)
     TextView tv_name;
     private String ir_id;
-    private String x_jingdu;
-    private String y_weidu;
+    private String x_weidu;
+    private String y_jingdu;
     private ShangjiaDetailModel.DataBean dataBean;
     private IWXAPI api;
 
@@ -139,8 +124,9 @@ public class ShangjiaDetailsActivity extends BaseActivity {
         api = WXAPIFactory.createWXAPI(this, APP_ID, true);//创建一个实例
         api.registerApp(APP_ID);//注册实例
         ir_id = getIntent().getStringExtra("ir_id");
-        x_jingdu = PreferenceHelper.getInstance(mContext).getString(App.JINGDU, "");
-        y_weidu = PreferenceHelper.getInstance(mContext).getString(App.WEIDU, "");
+        x_weidu = PreferenceHelper.getInstance(mContext).getString(App.WEIDU, "");
+        y_jingdu = PreferenceHelper.getInstance(mContext).getString(App.JINGDU, "");
+
         initSM();
         getData();
     }
@@ -178,8 +164,8 @@ public class ShangjiaDetailsActivity extends BaseActivity {
         map.put("code", "17007");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
-        map.put("x", x_jingdu);
-        map.put("y", y_weidu);
+        map.put("x", x_weidu);
+        map.put("y", y_jingdu);
         map.put("ir_id", ir_id);
         map.put("operate_type", "1");
         Gson gson = new Gson();
@@ -256,7 +242,7 @@ public class ShangjiaDetailsActivity extends BaseActivity {
             ShareActivity.actionStart(mContext,
                     dataBean.getShare_title(),
                     dataBean.getShare_detail(),
-                    dataBean.getShare_url(),
+                    dataBean.getShare_url()+"&x="+ x_weidu +"&y="+ y_jingdu,
                     dataBean.getShare_img());
         }
     }

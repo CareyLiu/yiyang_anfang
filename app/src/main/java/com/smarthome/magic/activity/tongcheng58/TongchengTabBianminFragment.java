@@ -67,8 +67,8 @@ public class TongchengTabBianminFragment extends BaseFragment {
     SmartRefreshLayout smartRefreshLayout;
 
     private String ir_column_type;
-    private String x_jingdu;
-    private String y_weidu;
+    private String x_weidu;
+    private String y_jingdu;
     private int page_number;
     private boolean isFirst;
 
@@ -104,8 +104,8 @@ public class TongchengTabBianminFragment extends BaseFragment {
     }
 
     private void initStart() {
-        x_jingdu = PreferenceHelper.getInstance(getActivity()).getString(App.JINGDU, "");
-        y_weidu = PreferenceHelper.getInstance(getActivity()).getString(App.WEIDU, "");
+        x_weidu = PreferenceHelper.getInstance(getActivity()).getString(App.WEIDU, "");
+        y_jingdu = PreferenceHelper.getInstance(getActivity()).getString(App.JINGDU, "");
         page_number = 0;
         isFirst = true;
         ir_column_type = "1852";
@@ -191,8 +191,8 @@ public class TongchengTabBianminFragment extends BaseFragment {
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(getContext()).getAppToken());
         map.put("ir_column_type", ir_column_type);
-        map.put("x", x_jingdu);
-        map.put("y", y_weidu);
+        map.put("x", x_weidu);
+        map.put("y", y_jingdu);
         map.put("page_number", page_number + "");
         Gson gson = new Gson();
         OkGo.<AppResponse<TcBianminModel.DataBean>>post(Urls.TONG_CHENG)
@@ -290,8 +290,8 @@ public class TongchengTabBianminFragment extends BaseFragment {
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(getContext()).getAppToken());
         map.put("ir_column_type", ir_column_type);
-        map.put("x", x_jingdu);
-        map.put("y", y_weidu);
+        map.put("x", x_weidu);
+        map.put("y", y_jingdu);
         map.put("page_number", page_number + "");
         Gson gson = new Gson();
         OkGo.<AppResponse<TcBianminModel.DataBean>>post(Urls.TONG_CHENG)

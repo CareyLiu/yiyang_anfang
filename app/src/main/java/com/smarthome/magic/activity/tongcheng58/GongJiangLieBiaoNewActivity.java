@@ -126,6 +126,7 @@ public class GongJiangLieBiaoNewActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         initStart();
         initAdapter();
+        showProgressDialog();
         getData();
         initSM();
     }
@@ -154,7 +155,7 @@ public class GongJiangLieBiaoNewActivity extends BaseActivity {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                GongJiangXinXiActivity.actionStart(mContext, craftsManList.get(position).ir_id,"1");
+                GongJiangXinXiActivity.actionStart(mContext, craftsManList.get(position).ir_id, "1");
             }
         });
 
@@ -219,6 +220,7 @@ public class GongJiangLieBiaoNewActivity extends BaseActivity {
                         super.onFinish();
                         smartRefreshLayout.finishRefresh();
                         smartRefreshLayout.finishLoadMore();
+                        dismissProgressDialog();
                     }
                 });
     }
@@ -273,6 +275,7 @@ public class GongJiangLieBiaoNewActivity extends BaseActivity {
     }
 
     private void setNet(int index) {
+        showProgressDialog();
         viewPager.setCurrentItem(index);
         service_type = iconList.get(index).getService_type();
         getData();

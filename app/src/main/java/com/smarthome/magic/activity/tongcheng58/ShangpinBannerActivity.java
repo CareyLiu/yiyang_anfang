@@ -1,29 +1,22 @@
 package com.smarthome.magic.activity.tongcheng58;
 
-import android.Manifest;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
-import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
-
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tongcheng58.adapter.ShangpinBannerAdapter;
@@ -38,8 +31,6 @@ import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.util.phoneview.sample.ImageShowActivity;
-import com.smarttop.library.widget.BottomDialog;
-import com.tbruyelle.rxpermissions.RxPermissions;
 
 import org.devio.takephoto.app.TakePhoto;
 import org.devio.takephoto.app.TakePhotoImpl;
@@ -52,17 +43,16 @@ import org.devio.takephoto.permission.PermissionManager;
 import org.devio.takephoto.permission.TakePhotoInvocationHandler;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.functions.Action1;
 
 public class ShangpinBannerActivity extends BaseActivity implements TakePhoto.TakeResultListener, InvokeListener {
 
@@ -73,6 +63,8 @@ public class ShangpinBannerActivity extends BaseActivity implements TakePhoto.Ta
     ImageView iv_delete;
     @BindView(R.id.rv_content)
     RecyclerView rv_content;
+    @BindView(R.id.ll_no_picture)
+    RelativeLayout ll_no_picture;
 
     private List<TcUpLoadModel.DataBean> imgText_list = new ArrayList<>();
     private ShangpinBannerAdapter adapter;
@@ -94,16 +86,24 @@ public class ShangpinBannerActivity extends BaseActivity implements TakePhoto.Ta
     @Override
     protected void initToolbar() {
         super.initToolbar();
-        tv_title.setText("商品详情图片");
+        tv_title.setText("轮播图");
         tv_title.setTextSize(17);
         tv_title.setTextColor(getResources().getColor(R.color.black));
         mToolbar.setNavigationIcon(R.mipmap.backbutton);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onActivityFinish();
             }
         });
+    }
+
+
+    public static void actionStart(Context context, List<TcUpLoadModel.DataBean> imgText_list) {
+        Intent intent = new Intent(context, ShangpinBannerActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("imgText_list", (Serializable) imgText_list);
+        context.startActivity(intent);
     }
 
     @Override
@@ -111,19 +111,31 @@ public class ShangpinBannerActivity extends BaseActivity implements TakePhoto.Ta
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+        getTakePhoto().onCreate(savedInstanceState);
         init();
     }
 
     private void init() {
+        imgText_list = (List<TcUpLoadModel.DataBean>) getIntent().getSerializableExtra("imgText_list");
+        if (imgText_list.size() > 1) {
+            iv_main.setVisibility(View.VISIBLE);
+            iv_delete.setVisibility(View.VISIBLE);
+            ll_no_picture.setVisibility(View.GONE);
+            Glide.with(mContext).load(imgText_list.get(0).getImg_url()).into(iv_main);
+            position = 0;
+        } else {
+            ll_no_picture.setVisibility(View.VISIBLE);
+            iv_delete.setVisibility(View.GONE);
+            iv_main.setVisibility(View.GONE);
+        }
+
         initAdapter();
     }
 
     private void initAdapter() {
-        TcUpLoadModel.DataBean addBeen = new TcUpLoadModel.DataBean();
-        imgText_list.add(addBeen);
         adapter = new ShangpinBannerAdapter(R.layout.tongcheng_item_shangpin_addimg, imgText_list);
         rv_content.setAdapter(adapter);
-        rv_content.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
+        rv_content.setLayoutManager(new GridLayoutManager(mContext, 4));
         adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -144,6 +156,9 @@ public class ShangpinBannerActivity extends BaseActivity implements TakePhoto.Ta
             getPicture();
         } else {
             this.position = position;
+            iv_main.setVisibility(View.VISIBLE);
+            iv_delete.setVisibility(View.VISIBLE);
+            ll_no_picture.setVisibility(View.GONE);
             String img_url = imgText_list.get(position).getImg_url();
             Glide.with(mContext).load(img_url).into(iv_main);
         }
@@ -208,10 +223,13 @@ public class ShangpinBannerActivity extends BaseActivity implements TakePhoto.Ta
                     @Override
                     public void onSuccess(final Response<AppResponse<TcUpLoadModel.DataBean>> response) {
                         if (response.body().msg_code.equals("0000")) {
+                            ll_no_picture.setVisibility(View.GONE);
+                            iv_main.setVisibility(View.VISIBLE);
+                            iv_delete.setVisibility(View.VISIBLE);
                             Glide.with(mContext).load(file.getPath()).into(iv_main);
                             TcUpLoadModel.DataBean dataBean = response.body().data.get(0);
                             position = imgText_list.size() - 1;
-                            imgText_list.add(position,dataBean);
+                            imgText_list.add(position, dataBean);
                             adapter.notifyDataSetChanged();
                         }
                     }
@@ -260,15 +278,6 @@ public class ShangpinBannerActivity extends BaseActivity implements TakePhoto.Ta
         CropOptions.Builder builder = new CropOptions.Builder();
         builder.setAspectX(800).setAspectY(800);
         return builder.create();
-    }
-
-
-    private void onActivityFinish() {
-        Notice n = new Notice();
-        n.type = ConstanceValue.MSG_ADD_BANNER;
-        n.content = imgText_list;
-        RxBus.getDefault().sendRx(n);
-        finish();
     }
 
     @Override
@@ -326,12 +335,23 @@ public class ShangpinBannerActivity extends BaseActivity implements TakePhoto.Ta
         position = 0;
         imgText_list.remove(pos);
         if (imgText_list.size() <= 1) {
+            iv_main.setVisibility(View.GONE);
             iv_delete.setVisibility(View.GONE);
-            iv_main.setImageResource(R.mipmap.no_picture);
+            ll_no_picture.setVisibility(View.VISIBLE);
         } else {
-            Glide.with(mContext).load(imgText_list.get(0).getImg_url()).into(iv_main);
+            iv_main.setVisibility(View.VISIBLE);
             iv_delete.setVisibility(View.VISIBLE);
+            ll_no_picture.setVisibility(View.GONE);
+            Glide.with(mContext).load(imgText_list.get(0).getImg_url()).into(iv_main);
         }
         adapter.notifyDataSetChanged();
+    }
+
+    private void onActivityFinish() {
+        Notice n = new Notice();
+        n.type = ConstanceValue.MSG_ADD_BANNER;
+        n.content = imgText_list;
+        RxBus.getDefault().sendRx(n);
+        finish();
     }
 }

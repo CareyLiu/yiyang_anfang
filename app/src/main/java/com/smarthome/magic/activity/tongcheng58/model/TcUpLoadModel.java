@@ -1,8 +1,9 @@
 package com.smarthome.magic.activity.tongcheng58.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class TcUpLoadModel {
+public class TcUpLoadModel implements Serializable{
 
     /**
      * msg_code : 0000
@@ -48,7 +49,7 @@ public class TcUpLoadModel {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         /**
          * img_url : http://yjn-znjj.oss-cn-hangzhou.aliyuncs.com/20210329104816000001.jpg
          * img_id : 12052

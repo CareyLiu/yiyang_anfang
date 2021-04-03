@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:paddingHorizontal="15pt">
+                android:paddingLeft="15pt">
 
                 <TextView
                     android:id="@+id/tv_state"
@@ -60,9 +60,10 @@
 
                 <TextView
                     android:id="@+id/bt_bianjie"
-                    android:layout_width="100pt"
-                    android:layout_height="38pt"
+                    android:layout_width="115pt"
+                    android:layout_height="match_parent"
                     android:gravity="center"
+                    android:paddingRight="15pt"
                     android:text="编辑"
                     android:textColor="@color/text_red"
                     android:textSize="23pt"

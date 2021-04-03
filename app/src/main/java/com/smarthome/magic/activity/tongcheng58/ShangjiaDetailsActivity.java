@@ -1,12 +1,20 @@
 package com.smarthome.magic.activity.tongcheng58;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.flyco.roundview.RoundRelativeLayout;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
@@ -16,22 +24,31 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.DefaultX5WebView_HaveNameActivity;
+import com.smarthome.magic.activity.fenxiang_tuisong.ShouYeFenXiang_Url_Activity;
 import com.smarthome.magic.activity.homepage.DaLiBaoActivity;
 import com.smarthome.magic.activity.tongcheng58.model.ShangjiaDetailModel;
 import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallDetailsActivity;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.Radius_GlideImageLoader;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.view.AutoNextLineLinearlayout;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +58,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.smarthome.magic.activity.fenxiang_tuisong.FenXiangTuiSongActivity.IMAGE_SIZE;
+import static com.smarthome.magic.config.Wetch_S.APP_ID;
 
 public class ShangjiaDetailsActivity extends BaseActivity {
 
@@ -74,6 +94,7 @@ public class ShangjiaDetailsActivity extends BaseActivity {
     private String x_jingdu;
     private String y_weidu;
     private ShangjiaDetailModel.DataBean dataBean;
+    private IWXAPI api;
 
     @Override
     public int getContentViewResId() {
@@ -110,6 +131,8 @@ public class ShangjiaDetailsActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        api = WXAPIFactory.createWXAPI(this, APP_ID, true);//创建一个实例
+        api.registerApp(APP_ID);//注册实例
         ir_id = getIntent().getStringExtra("ir_id");
         x_jingdu = PreferenceHelper.getInstance(mContext).getString(App.JINGDU, "");
         y_weidu = PreferenceHelper.getInstance(mContext).getString(App.WEIDU, "");
@@ -199,6 +222,7 @@ public class ShangjiaDetailsActivity extends BaseActivity {
                 clickPhone();
                 break;
             case R.id.bt_weixin:
+                copyContentToClipboard();
                 break;
             case R.id.bt_daohang:
                 break;
@@ -231,5 +255,90 @@ public class ShangjiaDetailsActivity extends BaseActivity {
         dialog.setTextTitle("拨打电话");
         dialog.setTextContent(ir_contact_phone);
         dialog.show();
+    }
+
+
+    /**
+     * 复制内容到剪贴板
+     */
+    public void copyContentToClipboard() {
+        if (dataBean != null) {
+            //获取剪贴板管理器：
+            ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            // 创建普通字符型ClipData
+            ClipData mClipData = ClipData.newPlainText("Label", dataBean.getIr_wx_number());
+            // 将ClipData内容放到系统剪贴板里。
+            cm.setPrimaryClip(mClipData);
+
+            UIHelper.ToastMessage(mContext, "已复制微信号");
+        }
+    }
+
+    /**
+     * @param title
+     * @param content
+     * @param url
+     * @param imageUrl
+     * @param leixing  0 好友 1朋友圈
+     */
+    private void setWeatchShare(String title, String content, String url, String imageUrl, String leixing) {
+        new Thread(new Runnable() {//创建一个子线程
+            @Override
+            public void run() {
+                WXWebpageObject webpage = new WXWebpageObject();
+                webpage.webpageUrl = url;
+                WXMediaMessage msg = new WXMediaMessage(webpage);
+                msg.title = title;
+                msg.description = content;
+                ImageView iv = new ImageView(mContext);
+                Glide.with(mContext).asBitmap().load(imageUrl).into(new BitmapImageViewTarget(iv) {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        resource.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                        byte[] data = baos.toByteArray();
+                    }
+                });
+
+                msg.thumbData = getThumbData();
+                SendMessageToWX.Req req = new SendMessageToWX.Req();
+                req.transaction = String.valueOf(System.currentTimeMillis());
+                req.message = msg;
+
+                if (leixing.equals("0")) {
+                    req.scene = SendMessageToWX.Req.WXSceneSession;//分享到微信好友
+                } else if (leixing.equals("1")) {
+                    req.scene = SendMessageToWX.Req.WXSceneTimeline;//分享到微信朋友圈
+                }
+                //调用api接口，发送数据到微信
+                api.sendReq(req);
+
+            }
+        }).start();
+    }
+
+    /**
+     * 获取分享封面byte数组 我们这边取的是软件启动icon
+     */
+    private byte[] getThumbData() {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 2;
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher, options);
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
+        int quality = 100;
+        while (output.toByteArray().length > IMAGE_SIZE && quality != 10) {
+            output.reset(); // 清空baos
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, output);// 这里压缩options%，把压缩后的数据存放到baos中
+            quality -= 10;
+        }
+        bitmap.recycle();
+        byte[] result = output.toByteArray();
+        try {
+            output.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

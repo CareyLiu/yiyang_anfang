@@ -123,7 +123,7 @@ public class TongchengTabWodeFragment extends BaseFragment {
                     String ir_id = bean.getIr_id();
                     if (ir_type.equals("1")) {
                         Y.t("工匠的编辑  " + ir_id);
-                        GongJiangRuZhuBianJiActivity.actionStart(getActivity(),wodeBeanInfor_list.get(position).getIr_id());
+                        GongJiangRuZhuBianJiActivity.actionStart(getActivity(), wodeBeanInfor_list.get(position).getIr_id());
                     } else if (ir_type.equals("2")) {
                         ShangjiaBianjiActivity.actionStart(getContext(), ir_id);
                     } else if (ir_type.equals("3")) {
@@ -220,6 +220,7 @@ public class TongchengTabWodeFragment extends BaseFragment {
                         super.onFinish();
                         smartRefreshLayout.finishRefresh();
                         smartRefreshLayout.finishLoadMore();
+                        dismissProgressDialog();
                     }
                 });
     }
@@ -293,6 +294,7 @@ public class TongchengTabWodeFragment extends BaseFragment {
             ir_type = "3";
         }
 
+        showProgressDialog();
         getData();
     }
 

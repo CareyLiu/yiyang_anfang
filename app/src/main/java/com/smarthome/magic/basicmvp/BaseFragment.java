@@ -9,6 +9,7 @@ import com.billy.android.loading.Gloading;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.RxUtils;
+import com.smarthome.magic.dialog.LordingDialog;
 
 import butterknife.ButterKnife;
 import rx.Observable;
@@ -86,5 +87,34 @@ public abstract class BaseFragment<T extends BasicPresenter, E extends BasicMode
     public void sendRx(Notice msg) {
         RxBus.getDefault().sendRx(msg);
     }
+
+
+    private LordingDialog lordingDialog;
+
+    public void showProgressDialog() {
+        showProgressDialog("");
+    }
+
+    public void showProgressDialog(String msg) {
+        if (lordingDialog == null) {
+            lordingDialog = new LordingDialog(getContext());
+        }
+        lordingDialog.setTextMsg(msg);
+
+        if (!lordingDialog.isShowing()) {
+            lordingDialog.show();
+        }
+    }
+
+    public void dismissProgressDialog() {
+        if (lordingDialog != null) {
+            try {
+                lordingDialog.dismiss();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
 }

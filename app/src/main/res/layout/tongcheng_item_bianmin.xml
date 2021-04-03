@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15pt"
-                android:layout_marginVertical="23pt"
+                android:layout_marginTop="23pt"
                 android:includeFontPadding="false"
                 android:maxLines="1"
                 android:text="专业清洗地暖"
@@ -38,9 +38,10 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:paddingHorizontal="15pt">
+                android:paddingLeft="15pt">
 
                 <ImageView
                     android:layout_width="31pt"
@@ -61,8 +62,9 @@
                 <LinearLayout
                     android:id="@+id/ll_lianxi"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="15pt">
 
                     <ImageView
                         android:layout_width="31pt"

@@ -120,6 +120,8 @@ public class TongchengTabHomeFragment extends BaseFragment {
 
         initAdapter();
         initSM();
+
+        showProgressDialog();
         getData();
     }
 
@@ -245,6 +247,7 @@ public class TongchengTabHomeFragment extends BaseFragment {
     private void setNet(int index) {
         viewpager.setCurrentItem(index);
         ir_industry_type = shop_type_list.get(index).getIr_industry_type();
+        showProgressDialog();
         getData();
     }
 
@@ -283,6 +286,7 @@ public class TongchengTabHomeFragment extends BaseFragment {
                         super.onFinish();
                         smartRefreshLayout.finishRefresh();
                         smartRefreshLayout.finishLoadMore();
+                        dismissProgressDialog();
                     }
                 });
     }

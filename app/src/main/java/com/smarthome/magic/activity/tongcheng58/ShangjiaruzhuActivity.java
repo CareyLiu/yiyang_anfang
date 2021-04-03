@@ -8,7 +8,6 @@ import android.os.Environment;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,13 +30,14 @@ import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.DefaultX5WebViewActivity;
+import com.smarthome.magic.activity.ShuRuInterView;
 import com.smarthome.magic.activity.shuinuan.Y;
+import com.smarthome.magic.activity.tongcheng58.adapter.ShangpinBannerAdapter;
 import com.smarthome.magic.activity.tongcheng58.adapter.TcSheshiAdapter;
 import com.smarthome.magic.activity.tongcheng58.model.ShangjiaDetailModel;
 import com.smarthome.magic.activity.tongcheng58.model.TcBannerModel;
 import com.smarthome.magic.activity.tongcheng58.model.TcHomeModel;
 import com.smarthome.magic.activity.tongcheng58.model.TcLeimuModel;
-import com.smarthome.magic.activity.tongcheng58.model.TcSheshiModel;
 import com.smarthome.magic.activity.tongcheng58.model.TcUpLoadModel;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.BaseActivity;
@@ -47,6 +47,7 @@ import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.TongYongShuRuDIalog;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 
@@ -82,7 +83,7 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
     @BindView(R.id.iv_logo_add)
     ImageView ivLogoAdd;
     @BindView(R.id.ed_name)
-    EditText edName;
+    TextView edName;
     @BindView(R.id.tv_hangyefenlei)
     TextView tvHangyefenlei;
     @BindView(R.id.ll_hangyefenlei)
@@ -96,15 +97,13 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
     @BindView(R.id.ll_adress)
     LinearLayout llAdress;
     @BindView(R.id.ed_weixinhao)
-    EditText edWeixinhao;
+    TextView edWeixinhao;
     @BindView(R.id.ed_shangjiagonggao)
     TextView edShangjiagonggao;
     @BindView(R.id.ed_shangjiajieshao)
     TextView edShangjiajieshao;
-    @BindView(R.id.iv_banner_add)
-    ImageView ivBannerAdd;
     @BindView(R.id.ed_zhekou)
-    EditText edZhekou;
+    TextView edZhekou;
     @BindView(R.id.tv_stop_time)
     TextView tvStopTime;
     @BindView(R.id.ll_qizhi_time)
@@ -120,13 +119,23 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
     @BindView(R.id.bt_save)
     TextView btSave;
     @BindView(R.id.ed_phone)
-    EditText edPhone;
+    TextView edPhone;
     @BindView(R.id.ll_shangjiagonggao)
     LinearLayout llShangjiagonggao;
     @BindView(R.id.ll_shangjiajieshao)
     LinearLayout llShangjiajieshao;
     @BindView(R.id.rv_shebei)
     RecyclerView rvShebei;
+    @BindView(R.id.ll_name)
+    LinearLayout llName;
+    @BindView(R.id.ll_weixin)
+    LinearLayout llWeixin;
+    @BindView(R.id.ll_phone)
+    LinearLayout llPhone;
+    @BindView(R.id.ll_zhekou)
+    LinearLayout llZhekou;
+    @BindView(R.id.rv_banner)
+    RecyclerView rvBanner;
 
     private TakePhoto takePhoto;
 
@@ -153,7 +162,6 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
     private String ir_inst_device;                  //店内设备（多选传1,2,3,4）
     private String ir_inst_settled_time;            //公司入驻时间
     private boolean isXieyi;
-    private List<TcBannerModel> bannerModels = new ArrayList<>();
 
     private OptionsPickerView<Object> leimuPicker;
     private List<TcLeimuModel.DataBean> leimuModels;
@@ -162,6 +170,10 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
     final static private String jieshao = "jieshao";
     private List<ShangjiaDetailModel.DataBean.TypeArrayBean> dianneisheshi = new ArrayList<>();
     private TcSheshiAdapter adapter;
+
+    private List<TcBannerModel> bannerModels = new ArrayList<>();
+    private List<TcUpLoadModel.DataBean> imgText_list = new ArrayList<>();
+    private ShangpinBannerAdapter bannerAdapter;
 
     @Override
     public int getContentViewResId() {
@@ -221,6 +233,10 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
                     } else if (input_type.equals(jieshao)) {
                         edShangjiajieshao.setText(content);
                     }
+                } else if (message.type == ConstanceValue.MSG_ADD_BANNER) {
+                    imgText_list = (List<TcUpLoadModel.DataBean>) message.content;
+                    bannerAdapter.setNewData(imgText_list);
+                    bannerAdapter.notifyDataSetChanged();
                 }
             }
         }));
@@ -262,6 +278,25 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
                 adapter.notifyDataSetChanged();
             }
         });
+
+
+        TcUpLoadModel.DataBean addBeen = new TcUpLoadModel.DataBean();
+        imgText_list.add(addBeen);
+        bannerAdapter = new ShangpinBannerAdapter(R.layout.tongcheng_item_shangpin_addimg, imgText_list);
+        rvBanner.setAdapter(bannerAdapter);
+        rvBanner.setLayoutManager(new GridLayoutManager(mContext, 4));
+        bannerAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (imgText_list != null && imgText_list.size() > position) {
+                    switch (view.getId()) {
+                        case R.id.iv_main:
+                            ShangpinBannerActivity.actionStart(mContext, imgText_list);
+                            break;
+                    }
+                }
+            }
+        });
     }
 
     private void getSheshi() {
@@ -285,7 +320,7 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
     }
 
 
-    @OnClick({R.id.ll_shangjiagonggao, R.id.ll_shangjiajieshao, R.id.iv_logo_add, R.id.ll_hangyefenlei, R.id.ll_yingye_time, R.id.ll_adress, R.id.iv_banner_add, R.id.ll_qizhi_time, R.id.ll_ruzhu_time, R.id.iv_xieyi, R.id.tv_xieyi, R.id.bt_save})
+    @OnClick({R.id.ll_name, R.id.ll_weixin, R.id.ll_phone, R.id.ll_zhekou, R.id.ll_shangjiagonggao, R.id.ll_shangjiajieshao, R.id.iv_logo_add, R.id.ll_hangyefenlei, R.id.ll_yingye_time, R.id.ll_adress, R.id.ll_qizhi_time, R.id.ll_ruzhu_time, R.id.iv_xieyi, R.id.tv_xieyi, R.id.bt_save})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_logo_add:
@@ -300,10 +335,6 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
             case R.id.ll_adress:
                 Intent intent = new Intent(mContext, PoiKeywordSearchActivity.class);
                 startActivity(intent);
-                break;
-            case R.id.iv_banner_add:
-                bannerModels.add(new TcBannerModel("12053", "http://yjn-znjj.oss-cn-hangzhou.aliyuncs.com/20210329163025000001.jpg"));
-                Y.t("添加了轮播图" + bannerModels.size());
                 break;
             case R.id.ll_qizhi_time:
                 showQizhiDialog();
@@ -326,7 +357,60 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
             case R.id.ll_shangjiajieshao:
                 TcInputActivity.actionStart(mContext, jieshao, edShangjiajieshao.getText().toString());
                 break;
+            case R.id.ll_name:
+                clickTongyongshuru("name");
+                break;
+            case R.id.ll_weixin:
+                clickTongyongshuru("weixin");
+                break;
+            case R.id.ll_phone:
+                clickTongyongshuru("phone");
+                break;
+            case R.id.ll_zhekou:
+                clickTongyongshuru("zhekou");
+                break;
         }
+    }
+
+    private void clickTongyongshuru(String type) {
+        String title;
+        String content;
+
+        if (type.equals("name")) {
+            title = "请输入商家名称";
+            content = edName.getText().toString();
+        } else if (type.equals("weixin")) {
+            title = "请输入老板微信";
+            content = edWeixinhao.getText().toString();
+        } else if (type.equals("phone")) {
+            title = "请输入联系电话";
+            content = edPhone.getText().toString();
+        } else {
+            title = "请输入折扣";
+            content = edZhekou.getText().toString();
+        }
+
+        TongYongShuRuDIalog tongYongShuRuDIalog = new TongYongShuRuDIalog(mContext, new ShuRuInterView() {
+            @Override
+            public void cannel() {
+
+            }
+
+            @Override
+            public void submit(String str) {
+                if (type.equals("name")) {
+                    edName.setText(str);
+                } else if (type.equals("weixin")) {
+                    edWeixinhao.setText(str);
+                } else if (type.equals("phone")) {
+                    edPhone.setText(str);
+                } else {
+                    edZhekou.setText(str);
+                }
+            }
+        }, title);
+        tongYongShuRuDIalog.setmContext(content);
+        tongYongShuRuDIalog.show();
     }
 
     private void clickRuzhuTime() {
@@ -412,6 +496,15 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
             return;
         }
         ir_inst_device = ir_inst_device.substring(0, ir_inst_device.length() - 1);
+
+
+        bannerModels.clear();
+        if (imgText_list.size() > 1) {
+            for (int i = 0; i < imgText_list.size() - 1; i++) {
+                TcUpLoadModel.DataBean dataBean = imgText_list.get(i);
+                bannerModels.add(new TcBannerModel(dataBean.getImg_id(), dataBean.getImg_url()));
+            }
+        }
 
         if (bannerModels.size() == 0) {
             Y.t("请上传轮播图");
@@ -801,7 +894,4 @@ public class ShangjiaruzhuActivity extends BaseActivity implements TakePhoto.Tak
         builder.setAspectX(800).setAspectY(800);
         return builder.create();
     }
-
-
-
 }

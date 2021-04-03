@@ -102,4 +102,8 @@ public class TongYongShuRuDIalog implements View.OnClickListener {
             return false;
         }
     }
+
+    public void setmContext(String text) {
+        et_name.setText(text);
+    }
 }

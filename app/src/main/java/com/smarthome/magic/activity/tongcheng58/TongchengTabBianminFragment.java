@@ -218,6 +218,7 @@ public class TongchengTabBianminFragment extends BaseFragment {
                         super.onFinish();
                         smartRefreshLayout.finishRefresh();
                         smartRefreshLayout.finishLoadMore();
+                        dismissProgressDialog();
                     }
                 });
     }
@@ -278,6 +279,7 @@ public class TongchengTabBianminFragment extends BaseFragment {
     private void setNet(int index) {
         viewpager.setCurrentItem(index);
         ir_column_type = irNoticeTypeList.get(index).getIr_column_type();
+        showProgressDialog();
         getData();
     }
 

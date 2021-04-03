@@ -1567,7 +1567,14 @@
             android:name=".activity.tongcheng58.ShangjiaruzhuActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+            android:windowSoftInputMode="adjustNothing|stateHidden" />
+
+        <!--    商家轮播图    -->
+        <activity
+            android:name=".activity.tongcheng58.ShangpinBannerActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing|stateHidden" />
 
         <!--    商家编辑    -->
         <activity

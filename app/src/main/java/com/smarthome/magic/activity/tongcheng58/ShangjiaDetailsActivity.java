@@ -11,7 +11,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.amap.api.maps2d.model.LatLng;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -24,8 +26,10 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.DefaultX5WebView_HaveNameActivity;
+import com.smarthome.magic.activity.fenxiang_tuisong.ShareActivity;
 import com.smarthome.magic.activity.fenxiang_tuisong.ShouYeFenXiang_Url_Activity;
 import com.smarthome.magic.activity.homepage.DaLiBaoActivity;
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tongcheng58.model.ShangjiaDetailModel;
 import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallDetailsActivity;
 import com.smarthome.magic.app.App;
@@ -39,6 +43,7 @@ import com.smarthome.magic.config.Radius_GlideImageLoader;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.util.NavigationUtils;
 import com.smarthome.magic.view.AutoNextLineLinearlayout;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
@@ -225,9 +230,34 @@ public class ShangjiaDetailsActivity extends BaseActivity {
                 copyContentToClipboard();
                 break;
             case R.id.bt_daohang:
+                clickDaohang();
                 break;
             case R.id.bt_fenxiang:
+                clickShare();
                 break;
+        }
+    }
+
+    private void clickDaohang() {
+        if (dataBean != null) {
+            try {
+                double x = Y.getDouble(dataBean.getX());
+                double y = Y.getDouble(dataBean.getY());
+                LatLng latLng = new LatLng(x, y);
+                NavigationUtils.Navigation(latLng);
+            } catch (Exception e) {
+                com.smarthome.magic.app.UIHelper.ToastMessage(MyApplication.getApp().getApplicationContext(), "请下载高德后重新尝试", Toast.LENGTH_SHORT);
+            }
+        }
+    }
+
+    private void clickShare() {
+        if (dataBean != null) {
+            ShareActivity.actionStart(mContext,
+                    dataBean.getShare_title(),
+                    dataBean.getShare_detail(),
+                    dataBean.getShare_url(),
+                    dataBean.getShare_img());
         }
     }
 
@@ -274,71 +304,5 @@ public class ShangjiaDetailsActivity extends BaseActivity {
         }
     }
 
-    /**
-     * @param title
-     * @param content
-     * @param url
-     * @param imageUrl
-     * @param leixing  0 好友 1朋友圈
-     */
-    private void setWeatchShare(String title, String content, String url, String imageUrl, String leixing) {
-        new Thread(new Runnable() {//创建一个子线程
-            @Override
-            public void run() {
-                WXWebpageObject webpage = new WXWebpageObject();
-                webpage.webpageUrl = url;
-                WXMediaMessage msg = new WXMediaMessage(webpage);
-                msg.title = title;
-                msg.description = content;
-                ImageView iv = new ImageView(mContext);
-                Glide.with(mContext).asBitmap().load(imageUrl).into(new BitmapImageViewTarget(iv) {
-                    @Override
-                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                        resource.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                        byte[] data = baos.toByteArray();
-                    }
-                });
 
-                msg.thumbData = getThumbData();
-                SendMessageToWX.Req req = new SendMessageToWX.Req();
-                req.transaction = String.valueOf(System.currentTimeMillis());
-                req.message = msg;
-
-                if (leixing.equals("0")) {
-                    req.scene = SendMessageToWX.Req.WXSceneSession;//分享到微信好友
-                } else if (leixing.equals("1")) {
-                    req.scene = SendMessageToWX.Req.WXSceneTimeline;//分享到微信朋友圈
-                }
-                //调用api接口，发送数据到微信
-                api.sendReq(req);
-
-            }
-        }).start();
-    }
-
-    /**
-     * 获取分享封面byte数组 我们这边取的是软件启动icon
-     */
-    private byte[] getThumbData() {
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 2;
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher, options);
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
-        int quality = 100;
-        while (output.toByteArray().length > IMAGE_SIZE && quality != 10) {
-            output.reset(); // 清空baos
-            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, output);// 这里压缩options%，把压缩后的数据存放到baos中
-            quality -= 10;
-        }
-        bitmap.recycle();
-        byte[] result = output.toByteArray();
-        try {
-            output.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
 }

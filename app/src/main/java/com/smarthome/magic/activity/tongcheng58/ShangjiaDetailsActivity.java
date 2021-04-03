@@ -2,10 +2,12 @@ package com.smarthome.magic.activity.tongcheng58;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.flyco.roundview.RoundRelativeLayout;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -24,6 +26,7 @@ import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.Radius_GlideImageLoader;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.view.AutoNextLineLinearlayout;
 import com.youth.banner.Banner;
@@ -58,13 +61,13 @@ public class ShangjiaDetailsActivity extends BaseActivity {
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.bt_phone)
-    TextView bt_phone;
+    RoundRelativeLayout bt_phone;
     @BindView(R.id.bt_weixin)
-    TextView bt_weixin;
+    RoundRelativeLayout bt_weixin;
     @BindView(R.id.bt_daohang)
-    TextView bt_daohang;
+    RoundRelativeLayout bt_daohang;
     @BindView(R.id.bt_fenxiang)
-    TextView bt_fenxiang;
+    RoundRelativeLayout bt_fenxiang;
     @BindView(R.id.tv_name)
     TextView tv_name;
     private String ir_id;
@@ -193,6 +196,7 @@ public class ShangjiaDetailsActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bt_phone:
+                clickPhone();
                 break;
             case R.id.bt_weixin:
                 break;
@@ -201,5 +205,31 @@ public class ShangjiaDetailsActivity extends BaseActivity {
             case R.id.bt_fenxiang:
                 break;
         }
+    }
+
+    private void clickPhone() {
+        String ir_contact_phone = dataBean.getIr_contact_phone();
+        TishiDialog dialog = new TishiDialog(mContext, TishiDialog.TYPE_CAOZUO, new TishiDialog.TishiDialogListener() {
+            @Override
+            public void onClickCancel(View v, TishiDialog dialog) {
+
+            }
+
+            @Override
+            public void onClickConfirm(View v, TishiDialog dialog) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                Uri data = Uri.parse("tel:" + ir_contact_phone);
+                intent.setData(data);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onDismiss(TishiDialog dialog) {
+
+            }
+        });
+        dialog.setTextTitle("拨打电话");
+        dialog.setTextContent(ir_contact_phone);
+        dialog.show();
     }
 }

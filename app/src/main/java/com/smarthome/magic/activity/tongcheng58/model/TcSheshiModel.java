@@ -15,7 +15,7 @@ public class TcSheshiModel {
     private String msg_code;
     private String msg;
     private String row_num;
-    private List<DataBean> data;
+    private List<ShangjiaDetailModel.DataBean.TypeArrayBean> data;
 
     public String getMsg_code() {
         return msg_code;
@@ -41,37 +41,13 @@ public class TcSheshiModel {
         this.row_num = row_num;
     }
 
-    public List<DataBean> getData() {
+    public List<ShangjiaDetailModel.DataBean.TypeArrayBean> getData() {
         return data;
     }
 
-    public void setData(List<DataBean> data) {
+    public void setData(List<ShangjiaDetailModel.DataBean.TypeArrayBean> data) {
         this.data = data;
     }
 
-    public static class DataBean {
-        /**
-         * name : 刷卡支付
-         * id : 1
-         */
 
-        private String name;
-        private String id;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-    }
 }

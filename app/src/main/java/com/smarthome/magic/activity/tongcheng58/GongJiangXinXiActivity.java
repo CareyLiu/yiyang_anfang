@@ -24,6 +24,7 @@ import com.lzy.okgo.request.base.Request;
 import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.fenxiang_tuisong.ShareActivity;
 import com.smarthome.magic.activity.tongcheng58.model.ShangjiaDetailModel;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
@@ -130,7 +131,7 @@ public class GongJiangXinXiActivity extends BaseActivity {
         rlFenxiang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIHelper.ToastMessage(mContext, "分享");
+                clickShare();
             }
         });
 
@@ -161,7 +162,7 @@ public class GongJiangXinXiActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         //重新发布
-                        BianMinFaBuBianJiActivity.actionStart(mContext, irId);
+                        GongJiangRuZhuBianJiActivity.actionStart(mContext, irId);
                     }
                 });
                 llJujue.setVisibility(View.VISIBLE);
@@ -192,6 +193,18 @@ public class GongJiangXinXiActivity extends BaseActivity {
     @Override
     public boolean showToolBar() {
         return true;
+    }
+
+    GongJiangXinXiModel.DataBean dataBean;
+
+    private void clickShare() {
+        if (dataBean != null) {
+            ShareActivity.actionStart(mContext,
+                    dataBean.getShare_title(),
+                    dataBean.getShare_detail(),
+                    dataBean.getShare_url() + "&x=" + dataBean.getX() + "&y=" + dataBean.getY(),
+                    dataBean.getShare_img());
+        }
     }
 
     TishiDialog tishiDialog;
@@ -329,7 +342,7 @@ public class GongJiangXinXiActivity extends BaseActivity {
                     public void onSuccess(Response<AppResponse<GongJiangXinXiModel.DataBean>> response) {
                         Logger.d(gson.toJson(response.body()));
                         irId = response.body().data.get(0).getIr_id();
-
+                        dataBean = response.body().data.get(0);
                         GongJiangXinXiModel.DataBean dataBean = response.body().data.get(0);
                         Glide.with(mContext).load(dataBean.getIr_personnal_img_url()).into(ivImage);
                         tvGongjiangMing.setText(dataBean.getIr_personnal_name());
@@ -367,8 +380,8 @@ public class GongJiangXinXiActivity extends BaseActivity {
                                 llTag.addView(view);
                             }
                         }
-                        tvJujueYuanyin.setText(dataBean.getIr_manage_text());
-                        phone = dataBean.getIr_contact_phone();
+                        tvJujueYuanyin.setText("拒绝原因：" + dataBean.getIr_manage_text());
+                        phone = dataBean.getIr_user_phone();
                         weiXinHao = dataBean.getIr_wx_number();
                     }
 
@@ -427,4 +440,9 @@ public class GongJiangXinXiActivity extends BaseActivity {
                 });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
+    }
 }

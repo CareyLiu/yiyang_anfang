@@ -565,7 +565,7 @@ public class GongJiangRuZhuBianJiActivity extends BaseActivity implements TakePh
 
     public void saveData() {
         Map<String, Object> map = new HashMap<>();
-        map.put("code", "17001");
+        map.put("code", "17011");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
         map.put("x", gongJiangRuZhuBean.weiDu);
@@ -666,13 +666,20 @@ public class GongJiangRuZhuBianJiActivity extends BaseActivity implements TakePh
                         dataBean = response.body().data.get(0);
                         gongJiangRuZhuBean.geRenJianJie = dataBean.getIr_validity();
                         String fuWuGongZhong = "";
+                        String fuWuGongZhongId = "";
                         for (int i = 0; i < dataBean.getType_array().size(); i++) {
                             if (dataBean.getType_array().get(i).getDefaultX().equals("1")) {
 
                                 fuWuGongZhong = fuWuGongZhong + " " + dataBean.getType_array().get(i).getName();
+                                fuWuGongZhongId = fuWuGongZhongId + dataBean.getType_array().get(i).getId() + ",";
                             }
                         }
-                        gongJiangRuZhuBean.fuWuGongZhong = fuWuGongZhong;
+
+
+                        fuWuGongZhongId = fuWuGongZhongId.substring(0, fuWuGongZhongId.length() - 1);
+
+
+                        gongJiangRuZhuBean.fuWuGongZhong = fuWuGongZhongId;
 
                         for (int i = 0; i < dataBean.getImgList().size(); i++) {
                             BianMinFaBuBean.ProBean proBean = new BianMinFaBuBean.ProBean();
@@ -718,7 +725,9 @@ public class GongJiangRuZhuBianJiActivity extends BaseActivity implements TakePh
                         gongJiangRuZhuBean.lianXiRenMingCheng = dataBean.getIr_personnal_name();
                         Glide.with(mContext).load(gongJiangRuZhuBean.touXiang).into(ivTouxiang);
                         tvGongjiangXingming.setText(gongJiangRuZhuBean.lianXiRenMingCheng);
-                        tvFuwuGongzhong.setText(gongJiangRuZhuBean.fuWuGongZhong);
+
+                        tvFuwuGongzhong.setText(fuWuGongZhong);
+
                         Glide.with(mContext).load(gongJiangRuZhuBean.shenFenZhengZhengMian).into(ivShenfenzhengZhengmian);
                         Glide.with(mContext).load(gongJiangRuZhuBean.shenFenZhengFanMian).into(ivShenfengzhengFanmian);
                         tvGerenJianjie.setText(gongJiangRuZhuBean.geRenJianJie);

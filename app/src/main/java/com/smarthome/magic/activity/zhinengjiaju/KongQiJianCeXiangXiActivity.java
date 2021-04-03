@@ -36,6 +36,7 @@ import com.smarthome.magic.model.KongQiJianCeModel;
 import com.smarthome.magic.model.WenShiDuChuanGanQiModel;
 import com.smarthome.magic.util.icon_util.QuXianLineChart02View;
 import com.smarthome.magic.util.icon_util.SplineChart03View;
+import com.smarthome.magic.util.icon_util.SplineChart03View_new;
 import com.smarthome.magic.util.icon_util.SplineChart03View_xiangxi;
 
 import java.util.Calendar;
@@ -165,6 +166,7 @@ public class KongQiJianCeXiangXiActivity extends BaseActivity {
 
         //居中显示
         layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -288,7 +290,11 @@ public class KongQiJianCeXiangXiActivity extends BaseActivity {
         } else {
             month_last = String.valueOf(month);
         }
-        String nianYueRi = now.get(Calendar.YEAR) + "-" + month_last + "-" + now.get(Calendar.DAY_OF_MONTH);
+        String ri = String.valueOf(now.get(Calendar.DAY_OF_MONTH));
+        if (ri.length() == 1) {
+            ri = "0" + ri;
+        }
+        String nianYueRi = now.get(Calendar.YEAR) + "-" + month_last + "-" + ri;
         map.put("time", nianYueRi);
         Gson gson = new Gson();
         String a = gson.toJson(map);
@@ -301,7 +307,7 @@ public class KongQiJianCeXiangXiActivity extends BaseActivity {
                     public void onSuccess(Response<AppResponse<KongQiJianCeModel.DataBean>> response) {
                         showLoadSuccess();
                         llMain.removeAllViews();
-                        SplineChart03View_xiangxi splineChart03View = new SplineChart03View_xiangxi(mContext, response.body().data.get(0).getGd_list(), hangshu,dataType);
+                        SplineChart03View_new splineChart03View = new SplineChart03View_new(mContext, response.body().data.get(0).getGd_list(), hangshu, dataType);
                         llMain.addView(splineChart03View, layoutParams);
 
                         if (hangshu.equals("1")) {
@@ -332,4 +338,6 @@ public class KongQiJianCeXiangXiActivity extends BaseActivity {
                     }
                 });
     }
+
+
 }

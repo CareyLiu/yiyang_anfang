@@ -22,7 +22,7 @@ public class ChooseFuWuAdapter extends BaseQuickAdapter<FuWuGongZhongBean.DataBe
             helper.setTextColor(R.id.tv_text, mContext.getResources().getColor(R.color.color_FFFC0100));
             helper.setBackgroundRes(R.id.rl_item, R.drawable.chong_zhi_gray);
         } else if (item.type.equals("1")) {
-            helper.setBackgroundRes(R.id.rl_item, R.drawable.que_ding_pink);
+            helper.setBackgroundRes(R.id.rl_item,R.color.pink_10);
             helper.setTextColor(R.id.tv_text, mContext.getResources().getColor(R.color.black_333333));
         }
     }

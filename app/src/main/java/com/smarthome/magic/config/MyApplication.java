@@ -60,6 +60,7 @@ import com.smarthome.magic.activity.WelcomeActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.utils.BizBundleFamilyServiceImpl;
 import com.smarthome.magic.adapter.view.GlobalAdapter;
+import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.CodeClass;
@@ -230,6 +231,7 @@ public class MyApplication extends MultiDexApplication {
     DoMqttValue doMqttValue;
 
     public void onCreate() {
+        PreferenceHelper.getInstance(this).removeKey(App.CHOOSE_KONGZHI_XIANGMU);
         StringBuffer param = new StringBuffer();
         param.append("appid=" + getString(R.string.app_id));
         param.append(",");

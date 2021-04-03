@@ -41,6 +41,7 @@ import com.smarthome.magic.activity.zhinengjiaju.function.MenCiActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.MenSuoActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.SosActivity;
 import com.smarthome.magic.activity.zhinengjiaju.function.YanGanActivity;
+import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.BaseActivity;
@@ -65,6 +66,7 @@ import com.smarthome.magic.model.AlarmClass;
 import com.smarthome.magic.model.DongTaiShiTiZhuangTaiModel;
 import com.smarthome.magic.model.ZhiNengJiaJuNotifyJson;
 import com.smarthome.magic.util.AppToast;
+import com.smarthome.magic.util.DoMqttValue;
 import com.smarthome.magic.util.ShangChuanDongTaiShiTiTool;
 import com.smarthome.magic.util.SoundPoolUtils;
 import com.smarthome.magic.util.YuYinChuLiTool;
@@ -757,6 +759,8 @@ public class HomeActivity extends BaseActivity {
                     previousPosition = position;
                     mVp.setCurrentItem(position, false);
                 }
+
+
                 return true;
             }
         });
@@ -770,6 +774,13 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                 mBnve.setCurrentItem(position);
+
+                if (position == 1) {
+                    PreferenceHelper.getInstance(mContext).putString(App.CHOOSE_KONGZHI_XIANGMU, DoMqttValue.ZHINENGJIAJU);
+                } else {
+                    PreferenceHelper.getInstance(mContext).removeKey(App.CHOOSE_KONGZHI_XIANGMU);
+                }
+
             }
 
             @Override

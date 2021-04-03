@@ -25,7 +25,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SplineChart03View_xiangxi extends DemoView {
+public class SplineChart03View_new extends DemoView {
 
 
     private String TAG = "SplineChart03View";
@@ -43,29 +43,22 @@ public class SplineChart03View_xiangxi extends DemoView {
     private List<KongQiJianCeModel.DataBean.GdListBean> listBeans;
 
     private String jiaQuanOrKongQi; //1甲醛那一行 2.空气指数那一行
-    private String laber;
+    private String nianOrYueOrRi;
 
-    public SplineChart03View_xiangxi(Context context, List<KongQiJianCeModel.DataBean.GdListBean> listBeans, String jiaQuanOrKongQi) {
+    public SplineChart03View_new(Context context, List<KongQiJianCeModel.DataBean.GdListBean> listBeans, String jiaQuanOrKongQi, String nianOrYueOrRi) {
         super(context);
         this.listBeans = listBeans;
         this.jiaQuanOrKongQi = jiaQuanOrKongQi;
+        this.nianOrYueOrRi = nianOrYueOrRi;
         initView();
     }
 
-    public SplineChart03View_xiangxi(Context context, List<KongQiJianCeModel.DataBean.GdListBean> listBeans, String jiaQuanOrKongQi, String laber) {
-        super(context);
-        this.listBeans = listBeans;
-        this.jiaQuanOrKongQi = jiaQuanOrKongQi;
-        this.laber = laber;
-        initView();
-    }
-
-    public SplineChart03View_xiangxi(Context context, AttributeSet attrs, List<KongQiJianCeModel.DataBean.GdListBean> listBeans) {
+    public SplineChart03View_new(Context context, AttributeSet attrs, List<KongQiJianCeModel.DataBean.GdListBean> listBeans) {
         super(context, attrs);
         initView();
     }
 
-    public SplineChart03View_xiangxi(Context context, AttributeSet attrs, int defStyle) {
+    public SplineChart03View_new(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initView();
     }
@@ -103,6 +96,7 @@ public class SplineChart03View_xiangxi extends DemoView {
             chart.setCategories(labels);
             chart.setDataSource(chartData);
 
+
             //坐标系
             //数据轴最大值
             if (jiaQuanOrKongQi.equals("2")) {
@@ -120,6 +114,10 @@ public class SplineChart03View_xiangxi extends DemoView {
             chart.setCustomLines(mYCustomLineDataset); //y轴
 
 
+            //标签轴最大值
+            chart.setCategoryAxisMax(24);
+            //标签轴最小值
+            chart.setCategoryAxisMin(0);
             //chart.setCustomLines(mXCustomLineDataset); //y轴
             chart.setCategoryAxisCustomLines(mXCustomLineDataset); //x轴
 
@@ -182,17 +180,11 @@ public class SplineChart03View_xiangxi extends DemoView {
         //甲醛
         List<PointD> linePoint1 = new ArrayList<PointD>();
         if (jiaQuanOrKongQi.equals("1")) {
+            for (int i = 0; i < listBeans.size(); i++) {
+                String strHeng = listBeans.get(i).getTime().substring(0, 2);
+                linePoint1.add(new PointD(Double.valueOf(strHeng), Double.valueOf(listBeans.get(i).getGd_cascophen())));
 
-//            for (int i = 0; i < listBeans.size(); i++) {
-//                String strHeng = listBeans.get(i).getTime().substring(0, 2);
-//                linePoint1.add(new PointD(Double.valueOf(strHeng), Double.valueOf(listBeans.get(i).getGd_cascophen())));
-//
-//            }
-
-            PointD pointD = new PointD();
-            pointD.x = 1d;
-            pointD.y = 100d;
-            linePoint1.add(pointD);
+            }
 
         } else if (jiaQuanOrKongQi.equals("2")) {
 
@@ -204,7 +196,7 @@ public class SplineChart03View_xiangxi extends DemoView {
         }
 
 
-        SplineData dataSeries1 = new SplineData("线一", linePoint1,
+        SplineData dataSeries1 = new SplineData("", linePoint1,
                 Color.rgb(29, 32, 130));
         //把线弄细点
         dataSeries1.getLinePaint().setStrokeWidth(8);
@@ -228,7 +220,7 @@ public class SplineChart03View_xiangxi extends DemoView {
         }
 
 
-        SplineData dataSeries2 = new SplineData("线二", linePoint2,
+        SplineData dataSeries2 = new SplineData("", linePoint2,
                 Color.rgb(100, 137, 247));
         dataSeries2.getLinePaint().setStrokeWidth(8);
 
@@ -260,12 +252,12 @@ public class SplineChart03View_xiangxi extends DemoView {
 
     private void chartLabels() {
         int x = 0;
-        if (laber.equals("1")) {
+        if (nianOrYueOrRi.equals("1")) {
             x = 24;
-        } else if (laber.equals("2")) {
+        } else if (nianOrYueOrRi.equals("2")) {
 
             x = 30;
-        } else if (laber.equals("3")) {
+        } else if (nianOrYueOrRi.equals("3")) {
             x = 12;
         }
         for (int i = 0; i < x; i++) {

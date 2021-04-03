@@ -28,6 +28,7 @@ import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.KongQiJianCeModel;
+import com.smarthome.magic.model.KongQiJianCeZ;
 import com.smarthome.magic.util.icon_util.SplineChart03View;
 
 import java.util.Calendar;
@@ -105,6 +106,52 @@ public class KongQiJianCeActvity extends BaseActivity {
             }
         });
         getnet();
+        getFouData();
+    }
+
+    private void getFouData() {
+        //访问网络获取数据 下面的列表数据
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16035");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("device_id", device_id);
+
+        Gson gson = new Gson();
+        String a = gson.toJson(map);
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse<KongQiJianCeZ.DataBean>>post(ZHINENGJIAJU)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<KongQiJianCeZ.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<KongQiJianCeZ.DataBean>> response) {
+                        showLoadSuccess();
+                        tvJiaquan.setText(response.body().data.get(0).getGas_detection_list().get(0).getGd_cascophen());
+                        tvPm.setText(response.body().data.get(0).getGas_detection_list().get(0).getGd_particulate_matter());
+                        tvKongqiZhiliang.setText(response.body().data.get(0).getGas_detection_list().get(0).getGd_air_quality());
+                        tvCo2.setText(response.body().data.get(0).getGas_detection_list().get(0).getGd_carbon_dioxide());
+
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<KongQiJianCeZ.DataBean>> response) {
+                        String str = response.getException().getMessage();
+                        UIHelper.ToastMessage(mContext, response.getException().getMessage());
+
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<KongQiJianCeZ.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showLoading();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                    }
+                });
     }
 
     private void getnet() {
@@ -142,10 +189,6 @@ public class KongQiJianCeActvity extends BaseActivity {
                         llMain2.addView(splineChart03View1, layoutParams);
 
 
-                        tvJiaquan.setText(response.body().data.get(0).getGd_list().get(0).getGd_cascophen());
-                        tvPm.setText(response.body().data.get(0).getGd_list().get(0).getGd_particulate_matter());
-                        tvKongqiZhiliang.setText(response.body().data.get(0).getGd_list().get(0).getGd_air_quality());
-                        tvCo2.setText(response.body().data.get(0).getGd_list().get(0).getGd_carbon_dioxide());
 
 
                     }

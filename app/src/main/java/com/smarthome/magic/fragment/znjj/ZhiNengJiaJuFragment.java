@@ -335,7 +335,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                             PreferenceHelper.getInstance(getActivity()).putString(AppConfig.ZHINENGJIAJUGUANLIYUAN, "0");
                         }
 
-                        PreferenceHelper.getInstance(getActivity()).putString(App.CHOOSE_KONGZHI_XIANGMU, DoMqttValue.ZHINENGJIAJU);
+
                         List<ZhiNengModel.DataBean.DeviceBean> device = dataBean.get(0).getDevice();
                         if (device.size() > 0) {
                             ZhiNengModel.DataBean.DeviceBean deviceBean = device.get(0);

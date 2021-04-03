@@ -145,6 +145,7 @@ public class GongJiangRuZhuBianJiActivity extends BaseActivity implements TakePh
             public void onClick(View v) {
                 if (StringUtils.isEmpty(gongJiangRuZhuBean.touXiang)) {
                     UIHelper.ToastMessage(mContext, "头像不能为空");
+
                     return;
                 } else if (StringUtils.isEmpty(gongJiangRuZhuBean.lianXiRenMingCheng)) {
                     UIHelper.ToastMessage(mContext, "联系人名称不能为空");
@@ -570,7 +571,7 @@ public class GongJiangRuZhuBianJiActivity extends BaseActivity implements TakePh
         map.put("x", gongJiangRuZhuBean.weiDu);
         map.put("y", gongJiangRuZhuBean.jingDu);
         map.put("ir_type", "1");
-
+        map.put("ir_id", irid);
 //发布者头像
         map.put("ir_personnal_img_url", gongJiangRuZhuBean.touXiang);
         map.put("ir_personnal_img_id", gongJiangRuZhuBean.touXiangId);
@@ -712,6 +713,16 @@ public class GongJiangRuZhuBianJiActivity extends BaseActivity implements TakePh
                         gongJiangRuZhuBean.jingDu = dataBean.getY();
                         gongJiangRuZhuBean.weiXinHao = dataBean.getIr_wx_number();
                         gongJiangRuZhuBean.touXiang = dataBean.getIr_personnal_img_url();
+                        gongJiangRuZhuBean.touXiangId = dataBean.getIr_personnal_img_id();
+
+                        gongJiangRuZhuBean.lianXiRenMingCheng = dataBean.getIr_personnal_name();
+                        Glide.with(mContext).load(gongJiangRuZhuBean.touXiang).into(ivTouxiang);
+                        tvGongjiangXingming.setText(gongJiangRuZhuBean.lianXiRenMingCheng);
+                        tvFuwuGongzhong.setText(gongJiangRuZhuBean.fuWuGongZhong);
+                        Glide.with(mContext).load(gongJiangRuZhuBean.shenFenZhengZhengMian).into(ivShenfenzhengZhengmian);
+                        Glide.with(mContext).load(gongJiangRuZhuBean.shenFenZhengFanMian).into(ivShenfengzhengFanmian);
+                        tvGerenJianjie.setText(gongJiangRuZhuBean.geRenJianJie);
+                        tvWeixinhao.setText(gongJiangRuZhuBean.weiXinHao);
 
 
                     }

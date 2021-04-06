@@ -9,13 +9,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.zhinengjiaju.KaiGuanSettingActivity;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
@@ -25,6 +24,7 @@ import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuoTIshi;
+import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Success;
 import com.smarthome.magic.dialog.ZhiNengFamilyAddDIalog;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
@@ -33,6 +33,7 @@ import com.smarthome.magic.model.SuiYiTieModel;
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -58,12 +59,19 @@ public class SuiYiTieSetting extends BaseActivity {
     ImageView ivGuanlianIcon;
     @BindView(R.id.rl_guanlian)
     RelativeLayout rlGuanlian;
+    @BindView(R.id.tv_fangjian_ming)
+    TextView tvFangjianMing;
+    @BindView(R.id.iv_shebeimingcheng_2)
+    ImageView ivShebeimingcheng2;
+    @BindView(R.id.rl_fangjian)
+    RelativeLayout rlFangjian;
     private String device_ccid;
     private String device_ccidup;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        rlFangjian.setVisibility(View.GONE);
         device_ccid = getIntent().getStringExtra("device_ccid");
         device_ccidup = getIntent().getStringExtra("device_ccidup");
         getnet();
@@ -105,12 +113,6 @@ public class SuiYiTieSetting extends BaseActivity {
                 }
             }
         }));
-
-
-    }
-
-    private void deleteDevice() {
-
     }
 
     @Override
@@ -353,16 +355,34 @@ public class SuiYiTieSetting extends BaseActivity {
         map.put("device_ccid_up", device_ccidup);
         map.put("family_id", family_id);
         Gson gson = new Gson();
-        String a = gson.toJson(map);
-        Log.e("map_data", gson.toJson(map));
         OkGo.<AppResponse<SuiYiTieModel.DataBean>>post(ZHINENGJIAJU)
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<SuiYiTieModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<SuiYiTieModel.DataBean>> response) {
-                        UIHelper.ToastMessage(mContext, "随意贴解绑成功");
-                        getnet();
+                        if (response.body().msg_code.equals("0000")) {
+                            Notice notice = new Notice();
+                            notice.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+                            sendRx(notice);
+
+                            MyCarCaoZuoDialog_Success myCarCaoZuoDialog_success = new MyCarCaoZuoDialog_Success(SuiYiTieSetting.this,
+                                    "成功", "设备删除成功", "好的", new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
+                                @Override
+                                public void clickLeft() {
+
+                                }
+
+                                @Override
+                                public void clickRight() {
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_KAIGUAN_DELETE;
+                                    sendRx(notice);
+                                    finish();
+                                }
+                            });
+                            myCarCaoZuoDialog_success.show();
+                        }
                     }
 
                     @Override

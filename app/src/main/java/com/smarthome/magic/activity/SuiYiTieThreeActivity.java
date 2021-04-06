@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,6 +32,8 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.zhinengjiaju.RenTiGanYingActivity;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.app.ConstanceValue;
+import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
@@ -51,6 +54,8 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
@@ -116,6 +121,15 @@ public class SuiYiTieThreeActivity extends BaseActivity {
         device_ccidup = getIntent().getStringExtra("device_ccid_up");
         kongJianClick();
         getnet();
+
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_KAIGUAN_DELETE) {
+                    finish();
+                }
+            }
+        }));
     }
 
     @Override
@@ -149,40 +163,42 @@ public class SuiYiTieThreeActivity extends BaseActivity {
                 finish();
             }
         });
-
-
     }
 
     private void kongJianClick() {
         ll1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bangDingLeft.equals("0")) {
-                    UIHelper.ToastMessage(mContext, "请绑定设备后重新尝试");
-                    return;
-                }
-                if (iv1.isSelected()) {
-                    zhiXingMqtt(0, "02");
-                    iv1.setSelected(false);
-                } else {
-                    zhiXingMqtt(0, "01");
-                    iv1.setSelected(true);
+                if (!TextUtils.isEmpty(bangDingLeft)) {
+                    if (bangDingLeft.equals("0")) {
+                        UIHelper.ToastMessage(mContext, "请绑定设备后重新尝试");
+                        return;
+                    }
+                    if (iv1.isSelected()) {
+                        zhiXingMqtt(0, "02");
+                        iv1.setSelected(false);
+                    } else {
+                        zhiXingMqtt(0, "01");
+                        iv1.setSelected(true);
+                    }
                 }
             }
         });
         ll2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bangDingCenter.equals("0")) {
-                    UIHelper.ToastMessage(mContext, "请绑定设备后重新尝试");
-                    return;
-                }
-                if (iv2.isSelected()) {
-                    zhiXingMqtt(1, "02");
-                    iv2.setSelected(false);
-                } else {
-                    zhiXingMqtt(1, "01");
-                    iv2.setSelected(true);
+                if (!TextUtils.isEmpty(bangDingCenter)) {
+                    if (bangDingCenter.equals("0")) {
+                        UIHelper.ToastMessage(mContext, "请绑定设备后重新尝试");
+                        return;
+                    }
+                    if (iv2.isSelected()) {
+                        zhiXingMqtt(1, "02");
+                        iv2.setSelected(false);
+                    } else {
+                        zhiXingMqtt(1, "01");
+                        iv2.setSelected(true);
+                    }
                 }
             }
         });
@@ -190,38 +206,43 @@ public class SuiYiTieThreeActivity extends BaseActivity {
         ll3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bangDingRight.equals("0")) {
-                    UIHelper.ToastMessage(mContext, "请绑定设备后重新尝试");
-                    return;
+                if (!TextUtils.isEmpty(bangDingRight)) {
+                    if (bangDingRight.equals("0")) {
+                        UIHelper.ToastMessage(mContext, "请绑定设备后重新尝试");
+                        return;
+                    }
+                    if (iv3.isSelected()) {
+                        zhiXingMqtt(2, "02");
+                        iv3.setSelected(false);
+                    } else {
+                        zhiXingMqtt(2, "01");
+                        iv3.setSelected(true);
+                    }
                 }
-                if (iv3.isSelected()) {
-                    zhiXingMqtt(2, "02");
-                    iv3.setSelected(false);
-                } else {
-                    zhiXingMqtt(2, "01");
-                    iv3.setSelected(true);
-                }
-
             }
         });
         rlLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tanChuang("0", bangDingLeft);
+                if (!TextUtils.isEmpty(bangDingLeft)) {
+                    tanChuang("0", bangDingLeft);
+                }
             }
         });
         rlCenter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tanChuang("1", bangDingCenter);
-
+                if (!TextUtils.isEmpty(bangDingCenter)) {
+                    tanChuang("1", bangDingCenter);
+                }
             }
         });
         rlRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tanChuang("2", bangDingRight);
-
+                if (!TextUtils.isEmpty(bangDingRight)) {
+                    tanChuang("2", bangDingRight);
+                }
             }
         });
     }
@@ -447,7 +468,7 @@ public class SuiYiTieThreeActivity extends BaseActivity {
 
 
     public void showSuiYiTie(Response<AppResponse<SuiYiTieModel.DataBean>> response) {
-        {
+        if (response.body().data.get(0).getDevice_list().size() == 3) {
             tvsuiyitie.setVisibility(View.GONE);
             if (StringUtils.isEmpty(response.body().data.get(0).getDevice_list().get(0).getBinding_device_name())) {
                 Glide.with(mContext).load(R.mipmap.tuya_nav_icon_add).into(ivAdd1);
@@ -496,7 +517,6 @@ public class SuiYiTieThreeActivity extends BaseActivity {
                     iv3.setSelected(false);
                 }
             }
-
 
         }
     }

@@ -163,6 +163,7 @@ public class GongJiangXinXiActivity extends BaseActivity {
                     public void onClick(View v) {
                         //重新发布
                         GongJiangRuZhuBianJiActivity.actionStart(mContext, irId);
+                        finish();
                     }
                 });
                 llJujue.setVisibility(View.VISIBLE);
@@ -225,6 +226,7 @@ public class GongJiangXinXiActivity extends BaseActivity {
                 tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
                     @Override
                     public void onClickCancel(View v, TishiDialog dialog) {
+
 
                     }
 

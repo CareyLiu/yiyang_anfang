@@ -1558,7 +1558,7 @@
             android:name=".activity.tongcheng58.BianMinFaBuActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+            android:windowSoftInputMode="adjustNothing|stateHidden" />
 
         <activity
             android:name=".activity.tongcheng58.PoiKeywordSearchActivity"
@@ -1569,7 +1569,7 @@
             android:name=".activity.tongcheng58.GongJiangRuZhuActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+            android:windowSoftInputMode="adjustNothing|stateHidden"/>
 
         <!--    商家入驻    -->
         <activity
@@ -1639,12 +1639,12 @@
             android:name=".activity.tongcheng58.BianMinFaBuBianJiActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+            android:windowSoftInputMode="adjustNothing|stateHidden" />
         <activity
             android:name=".activity.tongcheng58.GongJiangRuZhuBianJiActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+            android:windowSoftInputMode="adjustNothing|stateHidden" />
     </application>
 
 </manifest>

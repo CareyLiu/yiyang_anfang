@@ -28,6 +28,7 @@ import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.orhanobut.logger.Logger;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.DefaultX5WebView_HaveNameActivity;
 import com.smarthome.magic.activity.ShuRuInterView;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tongcheng58.model.TcUpLoadModel;
@@ -67,6 +68,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import retrofit2.http.Url;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
@@ -116,6 +118,7 @@ public class GongJiangRuZhuActivity extends BaseActivity implements TakePhoto.Ta
     @BindView(R.id.tv_dizhi)
     TextView tvDizhi;
 
+    TextView tvGongJiangFabuXuZhi;
     private String xuanZe = "0";//0未选择 1已选择
     GongJiangRuZhuBean gongJiangRuZhuBean = new GongJiangRuZhuBean();
     XiangQingTuAdapter xiangQingTuAdapter;
@@ -129,6 +132,7 @@ public class GongJiangRuZhuActivity extends BaseActivity implements TakePhoto.Ta
         super.onCreate(savedInstanceState);
         getTakePhoto().onCreate(savedInstanceState);
         gongJiangRuZhuBean.proBeanList = new ArrayList<>();
+        tvGongJiangFabuXuZhi = findViewById(R.id.tv_gongjiangfabuxuzhi);
         rlGongjiangTouxiang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,6 +140,14 @@ public class GongJiangRuZhuActivity extends BaseActivity implements TakePhoto.Ta
                 getPaiZhaoPhone();
             }
         });
+
+        tvGongJiangFabuXuZhi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DefaultX5WebView_HaveNameActivity.actionStart(mContext, Urls.GONGJIANGXUZHI,"工匠发布须知");
+            }
+        });
+
 
         rrlTijiao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,18 +157,25 @@ public class GongJiangRuZhuActivity extends BaseActivity implements TakePhoto.Ta
                     return;
                 } else if (StringUtils.isEmpty(gongJiangRuZhuBean.lianXiRenMingCheng)) {
                     UIHelper.ToastMessage(mContext, "联系人名称不能为空");
+                    return;
                 } else if (StringUtils.isEmpty(gongJiangRuZhuBean.fuWuGongZhong)) {
                     UIHelper.ToastMessage(mContext, "服务工种不能为空");
+                    return;
                 } else if (gongJiangRuZhuBean.proBeanList.size() == 0) {
                     UIHelper.ToastMessage(mContext, "上传图片不能为空");
+                    return;
                 } else if (StringUtils.isEmpty(gongJiangRuZhuBean.shenFenZhengZhengMian)) {
                     UIHelper.ToastMessage(mContext, "请上传身份证正面");
+                    return;
                 } else if (StringUtils.isEmpty(gongJiangRuZhuBean.shenFenZhengFanMian)) {
                     UIHelper.ToastMessage(mContext, "请上传身份证反面");
+                    return;
                 } else if (StringUtils.isEmpty(gongJiangRuZhuBean.diZhi)) {
                     UIHelper.ToastMessage(mContext, "请上传地址");
+                    return;
                 } else if (StringUtils.isEmpty(gongJiangRuZhuBean.weiXinHao)) {
                     UIHelper.ToastMessage(mContext, "请上传微信号");
+                    return;
                 }
 
                 tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {

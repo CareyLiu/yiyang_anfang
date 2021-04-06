@@ -100,6 +100,7 @@ public class BianMinXinXiActivity extends BaseActivity {
                     public void onClick(View v) {
                         //重新发布
                         BianMinFaBuBianJiActivity.actionStart(mContext, irId);
+                        finish();
                     }
                 });
                 llJujue.setVisibility(View.VISIBLE);

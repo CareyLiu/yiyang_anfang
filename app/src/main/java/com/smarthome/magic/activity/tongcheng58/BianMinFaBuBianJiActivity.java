@@ -717,19 +717,36 @@ public class BianMinFaBuBianJiActivity extends BaseActivity implements TakePhoto
                                 Log.i("BianMinFaBuActivity", "dataBeanList的值" + dataBeanList.get(options1) + "");
                                 Log.i("BianMinFaBuActivity", "dataBeanList1的值" + dataBeanList1.get(options2) + "");
 
-                                for (int i = 0; i < response.body().data.size(); i++) {
+                                for (int i = 0; i < dataBeanList.size(); i++) {
                                     if (response.body().data.get(i).getItem_name().equals(dataBeanList.get(options1))) {
                                         bianMinFaBuBean.lanMuLeiBie = response.body().data.get(i).getItem_id();
                                         bianMinFaBuBean.lanMuLeiBieMingCheng = response.body().data.get(i).getItem_name();
 
+//                                        for (int j = 0; j < response.body().data.get(i).getItem().size(); j++) {
+//
+//                                            bianMinFaBuBean.lanMuLeiXing = response.body().data.get(i).getItem().get(j).getItem_id();
+//                                            bianMinFaBuBean.lanMuLeiXingMingCheng = response.body().data.get(i).getItem().get(j).getItem_name();
+//                                        }
+
+                                        bianMinFaBuBean.lanMuLeiXingMingCheng = (String) dataBeanList1.get(i).get(options2);
+                                        // bianMinFaBuBean.lanMuLeiXingMingCheng = (String) dataBeanList.get(i);
+
                                         for (int j = 0; j < response.body().data.get(i).getItem().size(); j++) {
-                                            bianMinFaBuBean.lanMuLeiXing = response.body().data.get(i).getItem().get(j).getItem_id();
-                                            bianMinFaBuBean.lanMuLeiXingMingCheng = response.body().data.get(i).getItem().get(j).getItem_name();
+                                            if ( bianMinFaBuBean.lanMuLeiXingMingCheng.equals(response.body().data.get(i).getItem().get(j).getItem_name())) {
+
+                                                bianMinFaBuBean.lanMuLeiXing = response.body().data.get(i).getItem().get(j).getItem_id();
+                                                bianMinFaBuBean.lanMuLeiXingMingCheng=response.body().data.get(i).getItem().get(j).getItem_name();
+                                            }
                                         }
+
                                     }
                                 }
 
-                                String str = dataBeanList.get(options1) + "-" + dataBeanList1.get(options2);
+                                Log.i("BianMinFaBuActivity", "栏目类别:" + bianMinFaBuBean.lanMuLeiBie + "栏目类别名称:" + bianMinFaBuBean.lanMuLeiBieMingCheng);
+                                Log.i("BianMinFaBuActivity", "栏目类型:" + bianMinFaBuBean.lanMuLeiXing + "栏目类型名称:" + bianMinFaBuBean.lanMuLeiXingMingCheng);
+
+
+                                String str = bianMinFaBuBean.lanMuLeiBieMingCheng + "-" + bianMinFaBuBean.lanMuLeiXingMingCheng;
                                 tvQingxuanze.setText(str);
                             }
                         }).build();
@@ -740,14 +757,14 @@ public class BianMinFaBuBianJiActivity extends BaseActivity implements TakePhoto
 //                            JingYingXiangBean.DataBean jingYingXiangBean = new JingYingXiangBean.DataBean();
 //                            jingYingXiangBean.setItem_name(response.body().data.get(i).getItem_name());
 //                            jingYingXiangBean.setItem_id(response.body().data.get(i).getItem_id());
-
+                            List<Object> list = new ArrayList<>();
                             for (int j = 0; j < response.body().data.get(i).getItem().size(); j++) {
-                                List<Object> list = new ArrayList<>();
+
                                 list.add(response.body().data.get(i).getItem().get(j).getItem_name());
-                                dataBeanList1.add(list);
+
 
                             }
-
+                            dataBeanList1.add(list);
                             dataBeanList.add(response.body().data.get(i).getItem_name());
                         }
 

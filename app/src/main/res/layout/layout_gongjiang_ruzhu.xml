@@ -55,8 +55,7 @@
                     android:layout_height="@dimen/dp_52"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                />
+                    android:layout_marginRight="15dp" />
 
             </RelativeLayout>
 
@@ -105,10 +104,10 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_marginVertical="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:layout_marginVertical="15dp"
                     android:layout_marginLeft="15dp"
                     android:text="服务工种"
                     android:textColor="#ff333333"
@@ -125,11 +124,11 @@
                     android:gravity="center_vertical">
 
                     <TextView
-                        android:gravity="right"
-                        android:layout_gravity="right"
                         android:id="@+id/tv_fuwu_gongzhong"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:gravity="right"
                         android:text="请选择服务工种"
                         android:textColor="#ff999999"
                         android:textSize="13sp" />
@@ -179,13 +178,13 @@
                 android:layout_height="wrap_content">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:layout_marginBottom="19dp"
                     android:id="@+id/rlv_tupian"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rl_xiangqingtu_huashu"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="19dp">
+                    android:layout_marginTop="19dp"
+                    android:layout_marginBottom="19dp">
 
                 </androidx.recyclerview.widget.RecyclerView>
 
@@ -296,11 +295,11 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_marginVertical="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginVertical="15dp"
                     android:layout_marginLeft="15dp"
                     android:text="服务区域"
                     android:textColor="#ff333333"
@@ -389,8 +388,10 @@
                     android:textSize="13sp" />
 
                 <TextView
+                    android:gravity="center_vertical"
+                    android:id="@+id/tv_gongjiangfabuxuzhi"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="4dp"
                     android:text="《工匠发布须知》"
                     android:textColor="#fffc0100"

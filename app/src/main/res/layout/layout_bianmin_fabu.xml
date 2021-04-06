@@ -320,7 +320,7 @@
             <RelativeLayout
                 android:id="@+id/rl_xuanze"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="@dimen/dp_43">
 
                 <ImageView
                     android:id="@+id/iv_none_sel"
@@ -344,9 +344,10 @@
                     android:textSize="13sp" />
 
                 <TextView
+                    android:gravity="center_vertical"
                     android:id="@+id/tv_fabuxuzhi"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/tv_tongyi_huashu"
                     android:text="《发布须知》"

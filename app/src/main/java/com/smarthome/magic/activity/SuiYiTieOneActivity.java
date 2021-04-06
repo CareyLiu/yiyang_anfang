@@ -30,6 +30,8 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.zhinengjiaju.RenTiGanYingActivity;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.app.ConstanceValue;
+import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
@@ -50,6 +52,8 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
@@ -84,6 +88,15 @@ public class SuiYiTieOneActivity extends BaseActivity {
         device_ccidup = getIntent().getStringExtra("device_ccid_up");
         kongJianClick();
         getnet();
+
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_KAIGUAN_DELETE) {
+                    finish();
+                }
+            }
+        }));
     }
 
     @Override
@@ -191,7 +204,7 @@ public class SuiYiTieOneActivity extends BaseActivity {
                         dialog.dismiss();
                     }
                 });
-            }else {
+            } else {
                 String deviceCcidSt = "";
                 //UIHelper.ToastMessage(mContext, "绑定设备");
                 if (mDatas.get(Integer.valueOf(paiwei)) != null) {
@@ -263,25 +276,26 @@ public class SuiYiTieOneActivity extends BaseActivity {
     }
 
     private void showAddIcon(Response<AppResponse<SuiYiTieModel.DataBean>> response) {
+        if (response.body().data.get(0).getDevice_list().size() > 0) {
+            if (response.body().data.get(0).getBinding_type() != null) {
+                if (response.body().data.get(0).getBinding_type().equals("1")) {
+                    rlCenter.setVisibility(View.GONE);
+                    tvsuiyitie.setVisibility(View.VISIBLE);
+                    String str1 = response.body().data.get(0).getDevice_list().get(0).getBinding_device_name();
+                    String str = "该随意贴已与" + str1 + "绑定，如需解绑请去设置页设置";
+                    tvsuiyitie.setText(str);
 
-        if (response.body().data.get(0).getBinding_type() != null) {
-            if (response.body().data.get(0).getBinding_type().equals("1")) {
-                rlCenter.setVisibility(View.GONE);
-                tvsuiyitie.setVisibility(View.VISIBLE);
-                String str1 = response.body().data.get(0).getDevice_list().get(0).getBinding_device_name();
-                String str = "该随意贴已与" + str1 + "绑定，如需解绑请去设置页设置";
-                tvsuiyitie.setText(str);
 
-
+                } else {
+                    showSuiYiTie(response);
+                }
             } else {
                 showSuiYiTie(response);
             }
-        } else {
-            showSuiYiTie(response);
-        }
 
-        if (StringUtils.isEmpty(response.body().data.get(0).getBinding_type())) {
-            tvsuiyitie.setVisibility(View.GONE);
+            if (StringUtils.isEmpty(response.body().data.get(0).getBinding_type())) {
+                tvsuiyitie.setVisibility(View.GONE);
+            }
         }
     }
 

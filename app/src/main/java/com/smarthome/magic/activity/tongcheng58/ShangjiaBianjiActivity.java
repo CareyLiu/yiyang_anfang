@@ -402,7 +402,8 @@ public class ShangjiaBianjiActivity extends BaseActivity implements TakePhoto.Ta
                 showYingyeDialog();
                 break;
             case R.id.ll_adress:
-                tvAddress.setText("神灯科技");
+                Intent intent = new Intent(mContext, PoiKeywordSearchActivity.class);
+                startActivity(intent);
                 break;
             case R.id.ll_qizhi_time:
                 showQizhiDialog();

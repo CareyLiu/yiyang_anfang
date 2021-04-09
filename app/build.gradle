@@ -350,6 +350,7 @@ dependencies {
     implementation 'com.tuya.smart:tuyasmart-bizbundle-camera:3.22.0-5'
     implementation 'org.xclcharts:lib:2.4'
     implementation 'com.amap.api:search:latest.integration'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 
 
 }

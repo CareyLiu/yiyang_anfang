@@ -31,13 +31,15 @@ import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.fragment.Co2Fragment;
+import com.smarthome.magic.fragment.JiaQuanFragment;
+import com.smarthome.magic.fragment.KongQiZhiLiangFragment;
+import com.smarthome.magic.fragment.Pm2Dian5Fragment;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.KongQiJianCeModel;
 import com.smarthome.magic.model.WenShiDuChuanGanQiModel;
 import com.smarthome.magic.util.icon_util.QuXianLineChart02View;
-import com.smarthome.magic.util.icon_util.SplineChart03View;
 import com.smarthome.magic.util.icon_util.SplineChart03View_new;
-import com.smarthome.magic.util.icon_util.SplineChart03View_xiangxi;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -48,7 +50,7 @@ import butterknife.BindView;
 
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
-public class KongQiJianCeXiangXiActivity extends BaseActivity {
+public class KongQiJianCeXiangXi_NewActivity extends BaseActivity {
     @BindView(R.id.tv_tian)
     TextView tvTian;
     @BindView(R.id.tv_yue)
@@ -64,8 +66,6 @@ public class KongQiJianCeXiangXiActivity extends BaseActivity {
     @BindView(R.id.tv_riqi)
     TextView tvRiqi;
 
-    @BindView(R.id.tv_two)
-    TextView tvTwo;
 
     private String deviceId;
     private String dataType = "1";
@@ -233,7 +233,7 @@ public class KongQiJianCeXiangXiActivity extends BaseActivity {
      * @param context
      */
     public static void actionStart(Context context, String deviceId, String str) {
-        Intent intent = new Intent(context, KongQiJianCeXiangXiActivity.class);
+        Intent intent = new Intent(context, KongQiJianCeXiangXi_NewActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("device_id", deviceId);
         intent.putExtra("hangshu", str);
@@ -305,17 +305,45 @@ public class KongQiJianCeXiangXiActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Response<AppResponse<KongQiJianCeModel.DataBean>> response) {
                         showLoadSuccess();
-                        llMain.removeAllViews();
-                        SplineChart03View_new splineChart03View = new SplineChart03View_new(mContext, response.body().data.get(0).getGd_list(), hangshu, dataType);
-                        llMain.addView(splineChart03View, layoutParams);
+//                        llMain.removeAllViews();
+//                        SplineChart03View_new splineChart03View = new SplineChart03View_new(mContext, response.body().data.get(0).getGd_list(), hangshu, dataType);
+//                        llMain.addView(splineChart03View, layoutParams);
 
-//                        if (hangshu.equals("1")) {
+
+                        if (hangshu.equals("1")) {
 //                            tvOne.setText("甲醛");
 //                            tvTwo.setText("pm2.5");
-//                        } else {
+
+                            getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .replace(R.id.ll_main, new KongQiZhiLiangFragment(response.body().data.get(0).getGd_list(), "1"))
+                                    .commit();
+//                            getSupportFragmentManager()    //
+//                                    .beginTransaction()
+//                                    .add(R.id.ll_main, new KongQiZhiLiangFragment(response.body().data.get(0).getGd_list()))   // 此处的R.id.fragment_container是要盛放fragment的父容器
+//                                    .commit();
+                        } else if (hangshu.equals("2")) {
 //                            tvOne.setText("空气质量");
 //                            tvTwo.setText("co2指数");
-//                        }
+//                            getSupportFragmentManager()    //
+//                                    .beginTransaction()
+//                                    .add(R.id.ll_main, new Pm2Dian5Fragment(response.body().data.get(0).getGd_list()))   // 此处的R.id.fragment_container是要盛放fragment的父容器
+//                                    .commit();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.ll_main, new Pm2Dian5Fragment(response.body().data.get(0).getGd_list(), "1")).commit();
+                        } else if (hangshu.equals("3")) {
+//                            getSupportFragmentManager()    //
+//                                    .beginTransaction()
+//                                    .add(R.id.ll_main, new JiaQuanFragment(response.body().data.get(0).getGd_list()))   // 此处的R.id.fragment_container是要盛放fragment的父容器
+//                                    .commit();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.ll_main, new JiaQuanFragment(response.body().data.get(0).getGd_list(), "1")).commit();
+                        } else if (hangshu.equals("4")) {
+//                            getSupportFragmentManager()    //
+//                                    .beginTransaction()
+//                                    .add(R.id.ll_main, new Co2Fragment(response.body().data.get(0).getGd_list()))   // 此处的R.id.fragment_container是要盛放fragment的父容器
+//                                    .commit();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.ll_main, new Co2Fragment(response.body().data.get(0).getGd_list(), "1")).commit();
+
+                        }
                     }
 
                     @Override

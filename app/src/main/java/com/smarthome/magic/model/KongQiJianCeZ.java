@@ -1,5 +1,6 @@
 package com.smarthome.magic.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class KongQiJianCeZ {
@@ -47,7 +48,7 @@ public class KongQiJianCeZ {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         /**
          * room_id : 0
          * device_ccid : 19010101

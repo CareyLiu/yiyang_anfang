@@ -44,6 +44,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.DefaultX5WebView_HaveNameActivity;
 import com.smarthome.magic.activity.SheBeiLieBiaoActivity;
+import com.smarthome.magic.activity.TuBiaoActivity;
 import com.smarthome.magic.activity.TuanYouWebView;
 import com.smarthome.magic.activity.gouwuche.GouWuCheActivity;
 import com.smarthome.magic.activity.homepage.DaLiBaoActivity;
@@ -153,6 +154,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
 
     private View viewLineTop, viewLineMiddle, remenViewLineTop;
     RecyclerView chiHeWanLeList, zhiKongList, shengHuoList;//吃喝玩乐和智控
+    private RelativeLayout llShengHuo;
     /**
      * 每一页展示多少条数据
      */
@@ -285,6 +287,8 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
 
         shengHuoList = view.findViewById(R.id.rlv_shenghuo);
         shengHuoList.setFocusable(false);
+
+        llShengHuo = view.findViewById(R.id.ll_shenghuo1);
 
         ivZiJian = view.findViewById(R.id.iv_zijian);
         tianMaoOrTaoBao = view.findViewById(R.id.iv_tianmao_or_taobao);
@@ -458,7 +462,9 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                             //GongJiangRuZhuActivity.actionStart(getActivity());
 //                            Intent intent = new Intent(getActivity(), PoiKeywordSearchActivity.class);
 //                            startActivity(intent);
-                            // KongQiJianCeActvity.actionStart(getActivity(),"0x1100033");
+                            //KongQiJianCeActvity.actionStart(getActivity(),"0x1100033");
+//                            Intent intent = new Intent(getActivity(), TuBiaoActivity.class);
+//                            startActivity(intent);
                         } else {
                             Toast.makeText(getActivity(), "该应用需要赋予访问相机的权限，不开启将无法正常工作！", Toast.LENGTH_LONG).show();
                         }
@@ -786,15 +792,16 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                                 }
                             });
                         }
-
-
                         intellectListBeanList = new ArrayList<>();
                         lifeListBeans = new ArrayList<>();
                         chiHeWanLeListBeans = new ArrayList<>();
                         //下面展示首页顶部图片
                         intellectListBeanList.addAll(response.body().data.get(0).getIntellectList());
-                        lifeListBeans.addAll(response.body().data.get(0).lifeList);
-
+                        if (response.body().data.get(0).lifeList != null) {
+                            lifeListBeans.addAll(response.body().data.get(0).lifeList);
+                        } else {
+                            llShengHuo.setVisibility(View.GONE);
+                        }
                         if (response.body().data.get(0).getIconList() != null) {
                             chiHeWanLeListBeans.addAll(response.body().data.get(0).getIconList());
                         }

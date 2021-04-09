@@ -39,6 +39,7 @@ import com.smarthome.magic.activity.yaokongqi.WanNengYaoKongQi;
 import com.smarthome.magic.activity.yaokongqi.YaokongKT;
 import com.smarthome.magic.activity.zckt.AirConditionerActivity;
 import com.smarthome.magic.activity.zhinengjiaju.KongQiJianCeActvity;
+import com.smarthome.magic.activity.zhinengjiaju.KongQiJianCe_NewActvity;
 import com.smarthome.magic.activity.zhinengjiaju.RenTiGanYingActivity;
 import com.smarthome.magic.activity.zhinengjiaju.WenShiDuChuanGanQiActivity;
 import com.smarthome.magic.activity.zhinengjiaju.ZhiNengJiaJuKaiGuanOneActivity;
@@ -343,7 +344,8 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                             startActivity(new Intent(getActivity(), ZhiNengZhuJiDetailAutoActivity.class).putExtras(bundle));
                         } else if (deviceBean.getDevice_type().equals("19")) {
                             //空气检测
-                            KongQiJianCeActvity.actionStart(getActivity(), deviceBean.getDevice_id());
+                            KongQiJianCe_NewActvity.actionStart(getActivity(), deviceBean.getDevice_id());
+                            //KongQiJianCeActvity.actionStart(getActivity(), deviceBean.getDevice_id());
                         } else {
                             String ty_device_ccid = deviceBean.getTy_device_ccid();
                             if (TextUtils.isEmpty(ty_device_ccid)) {

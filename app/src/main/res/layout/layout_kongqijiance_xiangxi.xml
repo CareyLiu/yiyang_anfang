@@ -47,48 +47,43 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/rl_kongqizhiliang"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_29"
-        android:layout_gravity="center_vertical"
-        android:background="@color/white"
-        android:gravity="center_vertical">
-
-        <ImageView
-            android:layout_width="13dp"
-            android:layout_height="13dp"
-            android:layout_marginLeft="17dp"
-            android:background="@drawable/yuanhuan_zise">
-
-        </ImageView>
+        android:layout_height="42dp"
+        android:background="@color/white">
 
         <TextView
-            android:id="@+id/tv_one"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="甲醛"
-            android:textColor="#ff666666"
-            android:textSize="13sp" />
-
-        <ImageView
-            android:layout_width="13dp"
-            android:layout_height="13dp"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="17dp"
-            android:background="@drawable/yuanhuan_qianlanse">
+            android:text="空气质量指数统计(天)"
+            android:textColor="#ff172434"
+            android:textSize="15sp" />
 
-        </ImageView>
-
-        <TextView
-            android:id="@+id/tv_two"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
-            android:text="pm2.5(细颗粒物)"
-            android:textColor="#ff666666"
-            android:textSize="13sp" />
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="17dp"
+            android:gravity="center_vertical">
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="更多"
+                android:textColor="#ff999999"
+                android:textSize="13sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:src="@mipmap/push_gray_999" />
+        </LinearLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -97,7 +92,7 @@
 
         <LinearLayout
             android:id="@+id/ll_main"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_weight="1"

@@ -141,7 +141,6 @@
         </provider>
 
 
-
         <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" -->
         <activity
             android:name=".activity.SplashActivity"
@@ -1573,7 +1572,7 @@
             android:name=".activity.tongcheng58.GongJiangRuZhuActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing|stateHidden"/>
+            android:windowSoftInputMode="adjustNothing|stateHidden" />
 
         <!--    商家入驻    -->
         <activity
@@ -1646,6 +1645,21 @@
             android:windowSoftInputMode="adjustNothing|stateHidden" />
         <activity
             android:name=".activity.tongcheng58.GongJiangRuZhuBianJiActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing|stateHidden" />
+        <activity
+            android:name=".activity.zhinengjiaju.KongQiJianCe_NewActvity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing|stateHidden" />
+        <activity
+            android:name=".activity.TuBiaoActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing|stateHidden" />
+        <activity
+            android:name=".activity.zhinengjiaju.KongQiJianCeXiangXi_NewActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing|stateHidden" />

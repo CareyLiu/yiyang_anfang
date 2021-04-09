@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.gyf.barlibrary.ImmersionBar;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
@@ -181,6 +183,7 @@ public class ShareActivity extends Activity {
                 WXMediaMessage msg = new WXMediaMessage(webpage);
                 msg.title = title;
                 msg.description = content;
+                byte[] thumbData = getThumbData(imageUrl);
                 msg.thumbData = getThumbData(imageUrl);
                 SendMessageToWX.Req req = new SendMessageToWX.Req();
                 req.transaction = String.valueOf(System.currentTimeMillis());
@@ -207,6 +210,7 @@ public class ShareActivity extends Activity {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 2;
         Bitmap bitmap = returnBitMap(share_url);
+        bitmap = createBitmapThumbnail(bitmap);
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
         int quality = 100;
@@ -239,6 +243,24 @@ public class ShareActivity extends Activity {
             return null;
         }
 
+    }
+
+    //压缩图片
+    public Bitmap createBitmapThumbnail(Bitmap bitMap) {
+        int width = bitMap.getWidth();
+        int height = bitMap.getHeight();
+        // 设置想要的大小
+        int newWidth = 99;
+        int newHeight = 99;
+        // 计算缩放比例
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // 取得想要缩放的matrix参数
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        // 得到新的图片
+        Bitmap newBitMap = Bitmap.createBitmap(bitMap, 0, 0, width, height, matrix, true);
+        return newBitMap;
     }
 }
 

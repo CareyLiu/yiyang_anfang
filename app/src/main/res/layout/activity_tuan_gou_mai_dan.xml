@@ -16,7 +16,6 @@
         app:rv_cornerRadius="@dimen/dp_10">
 
         <EditText
-            android:inputType="numberDecimal"
             android:id="@+id/et_jine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,6 +23,7 @@
             android:layout_marginLeft="14dp"
             android:background="@null"
             android:hint="请输入金额"
+            android:inputType="numberDecimal"
             android:textSize="15sp" />
     </com.flyco.roundview.RoundRelativeLayout>
 
@@ -40,7 +40,6 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:rv_backgroundColor="@color/oranger"
+        app:rv_backgroundColor="@color/text_red"
         app:rv_cornerRadius="10dp" />
-
 </RelativeLayout>

@@ -2,6 +2,7 @@ package com.smarthome.magic.activity.tuangou;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatRatingBar;
@@ -67,6 +68,7 @@ public class TuanGouShangJiaDetailsActivity extends AbStracTuanGouShangJiaDetail
     private String shangJiaId;
     private Response<AppResponse<TuanGouShangJiaDetailsModel.DataBean>> response;
     private TuanGouShangJiaDetailsAdapter tuanGouShangJiaDetailsAdapter;
+    private String inst_phone;
 
 
     @Override
@@ -108,9 +110,13 @@ public class TuanGouShangJiaDetailsActivity extends AbStracTuanGouShangJiaDetail
                     @Override
                     public void onSuccess(Response<AppResponse<TuanGouShangJiaDetailsModel.DataBean>> response) {
                         TuanGouShangJiaDetailsActivity.this.response = response;
+                        TuanGouShangJiaDetailsModel.DataBean.StoreListBean storeList = response.body().data.get(0).getStoreList();
+                        inst_phone = storeList.getInst_phone();
+
                         favourableListBeans = response.body().data.get(0).getFavourableList();
                         highScoreListBeans = response.body().data.get(0).getHighScoreList();
                         neighborListBeans = response.body().data.get(0).getNeighborList();
+
                         inst_id = response.body().data.get(0).getStoreList().getInst_id();
                         getTurn();
                         setFotter();
@@ -140,6 +146,7 @@ public class TuanGouShangJiaDetailsActivity extends AbStracTuanGouShangJiaDetail
         AppCompatRatingBar ratingBar = view.findViewById(R.id.star);
         TextView tvRenJun = view.findViewById(R.id.tv_renjun);
         TextView tvAddr = view.findViewById(R.id.tv_addr);
+        ImageView iv_image2 = view.findViewById(R.id.iv_image2);
         RoundTextView roundTextView = view.findViewById(R.id.rtv_maidan);
         roundTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,6 +154,15 @@ public class TuanGouShangJiaDetailsActivity extends AbStracTuanGouShangJiaDetail
                 if (!StringUtils.isEmpty(inst_id)) {
                     TuanGouMaiDanActivity.actionStart(TuanGouShangJiaDetailsActivity.this, inst_id, typeID);
                 }
+            }
+        });
+        iv_image2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                Uri data = Uri.parse("tel:" + inst_phone);
+                intent.setData(data);
+                startActivity(intent);
             }
         });
 
@@ -244,9 +260,20 @@ public class TuanGouShangJiaDetailsActivity extends AbStracTuanGouShangJiaDetail
 
     public void setFotter() {
         View view = View.inflate(TuanGouShangJiaDetailsActivity.this, R.layout.layout_shangjia_details_footer, null);
-
         RecyclerView rcvList1 = view.findViewById(R.id.rcv_list1);
         RecyclerView rcvList2 = view.findViewById(R.id.rcv_list2);
+        TextView tv_nearby = view.findViewById(R.id.tv_nearby);
+        View view_1 = view.findViewById(R.id.view_1);
+
+        if (neighborListBeans.size() == 0) {
+            tv_nearby.setVisibility(View.GONE);
+            view_1.setVisibility(View.GONE);
+            rcvList1.setVisibility(View.GONE);
+        } else {
+            tv_nearby.setVisibility(View.VISIBLE);
+            view_1.setVisibility(View.VISIBLE);
+            rcvList1.setVisibility(View.VISIBLE);
+        }
 
 
         rcvList1.setLayoutManager(new LinearLayoutManager(TuanGouShangJiaDetailsActivity.this));

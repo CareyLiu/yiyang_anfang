@@ -793,7 +793,11 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                         chiHeWanLeListBeans = new ArrayList<>();
                         //下面展示首页顶部图片
                         intellectListBeanList.addAll(response.body().data.get(0).getIntellectList());
-                        lifeListBeans.addAll(response.body().data.get(0).lifeList);
+
+                        List<Home.DataBean.LifeListBean> lifeList = response.body().data.get(0).lifeList;
+                        if (lifeList!=null){
+                            lifeListBeans.addAll(lifeList);
+                        }
 
                         if (response.body().data.get(0).getIconList() != null) {
                             chiHeWanLeListBeans.addAll(response.body().data.get(0).getIconList());

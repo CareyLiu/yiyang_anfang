@@ -39,6 +39,7 @@ import com.smarthome.magic.config.GlideImageLoader;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.TuanGouShangJiaListBean;
+import com.smarthome.magic.project_A.tuangou.TuanGouShangJiaList;
 import com.smarthome.magic.util.GlideShowImageUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
@@ -147,7 +148,9 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
             //设置图片集合
             banner.setImages(items);
             //banner设置方法全部调用完毕时最后调用
-            banner.start();
+            if (!TuanGouShangJiaListActivity.this.isDestroyed()) {
+                banner.start();
+            }
             banner.setOnBannerListener(new OnBannerListener() {
                 @Override
                 public void OnBannerClick(int position) {
@@ -159,6 +162,7 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
 
     TuanGouShangJiaHeaderListAdapter ziJian_headerAdapter;
     int choosePostion;
+
 
     @Override
     public void getHortialList() {
@@ -196,7 +200,7 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                         }
                     } else if (ziJian_headerAdapter.getData().get(position).getId().equals("11")) {
                         TuanYouList.actionStart(mContext);
-                    }  else if (ziJian_headerAdapter.getData().get(position).getId().equals("1")) {
+                    } else if (ziJian_headerAdapter.getData().get(position).getId().equals("1")) {
                         TuanGouShangJiaListActivity.actionStart(mContext, ziJian_headerAdapter.getData().get(position).getId());
                     } else if (ziJian_headerAdapter.getData().get(position).getId().equals("2")) {
                         TuanGouShangJiaListActivity.actionStart(mContext, ziJian_headerAdapter.getData().get(position).getId());
@@ -533,7 +537,7 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                                         String jingdu = PreferenceHelper.getInstance(mContext).getString(JINGDU, "0X11");
                                         String weidu = PreferenceHelper.getInstance(mContext).getString(WEIDU, "0X11");
                                         if (!jingdu.equals("0X11")) {
-                                            String str =iconListBeans1.get(finalI).getHref_url() + "?i=" + JiaMiToken + "&" + "gps_x=" + weidu + "&" + "gps_y=" + jingdu;
+                                            String str = iconListBeans1.get(finalI).getHref_url() + "?i=" + JiaMiToken + "&" + "gps_x=" + weidu + "&" + "gps_y=" + jingdu;
                                             TuanYouWebView.actionStart(mContext, str);
                                         } else {
                                             choosePostion = finalI;
@@ -548,7 +552,7 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                                     } else if (iconListBeans1.get(finalI).getId().equals("1")) {
                                         TuanGouShangJiaListActivity.actionStart(mContext, iconListBeans1.get(finalI).getId());
                                     } else if (iconListBeans1.get(finalI).getId().equals("2")) {
-                                        TuanGouShangJiaListActivity.actionStart(mContext,iconListBeans1.get(finalI).getId());
+                                        TuanGouShangJiaListActivity.actionStart(mContext, iconListBeans1.get(finalI).getId());
                                     } else if (iconListBeans1.get(finalI).getId().equals("3")) {
                                         TuanGouShangJiaListActivity.actionStart(mContext, iconListBeans1.get(finalI).getId());
                                     } else if (iconListBeans1.get(finalI).getId().equals("4")) {
@@ -840,5 +844,10 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

@@ -126,12 +126,13 @@ public class TuanGouShangJiaDetailsActivity extends AbStracTuanGouShangJiaDetail
     }
 
     TuanGouShangJiaDetailsModel.DataBean.StoreListBean storeListBean;
+    Banner banner;
 
     @Override
     public void setHeader() {
         View view = View.inflate(TuanGouShangJiaDetailsActivity.this, R.layout.layout_tuangou_shangjia_details_header, null);
 
-        Banner banner = view.findViewById(R.id.banner);
+        banner = view.findViewById(R.id.banner);
 
         //设置图片加载器
         banner.setImageLoader(new GlideImageLoader());
@@ -297,6 +298,12 @@ public class TuanGouShangJiaDetailsActivity extends AbStracTuanGouShangJiaDetail
         });
         tuanGouShangJiaDetailsAdapter.addFooterView(view);
 
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
     }
 }

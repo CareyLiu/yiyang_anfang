@@ -85,6 +85,4 @@ public class TuanGouMaiDanActivity extends BaseActivity {
         context.startActivity(intent);
 
     }
-
-
 }

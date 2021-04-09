@@ -144,7 +144,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="14dp"
                     android:text="100"
-                    android:textColor="#fffa7e00"
+                    android:textColor="@color/text_red"
                     android:textStyle="bold" />
 
                 <View
@@ -199,6 +199,6 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:rv_backgroundColor="#fffa7e00"
+        app:rv_backgroundColor="@color/text_red"
         app:rv_cornerRadius="@dimen/dp_10" />
 </RelativeLayout>

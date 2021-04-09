@@ -792,6 +792,8 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                                 }
                             });
                         }
+
+
                         intellectListBeanList = new ArrayList<>();
                         lifeListBeans = new ArrayList<>();
                         chiHeWanLeListBeans = new ArrayList<>();

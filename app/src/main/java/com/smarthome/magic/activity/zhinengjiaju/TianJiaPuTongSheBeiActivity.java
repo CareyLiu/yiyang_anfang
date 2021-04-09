@@ -149,36 +149,38 @@ public class TianJiaPuTongSheBeiActivity extends BaseActivity {
                     }
                     oneImageAdapter.notifyDataSetChanged();
 
-                    Notice notice1 = new Notice();
-                    notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
-                    sendRx(notice1);
 
-                    tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
-                        @Override
-                        public void onClickCancel(View v, TishiDialog dialog) {
-                            Notice notice = new Notice();
-                            notice.type = MSG_PEIWANG_SUCCESS;
-                            RxBus.getDefault().sendRx(notice);
-                            finish();
-                        }
+                    if (tishiDialog==null){
+                        tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+                                Notice notice = new Notice();
+                                notice.type = MSG_PEIWANG_SUCCESS;
+                                RxBus.getDefault().sendRx(notice);
+                                finish();
+                            }
 
-                        @Override
-                        public void onClickConfirm(View v, TishiDialog dialog) {
-                            sendMqttTianJiaSheBei();
-                        }
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
+                                sendMqttTianJiaSheBei();
+                            }
 
-                        @Override
-                        public void onDismiss(TishiDialog dialog) {
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
 
-                        }
-                    });
-                    tishiDialog.setTextContent("成功添加设备，是否继续？");
-                    tishiDialog.setTextCancel("退出");
-                    tishiDialog.setTextConfirm("继续");
-                    tishiDialog.setCancelable(false);
-                    tishiDialog.setCanceledOnTouchOutside(false);
-                    tishiDialog.setDismissAfterClick(true);
-                    tishiDialog.show();
+                            }
+                        });
+                        tishiDialog.setTextContent("成功添加设备，是否继续？");
+                        tishiDialog.setTextCancel("退出");
+                        tishiDialog.setTextConfirm("继续");
+                        tishiDialog.setCancelable(false);
+                        tishiDialog.setCanceledOnTouchOutside(false);
+                        tishiDialog.setDismissAfterClick(true);
+                    }
+
+                   if (!tishiDialog.isShowing()){
+                       tishiDialog.show();
+                   }
                 } else if (message.type == ConstanceValue.MSG_PEIWANG_ERROR) {
                     TishiDialog tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
                         @Override

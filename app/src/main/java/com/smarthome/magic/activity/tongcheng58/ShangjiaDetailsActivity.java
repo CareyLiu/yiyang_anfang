@@ -1,7 +1,9 @@
 package com.smarthome.magic.activity.tongcheng58;
 
+import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -47,6 +49,7 @@ import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -214,6 +217,18 @@ public class ShangjiaDetailsActivity extends BaseActivity {
                 break;
             case R.id.bt_weixin:
                 copyContentToClipboard();
+                try {
+                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                    ComponentName cmp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI");
+                    intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setComponent(cmp);
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    // TODO: handle exception
+                    Toast.makeText(this, "检查到您手机没有安装微信，请安装后使用该功能", Toast.LENGTH_SHORT).show();
+                }
+
                 break;
             case R.id.bt_daohang:
                 clickDaohang();
@@ -242,7 +257,7 @@ public class ShangjiaDetailsActivity extends BaseActivity {
             ShareActivity.actionStart(mContext,
                     dataBean.getShare_title(),
                     dataBean.getShare_detail(),
-                    dataBean.getShare_url()+"&x="+ x_weidu +"&y="+ y_jingdu,
+                    dataBean.getShare_url() + "&x=" + x_weidu + "&y=" + y_jingdu,
                     dataBean.getShare_img());
         }
     }

@@ -1,7 +1,9 @@
 package com.smarthome.magic.activity.tongcheng58;
 
+import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -11,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -120,6 +123,19 @@ public class GongJiangXinXiActivity extends BaseActivity {
                 //UIHelper.ToastMessage(mContext, "加微信");
 
                 copyContentToClipboard(weiXinHao, mContext);
+                try {
+                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                    ComponentName cmp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI");
+                    intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setComponent(cmp);
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    // TODO: handle exception
+                    Toast.makeText(mContext, "检查到您手机没有安装微信，请安装后使用该功能", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
         rlYuefuwu.setOnClickListener(new View.OnClickListener() {

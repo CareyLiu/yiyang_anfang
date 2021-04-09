@@ -156,7 +156,7 @@ public class BianMinXinXiActivity extends BaseActivity {
                         } else {
                             tvDizhi.setText(response.body().data.get(0).getAddr());
                         }
-                        lianxiFangshi.setText(response.body().data.get(0).getIr_contact_name() + response.body().data.get(0).getIr_contact_phone());
+                        lianxiFangshi.setText(response.body().data.get(0).getIr_contact_name() + response.body().data.get(0).getIr_user_phone());
 
                         tvJianjie.setText(response.body().data.get(0).getIr_validity());
 

@@ -135,9 +135,7 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
                         if (isOk.equals("1")) {
                             SoundPoolUtils.soundPool(mContext, R.raw.hongwai_learn_suc);
                             tishiDialog.setTextContent(keyName + "键配对成功!");
-                            Y.e("我是什么啊啊啊 "+shebeiMaTwo);
                             if (shebeiMaTwo.equals("28")) {
-                                Y.e("附件为翻开历史的反思的 "+shebeiMaTwo);
                                 if (keyCode.equals("14")) {
                                     llKey1.setEnabled(false);
                                     llKey1.setTextColor(Y.getColor(R.color.color_main));
@@ -218,8 +216,6 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
                                     tishiDialog.show();
                                 }
                             } else {
-                                Y.e("九回复迪斯科解放士大夫但是 "+shebeiMaTwo);
-
                                 if (keyCode.equals("07")) {
                                     llKey1.setEnabled(false);
                                     llKey1.setTextColor(Y.getColor(R.color.color_main));

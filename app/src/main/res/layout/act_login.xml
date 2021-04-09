@@ -37,7 +37,8 @@
         android:layout_marginRight="45dp"
         android:background="@drawable/login_bg"
         android:hint="请输入手机号"
-        android:inputType="text"
+        android:inputType="number"
+        android:maxLength="11"
         android:maxLines="1"
         android:paddingLeft="19dp"
         android:textColor="@color/black_666666"
@@ -65,7 +66,7 @@
             android:layout_weight="1"
             android:background="@null"
             android:hint="请输入验证码"
-            android:inputType="textPassword"
+            android:inputType="number"
             android:maxLines="1"
             android:paddingLeft="19dp"
             android:textColor="@color/black_666666"
@@ -178,8 +179,3 @@
             android:textSize="11sp" />
     </LinearLayout>
 </RelativeLayout>
-
-
-
-
-

@@ -3,6 +3,7 @@ package com.smarthome.magic.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.text.InputType;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -255,14 +256,18 @@ public class LoginActivity extends BaseActivity {
                         switch (position) {
                             case 0:
                                 mTvGetCode.setVisibility(View.VISIBLE);
+                                mEtPwdCode.setText("");
                                 mEtPwdCode.setHint("请输入验证码");
                                 mEtPwdCode.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                                mEtPwdCode.setInputType(InputType.TYPE_CLASS_NUMBER);
                                 req_type = "2";
                                 break;
                             case 1:
                                 mTvGetCode.setVisibility(View.GONE);
+                                mEtPwdCode.setText("");
                                 mEtPwdCode.setHint("请输入登录密码");
                                 mEtPwdCode.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                mEtPwdCode.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
                                 req_type = "1";
                                 break;
                         }

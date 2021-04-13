@@ -141,7 +141,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:includeFontPadding="true"
-                        android:text="营业时间"
+                        android:text="营业开店时间"
                         android:textColor="@color/color_3"
                         android:textSize="31pt"
                         android:textStyle="bold" />
@@ -153,7 +153,46 @@
                         android:layout_weight="1"
                         android:background="@null"
                         android:gravity="right|center_vertical"
-                        android:hint="请选择(可选填)"
+                        android:hint="请选择开店时间"
+                        android:textColor="@color/color_9"
+                        android:textColorHint="@color/color_9"
+                        android:textSize="27pt" />
+
+                    <ImageView
+                        android:layout_width="31pt"
+                        android:layout_height="31pt"
+                        android:layout_marginLeft="16pt"
+                        android:src="@drawable/arrow_more" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1pt"
+                    android:background="@color/line" />
+
+                <LinearLayout
+                    android:id="@+id/ll_yingye_time_bi"
+                    android:layout_width="match_parent"
+                    android:layout_height="104pt"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="true"
+                        android:text="营业闭店时间"
+                        android:textColor="@color/color_3"
+                        android:textSize="31pt"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_yingye_time_bi"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="right|center_vertical"
+                        android:hint="请选择闭店时间"
                         android:textColor="@color/color_9"
                         android:textColorHint="@color/color_9"
                         android:textSize="27pt" />
@@ -467,7 +506,7 @@
                         android:layout_weight="1"
                         android:background="@null"
                         android:gravity="right|center_vertical"
-                        android:hint="请输入折扣(可选填)"
+                        android:hint="请选择折扣(可选填)"
                         android:textColor="@color/color_9"
                         android:textColorHint="@color/color_9"
                         android:textSize="27pt" />
@@ -488,7 +527,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:includeFontPadding="true"
-                        android:text="起止日期"
+                        android:text="折扣开始日期"
                         android:textColor="@color/color_3"
                         android:textSize="31pt"
                         android:textStyle="bold" />
@@ -500,7 +539,47 @@
                         android:layout_weight="1"
                         android:background="@null"
                         android:gravity="right|center_vertical"
-                        android:hint="请选择"
+                        android:hint="请选择折扣开始时间"
+                        android:textColor="@color/color_9"
+                        android:textColorHint="@color/color_9"
+                        android:textSize="27pt" />
+
+                    <ImageView
+                        android:layout_width="31pt"
+                        android:layout_height="31pt"
+                        android:layout_marginLeft="16pt"
+                        android:src="@drawable/arrow_more" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1pt"
+                    android:background="@color/line" />
+
+
+                <LinearLayout
+                    android:id="@+id/ll_qizhi_time_end"
+                    android:layout_width="match_parent"
+                    android:layout_height="104pt"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="true"
+                        android:text="折扣结束日期"
+                        android:textColor="@color/color_3"
+                        android:textSize="31pt"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_stop_time_end"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="right|center_vertical"
+                        android:hint="请选择折扣结束时间"
                         android:textColor="@color/color_9"
                         android:textColorHint="@color/color_9"
                         android:textSize="27pt" />

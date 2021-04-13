@@ -28,7 +28,7 @@ public class TongYongShuRuDIalog implements View.OnClickListener {
     private WindowManager windowManager;
     private int mStyle = R.style.UserinfoDialogStyle;
     private TextView tv_dialog_name, tv_clean, tv_submit;
-    private EditText et_name;
+    public EditText et_name;
 
     private ShuRuInterView shuRuInterView;
     private String shuRu;

@@ -170,7 +170,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initData();
-        getnet();
+        getnet("初始化");
         initSM();
         initHuidiao();
     }
@@ -240,7 +240,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
         srLSmart.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                getnet();
+                getnet("刷新");
             }
         });
     }
@@ -253,11 +253,11 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                     ivZhujiZhuangtai.setBackgroundResource(R.mipmap.zhikong_zhujizaixian);
                     tvZhujiZhuangtai.setText("主机在线");
                 } else if (message.type == ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN) {
-                    getnet();
+                    getnet("MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN");
                 } else if (message.type == ConstanceValue.MSG_ZHINENGJIAJU_ZHUJI) {
-                    getnet();
+                    getnet("MSG_ZHINENGJIAJU_ZHUJI");
                 } else if (message.type == ConstanceValue.MSG_DEVICE_ADD) {
-                    getnet();
+                    getnet("MSG_DEVICE_ADD");
                 } else if (message.type == ConstanceValue.MSG_TUYA_TIANQI) {
                     Object content = message.content;
                     if (content == null) {
@@ -274,19 +274,21 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                         iv_tianqi_enter.setVisibility(View.GONE);
                     }
                 } else if (message.type == ConstanceValue.MSG_DEVICE_DELETE) {//删除设备
-                    getnet();
+                    getnet("MSG_DEVICE_DELETE");
                 } else if (message.type == ConstanceValue.MSG_TIANJIASHEBEI) {//添加普通设备
-                    getnet();
+                    getnet("MSG_TIANJIASHEBEI");
                 } else if (message.type == ConstanceValue.MSG_DEVICE_ROOM_NAME_CHANGE) {//设备转移
-                    getnet();
+                    getnet("MSG_DEVICE_ROOM_NAME_CHANGE");
                 } else if (message.type == ConstanceValue.MSG_DELETE_FAMILY) {//删除家庭刷新
-                    getnet();
+                    getnet("MSG_DELETE_FAMILY");
                 }
             }
         }));
     }
 
-    private void getnet() {
+    private void getnet(String code) {
+        Y.e("接口从哪里执行的  " + code);
+
         //访问网络获取数据 下面的列表数据
         Map<String, String> map = new HashMap<>();
         map.put("code", "16001");
@@ -600,7 +602,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
-        getnet();
+        getnet("显示");
     }
 
     private void deleteTuyaJiating(String ty_family_id) {

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -136,6 +137,14 @@ public class ShangjiaBianjiActivity extends BaseActivity implements TakePhoto.Ta
     LinearLayout llZhekou;
     @BindView(R.id.rv_banner)
     RecyclerView rvBanner;
+    @BindView(R.id.tv_yingye_time_bi)
+    TextView tvYingyeTimeBi;
+    @BindView(R.id.ll_yingye_time_bi)
+    LinearLayout llYingyeTimeBi;
+    @BindView(R.id.tv_stop_time_end)
+    TextView tvStopTimeEnd;
+    @BindView(R.id.ll_qizhi_time_end)
+    LinearLayout llQizhiTimeEnd;
 
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
@@ -335,13 +344,13 @@ public class ShangjiaBianjiActivity extends BaseActivity implements TakePhoto.Ta
 
                             ir_inst_open_time = dataBean.getIr_inst_open_time();
                             ir_inst_close_time = dataBean.getIr_inst_close_time();
-                            tvYingyeTime.setText(ir_inst_open_time + " 至 " + ir_inst_close_time);
+                            tvYingyeTime.setText(ir_inst_open_time);
+                            tvYingyeTimeBi.setText(ir_inst_close_time);
 
                             ir_inst_begin_time = dataBean.getIr_inst_begin_time();
                             ir_inst_end_time = dataBean.getIr_inst_end_time();
-                            if (!TextUtils.isEmpty(ir_inst_begin_time)) {
-                                tvStopTime.setText(ir_inst_begin_time + " 至 " + ir_inst_end_time);
-                            }
+                            tvStopTime.setText(ir_inst_begin_time);
+                            tvStopTimeEnd.setText(ir_inst_end_time);
 
                             ir_contact_phone = dataBean.getIr_contact_phone();
                             edPhone.setText(ir_contact_phone);
@@ -362,7 +371,9 @@ public class ShangjiaBianjiActivity extends BaseActivity implements TakePhoto.Ta
                             edShangjiajieshao.setText(ir_validity);
 
                             ir_agio = dataBean.getIr_agio();
-                            edZhekou.setText(ir_agio);
+                            if (!TextUtils.isEmpty(ir_agio)){
+                                edZhekou.setText(ir_agio + "折");
+                            }
 
                             ir_inst_settled_time = dataBean.getIr_inst_settled_time();
                             tvStartTime.setText(ir_inst_settled_time + "个月");
@@ -389,7 +400,7 @@ public class ShangjiaBianjiActivity extends BaseActivity implements TakePhoto.Ta
     }
 
 
-    @OnClick({R.id.ll_name, R.id.ll_weixin, R.id.ll_phone, R.id.ll_zhekou, R.id.ll_shangjiagonggao, R.id.ll_shangjiajieshao, R.id.iv_logo_add, R.id.ll_hangyefenlei, R.id.ll_yingye_time, R.id.ll_adress, R.id.ll_qizhi_time, R.id.ll_ruzhu_time, R.id.iv_xieyi, R.id.tv_xieyi, R.id.bt_save})
+    @OnClick({R.id.ll_yingye_time_bi, R.id.ll_qizhi_time_end, R.id.ll_name, R.id.ll_weixin, R.id.ll_phone, R.id.ll_zhekou, R.id.ll_shangjiagonggao, R.id.ll_shangjiajieshao, R.id.iv_logo_add, R.id.ll_hangyefenlei, R.id.ll_yingye_time, R.id.ll_adress, R.id.ll_qizhi_time, R.id.ll_ruzhu_time, R.id.iv_xieyi, R.id.tv_xieyi, R.id.bt_save})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_logo_add:
@@ -398,15 +409,9 @@ public class ShangjiaBianjiActivity extends BaseActivity implements TakePhoto.Ta
             case R.id.ll_hangyefenlei:
                 clickFenlei();
                 break;
-            case R.id.ll_yingye_time:
-                showYingyeDialog();
-                break;
             case R.id.ll_adress:
                 Intent intent = new Intent(mContext, PoiKeywordSearchActivity.class);
                 startActivity(intent);
-                break;
-            case R.id.ll_qizhi_time:
-                showQizhiDialog();
                 break;
             case R.id.ll_ruzhu_time:
                 clickRuzhuTime();
@@ -436,7 +441,19 @@ public class ShangjiaBianjiActivity extends BaseActivity implements TakePhoto.Ta
                 clickTongyongshuru("phone");
                 break;
             case R.id.ll_zhekou:
-                clickTongyongshuru("zhekou");
+                clickZheko();
+                break;
+            case R.id.ll_yingye_time:
+                clickTime(0);
+                break;
+            case R.id.ll_yingye_time_bi:
+                clickTime(1);
+                break;
+            case R.id.ll_qizhi_time:
+                clickData(0);
+                break;
+            case R.id.ll_qizhi_time_end:
+                clickData(1);
                 break;
         }
     }
@@ -478,6 +495,15 @@ public class ShangjiaBianjiActivity extends BaseActivity implements TakePhoto.Ta
                 }
             }
         }, title);
+        if (type.equals("name")) {
+            tongYongShuRuDIalog.et_name.setInputType(InputType.TYPE_CLASS_TEXT);
+        } else if (type.equals("weixin")) {
+            tongYongShuRuDIalog.et_name.setInputType(InputType.TYPE_CLASS_TEXT);
+        } else if (type.equals("phone")) {
+            tongYongShuRuDIalog.et_name.setInputType(InputType.TYPE_CLASS_NUMBER);
+        } else {
+            tongYongShuRuDIalog.et_name.setInputType(InputType.TYPE_CLASS_NUMBER);
+        }
         tongYongShuRuDIalog.setmContext(content);
         tongYongShuRuDIalog.show();
     }
@@ -508,11 +534,26 @@ public class ShangjiaBianjiActivity extends BaseActivity implements TakePhoto.Ta
         dialog.show();
     }
 
+    private void clickZheko() {
+        String[] items = {"1折", "2折", "3折", "4折", "5折", "6折", "7折", "8折", "9折"};
+        ActionSheetDialog dialog = new ActionSheetDialog(mContext, items, null);
+        dialog.isTitleShow(false);
+        dialog.cancelText("完成");
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ir_agio = (position + 1) + "";
+                edZhekou.setText(ir_agio + "折");
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
     private void save() {
         ir_inst_name = edName.getText().toString();
         ir_wx_number = edWeixinhao.getText().toString();
         ir_contact_phone = edPhone.getText().toString();
-        ir_agio = edZhekou.getText().toString();
         addr = tvAddress.getText().toString();
         ir_inst_notice = edShangjiagonggao.getText().toString();
         ir_validity = edShangjiajieshao.getText().toString();
@@ -673,50 +714,6 @@ public class ShangjiaBianjiActivity extends BaseActivity implements TakePhoto.Ta
         }
     }
 
-    private void showQizhiDialog() {
-        String[] items = {"开始时间", "结束时间"};
-        ActionSheetDialog dialog = new ActionSheetDialog(mContext, items, null);
-        dialog.isTitleShow(false);
-        dialog.cancelText("完成");
-        dialog.setOnOperItemClickL(new OnOperItemClickL() {
-            @Override
-            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        clickData(0);
-                        break;
-                    case 1:
-                        clickData(1);
-                        break;
-                }
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
-
-    private void showYingyeDialog() {
-        String[] items = {"开业时间", "闭业时间"};
-        ActionSheetDialog dialog = new ActionSheetDialog(mContext, items, null);
-        dialog.isTitleShow(false);
-        dialog.cancelText("完成");
-        dialog.setOnOperItemClickL(new OnOperItemClickL() {
-            @Override
-            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        clickTime(0);
-                        break;
-                    case 1:
-                        clickTime(1);
-                        break;
-                }
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
-
     private void clickFenlei() {
         if (leimuPicker == null) {
             showProgressDialog();
@@ -816,10 +813,11 @@ public class ShangjiaBianjiActivity extends BaseActivity implements TakePhoto.Ta
                 }
                 if (pos == 0) {
                     ir_inst_open_time = time;
+                    tvYingyeTime.setText(ir_inst_open_time);
                 } else {
                     ir_inst_close_time = time;
+                    tvYingyeTimeBi.setText(ir_inst_close_time);
                 }
-                tvYingyeTime.setText(ir_inst_open_time + " 至 " + ir_inst_close_time);
             }
         })
                 .setType(select)// 默认全部显示
@@ -839,10 +837,11 @@ public class ShangjiaBianjiActivity extends BaseActivity implements TakePhoto.Ta
                 String dataS = Y.getData(date);
                 if (pos == 0) {
                     ir_inst_begin_time = dataS;
+                    tvStopTime.setText(ir_inst_begin_time);
                 } else {
                     ir_inst_end_time = dataS;
+                    tvStopTimeEnd.setText(ir_inst_end_time);
                 }
-                tvStopTime.setText(ir_inst_begin_time + " 至 " + ir_inst_end_time);
             }
         })
                 .setType(select)// 默认全部显示

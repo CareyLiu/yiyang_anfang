@@ -12,14 +12,16 @@
 
         <ImageView
             android:id="@+id/iv_tag"
-            android:layout_width="63pt"
-            android:layout_height="63pt" />
+            android:layout_width="92pt"
+            android:layout_height="92pt" />
 
         <TextView
             android:id="@+id/tv_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35pt"
+            android:layout_marginTop="20pt"
+            android:includeFontPadding="false"
+            android:maxLines="1"
             android:textColor="@color/color_3"
             android:textSize="23pt" />
     </LinearLayout>

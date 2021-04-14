@@ -187,22 +187,8 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
                             "严重污染 大于250及以上。");
                     kongQiJianCeShuoMingDialog.show();
                 } else if (strType.equals("jiaQuan")) {
-                    KongQiJianCeShuoMingDialog kongQiJianCeShuoMingDialog = new KongQiJianCeShuoMingDialog(mContext, "0.10ppm ：\n" +
-                            "几乎无味，无健康影响 \n" +
-                            "0.10-0.25ppm：\n" +
-                            "幼童长期吸入易引发皮肤过敏，免疫力下降\n" +
-                            "0.25-0.30ppm：  \n" +
-                            "引发气喘、胸闷、咳嗽、头晕、疲倦、过敏、睡眠\n" +
-                            "不良等症状\n" +
-                            "0.30ppm以上：\n" +
-                            "小孩智力下降，内分泌失调，经期紊乱\n" +
-                            "0.50ppm以上：\n" +
-                            "免疫功能异常，致癌危机\n" +
-                            "0.70ppm以上：\n" +
-                            "染色体异常，影响生育，易致癌\n" +
-                            "5.0ppm以上：\n" +
-                            "致癌、促癌，慢性呼吸道疾病引起的鼻咽癌、直肠\n" +
-                            "癌、脑瘤等。");
+                    KongQiJianCeShuoMingDialog kongQiJianCeShuoMingDialog = new KongQiJianCeShuoMingDialog(mContext, "根据国家强制性标准，关闭门窗1小时后，每立方米室内空气中，甲醛释放量不得大于0.08毫克；如达到0.1-2.0毫克，50%的正常人能闻到臭气;达到2.0-5.0毫克，眼睛、气管将受到强烈刺激，出现打喷嚏、咳嗽等症状；达到10毫克以上，呼吸困难;达到50毫克以上，会\n" +
+                            "引发肺炎等危重疾病，甚至导致死亡。");
                     kongQiJianCeShuoMingDialog.show();
                 } else if (strType.equals("erYangHuaTan")) {
                     KongQiJianCeShuoMingDialog kongQiJianCeShuoMingDialog = new KongQiJianCeShuoMingDialog(mContext, "·150～350：是不可能的\n" +
@@ -239,17 +225,17 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
                     @Override
                     public void onSuccess(Response<AppResponse<KongQiJianCeZ.DataBean>> response) {
                         showLoadSuccess();
-
+                        tvShowText.setText("AQI");
+                        setChuShi4XiangZhi(R.id.ll_kongqizhiliang);
                         if (response.body().data.get(0).getGas_detection_list().size() == 0) {
                             return;
                         }
+
                         tvJiaquan.setText(response.body().data.get(0).getGd_cascophen());
                         tvPmText.setText(response.body().data.get(0).getGd_particulate_matter());
                         tvKongqiZhiliang.setText(response.body().data.get(0).getGd_air_quality());
                         tvCo2.setText(response.body().data.get(0).getGd_carbon_dioxide());
 
-
-                        setChuShi4XiangZhi(R.id.ll_pm2dian5);
                     }
 
                     @Override
@@ -403,7 +389,7 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
         context.startActivity(intent);
     }
 
-    String strType="pm2dian5";
+    String strType = "kongQiZhiLiang";
 
     @OnClick({R.id.ll_kongqizhiliang, R.id.ll_pm2dian5, R.id.ll_jiaquan, R.id.ll_co2, R.id.rl_kongqizhiliang, R.id.rl_pm2dian5, R.id.rl_jiaquan, R.id.rl_co2})
     public void onViewClicked(View view) {
@@ -414,21 +400,23 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
                 //UIHelper.ToastMessage(mContext, "空气质量");
                 setChuShi4XiangZhi(R.id.ll_kongqizhiliang);
                 rlYan.setBackgroundResource(R.mipmap.airmonitor_smoke_green);
-                Integer kongQiZhiLiang = Integer.valueOf(tvKongqiZhiliang.getText().toString().trim());
-                if (kongQiZhiLiang < 350) {
-                    tvText.setText("优");
-                } else if (kongQiZhiLiang > 350 && kongQiZhiLiang < 750) {
-                    tvText.setText("良");
-                } else if (kongQiZhiLiang > 750 && kongQiZhiLiang < 1150) {
-                    tvText.setText("轻度污染");
-                } else if (kongQiZhiLiang > 1150 && kongQiZhiLiang < 1500) {
-                    tvText.setText("中度污染");
-                } else if (kongQiZhiLiang > 1500) {
-                    tvText.setText("重度污染");
-                }
-
+                rlYan.setVisibility(View.GONE);
                 tvMax.setText("Max 5000");
 
+                if (!StringUtils.isEmpty(tvKongqiZhiliang.getText().toString().trim())) {
+                    Integer kongQiZhiLiang = Integer.valueOf(tvKongqiZhiliang.getText().toString().trim());
+                    if (kongQiZhiLiang < 350) {
+                        tvText.setText("优");
+                    } else if (kongQiZhiLiang > 350 && kongQiZhiLiang < 750) {
+                        tvText.setText("良");
+                    } else if (kongQiZhiLiang > 750 && kongQiZhiLiang < 1150) {
+                        tvText.setText("轻度污染");
+                    } else if (kongQiZhiLiang > 1150 && kongQiZhiLiang < 1500) {
+                        tvText.setText("中度污染");
+                    } else if (kongQiZhiLiang > 1500) {
+                        tvText.setText("重度污染");
+                    }
+                }
                 break;
 
             case R.id.ll_pm2dian5:
@@ -444,25 +432,31 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
                  * 4.大于150且小于250 中度污染
                  * 5.大于250及以上    严重污染
                  */
-
+                tvMax.setText("Max 1000");
                 if (!StringUtils.isEmpty(tvPmText.getText().toString())) {
                     Integer pm2Dian5 = Integer.valueOf(tvPmText.getText().toString().trim());
                     if (pm2Dian5 < 35) {
                         tvText.setText("优");
+                        rlYan.setVisibility(View.GONE);
                     } else if (pm2Dian5 > 35 && pm2Dian5 < 75) {
                         tvText.setText("良");
+                        rlYan.setVisibility(View.GONE);
                     } else if (pm2Dian5 > 75 && pm2Dian5 < 115) {
                         tvText.setText("轻度污染");
+                        rlYan.setVisibility(View.VISIBLE);
                     } else if (pm2Dian5 > 115 && pm2Dian5 < 150) {
                         tvText.setText("中度污染");
+                        rlYan.setVisibility(View.VISIBLE);
                     } else if (pm2Dian5 > 150 && pm2Dian5 < 250) {
                         tvText.setText("重度污染");
+                        rlYan.setVisibility(View.VISIBLE);
                     } else if (pm2Dian5 > 250) {
                         tvText.setText("严重污染");
+                        rlYan.setVisibility(View.VISIBLE);
                     }
                 }
 
-                tvMax.setText("Max 1000");
+
                 break;
             case R.id.ll_jiaquan:
                 tvShowText.setText("CH2O");
@@ -470,27 +464,34 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
                 //UIHelper.ToastMessage(mContext, "甲醛");
                 setChuShi4XiangZhi(R.id.ll_jiaquan);
                 rlYan.setBackgroundResource(R.mipmap.airmonitor_smoke_red);
-
-                Integer jiaquan = Integer.valueOf(tvJiaquan.getText().toString().trim());
-                /**
-                 * 单位 - 微米
-                 * 1.小于80 正常
-                 * 2.100-200 轻度污染
-                 * 3.200-500 中度污染
-                 * 4.500及以上 重度污染
-                 */
-                if (jiaquan < 80) {
-                    tvText.setText("正常");
-                } else if (jiaquan > 80 && jiaquan < 100) {
-                    tvText.setText("轻度污染");
-                } else if (jiaquan > 100 && jiaquan < 200) {
-                    tvText.setText("中度污染");
-                } else if (jiaquan > 200 && jiaquan < 500) {
-                    tvText.setText("重度污染");
-                } else if (jiaquan > 500) {
-                    tvText.setText("严重污染");
-                }
                 tvMax.setText("Max 1000");
+
+                if (!StringUtils.isEmpty(tvJiaquan.getText().toString().trim())) {
+                    Integer jiaquan = Integer.valueOf(tvJiaquan.getText().toString().trim());
+                    /**
+                     * 单位 - 微米
+                     * 1.小于80 正常
+                     * 2.100-200 轻度污染
+                     * 3.200-500 中度污染
+                     * 4.500及以上 重度污染
+                     */
+                    if (jiaquan < 80) {
+                        tvText.setText("正常");
+                        rlYan.setVisibility(View.GONE);
+                    } else if (jiaquan > 80 && jiaquan < 100) {
+                        tvText.setText("轻度污染");
+                        rlYan.setVisibility(View.VISIBLE);
+                    } else if (jiaquan > 100 && jiaquan < 200) {
+                        tvText.setText("中度污染");
+                        rlYan.setVisibility(View.VISIBLE);
+                    } else if (jiaquan > 200 && jiaquan < 500) {
+                        tvText.setText("重度污染");
+                        rlYan.setVisibility(View.VISIBLE);
+                    } else if (jiaquan > 500) {
+                        tvText.setText("严重污染");
+                        rlYan.setVisibility(View.VISIBLE);
+                    }
+                }
                 break;
             case R.id.ll_co2:
                 strType = "erYangHuaTan";
@@ -498,27 +499,34 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
                 //UIHelper.ToastMessage(mContext, "CO2");
                 setChuShi4XiangZhi(R.id.ll_co2);
                 rlYan.setBackgroundResource(R.mipmap.airmonitor_smoke_pink);
-                Integer co2Int = Integer.valueOf(tvCo2.getText().toString().trim());
-                /**
-                 * 1.0-450 优
-                 * 2.450-1000 良
-                 * 3.1000-2000 轻度污染
-                 * 4.2000-5000 中度污染
-                 * 5.5000以上  重度污染
-                 */
-                if (co2Int < 450) {
-                    tvText.setText("优");
-                } else if (co2Int > 450 && co2Int < 1000) {
-                    tvText.setText("良");
-                } else if (co2Int > 1000 && co2Int < 2000) {
-                    tvText.setText("轻度污染");
-                } else if (co2Int > 2000 && co2Int < 5000) {
-                    tvText.setText("中度污染");
-                } else if (co2Int > 5000) {
-                    tvText.setText("重度污染");
-                }
                 tvMax.setText("Max 5000");
 
+                if (!StringUtils.isEmpty(tvCo2.getText().toString().trim())){
+                    Integer co2Int = Integer.valueOf(tvCo2.getText().toString().trim());
+                    /**
+                     * 1.0-450 优
+                     * 2.450-1000 良
+                     * 3.1000-2000 轻度污染
+                     * 4.2000-5000 中度污染
+                     * 5.5000以上  重度污染
+                     */
+                    if (co2Int < 450) {
+                        tvText.setText("优");
+                        rlYan.setVisibility(View.GONE);
+                    } else if (co2Int > 450 && co2Int < 1000) {
+                        tvText.setText("良");
+                        rlYan.setVisibility(View.GONE);
+                    } else if (co2Int > 1000 && co2Int < 2000) {
+                        tvText.setText("轻度污染");
+                        rlYan.setVisibility(View.VISIBLE);
+                    } else if (co2Int > 2000 && co2Int < 5000) {
+                        tvText.setText("中度污染");
+                        rlYan.setVisibility(View.VISIBLE);
+                    } else if (co2Int > 5000) {
+                        tvText.setText("重度污染");
+                        rlYan.setVisibility(View.VISIBLE);
+                    }
+                }
                 break;
             case R.id.rl_kongqizhiliang:
                 KongQiJianCeXiangXi_NewActivity.actionStart(mContext, device_id, "1");

@@ -38,6 +38,7 @@ import com.amap.api.services.help.Tip;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.amap.api.services.poisearch.PoiSearch.OnPoiSearchListener;
+import com.flyco.roundview.RoundRelativeLayout;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.tongcheng58.overlay.PoiOverlay;
 import com.smarthome.magic.app.BaseActivity;
@@ -61,10 +62,8 @@ public class PoiKeywordSearchActivity extends BaseActivity implements
 
     @BindView(R.id.city)
     EditText city;
-    @BindView(R.id.searchButton)
-    Button searchButton;
-    @BindView(R.id.nextButton)
-    Button nextButton;
+    @BindView(R.id.rl_qingkong)
+    RoundRelativeLayout searchButton;
     @BindView(R.id.map)
     MapView map;
     private AMap aMap;
@@ -106,10 +105,9 @@ public class PoiKeywordSearchActivity extends BaseActivity implements
      * 设置页面监听
      */
     private void setUpMap() {
-        Button searButton = (Button) findViewById(R.id.searchButton);
+        RoundRelativeLayout searButton = findViewById(R.id.rl_qingkong);
         searButton.setOnClickListener(this);
-        Button nextButton = (Button) findViewById(R.id.nextButton);
-        nextButton.setOnClickListener(this);
+
         searchText = (AutoCompleteTextView) findViewById(R.id.keyWord);
         searchText.addTextChangedListener(this);// 添加文本输入框监听事件
         editCity = (EditText) findViewById(R.id.city);
@@ -352,15 +350,15 @@ public class PoiKeywordSearchActivity extends BaseActivity implements
             /**
              * 点击搜索按钮
              */
-            case R.id.searchButton:
+            case R.id.rl_qingkong:
                 searchButton();
                 break;
             /**
              * 点击下一页按钮
              */
-            case R.id.nextButton:
-                nextButton();
-                break;
+//            case R.id.nextButton:
+//                nextButton();
+//                break;
             default:
                 break;
         }

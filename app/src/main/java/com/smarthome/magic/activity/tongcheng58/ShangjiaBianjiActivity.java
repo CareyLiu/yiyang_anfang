@@ -347,10 +347,6 @@ public class ShangjiaBianjiActivity extends BaseActivity implements TakePhoto.Ta
                             tvYingyeTime.setText(ir_inst_open_time);
                             tvYingyeTimeBi.setText(ir_inst_close_time);
 
-                            ir_inst_begin_time = dataBean.getIr_inst_begin_time();
-                            ir_inst_end_time = dataBean.getIr_inst_end_time();
-                            tvStopTime.setText(ir_inst_begin_time);
-                            tvStopTimeEnd.setText(ir_inst_end_time);
 
                             ir_contact_phone = dataBean.getIr_contact_phone();
                             edPhone.setText(ir_contact_phone);
@@ -371,8 +367,19 @@ public class ShangjiaBianjiActivity extends BaseActivity implements TakePhoto.Ta
                             edShangjiajieshao.setText(ir_validity);
 
                             ir_agio = dataBean.getIr_agio();
-                            if (!TextUtils.isEmpty(ir_agio)){
+                            if (!TextUtils.isEmpty(ir_agio)) {
                                 edZhekou.setText(ir_agio + "折");
+                                ir_inst_begin_time = dataBean.getIr_inst_begin_time();
+                                ir_inst_end_time = dataBean.getIr_inst_end_time();
+                                tvStopTime.setText(ir_inst_begin_time);
+                                tvStopTimeEnd.setText(ir_inst_end_time);
+                            } else {
+                                ir_agio = "";
+                                ir_inst_begin_time = "";
+                                ir_inst_end_time = "";
+                                edZhekou.setText(ir_agio);
+                                tvStopTime.setText(ir_inst_begin_time);
+                                tvStopTimeEnd.setText(ir_inst_end_time);
                             }
 
                             ir_inst_settled_time = dataBean.getIr_inst_settled_time();
@@ -535,15 +542,24 @@ public class ShangjiaBianjiActivity extends BaseActivity implements TakePhoto.Ta
     }
 
     private void clickZheko() {
-        String[] items = {"1折", "2折", "3折", "4折", "5折", "6折", "7折", "8折", "9折"};
+        String[] items = {"无折扣", "1折", "2折", "3折", "4折", "5折", "6折", "7折", "8折", "9折"};
         ActionSheetDialog dialog = new ActionSheetDialog(mContext, items, null);
         dialog.isTitleShow(false);
         dialog.cancelText("完成");
         dialog.setOnOperItemClickL(new OnOperItemClickL() {
             @Override
             public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ir_agio = (position + 1) + "";
-                edZhekou.setText(ir_agio + "折");
+                if (position == 0) {
+                    ir_agio = "";
+                    edZhekou.setText("");
+                    tvStopTime.setText("");
+                    tvStopTimeEnd.setText("");
+                    ir_inst_begin_time = "";
+                    ir_inst_end_time = "";
+                } else {
+                    ir_agio = position + "";
+                    edZhekou.setText(ir_agio + "折");
+                }
                 dialog.dismiss();
             }
         });
@@ -629,6 +645,18 @@ public class ShangjiaBianjiActivity extends BaseActivity implements TakePhoto.Ta
             return;
         }
 
+        if (!TextUtils.isEmpty(ir_agio)) {
+            if (TextUtils.isEmpty(ir_inst_begin_time)) {
+                Y.t("请选择折扣开始日期");
+                return;
+            }
+
+            if (TextUtils.isEmpty(ir_inst_end_time)) {
+                Y.t("请选择折扣结束日期");
+                return;
+            }
+        }
+
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code", "17011");
         jsonObject.put("key", Urls.key);
@@ -656,7 +684,7 @@ public class ShangjiaBianjiActivity extends BaseActivity implements TakePhoto.Ta
         jsonObject.put("ir_inst_open_time", ir_inst_open_time);
         jsonObject.put("ir_inst_close_time", ir_inst_close_time);
 
-        if (TextUtils.isEmpty(ir_inst_begin_time) || TextUtils.isEmpty(ir_inst_end_time)) {
+        if (TextUtils.isEmpty(ir_agio)) {
             jsonObject.put("ir_inst_begin_time", "");
             jsonObject.put("ir_inst_end_time", "");
         } else {

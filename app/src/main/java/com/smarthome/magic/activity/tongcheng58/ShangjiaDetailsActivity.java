@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,7 +50,6 @@ import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -83,6 +83,8 @@ public class ShangjiaDetailsActivity extends BaseActivity {
     RoundRelativeLayout bt_fenxiang;
     @BindView(R.id.tv_name)
     TextView tv_name;
+    @BindView(R.id.tv_zhekou)
+    TextView tv_zhekou;
     private String ir_id;
     private String x_weidu;
     private String y_jingdu;
@@ -198,6 +200,15 @@ public class ShangjiaDetailsActivity extends BaseActivity {
                                 tv_tag.setText(inst_device_list.get(i).getInst_device_name());
                                 ll_dianneisheshi_add.addView(view);
                             }
+
+                            String ir_agio = dataBean.getIr_agio();
+                            if (TextUtils.isEmpty(ir_agio)) {
+                                tv_zhekou.setText("");
+                            } else {
+                                String ir_inst_begin_time = dataBean.getIr_inst_begin_time();
+                                String ir_inst_end_time = dataBean.getIr_inst_end_time();
+                                tv_zhekou.setText("限时：" + ir_agio + "折  开始时间：" + ir_inst_begin_time + "  结束时间：" + ir_inst_end_time);
+                            }
                         }
                     }
 
@@ -247,7 +258,7 @@ public class ShangjiaDetailsActivity extends BaseActivity {
                 LatLng latLng = new LatLng(x, y);
                 NavigationUtils.Navigation(latLng);
             } catch (Exception e) {
-                com.smarthome.magic.app.UIHelper.ToastMessage(MyApplication.getApp().getApplicationContext(), "请下载高德后重新尝试", Toast.LENGTH_SHORT);
+                UIHelper.ToastMessage(MyApplication.getApp().getApplicationContext(), "请下载高德后重新尝试", Toast.LENGTH_SHORT);
             }
         }
     }

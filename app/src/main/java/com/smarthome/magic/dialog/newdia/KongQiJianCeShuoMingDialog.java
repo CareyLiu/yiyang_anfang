@@ -11,17 +11,20 @@ import android.widget.TextView;
 import com.smarthome.magic.R;
 
 
-public class KongQiJianCeShuoMingDialog extends Dialog  {
+public class KongQiJianCeShuoMingDialog extends Dialog {
 
     protected boolean dismissAfterClick = true;//是否点击按钮后关闭
     private int type;//1.消息推送    2.操作失败    3.操作提示    4.操作成功    5.删除
     private String str;
     private TextView tvStr;
+    private String title;
+    private TextView tvTitle;
 
-    public KongQiJianCeShuoMingDialog(Context context, String str) {
+    public KongQiJianCeShuoMingDialog(Context context, String str, String title) {
         this(context, R.style.dialogBaseBlur);
         this.type = type;
         this.str = str;
+        this.title = title;
         init();
     }
 
@@ -32,6 +35,8 @@ public class KongQiJianCeShuoMingDialog extends Dialog  {
     private void init() {
         setContentView(R.layout.dialog_tishi_shuoming);
         tvStr = findViewById(R.id.tv_text);
+        tvTitle = findViewById(R.id.tv_title);
+        tvTitle.setText(title);
         setCanceledOnTouchOutside(true);
         setCancelable(true);
         tvStr.setText(str);

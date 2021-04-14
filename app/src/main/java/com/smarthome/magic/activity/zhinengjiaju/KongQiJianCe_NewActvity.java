@@ -178,17 +178,17 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
                             "表明空气质量为轻度污染，长期接触，易感人群病状\n" +
                             "有轻度加剧，健康人群出现刺激症状。\n" +
                             "空气质量值大于200：\n" +
-                            "表明空气质量较差，一定时间接触后，对人体危害较大");
+                            "表明空气质量较差，一定时间接触后，对人体危害较大", "空气检测说明");
                     kongQiJianCeShuoMingDialog.show();
                 } else if (strType.equals("pm2dian5")) {
                     KongQiJianCeShuoMingDialog kongQiJianCeShuoMingDialog = new KongQiJianCeShuoMingDialog(mContext, "24小时PM2.5平均值标准值\n" +
                             "优 0~35、良 35~75、轻度污染 75~115、\n" +
                             "中度污染 115~150、重度污染 150~250、\n" +
-                            "严重污染 大于250及以上。");
+                            "严重污染 大于250及以上。", "pm2.5说明");
                     kongQiJianCeShuoMingDialog.show();
                 } else if (strType.equals("jiaQuan")) {
                     KongQiJianCeShuoMingDialog kongQiJianCeShuoMingDialog = new KongQiJianCeShuoMingDialog(mContext, "根据国家强制性标准，关闭门窗1小时后，每立方米室内空气中，甲醛释放量不得大于0.08毫克；如达到0.1-2.0毫克，50%的正常人能闻到臭气;达到2.0-5.0毫克，眼睛、气管将受到强烈刺激，出现打喷嚏、咳嗽等症状；达到10毫克以上，呼吸困难;达到50毫克以上，会\n" +
-                            "引发肺炎等危重疾病，甚至导致死亡。");
+                            "引发肺炎等危重疾病，甚至导致死亡。", "甲醛说明");
                     kongQiJianCeShuoMingDialog.show();
                 } else if (strType.equals("erYangHuaTan")) {
                     KongQiJianCeShuoMingDialog kongQiJianCeShuoMingDialog = new KongQiJianCeShuoMingDialog(mContext, "·150～350：是不可能的\n" +
@@ -198,7 +198,7 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
                             "·2500～5000ppm：感觉头痛、嗜睡、呆滞、注意力无\n" +
                             "法集中、心跳加速、轻度恶心 　　\n" +
                             "·大于5000ppm：可能导致严重缺氧，造成永久性脑损\n" +
-                            "伤、昏迷、甚至死亡\n");
+                            "伤、昏迷、甚至死亡\n", "二氧化碳说明");
                     kongQiJianCeShuoMingDialog.show();
                 }
 
@@ -501,7 +501,7 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
                 rlYan.setBackgroundResource(R.mipmap.airmonitor_smoke_pink);
                 tvMax.setText("Max 5000");
 
-                if (!StringUtils.isEmpty(tvCo2.getText().toString().trim())){
+                if (!StringUtils.isEmpty(tvCo2.getText().toString().trim())) {
                     Integer co2Int = Integer.valueOf(tvCo2.getText().toString().trim());
                     /**
                      * 1.0-450 优

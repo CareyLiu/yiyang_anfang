@@ -40,13 +40,10 @@ import com.amap.api.services.poisearch.PoiSearch;
 import com.amap.api.services.poisearch.PoiSearch.OnPoiSearchListener;
 import com.flyco.roundview.RoundRelativeLayout;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.tongcheng58.overlay.PoiOverlay;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
-import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
-
 import java.util.ArrayList;
 import java.util.List;
 

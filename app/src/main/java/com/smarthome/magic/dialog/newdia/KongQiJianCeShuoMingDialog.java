@@ -1,0 +1,42 @@
+package com.smarthome.magic.dialog.newdia;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.smarthome.magic.R;
+
+
+public class KongQiJianCeShuoMingDialog extends Dialog  {
+
+    protected boolean dismissAfterClick = true;//是否点击按钮后关闭
+    private int type;//1.消息推送    2.操作失败    3.操作提示    4.操作成功    5.删除
+    private String str;
+    private TextView tvStr;
+
+    public KongQiJianCeShuoMingDialog(Context context, String str) {
+        this(context, R.style.dialogBaseBlur);
+        this.type = type;
+        this.str = str;
+        init();
+    }
+
+    private KongQiJianCeShuoMingDialog(Context context, int theme) {
+        super(context, theme);
+    }
+
+    private void init() {
+        setContentView(R.layout.dialog_tishi_shuoming);
+        tvStr = findViewById(R.id.tv_text);
+        setCanceledOnTouchOutside(true);
+        setCancelable(true);
+        tvStr.setText(str);
+
+    }
+
+
+}

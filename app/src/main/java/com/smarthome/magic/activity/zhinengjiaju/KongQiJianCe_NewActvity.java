@@ -21,8 +21,10 @@ import com.smarthome.magic.activity.ZhiNengJiaJuZhuangZhiSetting;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.UserManager;
+import com.smarthome.magic.dialog.newdia.KongQiJianCeShuoMingDialog;
 import com.smarthome.magic.fragment.Co2Fragment;
 import com.smarthome.magic.fragment.JiaQuanFragment;
 import com.smarthome.magic.fragment.KongQiZhiLiangFragment;
@@ -162,6 +164,61 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
 //        });
         getnet();
         getFouData();
+
+        ivShuoming.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (strType.equals("kongQiZhiLiang")) {
+                    KongQiJianCeShuoMingDialog kongQiJianCeShuoMingDialog = new KongQiJianCeShuoMingDialog(mContext, "空气质量值小于等于50：\n" +
+                            "说明空气质量为优。\n" +
+                            "空气质量值大于50且小于等于100：\n" +
+                            "表明空气质量良好。\n" +
+                            "空气质量值大于100且小于等于200：\n" +
+                            "表明空气质量为轻度污染，长期接触，易感人群病状\n" +
+                            "有轻度加剧，健康人群出现刺激症状。\n" +
+                            "空气质量值大于200：\n" +
+                            "表明空气质量较差，一定时间接触后，对人体危害较大");
+                    kongQiJianCeShuoMingDialog.show();
+                } else if (strType.equals("pm2dian5")) {
+                    KongQiJianCeShuoMingDialog kongQiJianCeShuoMingDialog = new KongQiJianCeShuoMingDialog(mContext, "24小时PM2.5平均值标准值\n" +
+                            "优 0~35、良 35~75、轻度污染 75~115、\n" +
+                            "中度污染 115~150、重度污染 150~250、\n" +
+                            "严重污染 大于250及以上。");
+                    kongQiJianCeShuoMingDialog.show();
+                } else if (strType.equals("jiaQuan")) {
+                    KongQiJianCeShuoMingDialog kongQiJianCeShuoMingDialog = new KongQiJianCeShuoMingDialog(mContext, "0.10ppm ：\n" +
+                            "几乎无味，无健康影响 \n" +
+                            "0.10-0.25ppm：\n" +
+                            "幼童长期吸入易引发皮肤过敏，免疫力下降\n" +
+                            "0.25-0.30ppm：  \n" +
+                            "引发气喘、胸闷、咳嗽、头晕、疲倦、过敏、睡眠\n" +
+                            "不良等症状\n" +
+                            "0.30ppm以上：\n" +
+                            "小孩智力下降，内分泌失调，经期紊乱\n" +
+                            "0.50ppm以上：\n" +
+                            "免疫功能异常，致癌危机\n" +
+                            "0.70ppm以上：\n" +
+                            "染色体异常，影响生育，易致癌\n" +
+                            "5.0ppm以上：\n" +
+                            "致癌、促癌，慢性呼吸道疾病引起的鼻咽癌、直肠\n" +
+                            "癌、脑瘤等。");
+                    kongQiJianCeShuoMingDialog.show();
+                } else if (strType.equals("erYangHuaTan")) {
+                    KongQiJianCeShuoMingDialog kongQiJianCeShuoMingDialog = new KongQiJianCeShuoMingDialog(mContext, "·150～350：是不可能的\n" +
+                            "·350～450ppm：同一般室外环境 　　\n" +
+                            "·350～1200ppm：空气清新，呼吸顺畅 　　\n" +
+                            "·1200～2500ppm：感觉空气浑浊,并开始觉得昏昏欲睡 　　\n" +
+                            "·2500～5000ppm：感觉头痛、嗜睡、呆滞、注意力无\n" +
+                            "法集中、心跳加速、轻度恶心 　　\n" +
+                            "·大于5000ppm：可能导致严重缺氧，造成永久性脑损\n" +
+                            "伤、昏迷、甚至死亡\n");
+                    kongQiJianCeShuoMingDialog.show();
+                }
+
+
+            }
+        });
     }
 
     private void getFouData() {
@@ -186,13 +243,13 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
                         if (response.body().data.get(0).getGas_detection_list().size() == 0) {
                             return;
                         }
-                        tvJiaquan.setText(response.body().data.get(0).getGas_detection_list().get(0).getGd_cascophen());
-                        tvPmText.setText(response.body().data.get(0).getGas_detection_list().get(0).getGd_particulate_matter());
-                        tvKongqiZhiliang.setText(response.body().data.get(0).getGas_detection_list().get(0).getGd_air_quality());
-                        tvCo2.setText(response.body().data.get(0).getGas_detection_list().get(0).getGd_carbon_dioxide());
+                        tvJiaquan.setText(response.body().data.get(0).getGd_cascophen());
+                        tvPmText.setText(response.body().data.get(0).getGd_particulate_matter());
+                        tvKongqiZhiliang.setText(response.body().data.get(0).getGd_air_quality());
+                        tvCo2.setText(response.body().data.get(0).getGd_carbon_dioxide());
 
 
-                        setChuShi4XiangZhi(R.id.ll_kongqizhiliang);
+                        setChuShi4XiangZhi(R.id.ll_pm2dian5);
                     }
 
                     @Override
@@ -346,11 +403,14 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
         context.startActivity(intent);
     }
 
+    String strType="pm2dian5";
+
     @OnClick({R.id.ll_kongqizhiliang, R.id.ll_pm2dian5, R.id.ll_jiaquan, R.id.ll_co2, R.id.rl_kongqizhiliang, R.id.rl_pm2dian5, R.id.rl_jiaquan, R.id.rl_co2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-
             case R.id.ll_kongqizhiliang:
+                strType = "kongQiZhiLiang";
+                tvShowText.setText("AQI");
                 //UIHelper.ToastMessage(mContext, "空气质量");
                 setChuShi4XiangZhi(R.id.ll_kongqizhiliang);
                 rlYan.setBackgroundResource(R.mipmap.airmonitor_smoke_green);
@@ -372,33 +432,41 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
                 break;
 
             case R.id.ll_pm2dian5:
+                strType = "pm2dian5";
+                tvShowText.setText("PM2.5");
                 //UIHelper.ToastMessage(mContext, "pm2.5");
                 setChuShi4XiangZhi(R.id.ll_pm2dian5);
                 rlYan.setBackgroundResource(R.mipmap.airmonitor_smoke_yellow);
-/**
- * 1.小于35 非常好
- * 2.大于35且小于75 良
- * 3.大于75 且小于115 轻度污染
- * 4.大于150且小于250 中度污染
- * 5.大于250及以上    严重污染
- */
-                Integer pm2Dian5 = Integer.valueOf(tvPmText.getText().toString().trim());
-                if (pm2Dian5 < 35) {
-                    tvText.setText("优");
-                } else if (pm2Dian5 > 35 && pm2Dian5 < 75) {
-                    tvText.setText("良");
-                } else if (pm2Dian5 > 75 && pm2Dian5 < 115) {
-                    tvText.setText("轻度污染");
-                } else if (pm2Dian5 > 115 && pm2Dian5 < 150) {
-                    tvText.setText("中度污染");
-                } else if (pm2Dian5 > 150 && pm2Dian5 < 250) {
-                    tvText.setText("重度污染");
-                } else if (pm2Dian5 > 250) {
-                    tvText.setText("严重污染");
+                /**
+                 * 1.小于35 非常好
+                 * 2.大于35且小于75 良
+                 * 3.大于75 且小于115 轻度污染
+                 * 4.大于150且小于250 中度污染
+                 * 5.大于250及以上    严重污染
+                 */
+
+                if (!StringUtils.isEmpty(tvPmText.getText().toString())) {
+                    Integer pm2Dian5 = Integer.valueOf(tvPmText.getText().toString().trim());
+                    if (pm2Dian5 < 35) {
+                        tvText.setText("优");
+                    } else if (pm2Dian5 > 35 && pm2Dian5 < 75) {
+                        tvText.setText("良");
+                    } else if (pm2Dian5 > 75 && pm2Dian5 < 115) {
+                        tvText.setText("轻度污染");
+                    } else if (pm2Dian5 > 115 && pm2Dian5 < 150) {
+                        tvText.setText("中度污染");
+                    } else if (pm2Dian5 > 150 && pm2Dian5 < 250) {
+                        tvText.setText("重度污染");
+                    } else if (pm2Dian5 > 250) {
+                        tvText.setText("严重污染");
+                    }
                 }
+
                 tvMax.setText("Max 1000");
                 break;
             case R.id.ll_jiaquan:
+                tvShowText.setText("CH2O");
+                strType = "jiaQuan";
                 //UIHelper.ToastMessage(mContext, "甲醛");
                 setChuShi4XiangZhi(R.id.ll_jiaquan);
                 rlYan.setBackgroundResource(R.mipmap.airmonitor_smoke_red);
@@ -425,6 +493,8 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
                 tvMax.setText("Max 1000");
                 break;
             case R.id.ll_co2:
+                strType = "erYangHuaTan";
+                tvShowText.setText("CO2");
                 //UIHelper.ToastMessage(mContext, "CO2");
                 setChuShi4XiangZhi(R.id.ll_co2);
                 rlYan.setBackgroundResource(R.mipmap.airmonitor_smoke_pink);
@@ -506,7 +576,7 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
 
         } else if (id == R.id.ll_pm2dian5) {
             tvShow.setText(tvPmText.getText().toString());
-            ivIconPm.setBackgroundResource(R.mipmap.airmonitor_kongqizhiliang_wt);
+            ivIconPm.setBackgroundResource(R.mipmap.airmonitor_pm_bk);
             llPm2dian5.setBackgroundResource(R.drawable.blue_con_8dp);
 
             ivIconKongqizhiliang.setBackgroundResource(R.mipmap.airmonitor_kongqizhiliang_bk);

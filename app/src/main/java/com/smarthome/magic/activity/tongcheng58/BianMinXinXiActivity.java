@@ -21,6 +21,7 @@ import com.lzy.okgo.request.base.Request;
 import com.orhanobut.logger.Logger;
 import com.smarthome.magic.R;
 import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
@@ -173,6 +174,7 @@ public class BianMinXinXiActivity extends BaseActivity {
                             linearLayout.addView(view);
                         }
                         tvJujueYuanyin.setText(response.body().data.get(0).getIr_manage_text());
+
                     }
 
                     @Override

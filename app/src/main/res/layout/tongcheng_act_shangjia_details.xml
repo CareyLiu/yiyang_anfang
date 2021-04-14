@@ -148,7 +148,6 @@
                     android:textSize="31pt"
                     android:textStyle="bold" />
 
-
                 <TextView
                     android:id="@+id/tv_gonggao"
                     android:layout_width="match_parent"
@@ -178,9 +177,34 @@
                     android:id="@+id/tv_jieshao"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="140pt"
                     android:background="@color/white"
                     android:hint="暂无商家介绍"
+                    android:includeFontPadding="false"
+                    android:paddingHorizontal="31pt"
+                    android:paddingBottom="31pt"
+                    android:textColor="@color/color_9"
+                    android:textColorHint="@color/color_9"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="84pt"
+                    android:layout_marginTop="23pt"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="31pt"
+                    android:text="商家折扣"
+                    android:textColor="@color/color_3"
+                    android:textSize="31pt"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_zhekou"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="140pt"
+                    android:background="@color/white"
+                    android:hint="暂无折扣活动"
                     android:includeFontPadding="false"
                     android:paddingHorizontal="31pt"
                     android:paddingBottom="31pt"

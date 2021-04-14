@@ -3,6 +3,7 @@ package com.smarthome.magic.activity.tongcheng58;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,8 +12,6 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
-import com.lzy.okgo.request.base.Request;
-import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -29,7 +28,6 @@ import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.BianMinXinXiModel;
-import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.view.AutoNextLineLinearlayout;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
@@ -42,7 +40,6 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import butterknife.BindView;
-import butterknife.OnClick;
 
 import static com.smarthome.magic.get_net.Urls.TONGCHENG;
 
@@ -72,6 +69,8 @@ public class ShangjiaWodeActivity extends BaseActivity {
     TextView tv_jieshao;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
+    @BindView(R.id.tv_zhekou)
+    TextView tv_zhekou;
 
     private String ir_id;
     private String x_jingdu;
@@ -229,6 +228,14 @@ public class ShangjiaWodeActivity extends BaseActivity {
                                 iv_shenhe_state.setBackgroundResource(R.mipmap.gongjiangxinxi_pic_shenhezhong);
                             }
 
+                            String ir_agio = dataBean.getIr_agio();
+                            if (TextUtils.isEmpty(ir_agio)) {
+                                tv_zhekou.setText("");
+                            } else {
+                                String ir_inst_begin_time = dataBean.getIr_inst_begin_time();
+                                String ir_inst_end_time = dataBean.getIr_inst_end_time();
+                                tv_zhekou.setText("限时：" + ir_agio + "折  开始时间：" + ir_inst_begin_time + "  结束时间：" + ir_inst_end_time);
+                            }
                         }
                     }
 

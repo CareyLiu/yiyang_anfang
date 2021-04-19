@@ -373,10 +373,14 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
         }
         mTask = new EsptouchAsyncTask4(this);
 
-        int yonghuming_length = mSsid.toString().length();
+        byte []a=mSsid.toString().getBytes();
+
+        int yonghuming_length = a.length;
         int password_length = password.toString().length();
 
+
         String zhengHeYongHuMing = String.format("%02d", yonghuming_length) + mSsid.toString();
+
 
         String zhengHePasssword_length = String.format("%02d", password_length);
 
@@ -390,6 +394,8 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
         String familyId_length = String.format("%02d", familyId.length());
 
         Log.i("execute_info", "   mssid  :" + mSsid.toString() + "   mBssid  :" + mBssid + "   password  :" + password);
+
+        Log.i("execute_info", "转换后：" + yonghuming_length + "不转换：" + mSsid.length());
 
         String zhengHePassWord = zhengHePasssword_length + familyId_length + password + familyId;
 

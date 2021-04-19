@@ -227,6 +227,9 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
                         showLoadSuccess();
                         tvShowText.setText("AQI");
                         setChuShi4XiangZhi(R.id.ll_kongqizhiliang);
+                        if (response.body().data.size() == 0) {
+                            return;
+                        }
                         if (response.body().data.get(0).getGas_detection_list().size() == 0) {
                             return;
                         }

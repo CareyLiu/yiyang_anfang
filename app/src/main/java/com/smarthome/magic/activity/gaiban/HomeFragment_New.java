@@ -59,6 +59,7 @@ import com.smarthome.magic.activity.tongcheng58.TongChengMainActivity;
 import com.smarthome.magic.activity.tuangou.TuanGouShangJiaListActivity;
 import com.smarthome.magic.activity.xin_tuanyou.TuanYouList;
 import com.smarthome.magic.activity.zhinengjiaju.KongQiJianCeActvity;
+import com.smarthome.magic.activity.zhinengjiaju.KongQiJianCe_NewActvity;
 import com.smarthome.magic.activity.zijian_shangcheng.FenLeiThirdActivity;
 import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallActivity;
 import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallDetailsActivity;
@@ -93,6 +94,7 @@ import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.GlideShowImageUtils;
 import com.smarthome.magic.util.GridAverageUIDecoration;
 import com.smarthome.magic.util.Utils;
+import com.smarthome.magic.util.demo.ShiJianFenFaDemoActivity;
 import com.smarthome.magic.view.ObservableScrollView;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.umeng.commonsdk.UMConfigure;
@@ -462,8 +464,10 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                             //GongJiangRuZhuActivity.actionStart(getActivity());
 //                            Intent intent = new Intent(getActivity(), PoiKeywordSearchActivity.class);
 //                            startActivity(intent);
-                            //KongQiJianCeActvity.actionStart(getActivity(),"0x1100033");
+                            // KongQiJianCe_NewActvity.actionStart(getActivity(),"0x1100033");
 //                            Intent intent = new Intent(getActivity(), TuBiaoActivity.class);
+//                            startActivity(intent);
+//                            Intent intent = new Intent(getActivity(), ShiJianFenFaDemoActivity.class);
 //                            startActivity(intent);
                         } else {
                             Toast.makeText(getActivity(), "该应用需要赋予访问相机的权限，不开启将无法正常工作！", Toast.LENGTH_LONG).show();

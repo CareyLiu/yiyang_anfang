@@ -469,16 +469,16 @@ public class YaokongKTPei extends BaseActivity {
                 clickKey("模式键", "01");
                 break;
             case R.id.ll_fengsu:
-                clickKey("风速键", "03");
+                clickKey("风速键", "05");
                 break;
             case R.id.ll_wendu_add:
-                clickKey("温度加键", "05");
+                clickKey("温度加键", "03");
                 break;
             case R.id.ll_wendu_jian:
-                clickKey("温度减键", "06");
+                clickKey("温度减键", "04");
                 break;
             case R.id.ll_fengxiang:
-                clickKey("风向加键", "04");
+                clickKey("风向加键", "06");
                 break;
         }
     }

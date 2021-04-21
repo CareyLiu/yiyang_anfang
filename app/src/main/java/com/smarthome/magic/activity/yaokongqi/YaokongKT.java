@@ -193,28 +193,28 @@ public class YaokongKT extends BaseActivity {
                 } else {
                     ll_dianyuan.setEnabled(false);
                 }
-            } else if (mark_id.equals(label_header + "03")) {
+            } else if (mark_id.equals(label_header + "05")) {
                 if (mark_status.equals("1")) {
                     iv_fengsu.setImageResource(R.mipmap.yaokong_icon_add_blue);
                     ll_fengsu.setEnabled(true);
                 } else {
                     ll_fengsu.setEnabled(false);
                 }
-            } else if (mark_id.equals(label_header + "04")) {
+            } else if (mark_id.equals(label_header + "06")) {
                 if (mark_status.equals("1")) {
                     iv_fengxiang.setImageResource(R.mipmap.yaokong_icon_reduce_blue);
                     ll_fengxiang.setEnabled(true);
                 } else {
                     ll_fengxiang.setEnabled(false);
                 }
-            } else if (mark_id.equals(label_header + "05")) {
+            } else if (mark_id.equals(label_header + "03")) {
                 if (mark_status.equals("1")) {
                     tv_wendu_add.setImageResource(R.mipmap.yaokong_icon_add_blue);
                     ll_wendu_add.setEnabled(true);
                 } else {
                     ll_wendu_add.setEnabled(false);
                 }
-            } else if (mark_id.equals(label_header + "06")) {
+            } else if (mark_id.equals(label_header + "04")) {
                 if (mark_status.equals("1")) {
                     tv_wendu_jian.setImageResource(R.mipmap.yaokong_icon_reduce_blue);
                     ll_wendu_jian.setEnabled(true);

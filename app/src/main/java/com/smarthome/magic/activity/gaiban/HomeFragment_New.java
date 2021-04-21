@@ -94,7 +94,6 @@ import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.GlideShowImageUtils;
 import com.smarthome.magic.util.GridAverageUIDecoration;
 import com.smarthome.magic.util.Utils;
-import com.smarthome.magic.util.demo.ShiJianFenFaDemoActivity;
 import com.smarthome.magic.view.ObservableScrollView;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.umeng.commonsdk.UMConfigure;

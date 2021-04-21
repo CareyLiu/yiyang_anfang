@@ -180,6 +180,8 @@ public class TuanGouZhiFuActivity extends BaseActivity {
                         pay_id = list.get(position).pay_id;
                         payType = list.get(position).pay_type;
 
+
+
                         for (int i = 0; i < list.size(); i++) {
                             if (i==position){
                                 list.get(position).choose = "1";

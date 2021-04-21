@@ -53,7 +53,6 @@ import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
 public class YaokongKTPei extends BaseActivity {
 
-
     @BindView(R.id.ll_zidingyi)
     TextView ll_zidingyi;
     @BindView(R.id.iv_dianyuan)
@@ -278,7 +277,7 @@ public class YaokongKTPei extends BaseActivity {
         serverId = PreferenceHelper.getInstance(mContext).getString(AppConfig.SERVERID, "");
         znjjMqttMingLing = new ZnjjMqttMingLing(mContext);
         topic = "zn/hardware/" + serverId + ccid;
-        znjjMqttMingLing.yaoKongQiPeiDui(topic, new IMqttActionListener() {
+        znjjMqttMingLing.yaoKongQiPeiDui(topic,"M1737.", new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
                 Log.i("rair", "发送配电视命令" + topic);

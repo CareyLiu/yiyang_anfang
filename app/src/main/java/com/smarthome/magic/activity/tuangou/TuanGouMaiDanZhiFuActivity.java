@@ -6,9 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-
-import androidx.annotation.Nullable;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +13,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alipay.sdk.app.PayTask;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.roundview.RoundTextView;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
@@ -24,6 +26,7 @@ import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
+import com.smarthome.magic.adapter.ZhiFuFangShiAdapter;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.BaseActivity;
@@ -38,6 +41,7 @@ import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.YuZhiFuModel;
 import com.smarthome.magic.model.YuZhiFuModel_AliPay;
+import com.smarthome.magic.model.ZhiFuTypeModel;
 import com.smarthome.magic.pay_about.alipay.PayResult;
 import com.smarthome.magic.util.PaySuccessUtils;
 import com.tencent.mm.opensdk.modelpay.PayReq;
@@ -45,32 +49,21 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
+import static com.smarthome.magic.get_net.Urls.HOME_PICTURE_HOME;
+
 public class TuanGouMaiDanZhiFuActivity extends BaseActivity {
 
-    @BindView(R.id.view_weixin)
-    View viewWeixin;
-    @BindView(R.id.view_zhifubao)
-    View viewZhifubao;
-    @BindView(R.id.tv_choose_zhifufangshi)
-    TextView tvChooseZhifufangshi;
-    @BindView(R.id.iv_icon_1)
-    ImageView ivIcon1;
-    @BindView(R.id.iv_weixin_choose)
-    ImageView ivWeixinChoose;
-    @BindView(R.id.view)
-    View view;
-    @BindView(R.id.iv_icon_2)
-    ImageView ivIcon2;
-    @BindView(R.id.iv_zhifubao_choose)
-    ImageView ivZhifubaoChoose;
     @BindView(R.id.frtv_pay)
     RoundTextView frtvPay;
+    @BindView(R.id.rv_list)
+    RecyclerView rvList;
 
     private String appId;//支付id 给支付宝
     private IWXAPI api;
@@ -85,12 +78,47 @@ public class TuanGouMaiDanZhiFuActivity extends BaseActivity {
     private YuZhiFuModel.DataBean dataBean;
     private String formId;
 
+    ZhiFuFangShiAdapter zhiFuFangShiAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initData();
         initHuidiao();
+        initAdapter();
+        getZhiFuNet();
+    }
+
+    private void initAdapter() {
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        zhiFuFangShiAdapter = new ZhiFuFangShiAdapter(R.layout.item_zhifutype, zhiFuList);
+        rvList.setLayoutManager(linearLayoutManager);
+        rvList.setAdapter(zhiFuFangShiAdapter);
+
+        zhiFuFangShiAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.cl_main:
+                        for (int i = 0; i < zhiFuList.size(); i++) {
+                            if (position == i) {
+                                zhiFuList.get(i).choose = "1";
+                            } else {
+                                zhiFuList.get(i).choose = "0";
+                            }
+                        }
+                        pay_id = zhiFuList.get(position).pay_id;//支付方式-- 1 支付宝 2 微信
+                        payType = zhiFuList.get(position).pay_type;//1 支付宝 4 微信
+
+                        zhiFuFangShiAdapter.notifyDataSetChanged();
+                        break;
+                }
+            }
+        });
+
     }
 
     private void initData() {
@@ -106,25 +134,25 @@ public class TuanGouMaiDanZhiFuActivity extends BaseActivity {
             }
         });
 
-        viewWeixin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pay_id = "2";//支付方式-- 1 支付宝 2 微信
-                payType = "4";//1 支付宝 4 微信
-                ivZhifubaoChoose.setVisibility(View.INVISIBLE);
-                ivWeixinChoose.setVisibility(View.VISIBLE);
-            }
-        });
+//        viewWeixin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                pay_id = "2";//支付方式-- 1 支付宝 2 微信
+//                payType = "4";//1 支付宝 4 微信
+//                ivZhifubaoChoose.setVisibility(View.INVISIBLE);
+//                ivWeixinChoose.setVisibility(View.VISIBLE);
+//            }
+//        });
 
-        viewZhifubao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pay_id = "1";//支付方式-- 1 支付宝 2 微信
-                payType = "1";//1 支付宝 4 微信
-                ivZhifubaoChoose.setVisibility(View.VISIBLE);
-                ivWeixinChoose.setVisibility(View.INVISIBLE);
-            }
-        });
+//        viewZhifubao.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                pay_id = "1";//支付方式-- 1 支付宝 2 微信
+//                payType = "1";//1 支付宝 4 微信
+//                ivZhifubaoChoose.setVisibility(View.VISIBLE);
+//                ivWeixinChoose.setVisibility(View.INVISIBLE);
+//            }
+//        });
     }
 
     private void initHuidiao() {
@@ -143,6 +171,56 @@ public class TuanGouMaiDanZhiFuActivity extends BaseActivity {
             }
         }));
     }
+
+    List<ZhiFuTypeModel.DataBean> zhiFuList;
+
+    public void getZhiFuNet() {
+        //访问网络获取数据 下面的列表数据
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "04266");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("inst_id", inst_id);
+        Gson gson = new Gson();
+        OkGo.<AppResponse<ZhiFuTypeModel.DataBean>>post(HOME_PICTURE_HOME)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ZhiFuTypeModel.DataBean>>() {
+                    @Override
+                    public void onStart(Request<AppResponse<ZhiFuTypeModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+
+                    }
+
+                    @Override
+                    public void onSuccess(Response<AppResponse<ZhiFuTypeModel.DataBean>> response) {
+                        zhiFuList = response.body().data;
+                        if (zhiFuList.size() == 0) {
+                            UIHelper.ToastMessage(mContext, "暂无支付方式");
+                            frtvPay.setEnabled(false);
+                            return;
+                        }
+                        for (int i = 0; i < zhiFuList.size(); i++) {
+                            if (i == 0) {
+                                zhiFuList.get(0).choose = "1";
+                            } else {
+                                zhiFuList.get(i).choose = "0";
+                            }
+                        }
+
+                        pay_id = zhiFuList.get(0).pay_id;//支付方式-- 1 支付宝 2 微信
+                        payType = zhiFuList.get(0).pay_type;//1 支付宝 4 微信
+
+                        zhiFuFangShiAdapter.setNewData(zhiFuList);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                    }
+                });
+    }
+
 
     @Override
     public int getContentViewResId() {

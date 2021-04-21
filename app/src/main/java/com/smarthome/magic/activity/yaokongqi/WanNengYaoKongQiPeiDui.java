@@ -228,7 +228,7 @@ public class WanNengYaoKongQiPeiDui extends BaseActivity {
         serverId = PreferenceHelper.getInstance(mContext).getString(AppConfig.SERVERID, "");
         znjjMqttMingLing = new ZnjjMqttMingLing(mContext);
         topic = "zn/hardware/" + serverId + ccid;
-        znjjMqttMingLing.yaoKongQiPeiDui(topic, new IMqttActionListener() {
+        znjjMqttMingLing.yaoKongQiPeiDui(topic,"M1728.", new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
                 Log.i("rair", "发送配电视命令" + topic);

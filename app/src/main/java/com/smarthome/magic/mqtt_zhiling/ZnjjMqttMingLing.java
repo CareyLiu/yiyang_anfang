@@ -593,12 +593,11 @@ public class ZnjjMqttMingLing {
     }
 
 
-    public void yaoKongQiPeiDui(String topic, IMqttActionListener listener) {
+    public void yaoKongQiPeiDui(String topic,String zhiLing, IMqttActionListener listener) {
         if (!AndMqtt.getInstance().isConnect()) {
             UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
             return;
         }
-        String zhiLing = "M1728.";
         AndMqtt.getInstance().publish(new MqttPublish()
                 .setMsg(zhiLing)
                 .setQos(2).setRetained(false)

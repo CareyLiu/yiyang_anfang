@@ -322,7 +322,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                             zhuJiWenShiDu = "室内温度" + wendu + "℃" + " " + "室内湿度" + shidu + "℃" + " ";
                         }
 
-                        tv_tianqi_wendu.setText(zhuJiWenShiDu);
+//                        tv_tianqi_wendu.setText(zhuJiWenShiDu);
 
                         if (dataBean.get(0).getMember_type().equals("1")) {
                             tv_family_name.setText(dataBean.get(0).getFamily_name());

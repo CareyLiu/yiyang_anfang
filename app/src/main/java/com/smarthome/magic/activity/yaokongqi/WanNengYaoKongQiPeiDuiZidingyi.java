@@ -216,24 +216,11 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
                                     tishiDialog.show();
                                 }
                             } else if (shebeiMaTwo.equals("38")) {//空气净化
-                                if (keyCode.equals("07")) {
+                                if (keyCode.equals("08")) {
                                     llKey1.setEnabled(false);
                                     llKey1.setTextColor(Y.getColor(R.color.color_main));
                                     llKey1.setText(keyName);
                                     tvKey1.setText(keyName);
-
-                                    YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "07", keyName, "1");
-                                    Notice notice = new Notice();
-                                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI_ZIDINGYI;
-                                    notice.content = keyModel;
-                                    sendRx(notice);
-
-                                    tishiDialog.show();
-                                } else if (keyCode.equals("08")) {
-                                    llKey2.setEnabled(false);
-                                    llKey2.setTextColor(Y.getColor(R.color.color_main));
-                                    llKey2.setText(keyName);
-                                    tvKey2.setText(keyName);
 
                                     YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "08", keyName, "1");
                                     Notice notice = new Notice();
@@ -243,10 +230,10 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
 
                                     tishiDialog.show();
                                 } else if (keyCode.equals("09")) {
-                                    llKey3.setEnabled(false);
-                                    llKey3.setTextColor(Y.getColor(R.color.color_main));
-                                    llKey3.setText(keyName);
-                                    tvKey3.setText(keyName);
+                                    llKey2.setEnabled(false);
+                                    llKey2.setTextColor(Y.getColor(R.color.color_main));
+                                    llKey2.setText(keyName);
+                                    tvKey2.setText(keyName);
 
                                     YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "09", keyName, "1");
                                     Notice notice = new Notice();
@@ -256,10 +243,10 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
 
                                     tishiDialog.show();
                                 } else if (keyCode.equals("10")) {
-                                    llKey4.setEnabled(false);
-                                    llKey4.setTextColor(Y.getColor(R.color.color_main));
-                                    llKey4.setText(keyName);
-                                    tvKey4.setText(keyName);
+                                    llKey3.setEnabled(false);
+                                    llKey3.setTextColor(Y.getColor(R.color.color_main));
+                                    llKey3.setText(keyName);
+                                    tvKey3.setText(keyName);
 
                                     YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "10", keyName, "1");
                                     Notice notice = new Notice();
@@ -269,10 +256,10 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
 
                                     tishiDialog.show();
                                 } else if (keyCode.equals("11")) {
-                                    llKey5.setEnabled(false);
-                                    llKey5.setTextColor(Y.getColor(R.color.color_main));
-                                    llKey5.setText(keyName);
-                                    tvKey5.setText(keyName);
+                                    llKey4.setEnabled(false);
+                                    llKey4.setTextColor(Y.getColor(R.color.color_main));
+                                    llKey4.setText(keyName);
+                                    tvKey4.setText(keyName);
 
                                     YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "11", keyName, "1");
                                     Notice notice = new Notice();
@@ -282,12 +269,105 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
 
                                     tishiDialog.show();
                                 } else if (keyCode.equals("12")) {
+                                    llKey5.setEnabled(false);
+                                    llKey5.setTextColor(Y.getColor(R.color.color_main));
+                                    llKey5.setText(keyName);
+                                    tvKey5.setText(keyName);
+
+                                    YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "12", keyName, "1");
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI_ZIDINGYI;
+                                    notice.content = keyModel;
+                                    sendRx(notice);
+
+                                    tishiDialog.show();
+                                } else if (keyCode.equals("13")) {
                                     llKey6.setEnabled(false);
                                     llKey6.setTextColor(Y.getColor(R.color.color_main));
                                     llKey6.setText(keyName);
                                     tvKey6.setText(keyName);
 
+                                    YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "13", keyName, "1");
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI_ZIDINGYI;
+                                    notice.content = keyModel;
+                                    sendRx(notice);
+
+                                    tishiDialog.show();
+                                }
+                            } else {//空调
+                                if (keyCode.equals("08")) {
+                                    llKey1.setEnabled(false);
+                                    llKey1.setTextColor(Y.getColor(R.color.color_main));
+                                    llKey1.setText(keyName);
+                                    tvKey1.setText(keyName);
+
+                                    YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "08", keyName, "1");
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI_ZIDINGYI;
+                                    notice.content = keyModel;
+                                    sendRx(notice);
+
+                                    tishiDialog.show();
+                                } else if (keyCode.equals("09")) {
+                                    llKey2.setEnabled(false);
+                                    llKey2.setTextColor(Y.getColor(R.color.color_main));
+                                    llKey2.setText(keyName);
+                                    tvKey2.setText(keyName);
+
+                                    YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "09", keyName, "1");
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI_ZIDINGYI;
+                                    notice.content = keyModel;
+                                    sendRx(notice);
+
+                                    tishiDialog.show();
+                                } else if (keyCode.equals("10")) {
+                                    llKey3.setEnabled(false);
+                                    llKey3.setTextColor(Y.getColor(R.color.color_main));
+                                    llKey3.setText(keyName);
+                                    tvKey3.setText(keyName);
+
+                                    YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "10", keyName, "1");
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI_ZIDINGYI;
+                                    notice.content = keyModel;
+                                    sendRx(notice);
+
+                                    tishiDialog.show();
+                                } else if (keyCode.equals("11")) {
+                                    llKey4.setEnabled(false);
+                                    llKey4.setTextColor(Y.getColor(R.color.color_main));
+                                    llKey4.setText(keyName);
+                                    tvKey4.setText(keyName);
+
+                                    YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "11", keyName, "1");
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI_ZIDINGYI;
+                                    notice.content = keyModel;
+                                    sendRx(notice);
+
+                                    tishiDialog.show();
+                                } else if (keyCode.equals("12")) {
+                                    llKey5.setEnabled(false);
+                                    llKey5.setTextColor(Y.getColor(R.color.color_main));
+                                    llKey5.setText(keyName);
+                                    tvKey5.setText(keyName);
+
                                     YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "12", keyName, "1");
+                                    Notice notice = new Notice();
+                                    notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI_ZIDINGYI;
+                                    notice.content = keyModel;
+                                    sendRx(notice);
+
+                                    tishiDialog.show();
+                                } else if (keyCode.equals("13")) {
+                                    llKey6.setEnabled(false);
+                                    llKey6.setTextColor(Y.getColor(R.color.color_main));
+                                    llKey6.setText(keyName);
+                                    tvKey6.setText(keyName);
+
+                                    YaokongKeyModel keyModel = new YaokongKeyModel(shebeiMa + "13", keyName, "1");
                                     Notice notice = new Notice();
                                     notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI_ZIDINGYI;
                                     notice.content = keyModel;
@@ -368,32 +448,32 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
                 String mark_status = keyModel.getMark_status();
                 String mark_name = keyModel.getMark_name();
                 if (mark_status.equals("1")) {
-                    if (mark_id.equals("07")) {
+                    if (mark_id.equals("08")) {
                         llKey1.setEnabled(false);
                         llKey1.setTextColor(Y.getColor(R.color.color_main));
                         llKey1.setText(mark_name);
                         tvKey1.setText(mark_name);
-                    } else if (mark_id.equals("08")) {
+                    } else if (mark_id.equals("09")) {
                         llKey2.setEnabled(false);
                         llKey2.setTextColor(Y.getColor(R.color.color_main));
                         llKey2.setText(mark_name);
                         tvKey2.setText(mark_name);
-                    } else if (mark_id.equals("09")) {
+                    } else if (mark_id.equals("10")) {
                         llKey3.setEnabled(false);
                         llKey3.setTextColor(Y.getColor(R.color.color_main));
                         llKey3.setText(mark_name);
                         tvKey3.setText(mark_name);
-                    } else if (mark_id.equals("10")) {
+                    } else if (mark_id.equals("11")) {
                         llKey4.setEnabled(false);
                         llKey4.setTextColor(Y.getColor(R.color.color_main));
                         llKey4.setText(mark_name);
                         tvKey4.setText(mark_name);
-                    } else if (mark_id.equals("11")) {
+                    } else if (mark_id.equals("12")) {
                         llKey5.setEnabled(false);
                         llKey5.setTextColor(Y.getColor(R.color.color_main));
                         llKey5.setText(mark_name);
                         tvKey5.setText(mark_name);
-                    } else if (mark_id.equals("12")) {
+                    } else if (mark_id.equals("13")) {
                         llKey6.setEnabled(false);
                         llKey6.setTextColor(Y.getColor(R.color.color_main));
                         llKey6.setText(mark_name);
@@ -438,7 +518,7 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
                     showNameDialog("8");
 
                 } else {
-                    showNameDialog("07");
+                    showNameDialog("08");
                 }
                 break;
             case R.id.ll_key2:
@@ -447,7 +527,7 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
                 } else if (shebeiMaTwo.equals("38")) {
                     showNameDialog("9");
                 } else {
-                    showNameDialog("08");
+                    showNameDialog("09");
                 }
                 break;
             case R.id.ll_key3:
@@ -456,7 +536,7 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
                 } else if (shebeiMaTwo.equals("38")) {
                     showNameDialog("10");
                 } else {
-                    showNameDialog("09");
+                    showNameDialog("10");
                 }
                 break;
             case R.id.ll_key4:
@@ -465,7 +545,7 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
                 } else if (shebeiMaTwo.equals("38")) {
                     showNameDialog("11");
                 } else {
-                    showNameDialog("10");
+                    showNameDialog("11");
                 }
                 break;
             case R.id.ll_key5:
@@ -474,7 +554,7 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
                 } else if (shebeiMaTwo.equals("38")) {
                     showNameDialog("12");
                 } else {
-                    showNameDialog("11");
+                    showNameDialog("12");
                 }
                 break;
             case R.id.ll_key6:
@@ -483,7 +563,7 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
                 } else if (shebeiMaTwo.equals("38")) {
                     showNameDialog("13");
                 } else {
-                    showNameDialog("20");
+                    showNameDialog("13");
                 }
                 break;
         }

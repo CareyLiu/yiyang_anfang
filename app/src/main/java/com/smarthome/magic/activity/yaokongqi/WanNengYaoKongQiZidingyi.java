@@ -182,7 +182,7 @@ public class WanNengYaoKongQiZidingyi extends BaseActivity {
                 String mark_id = bean.getMark_id();
                 String mark_name = bean.getMark_name();
                 String mark_status = bean.getMark_status();
-                if (mark_id.equals(shebeima + "07")) {
+                if (mark_id.equals(shebeima + "08")) {
                     if (mark_status.equals("1")) {
                         tv_key1.setText(mark_name);
                         ll_key1.setText(mark_name);
@@ -191,7 +191,7 @@ public class WanNengYaoKongQiZidingyi extends BaseActivity {
                     } else {
                         ll_key1.setEnabled(false);
                     }
-                } else if (mark_id.equals(shebeima + "08")) {
+                } else if (mark_id.equals(shebeima + "09")) {
                     if (mark_status.equals("1")) {
                         tv_key2.setText(mark_name);
                         ll_key2.setText(mark_name);
@@ -200,7 +200,7 @@ public class WanNengYaoKongQiZidingyi extends BaseActivity {
                     } else {
                         ll_key2.setEnabled(false);
                     }
-                } else if (mark_id.equals(shebeima + "09")) {
+                } else if (mark_id.equals(shebeima + "10")) {
                     if (mark_status.equals("1")) {
                         tv_key3.setText(mark_name);
                         ll_key3.setText(mark_name);
@@ -209,7 +209,7 @@ public class WanNengYaoKongQiZidingyi extends BaseActivity {
                     } else {
                         ll_key3.setEnabled(false);
                     }
-                } else if (mark_id.equals(shebeima + "10")) {
+                } else if (mark_id.equals(shebeima + "11")) {
                     if (mark_status.equals("1")) {
                         tv_key4.setText(mark_name);
                         ll_key4.setText(mark_name);
@@ -218,7 +218,7 @@ public class WanNengYaoKongQiZidingyi extends BaseActivity {
                     } else {
                         ll_key4.setEnabled(false);
                     }
-                } else if (mark_id.equals(shebeima + "11")) {
+                } else if (mark_id.equals(shebeima + "12")) {
                     if (mark_status.equals("1")) {
                         tv_key5.setText(mark_name);
                         ll_key5.setText(mark_name);
@@ -227,7 +227,7 @@ public class WanNengYaoKongQiZidingyi extends BaseActivity {
                     } else {
                         ll_key5.setEnabled(false);
                     }
-                } else if (mark_id.equals(shebeima + "12")) {
+                } else if (mark_id.equals(shebeima + "13")) {
                     if (mark_status.equals("1")) {
                         tv_key6.setText(mark_name);
                         ll_key6.setText(mark_name);
@@ -248,42 +248,42 @@ public class WanNengYaoKongQiZidingyi extends BaseActivity {
                 if (shebeiMaTwo.equals("28")) {
                     sendMsg("14");
                 } else {
-                    sendMsg("07");
+                    sendMsg("08");
                 }
                 break;
             case R.id.ll_key2:
                 if (shebeiMaTwo.equals("28")) {
                     sendMsg("15");
                 } else {
-                    sendMsg("08");
+                    sendMsg("09");
                 }
                 break;
             case R.id.ll_key3:
                 if (shebeiMaTwo.equals("28")) {
                     sendMsg("16");
                 } else {
-                    sendMsg("09");
+                    sendMsg("10");
                 }
                 break;
             case R.id.ll_key4:
                 if (shebeiMaTwo.equals("28")) {
                     sendMsg("17");
                 } else {
-                    sendMsg("10");
+                    sendMsg("11");
                 }
                 break;
             case R.id.ll_key5:
                 if (shebeiMaTwo.equals("28")) {
                     sendMsg("18");
                 } else {
-                    sendMsg("11");
+                    sendMsg("12");
                 }
                 break;
             case R.id.ll_key6:
                 if (shebeiMaTwo.equals("28")) {
                     sendMsg("19");
                 } else {
-                    sendMsg("12");
+                    sendMsg("13");
                 }
                 break;
         }

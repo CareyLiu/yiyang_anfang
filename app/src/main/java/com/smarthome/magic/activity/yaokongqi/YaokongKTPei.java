@@ -266,10 +266,10 @@ public class YaokongKTPei extends BaseActivity {
         keyModels = new ArrayList<>();
         keyModels.add(new YaokongKeyModel(shebeiMa + "01", "模式", "0"));
         keyModels.add(new YaokongKeyModel(shebeiMa + "02", "电源", "0"));
-        keyModels.add(new YaokongKeyModel(shebeiMa + "03", "风速", "0"));
-        keyModels.add(new YaokongKeyModel(shebeiMa + "04", "风向", "0"));
-        keyModels.add(new YaokongKeyModel(shebeiMa + "05", "温度加", "0"));
-        keyModels.add(new YaokongKeyModel(shebeiMa + "06", "温度减", "0"));
+        keyModels.add(new YaokongKeyModel(shebeiMa + "03", "温度加", "0"));
+        keyModels.add(new YaokongKeyModel(shebeiMa + "04", "温度减", "0"));
+        keyModels.add(new YaokongKeyModel(shebeiMa + "05", "风速", "0"));
+        keyModels.add(new YaokongKeyModel(shebeiMa + "06", "风向", "0"));
     }
 
     private void initMqtt() {

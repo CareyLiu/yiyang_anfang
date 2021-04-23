@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
@@ -33,7 +33,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
@@ -41,37 +40,41 @@ import rx.functions.Action1;
 
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
-public class YaokongKT extends BaseActivity {
+public class KongQiJingHuaKongZhiActivity extends BaseActivity {
 
-    @BindView(R.id.ll_zidingyi)
-    TextView ll_zidingyi;
+
     @BindView(R.id.iv_dianyuan)
-    ImageView iv_dianyuan;
-    @BindView(R.id.ll_dianyuan)
-    LinearLayout ll_dianyuan;
+    ImageView ivDianyuan;
+    @BindView(R.id.rl_dianyuan)
+    RelativeLayout rlDianyuan;
+    @BindView(R.id.iv_zidong)
+    ImageView ivZidong;
+    @BindView(R.id.rl_zidong)
+    RelativeLayout rlZidong;
     @BindView(R.id.iv_moshi)
-    ImageView iv_moshi;
-    @BindView(R.id.ll_moshi)
-    LinearLayout ll_moshi;
-    @BindView(R.id.rl1)
-    RelativeLayout rl1;
+    ImageView ivMoshi;
+    @BindView(R.id.rl_moshi)
+    RelativeLayout rlMoshi;
+    @BindView(R.id.iv_dingshi)
+    ImageView ivDingshi;
+    @BindView(R.id.rl_dingshi)
+    RelativeLayout rlDingshi;
     @BindView(R.id.iv_fengsu)
-    ImageView iv_fengsu;
-    @BindView(R.id.ll_fengsu)
-    LinearLayout ll_fengsu;
-    @BindView(R.id.tv_wendu_add)
-    ImageView tv_wendu_add;
-    @BindView(R.id.ll_wendu_add)
-    LinearLayout ll_wendu_add;
-    @BindView(R.id.tv_wendu_jian)
-    ImageView tv_wendu_jian;
-    @BindView(R.id.ll_wendu_jian)
-    LinearLayout ll_wendu_jian;
-    @BindView(R.id.iv_fengxiang)
-    ImageView iv_fengxiang;
-    @BindView(R.id.ll_fengxiang)
-    LinearLayout ll_fengxiang;
-
+    ImageView ivFengsu;
+    @BindView(R.id.rl_fengsu)
+    RelativeLayout rlFengsu;
+    @BindView(R.id.iv_shuimian)
+    ImageView ivShuimian;
+    @BindView(R.id.rl_shuimian)
+    RelativeLayout rlShuimian;
+    @BindView(R.id.iv_tongsuo)
+    ImageView ivTongsuo;
+    @BindView(R.id.rl_tongsuo)
+    RelativeLayout rlTongsuo;
+    @BindView(R.id.iv_zidingyi)
+    ImageView ivZidingyi;
+    @BindView(R.id.rl_zidingyi)
+    RelativeLayout rlZidingyi;
     private String device_id;
     private String ccid;
     private String serverId;
@@ -85,7 +88,7 @@ public class YaokongKT extends BaseActivity {
 
     @Override
     public int getContentViewResId() {
-        return R.layout.layout_wanneng_yaokongqi_peidui_kongtiao;
+        return R.layout.layout_kongqijinghua;
     }
 
     @Override
@@ -96,7 +99,7 @@ public class YaokongKT extends BaseActivity {
     @Override
     protected void initToolbar() {
         super.initToolbar();
-        tv_title.setText("空调遥控器");
+        tv_title.setText("空气净化");
         tv_title.setTextSize(17);
         tv_title.setTextColor(getResources().getColor(R.color.black));
 
@@ -121,11 +124,11 @@ public class YaokongKT extends BaseActivity {
     }
 
     private void set() {
-        WanNengYaoKongQiSet.actionStart(mContext,device_id, member_type);
+        WanNengYaoKongQiSet.actionStart(mContext, device_id, member_type);
     }
 
-    public static void actionStart(Context context, String device_id,String member_type) {
-        Intent intent = new Intent(context, YaokongKT.class);
+    public static void actionStart(Context context, String device_id, String member_type) {
+        Intent intent = new Intent(context, KongQiJingHuaKongZhiActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("device_id", device_id);
         intent.putExtra("member_type", member_type);
@@ -142,12 +145,14 @@ public class YaokongKT extends BaseActivity {
     }
 
     private void initView() {
-        ll_moshi.setEnabled(false);
-        ll_dianyuan.setEnabled(false);
-        ll_fengsu.setEnabled(false);
-        ll_fengxiang.setEnabled(false);
-        ll_wendu_add.setEnabled(false);
-        ll_wendu_jian.setEnabled(false);
+        rlDianyuan.setEnabled(false);
+        rlZidong.setEnabled(false);
+        rlMoshi.setEnabled(false);
+        rlDingshi.setEnabled(false);
+        rlFengsu.setEnabled(false);
+        rlShuimian.setEnabled(false);
+        rlTongsuo.setEnabled(false);
+
     }
 
     private void getNet() {
@@ -181,45 +186,52 @@ public class YaokongKT extends BaseActivity {
             String mark_status = listBean.getMark_status();
             if (mark_id.equals(label_header + "01")) {
                 if (mark_status.equals("1")) {
-                    iv_moshi.setImageResource(R.mipmap.yaokong_icon_moshi_blue);
-                    ll_moshi.setEnabled(true);
+                    ivDianyuan.setImageResource(R.mipmap.yaokong_icon_guanbi_bl);
+                    rlDianyuan.setEnabled(true);
                 } else {
-                    ll_moshi.setEnabled(false);
+                    rlDianyuan.setEnabled(false);
                 }
             } else if (mark_id.equals(label_header + "02")) {
                 if (mark_status.equals("1")) {
-                    iv_dianyuan.setImageResource(R.mipmap.yaokong_icon_guanbi_blue);
-                    ll_dianyuan.setEnabled(true);
+                    ivZidong.setImageResource(R.mipmap.yaokong_icon_zidong_black);
+                    rlZidong.setEnabled(true);
                 } else {
-                    ll_dianyuan.setEnabled(false);
-                }
-            } else if (mark_id.equals(label_header + "05")) {
-                if (mark_status.equals("1")) {
-                    iv_fengsu.setImageResource(R.mipmap.yaokong_icon_fengsu_blue);
-                    ll_fengsu.setEnabled(true);
-                } else {
-                    ll_fengsu.setEnabled(false);
-                }
-            } else if (mark_id.equals(label_header + "06")) {
-                if (mark_status.equals("1")) {
-                    iv_fengxiang.setImageResource(R.mipmap.yaokong_icon_fengxiang_blue);
-                    ll_fengxiang.setEnabled(true);
-                } else {
-                    ll_fengxiang.setEnabled(false);
+                    rlZidong.setEnabled(false);
                 }
             } else if (mark_id.equals(label_header + "03")) {
                 if (mark_status.equals("1")) {
-                    tv_wendu_add.setImageResource(R.mipmap.yaokong_icon_add_blue);
-                    ll_wendu_add.setEnabled(true);
+                    ivMoshi.setImageResource(R.mipmap.jinghuaqi_icon_moshi_bl);
+                    rlMoshi.setEnabled(true);
                 } else {
-                    ll_wendu_add.setEnabled(false);
+                    rlMoshi.setEnabled(false);
                 }
             } else if (mark_id.equals(label_header + "04")) {
                 if (mark_status.equals("1")) {
-                    tv_wendu_jian.setImageResource(R.mipmap.yaokong_icon_reduce_blue);
-                    ll_wendu_jian.setEnabled(true);
+                    ivDingshi.setImageResource(R.mipmap.jinghuaqi_icon_shijian_bl);
+                    rlDingshi.setEnabled(true);
                 } else {
-                    ll_wendu_jian.setEnabled(false);
+                    rlDingshi.setEnabled(false);
+                }
+            } else if (mark_id.equals(label_header + "05")) {
+                if (mark_status.equals("1")) {
+                    ivFengsu.setImageResource(R.mipmap.jinghuaqi_icon_fengsu_bk);
+                    rlFengsu.setEnabled(true);
+                } else {
+                    rlFengsu.setEnabled(false);
+                }
+            } else if (mark_id.equals(label_header + "06")) {
+                if (mark_status.equals("1")) {
+                    ivShuimian.setImageResource(R.mipmap.jinghuaqi_icon_shuimian_bk);
+                    rlShuimian.setEnabled(true);
+                } else {
+                    rlShuimian.setEnabled(false);
+                }
+            } else if (mark_id.equals(label_header + "07")) {
+                if (mark_status.equals("1")) {
+                    ivTongsuo.setImageResource(R.mipmap.jinghuaqi_icon_tongsuo_bl_blue);
+                    rlTongsuo.setEnabled(true);
+                } else {
+                    rlTongsuo.setEnabled(false);
                 }
             }
         }
@@ -284,29 +296,32 @@ public class YaokongKT extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.ll_zidingyi, R.id.ll_dianyuan, R.id.ll_moshi, R.id.ll_fengsu, R.id.ll_wendu_add, R.id.ll_wendu_jian, R.id.ll_fengxiang})
+    @OnClick({R.id.rl_dianyuan, R.id.rl_zidong, R.id.rl_moshi, R.id.rl_dingshi, R.id.rl_fengsu, R.id.rl_shuimian, R.id.rl_tongsuo, R.id.rl_zidingyi})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.ll_zidingyi:
-                WanNengYaoKongQiZidingyi.actionStart(mContext, device_id, label_header, control_keys_list);
-                break;
-            case R.id.ll_dianyuan:
+            case R.id.rl_dianyuan:
                 sendMsg(1);
                 break;
-            case R.id.ll_moshi:
-                sendMsg(0);
-                break;
-            case R.id.ll_fengsu:
+            case R.id.rl_zidong:
                 sendMsg(2);
                 break;
-            case R.id.ll_wendu_add:
+            case R.id.rl_moshi:
+                sendMsg(3);
+                break;
+            case R.id.rl_dingshi:
                 sendMsg(4);
                 break;
-            case R.id.ll_wendu_jian:
+            case R.id.rl_fengsu:
                 sendMsg(5);
                 break;
-            case R.id.ll_fengxiang:
-                sendMsg(3);
+            case R.id.rl_shuimian:
+                sendMsg(6);
+                break;
+            case R.id.rl_tongsuo:
+                sendMsg(7);
+                break;
+            case R.id.rl_zidingyi:
+                WanNengYaoKongQiZidingyi.actionStart(mContext, device_id, label_header, control_keys_list);
                 break;
         }
     }

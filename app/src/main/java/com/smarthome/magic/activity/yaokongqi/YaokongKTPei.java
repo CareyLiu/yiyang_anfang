@@ -370,7 +370,7 @@ public class YaokongKTPei extends BaseActivity {
                                 keyModel.setMark_status("1");
                                 keyModels.set(1, keyModel);
                                 tishiDialog.show();
-                            } else if (keyCode.equals("03")) {
+                            } else if (keyCode.equals("05")) {
                                 iv_fengsu.setImageResource(R.mipmap.yaokong_icon_fengsu_blue);
                                 ll_fengsu.setEnabled(false);
 
@@ -378,7 +378,7 @@ public class YaokongKTPei extends BaseActivity {
                                 keyModel.setMark_status("1");
                                 keyModels.set(2, keyModel);
                                 tishiDialog.show();
-                            } else if (keyCode.equals("04")) {
+                            } else if (keyCode.equals("06")) {
                                 iv_fengxiang.setImageResource(R.mipmap.yaokong_icon_fengxiang_blue);
                                 ll_fengxiang.setEnabled(false);
 
@@ -386,7 +386,7 @@ public class YaokongKTPei extends BaseActivity {
                                 keyModel.setMark_status("1");
                                 keyModels.set(3, keyModel);
                                 tishiDialog.show();
-                            } else if (keyCode.equals("05")) {
+                            } else if (keyCode.equals("03")) {
                                 tv_wendu_add.setImageResource(R.mipmap.yaokong_icon_add_blue);
                                 ll_wendu_add.setEnabled(false);
 
@@ -394,7 +394,7 @@ public class YaokongKTPei extends BaseActivity {
                                 keyModel.setMark_status("1");
                                 keyModels.set(4, keyModel);
                                 tishiDialog.show();
-                            } else if (keyCode.equals("06")) {
+                            } else if (keyCode.equals("04")) {
                                 tv_wendu_jian.setImageResource(R.mipmap.yaokong_icon_reduce_blue);
                                 ll_wendu_jian.setEnabled(false);
 

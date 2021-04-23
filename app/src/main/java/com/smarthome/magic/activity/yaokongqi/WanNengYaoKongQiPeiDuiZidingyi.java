@@ -215,7 +215,7 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
 
                                     tishiDialog.show();
                                 }
-                            } else {
+                            } else if (shebeiMaTwo.equals("38")) {//空气净化
                                 if (keyCode.equals("07")) {
                                     llKey1.setEnabled(false);
                                     llKey1.setTextColor(Y.getColor(R.color.color_main));
@@ -434,6 +434,9 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
             case R.id.ll_key1:
                 if (shebeiMaTwo.equals("28")) {
                     showNameDialog("14");
+                } else if (shebeiMaTwo.equals("38")) {
+                    showNameDialog("8");
+
                 } else {
                     showNameDialog("07");
                 }
@@ -441,6 +444,8 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
             case R.id.ll_key2:
                 if (shebeiMaTwo.equals("28")) {
                     showNameDialog("15");
+                } else if (shebeiMaTwo.equals("38")) {
+                    showNameDialog("9");
                 } else {
                     showNameDialog("08");
                 }
@@ -448,6 +453,8 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
             case R.id.ll_key3:
                 if (shebeiMaTwo.equals("28")) {
                     showNameDialog("16");
+                } else if (shebeiMaTwo.equals("38")) {
+                    showNameDialog("10");
                 } else {
                     showNameDialog("09");
                 }
@@ -455,6 +462,8 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
             case R.id.ll_key4:
                 if (shebeiMaTwo.equals("28")) {
                     showNameDialog("17");
+                } else if (shebeiMaTwo.equals("38")) {
+                    showNameDialog("11");
                 } else {
                     showNameDialog("10");
                 }
@@ -462,6 +471,8 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
             case R.id.ll_key5:
                 if (shebeiMaTwo.equals("28")) {
                     showNameDialog("18");
+                } else if (shebeiMaTwo.equals("38")) {
+                    showNameDialog("12");
                 } else {
                     showNameDialog("11");
                 }
@@ -469,6 +480,8 @@ public class WanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
             case R.id.ll_key6:
                 if (shebeiMaTwo.equals("28")) {
                     showNameDialog("19");
+                } else if (shebeiMaTwo.equals("38")) {
+                    showNameDialog("13");
                 } else {
                     showNameDialog("20");
                 }

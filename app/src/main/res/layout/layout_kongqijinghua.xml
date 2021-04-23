@@ -47,6 +47,7 @@
                         android:orientation="vertical">
 
                         <RelativeLayout
+
                             android:layout_width="68dp"
                             android:layout_height="68dp"
                             android:background="@mipmap/yaokong_bg_round_gradual_2">
@@ -56,7 +57,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:src="@mipmap/yaokong_icon_guanbi_bl">
+                                android:src="@mipmap/jinghuaqi_icon_guanbi_bk">
 
                             </ImageView>
                         </RelativeLayout>
@@ -91,10 +92,11 @@
                             android:background="@mipmap/yaokong_bg_round_gradual_2">
 
                             <ImageView
+                                android:id="@+id/iv_zidong"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:src="@mipmap/yaokong_icon_zidong_black">
+                                android:src="@mipmap/jinghuaqi_icon_zidong_bk">
 
                             </ImageView>
                         </RelativeLayout>
@@ -129,10 +131,11 @@
                             android:background="@mipmap/yaokong_bg_round_gradual_2">
 
                             <ImageView
+                                android:id="@+id/iv_moshi"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:src="@mipmap/jinghuaqi_icon_moshi_bl">
+                                android:src="@mipmap/jinghuaqi_icon_moshi_bk">
 
                             </ImageView>
                         </RelativeLayout>
@@ -174,10 +177,11 @@
                             android:background="@mipmap/yaokong_bg_round_gradual_2">
 
                             <ImageView
+                                android:id="@+id/iv_dingshi"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:src="@mipmap/jinghuaqi_icon_shijian_bl">
+                                android:src="@mipmap/jinghuaqi_icon_shijian_bk">
 
                             </ImageView>
                         </RelativeLayout>
@@ -212,10 +216,11 @@
                             android:background="@mipmap/yaokong_bg_round_gradual_2">
 
                             <ImageView
+                                android:id="@+id/iv_fengsu"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:src="@mipmap/jinghuaqi_icon_fengsu_bk">
+                                android:src="@mipmap/jinghuaqi_icon_fengsu_bk_heise">
 
                             </ImageView>
                         </RelativeLayout>
@@ -250,10 +255,11 @@
                             android:background="@mipmap/yaokong_bg_round_gradual_2">
 
                             <ImageView
+                                android:id="@+id/iv_shuimian"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:src="@mipmap/jinghuaqi_icon_shuimian_bk">
+                                android:src="@mipmap/jinghuaqi_icon_shuimian_bk_heise">
 
                             </ImageView>
                         </RelativeLayout>
@@ -295,10 +301,11 @@
                             android:background="@mipmap/yaokong_bg_round_gradual_2">
 
                             <ImageView
+                                android:id="@+id/iv_tongsuo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:src="@mipmap/jinghuaqi_icon_shijian_bl">
+                                android:src="@mipmap/jinghuaqi_icon_shijian_bk">
 
                             </ImageView>
                         </RelativeLayout>
@@ -372,10 +379,11 @@
                             android:background="@mipmap/yaokong_bg_round_gradual_2">
 
                             <ImageView
+                                android:id="@+id/iv_zidingyi"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:src="@mipmap/jinghuaqi_icon_shuimian_bk">
+                                android:src="@mipmap/jinghuaqi_icon_shuimian_bk_heise">
 
                             </ImageView>
                         </RelativeLayout>

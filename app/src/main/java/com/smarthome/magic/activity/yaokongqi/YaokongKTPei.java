@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -79,6 +80,14 @@ public class YaokongKTPei extends BaseActivity {
     ImageView iv_fengxiang;
     @BindView(R.id.ll_fengxiang)
     LinearLayout ll_fengxiang;
+    @BindView(R.id.rl1)
+    RelativeLayout rl1;
+    @BindView(R.id.tv_fengxiang)
+    TextView tvFengxiang;
+    @BindView(R.id.iv_off)
+    ImageView ivOff;
+    @BindView(R.id.ll_off)
+    LinearLayout llOff;
 
     private String shebeiMa;
     private String keyMa;
@@ -110,7 +119,6 @@ public class YaokongKTPei extends BaseActivity {
         tv_title.setText("空调遥控器配网");
         tv_title.setTextSize(17);
         tv_title.setTextColor(getResources().getColor(R.color.black));
-
         tv_rightTitle.setVisibility(View.VISIBLE);
         tv_rightTitle.setText("保存");
         tv_rightTitle.setTextSize(17);
@@ -265,11 +273,12 @@ public class YaokongKTPei extends BaseActivity {
     private void initKeyModels() {
         keyModels = new ArrayList<>();
         keyModels.add(new YaokongKeyModel(shebeiMa + "01", "模式", "0"));
-        keyModels.add(new YaokongKeyModel(shebeiMa + "02", "电源", "0"));
+        keyModels.add(new YaokongKeyModel(shebeiMa + "02", "开", "0"));
         keyModels.add(new YaokongKeyModel(shebeiMa + "03", "温度加", "0"));
         keyModels.add(new YaokongKeyModel(shebeiMa + "04", "温度减", "0"));
         keyModels.add(new YaokongKeyModel(shebeiMa + "05", "风速", "0"));
         keyModels.add(new YaokongKeyModel(shebeiMa + "06", "风向", "0"));
+        keyModels.add(new YaokongKeyModel(shebeiMa + "07", "关", "0"));
     }
 
     private void initMqtt() {
@@ -277,7 +286,7 @@ public class YaokongKTPei extends BaseActivity {
         serverId = PreferenceHelper.getInstance(mContext).getString(AppConfig.SERVERID, "");
         znjjMqttMingLing = new ZnjjMqttMingLing(mContext);
         topic = "zn/hardware/" + serverId + ccid;
-        znjjMqttMingLing.yaoKongQiPeiDui(topic,"M1737.", new IMqttActionListener() {
+        znjjMqttMingLing.yaoKongQiPeiDui(topic, "M1737.", new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
                 Log.i("rair", "发送配电视命令" + topic);
@@ -374,33 +383,41 @@ public class YaokongKTPei extends BaseActivity {
                                 iv_fengsu.setImageResource(R.mipmap.yaokong_icon_fengsu_blue);
                                 ll_fengsu.setEnabled(false);
 
-                                YaokongKeyModel keyModel = keyModels.get(2);
+                                YaokongKeyModel keyModel = keyModels.get(4);
                                 keyModel.setMark_status("1");
-                                keyModels.set(2, keyModel);
+                                keyModels.set(4, keyModel);
                                 tishiDialog.show();
                             } else if (keyCode.equals("06")) {
                                 iv_fengxiang.setImageResource(R.mipmap.yaokong_icon_fengxiang_blue);
                                 ll_fengxiang.setEnabled(false);
 
-                                YaokongKeyModel keyModel = keyModels.get(3);
+                                YaokongKeyModel keyModel = keyModels.get(5);
                                 keyModel.setMark_status("1");
-                                keyModels.set(3, keyModel);
+                                keyModels.set(5, keyModel);
                                 tishiDialog.show();
                             } else if (keyCode.equals("03")) {
                                 tv_wendu_add.setImageResource(R.mipmap.yaokong_icon_add_blue);
                                 ll_wendu_add.setEnabled(false);
 
-                                YaokongKeyModel keyModel = keyModels.get(4);
+                                YaokongKeyModel keyModel = keyModels.get(2);
                                 keyModel.setMark_status("1");
-                                keyModels.set(4, keyModel);
+                                keyModels.set(2, keyModel);
                                 tishiDialog.show();
                             } else if (keyCode.equals("04")) {
                                 tv_wendu_jian.setImageResource(R.mipmap.yaokong_icon_reduce_blue);
                                 ll_wendu_jian.setEnabled(false);
 
-                                YaokongKeyModel keyModel = keyModels.get(5);
+                                YaokongKeyModel keyModel = keyModels.get(3);
                                 keyModel.setMark_status("1");
-                                keyModels.set(5, keyModel);
+                                keyModels.set(3, keyModel);
+                                tishiDialog.show();
+                            } else if (keyCode.equals("07")) {
+                                ivOff.setImageResource(R.mipmap.yaokong_icon_guanbi_blue);
+                                llOff.setEnabled(false);
+
+                                YaokongKeyModel keyModel = keyModels.get(6);
+                                keyModel.setMark_status("1");
+                                keyModels.set(6, keyModel);
                                 tishiDialog.show();
                             }
                         } else {
@@ -455,14 +472,14 @@ public class YaokongKTPei extends BaseActivity {
                 });
     }
 
-    @OnClick({R.id.ll_zidingyi, R.id.ll_dianyuan, R.id.ll_moshi, R.id.ll_fengsu, R.id.ll_wendu_add, R.id.ll_wendu_jian, R.id.ll_fengxiang})
+    @OnClick({R.id.ll_zidingyi, R.id.ll_dianyuan, R.id.ll_moshi, R.id.ll_fengsu, R.id.ll_wendu_add, R.id.ll_wendu_jian, R.id.ll_fengxiang, R.id.ll_off})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_zidingyi:
                 WanNengYaoKongQiPeiDuiZidingyi.actionStart(mContext, shebeiMa, keyModels);
                 break;
             case R.id.ll_dianyuan:
-                clickKey("电源键", "02");
+                clickKey("开关开", "02");
                 break;
             case R.id.ll_moshi:
                 clickKey("模式键", "01");
@@ -479,6 +496,10 @@ public class YaokongKTPei extends BaseActivity {
             case R.id.ll_fengxiang:
                 clickKey("风向加键", "06");
                 break;
+            case R.id.ll_off:
+                clickKey("开关关", "07");
+                break;
+
         }
     }
 

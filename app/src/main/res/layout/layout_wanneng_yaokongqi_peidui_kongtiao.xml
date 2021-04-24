@@ -87,7 +87,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="3pt"
             android:gravity="center"
-            android:text="ON/OFF"
+            android:text="ON"
             android:textColor="@color/text_color3"
             android:textSize="27pt"
             android:textStyle="bold" />
@@ -219,6 +219,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_fengxiang"
             android:layout_width="146pt"
             android:layout_height="wrap_content"
             android:layout_below="@id/ll_fengxiang"
@@ -226,6 +227,35 @@
             android:layout_marginTop="3pt"
             android:gravity="center"
             android:text="风向"
+            android:textColor="@color/text_color3"
+            android:textSize="27pt"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/ll_off"
+            android:layout_width="146pt"
+            android:layout_height="146pt"
+            android:layout_below="@+id/tv_fengxiang"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="18pt"
+            android:background="@mipmap/yaokong_bg_round_gradual_2"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_off"
+                android:layout_width="46pt"
+                android:layout_height="46pt"
+                android:src="@mipmap/yaokong_icon_guanbi" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="146pt"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_off"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="3pt"
+            android:gravity="center"
+            android:text="OFF"
             android:textColor="@color/text_color3"
             android:textSize="27pt"
             android:textStyle="bold" />

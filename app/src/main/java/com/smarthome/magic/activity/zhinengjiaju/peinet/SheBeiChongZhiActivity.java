@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
 import com.flyco.roundview.RoundRelativeLayout;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.yaokongqi.KongQiJingHuaPeiActivity;
 import com.smarthome.magic.activity.yaokongqi.WanNengYaoKongQiPeiDui;
 import com.smarthome.magic.activity.tuya_device.add.zi.TuyaAddCameraActivity;
 import com.smarthome.magic.activity.yaokongqi.YaokongKTPei;
@@ -97,10 +98,12 @@ public class SheBeiChongZhiActivity extends BaseActivity {
                     } else if (fenLeiContentModel.type.equals("18")) {//摄像头
                         // TODO: 2021/2/3 添加摄像头
                         TuyaAddCameraActivity.actionStart(mContext);
-                    } else if (fenLeiContentModel.type.equals("28")) {
+                    } else if (fenLeiContentModel.type.equals("28")) {//其实是电视
                         WanNengYaoKongQiPeiDui.actionStart(SheBeiChongZhiActivity.this);
                     } else if (fenLeiContentModel.type.equals("37")) {
                         YaokongKTPei.actionStart(SheBeiChongZhiActivity.this);
+                    } else if (fenLeiContentModel.type.equals("38")) {
+                        KongQiJingHuaPeiActivity.actionStart(mContext);
                     } else {
                         TianJiaPuTongSheBeiActivity.actionStart(mContext, fenLeiContentModel);
                     }

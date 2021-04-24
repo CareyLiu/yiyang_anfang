@@ -38,6 +38,7 @@ import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
@@ -92,6 +93,7 @@ public class RenTiGanYingActivity extends BaseActivity {
     LordingDialog lordingDialog;
     private ImageView ivShebeiZaixianzhuangtaiImg;//在线离线 红标
     private TextView zaiXianLiXian;//在线离线
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,9 +142,6 @@ public class RenTiGanYingActivity extends BaseActivity {
         zaiXianLiXian = headerView.findViewById(R.id.tv_shebei_zaixian_huashu);
         ivShebeiZaixianzhuangtaiImg = headerView.findViewById(R.id.iv_shebei_zaixianzhuangtai_img);
         Switch switchBaoJingTishiYin = headerView.findViewById(R.id.btn_baojing_tishiyin);
-
-
-
 
 
         String strBaoJing = PreferenceHelper.getInstance(mContext).getString(AppConfig.BAOJINGRENTIGANYING, "2");
@@ -321,7 +320,7 @@ public class RenTiGanYingActivity extends BaseActivity {
                         dataBean = response.body().data.get(0);
                         deviceCCid = dataBean.getDevice_ccid();
                         String onlineState = dataBean.getOnline_state();
-                        if (onlineState!=null){
+                        if (onlineState != null) {
                             if (onlineState.equals("1")) {
                                 zaiXianLiXian.setText("设备在线");
                                 ivShebeiZaixianzhuangtaiImg.setBackgroundResource(R.drawable.bg_zhineng_device_online);
@@ -450,15 +449,23 @@ public class RenTiGanYingActivity extends BaseActivity {
                 });
 
     }
+
     TishiDialog tishiDialog;
+
     private void deleteDevice() {
 
         Map<String, String> map = new HashMap<>();
         map.put("code", "16034");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
-        map.put("family_id", dataBean.getFamily_id());
-        map.put("device_id", dataBean.getDevice_id());
+        if (!StringUtils.isEmpty(dataBean.getFamily_id())) {
+            map.put("family_id", dataBean.getFamily_id());
+            map.put("device_id", dataBean.getDevice_id());
+            UIHelper.ToastMessage(mContext, "系统错误");
+            finish();
+            return;
+        }
+
         Gson gson = new Gson();
         Log.e("map_data", gson.toJson(map));
         OkGo.<AppResponse<ZhiNengFamilyEditBean>>post(ZHINENGJIAJU)
@@ -518,7 +525,7 @@ public class RenTiGanYingActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (znjjMqttMingLing!=null){
+        if (znjjMqttMingLing != null) {
             znjjMqttMingLing.unSubscribeShiShiXinXi(new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {

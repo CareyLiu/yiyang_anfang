@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -33,7 +35,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
@@ -71,6 +72,12 @@ public class YaokongKT extends BaseActivity {
     ImageView iv_fengxiang;
     @BindView(R.id.ll_fengxiang)
     LinearLayout ll_fengxiang;
+    @BindView(R.id.tv_fengxiang)
+    TextView tvFengxiang;
+    @BindView(R.id.iv_off)
+    ImageView ivOff;
+    @BindView(R.id.ll_off)
+    LinearLayout llOff;
 
     private String device_id;
     private String ccid;
@@ -121,10 +128,10 @@ public class YaokongKT extends BaseActivity {
     }
 
     private void set() {
-        WanNengYaoKongQiSet.actionStart(mContext,device_id, member_type);
+        WanNengYaoKongQiSet.actionStart(mContext, device_id, member_type);
     }
 
-    public static void actionStart(Context context, String device_id,String member_type) {
+    public static void actionStart(Context context, String device_id, String member_type) {
         Intent intent = new Intent(context, YaokongKT.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("device_id", device_id);
@@ -221,6 +228,13 @@ public class YaokongKT extends BaseActivity {
                 } else {
                     ll_wendu_jian.setEnabled(false);
                 }
+            } else if (mark_id.equals(label_header + "07")) {
+                if (mark_status.equals("1")) {
+                    ivOff.setImageResource(R.mipmap.yaokong_icon_guanbi_blue);
+                    llOff.setEnabled(true);
+                } else {
+                    llOff.setEnabled(false);
+                }
             }
         }
     }
@@ -284,7 +298,7 @@ public class YaokongKT extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.ll_zidingyi, R.id.ll_dianyuan, R.id.ll_moshi, R.id.ll_fengsu, R.id.ll_wendu_add, R.id.ll_wendu_jian, R.id.ll_fengxiang})
+    @OnClick({R.id.ll_zidingyi, R.id.ll_dianyuan, R.id.ll_moshi, R.id.ll_fengsu, R.id.ll_wendu_add, R.id.ll_wendu_jian, R.id.ll_fengxiang, R.id.ll_off})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_zidingyi:
@@ -297,16 +311,19 @@ public class YaokongKT extends BaseActivity {
                 sendMsg(0);
                 break;
             case R.id.ll_fengsu:
-                sendMsg(2);
-                break;
-            case R.id.ll_wendu_add:
                 sendMsg(4);
                 break;
+            case R.id.ll_wendu_add:
+                sendMsg(2);
+                break;
             case R.id.ll_wendu_jian:
-                sendMsg(5);
+                sendMsg(3);
                 break;
             case R.id.ll_fengxiang:
-                sendMsg(3);
+                sendMsg(5);
+                break;
+            case R.id.ll_off:
+                sendMsg(6);
                 break;
         }
     }

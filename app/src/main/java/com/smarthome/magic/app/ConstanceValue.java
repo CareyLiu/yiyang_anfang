@@ -184,5 +184,6 @@ public interface ConstanceValue {
     int MSG_FUWUGONGZHONG = 0x10136;//服务工种
 
     int MSG_ADD_BANNER = 0x10137;//添加轮播图
+    int MSG_NONEZHINENGJIAJU = 0x10138;//刷新不重新创建时，重新走程序
 
 }

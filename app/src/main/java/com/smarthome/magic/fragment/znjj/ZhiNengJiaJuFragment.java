@@ -78,6 +78,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
+
 import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -170,7 +171,6 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initData();
-        getnet("初始化");
         initSM();
         initHuidiao();
     }
@@ -181,6 +181,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
         ll_tianqi_click.setOnClickListener(this);
         initViewpager();
         initMagicIndicator();
+        getnet("初始化");
     }
 
     private void initViewpager() {
@@ -281,6 +282,8 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                     getnet("MSG_DEVICE_ROOM_NAME_CHANGE");
                 } else if (message.type == ConstanceValue.MSG_DELETE_FAMILY) {//删除家庭刷新
                     getnet("MSG_DELETE_FAMILY");
+                } else if (message.type == ConstanceValue.MSG_NONEZHINENGJIAJU) {
+
                 }
             }
         }));

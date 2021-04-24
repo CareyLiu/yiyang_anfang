@@ -283,7 +283,7 @@ public class KongQiJingHuaPeiActivity extends BaseActivity {
         serverId = PreferenceHelper.getInstance(mContext).getString(AppConfig.SERVERID, "");
         znjjMqttMingLing = new ZnjjMqttMingLing(mContext);
         topic = "zn/hardware/" + serverId + ccid;
-        znjjMqttMingLing.yaoKongQiPeiDui(topic, "M1737", new IMqttActionListener() {
+        znjjMqttMingLing.yaoKongQiPeiDui(topic, "M1738.", new IMqttActionListener() {
             @Override
             public void onSuccess(IMqttToken asyncActionToken) {
                 Log.i("rair", "发送配电视命令" + topic);

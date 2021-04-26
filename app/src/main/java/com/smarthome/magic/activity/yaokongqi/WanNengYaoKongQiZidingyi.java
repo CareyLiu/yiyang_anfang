@@ -23,6 +23,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import androidx.annotation.Nullable;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -74,7 +75,7 @@ public class WanNengYaoKongQiZidingyi extends BaseActivity {
     @Override
     protected void initToolbar() {
         super.initToolbar();
-        tv_title.setText("电视遥控器");
+        tv_title.setText("自定义");
         tv_title.setTextSize(17);
         tv_title.setTextColor(getResources().getColor(R.color.black));
         mToolbar.setNavigationIcon(R.mipmap.backbutton);
@@ -176,7 +177,7 @@ public class WanNengYaoKongQiZidingyi extends BaseActivity {
                     }
                 }
             }
-        } else {
+        } else if (shebeiMaTwo.equals("37")) {
             for (int i = 0; i < control_keys_list.size(); i++) {
                 YaokongDetailsModel.DataBean.ControlKeysListBean bean = control_keys_list.get(i);
                 String mark_id = bean.getMark_id();
@@ -238,6 +239,68 @@ public class WanNengYaoKongQiZidingyi extends BaseActivity {
                     }
                 }
             }
+        } else if (shebeiMaTwo.equals("38")) {
+            for (int i = 0; i < control_keys_list.size(); i++) {
+                YaokongDetailsModel.DataBean.ControlKeysListBean bean = control_keys_list.get(i);
+                String mark_id = bean.getMark_id();
+                String mark_name = bean.getMark_name();
+                String mark_status = bean.getMark_status();
+                if (mark_id.equals(shebeima + "11")) {
+                    if (mark_status.equals("1")) {
+                        tv_key1.setText(mark_name);
+                        ll_key1.setText(mark_name);
+                        ll_key1.setTextColor(Y.getColor(R.color.color_main));
+                        ll_key1.setEnabled(true);
+                    } else {
+                        ll_key1.setEnabled(false);
+                    }
+                } else if (mark_id.equals(shebeima + "12")) {
+                    if (mark_status.equals("1")) {
+                        tv_key2.setText(mark_name);
+                        ll_key2.setText(mark_name);
+                        ll_key2.setTextColor(Y.getColor(R.color.color_main));
+                        ll_key2.setEnabled(true);
+                    } else {
+                        ll_key2.setEnabled(false);
+                    }
+                } else if (mark_id.equals(shebeima + "13")) {
+                    if (mark_status.equals("1")) {
+                        tv_key3.setText(mark_name);
+                        ll_key3.setText(mark_name);
+                        ll_key3.setTextColor(Y.getColor(R.color.color_main));
+                        ll_key3.setEnabled(true);
+                    } else {
+                        ll_key3.setEnabled(false);
+                    }
+                } else if (mark_id.equals(shebeima + "14")) {
+                    if (mark_status.equals("1")) {
+                        tv_key4.setText(mark_name);
+                        ll_key4.setText(mark_name);
+                        ll_key4.setTextColor(Y.getColor(R.color.color_main));
+                        ll_key4.setEnabled(true);
+                    } else {
+                        ll_key4.setEnabled(false);
+                    }
+                } else if (mark_id.equals(shebeima + "15")) {
+                    if (mark_status.equals("1")) {
+                        tv_key5.setText(mark_name);
+                        ll_key5.setText(mark_name);
+                        ll_key5.setTextColor(Y.getColor(R.color.color_main));
+                        ll_key5.setEnabled(true);
+                    } else {
+                        ll_key5.setEnabled(false);
+                    }
+                } else if (mark_id.equals(shebeima + "16")) {
+                    if (mark_status.equals("1")) {
+                        tv_key6.setText(mark_name);
+                        ll_key6.setText(mark_name);
+                        ll_key6.setTextColor(Y.getColor(R.color.color_main));
+                        ll_key6.setEnabled(true);
+                    } else {
+                        ll_key6.setEnabled(false);
+                    }
+                }
+            }
         }
     }
 
@@ -247,13 +310,17 @@ public class WanNengYaoKongQiZidingyi extends BaseActivity {
             case R.id.ll_key1:
                 if (shebeiMaTwo.equals("28")) {
                     sendMsg("14");
-                } else {
+                } else if (shebeiMaTwo.equals("37")) {
                     sendMsg("08");
+                } else if (shebeiMaTwo.equals("38")) {
+                    sendMsg("11");
                 }
                 break;
             case R.id.ll_key2:
                 if (shebeiMaTwo.equals("28")) {
                     sendMsg("15");
+                } else if (shebeiMaTwo.equals("38")) {
+                    sendMsg("12");
                 } else {
                     sendMsg("09");
                 }
@@ -261,6 +328,8 @@ public class WanNengYaoKongQiZidingyi extends BaseActivity {
             case R.id.ll_key3:
                 if (shebeiMaTwo.equals("28")) {
                     sendMsg("16");
+                } else if (shebeiMaTwo.equals("38")) {
+                    sendMsg("13");
                 } else {
                     sendMsg("10");
                 }
@@ -268,6 +337,8 @@ public class WanNengYaoKongQiZidingyi extends BaseActivity {
             case R.id.ll_key4:
                 if (shebeiMaTwo.equals("28")) {
                     sendMsg("17");
+                } else if (shebeiMaTwo.equals("38")) {
+                    sendMsg("14");
                 } else {
                     sendMsg("11");
                 }
@@ -275,6 +346,8 @@ public class WanNengYaoKongQiZidingyi extends BaseActivity {
             case R.id.ll_key5:
                 if (shebeiMaTwo.equals("28")) {
                     sendMsg("18");
+                } else if (shebeiMaTwo.equals("38")) {
+                    sendMsg("15");
                 } else {
                     sendMsg("12");
                 }
@@ -282,6 +355,8 @@ public class WanNengYaoKongQiZidingyi extends BaseActivity {
             case R.id.ll_key6:
                 if (shebeiMaTwo.equals("28")) {
                     sendMsg("19");
+                } else if (shebeiMaTwo.equals("38")) {
+                    sendMsg("16");
                 } else {
                     sendMsg("13");
                 }

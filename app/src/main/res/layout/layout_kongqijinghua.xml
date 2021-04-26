@@ -13,18 +13,27 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-                <ImageView
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginLeft="15dp"
+                android:gravity="center_vertical">
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@mipmap/jiashiqi_pic_1">
+                    android:text="注："
+                    android:textColor="#fffc0100"
+                    android:textSize="14sp" />
 
-                </ImageView>
-            </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="已配对按键为蓝色"
+                    android:textColor="#ff666666"
+                    android:textSize="14sp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -150,6 +159,7 @@
 
             </LinearLayout>
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -266,7 +276,131 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
-                            android:text="睡眠"
+                            android:text="睡眠风"
+                            android:textColor="#ff333333"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp">
+
+                <RelativeLayout
+                    android:id="@+id/rl_jinghua"
+                    android:layout_width="match_parent"
+                    android:layout_height="105dp"
+                    android:layout_weight="1">
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="68dp"
+                            android:layout_height="68dp"
+                            android:background="@mipmap/yaokong_bg_round_gradual_2">
+
+                            <ImageView
+                                android:id="@+id/iv_jinghua"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:src="@mipmap/jinghuaqi_icon_jinghua_bk">
+
+                            </ImageView>
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="净化"
+                            android:textColor="#ff333333"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_chuyan"
+                    android:layout_width="match_parent"
+                    android:layout_height="105dp"
+                    android:layout_weight="1">
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="68dp"
+                            android:layout_height="68dp"
+                            android:background="@mipmap/yaokong_bg_round_gradual_2">
+
+                            <ImageView
+                                android:id="@+id/iv_chuyan"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:src="@mipmap/jinghuaqi_icon_yanwu_bk">
+
+                            </ImageView>
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="除烟"
+                            android:textColor="#ff333333"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_fulizi"
+                    android:layout_width="match_parent"
+                    android:layout_height="105dp"
+                    android:layout_weight="1">
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="68dp"
+                            android:layout_height="68dp"
+                            android:background="@mipmap/yaokong_bg_round_gradual_2">
+
+                            <ImageView
+                                android:id="@+id/iv_fulizi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:src="@mipmap/jinghuaqi_icon_fulizi_bk">
+
+                            </ImageView>
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="负离子"
                             android:textColor="#ff333333"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -303,7 +437,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:src="@mipmap/jinghuaqi_icon_shijian_bk">
+                                android:src="@mipmap/jinghuaqi_icon_tongsuo_bk_heise">
 
                             </ImageView>
                         </RelativeLayout>
@@ -376,14 +510,15 @@
                             android:layout_height="68dp"
                             android:background="@mipmap/yaokong_bg_round_gradual_2">
 
-                            <ImageView
+                            <TextView
                                 android:id="@+id/iv_zidingyi"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:src="@mipmap/jinghuaqi_icon_shuimian_bk_heise">
+                                android:text="自定义"
+                                android:textColor="@color/black_333333">
 
-                            </ImageView>
+                            </TextView>
                         </RelativeLayout>
 
                         <TextView
@@ -397,6 +532,12 @@
                 </RelativeLayout>
 
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp">
+
+            </View>
         </LinearLayout>
     </ScrollView>
 

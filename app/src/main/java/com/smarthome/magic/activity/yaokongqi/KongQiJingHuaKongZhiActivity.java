@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
@@ -42,7 +43,6 @@ import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
 public class KongQiJingHuaKongZhiActivity extends BaseActivity {
 
-
     @BindView(R.id.iv_dianyuan)
     ImageView ivDianyuan;
     @BindView(R.id.rl_dianyuan)
@@ -72,9 +72,21 @@ public class KongQiJingHuaKongZhiActivity extends BaseActivity {
     @BindView(R.id.rl_tongsuo)
     RelativeLayout rlTongsuo;
     @BindView(R.id.iv_zidingyi)
-    ImageView ivZidingyi;
+    TextView ivZidingyi;
     @BindView(R.id.rl_zidingyi)
     RelativeLayout rlZidingyi;
+    @BindView(R.id.iv_jinghua)
+    ImageView ivJinghua;
+    @BindView(R.id.rl_jinghua)
+    RelativeLayout rlJinghua;
+    @BindView(R.id.iv_chuyan)
+    ImageView ivChuyan;
+    @BindView(R.id.rl_chuyan)
+    RelativeLayout rlChuyan;
+    @BindView(R.id.iv_fulizi)
+    ImageView ivFulizi;
+    @BindView(R.id.rl_fulizi)
+    RelativeLayout rlFulizi;
     private String device_id;
     private String ccid;
     private String serverId;
@@ -226,9 +238,30 @@ public class KongQiJingHuaKongZhiActivity extends BaseActivity {
                 } else {
                     rlShuimian.setEnabled(false);
                 }
-            } else if (mark_id.equals(label_header + "07")) {
+            } else if (mark_id.equals(label_header + "10")) {
                 if (mark_status.equals("1")) {
                     ivTongsuo.setImageResource(R.mipmap.jinghuaqi_icon_tongsuo_bl_blue);
+                    rlTongsuo.setEnabled(true);
+                } else {
+                    rlTongsuo.setEnabled(false);
+                }
+            } else if (mark_id.equals(label_header + "07")) {
+                if (mark_status.equals("1")) {
+                    ivJinghua.setImageResource(R.mipmap.jinghuaqi_icon_jinghua_bl);
+                    rlTongsuo.setEnabled(true);
+                } else {
+                    rlTongsuo.setEnabled(false);
+                }
+            } else if (mark_id.equals(label_header + "08")) {
+                if (mark_status.equals("1")) {
+                    ivChuyan.setImageResource(R.mipmap.jinghuaqi_icon_yanwu_bl);
+                    rlTongsuo.setEnabled(true);
+                } else {
+                    rlTongsuo.setEnabled(false);
+                }
+            } else if (mark_id.equals(label_header + "09")) {
+                if (mark_status.equals("1")) {
+                    ivFulizi.setImageResource(R.mipmap.jinghuaqi_icon_fulizi_bl);
                     rlTongsuo.setEnabled(true);
                 } else {
                     rlTongsuo.setEnabled(false);
@@ -296,29 +329,38 @@ public class KongQiJingHuaKongZhiActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.rl_dianyuan, R.id.rl_zidong, R.id.rl_moshi, R.id.rl_dingshi, R.id.rl_fengsu, R.id.rl_shuimian, R.id.rl_tongsuo, R.id.rl_zidingyi})
+    @OnClick({R.id.rl_dianyuan, R.id.rl_zidong, R.id.rl_moshi, R.id.rl_dingshi, R.id.rl_fengsu, R.id.rl_shuimian, R.id.rl_tongsuo, R.id.rl_zidingyi, R.id.rl_jinghua, R.id.rl_chuyan, R.id.rl_fulizi})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_dianyuan:
-                sendMsg(1);
+                sendMsg(0);
                 break;
             case R.id.rl_zidong:
-                sendMsg(2);
+                sendMsg(1);
                 break;
             case R.id.rl_moshi:
-                sendMsg(3);
+                sendMsg(2);
                 break;
             case R.id.rl_dingshi:
-                sendMsg(4);
+                sendMsg(3);
                 break;
             case R.id.rl_fengsu:
-                sendMsg(5);
+                sendMsg(4);
                 break;
             case R.id.rl_shuimian:
-                sendMsg(6);
+                sendMsg(5);
                 break;
             case R.id.rl_tongsuo:
+                sendMsg(6);
+                break;
+            case R.id.rl_jinghua:
                 sendMsg(7);
+                break;
+            case R.id.rl_chuyan:
+                sendMsg(8);
+                break;
+            case R.id.rl_fulizi:
+                sendMsg(9);
                 break;
             case R.id.rl_zidingyi:
                 WanNengYaoKongQiZidingyi.actionStart(mContext, device_id, label_header, control_keys_list);

@@ -354,7 +354,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                             //空气检测
                             KongQiJianCe_NewActvity.actionStart(getActivity(), deviceBean.getDevice_id());
                         } else if (deviceBean.getDevice_type().equals("38")) {//空气净化遥控器
-                            KongQiJingHuaKongZhiActivity.actionStart(getActivity(), deviceBean.getDevice_id(), deviceBean.getDevice_type());
+                            KongQiJingHuaKongZhiActivity.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
                         } else if (deviceBean.getDevice_type().equals("39")) {//万能遥控器
                             // WanNengYaoKongQiPeiDuiZidingyi.actionStart(getActivity());
                         } else {

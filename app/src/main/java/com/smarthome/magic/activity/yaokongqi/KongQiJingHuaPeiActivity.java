@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
@@ -84,7 +85,19 @@ public class KongQiJingHuaPeiActivity extends BaseActivity {
     @BindView(R.id.iv_tongsuo)
     ImageView ivTongsuo;
     @BindView(R.id.iv_zidingyi)
-    ImageView ivZidingyi;
+    TextView ivZidingyi;
+    @BindView(R.id.iv_jinghua)
+    ImageView ivJinghua;
+    @BindView(R.id.rl_jinghua)
+    RelativeLayout rlJinghua;
+    @BindView(R.id.iv_chuyan)
+    ImageView ivChuyan;
+    @BindView(R.id.rl_chuyan)
+    RelativeLayout rlChuyan;
+    @BindView(R.id.iv_fulizi)
+    ImageView ivFulizi;
+    @BindView(R.id.rl_fulizi)
+    RelativeLayout rlFulizi;
     private String shebeiMa;
     private String keyMa;
     private String keyName;
@@ -275,7 +288,11 @@ public class KongQiJingHuaPeiActivity extends BaseActivity {
         keyModels.add(new YaokongKeyModel(shebeiMa + "04", "定时", "0"));
         keyModels.add(new YaokongKeyModel(shebeiMa + "05", "风速", "0"));
         keyModels.add(new YaokongKeyModel(shebeiMa + "06", "睡眠", "0"));
-        keyModels.add(new YaokongKeyModel(shebeiMa + "07", "童锁", "0"));
+        keyModels.add(new YaokongKeyModel(shebeiMa + "10", "童锁", "0"));
+
+        keyModels.add(new YaokongKeyModel(shebeiMa + "07", "净化", "0"));
+        keyModels.add(new YaokongKeyModel(shebeiMa + "08", "除烟", "0"));
+        keyModels.add(new YaokongKeyModel(shebeiMa + "09", "负离子", "0"));
     }
 
     private void initMqtt() {
@@ -364,7 +381,6 @@ public class KongQiJingHuaPeiActivity extends BaseActivity {
                                 ivDianyuan.setImageResource(R.mipmap.yaokong_icon_guanbi_bl);
                                 rlDianyuan.setEnabled(false);
                                 YaokongKeyModel keyModel = keyModels.get(0);
-
                                 keyModel.setMark_status("1");
                                 keyModels.set(0, keyModel);
                                 tishiDialog.show();
@@ -408,13 +424,37 @@ public class KongQiJingHuaPeiActivity extends BaseActivity {
                                 keyModel.setMark_status("1");
                                 keyModels.set(5, keyModel);
                                 tishiDialog.show();
-                            } else if (keyCode.equals("06")) {
+                            } else if (keyCode.equals("10")) {
                                 ivTongsuo.setImageResource(R.mipmap.jinghuaqi_icon_tongsuo_bl_blue);
                                 rlTongsuo.setEnabled(false);
 
                                 YaokongKeyModel keyModel = keyModels.get(6);
                                 keyModel.setMark_status("1");
                                 keyModels.set(6, keyModel);
+                                tishiDialog.show();
+                            } else if (keyCode.equals("07")) {
+                                ivJinghua.setImageResource(R.mipmap.jinghuaqi_icon_jinghua_bl);
+                                rlTongsuo.setEnabled(false);
+
+                                YaokongKeyModel keyModel = keyModels.get(7);
+                                keyModel.setMark_status("1");
+                                keyModels.set(7, keyModel);
+                                tishiDialog.show();
+                            } else if (keyCode.equals("08")) {
+                                ivChuyan.setImageResource(R.mipmap.jinghuaqi_icon_yanwu_bl);
+                                rlTongsuo.setEnabled(false);
+
+                                YaokongKeyModel keyModel = keyModels.get(8);
+                                keyModel.setMark_status("1");
+                                keyModels.set(8, keyModel);
+                                tishiDialog.show();
+                            } else if (keyCode.equals("09")) {
+                                ivFulizi.setImageResource(R.mipmap.jinghuaqi_icon_fulizi_bl);
+                                rlTongsuo.setEnabled(false);
+
+                                YaokongKeyModel keyModel = keyModels.get(9);
+                                keyModel.setMark_status("1");
+                                keyModels.set(9, keyModel);
                                 tishiDialog.show();
                             }
                         } else {
@@ -436,7 +476,7 @@ public class KongQiJingHuaPeiActivity extends BaseActivity {
         map.put("code", "16071");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
-        map.put("device_type", "37");
+        map.put("device_type", "38");
         map.put("ccid", ccid);
         Gson gson = new Gson();
         OkGo.<YaokongTagModel>post(ZHINENGJIAJU)
@@ -503,7 +543,7 @@ public class KongQiJingHuaPeiActivity extends BaseActivity {
         back();
     }
 
-    @OnClick({R.id.rl_dianyuan, R.id.rl_zidong, R.id.rl_moshi, R.id.rl_dingshi, R.id.rl_fengsu, R.id.rl_shuimian, R.id.rl_tongsuo, R.id.rl_zidingyi})
+    @OnClick({R.id.rl_dianyuan, R.id.rl_zidong, R.id.rl_moshi, R.id.rl_dingshi, R.id.rl_fengsu, R.id.rl_shuimian, R.id.rl_tongsuo, R.id.rl_zidingyi, R.id.rl_jinghua, R.id.rl_chuyan, R.id.rl_fulizi})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_dianyuan:
@@ -525,7 +565,16 @@ public class KongQiJingHuaPeiActivity extends BaseActivity {
                 clickKey("睡眠", "06");
                 break;
             case R.id.rl_tongsuo:
-                clickKey("童锁", "07");
+                clickKey("童锁", "10");
+                break;
+            case R.id.rl_jinghua:
+                clickKey("净化", "07");
+                break;
+            case R.id.rl_chuyan:
+                clickKey("除烟", "08");
+                break;
+            case R.id.rl_fulizi:
+                clickKey("负离子", "09");
                 break;
             case R.id.rl_zidingyi:
                 WanNengYaoKongQiPeiDuiZidingyi.actionStart(mContext, shebeiMa, keyModels);

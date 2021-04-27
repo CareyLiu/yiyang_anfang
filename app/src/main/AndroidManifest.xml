@@ -1680,6 +1680,22 @@
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing|stateHidden" />
+        <activity
+            android:name=".activity.yaokongqi.ZhenWanNengYaoKongQiPeiDuiZidingyi"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing|stateHidden" />
+        <activity
+            android:name=".activity.yaokongqi.ZhenWanNengYaoKongQiKongZhi"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing|stateHidden" />
+
+        <activity
+            android:name=".activity.zhinengjiaju.GengDuoJingBaoActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing|stateHidden" />
     </application>
 
 </manifest>

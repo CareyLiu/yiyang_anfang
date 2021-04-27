@@ -17,6 +17,7 @@ import com.smarthome.magic.activity.yaokongqi.KongQiJingHuaPeiActivity;
 import com.smarthome.magic.activity.yaokongqi.WanNengYaoKongQiPeiDui;
 import com.smarthome.magic.activity.tuya_device.add.zi.TuyaAddCameraActivity;
 import com.smarthome.magic.activity.yaokongqi.YaokongKTPei;
+import com.smarthome.magic.activity.yaokongqi.ZhenWanNengYaoKongQiPeiDuiZidingyi;
 import com.smarthome.magic.activity.zhinengjiaju.TianJiaPuTongSheBeiActivity;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.BaseActivity;
@@ -104,6 +105,9 @@ public class SheBeiChongZhiActivity extends BaseActivity {
                         YaokongKTPei.actionStart(SheBeiChongZhiActivity.this);
                     } else if (fenLeiContentModel.type.equals("38")) {
                         KongQiJingHuaPeiActivity.actionStart(mContext);
+                    } else if (fenLeiContentModel.type.equals("39")) {
+                        ZhenWanNengYaoKongQiPeiDuiZidingyi.actionStart(mContext);
+
                     } else {
                         TianJiaPuTongSheBeiActivity.actionStart(mContext, fenLeiContentModel);
                     }

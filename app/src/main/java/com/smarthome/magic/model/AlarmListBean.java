@@ -17,5 +17,8 @@ public  class AlarmListBean extends SectionEntity {
     public String device_state_name;
     public String device_state;
 
+    public String is_more;
+    public String sel_alarm_date;
+
 
 }

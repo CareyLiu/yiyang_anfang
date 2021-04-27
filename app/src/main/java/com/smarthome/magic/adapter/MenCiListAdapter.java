@@ -30,6 +30,14 @@ public class MenCiListAdapter extends BaseSectionQuickAdapter<AlarmListBean, Bas
     protected void convertHead(BaseViewHolder helper, AlarmListBean item) {
 
         helper.setText(R.id.tv_riqi, item.alarm_date);
+
+        if (item.is_more.equals("1")) {
+            helper.setVisible(R.id.rrl_gengduo, false);
+        } else {
+            helper.setVisible(R.id.rrl_gengduo, true);
+        }
+
+        helper.addOnClickListener(R.id.rrl_gengduo);
     }
 
     @Override

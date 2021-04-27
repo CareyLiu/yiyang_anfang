@@ -32,6 +32,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.ZhiNengDianDengActivity;
 import com.smarthome.magic.activity.ZhiNengJiaJuChaZuoActivity;
 import com.smarthome.magic.activity.ZhiNengRoomManageActivity;
+import com.smarthome.magic.activity.zhinengjiaju.GengDuoJingBaoActivity;
 import com.smarthome.magic.adapter.MenCiListAdapter;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.AppConfig;
@@ -40,6 +41,7 @@ import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
+import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
@@ -237,6 +239,18 @@ public class MenCiActivity extends BaseActivity {
         srLSmart.setEnableLoadMore(false);
         srLSmart.setEnableRefresh(true);
         getNet();
+
+        menCiListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.rrl_gengduo:
+                        //UIHelper.ToastMessage(mContext, mDatas.get(position).sel_alarm_date + "更多");
+                        GengDuoJingBaoActivity.actionStart(mContext, device_id, menCiListAdapter.getData().get(position).sel_alarm_date);
+                        break;
+                }
+            }
+        });
 
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
@@ -584,6 +598,10 @@ public class MenCiActivity extends BaseActivity {
 
                             AlarmListBean alarmListBean = new AlarmListBean(true, dataBean.getAlarm_list().get(i).getAlarm_date());
                             alarmListBean.alarm_date = dataBean.getAlarm_list().get(i).getAlarm_date();
+
+
+                            alarmListBean.is_more = dataBean.getAlarm_list().get(i).is_more;
+                            alarmListBean.sel_alarm_date = dataBean.getAlarm_list().get(i).sel_alarm_date;
                             mDatas.add(alarmListBean);
 
                             for (int j = 0; j < dataBean.getAlarm_list().get(i).getAlerm_time_list().size(); j++) {

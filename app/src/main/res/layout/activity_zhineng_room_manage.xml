@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:background="@color/trans"
             app:srlTextSizeTime="10sp"
-                app:srlTextSizeTitle="12sp" />
+            app:srlTextSizeTitle="12sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"

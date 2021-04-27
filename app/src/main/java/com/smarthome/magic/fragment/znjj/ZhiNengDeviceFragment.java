@@ -40,6 +40,8 @@ import com.smarthome.magic.activity.yaokongqi.KongQiJingHuaPeiActivity;
 import com.smarthome.magic.activity.yaokongqi.WanNengYaoKongQi;
 import com.smarthome.magic.activity.yaokongqi.WanNengYaoKongQiPeiDuiZidingyi;
 import com.smarthome.magic.activity.yaokongqi.YaokongKT;
+import com.smarthome.magic.activity.yaokongqi.ZhenWanNengYaoKongQiKongZhi;
+import com.smarthome.magic.activity.yaokongqi.ZhenWanNengYaoKongQiPeiDuiZidingyi;
 import com.smarthome.magic.activity.zckt.AirConditionerActivity;
 import com.smarthome.magic.activity.zhinengjiaju.KongQiJianCeActvity;
 import com.smarthome.magic.activity.zhinengjiaju.KongQiJianCe_NewActvity;
@@ -356,7 +358,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                         } else if (deviceBean.getDevice_type().equals("38")) {//空气净化遥控器
                             KongQiJingHuaKongZhiActivity.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
                         } else if (deviceBean.getDevice_type().equals("39")) {//万能遥控器
-                            // WanNengYaoKongQiPeiDuiZidingyi.actionStart(getActivity());
+                            ZhenWanNengYaoKongQiKongZhi.actionStart(getActivity(),deviceBean.getDevice_id(),member_type);
                         } else {
                             String ty_device_ccid = deviceBean.getTy_device_ccid();
                             if (TextUtils.isEmpty(ty_device_ccid)) {

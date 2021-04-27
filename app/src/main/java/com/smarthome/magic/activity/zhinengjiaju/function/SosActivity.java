@@ -29,6 +29,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.zhinengjiaju.GengDuoJingBaoActivity;
 import com.smarthome.magic.adapter.SosListAdapter;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.AppConfig;
@@ -37,6 +38,7 @@ import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
+import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
@@ -130,10 +132,21 @@ public class SosActivity extends BaseActivity {
 //            ivShebeiZaixianzhuangtaiImg.setBackgroundResource(R.drawable.bg_zhineng_device_offline);
 //        }
 
-        menCiListAdapter = new SosListAdapter(R.layout.item_sos_list, R.layout.item_sos_header, mDatas);
+        menCiListAdapter = new SosListAdapter(R.layout.item_sos_list, R.layout.item_menci_header, mDatas);
         rlvList.setLayoutManager(new LinearLayoutManager(mContext));
         rlvList.setAdapter(menCiListAdapter);
 
+        menCiListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.rrl_gengduo:
+                        //UIHelper.ToastMessage(mContext, mDatas.get(position).sel_alarm_date + "更多");
+                        GengDuoJingBaoActivity.actionStart(mContext, device_id, menCiListAdapter.getData().get(position).sel_alarm_date);
+                        break;
+                }
+            }
+        });
 
         headerView = View.inflate(mContext, R.layout.sos_header, null);
 
@@ -481,6 +494,8 @@ public class SosActivity extends BaseActivity {
 
                             AlarmListBean alarmListBean = new AlarmListBean(true, dataBean.getAlarm_list().get(i).getAlarm_date());
                             alarmListBean.alarm_date = dataBean.getAlarm_list().get(i).getAlarm_date();
+                            alarmListBean.is_more = dataBean.getAlarm_list().get(i).is_more;
+                            alarmListBean.sel_alarm_date = dataBean.getAlarm_list().get(i).sel_alarm_date;
                             mDatas.add(alarmListBean);
 
                             for (int j = 0; j < dataBean.getAlarm_list().get(i).getAlerm_time_list().size(); j++) {

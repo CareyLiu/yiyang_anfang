@@ -122,7 +122,10 @@ public class OnlineFragment extends BaseFragment implements Observer {
                                 PreferenceHelper.getInstance(getContext()).putString("share_type", mDatas.get(position).share_type);
                                 PreferenceHelper.getInstance(getActivity()).putString("ccid", mDatas.get(position).ccid);
                                 PreferenceHelper.getInstance(getContext()).putString("sim_ccid_save_type", mDatas.get(position).sim_ccid_save_type);
+
                                 MyApplication.CARBOX_GETNOW = "wit/cbox/app/" + getServer_id() + mDatas.get(position).ccid;
+                                MyApplication.CAR_NOTIFY = "witrver/" + getServer_id() + MyApplication.getUser_id();
+                                MyApplication.CAR_CTROL = "wit/cbox/hardware/" + getServer_id() + MyApplication.getCcid();
 
                                 if (NetworkUtils.isConnected(getActivity())) {
                                     Activity currentActivity = AppManager.getAppManager().currentActivity();

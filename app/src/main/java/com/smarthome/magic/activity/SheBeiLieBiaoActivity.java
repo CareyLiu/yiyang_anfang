@@ -89,6 +89,10 @@ public class SheBeiLieBiaoActivity extends BaseActivity {
                                 PreferenceHelper.getInstance(mContext).putString("ccid", mDatas.get(position).ccid);
                                 PreferenceHelper.getInstance(mContext).putString("share_type", mDatas.get(position).share_type);
                                 PreferenceHelper.getInstance(mContext).putString("sim_ccid_save_type", mDatas.get(position).sim_ccid_save_type);
+                                MyApplication.CARBOX_GETNOW = "wit/cbox/app/" + getServer_id() + mDatas.get(position).ccid;
+                                MyApplication.CAR_NOTIFY = "witrver/" + getServer_id() + MyApplication.getUser_id();
+                                MyApplication.CAR_CTROL = "wit/cbox/hardware/" + getServer_id() + MyApplication.getCcid();
+
                                 Log.i("getnow", MyApplication.CARBOX_GETNOW);
                                 if (NetworkUtils.isConnected(mContext)) {
                                     Activity currentActivity = AppManager.getAppManager().currentActivity();

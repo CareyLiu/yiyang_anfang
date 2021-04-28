@@ -308,7 +308,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="47dp"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <TextView
             android:layout_width="wrap_content"

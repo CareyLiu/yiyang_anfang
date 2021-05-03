@@ -640,7 +640,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                     //接收到信息
                     Log.i("msg_car_j_m", message.content.toString());
 
-                    String messageData = message.content.toString().substring(1, message.content.toString().length() - 1);
+                    String messageData = message.content.toString().substring(1);
                     Log.i("msg_car_j_m_data", messageData);
                     // 驻车加热器:当前档位1至5档	1	是
                     String oper_dang = messageData.substring(0, 1);
@@ -1114,7 +1114,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                         String haiBaGaoDu = messageData.substring(49, 53);
                         tvHaibagaodu.setText(haiBaGaoDu + "m");
 
-                        String hanYangLiang = messageData.substring(53, 55);
+                        String hanYangLiang = messageData.substring(53);
                         tvHanyangliang.setText(hanYangLiang + "g/m3");
                     }
 

@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="263dp"
         android:layout_height="wrap_content"
-        android:background="@mipmap/pop_bg"
+        android:background="@drawable/bazi_renzheng"
         android:paddingBottom="21dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -18,10 +18,10 @@
 
         <ImageView
             android:id="@+id/iv_success"
-            android:layout_width="61dp"
-            android:layout_height="61dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="19dp"
-            android:src="@mipmap/pop_tips"
+            android:src="@mipmap/alert_pic_delete"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -54,7 +54,7 @@
 
 
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="17dp"
@@ -63,31 +63,27 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_caozuochenggonghuashu">
 
-            <com.flyco.roundview.RoundTextView
+            <TextView
                 android:id="@+id/tv_left"
-                android:layout_width="71dp"
-                android:layout_height="29dp"
-                android:layout_alignParentLeft="true"
+                android:layout_width="115dp"
+                android:layout_height="42dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/dialog_cancel_bt"
                 android:gravity="center"
-                android:text="我再想想"
-                android:textSize="12sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:rv_backgroundColor="@color/blue_ff94dfd2"
-                app:rv_cornerRadius="8dp" />
+                android:text="取消"
+                android:textColor="@color/black_333333"
+                android:textSize="15sp" />
 
-            <com.flyco.roundview.RoundTextView
+            <TextView
                 android:id="@+id/tv_right"
-                android:layout_width="71dp"
-                android:layout_height="29dp"
-                android:layout_alignParentRight="true"
+                android:layout_width="115dp"
+                android:layout_height="42dp"
+                android:layout_toRightOf="@+id/tv_left"
+                android:background="@drawable/dialog_confirm_bt"
                 android:gravity="center"
                 android:text="确定"
-                android:textSize="12sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:rv_backgroundColor="#fff16246"
-                app:rv_cornerRadius="8dp" />
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
         </RelativeLayout>
 

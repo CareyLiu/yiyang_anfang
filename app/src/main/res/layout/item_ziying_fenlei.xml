@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="¥19.9"
-            android:textColor="#fffa7e00"
+            android:textColor="@color/red"
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="@+id/rtv_juan"

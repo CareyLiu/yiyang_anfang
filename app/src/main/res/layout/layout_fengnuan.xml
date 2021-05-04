@@ -453,7 +453,7 @@
                                         android:id="@+id/tv_dianya"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="24.0v"
+                                        android:text="--v"
                                         android:textColor="#F9B233"
                                         android:textSize="33pt" />
 
@@ -480,7 +480,7 @@
                                         android:id="@+id/tv_rufengkouwendu"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="23℃"
+                                        android:text="--℃"
                                         android:textColor="#F9B233"
                                         android:textSize="33pt" />
 
@@ -508,7 +508,7 @@
                                         android:id="@+id/tv_chufengkouwendu"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="60℃"
+                                        android:text="--℃"
                                         android:textColor="#F9B233"
                                         android:textSize="33pt" />
 
@@ -542,7 +542,7 @@
                                         android:id="@+id/tv_haibagaodu"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="3000m"
+                                        android:text="--m"
                                         android:textColor="#F9B233"
                                         android:textSize="33pt" />
 
@@ -570,7 +570,7 @@
                                         android:id="@+id/tv_hanyangliang"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="204kg/cm3"
+                                        android:text="--kg/cm3"
                                         android:textColor="#F9B233"
                                         android:textSize="33pt" />
 
@@ -597,7 +597,7 @@
                                         android:id="@+id/tv_daqiya"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="1090kpa"
+                                        android:text="--kpa"
                                         android:textColor="#F9B233"
                                         android:textSize="33pt" />
 

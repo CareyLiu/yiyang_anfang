@@ -288,11 +288,10 @@ public class KongQiJingHuaPeiActivity extends BaseActivity {
         keyModels.add(new YaokongKeyModel(shebeiMa + "04", "定时", "0"));
         keyModels.add(new YaokongKeyModel(shebeiMa + "05", "风速", "0"));
         keyModels.add(new YaokongKeyModel(shebeiMa + "06", "睡眠", "0"));
-        keyModels.add(new YaokongKeyModel(shebeiMa + "10", "童锁", "0"));
-
-        keyModels.add(new YaokongKeyModel(shebeiMa + "07", "净化", "0"));
-        keyModels.add(new YaokongKeyModel(shebeiMa + "08", "除烟", "0"));
+        keyModels.add(new YaokongKeyModel(shebeiMa + "07", "除烟", "0"));
+        keyModels.add(new YaokongKeyModel(shebeiMa + "08", "净化", "0"));
         keyModels.add(new YaokongKeyModel(shebeiMa + "09", "负离子", "0"));
+        keyModels.add(new YaokongKeyModel(shebeiMa + "10", "童锁", "0"));
     }
 
     private void initMqtt() {
@@ -424,15 +423,7 @@ public class KongQiJingHuaPeiActivity extends BaseActivity {
                                 keyModel.setMark_status("1");
                                 keyModels.set(5, keyModel);
                                 tishiDialog.show();
-                            } else if (keyCode.equals("10")) {
-                                ivTongsuo.setImageResource(R.mipmap.jinghuaqi_icon_tongsuo_bl_blue);
-                                rlTongsuo.setEnabled(false);
-
-                                YaokongKeyModel keyModel = keyModels.get(6);
-                                keyModel.setMark_status("1");
-                                keyModels.set(6, keyModel);
-                                tishiDialog.show();
-                            } else if (keyCode.equals("07")) {
+                            } else if (keyCode.equals("08")) {
                                 ivJinghua.setImageResource(R.mipmap.jinghuaqi_icon_jinghua_bl);
                                 rlTongsuo.setEnabled(false);
 
@@ -440,16 +431,24 @@ public class KongQiJingHuaPeiActivity extends BaseActivity {
                                 keyModel.setMark_status("1");
                                 keyModels.set(7, keyModel);
                                 tishiDialog.show();
-                            } else if (keyCode.equals("08")) {
+                            } else if (keyCode.equals("07")) {
                                 ivChuyan.setImageResource(R.mipmap.jinghuaqi_icon_yanwu_bl);
+                                rlTongsuo.setEnabled(false);
+
+                                YaokongKeyModel keyModel = keyModels.get(6);
+                                keyModel.setMark_status("1");
+                                keyModels.set(6, keyModel);
+                                tishiDialog.show();
+                            } else if (keyCode.equals("09")) {
+                                ivFulizi.setImageResource(R.mipmap.jinghuaqi_icon_fulizi_bl);
                                 rlTongsuo.setEnabled(false);
 
                                 YaokongKeyModel keyModel = keyModels.get(8);
                                 keyModel.setMark_status("1");
                                 keyModels.set(8, keyModel);
                                 tishiDialog.show();
-                            } else if (keyCode.equals("09")) {
-                                ivFulizi.setImageResource(R.mipmap.jinghuaqi_icon_fulizi_bl);
+                            } else if (keyCode.equals("10")) {
+                                ivTongsuo.setImageResource(R.mipmap.jinghuaqi_icon_tongsuo_bl_blue);
                                 rlTongsuo.setEnabled(false);
 
                                 YaokongKeyModel keyModel = keyModels.get(9);
@@ -568,10 +567,10 @@ public class KongQiJingHuaPeiActivity extends BaseActivity {
                 clickKey("童锁", "10");
                 break;
             case R.id.rl_jinghua:
-                clickKey("净化", "07");
+                clickKey("净化", "08");
                 break;
             case R.id.rl_chuyan:
-                clickKey("除烟", "08");
+                clickKey("除烟", "07");
                 break;
             case R.id.rl_fulizi:
                 clickKey("负离子", "09");

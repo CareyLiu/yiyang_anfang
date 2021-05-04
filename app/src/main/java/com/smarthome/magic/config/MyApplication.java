@@ -831,6 +831,8 @@ public class MyApplication extends MultiDexApplication {
                 activity_main = activity;
                 Log.i(TAG, "ONACTIVITYCREATED  activityName:" + activity_main.getClass().getSimpleName());
 
+
+
             }
 
             @Override

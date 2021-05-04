@@ -245,14 +245,14 @@ public class KongQiJingHuaKongZhiActivity extends BaseActivity {
                 } else {
                     rlTongsuo.setEnabled(false);
                 }
-            } else if (mark_id.equals(label_header + "07")) {
+            } else if (mark_id.equals(label_header + "08")) {
                 if (mark_status.equals("1")) {
                     ivJinghua.setImageResource(R.mipmap.jinghuaqi_icon_jinghua_bl);
                     rlTongsuo.setEnabled(true);
                 } else {
                     rlTongsuo.setEnabled(false);
                 }
-            } else if (mark_id.equals(label_header + "08")) {
+            } else if (mark_id.equals(label_header + "07")) {
                 if (mark_status.equals("1")) {
                     ivChuyan.setImageResource(R.mipmap.jinghuaqi_icon_yanwu_bl);
                     rlTongsuo.setEnabled(true);
@@ -351,16 +351,16 @@ public class KongQiJingHuaKongZhiActivity extends BaseActivity {
                 sendMsg(5);
                 break;
             case R.id.rl_tongsuo:
-                sendMsg(6);
+                sendMsg(10);
                 break;
             case R.id.rl_jinghua:
                 sendMsg(7);
                 break;
             case R.id.rl_chuyan:
-                sendMsg(8);
+                sendMsg(6);
                 break;
             case R.id.rl_fulizi:
-                sendMsg(9);
+                sendMsg(8);
                 break;
             case R.id.rl_zidingyi:
                 WanNengYaoKongQiZidingyi.actionStart(mContext, device_id, label_header, control_keys_list);

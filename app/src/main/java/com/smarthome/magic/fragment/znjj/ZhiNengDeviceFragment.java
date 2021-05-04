@@ -131,7 +131,10 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                             mDatas.get(i).setWork_state(kaiGuanDengZhuangTai);
                         }
                     }
-                    zhiNengDeviceListAdapter.notifyDataSetChanged();
+                    if (zhiNengDeviceListAdapter != null) {
+                        zhiNengDeviceListAdapter.notifyDataSetChanged();
+                    }
+
                 } else if (message.type == ConstanceValue.MSG_DEVICE_DELETE_TUYA) {
                     String tuyaId = message.devId;
                     for (int i = 0; i < mDatas.size(); i++) {
@@ -358,7 +361,7 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                         } else if (deviceBean.getDevice_type().equals("38")) {//空气净化遥控器
                             KongQiJingHuaKongZhiActivity.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
                         } else if (deviceBean.getDevice_type().equals("39")) {//万能遥控器
-                            ZhenWanNengYaoKongQiKongZhi.actionStart(getActivity(),deviceBean.getDevice_id(),member_type);
+                            ZhenWanNengYaoKongQiKongZhi.actionStart(getActivity(), deviceBean.getDevice_id(), member_type);
                         } else {
                             String ty_device_ccid = deviceBean.getTy_device_ccid();
                             if (TextUtils.isEmpty(ty_device_ccid)) {

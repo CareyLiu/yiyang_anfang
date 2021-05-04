@@ -288,7 +288,44 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp">
+                <RelativeLayout
+                    android:id="@+id/rl_chuyan"
+                    android:layout_width="match_parent"
+                    android:layout_height="105dp"
+                    android:layout_weight="1">
 
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="68dp"
+                            android:layout_height="68dp"
+                            android:background="@mipmap/yaokong_bg_round_gradual_2">
+
+                            <ImageView
+                                android:id="@+id/iv_chuyan"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:src="@mipmap/jinghuaqi_icon_yanwu_bk">
+
+                            </ImageView>
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="除烟"
+                            android:textColor="#ff333333"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </RelativeLayout>
                 <RelativeLayout
                     android:id="@+id/rl_jinghua"
                     android:layout_width="match_parent"
@@ -328,44 +365,7 @@
                     </LinearLayout>
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/rl_chuyan"
-                    android:layout_width="match_parent"
-                    android:layout_height="105dp"
-                    android:layout_weight="1">
 
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                        <RelativeLayout
-                            android:layout_width="68dp"
-                            android:layout_height="68dp"
-                            android:background="@mipmap/yaokong_bg_round_gradual_2">
-
-                            <ImageView
-                                android:id="@+id/iv_chuyan"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:src="@mipmap/jinghuaqi_icon_yanwu_bk">
-
-                            </ImageView>
-                        </RelativeLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:text="除烟"
-                            android:textColor="#ff333333"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/rl_fulizi"

@@ -229,6 +229,7 @@ public class MyApplication extends MultiDexApplication {
     };
 
     DoMqttValue doMqttValue;
+    String doMqtt = "0";//0 不执行mqtt相关功能 1执行mqtt相关功能
 
     public void onCreate() {
         PreferenceHelper.getInstance(this).removeKey(App.CHOOSE_KONGZHI_XIANGMU);
@@ -662,6 +663,9 @@ public class MyApplication extends MultiDexApplication {
 
                     @Override
                     public void messageArrived(String topic, MqttMessage message) throws Exception {
+                        if (doMqtt.equals("0")) {
+                            return;
+                        }
                         System.out.println("Rair-MqttMessage    " + "收到的消息的主题是   ： 订阅的主题：" + topic + "  收到的数据信息：  " + message.toString());
                         if (message.toString().contains("{")) {
                             //解析对象 code
@@ -830,8 +834,11 @@ public class MyApplication extends MultiDexApplication {
                 }
                 activity_main = activity;
                 Log.i(TAG, "ONACTIVITYCREATED  activityName:" + activity_main.getClass().getSimpleName());
-
-
+                if (activity_main.getClass().getSimpleName().equals("LoginActivity")) {
+                    doMqtt = "0";
+                } else {
+                    doMqtt = "1";
+                }
 
             }
 

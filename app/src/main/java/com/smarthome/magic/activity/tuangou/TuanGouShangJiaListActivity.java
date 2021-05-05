@@ -308,14 +308,18 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                             noneText.setVisibility(View.VISIBLE);
 
 
+
                         } else {
                             constraintLayout.setVisibility(View.GONE);
                             ivNoneImage.setVisibility(View.GONE);
                             noneText.setVisibility(View.GONE);
 
+
+
+                            tuanGouShangJiaListAdapter.setNewData(storeListBeans);
+                            tuanGouShangJiaListAdapter.notifyDataSetChanged();
                         }
-                        tuanGouShangJiaListAdapter.setNewData(storeListBeans);
-                        tuanGouShangJiaListAdapter.notifyDataSetChanged();
+
                         //  getTurn();
 
                         srLSmart.finishRefresh();

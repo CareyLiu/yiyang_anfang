@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide;
 import com.smarthome.magic.R;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseViewHolder;
+import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.fragment.znjj.model.ZhiNengModel;
 import com.smarthome.magic.util.GlideShowImageUtils;
 
@@ -27,19 +28,27 @@ public class ZhiNengDeviceListNewAdapter extends BaseQuickAdapter<ZhiNengModel.D
 
         helper.setText(R.id.tv_device_name, item.getDevice_name());
         helper.setText(R.id.tv_room_name, item.getRoom_name());
-        if (item.getOnline_state() == null) {
-            //设备离线
-            helper.setBackgroundRes(R.id.iv_state, R.drawable.bg_zhineng_device_offline);
-            helper.setText(R.id.tv_state, "设备离线");
-        } else if (item.getOnline_state().equals("1")) {
+        if (!StringUtils.isEmpty(item.getTy_device_ccid())) {
             //设备在线
             helper.setBackgroundRes(R.id.iv_state, R.drawable.bg_zhineng_device_online);
             helper.setText(R.id.tv_state, "设备在线");
         } else {
-            //设备离线
-            helper.setBackgroundRes(R.id.iv_state, R.drawable.bg_zhineng_device_offline);
-            helper.setText(R.id.tv_state, "设备离线");
+
+            if (item.getOnline_state() == null) {
+                //设备离线
+                helper.setBackgroundRes(R.id.iv_state, R.drawable.bg_zhineng_device_offline);
+                helper.setText(R.id.tv_state, "设备离线");
+            } else if (item.getOnline_state().equals("1")) {
+                //设备在线
+                helper.setBackgroundRes(R.id.iv_state, R.drawable.bg_zhineng_device_online);
+                helper.setText(R.id.tv_state, "设备在线");
+            } else {
+                //设备离线
+                helper.setBackgroundRes(R.id.iv_state, R.drawable.bg_zhineng_device_offline);
+                helper.setText(R.id.tv_state, "设备离线");
+            }
         }
+
 
         if (item.getDevice_type().equals("11") || item.getDevice_type().equals("12") || item.getDevice_type().equals("13")
                 || item.getDevice_type().equals("14") || item.getDevice_type().equals("15")) {

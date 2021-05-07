@@ -30,6 +30,13 @@ public class MessageListAdapter extends BaseQuickAdapter<MessageModel.DataBean, 
         //  8.普通消息 9.广告消息
         //  11.商城消息 12.商城订单消息
 
+
+        if (item.getNotify_read().equals("1")) {
+            helper.setVisible(R.id.iv_xiaohongdian, true);
+        } else if (item.getNotify_read().equals("2")) {
+            helper.setVisible(R.id.iv_xiaohongdian, false);
+        }
+
         ImageView ivImage = helper.getView(R.id.iv_image);
 
         if (item.getNotify_type().equals("1")) {

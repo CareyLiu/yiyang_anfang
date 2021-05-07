@@ -37,6 +37,7 @@ import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Delete;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.MessageModel;
 import com.smarthome.magic.model.OrderListModel;
@@ -150,11 +151,12 @@ public class MessageListFragment extends BaseFragment {
     View view;
 
 
-
     @Override
     protected int getLayoutRes() {
         return R.layout.messagelist;
     }
+
+    TishiDialog tishiDialog;
 
     @Override
     protected void initView(View rootView) {
@@ -221,6 +223,11 @@ public class MessageListFragment extends BaseFragment {
                             case "1":
                             case "2":
                             case "3":
+                                getRead(mDatas.get(position).getNotify_id());
+                                MessageModel.DataBean dataBean1 = mDatas.get(position);
+                                dataBean1.setNotify_read("2");
+                                mDatas.set(position, dataBean1);
+
                                 CheLianWangNoticeActvity.actionStart(getActivity(), dataBean.getNotify_id());
                                 break;
                             case "8":
@@ -232,10 +239,40 @@ public class MessageListFragment extends BaseFragment {
                             case "12":
 //                                OrderListModel.DataBean dataBean = new OrderListModel.DataBean();
 //                                dataBean.setShop_form_id(mDatas.get(position).getOper_id());
-
+                                getRead(mDatas.get(position).getNotify_id());
+                                MessageModel.DataBean dataBean2 = mDatas.get(position);
+                                dataBean2.setNotify_read("2");
+                                mDatas.set(position, dataBean2);
                                 XiaoXiEnterDingDanActivity.actionStart(getActivity(), mDatas.get(position).getOper_id());
                                 break;
                             case "13":
+                                break;
+
+                            case "15":
+                                tishiDialog = new TishiDialog(getActivity(), 3, new TishiDialog.TishiDialogListener() {
+                                    @Override
+                                    public void onClickCancel(View v, TishiDialog dialog) {
+                                    }
+
+                                    @Override
+                                    public void onClickConfirm(View v, TishiDialog dialog) {
+                                        getRead(mDatas.get(position).getNotify_id());
+                                        MessageModel.DataBean dataBean1 = mDatas.get(position);
+                                        dataBean1.setNotify_read("2");
+                                        mDatas.set(position, dataBean1);
+                                        messageListAdapter.notifyDataSetChanged();
+
+                                    }
+
+                                    @Override
+                                    public void onDismiss(TishiDialog dialog) {
+
+                                    }
+                                });
+                                tishiDialog.setTextCancel("");
+                                tishiDialog.setTextConfirm("知道了");
+                                tishiDialog.setTextContent(mDatas.get(position).getNotify_text());
+                                tishiDialog.show();
                                 break;
 
                         }
@@ -285,6 +322,34 @@ public class MessageListFragment extends BaseFragment {
                     public void onStart(Request<AppResponse, ? extends Request> request) {
                         super.onStart(request);
                         showLoading();
+                    }
+                });
+    }
+
+    public void getRead(String notifyId) {
+        //访问网络获取数据 下面的列表数据
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", "03516");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(getApp()).getAppToken());
+        map.put("notify_id", notifyId);
+
+        Gson gson = new Gson();
+        Log.e("map_data", gson.toJson(map));
+        OkGo.<AppResponse>post(MESSAGE_URL)
+                .tag(this)
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse> response) {
+                        //showLoadSuccess();
+                        getNet();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse, ? extends Request> request) {
+                        super.onStart(request);
+                        //  showLoading();
                     }
                 });
     }

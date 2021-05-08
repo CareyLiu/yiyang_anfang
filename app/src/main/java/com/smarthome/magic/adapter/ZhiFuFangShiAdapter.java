@@ -1,8 +1,10 @@
 package com.smarthome.magic.adapter;
 
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -22,10 +24,14 @@ public class ZhiFuFangShiAdapter extends BaseQuickAdapter<ZhiFuTypeModel.DataBea
 
         Glide.with(mContext).load(item.pay_img_url).into((ImageView) helper.getView(R.id.iv_image));
         helper.setText(R.id.tv_text, item.payment_method);
+        ConstraintLayout constraintLayout = helper.getView(R.id.cl_main);
+
         if (item.is_payment_supported.equals("1")) {
-            helper.setVisible(R.id.cl_main, true);
+            //helper.setVisible(R.id.cl_main, true);
+            constraintLayout.setVisibility(View.VISIBLE);
         } else if (item.is_payment_supported.equals("2")) {
-            helper.setVisible(R.id.cl_main, false);
+            //helper.setVisible(R.id.cl_main, false);
+            constraintLayout.setVisibility(View.GONE);
         }
 
         if (item.choose.equals("0")) {

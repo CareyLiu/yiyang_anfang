@@ -201,15 +201,19 @@ public class TuanGouMaiDanZhiFuActivity extends BaseActivity {
                             return;
                         }
                         for (int i = 0; i < zhiFuList.size(); i++) {
-                            if (i == 0) {
-                                zhiFuList.get(0).choose = "1";
+                            if (zhiFuList.get(i).is_payment_supported.equals("1")) {
+                                zhiFuList.get(i).choose = "1";
+                                pay_id = zhiFuList.get(i).pay_id;//支付方式-- 1 支付宝 2 微信
+                                payType = zhiFuList.get(i).pay_type;//1 支付宝 4 微信
                             } else {
                                 zhiFuList.get(i).choose = "0";
+                                zhiFuList.remove(i);
                             }
                         }
 
                         pay_id = zhiFuList.get(0).pay_id;//支付方式-- 1 支付宝 2 微信
                         payType = zhiFuList.get(0).pay_type;//1 支付宝 4 微信
+
 
                         zhiFuFangShiAdapter.setNewData(zhiFuList);
                     }

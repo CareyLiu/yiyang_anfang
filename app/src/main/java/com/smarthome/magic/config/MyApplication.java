@@ -288,6 +288,7 @@ public class MyApplication extends MultiDexApplication {
                             @Override
                             public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                                 Log.i("Rair", "(MainActivity.java:98)-onFailure:-&gt;取消订阅失败");
+                                Log.i("Rair", "(MainActivity.java)");
                             }
                         });
 

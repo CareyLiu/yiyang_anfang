@@ -92,6 +92,9 @@ public class MessageListFragment extends BaseFragment {
             map.put("notify_state", "2");
         }
         NetUtils<MessageModel.DataBean> netUtils = new NetUtils<>();
+        if (getActivity() == null) {
+            return;
+        }
         netUtils.requestData(map, Urls.MESSAGE_URL, getActivity(), new JsonCallback<AppResponse<MessageModel.DataBean>>() {
             @Override
             public void onSuccess(Response<AppResponse<MessageModel.DataBean>> response) {

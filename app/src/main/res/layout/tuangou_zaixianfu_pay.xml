@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="19dp"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="15dp"
         android:text="请选择支付方式"
         android:textColor="#ff000000"
         android:textSize="15sp"
@@ -20,7 +20,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="5dp"
         android:id="@+id/rv_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,6 +46,7 @@
         app:rv_cornerRadius="6dp" />
 
     <View
+        android:visibility="gone"
         android:id="@+id/view_weixin"
         android:layout_width="match_parent"
         android:layout_height="58dp"
@@ -55,6 +55,7 @@
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <View
+        android:visibility="gone"
         android:id="@+id/view_zhifubao"
         android:layout_width="match_parent"
         android:layout_height="58dp"

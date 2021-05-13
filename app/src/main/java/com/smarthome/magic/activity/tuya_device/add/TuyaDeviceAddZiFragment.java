@@ -268,9 +268,7 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                         tishiDialog = new TishiDialog(getActivity(), 3, new TishiDialog.TishiDialogListener() {
                             @Override
                             public void onClickCancel(View v, TishiDialog dialog) {
-                                Notice notice = new Notice();
-                                notice.type = MSG_PEIWANG_SUCCESS;
-                                RxBus.getDefault().sendRx(notice);
+
                             }
 
                             @Override
@@ -280,10 +278,50 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
 
                             @Override
                             public void onDismiss(TishiDialog dialog) {
-
+                                Notice notice = new Notice();
+                                notice.type = MSG_PEIWANG_SUCCESS;
+                                RxBus.getDefault().sendRx(notice);
                             }
                         });
                         tishiDialog.setTextContent("主机配网成功");
+                        tishiDialog.setTextCancel("");
+                        tishiDialog.setTextConfirm("完成");
+                        tishiDialog.show();
+                    }
+                } else if (message.type == ConstanceValue.MSG_TIANJIASHEBEI) {//添加普通设备
+                    if (isOnFrag) {
+                        Notice notice1 = new Notice();
+                        notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+                        sendRx(notice1);
+
+                        zhiNengJiaJu_0007Model = (ZhiNengJiaJu_0007Model) message.content;
+                        List<ZhiNengJiaJu_0007Model.MatchListBean> match_list = zhiNengJiaJu_0007Model.getMatch_list();
+                        for (int i = 0; i < match_list.size(); i++) {
+                            DeviceBean devResp = new DeviceBean();
+                            devResp.setIconUrl(match_list.get(i).getDevice_type_pic());
+                            deviceBeans.add(devResp);
+                            adapter.notifyDataSetChanged();
+                        }
+
+                        tishiDialog = new TishiDialog(getActivity(), 3, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+                                Notice notice = new Notice();
+                                notice.type = MSG_PEIWANG_SUCCESS;
+                                RxBus.getDefault().sendRx(notice);
+                            }
+
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
+                                startJyjSearch();
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+
+                            }
+                        });
+                        tishiDialog.setTextContent("设备配网成功");
                         tishiDialog.setTextCancel("退出");
                         tishiDialog.setTextConfirm("继续");
                         tishiDialog.show();
@@ -322,40 +360,42 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                     tishiDialog.setTextConfirm("退出");
                     tishiDialog.show();
                 } else if (message.type == ConstanceValue.MSG_ZHUJIBANG_OTHER) {
-                    peiwangOtherModel = (PeiwangOtherModel) message.content;
-                    tishiPhoneDialog = new TishiPhoneDialog(getActivity(), new TishiPhoneDialog.TishiDialogListener() {
-                        @Override
-                        public void onClickCancel(View v, TishiPhoneDialog dialog) {
-                            dialog.dismiss();
-                        }
-
-                        @Override
-                        public void onClickConfirm(View v, TishiPhoneDialog dialog) {
-                            if (TextUtils.isEmpty(smsId)) {
-                                Y.t("请发送验证码");
-                                return;
+                    if (isOnFrag) {
+                        peiwangOtherModel = (PeiwangOtherModel) message.content;
+                        tishiPhoneDialog = new TishiPhoneDialog(getActivity(), new TishiPhoneDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiPhoneDialog dialog) {
+                                dialog.dismiss();
                             }
 
-                            if (TextUtils.isEmpty(dialog.getEdContent())) {
-                                Y.t("请输入验证码");
-                                return;
+                            @Override
+                            public void onClickConfirm(View v, TishiPhoneDialog dialog) {
+                                if (TextUtils.isEmpty(smsId)) {
+                                    Y.t("请发送验证码");
+                                    return;
+                                }
+
+                                if (TextUtils.isEmpty(dialog.getEdContent())) {
+                                    Y.t("请输入验证码");
+                                    return;
+                                }
+
+                                tianJiaSheBeiNet2(dialog.getEdContent());
                             }
 
-                            tianJiaSheBeiNet2(dialog.getEdContent());
-                        }
+                            @Override
+                            public void onDismiss(TishiPhoneDialog dialog) {
 
-                        @Override
-                        public void onDismiss(TishiPhoneDialog dialog) {
+                            }
 
-                        }
-
-                        @Override
-                        public void onSendYanZhengMa(View v, TishiPhoneDialog dialog) {
-                            get_code();
-                        }
-                    });
-                    tishiPhoneDialog.setTextContent("该设备已被绑定到账号为" + peiwangOtherModel.getPhone() + "的家庭，如继续操作请手机验证");
-                    tishiPhoneDialog.show();
+                            @Override
+                            public void onSendYanZhengMa(View v, TishiPhoneDialog dialog) {
+                                get_code();
+                            }
+                        });
+                        tishiPhoneDialog.setTextContent("该设备已被绑定到账号为" + peiwangOtherModel.getPhone() + "的家庭，如继续操作请手机验证");
+                        tishiPhoneDialog.show();
+                    }
                 }
             }
         }));

@@ -23,6 +23,7 @@ public class AppResponse<T> implements Serializable {
 
     private static final long serialVersionUID = 5213230387175987834L;
 
+    public String is_added;//是否添加过主机
     public String available_balance;
     public String msg_code;
     public String msg;

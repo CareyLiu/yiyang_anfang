@@ -619,8 +619,6 @@ public class MyApplication extends MultiDexApplication {
                     public void connectComplete(boolean reconnect, String serverURI) {
                         Log.i("Rair", "(MainActivity.java:29)-connectComplete:-&gt;连接完成");
                         sendRx(ConstanceValue.MSG_MQTT_CONNECTCOMPLETE, "");
-
-
                         AndMqtt.getInstance().subscribe(new MqttSubscribe()
                                 .setTopic(CARBOX_JINGBAO)
                                 .setQos(2), new IMqttActionListener() {

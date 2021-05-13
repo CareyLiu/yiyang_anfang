@@ -51,6 +51,7 @@ import com.smarthome.magic.dialog.newdia.TishiPhoneDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.Message;
 import com.smarthome.magic.model.PeiwangOtherModel;
+import com.smarthome.magic.model.TianJiaZhuJiMoel;
 import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.model.ZhiNengHomeBean;
 import com.smarthome.magic.model.ZhiNengJiaJu_0007Model;
@@ -202,6 +203,7 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
     ZhiNengJiaJu_0009Model zhiNengJiaJu_0009Model;
     List<ZhiNengJiaJu_0007Model.MatchListBean> mDatas = new ArrayList<>();
     TishiDialog tishiDialog;
+    lianWangThread thread;
 
     private void initHuidiao() {
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
@@ -255,51 +257,56 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
 
                 } else if (message.type == ConstanceValue.MSG_TIANJIAZHUJI) {//添加主机
                     if (isOnFrag) {
-                        Notice notice1 = new Notice();
-                        notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
-                        sendRx(notice1);
+                        if (x) {
+                            return;
+                        }
+                        kaiGuanFlag = false;
+                        thread.interrupt();
+                        if (tishiDialog == null) {
 
-                        zhiNengJiaJu_0009Model = (ZhiNengJiaJu_0009Model) message.content;
-                        DeviceBean devResp = new DeviceBean();
-                        devResp.setIconUrl(zhiNengJiaJu_0009Model.mc_device_url);
-                        deviceBeans.add(devResp);
-                        adapter.notifyDataSetChanged();
 
-                        tishiDialog = new TishiDialog(getActivity(), 3, new TishiDialog.TishiDialogListener() {
-                            @Override
-                            public void onClickCancel(View v, TishiDialog dialog) {
-                                Notice notice = new Notice();
-                                notice.type = MSG_PEIWANG_SUCCESS;
-                                RxBus.getDefault().sendRx(notice);
-                            }
+                            Notice notice1 = new Notice();
+                            notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+                            sendRx(notice1);
 
-                            @Override
-                            public void onClickConfirm(View v, TishiDialog dialog) {
+                            zhiNengJiaJu_0009Model = (ZhiNengJiaJu_0009Model) message.content;
+                            DeviceBean devResp = new DeviceBean();
+                            devResp.setIconUrl(zhiNengJiaJu_0009Model.mc_device_url);
+                            deviceBeans.add(devResp);
+                            adapter.notifyDataSetChanged();
 
-                            }
+                            tishiDialog = new TishiDialog(getActivity(), 3, new TishiDialog.TishiDialogListener() {
+                                @Override
+                                public void onClickCancel(View v, TishiDialog dialog) {
+                                    Notice notice = new Notice();
+                                    notice.type = MSG_PEIWANG_SUCCESS;
+                                    RxBus.getDefault().sendRx(notice);
+                                }
 
-                            @Override
-                            public void onDismiss(TishiDialog dialog) {
+                                @Override
+                                public void onClickConfirm(View v, TishiDialog dialog) {
 
-                            }
-                        });
-                        tishiDialog.setTextContent("主机配网成功");
-                        tishiDialog.setTextCancel("退出");
-                        tishiDialog.setTextConfirm("继续");
-                        tishiDialog.show();
+                                }
+
+                                @Override
+                                public void onDismiss(TishiDialog dialog) {
+
+                                }
+                            });
+                            tishiDialog.setTextContent("主机配网成功");
+                            tishiDialog.setTextCancel("退出");
+                            tishiDialog.setTextConfirm("继续");
+                            tishiDialog.show();
+                        }
                     }
                 } else if (message.type == ConstanceValue.MSG_PEIWNAG_ESPTOUCH) {
-                    int ob = (int) message.content;
-                    /**
-                     * @param str 0连接失败 1开始连接页面 2连接中3连接成功
-                     */
-                    if (ob == 0) {//连接失败
-                        Y.e("连接失败");
-                    } else if (ob == 2) {//连接中
-                        Y.e("连接中");
-                    } else if (ob == 3) {//连接成功
-                        Y.e("连接成功");
-                    }
+
+                       // Y.e("连接成功");
+                      //  Log.i("TuYaDeviceAdd", String.valueOf(ob));
+                        thread = new lianWangThread();
+                        thread.start();
+
+
                 } else if (message.type == ConstanceValue.MSG_PEIWANG_ERROR) {
                     tishiDialog = new TishiDialog(getActivity(), 3, new TishiDialog.TishiDialogListener() {
                         @Override
@@ -534,7 +541,13 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
         if (mTask != null) {
             mTask.cancelEsptouch();
         }
-        mTask = new EsptouchAsyncTask4(getActivity());
+        mTask = new EsptouchAsyncTask4(getActivity(), new EsptouchAsyncTask4.IListener() {
+            @Override
+            public void successZhuJi() {
+                thread = new lianWangThread();
+                thread.start();
+            }
+        });
 
         int yonghuming_length = mSsid.toString().length();
         int password_length = password.toString().length();
@@ -813,4 +826,117 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
         super.onSupportInvisible();
         isOnFrag = false;
     }
+
+    private void getZhuJiNet() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16076");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(getActivity()).getAppToken());
+        map.put("family_id", PreferenceHelper.getInstance(getActivity()).getString(AppConfig.FAMILY_ID, ""));
+        Gson gson = new Gson();
+        OkGo.<AppResponse<TianJiaZhuJiMoel>>post(Urls.ZHINENGJIAJU)
+                .tag(this)
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<TianJiaZhuJiMoel>>() {
+                    @Override
+                    public void onSuccess(final Response<AppResponse<TianJiaZhuJiMoel>> response) {
+                        if (response.body().is_added.equals("1")) {
+                            if (tishiDialog == null) {
+                                Notice notice1 = new Notice();
+                                notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+                                sendRx(notice1);
+
+                                tishiDialog = new TishiDialog(getActivity(), 3, new TishiDialog.TishiDialogListener() {
+                                    @Override
+                                    public void onClickCancel(View v, TishiDialog dialog) {
+
+                                    }
+
+                                    @Override
+                                    public void onClickConfirm(View v, TishiDialog dialog) {
+                                        Notice notice = new Notice();
+                                        notice.type = MSG_PEIWANG_SUCCESS;
+                                        RxBus.getDefault().sendRx(notice);
+                                        getActivity().finish();
+                                    }
+
+                                    @Override
+                                    public void onDismiss(TishiDialog dialog) {
+
+                                    }
+                                });
+                                tishiDialog.setTextContent("主机配网成功");
+                                tishiDialog.setTextCancel("");
+                                tishiDialog.setTextConfirm("完成");
+                                tishiDialog.show();
+
+                                thread.interrupt();
+                                kaiGuanFlag = false;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                    }
+                });
+    }
+
+    boolean kaiGuanFlag = true;
+    boolean x = false;
+
+    private class lianWangThread extends Thread {
+        private int i = 0;
+
+        public void run() {
+            while (kaiGuanFlag) {
+                if (tishiDialog != null) {
+                    if (Thread.currentThread().isInterrupted()) {
+                        System.out.println("Yes,I am interruted,but I am still running");
+                        return;
+
+                    }
+                }
+
+
+                try {
+                    Thread.sleep(3000);
+                    if (tishiDialog == null) {
+                        getZhuJiNet();
+
+                    }
+                    i = i + 1;
+                    if (i == 2) {
+                        tishiDialog_lianwangshibai = new TishiDialog(getActivity(), 3, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+
+                            }
+
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
+
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+
+                            }
+                        });
+                        tishiDialog.setTextContent("联网失败，请切换网络重新尝试");
+                        tishiDialog.setTextCancel("");
+                        tishiDialog.setTextConfirm("确定");
+                        tishiDialog.show();
+                    }
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    TishiDialog tishiDialog_lianwangshibai;
 }

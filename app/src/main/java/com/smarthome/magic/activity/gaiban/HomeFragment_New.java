@@ -86,8 +86,10 @@ import com.smarthome.magic.config.Radius_GlideImageLoader;
 import com.smarthome.magic.config.Radius_XiuPeiChangImageLoader;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.LordingDialog;
+import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.dialog.newdia.YuYinZhiFuDialog;
 import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.AccessListModel;
 import com.smarthome.magic.model.Home;
 import com.smarthome.magic.model.TuiGuangMaModel;
 import com.smarthome.magic.util.AlertUtil;
@@ -112,6 +114,7 @@ import rx.functions.Action1;
 
 import static com.smarthome.magic.app.App.JINGDU;
 import static com.smarthome.magic.app.App.WEIDU;
+import static com.smarthome.magic.app.ConstanceValue.MSG_PEIWANG_SUCCESS;
 import static com.smarthome.magic.get_net.Urls.HOME_PICTURE;
 
 /**
@@ -186,6 +189,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         //初始化定位
         initLocation();
         startLocation();
+       // getZhuJiNet();
     }
 
     SmartRefreshLayout smartRefreshLayout;
@@ -206,6 +210,34 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
     @Override
     protected void initLogic() {
 
+    }
+
+    private void getZhuJiNet() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16076");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(getActivity()).getAppToken());
+        map.put("family_id", PreferenceHelper.getInstance(getActivity()).getString(AppConfig.FAMILY_ID, ""));
+        Gson gson = new Gson();
+        OkGo.<AppResponse<AccessListModel.DataBean>>post(Urls.ZHINENGJIAJU)
+                .tag(this)
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<AccessListModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(final Response<AppResponse<AccessListModel.DataBean>> response) {
+
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<AccessListModel.DataBean>> response) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                    }
+                });
     }
 
     @Override

@@ -47,6 +47,7 @@ import com.smarthome.magic.app.AppManager;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
@@ -62,9 +63,11 @@ import com.smarthome.magic.fragment.OnlineFragment;
 import com.smarthome.magic.fragment.znjj.ZhiNengJiaJuFragment;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.inter.YuYinInter;
+import com.smarthome.magic.model.AccessListModel;
 import com.smarthome.magic.model.AlarmClass;
 import com.smarthome.magic.model.DongTaiShiTiZhuangTaiModel;
 import com.smarthome.magic.model.ZhiNengJiaJuNotifyJson;
+import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.AppToast;
 import com.smarthome.magic.util.DoMqttValue;
 import com.smarthome.magic.util.ShangChuanDongTaiShiTiTool;
@@ -86,6 +89,7 @@ import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
+import static com.smarthome.magic.app.ConstanceValue.MSG_PEIWANG_SUCCESS;
 import static com.smarthome.magic.config.MyApplication.CAR_NOTIFY;
 import static com.smarthome.magic.config.MyApplication.context;
 import static com.smarthome.magic.config.MyApplication.getAppContext;
@@ -142,6 +146,7 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+      //  getZhuJiNet();
         StatusBarUtil.setLightMode(this);
         ButterKnife.bind(this);
         IntentFilter intentFilter = new IntentFilter();
@@ -829,6 +834,8 @@ public class HomeActivity extends BaseActivity {
     private void wakeUpClick() {
         yuYinChuLiTool.beginWakeUp();
     }
+
+
 
 
 }

@@ -43,7 +43,10 @@ import com.flyco.roundview.RoundRelativeLayout;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.rairmmd.andmqtt.AndMqtt;
+import com.rairmmd.andmqtt.MqttPublish;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.AccessListActivity;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.v1.EspTouchActivity;
 import com.smarthome.magic.adapter.OneImageAdapter;
@@ -61,12 +64,16 @@ import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.dialog.newdia.TishiPhoneDialog;
 import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.AccessListModel;
 import com.smarthome.magic.model.Message;
 import com.smarthome.magic.model.PeiwangOtherModel;
+import com.smarthome.magic.model.TianJiaZhuJiMoel;
 import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.model.ZhiNengJiaJu_0007Model;
 import com.smarthome.magic.model.ZhiNengJiaJu_0009Model;
 import com.smarthome.magic.mqtt_zhiling.ZnjjMqttMingLing;
+import com.smarthome.magic.util.AlertUtil;
+import com.smarthome.magic.util.SoundPoolUtils;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
@@ -82,6 +89,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 import static com.smarthome.magic.app.ConstanceValue.MSG_PEIWANG_SUCCESS;
+import static com.smarthome.magic.config.MyApplication.CAR_CTROL;
 import static com.smarthome.magic.get_net.Urls.SERVER_URL;
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
@@ -373,7 +381,7 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
         }
         mTask = new EsptouchAsyncTask4(this);
 
-        byte []a=mSsid.toString().getBytes();
+        byte[] a = mSsid.toString().getBytes();
 
         int yonghuming_length = a.length;
         int password_length = password.toString().length();
@@ -448,6 +456,8 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
         context.startActivity(intent);
     }
 
+    lianWangThread thread;
+
     private class EsptouchAsyncTask4 extends AsyncTask<byte[], IEsptouchResult, List<IEsptouchResult>> {
         private WeakReference<ZhiNengJiaJuPeiWangActivity> mActivity;
 
@@ -487,6 +497,9 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
             Activity context = mActivity.get();
             if (context != null) {
                 Toast.makeText(context, "配网成功", Toast.LENGTH_SHORT).show();
+
+                thread = new lianWangThread();
+                thread.start();
             }
         }
 
@@ -552,6 +565,62 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
         protected void onCancelled() {
             super.onCancelled();
         }
+    }
+
+    private void getZhuJiNet() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "16076");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("family_id", PreferenceHelper.getInstance(mContext).getString(AppConfig.FAMILY_ID, ""));
+        Gson gson = new Gson();
+        OkGo.<AppResponse<TianJiaZhuJiMoel>>post(Urls.ZHINENGJIAJU)
+                .tag(this)
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<TianJiaZhuJiMoel>>() {
+                    @Override
+                    public void onSuccess(final Response<AppResponse<TianJiaZhuJiMoel>> response) {
+                        if (response.body().is_added.equals("1")) {
+                            if (tishiDialog == null) {
+                                Notice notice1 = new Notice();
+                                notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+                                sendRx(notice1);
+
+                                tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                                    @Override
+                                    public void onClickCancel(View v, TishiDialog dialog) {
+
+                                    }
+
+                                    @Override
+                                    public void onClickConfirm(View v, TishiDialog dialog) {
+                                        Notice notice = new Notice();
+                                        notice.type = MSG_PEIWANG_SUCCESS;
+                                        RxBus.getDefault().sendRx(notice);
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onDismiss(TishiDialog dialog) {
+
+                                    }
+                                });
+                                tishiDialog.setTextContent("主机配网成功");
+                                tishiDialog.setTextCancel("");
+                                tishiDialog.setTextConfirm("完成");
+                                tishiDialog.show();
+
+                                thread.interrupt();
+                                kaiGuanFlag = false;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                    }
+                });
     }
 
     CharSequence message;
@@ -636,6 +705,9 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
         if (mTask != null) {
             mTask.cancelEsptouch();
         }
+        if (thread != null) {
+            thread.interrupt();
+        }
     }
 
     public void sendMqttTianJiaSheBei() {
@@ -673,6 +745,8 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
 
     TishiDialog tishiDialog;
     TishiPhoneDialog tishiPhoneDialog;
+    TishiDialog tishiDialog_lianwangshibai;
+    boolean x = false;
 
     public void jieShouMqttTianJiaSheBei() {
 
@@ -680,45 +754,54 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
             @Override
             public void call(Notice message) {
                 if (message.type == ConstanceValue.MSG_TIANJIAZHUJI) {
-                    llMainTianjia.setVisibility(View.VISIBLE);
-                    zhiNengJiaJu_0009Model = (ZhiNengJiaJu_0009Model) message.content;
-                    tvText.setText("主机添加成功");
-                    Glide.with(mContext).load(zhiNengJiaJu_0009Model.mc_device_url).into(ivImage);
+                    if (x) {
+                        return;
+                    }
+                    kaiGuanFlag = false;
+                    thread.interrupt();
+                    if (tishiDialog == null) {
 
-                    rlTuichu.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            finish();
-                        }
-                    });
+                        llMainTianjia.setVisibility(View.VISIBLE);
+                        zhiNengJiaJu_0009Model = (ZhiNengJiaJu_0009Model) message.content;
+                        tvText.setText("主机添加成功");
+                        Glide.with(mContext).load(zhiNengJiaJu_0009Model.mc_device_url).into(ivImage);
 
-                    Notice notice1 = new Notice();
-                    notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
-                    sendRx(notice1);
+                        rlTuichu.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                finish();
+                            }
+                        });
 
-                    tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
-                        @Override
-                        public void onClickCancel(View v, TishiDialog dialog) {
+                        Notice notice1 = new Notice();
+                        notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+                        sendRx(notice1);
 
-                        }
+                        tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
 
-                        @Override
-                        public void onClickConfirm(View v, TishiDialog dialog) {
-                            Notice notice = new Notice();
-                            notice.type = MSG_PEIWANG_SUCCESS;
-                            RxBus.getDefault().sendRx(notice);
-                            finish();
-                        }
+                            }
 
-                        @Override
-                        public void onDismiss(TishiDialog dialog) {
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
+                                Notice notice = new Notice();
+                                notice.type = MSG_PEIWANG_SUCCESS;
+                                RxBus.getDefault().sendRx(notice);
+                                finish();
+                            }
 
-                        }
-                    });
-                    tishiDialog.setTextContent("主机配网成功");
-                    tishiDialog.setTextCancel("");
-                    tishiDialog.setTextConfirm("完成");
-                    tishiDialog.show();
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+
+                            }
+                        });
+                        tishiDialog.setTextContent("主机配网成功");
+                        tishiDialog.setTextCancel("");
+                        tishiDialog.setTextConfirm("完成");
+                        tishiDialog.show();
+                    }
+
                 } else if (message.type == ConstanceValue.MSG_PEIWANG_ERROR) {
                     animationView.pauseAnimation();
                     tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
@@ -852,4 +935,60 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
                     }
                 });
     }
+
+    boolean kaiGuanFlag = true;
+
+    private class lianWangThread extends Thread {
+        private int i = 0;
+
+        public void run() {
+            while (kaiGuanFlag) {
+                if (tishiDialog!=null){
+                    if (Thread.currentThread().isInterrupted()) {
+                        System.out.println("Yes,I am interruted,but I am still running");
+                        return;
+
+                    }
+                }
+
+
+                try {
+                    Thread.sleep(3000);
+                    if (tishiDialog == null) {
+                        getZhuJiNet();
+
+                    }
+                    i = i + 1;
+                    if (i == 2) {
+                        tishiDialog_lianwangshibai = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+
+                            }
+
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
+
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+
+                            }
+                        });
+                        tishiDialog.setTextContent("联网失败，请切换网络重新尝试");
+                        tishiDialog.setTextCancel("");
+                        tishiDialog.setTextConfirm("确定");
+                        tishiDialog.show();
+                    }
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
 }

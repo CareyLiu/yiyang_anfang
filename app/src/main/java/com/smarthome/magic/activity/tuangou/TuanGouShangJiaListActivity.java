@@ -308,12 +308,10 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                             noneText.setVisibility(View.VISIBLE);
 
 
-
                         } else {
                             constraintLayout.setVisibility(View.GONE);
                             ivNoneImage.setVisibility(View.GONE);
                             noneText.setVisibility(View.GONE);
-
 
 
                             tuanGouShangJiaListAdapter.setNewData(storeListBeans);
@@ -606,9 +604,12 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
             }
         });
 
+        tvShaiXuan.setEnabled(false);
         tvShaiXuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 if (shaixuanShow) {
                     //   quanbuShow = !quanbuShow;
                     constrain.setVisibility(View.GONE);

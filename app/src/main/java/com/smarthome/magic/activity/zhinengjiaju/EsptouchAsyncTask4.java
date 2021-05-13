@@ -32,9 +32,16 @@ public class EsptouchAsyncTask4 extends AsyncTask<byte[], IEsptouchResult, List<
     private AlertDialog mResultDialog;
     private IEsptouchTask mEsptouchTask;
 
-    public EsptouchAsyncTask4(Activity activity) {
-        mActivity = new WeakReference<>(activity);
+    public IListener iListener;
 
+    public interface IListener {
+        void successZhuJi();
+    }
+
+
+    public EsptouchAsyncTask4(Activity activity, IListener iListener) {
+        mActivity = new WeakReference<>(activity);
+        this.iListener = iListener;
     }
 
     public void cancelEsptouch() {
@@ -56,10 +63,10 @@ public class EsptouchAsyncTask4 extends AsyncTask<byte[], IEsptouchResult, List<
         /**
          * @param str 0连接失败 1开始连接页面 2连接中
          */
-        Notice notice = new Notice();
-        notice.type = ConstanceValue.MSG_PEIWNAG_ESPTOUCH;
-        notice.content = 2;
-        RxBus.getDefault().sendRx(notice);
+//        Notice notice = new Notice();
+//        notice.type = ConstanceValue.MSG_PEIWNAG_ESPTOUCH;
+//        notice.content = 2;
+//        RxBus.getDefault().sendRx(notice);
 
         Activity activity = mActivity.get();
         mProgressDialog = new ProgressDialog(activity);
@@ -69,14 +76,21 @@ public class EsptouchAsyncTask4 extends AsyncTask<byte[], IEsptouchResult, List<
     protected void onProgressUpdate(IEsptouchResult... values) {
         Log.i("ZhiNengJiaJuPeiWang", "onProgressUpdate" + values[0].getBssid() + values[0].getInetAddress());
         Activity context = mActivity.get();
-        if (context != null) {
-//            Toast.makeText(context, "配网成功", Toast.LENGTH_SHORT).show();
-            Notice notice = new Notice();
-            notice.type = MSG_PEIWNAG_ESPTOUCH;
-            notice.type = 3;
-            RxBus.getDefault().sendRx(notice);
-//            context.finish();
-        }
+//        if (context != null) {
+//           Toast.makeText(context, "配网成功", Toast.LENGTH_SHORT).show();
+//            Notice notice = new Notice();
+//            notice.type = MSG_PEIWNAG_ESPTOUCH;
+//            notice.type = 3;
+//            RxBus.getDefault().sendRx(notice);
+////            context.finish();
+//        }
+
+        iListener.successZhuJi();
+//        Notice notice = new Notice();
+//        notice.type = MSG_PEIWNAG_ESPTOUCH;
+//        RxBus.getDefault().sendRx(notice);
+
+
     }
 
     @Override
@@ -126,10 +140,10 @@ public class EsptouchAsyncTask4 extends AsyncTask<byte[], IEsptouchResult, List<
          */
         if (!firstResult.isSuc()) {
 
-            Notice notice = new Notice();
-            notice.type = MSG_PEIWNAG_ESPTOUCH;
-            notice.content = 0;
-            RxBus.getDefault().sendRx(notice);
+//            Notice notice = new Notice();
+//            notice.type = MSG_PEIWNAG_ESPTOUCH;
+//            notice.content = 0;
+//            RxBus.getDefault().sendRx(notice);
 
             return;
         }

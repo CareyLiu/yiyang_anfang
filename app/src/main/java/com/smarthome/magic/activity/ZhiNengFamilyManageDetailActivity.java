@@ -2,11 +2,14 @@ package com.smarthome.magic.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,6 +25,8 @@ import com.amap.api.services.geocoder.RegeocodeResult;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.ActionSheetDialog;
 import com.google.gson.Gson;
 import com.jaeger.library.StatusBarUtil;
 import com.lzy.okgo.OkGo;
@@ -50,6 +55,7 @@ import com.smarthome.magic.model.ZhiNengFamilyMAnageDetailBean;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.api.IResultCallback;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -173,6 +179,8 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
         });
     }
 
+    String memberType = "";
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -190,9 +198,42 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                 startActivity(new Intent(context, ZhiNengRoomManageActivity.class).putExtras(bundle1));
                 break;
             case R.id.ll_add_share:
-                Bundle bundle = new Bundle();
-                bundle.putString("family_id", family_id);
-                startActivity(new Intent(context, ZhiNengFamilyAddShareActivity.class).putExtras(bundle));
+
+                String[] items = {"选择您要添加的角色", "成员", "管理员"};
+                final ActionSheetDialog dialog = new ActionSheetDialog(this, items, null);
+                dialog.isTitleShow(false).show();
+                dialog.setOnOperItemClickL(new OnOperItemClickL() {
+                    @Override
+                    public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        File file = new File(Environment.getExternalStorageDirectory(), "/temp/" + System.currentTimeMillis() + ".jpg");
+                        if (!file.getParentFile().exists()) {
+                            file.getParentFile().mkdirs();
+                        }
+                        Bundle bundle = new Bundle();
+                        Uri imageUri = Uri.fromFile(file);
+                        switch (position) {
+                            case 0:
+
+                                break;
+                            case 1:
+                                memberType = "2";
+                                bundle.putString("family_id", family_id);
+                                bundle.putString("memberType", memberType);
+                                startActivity(new Intent(context, ZhiNengFamilyAddShareActivity.class).putExtras(bundle));
+
+                                break;
+                            case 2:
+                                memberType = "3";
+                                bundle.putString("family_id", family_id);
+                                bundle.putString("memberType", memberType);
+                                startActivity(new Intent(context, ZhiNengFamilyAddShareActivity.class).putExtras(bundle));
+                                break;
+                        }
+                        dialog.dismiss();
+
+                    }
+                });
+
                 break;
             case R.id.tv_family_delete:
                 delete();
@@ -326,7 +367,7 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                     @Override
                     public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
                         MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(context,
-                                "提示",response.getException().getMessage(), "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+                                "提示", response.getException().getMessage(), "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
                             @Override
                             public void clickLeft() {
 
@@ -392,7 +433,7 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                     public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
                         super.onError(response);
                         MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(context,
-                                "提示",response.getException().getMessage(), "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+                                "提示", response.getException().getMessage(), "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
                             @Override
                             public void clickLeft() {
 
@@ -580,7 +621,7 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                     @Override
                     public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
                         MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(context,
-                                "提示",response.getException().getMessage(), "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+                                "提示", response.getException().getMessage(), "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
                             @Override
                             public void clickLeft() {
 

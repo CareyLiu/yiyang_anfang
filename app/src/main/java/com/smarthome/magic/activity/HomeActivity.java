@@ -146,7 +146,7 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      //  getZhuJiNet();
+        //  getZhuJiNet();
         StatusBarUtil.setLightMode(this);
         ButterKnife.bind(this);
         IntentFilter intentFilter = new IntentFilter();
@@ -834,8 +834,6 @@ public class HomeActivity extends BaseActivity {
     private void wakeUpClick() {
         yuYinChuLiTool.beginWakeUp();
     }
-
-
 
 
 }

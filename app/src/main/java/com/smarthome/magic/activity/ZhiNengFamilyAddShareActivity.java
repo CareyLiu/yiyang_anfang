@@ -47,7 +47,7 @@ import butterknife.BindView;
 
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
-public class ZhiNengFamilyAddShareActivity extends BaseActivity implements View.OnClickListener {
+public class ZhiNengFamilyAddShareActivity extends BaseActivity {
 
     @BindView(R.id.et_phone)
     EditText et_phone;
@@ -64,6 +64,8 @@ public class ZhiNengFamilyAddShareActivity extends BaseActivity implements View.
     private String family_id = "";
     private String smsId = "";
 
+    String memberType;
+
     @Override
     public int getContentViewResId() {
         return R.layout.activity_zhineng_family_add_share;
@@ -78,6 +80,7 @@ public class ZhiNengFamilyAddShareActivity extends BaseActivity implements View.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarUtil.setLightMode(this);
+        memberType = getIntent().getStringExtra("memberType");
         initToolbar();
         initView();
     }
@@ -85,8 +88,31 @@ public class ZhiNengFamilyAddShareActivity extends BaseActivity implements View.
     private void initView() {
         family_id = getIntent().getStringExtra("family_id");
         timeCount = new AddShareTimeCount(60000, 1000, tv_code);
-        ll_code.setOnClickListener(this);
-        tv_bind.setOnClickListener(this);
+        // ll_code.setOnClickListener(this);
+        //  tv_bind.setOnClickListener(this);
+        tv_bind.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (et_phone.getText().toString().isEmpty()) {
+                    Toast.makeText(context, "手机号不能为空", Toast.LENGTH_SHORT).show();
+                } else if (et_code.getText().toString().isEmpty()) {
+                    Toast.makeText(context, "验证码不能为空", Toast.LENGTH_SHORT).show();
+                } else {
+                    yaoqing(et_phone.getText().toString());
+                }
+            }
+        });
+
+        ll_code.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (et_phone.getText().toString().isEmpty()) {
+                    Toast.makeText(context, "手机号不能为空", Toast.LENGTH_SHORT).show();
+                } else {
+                    getCode();
+                }
+            }
+        });
     }
 
     @Override
@@ -109,29 +135,9 @@ public class ZhiNengFamilyAddShareActivity extends BaseActivity implements View.
         });
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.ll_code:
-                if (et_phone.getText().toString().isEmpty()) {
-                    Toast.makeText(context, "手机号不能为空", Toast.LENGTH_SHORT).show();
-                } else {
-                    getCode();
-                }
-                break;
-            case R.id.tv_bind:
-                if (et_phone.getText().toString().isEmpty()) {
-                    Toast.makeText(context, "手机号不能为空", Toast.LENGTH_SHORT).show();
-                } else if (et_code.getText().toString().isEmpty()) {
-                    Toast.makeText(context, "验证码不能为空", Toast.LENGTH_SHORT).show();
-                } else {
-                    yaoqing(et_phone.getText().toString());
-                }
-                break;
-        }
-    }
 
     TishiDialog tishiDialog;
+
     /**
      * 获取短信验证码
      */
@@ -194,6 +200,7 @@ public class ZhiNengFamilyAddShareActivity extends BaseActivity implements View.
         map.put("family_id", family_id);
         map.put("sms_id", smsId);
         map.put("sms_code", et_code.getText().toString());
+        map.put("member_type", memberType);
         Gson gson = new Gson();
         OkGo.<AppResponse<ZhiNengFamilyEditBean>>post(ZHINENGJIAJU)
                 .tag(this)//
@@ -251,6 +258,7 @@ public class ZhiNengFamilyAddShareActivity extends BaseActivity implements View.
         });
     }
 
+    // TODO: 2021-05-17 添加涂鸦设备  2.成员 3.二级管理员
     private void yaoqing(String phone) {
         long homeId = PreferenceHelper.getInstance(mContext).getLong(AppConfig.TUYA_HOME_ID, 0);
         @SuppressLint("WrongConstant") MemberWrapperBean bean = new MemberWrapperBean.Builder()

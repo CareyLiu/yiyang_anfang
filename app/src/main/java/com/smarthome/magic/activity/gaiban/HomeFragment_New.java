@@ -98,6 +98,9 @@ import com.smarthome.magic.util.GridAverageUIDecoration;
 import com.smarthome.magic.util.Utils;
 import com.smarthome.magic.view.ObservableScrollView;
 import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.umeng.commonsdk.UMConfigure;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
@@ -189,7 +192,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
         //初始化定位
         initLocation();
         startLocation();
-       // getZhuJiNet();
+        // getZhuJiNet();
     }
 
     SmartRefreshLayout smartRefreshLayout;
@@ -424,6 +427,8 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
             @Override
             public void onClick(View v) {
                 UIHelper.ToastMessage(getActivity(), "暂未开放此功能，敬请期待");
+
+
 //                String serverid = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.SERVERID, "");
 //
 //                if (StringUtils.isEmpty(serverid)) {
@@ -450,7 +455,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
 //                            //YanShiActivity.actionStart(getActivity());
 //                        } else {
 //                            Toast.makeText(getActivity(), "该应用需要赋予访问相机的权限，不开启将无法正常工作！", Toast.LENGTH_LONG).show();
-//                        }
+//                       }
 //                    }
 //                });
 
@@ -550,6 +555,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                             Notice n = new Notice();
                             n.type = ConstanceValue.MSG_ZHINENGJIAJU;
                             RxBus.getDefault().sendRx(n);
+                            UIHelper.ToastMessage(getActivity(), "");
                         } else if (intellectListBean.getId().equals("2")) {
                             SheBeiLieBiaoActivity.actionStart(getActivity(), "1");
                         } else if (intellectListBean.getId().equals("3")) {

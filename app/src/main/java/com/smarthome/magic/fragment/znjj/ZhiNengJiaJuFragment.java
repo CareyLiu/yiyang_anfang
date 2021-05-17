@@ -57,6 +57,9 @@ import com.smarthome.magic.view.magicindicator.buildins.commonnavigator.abs.IPag
 import com.smarthome.magic.view.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import com.smarthome.magic.view.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
 import com.smarthome.magic.view.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
+import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.bean.HomeBean;
 import com.tuya.smart.home.sdk.bean.MemberBean;
@@ -113,8 +116,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     AppBarLayout appBar;
     @BindView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
-    @BindView(R.id.rl_main)
-    LinearLayout rlMain;
+
     @BindView(R.id.tv_zhuji_zhuangtai)
     TextView tvZhujiZhuangtai;
     @BindView(R.id.bt_add_camera)
@@ -129,6 +131,8 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     ImageView iv_tianqi_enter;
     @BindView(R.id.ll_tianqi_click)
     LinearLayout ll_tianqi_click;
+
+    ImageView ivXiaoChengXu;
 
     private List<String> tabs = new ArrayList<>();
     private ArrayList<Fragment> fragmentList = new ArrayList<>();
@@ -165,6 +169,20 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
     @Override
     protected void initView(View view) {
         view.setClickable(true);// 防止点击穿透，底层的fragment响应上层点击触摸事件
+        ivXiaoChengXu = view.findViewById(R.id.iv_xiaochengxu);
+        ivXiaoChengXu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String appId = "wxafadbee6859e4228"; // 填移动应用(App)的 AppId，非小程序的 AppID
+                IWXAPI api = WXAPIFactory.createWXAPI(getActivity(), appId);
+
+                WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
+                req.userName = "gh_f4043d63b846"; // 填小程序原始id
+                //   req.path = path;                  ////拉起小程序页面的可带参路径，不填默认拉起小程序首页，对于小游戏，可以只传入 query 部分，来实现传参效果，如：传入 "?foo=bar"。
+                req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;// 可选打开 开发版，体验版和正式版
+                api.sendReq(req);
+            }
+        });
     }
 
     @Override
@@ -173,6 +191,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
         initData();
         initSM();
         initHuidiao();
+
     }
 
     private void initData() {

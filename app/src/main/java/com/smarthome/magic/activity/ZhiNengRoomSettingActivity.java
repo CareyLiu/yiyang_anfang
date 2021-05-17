@@ -131,6 +131,12 @@ public class ZhiNengRoomSettingActivity extends BaseActivity implements View.OnC
             room_name = "";
         }
         getnet();
+
+        if (TextUtils.isEmpty(room_id)||"0".equals(room_id)){
+            tvAddRoomDevice.setVisibility(View.GONE);
+        }else {
+            tvAddRoomDevice.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initView() {
@@ -154,7 +160,12 @@ public class ZhiNengRoomSettingActivity extends BaseActivity implements View.OnC
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 ZhiNengRoomManageSettingBean.DataBean deviceBean = (ZhiNengRoomManageSettingBean.DataBean) adapter.getItem(position);
-                showClickDia(deviceBean, position);
+               if (TextUtils.isEmpty(room_id)||"0".equals(room_id)){
+                   tiaozhuan(deviceBean);
+               }else {
+                   showClickDia(deviceBean, position);
+               }
+
             }
         });
 
@@ -181,7 +192,7 @@ public class ZhiNengRoomSettingActivity extends BaseActivity implements View.OnC
                         tiaozhuan(deviceBean);
                         break;
                     case 1:
-                        deviceTransfer(deviceBean.getDevice_id(), position);
+                        deviceTransfer(deviceBean.getDevice_id(), pos);
                         break;
                 }
                 dialog.dismiss();

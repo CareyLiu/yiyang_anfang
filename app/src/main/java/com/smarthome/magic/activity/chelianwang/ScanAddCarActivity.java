@@ -161,23 +161,43 @@ public class ScanAddCarActivity extends BaseActivity implements QRCodeView.Deleg
                 .execute(new JsonCallback<AppResponse<CarBrand.DataBean>>() {
                     @Override
                     public void onSuccess(final Response<AppResponse<CarBrand.DataBean>> response) {
-                        UIHelper.ToastMessage(mContext, "添加成功");
-                        finish();
-//                        Notice notice = new Notice();
-//                        notice.type = ConstanceValue.MSG_ADD_CHELIANG_SUCCESS;
-//                        sendRx(notice);
+                        BangdingFailDialog dialog = new BangdingFailDialog(mContext);
+                        dialog.setClick(new BangdingFailDialog.BangdingClick() {
+                            @Override
+                            public void close() {
+                                Notice notice = new Notice();
+                                notice.type = ConstanceValue.MSG_ADD_CHELIANG_SUCCESS;
+                                sendRx(notice);
+                                finish();
+                            }
+
+                            @Override
+                            public void jixu() {
+                                mQRCodeView.startSpot();
+                                mQRCodeView.setDelegate(ScanAddCarActivity.this);
+                            }
+                        });
+                        dialog.setTextContent("设备添加成功");
+                        dialog.show();
                     }
 
                     @Override
                     public void onError(Response<AppResponse<CarBrand.DataBean>> response) {
                         String msg = response.getException().getMessage();
-                        Y.tError(response);
-
                         BangdingFailDialog dialog = new BangdingFailDialog(mContext);
-                        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        dialog.setClick(new BangdingFailDialog.BangdingClick() {
                             @Override
-                            public void onDismiss(DialogInterface dialog) {
+                            public void close() {
+                                Notice notice = new Notice();
+                                notice.type = ConstanceValue.MSG_ADD_CHELIANG_SUCCESS;
+                                sendRx(notice);
                                 finish();
+                            }
+
+                            @Override
+                            public void jixu() {
+                                mQRCodeView.startSpot();
+                                mQRCodeView.setDelegate(ScanAddCarActivity.this);
                             }
                         });
                         dialog.setTextContent(msg);

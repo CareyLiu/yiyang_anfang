@@ -116,19 +116,47 @@ public class HandAddActivity extends BaseActivity implements View.OnClickListene
                 .execute(new JsonCallback<AppResponse<CarBrand.DataBean>>() {
                     @Override
                     public void onSuccess(final Response<AppResponse<CarBrand.DataBean>> response) {
-                        UIHelper.ToastMessage(mContext, "添加成功");
-                        finish();
-//                        Notice notice = new Notice();
-//                        notice.type = ConstanceValue.MSG_ADD_CHELIANG_SUCCESS;
-//                        sendRx(notice);
+                        mEtNumber.setText("");
+                        BangdingFailDialog dialog = new BangdingFailDialog(mContext);
+                        dialog.setClick(new BangdingFailDialog.BangdingClick() {
+                            @Override
+                            public void close() {
+                                Notice notice = new Notice();
+                                notice.type = ConstanceValue.MSG_ADD_CHELIANG_SUCCESS;
+                                sendRx(notice);
+                                finish();
+                            }
+
+                            @Override
+                            public void jixu() {
+
+                            }
+                        });
+                        dialog.bt_jixusao.setText("继续添加");
+                        dialog.setTextContent("设备添加成功");
+                        dialog.show();
                     }
 
                     @Override
                     public void onError(Response<AppResponse<CarBrand.DataBean>> response) {
+                        mEtNumber.setText("");
                         String msg = response.getException().getMessage();
-                        Y.tError(response);
-
                         BangdingFailDialog dialog = new BangdingFailDialog(mContext);
+                        dialog.setClick(new BangdingFailDialog.BangdingClick() {
+                            @Override
+                            public void close() {
+                                Notice notice = new Notice();
+                                notice.type = ConstanceValue.MSG_ADD_CHELIANG_SUCCESS;
+                                sendRx(notice);
+                                finish();
+                            }
+
+                            @Override
+                            public void jixu() {
+
+                            }
+                        });
+                        dialog.bt_jixusao.setText("继续添加");
                         dialog.setTextContent(msg);
                         dialog.show();
                     }

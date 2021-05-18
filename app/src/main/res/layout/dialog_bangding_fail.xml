@@ -35,13 +35,35 @@
             android:layout_height="0.5dp"
             android:background="@color/split" />
 
-        <TextView
-            android:id="@+id/bt_ok"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="38dp"
-            android:gravity="center"
-            android:text="确定"
-            android:textColor="@color/black_666666"
-            android:textSize="13sp" />
+            android:layout_height="38dp">
+
+
+            <TextView
+                android:id="@+id/bt_ok"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="关闭"
+                android:textColor="@color/black_666666"
+                android:textSize="13sp" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/split" />
+
+            <TextView
+                android:id="@+id/bt_jixusao"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="继续扫"
+                android:textColor="@color/black_666666"
+                android:textSize="13sp" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -9,6 +9,7 @@ import com.smarthome.magic.app.ConfigValue;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
+import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.config.PreferenceHelper;
 
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class DoMqttValue {
                             String zhuangZhiId = messageSplit[i].substring(1, 9);
                             String kaiGuanDengZhuangTai = messageSplit[i].substring(9, 10);
 
-                           stringList = new ArrayList<>();
+                            stringList = new ArrayList<>();
                             stringList.add(zhuangZhiId);
                             stringList.add(kaiGuanDengZhuangTai);
 
@@ -78,6 +79,7 @@ public class DoMqttValue {
                         notice.content = stringList;
                         Log.i("Rair", notice.content.toString());
                         RxBus.getDefault().sendRx(notice);
+
 
                         Notice notice1 = new Notice();
                         notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;

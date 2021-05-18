@@ -25,7 +25,7 @@ public class DoMqttValue {
     public static final String SHUINUAN = "SHUINUAN";
     public static final String KONGTIAO = "KONGTIAO";
     public static final String KONGCHE = "KONGCHE";
-
+    List<String> stringList;
 
     public void doValue(Context context, String topic, String message) {
         //控制硬件项目  1. 智能家居 2.风暖加热器 3.水暖加热器 4.驻车空调 5.神灯控车
@@ -49,16 +49,18 @@ public class DoMqttValue {
                             String zhuangZhiId = messageSplit[i].substring(1, 9);
                             String kaiGuanDengZhuangTai = messageSplit[i].substring(9, 10);
 
-                            List<String> stringList = new ArrayList<>();
+                           stringList = new ArrayList<>();
                             stringList.add(zhuangZhiId);
                             stringList.add(kaiGuanDengZhuangTai);
 
-                            Notice notice = new Notice();
-                            notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
-                            notice.content = stringList;
-                            Log.i("Rair", notice.content.toString());
-                            RxBus.getDefault().sendRx(notice);
+
                         }
+                        Notice notice = new Notice();
+                        notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
+                        notice.content = stringList;
+                        Log.i("Rair", notice.content.toString());
+                        RxBus.getDefault().sendRx(notice);
+
                         Notice notice1 = new Notice();
                         notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
                         RxBus.getDefault().sendRx(notice1);

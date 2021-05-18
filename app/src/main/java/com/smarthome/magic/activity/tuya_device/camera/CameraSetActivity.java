@@ -438,7 +438,7 @@ public class CameraSetActivity extends TuyaBaseCameraDeviceActivity {
     }
 
     private void clickDelete() {
-        if (member_type.equals("1")) {
+        if (member_type.equals("1") || member_type.equals("3")) {
             TuyaTishiDialog dialog = new TuyaTishiDialog(mContext, new TuyaTishiDialog.TishiDialogListener() {
                 @Override
                 public void onClickCancel(View v, TuyaTishiDialog dialog) {

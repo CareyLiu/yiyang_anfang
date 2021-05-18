@@ -243,7 +243,7 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
 
     private void delete() {
         String tishi;
-        if (member_type.equals("1")) {
+        if (member_type.equals("1") || member_type.equals("3")) {
             tishi = "确定要删除该家庭吗？";
         } else {
             tishi = "确定要退出该家庭吗？";
@@ -281,7 +281,7 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                     public void onSuccess(Response<AppResponse<ZhiNengFamilyMAnageDetailBean.DataBean>> response) {
                         dataBean = response.body().data.get(0);
                         member_type = dataBean.getMember_type();
-                        if (member_type.equals("1")) {
+                        if (member_type.equals("1") || member_type.equals("3")) {
                             tv_family_delete.setText("删除家庭");
                             if (zhiNengFamilyManageDetailAdapter.getFooterViewsCount() == 0) {
                                 zhiNengFamilyManageDetailAdapter.addFooterView(footerView);
@@ -406,7 +406,7 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                             RxBus.getDefault().sendRx(notice);
 
                             String title = "";
-                            if (member_type.equals("1")) {
+                            if (member_type.equals("1") || member_type.equals("3")) {
                                 title = "删除家庭";
                                 deleteTuyaJiating();
                             } else {

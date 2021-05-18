@@ -146,7 +146,7 @@ public class ZhiNengRoomManageActivity extends BaseActivity implements View.OnCl
 
                         @Override
                         public void clickRight() {
-                            if (member_type.equals("1")) {
+                            if (member_type.equals("1") || member_type.equals("3")) {
                                 deviceTransfer(dataBean.getRoom_id(), dataBean.getRoom_name());
                             } else {
                                 Toast.makeText(context, "操作失败，需要管理员身份", Toast.LENGTH_SHORT).show();

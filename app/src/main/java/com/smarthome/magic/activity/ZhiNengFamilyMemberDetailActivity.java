@@ -142,6 +142,7 @@ public class ZhiNengFamilyMemberDetailActivity extends BaseActivity implements V
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(context).getAppToken());
         map.put("family_id", family_id);
+        map.put("member_id", memberBean.getMember_id());
         map.put("member_type", memberType);
         Gson gson = new Gson();
         Log.e("map_data", gson.toJson(map));
@@ -156,7 +157,7 @@ public class ZhiNengFamilyMemberDetailActivity extends BaseActivity implements V
                         if (memberType.equals("2")) {
                             tv_type.setText("成员");
                         } else if (memberType.equals("3")) {
-                            tv_type.setText("管理员");
+                            tv_type.setText("二级管理员");
                         }
                     }
                 });
@@ -192,7 +193,7 @@ public class ZhiNengFamilyMemberDetailActivity extends BaseActivity implements V
         tuya_memberId = Y.getLong(memberBean.getTy_member_id());
         tv_phone.setText(member_phone);
         tv_type.setText(memberBean.getMember_type_name());
-        if (member_type.equals("1")) {
+        if (member_type.equals("1") || member_type.equals("3")) {
             if (memberBean.getMember_type_name().equals("管理员")) {
                 tv_delete.setVisibility(View.GONE);
             } else {

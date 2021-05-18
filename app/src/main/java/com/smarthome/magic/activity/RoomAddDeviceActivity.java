@@ -149,7 +149,7 @@ public class RoomAddDeviceActivity extends BaseActivity {
 
                     @Override
                     public void clickRight() {
-                        if (member_type.equals("1")) {
+                        if (member_type.equals("1") || member_type.equals("3")) {
                             deviceTransfer(deviceBean.getDevice_id());
                         } else {
                             Toast.makeText(mContext, "操作失败，需要管理员身份", Toast.LENGTH_SHORT).show();

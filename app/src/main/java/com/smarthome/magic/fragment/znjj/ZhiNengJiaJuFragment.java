@@ -346,14 +346,14 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
 
 //                        tv_tianqi_wendu.setText(zhuJiWenShiDu);
 
-                        if (dataBean.get(0).getMember_type().equals("1")) {
+                        if (dataBean.get(0).getMember_type().equals("1")||dataBean.get(0).getMember_type().equals("3")) {
                             tv_family_name.setText(dataBean.get(0).getFamily_name());
                         } else {
                             tv_family_name.setText(dataBean.get(0).getFamily_name() + "(共享家庭)");
                         }
                         tv_device_num.setText(dataBean.get(0).getDevice_num() + "个设备");
 
-                        if (dataBean.get(0).getMember_type().equals("1")) {
+                        if (dataBean.get(0).getMember_type().equals("1")||dataBean.get(0).getMember_type().equals("3")) {
                             PreferenceHelper.getInstance(getActivity()).putString(AppConfig.ZHINENGJIAJUGUANLIYUAN, "1");
                         } else {
                             PreferenceHelper.getInstance(getActivity()).putString(AppConfig.ZHINENGJIAJUGUANLIYUAN, "0");
@@ -410,7 +410,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                         PreferenceHelper.getInstance(getActivity()).putString(AppConfig.PEIWANG_FAMILYID, familyId);
                         String ty_family_id = dataBean.get(0).getTy_family_id();
                         if (TextUtils.isEmpty(ty_family_id)) {
-                            if (dataBean.get(0).getMember_type().equals("1")) {
+                            if (dataBean.get(0).getMember_type().equals("1")||dataBean.get(0).getMember_type().equals("3")) {
                                 List<String> addRooms = new ArrayList<>();
                                 TuyaHomeSdk.getHomeManagerInstance().createHome(dataBean.get(0).getFamily_name(), 0, 0, "", addRooms, new ITuyaHomeResultCallback() {
                                     @Override

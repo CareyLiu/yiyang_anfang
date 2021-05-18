@@ -301,6 +301,7 @@ public class SuiYiTieThreeActivity extends BaseActivity {
         } else {
             String deviceCcidSt = "";
             //UIHelper.ToastMessage(mContext, "绑定设备");
+
             if (mDatas.get(Integer.valueOf(paiwei)) != null) {
                 deviceCcidSt = mDatas.get(Integer.valueOf(paiwei)).getDevice_ccid();
             }

@@ -58,11 +58,10 @@ public class DoMqttValue {
                             notice.content = stringList;
                             Log.i("Rair", notice.content.toString());
                             RxBus.getDefault().sendRx(notice);
-
-                            Notice notice1 = new Notice();
-                            notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
-                            RxBus.getDefault().sendRx(notice1);
                         }
+                        Notice notice1 = new Notice();
+                        notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+                        RxBus.getDefault().sendRx(notice1);
 
                     } else {
                         String zhuangZhiId = message.substring(1, 9);

@@ -383,7 +383,7 @@ public class ZhiNengRoomSettingActivity extends BaseActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_room_name:
-                if (member_type.equals("1")) {
+                if (member_type.equals("1") || member_type.equals("3")) {
                     //管理员身份，可以编辑房间名字
                     if (room_id.equals("0")) {
                         //默认房间不能修改名字
@@ -422,7 +422,7 @@ public class ZhiNengRoomSettingActivity extends BaseActivity implements View.OnC
                 }
                 break;
             case R.id.tv_room_delete:
-                if (member_type.equals("1")) {
+                if (member_type.equals("1") || member_type.equals("3")) {
                     //管理员身份，可以删除房间
                     if (room_id.equals("0")) {
                         //默认房间不能修改名字

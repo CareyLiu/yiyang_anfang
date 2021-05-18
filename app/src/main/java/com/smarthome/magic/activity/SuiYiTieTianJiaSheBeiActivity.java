@@ -78,25 +78,7 @@ public class SuiYiTieTianJiaSheBeiActivity extends BaseActivity {
                         suiYiTieTianjiaSheBeiAdapter.notifyDataSetChanged();
                         getNetTianJia(mDatas.get(position));
 
-                        TishiDialog dialog = new TishiDialog(mContext, TishiDialog.TYPE_CAOZUO, new TishiDialog.TishiDialogListener() {
-                            @Override
-                            public void onClickCancel(View v, TishiDialog dialog) {
 
-                            }
-
-                            @Override
-                            public void onClickConfirm(View v, TishiDialog dialog) {
-                                finish();
-                            }
-
-                            @Override
-                            public void onDismiss(TishiDialog dialog) {
-
-                            }
-                        });
-                        dialog.setTextContent("已成功添加设备");
-                        dialog.setTextCancel("");
-                        dialog.show();
                         break;
                 }
 
@@ -215,6 +197,26 @@ public class SuiYiTieTianJiaSheBeiActivity extends BaseActivity {
                         mDatas.clear();
                         mDatas.addAll(response.body().data);
                         suiYiTieTianjiaSheBeiAdapter.setNewData(mDatas);
+
+                        TishiDialog dialog = new TishiDialog(mContext, TishiDialog.TYPE_CAOZUO, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+
+                            }
+
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
+                                finish();
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+
+                            }
+                        });
+                        dialog.setTextContent("已成功添加设备");
+                        dialog.setTextCancel("");
+                        dialog.show();
                     }
 
                     @Override

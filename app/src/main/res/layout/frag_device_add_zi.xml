@@ -76,6 +76,7 @@
             android:background="@drawable/bt_radius45_s"
             android:gravity="center"
             android:text="重新搜索"
+            android:visibility="gone"
             android:textColor="@color/white"
             android:textSize="33pt"
             android:textStyle="bold" />
@@ -110,7 +111,8 @@
                 android:text="下一步"
                 android:textColor="@color/white"
                 android:textSize="33pt"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
         </RelativeLayout>
     </RelativeLayout>
 

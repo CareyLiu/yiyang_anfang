@@ -18,8 +18,6 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.alibaba.sdk.android.utils.AMSConfigUtils;
-import com.espressif.iot.esptouch.util.ByteUtil;
 import com.espressif.iot.esptouch.util.TouchNetUtil;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
@@ -32,7 +30,6 @@ import com.smarthome.magic.activity.tuya_device.utils.OnTuyaItemClickListener;
 import com.smarthome.magic.activity.tuya_device.utils.WifiReceiver;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaHomeManager;
 import com.smarthome.magic.activity.zhinengjiaju.EsptouchAsyncTask4;
-import com.smarthome.magic.activity.zhinengjiaju.peinet.ZhiNengJiaJuPeiWangActivity;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.ConstanceValue;
@@ -41,9 +38,7 @@ import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
-import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
-import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
@@ -57,25 +52,12 @@ import com.smarthome.magic.model.ZhiNengHomeBean;
 import com.smarthome.magic.model.ZhiNengJiaJu_0007Model;
 import com.smarthome.magic.model.ZhiNengJiaJu_0009Model;
 import com.smarthome.magic.mqtt_zhiling.ZnjjMqttMingLing;
-import com.tuya.smart.android.ble.ITuyaBleOperator;
-import com.tuya.smart.android.ble.api.ITuyaBleConfigListener;
-import com.tuya.smart.android.ble.api.ScanDeviceBean;
-import com.tuya.smart.android.ble.api.ScanType;
-import com.tuya.smart.android.ble.api.TyBleScanResponse;
-import com.tuya.smart.android.blemesh.api.ITuyaBlueMeshActivatorListener;
-import com.tuya.smart.android.blemesh.api.ITuyaBlueMeshSearch;
-import com.tuya.smart.android.blemesh.api.ITuyaBlueMeshSearchListener;
-import com.tuya.smart.android.blemesh.bean.SearchDeviceBean;
-import com.tuya.smart.android.blemesh.builder.SearchBuilder;
-import com.tuya.smart.android.blemesh.builder.TuyaSigMeshActivatorBuilder;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.builder.ActivatorBuilder;
 import com.tuya.smart.sdk.api.ITuyaActivator;
 import com.tuya.smart.sdk.api.ITuyaActivatorGetToken;
 import com.tuya.smart.sdk.api.ITuyaSmartActivatorListener;
-import com.tuya.smart.sdk.api.bluemesh.ITuyaBlueMeshActivator;
 import com.tuya.smart.sdk.bean.DeviceBean;
-import com.tuya.smart.sdk.bean.SigMeshBean;
 import com.tuya.smart.sdk.enums.ActivatorModelEnum;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -85,7 +67,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -141,7 +122,6 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
     private TuyaDeviceAdapter adapter;
     private BluetoothAdapter bluetoothAdapter;
     private ITuyaActivator mTuyaActivator;
-    private ITuyaBleOperator bleOperator;
     private String familyId;
     private String isHaiZhuji;
 
@@ -238,23 +218,50 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                 } else if (message.type == ConstanceValue.MSG_WIFI_CLOSE) {
                     isSetWifi = false;
                     iv_wifi.setVisibility(View.GONE);
-                } else if (message.type == ConstanceValue.MSG_TIANJIASHEBEI_ZIDONG) {
-                    //添加设备
-                    zhiNengJiaJu_0007Model = (ZhiNengJiaJu_0007Model) message.content;
-                    mDatas.clear();
-                    mDatas.addAll(zhiNengJiaJu_0007Model.getMatch_list());
+                } else if (message.type == ConstanceValue.MSG_TIANJIASHEBEI) {
+                    if (isOnFrag) {
+                        getShebei();
+                        stopAnimation();
+                        stopSearch();
+                        //添加设备
+                        zhiNengJiaJu_0007Model = (ZhiNengJiaJu_0007Model) message.content;
+                        mDatas.clear();
+                        mDatas.addAll(zhiNengJiaJu_0007Model.getMatch_list());
 
-                    //将添加的设备显示出来
-                    for (int i = 0; i < mDatas.size(); i++) {
-                        DeviceBean devResp = new DeviceBean();
-                        devResp.setIconUrl(mDatas.get(i).getDevice_type_pic());
-                        deviceBeans.add(devResp);
+                        //将添加的设备显示出来
+                        for (int i = 0; i < mDatas.size(); i++) {
+                            DeviceBean devResp = new DeviceBean();
+                            devResp.setIconUrl(mDatas.get(i).getDevice_type_pic());
+                            devResp.setName(mDatas.get(i).getDevice_name());
+                            deviceBeans.add(devResp);
+                        }
+                        if (adapter != null) {
+                            adapter.notifyDataSetChanged();
+                        }
+
+                        tishiDialog = new TishiDialog(getActivity(), 3, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+
+                            }
+
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
+
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+                                Notice notice = new Notice();
+                                notice.type = MSG_PEIWANG_SUCCESS;
+                                RxBus.getDefault().sendRx(notice);
+                            }
+                        });
+                        tishiDialog.setTextContent("设备配网成功");
+                        tishiDialog.setTextCancel("");
+                        tishiDialog.setTextConfirm("完成");
+                        tishiDialog.show();
                     }
-                    if (adapter != null) {
-                        adapter.notifyDataSetChanged();
-                    }
-
-
                 } else if (message.type == ConstanceValue.MSG_TIANJIAZHUJI) {//添加主机
                     if (isOnFrag) {
                         if (x) {
@@ -262,9 +269,10 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                         }
                         kaiGuanFlag = false;
                         thread.interrupt();
+                        getShebei();
+                        stopAnimation();
+                        stopSearch();
                         if (tishiDialog == null) {
-
-
                             Notice notice1 = new Notice();
                             notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
                             sendRx(notice1);
@@ -278,36 +286,37 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                             tishiDialog = new TishiDialog(getActivity(), 3, new TishiDialog.TishiDialogListener() {
                                 @Override
                                 public void onClickCancel(View v, TishiDialog dialog) {
+
+                                }
+
+                                @Override
+                                public void onClickConfirm(View v, TishiDialog dialog) {
+
+                                }
+
+                                @Override
+                                public void onDismiss(TishiDialog dialog) {
                                     Notice notice = new Notice();
                                     notice.type = MSG_PEIWANG_SUCCESS;
                                     RxBus.getDefault().sendRx(notice);
                                 }
-
-                            @Override
-                            public void onClickConfirm(View v, TishiDialog dialog) {
-                                startJyjSearch();
-                            }
-
-                                @Override
-                                public void onDismiss(TishiDialog dialog) {
-
-                                }
                             });
                             tishiDialog.setTextContent("主机配网成功");
-                            tishiDialog.setTextCancel("退出");
-                            tishiDialog.setTextConfirm("继续");
+                            tishiDialog.setTextCancel("");
+                            tishiDialog.setTextConfirm("完成");
                             tishiDialog.show();
                         }
                     }
                 } else if (message.type == ConstanceValue.MSG_PEIWNAG_ESPTOUCH) {
 
-                       // Y.e("连接成功");
-                      //  Log.i("TuYaDeviceAdd", String.valueOf(ob));
-                        thread = new lianWangThread();
-                        thread.start();
+                    // Y.e("连接成功");
+                    //  Log.i("TuYaDeviceAdd", String.valueOf(ob));
+                    thread = new lianWangThread();
+                    thread.start();
 
 
                 } else if (message.type == ConstanceValue.MSG_PEIWANG_ERROR) {
+                    finishPeiwang();
                     tishiDialog = new TishiDialog(getActivity(), 3, new TishiDialog.TishiDialogListener() {
                         @Override
                         public void onClickCancel(View v, TishiDialog dialog) {
@@ -326,14 +335,18 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                     });
                     tishiDialog.setTextContent((String) message.content);
                     tishiDialog.setTextCancel("");
-                    tishiDialog.setTextConfirm("退出");
+                    tishiDialog.setTextConfirm("知道了");
                     tishiDialog.show();
                 } else if (message.type == ConstanceValue.MSG_ZHUJIBANG_OTHER) {
                     if (isOnFrag) {
+                        getShebei();
+                        stopAnimation();
+                        stopSearch();
                         peiwangOtherModel = (PeiwangOtherModel) message.content;
                         tishiPhoneDialog = new TishiPhoneDialog(getActivity(), new TishiPhoneDialog.TishiDialogListener() {
                             @Override
                             public void onClickCancel(View v, TishiPhoneDialog dialog) {
+                                finishPeiwang();
                                 dialog.dismiss();
                             }
 
@@ -362,6 +375,8 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                                 get_code();
                             }
                         });
+                        tishiPhoneDialog.setCancelable(false);
+                        tishiPhoneDialog.setCanceledOnTouchOutside(false);
                         tishiPhoneDialog.setTextContent("该设备已被绑定到账号为" + peiwangOtherModel.getPhone() + "的家庭，如继续操作请手机验证");
                         tishiPhoneDialog.show();
                     }
@@ -427,16 +442,35 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                 .execute(new JsonCallback<AppResponse<ZhiNengFamilyEditBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
-                        UIHelper.ToastMessage(getContext(), "设备添加成功");
-                        Notice notice = new Notice();
-                        notice.type = MSG_PEIWANG_SUCCESS;
-                        RxBus.getDefault().sendRx(notice);
+                        tishiDialog = new TishiDialog(getActivity(), 3, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+
+                            }
+
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
+
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+                                Notice notice = new Notice();
+                                notice.type = MSG_PEIWANG_SUCCESS;
+                                RxBus.getDefault().sendRx(notice);
+                            }
+                        });
+                        tishiDialog.setTextContent("主机配网成功");
+                        tishiDialog.setTextCancel("");
+                        tishiDialog.setTextConfirm("完成");
+                        tishiDialog.show();
                     }
 
                     @Override
                     public void onError(Response<AppResponse<ZhiNengFamilyEditBean>> response) {
                         super.onError(response);
                         Y.tError(response);
+                        finishPeiwang();
                     }
                 });
     }
@@ -607,8 +641,6 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
         isHaiZhuji = PreferenceHelper.getInstance(getActivity()).getString(App.HAS_ZHUJI, "");
         zhuJiDeviceCCidUp = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.DEVICECCID, "");
         serverId = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.SERVERID, "");
-
-        Y.e("我是什么啊啊啊  " + isHaiZhuji + "   " + zhuJiDeviceCCidUp + "   " + serverId);
         jiBenPeiWang(zhuJiDeviceCCidUp, serverId, "00", "00");
     }
 
@@ -618,56 +650,23 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
         rl_shuoming.setVisibility(View.VISIBLE);
         rv_shebei.setVisibility(View.GONE);
         bt_chongxinsousuo.setVisibility(View.GONE);
+        bt_xiugai.setVisibility(View.GONE);
+
         isSousuozhong = true;
         startAnimation();
-//        TuyaHomeSdk.getActivatorInstance().getActivatorToken(homeId,
-//                new ITuyaActivatorGetToken() {
-//                    @Override
-//                    public void onSuccess(String token) {
-//                        Y.e("获取Token成功：" + token + "   账号：" + wifiSSid + "  密码：" + mima);
-//                        startWifiPeiwang(token);
-//                        startLanyaPeiwang(token);
-//                    }
-//
-//                    @Override
-//                    public void onFailure(String s, String s1) {
-//                        Y.t(s1);
-//                        stopPeiwang();
-//                    }
-//                });
-    }
+        TuyaHomeSdk.getActivatorInstance().getActivatorToken(homeId,
+                new ITuyaActivatorGetToken() {
+                    @Override
+                    public void onSuccess(String token) {
+                        startWifiPeiwang(token);
+                    }
 
-    private void startLanyaPeiwang(String token) {
-        if (isSetLanya) {
-            Y.e("蓝牙添加设备了么");
-            bleOperator = TuyaHomeSdk.getBleOperator();
-            bleOperator.startLeScan(60000, ScanType.SINGLE, new TyBleScanResponse() {
-                @Override
-                public void onResult(ScanDeviceBean bean) {
-                    stopSearch();
-                    Map<String, Object> param = new HashMap<>();
-                    param.put("ssid", wifiSSid); //wifi ssid
-                    param.put("password", mima); //wifi pwd
-                    param.put("token", token); // user token
-                    TuyaHomeSdk.getBleManager().startBleConfig(homeId, bean.getUuid(), param, new ITuyaBleConfigListener() {
-                        @Override
-                        public void onSuccess(DeviceBean devResp) {
-                            Y.e("蓝牙成功添加了设备啊啊啊" + devResp.getName() + "   " + devResp.getIconUrl());
-                            getShebei();
-                            addShebei(devResp);
-                            deviceBeans.add(devResp);
-                            adapter.notifyDataSetChanged();
-                        }
-
-                        @Override
-                        public void onFail(String code, String msg, Object handle) {
-                            Y.e("蓝牙获取设备失败,请重新搜索" + msg);
-                            stopPeiwang();
-                        }
-                    });
-                }
-            });
-        }
+                    @Override
+                    public void onFailure(String s, String s1) {
+                        Y.t(s1);
+                        finishPeiwang();
+                    }
+                });
     }
 
     private void startWifiPeiwang(String token) {
@@ -681,14 +680,31 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                 .setListener(new ITuyaSmartActivatorListener() {
                                  @Override
                                  public void onError(String errorCode, String errorMsg) {
-                                     Y.t("获取设备失败,请重新搜索" + errorMsg);
-                                     Y.e("获取设备失败,请重新搜索" + errorMsg);
-                                     stopPeiwang();
+                                     finishPeiwang();
+                                     tishiDialog = new TishiDialog(getActivity(), 3, new TishiDialog.TishiDialogListener() {
+                                         @Override
+                                         public void onClickCancel(View v, TishiDialog dialog) {
+
+                                         }
+
+                                         @Override
+                                         public void onClickConfirm(View v, TishiDialog dialog) {
+                                             tishiDialog.dismiss();
+                                         }
+
+                                         @Override
+                                         public void onDismiss(TishiDialog dialog) {
+
+                                         }
+                                     });
+                                     tishiDialog.setTextContent("获取设备超时,请重新搜索");
+                                     tishiDialog.setTextCancel("");
+                                     tishiDialog.setTextConfirm("知道了");
+                                     tishiDialog.show();
                                  }
 
                                  @Override
                                  public void onActiveSuccess(DeviceBean devResp) {
-                                     Y.e("成功添加设备" + devResp.getName() + "   " + devResp.getIconUrl());
                                      getShebei();
                                      addShebei(devResp);
                                      deviceBeans.add(devResp);
@@ -728,13 +744,54 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                 .execute(new JsonCallback<AppResponse<ZhiNengHomeBean.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<ZhiNengHomeBean.DataBean>> response) {
-                        Y.e("添加是开发商的肌肤上的 开发进度是");
+                        tishiDialog = new TishiDialog(getActivity(), 3, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+
+                            }
+
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
+
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+                                Notice notice = new Notice();
+                                notice.type = MSG_PEIWANG_SUCCESS;
+                                RxBus.getDefault().sendRx(notice);
+                            }
+                        });
+                        tishiDialog.setTextContent("设备配网成功");
+                        tishiDialog.setTextCancel("");
+                        tishiDialog.setTextConfirm("完成");
+                        tishiDialog.show();
                     }
 
                     @Override
                     public void onError(Response<AppResponse<ZhiNengHomeBean.DataBean>> response) {
                         super.onError(response);
-                        Y.e(" JFK的实力开发商的  " + response.getException().getMessage());
+                        finishPeiwang();
+                        tishiDialog = new TishiDialog(getActivity(), 3, new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+
+                            }
+
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
+                                tishiDialog.dismiss();
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+
+                            }
+                        });
+                        tishiDialog.setTextContent(response.body().msg);
+                        tishiDialog.setTextCancel("");
+                        tishiDialog.setTextConfirm("知道了");
+                        tishiDialog.show();
                     }
                 });
     }
@@ -775,8 +832,9 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
         }
     }
 
-    private void stopPeiwang() {
+    private void finishPeiwang() {
         bt_chongxinsousuo.setVisibility(View.VISIBLE);
+        bt_xiugai.setVisibility(View.VISIBLE);
         stopAnimation();
         stopSearch();
     }
@@ -785,10 +843,6 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
         if (mTuyaActivator != null) {
             mTuyaActivator.stop();
             mTuyaActivator.onDestroy();
-        }
-
-        if (bleOperator != null) {
-            bleOperator.stopLeScan();
         }
     }
 
@@ -799,7 +853,7 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        stopPeiwang();
+        finishPeiwang();
         if (znjjMqttMingLing != null) {
             znjjMqttMingLing.unSubscribeShiShiXinXi_WithCanShu(zhuJiDeviceCCidUp, serverId, new IMqttActionListener() {
                 @Override

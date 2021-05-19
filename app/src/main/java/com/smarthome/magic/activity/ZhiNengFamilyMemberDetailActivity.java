@@ -1,5 +1,6 @@
 package com.smarthome.magic.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -21,10 +22,12 @@ import com.lzy.okgo.model.Response;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.tuya_device.utils.manager.TuyaHomeManager;
+import com.smarthome.magic.app.AppConfig;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppResponse;
+import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuoTIshi;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Success;
@@ -33,6 +36,7 @@ import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.model.ZhiNengFamilyMAnageDetailBean;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.bean.MemberBean;
+import com.tuya.smart.home.sdk.bean.MemberWrapperBean;
 import com.tuya.smart.home.sdk.callback.ITuyaGetMemberListCallback;
 import com.tuya.smart.sdk.api.IResultCallback;
 
@@ -153,14 +157,45 @@ public class ZhiNengFamilyMemberDetailActivity extends BaseActivity implements V
                     @Override
                     public void onSuccess(Response<AppResponse<ZhiNengFamilyMAnageDetailBean.DataBean>> response) {
                         UIHelper.ToastMessage(mContext, "切换成功");
-// TODO: 2021-05-17 切换涂鸦角色
                         if (memberType.equals("2")) {
                             tv_type.setText("成员");
                         } else if (memberType.equals("3")) {
                             tv_type.setText("二级管理员");
                         }
+
+                        upDataTuya(member_type);
                     }
                 });
+    }
+
+    private void upDataTuya(String member_type) {
+        int memberRole = 0;
+        if (member_type.equals("2")) {
+            memberRole = 0;
+        } else {
+            memberRole = 1;
+        }
+        long homeId = PreferenceHelper.getInstance(mContext).getLong(AppConfig.TUYA_HOME_ID, 0);
+        @SuppressLint("WrongConstant") MemberWrapperBean bean = new MemberWrapperBean.Builder()
+                .setHomeId(homeId)
+                .setNickName(memberBean.getMember_phone())
+                .setAccount(memberBean.getMember_phone())
+                .setCountryCode("86")
+                .setRole(memberRole)
+                .setHeadPic("")
+                .setAutoAccept(true)
+                .build();
+        TuyaHomeSdk.getMemberInstance().updateMember(bean, new IResultCallback() {
+            @Override
+            public void onSuccess() {
+                // do something
+            }
+
+            @Override
+            public void onError(String code, String error) {
+                // do something
+            }
+        });
     }
 
     private void initMember() {

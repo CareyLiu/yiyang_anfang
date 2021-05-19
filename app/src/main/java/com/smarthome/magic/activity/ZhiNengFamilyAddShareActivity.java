@@ -64,7 +64,8 @@ public class ZhiNengFamilyAddShareActivity extends BaseActivity {
     private String family_id = "";
     private String smsId = "";
 
-    String memberType;
+    private String memberType;
+    private int memberRole;
 
     @Override
     public int getContentViewResId() {
@@ -81,6 +82,13 @@ public class ZhiNengFamilyAddShareActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         StatusBarUtil.setLightMode(this);
         memberType = getIntent().getStringExtra("memberType");
+
+        if (memberType.equals("2")) {
+            memberRole = 0;
+        } else {
+            memberRole = 1;
+        }
+
         initToolbar();
         initView();
     }
@@ -248,12 +256,12 @@ public class ZhiNengFamilyAddShareActivity extends BaseActivity {
         TuyaHomeSdk.getMemberInstance().removeMember(memberId, new IResultCallback() {
             @Override
             public void onSuccess() {
-                Y.e("删除成功");
+
             }
 
             @Override
             public void onError(String code, String error) {
-                Y.e("删除失败" + code + "   " + error);
+
             }
         });
     }
@@ -266,7 +274,7 @@ public class ZhiNengFamilyAddShareActivity extends BaseActivity {
                 .setNickName(phone)
                 .setAccount(phone)
                 .setCountryCode("86")
-                .setRole(0)
+                .setRole(memberRole)
                 .setHeadPic("")
                 .setAutoAccept(true)
                 .build();
@@ -274,14 +282,25 @@ public class ZhiNengFamilyAddShareActivity extends BaseActivity {
         TuyaHomeSdk.getMemberInstance().addMember(bean, new ITuyaDataCallback<MemberBean>() {
             @Override
             public void onSuccess(MemberBean result) {
-                Y.e("邀请成功");
                 long memberId = result.getMemberId();
                 bindMember(memberId);
             }
 
             @Override
             public void onError(String errorCode, String errorMessage) {
-                Y.e("邀请失败啦 " + errorMessage);
+                MyCarCaoZuoDialog_CaoZuoTIshi myCarCaoZuoDialog_caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(context,
+                        "提示", errorMessage, "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+                    @Override
+                    public void clickLeft() {
+
+                    }
+
+                    @Override
+                    public void clickRight() {
+
+                    }
+                });
+                myCarCaoZuoDialog_caoZuoTIshi.show();
             }
         });
     }

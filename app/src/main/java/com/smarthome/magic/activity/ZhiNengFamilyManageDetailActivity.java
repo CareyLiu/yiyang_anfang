@@ -281,8 +281,9 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                     public void onSuccess(Response<AppResponse<ZhiNengFamilyMAnageDetailBean.DataBean>> response) {
                         dataBean = response.body().data.get(0);
                         member_type = dataBean.getMember_type();
-                        if (member_type.equals("1") || member_type.equals("3")) {
+                        if (member_type.equals("1")) {
                             tv_family_delete.setText("删除家庭");
+
                             if (zhiNengFamilyManageDetailAdapter.getFooterViewsCount() == 0) {
                                 zhiNengFamilyManageDetailAdapter.addFooterView(footerView);
                             }

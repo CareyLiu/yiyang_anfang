@@ -18,7 +18,11 @@ public class ZhiNengFamilyManageAdapter extends BaseQuickAdapter<ZhiNengHomeList
 
     @Override
     protected void convert(BaseViewHolder helper, ZhiNengHomeListBean.DataBean item) {
-        helper.setText(R.id.tv_family_name, item.getFamily_name());
+        if (item.getMember_type().equals("1")) {
+            helper.setText(R.id.tv_family_name, item.getFamily_name());
+        } else {
+            helper.setText(R.id.tv_family_name, item.getFamily_name() + "(共享家庭)");
+        }
         helper.setText(R.id.tv_room_num, item.getRoom_num() + "个房间");
         helper.setText(R.id.tv_device_num, item.getDevice_num() + "个设备");
         helper.addOnClickListener(R.id.ll_content);

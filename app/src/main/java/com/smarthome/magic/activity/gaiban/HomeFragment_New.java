@@ -601,8 +601,11 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                             TuanYouList.actionStart(getActivity());
                         } else if (chiHeWanLeListAdapter.getData().get(position).getId().equals("14")) {
                             DefaultX5WebView_HaveNameActivity.actionStart(getActivity(), chiHeWanLeListAdapter.getData().get(position).getHref_url(), chiHeWanLeListAdapter.getData().get(position).getName());
+                        } else if (chiHeWanLeListAdapter.getData().get(position).getId().equals("9")) {
+                            TuanGouShangJiaListActivity.actionStart(getActivity(), chiHeWanLeListAdapter.getData().get(position).getId());
                         } else {
                             TuanGouShangJiaListActivity.actionStart(getActivity(), chiHeWanLeListAdapter.getData().get(position).getId());
+
                         }
                 }
             }

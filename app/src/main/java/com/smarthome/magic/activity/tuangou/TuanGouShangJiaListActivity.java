@@ -34,6 +34,7 @@ import com.smarthome.magic.adapter.tuangou.TuanGouShangJiaListAdapter;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.callback.JsonCallback;
+import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.GlideImageLoader;
 import com.smarthome.magic.config.PreferenceHelper;
@@ -181,7 +182,7 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
 //                    inst_id = "";
 //                    imgType = type;
 
-                if (type.equals("10")) {
+                if (type.equals("10") || type.equals("9")) {
 
 
                     if (ziJian_headerAdapter.getData().get(position).getId().equals("6")) {
@@ -279,10 +280,9 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
         map.put("neibour", neibour);
         map.put("three_img_id", three_img_id);
         map.put("order", order);
-        if (type.equals("10")) {
+        if (type.equals("10") || type.equals("9")) {
             map.put("more_type", "1");
         }
-
         Gson gson = new Gson();
         Log.e("map_data", gson.toJson(map));
         OkGo.<AppResponse<TuanGouShangJiaListBean.DataBean>>post(LIBAOLIST)
@@ -349,8 +349,10 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
         map.put("three_img_id", three_img_id);
         map.put("order", order);
 
+        if (!StringUtils.isEmpty(inst_id)) {
+            map.put("inst_id", inst_id);
+        }
 
-        map.put("inst_id", inst_id);
 
         if (order.equals("1")) {
             map.put("meter", meter);
@@ -361,7 +363,7 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
             map.put("count", count);
         }
 
-        if (type.equals("10")) {
+        if (type.equals("10") || type.equals("9")) {
             map.put("more_type", "1");
         }
         Gson gson = new Gson();
@@ -782,6 +784,7 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
         context.startActivity(intent);
 
     }
+
 
     @Override
     public boolean showToolBar() {

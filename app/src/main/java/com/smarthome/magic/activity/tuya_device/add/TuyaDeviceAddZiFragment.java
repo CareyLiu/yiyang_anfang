@@ -204,7 +204,7 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
                     if (isSousuozhong) {
                         if (mTuyaActivator != null) {
                             mTuyaActivator.stop();
-                            starPeiwang();
+                            clickSearch();
                         }
                     }
                 } else if (message.type == ConstanceValue.MSG_WIFI_INFO) {
@@ -561,7 +561,9 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
             });
         } else {
             // TODO: 2021/2/2 接入密码  主机配对
-            executeEsptouch(mima, bssid, wifiSSid);
+            if (isSetWifi){
+                executeEsptouch(mima, bssid, wifiSSid);
+            }
         }
     }
 
@@ -625,11 +627,22 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
     }
 
     private void clickSearch() {
+        starPeiwang();
+        startJyjSearch();
         if (isSetWifi) {
-            starPeiwang();
-            startJyjSearch();
-        } else {
-            Y.t("请配置wifi");
+            TuyaHomeSdk.getActivatorInstance().getActivatorToken(homeId,
+                    new ITuyaActivatorGetToken() {
+                        @Override
+                        public void onSuccess(String token) {
+                            startWifiPeiwang(token);
+                        }
+
+                        @Override
+                        public void onFailure(String s, String s1) {
+                            Y.t(s1);
+                            finishPeiwang();
+                        }
+                    });
         }
     }
 
@@ -651,22 +664,8 @@ public class TuyaDeviceAddZiFragment extends BaseFragment {
         rv_shebei.setVisibility(View.GONE);
         bt_chongxinsousuo.setVisibility(View.GONE);
         bt_xiugai.setVisibility(View.GONE);
-
         isSousuozhong = true;
         startAnimation();
-        TuyaHomeSdk.getActivatorInstance().getActivatorToken(homeId,
-                new ITuyaActivatorGetToken() {
-                    @Override
-                    public void onSuccess(String token) {
-                        startWifiPeiwang(token);
-                    }
-
-                    @Override
-                    public void onFailure(String s, String s1) {
-                        Y.t(s1);
-                        finishPeiwang();
-                    }
-                });
     }
 
     private void startWifiPeiwang(String token) {

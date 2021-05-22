@@ -509,7 +509,7 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
         Map<String, String> map = new HashMap<>();
         map.put("code", "00005");
         map.put("key", Urls.key);
-        map.put("type_id", "province_city_ch");//物流公司
+        map.put("type_id", "province_city_ch");
         Gson gson = new Gson();
         OkGo.<AppResponse<ChandiModel.DataBean>>post(Urls.MSG)
                 .tag(this)//

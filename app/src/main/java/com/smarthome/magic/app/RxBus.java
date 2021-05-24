@@ -1,6 +1,16 @@
 package com.smarthome.magic.app;
 
+import android.util.Log;
+
+import com.iflytek.cloud.Setting;
+
+import java.util.concurrent.TimeUnit;
+
 import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
 import rx.subjects.SerializedSubject;
 import rx.subjects.Subject;
@@ -8,6 +18,7 @@ import rx.subjects.Subject;
 public class RxBus {
     // 主题
     private final Subject<Object, Object> bus;
+
     // PublishSubject只会把在订阅发生的时间点之后来自原始Observable的数据发射给观察者
     private RxBus() {
         bus = new SerializedSubject<>(PublishSubject.create());
@@ -31,4 +42,6 @@ public class RxBus {
     public <T> Observable<T> toObservable(Class<T> eventType) {
         return bus.ofType(eventType);
     }
+
+
 }

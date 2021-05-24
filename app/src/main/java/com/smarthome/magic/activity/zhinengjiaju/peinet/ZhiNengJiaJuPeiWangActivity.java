@@ -472,6 +472,7 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
         }
 
         public void cancelEsptouch() {
+            Log.i("ZhiNengJiaJuPeiWang", "cancelEsptouch");
             cancel(true);
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
@@ -486,6 +487,7 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
 
         @Override
         protected void onPreExecute() {
+            Log.i(ZhiNengJiaJuPeiWangActivity.class.getSimpleName(), "onPreExecute");
             ZhiNengJiaJuPeiWangActivity activity = mActivity.get();
             activity.setZhuangTaiZhanShi("2");
             mProgressDialog = new ProgressDialog(activity);
@@ -493,7 +495,7 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
 
         @Override
         protected void onProgressUpdate(IEsptouchResult... values) {
-            Log.i("ZhiNengJiaJuPeiWang", "onProgressUpdate" + values[0].getBssid() + values[0].getInetAddress());
+            Log.i(ZhiNengJiaJuPeiWangActivity.class.getSimpleName(), "onProgressUpdate" + values[0].getBssid() + values[0].getInetAddress());
             Activity context = mActivity.get();
             if (context != null) {
                 Toast.makeText(context, "配网成功", Toast.LENGTH_SHORT).show();
@@ -506,6 +508,7 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
         @Override
         protected List<IEsptouchResult> doInBackground(byte[]... params) {
             ZhiNengJiaJuPeiWangActivity activity = mActivity.get();
+            Log.i(ZhiNengJiaJuPeiWangActivity.class.getSimpleName(), "doInBackground"+params.length);
             int taskResultCount;
             synchronized (mLock) {
                 byte[] apSsid = params[0];
@@ -525,7 +528,7 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
         @Override
         protected void onPostExecute(List<IEsptouchResult> result) {
             ZhiNengJiaJuPeiWangActivity activity = mActivity.get();
-            Log.i("ZhiNengJiaJuPeiWang", "onProgressUpdate" + result.get(0).getBssid() + result.get(0).getInetAddress());
+            Log.i(ZhiNengJiaJuPeiWangActivity.class.getSimpleName(), "onProgressUpdate" + result.get(0).getBssid() + result.get(0).getInetAddress());
             activity.mTask = null;
             mProgressDialog.dismiss();
             if (result == null) {
@@ -943,7 +946,7 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
 
         public void run() {
             while (kaiGuanFlag) {
-                if (tishiDialog!=null){
+                if (tishiDialog != null) {
                     if (Thread.currentThread().isInterrupted()) {
                         System.out.println("Yes,I am interruted,but I am still running");
                         return;

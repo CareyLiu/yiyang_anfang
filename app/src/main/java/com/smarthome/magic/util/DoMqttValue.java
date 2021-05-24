@@ -3,6 +3,7 @@ package com.smarthome.magic.util;
 import android.content.Context;
 import android.util.Log;
 
+import com.iflytek.cloud.Setting;
 import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.ConfigValue;
@@ -14,6 +15,8 @@ import com.smarthome.magic.config.PreferenceHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.exceptions.MissingBackpressureException;
 
 public class DoMqttValue {
 
@@ -56,15 +59,18 @@ public class DoMqttValue {
 
 
                         }
+
                         Notice notice = new Notice();
                         notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
                         notice.content = stringList;
                         Log.i("Rair", notice.content.toString());
                         RxBus.getDefault().sendRx(notice);
 
+
                         Notice notice1 = new Notice();
                         notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
                         RxBus.getDefault().sendRx(notice1);
+
 
                     } else {
                         String zhuangZhiId = message.substring(1, 9);
@@ -74,16 +80,31 @@ public class DoMqttValue {
                         stringList.add(zhuangZhiId);
                         stringList.add(kaiGuanDengZhuangTai);
 
-                        Notice notice = new Notice();
-                        notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
-                        notice.content = stringList;
-                        Log.i("Rair", notice.content.toString());
-                        RxBus.getDefault().sendRx(notice);
+                        Thread thread = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Notice notice = new Notice();
+                                notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
+                                notice.content = stringList;
+                                Log.i("Rair", notice.content.toString());
+                                RxBus.getDefault().sendRx(notice);
+
+                                Notice notice1 = new Notice();
+                                notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+                                RxBus.getDefault().sendRx(notice1);
+                                Log.i("Rair", "发送了一次");
+
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
+                        thread.start();
 
 
-                        Notice notice1 = new Notice();
-                        notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
-                        RxBus.getDefault().sendRx(notice1);
                     }
 
                 } else if (message.contains("m0528")) {

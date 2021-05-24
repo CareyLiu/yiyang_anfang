@@ -577,12 +577,12 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                         }
                     }
                 } else if (message.type == ConstanceValue.MSG_CAR_J_M) {
-                    if (smartRefreshLayout!=null){
+                    if (smartRefreshLayout != null) {
                         smartRefreshLayout.finishRefresh();
                     }
 
-                    if (lordingDialog!=null){
-                        if (lordingDialog.isShowing()){
+                    if (lordingDialog != null) {
+                        if (lordingDialog.isShowing()) {
                             lordingDialog.dismiss();
                         }
                     }

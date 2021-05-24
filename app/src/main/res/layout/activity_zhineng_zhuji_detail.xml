@@ -248,7 +248,33 @@
                             android:textColor="#999999"
                             android:textSize="14sp" />
                     </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="47dp"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/white">
 
+                        <TextView
+                            android:id="@+id/tv_wangluo_mingcheng"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="14dp"
+                            android:text="WIFI"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:id="@+id/img_device_into"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="14dp"
+                            android:src="@mipmap/push_gray_999" />
+                    </RelativeLayout>
                     <RelativeLayout
                         android:id="@+id/rl_device_state"
                         android:layout_width="match_parent"

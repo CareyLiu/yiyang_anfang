@@ -187,6 +187,6 @@ public interface ConstanceValue {
     int MSG_NONEZHINENGJIAJU = 0x10138;//刷新不重新创建时，重新走程序
     int MSG_ZHUJIXIUGAIXINXI = 0x10139;//主机修改信息成功或失败
 
-    int MSG_NETWORK_CHANGE = 0x10115;//网络监听发生变化
+    int MSG_NETWORK_CHANGE = 0x10140;//网络监听发生变化
 
 }

@@ -1,11 +1,16 @@
 package com.smarthome.magic.fragment.znjj;
 
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -22,6 +27,7 @@ import com.rairmmd.andmqtt.MqttSubscribe;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.ZhiNengFamilyManageDetailActivity;
 import com.smarthome.magic.activity.ZhiNengHomeListActivity;
@@ -45,6 +51,7 @@ import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.fragment.znjj.model.ZhiNengModel;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.ZhiNengFamilyManageBean;
+import com.smarthome.magic.util.DensityUtils;
 import com.smarthome.magic.util.DoMqttValue;
 import com.smarthome.magic.util.GlideShowImageUtils;
 import com.smarthome.magic.view.NoSlidingViewPager;
@@ -166,6 +173,27 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
         return R.layout.zhinengjiaju;
     }
 
+    private int lastX;
+    private int lastY;
+
+    private boolean isIntercept = false;
+    /**
+     * 按下时的位置控件相对屏幕左上角的位置X
+     */
+    private int startDownX;
+    /**
+     * 按下时的位置控件距离屏幕左上角的位置Y
+     */
+    private int startDownY;
+    /**
+     * 控件相对屏幕左上角移动的位置X
+     */
+    private int lastMoveX;
+    /**
+     * 控件相对屏幕左上角移动的位置Y
+     */
+    private int lastMoveY;
+
     @Override
     protected void initView(View view) {
         view.setClickable(true);// 防止点击穿透，底层的fragment响应上层点击触摸事件
@@ -183,7 +211,90 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                 api.sendReq(req);
             }
         });
+
+        ivXiaoChengXu.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int x = (int) event.getX();
+                int y = (int) event.getY();
+                Log.i("ImageButton-00", "x" + String.valueOf(x));
+                Log.i("ImageButton-00", "y" + String.valueOf(y));
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        lastX = x;
+                        lastY = y;
+
+                        startDownX = lastMoveX = (int) event.getRawX();
+                        startDownY = lastMoveY = (int) event.getRawY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        int offsetX = x - lastX;
+                        int offsetY = y - lastY;
+                        Log.i("view_00", "差值" + (Float.valueOf(pingMuHeight) - v.getTop()) + "");
+                        Log.i("view_00", "底部栏和控件高度" + DensityUtils.dp2px(getActivity(), 110) + "");
+
+                        v.layout(v.getLeft() + offsetX,
+                                v.getTop() + offsetY,
+                                v.getRight() + offsetX,
+                                v.getBottom() + offsetY);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        // adsorbAnim(event.getRawX(), event.getRawY());
+                        if (v.getTop() < 0) {
+                            RelativeLayout.LayoutParams lpFeedback = new RelativeLayout.LayoutParams(
+                                    DensityUtils.dp2px(getActivity(), 60), DensityUtils.dp2px(getActivity(), 60));
+                            lpFeedback.leftMargin = v.getLeft();
+                            lpFeedback.topMargin = v.getTop();
+                            lpFeedback.setMargins(v.getLeft(), 0, 0, 0);
+                            v.setLayoutParams(lpFeedback);
+
+                        } else if ((Float.valueOf(pingMuHeight) - v.getTop()) < DensityUtils.dp2px(getActivity(), 110)) {
+                            RelativeLayout.LayoutParams lpFeedback = new RelativeLayout.LayoutParams(
+                                    DensityUtils.dp2px(getActivity(), 60), DensityUtils.dp2px(getActivity(), 60));
+                            lpFeedback.leftMargin = v.getLeft();
+                            lpFeedback.topMargin = v.getTop();
+                            lpFeedback.setMargins(v.getLeft(), Integer.valueOf(pingMuHeight) - DensityUtils.dp2px(getActivity(), 140), 0, 0);
+                            v.setLayoutParams(lpFeedback);
+
+                        } else {
+                            RelativeLayout.LayoutParams lpFeedback = new RelativeLayout.LayoutParams(
+                                    DensityUtils.dp2px(getActivity(), 60), DensityUtils.dp2px(getActivity(), 60));
+                            lpFeedback.leftMargin = v.getLeft();
+                            lpFeedback.topMargin = v.getTop();
+                            lpFeedback.setMargins(v.getLeft(), v.getTop(), 0, 0);
+                            v.setLayoutParams(lpFeedback);
+                            int lastMoveDx = Math.abs((int) event.getRawX() - startDownX);
+                            int lastMoveDy = Math.abs((int) event.getRawY() - startDownY);
+                            if (0 != lastMoveDx || 0 != lastMoveDy) {
+                                isIntercept = true;
+                            } else {
+                                isIntercept = false;
+                            }
+                        }
+
+                        adsorbAnim(v, event.getRawX(), event.getRawY());
+
+                        break;
+                }
+                return isIntercept;
+            }
+        });
     }
+
+
+    private void adsorbAnim(View view, float rawX, float rawY) {
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        int screenWidth = dm.widthPixels;
+
+        view.animate().setDuration(400)
+                .setInterpolator(new OvershootInterpolator())
+                .xBy(screenWidth - view.getX() - view.getWidth())
+                .start();
+
+    }
+
+
+    String pingMuHeight;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -192,6 +303,8 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
         initSM();
         initHuidiao();
 
+        pingMuHeight = DensityUtils.getScreenHeight(getActivity()) + "";
+        Log.i("view_00", pingMuHeight);
     }
 
     private void initData() {
@@ -346,14 +459,14 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
 
 //                        tv_tianqi_wendu.setText(zhuJiWenShiDu);
 
-                        if (dataBean.get(0).getMember_type().equals("1")||dataBean.get(0).getMember_type().equals("3")) {
+                        if (dataBean.get(0).getMember_type().equals("1") || dataBean.get(0).getMember_type().equals("3")) {
                             tv_family_name.setText(dataBean.get(0).getFamily_name());
                         } else {
                             tv_family_name.setText(dataBean.get(0).getFamily_name() + "(共享家庭)");
                         }
                         tv_device_num.setText(dataBean.get(0).getDevice_num() + "个设备");
 
-                        if (dataBean.get(0).getMember_type().equals("1")||dataBean.get(0).getMember_type().equals("3")) {
+                        if (dataBean.get(0).getMember_type().equals("1") || dataBean.get(0).getMember_type().equals("3")) {
                             PreferenceHelper.getInstance(getActivity()).putString(AppConfig.ZHINENGJIAJUGUANLIYUAN, "1");
                         } else {
                             PreferenceHelper.getInstance(getActivity()).putString(AppConfig.ZHINENGJIAJUGUANLIYUAN, "0");
@@ -410,7 +523,7 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                         PreferenceHelper.getInstance(getActivity()).putString(AppConfig.PEIWANG_FAMILYID, familyId);
                         String ty_family_id = dataBean.get(0).getTy_family_id();
                         if (TextUtils.isEmpty(ty_family_id)) {
-                            if (dataBean.get(0).getMember_type().equals("1")||dataBean.get(0).getMember_type().equals("3")) {
+                            if (dataBean.get(0).getMember_type().equals("1") || dataBean.get(0).getMember_type().equals("3")) {
                                 List<String> addRooms = new ArrayList<>();
                                 TuyaHomeSdk.getHomeManagerInstance().createHome(dataBean.get(0).getFamily_name(), 0, 0, "", addRooms, new ITuyaHomeResultCallback() {
                                     @Override

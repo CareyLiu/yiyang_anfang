@@ -593,7 +593,7 @@ public class ZnjjMqttMingLing {
     }
 
 
-    public void yaoKongQiPeiDui(String topic,String zhiLing, IMqttActionListener listener) {
+    public void yaoKongQiPeiDui(String topic, String zhiLing, IMqttActionListener listener) {
         if (!AndMqtt.getInstance().isConnect()) {
             UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
             return;
@@ -611,6 +611,32 @@ public class ZnjjMqttMingLing {
             return;
         }
         String zhiLing = mingLingMa;
+        AndMqtt.getInstance().publish(new MqttPublish()
+                .setMsg(zhiLing)
+                .setQos(2).setRetained(false)
+                .setTopic(topic), listener);
+    }
+
+
+    /**
+     * 示例:M231308yingjian_wifiabc12345.
+     * M23 命令码
+     * 13：表示Wi-Fi 名称长度
+     * 08:表示Wi-Fi密码长度
+     * yingjian_wifi：Wi-Fi名称示例
+     * abc12345：Wi-Fi密码示例
+     * .结束符
+     */
+    public void setActionOne(String str, IMqttActionListener listener) {
+
+        if (!AndMqtt.getInstance().isConnect()) {
+            UIHelper.ToastMessage(context, "未连接主机,请重新尝试");
+            return;
+        }
+
+        String zhiLing = "M02" + str;
+        Log.i("Rair", "M02  行为指令  " + str);
+        Log.i("Rair", zhiLing);
         AndMqtt.getInstance().publish(new MqttPublish()
                 .setMsg(zhiLing)
                 .setQos(2).setRetained(false)

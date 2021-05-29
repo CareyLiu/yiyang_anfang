@@ -189,6 +189,8 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
             public void call(Notice message) {
                 if (message.type == ConstanceValue.MSG_JIEBANG) {
                     finish();
+                }else if (message.type == ConstanceValue.MSG_NETWORK_CHANGE) {
+                    n9Thread.start();
                 }
             }
         }));

@@ -651,6 +651,10 @@ public class MyApplication extends MultiDexApplication {
                                 }
                             });
                         }
+
+                        Notice notice = new Notice();
+                        notice.type = ConstanceValue.MSG_NETWORK_CHANGE;
+                        RxBus.getDefault().sendRx(notice);
                     }
 
                     @Override

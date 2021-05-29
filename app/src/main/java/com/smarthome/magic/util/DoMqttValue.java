@@ -16,6 +16,7 @@ import com.smarthome.magic.config.PreferenceHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.internal.ListenerClass;
 import io.reactivex.exceptions.MissingBackpressureException;
 
 public class DoMqttValue {
@@ -42,7 +43,7 @@ public class DoMqttValue {
             case ZHINENGJIAJU:
                 //  收到的数据信息：  i01082.
 //                UIHelper.ToastMessage(context, "接收到的message信息： " + message);
-                if (message.contains("i")) {
+                if (message.charAt(0) == 'i') {
 
                     if (message.contains("_")) {
 
@@ -103,8 +104,6 @@ public class DoMqttValue {
                             }
                         });
                         thread.start();
-
-
                     }
 
                 } else if (message.contains("m0528")) {
@@ -123,6 +122,13 @@ public class DoMqttValue {
                     notice.type = ConstanceValue.MSG_WANNENGYAOKONGQI_CODE_PEIDUI;
                     notice.content = message;
                     RxBus.getDefault().sendRx(notice);
+                } else if (message.contains("m08")) {
+                    //接受到主机修改信息成功
+                    Notice notice = new Notice();
+                    notice.type = ConstanceValue.MSG_ZHUJIXIUGAIXINXI;
+                    notice.content = message;
+                    RxBus.getDefault().sendRx(notice);
+
                 }
                 break;
             case FENGNUAN:

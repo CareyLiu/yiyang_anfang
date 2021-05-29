@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:background="@color/trans"
             app:srlTextSizeTime="10sp"
-                app:srlTextSizeTitle="12sp" />
+            app:srlTextSizeTitle="12sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -248,7 +248,9 @@
                             android:textColor="#999999"
                             android:textSize="14sp" />
                     </RelativeLayout>
+
                     <RelativeLayout
+                        android:id="@+id/rl_wifi"
                         android:layout_width="match_parent"
                         android:layout_height="47dp"
                         android:layout_marginTop="1dp"
@@ -275,6 +277,7 @@
                             android:layout_marginRight="14dp"
                             android:src="@mipmap/push_gray_999" />
                     </RelativeLayout>
+
                     <RelativeLayout
                         android:id="@+id/rl_device_state"
                         android:layout_width="match_parent"
@@ -678,12 +681,12 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="14dp"
                         android:layout_marginTop="12dp"
-                        android:layout_marginRight="14dp">
+                        android:layout_marginRight="14dp"
+                        android:visibility="gone">
 
                         <ImageView
                             android:id="@+id/iv_tishi"

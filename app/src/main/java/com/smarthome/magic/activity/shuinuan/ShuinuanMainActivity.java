@@ -248,6 +248,8 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                     getData(msg);
                 } else if (message.type == ConstanceValue.MSG_JIEBANG) {
                     finish();
+                }else if (message.type == ConstanceValue.MSG_NETWORK_CHANGE) {
+                    getNs();
                 }
             }
         }));

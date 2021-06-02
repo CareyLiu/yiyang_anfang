@@ -124,4 +124,5 @@ public abstract class BaseFragment<T extends BasicPresenter, E extends BasicMode
         //根据 Tag 取消请求
         OkGo.getInstance().cancelTag(this);
     }
+
 }

@@ -979,10 +979,12 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
 
                             }
                         });
-                        tishiDialog.setTextContent("联网失败，请切换网络重新尝试");
+                        tishiDialog.setTextContent("主机配网失败，请切换网络重新尝试");
                         tishiDialog.setTextCancel("");
                         tishiDialog.setTextConfirm("确定");
                         tishiDialog.show();
+                        thread.interrupt();
+                        kaiGuanFlag = false;
                     }
 
 

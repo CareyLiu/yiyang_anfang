@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.billy.android.loading.Gloading;
+import com.lzy.okgo.OkGo;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.RxUtils;
@@ -116,5 +117,11 @@ public abstract class BaseFragment<T extends BasicPresenter, E extends BasicMode
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
 
+        //根据 Tag 取消请求
+        OkGo.getInstance().cancelTag(this);
+    }
 }

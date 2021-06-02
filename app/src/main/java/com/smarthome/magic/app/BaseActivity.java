@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 
 import com.billy.android.loading.Gloading;
 import com.gyf.barlibrary.ImmersionBar;
+import com.lzy.okgo.OkGo;
 import com.smarthome.magic.R;
 import com.smarthome.magic.basicmvp.BasicModel;
 import com.smarthome.magic.basicmvp.BasicPresenter;
@@ -120,7 +121,8 @@ public abstract class BaseActivity<T extends BasicPresenter, E extends BasicMode
         }
         rootView = null;
         AppManager.getAppManager().finishActivity(this);
-
+        //根据 Tag 取消请求
+        OkGo.getInstance().cancelTag(this);
     }
 
     /**
@@ -235,4 +237,5 @@ public abstract class BaseActivity<T extends BasicPresenter, E extends BasicMode
     public void setNotFullScreen() {
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
+
 }

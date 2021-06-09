@@ -127,6 +127,7 @@ public class LoginActivity extends BaseActivity {
         mEtPhone.setText(PreferenceHelper.getInstance(this).getString("user_phone", ""));
         String strToken = getIntent().getStringExtra("token_guoqi");
         if (strToken != null) {
+            //增加隐私校验
             TishiDialog tishiDialog = new TishiDialog(LoginActivity.this, 3, new TishiDialog.TishiDialogListener() {
                 @Override
                 public void onClickCancel(View v, TishiDialog dialog) {

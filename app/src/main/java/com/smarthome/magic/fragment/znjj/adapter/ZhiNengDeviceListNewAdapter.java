@@ -9,6 +9,7 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseViewHolder;
 import com.smarthome.magic.common.StringUtils;
+import com.smarthome.magic.common.UIHelper;
 import com.smarthome.magic.fragment.znjj.model.ZhiNengModel;
 import com.smarthome.magic.util.GlideShowImageUtils;
 

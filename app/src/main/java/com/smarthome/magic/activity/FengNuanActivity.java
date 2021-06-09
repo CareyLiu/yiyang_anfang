@@ -2556,7 +2556,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
             }
 
 
-            UIHelper.ToastMessage(mContext, "第" + count + "次执行,余数：" + count % 10);
+          //  UIHelper.ToastMessage(mContext, "第" + count + "次执行,余数：" + count % 10);
 
         }
     };

@@ -184,12 +184,13 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
             public void call(Notice message) {
                 if (message.type == ConstanceValue.MSG_JIEBANG) {
                     finish();
-                }else if (message.type == ConstanceValue.MSG_NETWORK_CHANGE) {
+                } else if (message.type == ConstanceValue.MSG_NETWORK_CHANGE) {
                     n9Thread.start();
                 }
             }
@@ -382,6 +383,11 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
         tvShuibeng.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (run==true){
+                    run = false;
+                    handler.removeCallbacks(myRunnable);
+                }
+
                 if (shuiBengValue.equals("a")) {
                     UIHelper.ToastMessage(mContext, "无水泵功能");
                     return;
@@ -440,6 +446,10 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
         tvYutongfeng.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (run==true){
+                    run = false;
+                    handler.removeCallbacks(myRunnable);
+                }
                 if (kongTiaoMoshiValue.equals("1") || dangWeiMoShiValue.equals("1") || bengYouValue.equals("1")) {
                     UIHelper.ToastMessage(mContext, "请关机后再执行预通风操作");
                     return;
@@ -470,6 +480,10 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
         tvZidongbengyou.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (run==true){
+                    run = false;
+                    handler.removeCallbacks(myRunnable);
+                }
                 if (kongTiaoMoshiValue.equals("1") || dangWeiMoShiValue.equals("1") || tongFengValue.equals("1")) {
                     UIHelper.ToastMessage(mContext, "请关机后再执行泵油操作");
                     return;
@@ -678,6 +692,12 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
                     switch (oper_open_close) {
                         case "1":
+
+                            if (run!=true){
+                                run = true;
+                                handler.post(myRunnable);
+                            }
+
                             tvShebeizhuangtai.setText("设备状态：挡位模式");
                             tvDangqianWenduOrDangwei.setText("当前挡位：" + oper_dang + "挡");
                             if (firstSetDangWei.equals("0")) {
@@ -729,6 +749,11 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
                             break;
                         case "2":
+                            if (run!=true){
+                                run = true;
+                                handler.post(myRunnable);
+                            }
+
                             if (firstSetKongTiao.equals("0")) {
                                 tvShedingWenduOrDangwei.setText("设定温度：" + oper_wendu_now + "℃");
                                 firstSetKongTiao = "1";
@@ -783,6 +808,11 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                             }
                             break;
                         case "3":
+                            if (run==true){
+                                run = false;
+                                handler.removeCallbacks(myRunnable);
+                            }
+
                             if (xunHuanN != null) {
                                 xunHuanNFlag = false;
                                 xunHuanN.interrupt();
@@ -843,6 +873,11 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
                             break;
                         case "4"://水泵开机
+                            if (run!=true){
+                                run = true;
+                                handler.post(myRunnable);
+                            }
+
                             //  tvShebeizhuangtai.setText("设备状态：水泵循环");
 //                            tvShuibeng.setTextColor(mContext.getResources().getColor(R.color.blue00fff));
 //                            tvShuibeng.setText("水泵已开机");
@@ -854,6 +889,11 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
                             break;
                         case "6":
+                            if (run!=true){
+                                run = true;
+                                handler.post(myRunnable);
+                            }
+
                             tvShebeizhuangtai.setText("设备状态：预泵油");
                             tvZidongbengyou.setTextColor(mContext.getResources().getColor(R.color.blue00fff));
                             bengYouValue = "1";
@@ -899,6 +939,11 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                             }
                             break;
                         case "7":
+                            if (run!=true){
+                                run = true;
+                                handler.post(myRunnable);
+                            }
+
                             tvShebeizhuangtai.setText("设备状态：预通风");
                             tvYutongfeng.setTextColor(mContext.getResources().getColor(R.color.blue00fff));
                             tongFengValue = "1";
@@ -955,6 +1000,10 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
                             break;
                         case "9":
+                            if (run==true){
+                                run = false;
+                                handler.removeCallbacks(myRunnable);
+                            }
                             tvShebeizhuangtai.setText("设备状态：关机中");
                             // mTvWd.setText("00");
                             // showLoadSuccess();
@@ -1610,7 +1659,6 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
         context.startActivity(intent);
     }
 
-    private Handler handler;
 
     public void setMqttZhiLing() {
 
@@ -1807,6 +1855,8 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                 MyApplication.mqttDingyue.remove(i);
             }
         }
+        handler.removeCallbacks(myRunnable);
+        run = false;
     }
 
     @Override
@@ -1814,6 +1864,11 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
         switch (v.getId()) {
             case R.id.iv_dangweimoshi:
+                if (run==true){
+                    run = false;
+                    handler.removeCallbacks(myRunnable);
+                }
+
                 if (kongTiaoMoshiValue.equals("1") || bengYouValue.equals("1") || tongFengValue.equals("1")) {
                     UIHelper.ToastMessage(mContext, "请关机后重新以挡位模式启动");
                     return false;
@@ -1832,6 +1887,10 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                 }
                 break;
             case R.id.iv_kongtiaomoshi:
+                if (run==true){
+                    run = false;
+                    handler.removeCallbacks(myRunnable);
+                }
                 if (dangWeiMoShiValue.equals("1") || bengYouValue.equals("1") || tongFengValue.equals("1")) {
                     UIHelper.ToastMessage(mContext, "请关机后重新以空调模式启动");
                     return false;
@@ -2461,5 +2520,45 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
 
     }
+
+    private boolean run = true;
+    private int count = 0;
+
+    private Handler handler = new Handler();
+
+    private Runnable myRunnable = new Runnable() {
+        public void run() {
+
+            if (run) {
+                handler.postDelayed(this, 1000);
+                count++;
+
+            }
+
+            if (count % 10 == 0 || count == 1) {
+                AndMqtt.getInstance().publish(new MqttPublish()
+                        .setMsg("N.")
+                        .setQos(2)
+                        .setTopic(CAR_CTROL)
+                        .setRetained(false), new IMqttActionListener() {
+                    @Override
+                    public void onSuccess(IMqttToken asyncActionToken) {
+                        //Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功" + " N9 我是在类里面订阅的");
+                        xunHuanCiShu = xunHuanCiShu + 1;
+                        // Log.i("xunhuancishu", "循环发送第" + xunHuanCiShu + "次");
+                    }
+
+                    @Override
+                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                        //Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+                    }
+                });
+            }
+
+
+            UIHelper.ToastMessage(mContext, "第" + count + "次执行,余数：" + count % 10);
+
+        }
+    };
 
 }

@@ -139,9 +139,11 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
         public boolean handleMessage(@NonNull Message msg) {
             switch (msg.what) {
                 case 1:
-                    if (isOnActivity) {
+                    if (isOnActivity&&isKaiji) {
                         getNsData();
                         Y.e("我执行了一次查询实时数据啦");
+                    }else {
+                        Y.e("我啥都没查询");
                     }
                     initHandlerNS();
                     break;
@@ -159,8 +161,8 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     @Override
     public void initImmersion() {
         mImmersionBar = ImmersionBar.with(this);
-        mImmersionBar.init();
         mImmersionBar.statusBarDarkFont(true);
+        mImmersionBar.init();
     }
 
     /**
@@ -178,12 +180,14 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
         init();
         initCcid();
         initHuidiao();
         registerKtMqtt();
         initSM();
+        initHandlerNS();
     }
 
     private void initSM() {
@@ -248,7 +252,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                     getData(msg);
                 } else if (message.type == ConstanceValue.MSG_JIEBANG) {
                     finish();
-                }else if (message.type == ConstanceValue.MSG_NETWORK_CHANGE) {
+                } else if (message.type == ConstanceValue.MSG_NETWORK_CHANGE) {
                     getNs();
                 }
             }
@@ -593,11 +597,6 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
 //
 //                }
 //            });
-
-
-            if (msg.length() != 58) {
-                initHandlerNS();
-            }
             isFirst = false;
         }
     }
@@ -625,7 +624,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     }
 
     private void dealGuzhang() {
-        String data = "M_s071";
+        String data = "M_s071.";
         AndMqtt.getInstance().publish(new MqttPublish()
                 .setMsg(data)
                 .setQos(2).setRetained(false)
@@ -972,7 +971,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     @Override
     public boolean onLongClick(View v) {
         if (!isZaixian) {
-            showTishiDialog();
+            chonglian();
             return false;
         } else {
             switch (v.getId()) {
@@ -1156,5 +1155,13 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
 
             }
         });
+    }
+
+    private void chonglian(){
+        if (handlerStart!=null){
+            handlerStart.removeMessages(1);
+        }
+
+        showTishiDialog();
     }
 }

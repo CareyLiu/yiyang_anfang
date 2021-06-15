@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +23,7 @@ import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
+
 import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
 import com.rairmmd.andmqtt.MqttSubscribe;
@@ -46,6 +48,7 @@ import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Notify;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.util.DoMqttValue;
 import com.smarthome.magic.util.SoundPoolUtils;
+
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
@@ -457,8 +460,8 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
                 if (tongFengValue.equals("0")) {
 
-                    lordingDialog.setTextMsg("正在开启预通风模式...");
-                    lordingDialog.show();
+//                    lordingDialog.setTextMsg("正在开启预通风模式...");
+//                    lordingDialog.show();
 
                     whatUWant = YUTONGFENGKAIJI;
                     yuTongFengKaiJiThread = new YuTongFengKaiJiThread();
@@ -466,9 +469,9 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
                 } else if (tongFengValue.equals("1")) {
                     //关闭预通风
-                    lordingDialog.setTextMsg("正在关机请稍后...");
-                    lordingDialog.show();
-
+//                    lordingDialog.setTextMsg("正在关机请稍后...");
+//                    lordingDialog.show();
+                    whatUWant = YUTONGFENGGUANJI;
                     yuTongFengGuanJiThread = new YuTongFengGuanJiThread();
                     yuTongFengGuanJiThread.start();
 
@@ -490,16 +493,16 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                 }
 
                 if (bengYouValue.equals("0")) {
-                    lordingDialog.setTextMsg("正在开启预泵油，请稍后");
-                    lordingDialog.show();
+//                    lordingDialog.setTextMsg("正在开启预泵油，请稍后");
+//                    lordingDialog.show();
                     whatUWant = BENGYOUKAIJI;
                     bengYouKaiJiThread = new BengYouKaiJiThread();
                     bengYouKaiJiThread.start();
 
                 } else if (bengYouValue.equals("1")) {
                     //关闭泵油
-                    lordingDialog.setTextMsg("正在关机请稍后...");
-                    lordingDialog.show();
+//                    lordingDialog.setTextMsg("正在关机请稍后...");
+//                    lordingDialog.show();
                     whatUWant = BENGYOUGUANJI;
                     bengYouGuanJiThread = new BengYouGuanJiThread();
                     bengYouGuanJiThread.start();
@@ -899,38 +902,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                             bengYouValue = "1";
 
                             if (whatUWant.equals(BENGYOUKAIJI)) {
-                                //  SoundPoolUtils.soundPool(mContext, R.raw.yikaiji);
-                                //开启泵油
-                                tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
-                                    @Override
-                                    public void onClickCancel(View v, TishiDialog dialog) {
 
-                                    }
-
-                                    @Override
-                                    public void onClickConfirm(View v, TishiDialog dialog) {
-                                        if (bengYouValue.equals("1")) {
-                                            //关闭泵油
-                                            tishiDialog.setTextConfirm("正在停止...");
-                                            whatUWant = BENGYOUGUANJI;
-                                            bengYouGuanJiThread = new BengYouGuanJiThread();
-                                            bengYouGuanJiThread.start();
-                                        }
-
-                                    }
-
-                                    @Override
-                                    public void onDismiss(TishiDialog dialog) {
-
-                                    }
-                                });
-                                tishiDialog.setTextTitle("预泵油模式运行中");
-                                tishiDialog.setTextCancel("");
-                                tishiDialog.setDismissAfterClick(false);
-                                tishiDialog.setTextContent("正在泵油");
-                                tishiDialog.setTextConfirm("停止泵油");
-                                tishiDialog.setCancelable(true);
-                                tishiDialog.show();
                                 whatUWant = "";
 
                                 if (bengYouKaiJiThread != null) {
@@ -958,41 +930,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 //                            }
 
                             if (whatUWant.equals(YUTONGFENGKAIJI)) {
-                                SoundPoolUtils.soundPool(mContext, R.raw.yikaiji);
-                                //  SoundPoolUtils.soundPool(mContext, R.raw.yikaiji);
-                                //开启预通风
-                                tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
-                                    @Override
-                                    public void onClickCancel(View v, TishiDialog dialog) {
 
-                                    }
-
-                                    @Override
-                                    public void onClickConfirm(View v, TishiDialog dialog) {
-                                        if (tongFengValue.equals("1")) {
-                                            //关闭预通风
-                                            tishiDialog.setTextConfirm("正在停止...");
-                                            whatUWant = YUTONGFENGGUANJI;
-                                            yuTongFengGuanJiThread = new YuTongFengGuanJiThread();
-                                            yuTongFengGuanJiThread.start();
-
-                                        }
-
-                                    }
-
-                                    @Override
-                                    public void onDismiss(TishiDialog dialog) {
-
-                                    }
-                                });
-                                tishiDialog.setTextTitle("预通风模式运行中");
-
-                                tishiDialog.setTextCancel("");
-                                tishiDialog.setDismissAfterClick(false);
-                                tishiDialog.setTextContent("正在通风");
-                                tishiDialog.setTextConfirm("开启中");
-                                tishiDialog.setCancelable(true);
-                                tishiDialog.show();
 
                                 whatUWant = "";
                                 yuTongFengKaiJiThread.interrupt();
@@ -2105,9 +2043,19 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
 
                             if (i == 0) {
-                                lordingDialog.setTextMsg("正在关机请稍后...");
-                                lordingDialog.show();
+                                //   lordingDialog.setTextMsg("正在关机请稍后...");
+                                //   lordingDialog.show();
                                 SoundPoolUtils.soundPool(mContext, R.raw.guanjizhong);
+
+                                ivKaiji.setVisibility(View.GONE);
+                                ivGuanji.setVisibility(View.VISIBLE);
+
+                                ivDangweimoshi.setBackgroundResource(R.mipmap.fengnuan_button_dangwei_nor);
+                                ivKongtiaomoshi.setBackgroundResource(R.mipmap.fengnuan_button_kongtiao_nor);
+
+                                tvYutongfeng.setTextColor(mContext.getResources().getColor(R.color.gray999999));
+                                tvZidongbengyou.setTextColor(mContext.getResources().getColor(R.color.gray999999));
+
                             }
                             //UIHelper.ToastMessage(mContext, "第" + String.valueOf(i) + "次发送");
                             i = i + 1;
@@ -2159,9 +2107,24 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
                             if (i == 0) {
                                 UIHelper.ToastMessage(mContext, "正在以档位模式");
-                                lordingDialog.setTextMsg("正在以" + "档位模式" + "开机请稍后...");
-                                lordingDialog.show();
+//                                lordingDialog.setTextMsg("正在以" + "档位模式" + "开机请稍后...");
+//                                lordingDialog.show();
                                 SoundPoolUtils.soundPool(mContext, R.raw.dangwei);
+
+                                ivKaiji.setVisibility(View.VISIBLE);
+                                ivGuanji.setVisibility(View.GONE);
+
+                                ivDangweimoshi.setBackgroundResource(R.mipmap.fengnuan_button_dangwei_sel);
+                                ivKongtiaomoshi.setBackgroundResource(R.mipmap.fengnuan_button_kongtiao_nor);
+
+                                tvZuidiwendu.setText("1挡");
+                                tvZuigaowendu.setText("5挡");
+
+                                dangWeiMoShiValue = "1";
+
+
+                                seekBar1.setVisibility(View.VISIBLE);
+                                seekBarKongtiao.setVisibility(View.GONE);
                             }
 
                             //UIHelper.ToastMessage(mContext, "第" + String.valueOf(i) + "次发送");
@@ -2212,9 +2175,20 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                             //UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
 
                             if (i == 0) {
-                                lordingDialog.setTextMsg("正在以" + "空调模式" + "开机请稍后...");
-                                lordingDialog.show();
+                                //  lordingDialog.setTextMsg("正在以" + "空调模式" + "开机请稍后...");
+                                //  lordingDialog.show();
                                 SoundPoolUtils.soundPool(mContext, R.raw.kongtiao);
+
+                                ivKaiji.setVisibility(View.VISIBLE);
+                                ivGuanji.setVisibility(View.GONE);
+
+                                seekBar1.setVisibility(View.GONE);
+                                seekBarKongtiao.setVisibility(View.VISIBLE);
+                                tvZuidiwendu.setText("0℃");
+                                tvZuigaowendu.setText("32℃");
+                                tvShebeizhuangtai.setText("设备状态：空调模式");
+                                ivDangweimoshi.setBackgroundResource(R.mipmap.fengnuan_button_dangwei_nor);
+                                ivKongtiaomoshi.setBackgroundResource(R.mipmap.fengnuan_button_kongtiao_sel);
                             }
 
                             //UIHelper.ToastMessage(mContext, "第" + String.valueOf(i) + "次发送");
@@ -2266,10 +2240,18 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
 
                             if (i == 0) {
-                                lordingDialog.setTextMsg("正在关机请稍后...");
-                                lordingDialog.show();
+                                //  lordingDialog.setTextMsg("正在关机请稍后...");
+                                //  lordingDialog.show();
                                 whatUWant = KONGTIAOGUANJI;
                                 SoundPoolUtils.soundPool(mContext, R.raw.guanjizhong);
+
+                                ivKaiji.setVisibility(View.GONE);
+                                ivGuanji.setVisibility(View.VISIBLE);
+
+                                ivDangweimoshi.setBackgroundResource(R.mipmap.fengnuan_button_dangwei_nor);
+                                ivKongtiaomoshi.setBackgroundResource(R.mipmap.fengnuan_button_kongtiao_nor);
+                                tvYutongfeng.setTextColor(mContext.getResources().getColor(R.color.gray999999));
+                                tvZidongbengyou.setTextColor(mContext.getResources().getColor(R.color.gray999999));
 
                             }
 
@@ -2327,6 +2309,51 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                                 SoundPoolUtils.soundPool(mContext, R.raw.yutongfeng);
                                 whatUWant = YUTONGFENGKAIJI;
 
+                                ivKaiji.setVisibility(View.GONE);
+                                ivGuanji.setVisibility(View.VISIBLE);
+
+                                ivDangweimoshi.setBackgroundResource(R.mipmap.fengnuan_button_dangwei_nor);
+                                ivKongtiaomoshi.setBackgroundResource(R.mipmap.fengnuan_button_kongtiao_nor);
+
+                                tvYutongfeng.setTextColor(mContext.getResources().getColor(R.color.gray999999));
+                                tvZidongbengyou.setTextColor(mContext.getResources().getColor(R.color.gray999999));
+
+                                SoundPoolUtils.soundPool(mContext, R.raw.yikaiji);
+                                //  SoundPoolUtils.soundPool(mContext, R.raw.yikaiji);
+                                //开启预通风
+                                tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                                    @Override
+                                    public void onClickCancel(View v, TishiDialog dialog) {
+
+                                    }
+
+                                    @Override
+                                    public void onClickConfirm(View v, TishiDialog dialog) {
+                                        if (tongFengValue.equals("1")) {
+                                            //关闭预通风
+                                            tishiDialog.setTextConfirm("正在停止...");
+                                            whatUWant = YUTONGFENGGUANJI;
+                                            yuTongFengGuanJiThread = new YuTongFengGuanJiThread();
+                                            yuTongFengGuanJiThread.start();
+
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onDismiss(TishiDialog dialog) {
+
+                                    }
+                                });
+                                tishiDialog.setTextTitle("预通风模式运行中");
+
+                                tishiDialog.setTextCancel("");
+                                tishiDialog.setDismissAfterClick(false);
+                                tishiDialog.setTextContent("正在通风");
+                                tishiDialog.setTextConfirm("开启中");
+                                tishiDialog.setCancelable(true);
+                                tishiDialog.show();
+
                             }
                             i = i + 1;
                             //UIHelper.ToastMessage(mContext, "第" + String.valueOf(i) + "次发送");
@@ -2369,8 +2396,23 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                         @Override
                         public void onSuccess(IMqttToken asyncActionToken) {
                             Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
+
+                            if (i==0){
+                                ivKaiji.setVisibility(View.GONE);
+                                ivGuanji.setVisibility(View.VISIBLE);
+
+                                ivDangweimoshi.setBackgroundResource(R.mipmap.fengnuan_button_dangwei_nor);
+                                ivKongtiaomoshi.setBackgroundResource(R.mipmap.fengnuan_button_kongtiao_nor);
+
+                                tvYutongfeng.setTextColor(mContext.getResources().getColor(R.color.gray999999));
+                                tvZidongbengyou.setTextColor(mContext.getResources().getColor(R.color.gray999999));
+
+
+                            }
                             i = i + 1;
                             //UIHelper.ToastMessage(mContext, "第" + String.valueOf(i) + "次发送");
+
+
                         }
 
                         @Override
@@ -2413,6 +2455,49 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                             if (i == 0) {
                                 SoundPoolUtils.soundPool(mContext, R.raw.yubengyou);
                                 whatUWant = BENGYOUKAIJI;
+
+                                ivKaiji.setVisibility(View.GONE);
+                                ivGuanji.setVisibility(View.VISIBLE);
+
+                                ivDangweimoshi.setBackgroundResource(R.mipmap.fengnuan_button_dangwei_nor);
+                                ivKongtiaomoshi.setBackgroundResource(R.mipmap.fengnuan_button_kongtiao_nor);
+
+                                tvYutongfeng.setTextColor(mContext.getResources().getColor(R.color.gray999999));
+                                tvZidongbengyou.setTextColor(mContext.getResources().getColor(R.color.gray999999));
+
+
+                                //  SoundPoolUtils.soundPool(mContext, R.raw.yikaiji);
+                                //开启泵油
+                                tishiDialog = new TishiDialog(mContext, 3, new TishiDialog.TishiDialogListener() {
+                                    @Override
+                                    public void onClickCancel(View v, TishiDialog dialog) {
+
+                                    }
+
+                                    @Override
+                                    public void onClickConfirm(View v, TishiDialog dialog) {
+                                        if (bengYouValue.equals("1")) {
+                                            //关闭泵油
+                                            tishiDialog.setTextConfirm("正在停止...");
+                                            whatUWant = BENGYOUGUANJI;
+                                            bengYouGuanJiThread = new BengYouGuanJiThread();
+                                            bengYouGuanJiThread.start();
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onDismiss(TishiDialog dialog) {
+
+                                    }
+                                });
+                                tishiDialog.setTextTitle("预泵油模式运行中");
+                                tishiDialog.setTextCancel("");
+                                tishiDialog.setDismissAfterClick(false);
+                                tishiDialog.setTextContent("正在泵油");
+                                tishiDialog.setTextConfirm("停止泵油");
+                                tishiDialog.setCancelable(true);
+                                tishiDialog.show();
                             }
                             i = i + 1;
                             //UIHelper.ToastMessage(mContext, "第" + String.valueOf(i) + "次发送");
@@ -2453,13 +2538,20 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                             .setQos(2).setRetained(false)
                             .setTopic(CAR_CTROL), new IMqttActionListener() {
                         @Override
-                            public void onSuccess(IMqttToken asyncActionToken) {
+                        public void onSuccess(IMqttToken asyncActionToken) {
                             Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
                             //  UIHelper.ToastMessage(WindHeaterActivity.this, "指令发送成功,等待服务器响应", Toast.LENGTH_SHORT);
 
-//                            if (i == 0) {
-//                                SoundPoolUtils.soundPool(mContext, R.raw.guanjizhong);
-//                            }
+                            if (i == 0) {
+                                ivKaiji.setVisibility(View.GONE);
+                                ivGuanji.setVisibility(View.VISIBLE);
+
+                                ivDangweimoshi.setBackgroundResource(R.mipmap.fengnuan_button_dangwei_nor);
+                                ivKongtiaomoshi.setBackgroundResource(R.mipmap.fengnuan_button_kongtiao_nor);
+
+                                tvYutongfeng.setTextColor(mContext.getResources().getColor(R.color.gray999999));
+                                tvZidongbengyou.setTextColor(mContext.getResources().getColor(R.color.gray999999));
+                            }
 
                             i = i + 1;
                             // UIHelper.ToastMessage(mContext, "第" + String.valueOf(i) + "次发送");
@@ -2534,7 +2626,6 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 //                count++;
 //
 //            }
-//
 //            if (count % 5 == 0 || count == 1) {
 //                AndMqtt.getInstance().publish(new MqttPublish()
 //                        .setMsg("N.")
@@ -2556,7 +2647,8 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 //            }
 //
 //
-//          //  UIHelper.ToastMessage(mContext, "第" + count + "次执行,余数：" + count % 10);
+//           // UIHelper.ToastMessage(mContext, "第" + count + "次执行,余数：" + count % 10);
+//
 //
 //        }
 //    };

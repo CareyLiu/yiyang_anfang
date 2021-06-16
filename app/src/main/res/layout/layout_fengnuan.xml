@@ -15,6 +15,7 @@
 
 
         <RelativeLayout
+            android:layout_marginLeft="5pt"
             android:id="@+id/rl_back"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">

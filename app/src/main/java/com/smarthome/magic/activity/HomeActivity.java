@@ -590,30 +590,35 @@ public class HomeActivity extends BaseActivity {
         Activity currentActivity = AppManager.getAppManager().currentActivity();
         if (currentActivity != null) {
             if (!currentActivity.getClass().getSimpleName().equals(DiagnosisActivity.class.getSimpleName())) {
-                MyCarCaoZuoDialog_Notify myCarCaoZuoDialog_notify = new MyCarCaoZuoDialog_Notify(getAppContext(), new MyCarCaoZuoDialog_Notify.OnDialogItemClickListener() {
+                TishiDialog myCarCaoZuoDialog_notify = new TishiDialog(HomeActivity.this, 1, new TishiDialog.TishiDialogListener() {
+
                     @Override
-                    public void clickLeft() {
-                        // player.stop();
+                    public void onClickCancel(View v, TishiDialog dialog) {
                         if (SoundPoolUtils.soundPool != null) {
                             SoundPoolUtils.soundPool.release();
                         }
-
                     }
 
                     @Override
-                    public void clickRight() {
+                    public void onClickConfirm(View v, TishiDialog dialog) {
                         DiagnosisActivity.actionStart(HomeActivity.this, alarmClass);
                         //SoundPoolUtils.soundPool.release();
                         if (SoundPoolUtils.soundPool != null) {
                             SoundPoolUtils.soundPool.release();
                         }
+                    }
+
+                    @Override
+                    public void onDismiss(TishiDialog dialog) {
 
                     }
                 }
+
                 );
 
-                myCarCaoZuoDialog_notify.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG);
+               // myCarCaoZuoDialog_notify.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG);
                 myCarCaoZuoDialog_notify.show();
+
                 myCarCaoZuoDialog_notify.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {

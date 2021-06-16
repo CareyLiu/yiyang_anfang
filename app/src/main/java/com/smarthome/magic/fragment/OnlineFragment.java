@@ -1,7 +1,6 @@
 package com.smarthome.magic.fragment;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,8 +20,6 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.BindBoxActivity;
 import com.smarthome.magic.activity.FengNuanActivity;
 import com.smarthome.magic.activity.shuinuan.ShuinuanMainActivity;
-import com.smarthome.magic.activity.shuinuan.Y;
-import com.smarthome.magic.activity.xiupeichang.XiupeichangShangActivity;
 import com.smarthome.magic.activity.zckt.AirConditionerActivity;
 import com.smarthome.magic.adapter.CarList1Adapter;
 import com.smarthome.magic.adapter.SheBeiListAdapter;
@@ -39,7 +36,6 @@ import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.BangdingFailDialog;
-import com.smarthome.magic.dialog.TianJiaSheBeiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.SheBeiLieBieListModel;
 import com.smarthome.magic.model.SheBeiModel;
@@ -60,7 +56,6 @@ import butterknife.Unbinder;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-import static com.smarthome.magic.config.MyApplication.getCcid;
 import static com.smarthome.magic.config.MyApplication.getServer_id;
 
 

@@ -136,10 +136,19 @@ public class ScanAddCarActivity extends BaseActivity implements QRCodeView.Deleg
             addSheBei(result);
         } else {
             BangdingFailDialog dialog = new BangdingFailDialog(mContext);
-            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            dialog.setClick(new BangdingFailDialog.BangdingClick() {
                 @Override
-                public void onDismiss(DialogInterface dialog) {
+                public void close() {
+                    Notice notice = new Notice();
+                    notice.type = ConstanceValue.MSG_ADD_CHELIANG_SUCCESS;
+                    sendRx(notice);
                     finish();
+                }
+
+                @Override
+                public void jixu() {
+                    mQRCodeView.startSpot();
+                    mQRCodeView.setDelegate(ScanAddCarActivity.this);
                 }
             });
             dialog.setTextContent("您的设备码不正确");
@@ -149,7 +158,8 @@ public class ScanAddCarActivity extends BaseActivity implements QRCodeView.Deleg
 
     public void addSheBei(String ccid) {
         Map<String, String> map = new HashMap<>();
-        map.put("code", "03509");
+        map.put("code", "03509");//正式的
+//        map.put("code", "03519");//测试用
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
         map.put("ccid", ccid);
@@ -213,33 +223,14 @@ public class ScanAddCarActivity extends BaseActivity implements QRCodeView.Deleg
         mQRCodeView.startCamera();
     }
 
-    /**
-     * 扫描结果对话框
-     *
-     * @param msg
-     */
-    public void showDialog(final String msg) {
-        new AlertDialog.Builder(ScanAddCarActivity.this).setTitle("扫描结果").setMessage(msg)
-                .setNegativeButton("返回", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        waitdialog.dismiss();
-                        dialog.dismiss();
-                        mQRCodeView.startSpotAndShowRect();
-                    }
-                }).show();
-    }
-
-
     @OnClick({R.id.capture_flash})
     public void onClick(View view) {
         switch (view.getId()) {
-
             case R.id.capture_flash:
                 light();
                 break;
         }
     }
-
 
     @Override
     protected void onStop() {
@@ -265,7 +256,9 @@ public class ScanAddCarActivity extends BaseActivity implements QRCodeView.Deleg
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //imm.hideSoftInputFromWindow(findViewById(R.id.cl_layout).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                Notice notice = new Notice();
+                notice.type = ConstanceValue.MSG_ADD_CHELIANG_SUCCESS;
+                sendRx(notice);
                 finish();
             }
         });

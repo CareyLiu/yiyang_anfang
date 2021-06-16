@@ -15,11 +15,15 @@ import com.smarthome.magic.R;
 import com.smarthome.magic.activity.chelianwang.ScanAddCarActivity;
 import com.smarthome.magic.activity.saoma.ScanActivity;
 import com.smarthome.magic.app.BaseActivity;
+import com.smarthome.magic.app.ConstanceValue;
+import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.util.AppToast;
 
 import java.util.List;
 
 import pub.devrel.easypermissions.EasyPermissions;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * Created by Sl on 2019/6/18.
@@ -49,6 +53,15 @@ public class BindBoxActivity extends BaseActivity implements View.OnClickListene
         mRlScanAdd.setOnClickListener(this);
         mRlHandAdd = (RelativeLayout) findViewById(R.id.rl_hand_add);
         mRlHandAdd.setOnClickListener(this);
+
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_ADD_CHELIANG_SUCCESS) {
+                    finish();
+                }
+            }
+        }));
     }
 
     @Override
@@ -114,7 +127,6 @@ public class BindBoxActivity extends BaseActivity implements View.OnClickListene
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //imm.hideSoftInputFromWindow(findViewById(R.id.cl_layout).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 finish();
             }
         });

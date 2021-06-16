@@ -277,14 +277,20 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
             if (sn_state.equals("0") || sn_state.equals("3")) {
                 if (shuibeng_state.equals("1") && youbeng_state.equals("2")) {
                     shubengIson = true;
+                    shoubengisdianhou = true;
+                    tv_shebei_state.setText("加热器状态：水泵模式");
                 } else {
                     shubengIson = false;
+                    shoubengisdianhou = false;
                 }
 
                 if (youbeng_state.equals("1") && shuibeng_state.equals("2")) {
                     youbengIson = true;
+                    youbengIsdianhou = true;
+                    tv_shebei_state.setText("加热器状态：油泵模式");
                 } else {
                     youbengIson = false;
+                    youbengIsdianhou = false;
                 }
             }
 
@@ -332,20 +338,12 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                 case "1"://开机中
                 case "2"://加热中
                 case "4"://循环水
-                    iv_shuinuan_kaijie.setVisibility(View.VISIBLE);
-                    iv_shuinuan_guanji.setVisibility(View.GONE);
-                    tv_shuinuan_kaiji.setTextColor(Y.getColor(R.color.text_color_blue));
-                    tv_shuinuan_guanji.setTextColor(Y.getColor(R.color.white));
-                    rv_shuinuan_kaiji.setSelected(true);
-                    rv_shuinuan_guanji.setSelected(false);
                     isKaiji = true;
-                    tv_shebei_state.setText("加热器状态：开机");
-                    iv_heater_host.setBackgroundResource(R.drawable.shuinuan_kaiji);
-                    animationDrawable = (AnimationDrawable) iv_heater_host.getBackground();
-                    animationDrawable.start();
+                    setUiKaiji();
                     break;
                 case "0"://关机中
                 case "3"://待机中
+                    isKaiji = false;
                     setUiGuanji();
                     break;
             }
@@ -670,11 +668,13 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                             showTishiDialog();
                         } else {
                             if (time == 5 || time == 10 || time == 15 || time == 20 || time == 25) {
+                                isCanGetNs = false;
                                 getNs();
                             }
                             initHandlerStart();
                         }
                     } else {
+                        isCanGetNs = true;
                         time = 0;
                     }
                     break;
@@ -709,13 +709,9 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                             isCanGetNs = true;
                             shoubengisdianhou = !shoubengisdianhou;
                             if (shoubengisdianhou) {
-                                tv_shuinuan_shuibeng.setText("水泵已开启");
-                                tv_shebei_state.setText("加热器状态：水泵模式");
-                                tv_shuinuan_shuibeng.setTextColor(Y.getColor(R.color.text_color_blue));
+                                setShuibengUiKai();
                             } else {
-                                tv_shuinuan_shuibeng.setText("水泵已关闭");
-                                tv_shebei_state.setText("加热器状态：关机");
-                                tv_shuinuan_shuibeng.setTextColor(Y.getColor(R.color.text_color_9));
+                                setShuibengUiGuan();
                             }
                             time = 0;
                         } else {
@@ -735,13 +731,9 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                             isCanGetNs = true;
                             youbengIsdianhou = !youbengIsdianhou;
                             if (youbengIsdianhou) {
-                                tv_shuinuan_youbeng.setText("油泵已开启");
-                                tv_shebei_state.setText("加热器状态：油泵模式");
-                                tv_shuinuan_youbeng.setTextColor(Y.getColor(R.color.text_color_blue));
+                                youbengUiKai();
                             } else {
-                                tv_shuinuan_youbeng.setText("油泵已关闭");
-                                tv_shebei_state.setText("加热器状态：关机");
-                                tv_shuinuan_youbeng.setTextColor(Y.getColor(R.color.text_color_9));
+                                youbengUiGuan();
                             }
                             time = 0;
                         } else {
@@ -878,21 +870,29 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
         initHandlerYoubeng();
         if (youbengIsdianhou) {
             typeMingling = 4;
-            youbengIsdianhou = false;
             SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_youbeng_off);
             sendMingling();
-            tv_shuinuan_youbeng.setText("油泵已关闭");
-            tv_shebei_state.setText("加热器状态：关机");
-            tv_shuinuan_youbeng.setTextColor(Y.getColor(R.color.text_color_9));
+            youbengUiGuan();
         } else {
             typeMingling = 3;
-            youbengIsdianhou = true;
             SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_youbeng_on);
             sendMingling();
-            tv_shuinuan_youbeng.setText("油泵已开启");
-            tv_shebei_state.setText("加热器状态：油泵模式");
-            tv_shuinuan_youbeng.setTextColor(Y.getColor(R.color.text_color_blue));
+            youbengUiKai();
         }
+    }
+
+    private void youbengUiGuan() {
+        youbengIsdianhou = false;
+        tv_shuinuan_youbeng.setText("油泵已关闭");
+        tv_shebei_state.setText("加热器状态：关机");
+        tv_shuinuan_youbeng.setTextColor(Y.getColor(R.color.text_color_9));
+    }
+
+    private void youbengUiKai() {
+        youbengIsdianhou = true;
+        tv_shuinuan_youbeng.setText("油泵已开启");
+        tv_shebei_state.setText("加热器状态：油泵模式");
+        tv_shuinuan_youbeng.setTextColor(Y.getColor(R.color.text_color_blue));
     }
 
     private void shuibeng() {
@@ -909,21 +909,29 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
         initHandlerShuibeng();
         if (shoubengisdianhou) {
             typeMingling = 6;
-            shoubengisdianhou = false;
             SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_shuibeng_off);
             sendMingling();
-            tv_shuinuan_shuibeng.setText("水泵已关闭");
-            tv_shebei_state.setText("加热器状态：关机");
-            tv_shuinuan_shuibeng.setTextColor(Y.getColor(R.color.text_color_9));
+            setShuibengUiGuan();
         } else {
             typeMingling = 5;
-            shoubengisdianhou = true;
             SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_shuibeng_on);
             sendMingling();
-            tv_shuinuan_shuibeng.setText("水泵已开启");
-            tv_shebei_state.setText("加热器状态：水泵模式");
-            tv_shuinuan_shuibeng.setTextColor(Y.getColor(R.color.text_color_blue));
+            setShuibengUiKai();
         }
+    }
+
+    private void setShuibengUiGuan() {
+        shoubengisdianhou = false;
+        tv_shuinuan_shuibeng.setText("水泵已关闭");
+        tv_shebei_state.setText("加热器状态：关机");
+        tv_shuinuan_shuibeng.setTextColor(Y.getColor(R.color.text_color_9));
+    }
+
+    private void setShuibengUiKai() {
+        shoubengisdianhou = true;
+        tv_shuinuan_shuibeng.setText("水泵已开启");
+        tv_shebei_state.setText("加热器状态：水泵模式");
+        tv_shuinuan_shuibeng.setTextColor(Y.getColor(R.color.text_color_blue));
     }
 
     private void guanji() {
@@ -932,7 +940,6 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
         }
 
         initHandlerClick();
-        iskaijiDianhou = false;
         SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_start_off);
         typeMingling = 2;
         sendMingling();
@@ -940,15 +947,17 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     }
 
     private void setUiGuanji() {
+        iskaijiDianhou = false;
         iv_shuinuan_kaijie.setVisibility(View.GONE);
         iv_shuinuan_guanji.setVisibility(View.VISIBLE);
         tv_shuinuan_kaiji.setTextColor(Y.getColor(R.color.white));
         tv_shuinuan_guanji.setTextColor(Y.getColor(R.color.text_color_blue));
         rv_shuinuan_kaiji.setSelected(false);
         rv_shuinuan_guanji.setSelected(true);
-        isKaiji = false;
-        tv_shebei_state.setText("加热器状态：关机");
         iv_heater_host.setBackgroundResource(R.drawable.shuinuan_guanji);
+        if (!youbengIson && !shubengIson) {
+            tv_shebei_state.setText("加热器状态：关机");
+        }
     }
 
     private void kaiji() {
@@ -967,7 +976,6 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
         }
 
         initHandlerClick();
-        iskaijiDianhou = true;
         SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_start_on);
         typeMingling = 1;
         sendMingling();
@@ -975,13 +983,13 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     }
 
     private void setUiKaiji() {
+        iskaijiDianhou = true;
         iv_shuinuan_kaijie.setVisibility(View.VISIBLE);
         iv_shuinuan_guanji.setVisibility(View.GONE);
         tv_shuinuan_kaiji.setTextColor(Y.getColor(R.color.text_color_blue));
         tv_shuinuan_guanji.setTextColor(Y.getColor(R.color.white));
         rv_shuinuan_kaiji.setSelected(true);
         rv_shuinuan_guanji.setSelected(false);
-        isKaiji = true;
         tv_shebei_state.setText("加热器状态：开机");
         iv_heater_host.setBackgroundResource(R.drawable.shuinuan_kaiji);
         animationDrawable = (AnimationDrawable) iv_heater_host.getBackground();
@@ -1116,7 +1124,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
 
     private void initHandlerNS() {
         Message message = handlerTime10.obtainMessage(1);
-        handlerTime10.sendMessageDelayed(message, 10000);
+        handlerTime10.sendMessageDelayed(message, 30000);
     }
 
     @Override

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,8 +17,6 @@ import com.rairmmd.andmqtt.MqttSubscribe;
 import com.smarthome.magic.R;
 import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
-import com.smarthome.magic.dialog.newdia.TishiDialog;
-
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
@@ -71,6 +68,8 @@ public class ShuinuanZhuangtaiActivity extends ShuinuanBaseNewActivity {
     TextView tvHaibagaodu;
     @BindView(R.id.tv_hanyangliang)
     TextView tvHanyangliang;
+    @BindView(R.id.tv_xinhao)
+    TextView tvXinhao;
 
     @Override
     public void initImmersion() {
@@ -126,22 +125,38 @@ public class ShuinuanZhuangtaiActivity extends ShuinuanBaseNewActivity {
             String youbeng_state = msg.substring(8, 9);//油泵状态  1.工作中2.待机中
             String fengji_state = msg.substring(9, 10);//风机状态  1.工作中2.待机中
             String dianyan = (Y.getInt(msg.substring(10, 14)) / 10.0f) + "";//电压  0253 = 25.3
-            String fengjizhuansu = msg.substring(14, 19);//风机转速   13245
+            String fengjizhuansu = Y.getInt(msg.substring(14, 19)) + "";//风机转速   13245
             String jairesaigonglv = (Y.getInt(msg.substring(19, 23)) / 10.0f) + "";// 加热塞功率  0264=26.4
             String youbenggonglv = (Y.getInt(msg.substring(23, 27)) / 10.0f) + "";// 油泵频率  0264=26.4
-            String rushukowendu = (Y.getInt(msg.substring(27, 30)) - 50) + "";// 入水口温度（℃）  -50至150（000 = -50，100 = 50）
-            String chushuikowendu = (Y.getInt(msg.substring(30, 33)) - 50) + "";// 出水口温度（℃）  -50至150（000 = -50，100 = 50）
-            String weiqiwendu = (Y.getInt(msg.substring(33, 37)) - 50) + "";// 尾气温度（℃）  -50至2000（000 = -50，100 = 50）
+
+            int rushukowenduInt = (Y.getInt(msg.substring(27, 30)) - 50);
+            if (rushukowenduInt <= 0) {
+                rushukowenduInt = 0;
+            }
+            String rushukowendu = rushukowenduInt + "";// 入水口温度（℃）  -50至150（000 = -50，100 = 50）
+
+            int chushuikowenduInt = (Y.getInt(msg.substring(30, 33)) - 50);
+            if (chushuikowenduInt <= 0) {
+                chushuikowenduInt = 0;
+            }
+            String chushuikowendu = chushuikowenduInt + "";// 出水口温度（℃）  -50至150（000 = -50，100 = 50）
+
+            int weiqiwenduInt = (Y.getInt(msg.substring(33, 37)) - 100);
+            if (weiqiwenduInt <= 0) {
+                weiqiwenduInt = 0;
+            }
+            String weiqiwendu = weiqiwenduInt + "";// 尾气温度（℃）  -50至2000（000 = -50，100 = 50）
+
             String danqiandangwei = msg.substring(37, 38);// 1.一档2.二档（注：用*占位）
             String yushewendu = msg.substring(38, 40);//预设温度（℃） 预设温度（℃）
             String zongTime = Y.getInt(msg.substring(40, 45)) + "";//总时长 （小时）
-            String daqiya = msg.substring(45, 48);//大气压
-            String haibagaodu = msg.substring(48, 52);//海拔高度
-            String hanyangliang = msg.substring(52, 55);//含氧量
+            String daqiya = Y.getInt(msg.substring(45, 48)) + "";//大气压
+            String haibagaodu = Y.getInt(msg.substring(48, 52)) + "";//海拔高度
+            String hanyangliang = Y.getInt(msg.substring(52, 55)) + "";//含氧量
             String xinhaoStr = msg.substring(55, 57);
 
             int xinhao;
-            if (xinhaoStr.equals("aa")) {
+            if (xinhaoStr.contains("a")) {
                 xinhao = 22;
             } else {
                 xinhao = Y.getInt(xinhaoStr);//信号强度
@@ -162,6 +177,7 @@ public class ShuinuanZhuangtaiActivity extends ShuinuanBaseNewActivity {
                     + "  信号强度" + xinhao;
             Y.e(num);
 
+            tvXinhao.setText(xinhao + "");
 
             switch (sn_state) {
                 case "1"://开机中
@@ -204,7 +220,7 @@ public class ShuinuanZhuangtaiActivity extends ShuinuanBaseNewActivity {
 
             tvDianya.setText(dianyan + "v");
             tvFengjizhuansu.setText(fengjizhuansu);
-            tvJiaresaigonglv.setText(jairesaigonglv + "v");
+            tvJiaresaigonglv.setText(jairesaigonglv);
             tvYoubengpinlv.setText(youbenggonglv);
             tvRushukouwendu.setText(rushukowendu + "℃");
             tvChushuikouwendu.setText(chushuikowendu + "℃");
@@ -217,7 +233,7 @@ public class ShuinuanZhuangtaiActivity extends ShuinuanBaseNewActivity {
                 case "2":
                     tvDangwei.setText("2档");
                     break;
-                case "A":
+                default:
                     tvDangwei.setText("暂无档位");
                     break;
             }
@@ -227,8 +243,6 @@ public class ShuinuanZhuangtaiActivity extends ShuinuanBaseNewActivity {
             tvDaqiya.setText(daqiya + "kpa");
             tvHaibagaodu.setText(haibagaodu + "m");
             tvHanyangliang.setText(hanyangliang + "kg/cm3");
-
-            dismissProgressDialog();
             handlerStart.removeMessages(1);
         }
     }
@@ -238,7 +252,6 @@ public class ShuinuanZhuangtaiActivity extends ShuinuanBaseNewActivity {
      * 注册订阅Mqtt
      */
     private void registerKtMqtt() {
-        showProgressDialog("获取数据中...");
         initHandlerStart();
         getNs();
     }
@@ -304,7 +317,7 @@ public class ShuinuanZhuangtaiActivity extends ShuinuanBaseNewActivity {
             if (msg.what == 1) {
                 time++;
                 if (time >= 20) {
-                    showTishiDialog();
+
                 } else {
                     if (time == 5 || time == 10 || time == 15) {
                         getNs();
@@ -315,32 +328,6 @@ public class ShuinuanZhuangtaiActivity extends ShuinuanBaseNewActivity {
             return false;
         }
     });
-
-    private void showTishiDialog() {
-        time = 0;
-        dismissProgressDialog();
-        TishiDialog tishiDialog = new TishiDialog(mContext, TishiDialog.TYPE_FAILED, new TishiDialog.TishiDialogListener() {
-            @Override
-            public void onClickCancel(View v, TishiDialog dialog) {
-
-            }
-
-            @Override
-            public void onClickConfirm(View v, TishiDialog dialog) {
-                registerKtMqtt();
-            }
-
-            @Override
-            public void onDismiss(TishiDialog dialog) {
-
-            }
-        });
-        tishiDialog.setTextTitle("提示：网络信号异常");
-        tishiDialog.setTextContent("请检查设备情况。1:设备是否接通电源 2:设备信号灯是否闪烁 3:设备是否有损坏 4:手机是否开启网络，如已确认以上问题，请重新尝试。");
-        tishiDialog.setTextConfirm("重试");
-        tishiDialog.setTextCancel("忽略");
-        tishiDialog.show();
-    }
 
     @Override
     protected void onDestroy() {

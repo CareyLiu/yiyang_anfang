@@ -116,7 +116,6 @@ public class ShuinuanHostNewActivity extends ShuinuanBaseNewActivity {
 
     @SuppressLint("SetTextI18n")
     private void getData(String msg) {
-        Y.e("获取的数据是" + msg);
         if (msg.contains("i_s")) {
             dismissProgressDialog();
             handlerStart.removeMessages(1);
@@ -138,7 +137,7 @@ public class ShuinuanHostNewActivity extends ShuinuanBaseNewActivity {
                 clickCixianquan(citienum);
                 clickJiaresai(jiaresai);
                 tvJiqigonglv.setText(Y.formatNum(Y.getFloat(jiqigonglv) / 10));
-                clickDianya(dianya + "v");
+                clickDianya(dianya);
                 tvRongjizhi.setText(rongjizhi + "L");
                 tvGuoyazhi.setText(Y.formatNum(Y.getFloat(guoyazhi) / 10) + "v");
                 tvGuoyaTime.setText(guoyatime + "s");
@@ -175,7 +174,6 @@ public class ShuinuanHostNewActivity extends ShuinuanBaseNewActivity {
      * 注册订阅Mqtt
      */
     private void registerKtMqtt() {
-        showProgressDialog("获取数据中...");
         initHandlerStart();
         getHost();
     }
@@ -255,16 +253,8 @@ public class ShuinuanHostNewActivity extends ShuinuanBaseNewActivity {
 
     private void showTishiDialog() {
         time = 0;
-        dismissProgressDialog();
         showNodata();
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        handlerStart.removeMessages(1);
-    }
-
 
     private void clickCixianquan(String type) {
         tvCixianquan0.setTextColor(Color.parseColor("#999999"));
@@ -319,5 +309,11 @@ public class ShuinuanHostNewActivity extends ShuinuanBaseNewActivity {
                 tvDianyaZidong.setTextColor(Y.getColor(R.color.text_color_blue));
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handlerStart.removeMessages(1);
     }
 }

@@ -104,58 +104,33 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     ImageView iv_heater_host;
 
     private SmartRefreshLayout smartRefreshLayout;
-    private String sn_state;     //水暖状态
-    private String yushewendu;      //预设温度
-    private boolean isKaiji;
-    private boolean iskaijiDianhou;
-    private GuzhangDialog guzhangDialog;
     private AnimationDrawable animationDrawable;
+    private GuzhangDialog guzhangDialog;
+
+    private String sn_state;     //水暖状态
     private String shuibeng_state;
     private String youbeng_state;
+    private String yushewendu;      //预设温度
+    private String sim_ccid_save_type;
+    private String xinhaoStr;
+
+    private boolean isFirst;
+    private boolean isKaiji;
+    private boolean isCanGetNs;//是否处于操作中   false 操作中、true 未操作
+    private int typeZaixian;//1 在线、2 离线、3 连接中
+    private int typeMingling;//1 开机、2 关机、3 油泵开、4 油泵关、5 水泵开、6水泵关
+    private boolean iskaijiDianhou;
+    private boolean isOnActivity;
+
     private boolean youbengIson;
     private boolean youbengIsdianhou;
     private boolean shubengIson;
     private boolean shoubengisdianhou;
-    private boolean isZaixian = false;
-    private String xinhaoStr;
-    private boolean isFirst;
-    private boolean isOnActivity;
-    private String sim_ccid_save_type;
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        isOnActivity = true;
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        isOnActivity = false;
-    }
-
-    private Handler handlerTime10 = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(@NonNull Message msg) {
-            switch (msg.what) {
-                case 1:
-                    if (isOnActivity&&isKaiji) {
-                        getNsData();
-                        Y.e("我执行了一次查询实时数据啦");
-                    }else {
-                        Y.e("我啥都没查询");
-                    }
-                    initHandlerNS();
-                    break;
-            }
-            return false;
-        }
-    });
 
 
     @Override
     public int getContentViewResId() {
-        return R.layout.activity_shuinuan_main_new;
+        return R.layout.activity_shuinuan_main;
     }
 
     @Override
@@ -183,7 +158,6 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
         init();
-        initCcid();
         initHuidiao();
         registerKtMqtt();
         initSM();
@@ -196,7 +170,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                isZaixian = false;
+                typeZaixian = 3;
                 registerKtMqtt();
                 smartRefreshLayout.finishRefresh();
             }
@@ -213,6 +187,8 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
         tv_shuinuan_shuibeng.setOnLongClickListener(this);
 
         PreferenceHelper.getInstance(mContext).putString(App.CHOOSE_KONGZHI_XIANGMU, DoMqttValue.SHUINUAN);
+
+        initCcid();
     }
 
     /**
@@ -223,13 +199,6 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
         tv_shebei_youxiaoqi.setText("有效期至:" + time);
         String car_server_id = getIntent().getStringExtra("car_server_id");
         ccid = getIntent().getStringExtra("ccid");
-//        ccid = "aaaaaaaaaaaaaa0070040018";
-//        ccid = "aaaaaaaaaaaaaa0290040018";
-//        ccid = "aaaaaaaaaaaaaa0300040018";
-//        ccid = "aaaaaaaaaaaaaa0310040018";
-//        ccid = "aaaaaaaaaaaaaa0420040018";
-//        ccid = "aaaaaaaaaaaaaa0440040018";
-//        ccid = "aaaaaaaaaaaaaa0680040018";
         SN_Send = "wh/hardware/" + car_server_id + ccid;
         SN_Accept = "wh/app/" + car_server_id + ccid;
 
@@ -238,6 +207,8 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
 
         sim_ccid_save_type = PreferenceHelper.getInstance(mContext).getString("sim_ccid_save_type", "0");
         isFirst = true;
+        isCanGetNs = true;
+        typeZaixian = 3;
     }
 
     /**
@@ -274,9 +245,25 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
             String fengjizhuansu = msg.substring(14, 19);//风机转速   13245
             String jairesaigonglv = (Y.getInt(msg.substring(19, 23)) / 10.0f) + "";// 加热塞功率  0264=26.4
             String youbenggonglv = (Y.getInt(msg.substring(23, 27)) / 10.0f) + "";// 油泵频率  0264=26.4
-            String rushukowendu = (Y.getInt(msg.substring(27, 30)) - 50) + "";// 入水口温度（℃）  -50至150（000 = -50，100 = 50）
-            String chushuikowendu = (Y.getInt(msg.substring(30, 33)) - 50) + "";// 出水口温度（℃）  -50至150（000 = -50，100 = 50）
-            String weiqiwendu = (Y.getInt(msg.substring(33, 37)) - 50) + "";// 尾气温度（℃）  -50至2000（000 = -50，100 = 50）
+
+            int rushukowenduInt = (Y.getInt(msg.substring(27, 30)) - 50);
+            if (rushukowenduInt <= 0) {
+                rushukowenduInt = 0;
+            }
+            String rushukowendu = rushukowenduInt + "";// 入水口温度（℃）  -50至150（000 = -50，100 = 50）
+
+            int chushuikowenduInt = (Y.getInt(msg.substring(30, 33)) - 50);
+            if (chushuikowenduInt <= 0) {
+                chushuikowenduInt = 0;
+            }
+            String chushuikowendu = chushuikowenduInt + "";// 出水口温度（℃）  -50至150（000 = -50，100 = 50）
+
+            int weiqiwenduInt = (Y.getInt(msg.substring(33, 37)) - 100);
+            if (weiqiwenduInt <= 0) {
+                weiqiwenduInt = 0;
+            }
+            String weiqiwendu = weiqiwenduInt + "";// 尾气温度（℃）  -50至2000（000 = -50，100 = 50）
+
             String danqiandangwei = msg.substring(37, 38);// 1.一档2.二档（注：用*占位）
             yushewendu = msg.substring(38, 40);//预设温度（℃） 预设温度（℃）
             String zongTime = msg.substring(40, 45);//总时长 （小时）
@@ -334,15 +321,17 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
             tv_dianya.setText(dianyan + "v");
             tv_jinshuikou_wendu.setText(rushukowendu + "℃");
             tv_chushuikou_wendu.setText(chushuikowendu + "℃");
-            tv_haibagaodu.setText(haibagaodu + "m");
-            tv_hanyangliang.setText(hanyangliang + "kg/cm3");
-            tv_daqiya.setText(daqiya + "kpa");
+            tv_haibagaodu.setText(Y.getInt(haibagaodu) + "m");
+            tv_hanyangliang.setText(Y.getInt(hanyangliang) + "kg/cm3");
+            tv_daqiya.setText(Y.getInt(daqiya) + "kpa");
             tv_wendu_yushe.setText("设定温度:" + yushewendu + "℃");
             tv_wendu_dangqian.setText("当前温度:" + chushuikowendu + "℃");
-            isZaixian = true;
+            typeZaixian = 1;
 
             switch (sn_state) {
                 case "1"://开机中
+                case "2"://加热中
+                case "4"://循环水
                     iv_shuinuan_kaijie.setVisibility(View.VISIBLE);
                     iv_shuinuan_guanji.setVisibility(View.GONE);
                     tv_shuinuan_kaiji.setTextColor(Y.getColor(R.color.text_color_blue));
@@ -355,43 +344,9 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                     animationDrawable = (AnimationDrawable) iv_heater_host.getBackground();
                     animationDrawable.start();
                     break;
-                case "2"://加热中
-                    iv_shuinuan_kaijie.setVisibility(View.VISIBLE);
-                    iv_shuinuan_guanji.setVisibility(View.GONE);
-                    tv_shuinuan_kaiji.setTextColor(Y.getColor(R.color.text_color_blue));
-                    tv_shuinuan_guanji.setTextColor(Y.getColor(R.color.white));
-                    rv_shuinuan_kaiji.setSelected(true);
-                    rv_shuinuan_guanji.setSelected(false);
-                    isKaiji = true;
-                    tv_shebei_state.setText("加热器状态：加热中");
-                    iv_heater_host.setBackgroundResource(R.drawable.shuinuan_kaiji);
-                    animationDrawable = (AnimationDrawable) iv_heater_host.getBackground();
-                    animationDrawable.start();
-                    break;
-                case "4"://循环水
-                    iv_shuinuan_kaijie.setVisibility(View.VISIBLE);
-                    iv_shuinuan_guanji.setVisibility(View.GONE);
-                    tv_shuinuan_kaiji.setTextColor(Y.getColor(R.color.text_color_blue));
-                    tv_shuinuan_guanji.setTextColor(Y.getColor(R.color.white));
-                    rv_shuinuan_kaiji.setSelected(true);
-                    rv_shuinuan_guanji.setSelected(false);
-                    isKaiji = true;
-                    tv_shebei_state.setText("加热器状态：循环水");
-                    iv_heater_host.setBackgroundResource(R.drawable.shuinuan_kaiji);
-                    animationDrawable = (AnimationDrawable) iv_heater_host.getBackground();
-                    animationDrawable.start();
-                    break;
                 case "0"://关机中
                 case "3"://待机中
-                    iv_shuinuan_kaijie.setVisibility(View.GONE);
-                    iv_shuinuan_guanji.setVisibility(View.VISIBLE);
-                    tv_shuinuan_kaiji.setTextColor(Y.getColor(R.color.white));
-                    tv_shuinuan_guanji.setTextColor(Y.getColor(R.color.text_color_blue));
-                    rv_shuinuan_kaiji.setSelected(false);
-                    rv_shuinuan_guanji.setSelected(true);
-                    isKaiji = false;
-                    tv_shebei_state.setText("加热器状态：关机");
-                    iv_heater_host.setBackgroundResource(R.drawable.shuinuan_guanji);
+                    setUiGuanji();
                     break;
             }
 
@@ -436,7 +391,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
 
             }
         } else if (msg.contains("g_s.")) {
-            isZaixian = true;
+            typeZaixian = 1;
         } else if (msg.contains("r_s")) {
             String dianya = msg.substring(3, 4);//电压	0.正常1.过高2.过低3.故障
             String youbeng = msg.substring(4, 5);//油泵	0.正常1.开路2.短路3.故障
@@ -582,29 +537,11 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
 
                 }
             });
-//
-//                    AndMqtt.getInstance().publish(new MqttPublish()
-//                            .setMsg("Z_s.")
-//                            .setQos(2).setRetained(false)
-//                            .setTopic(SN_Send), new IMqttActionListener() {
-//                        @Override
-//                        public void onSuccess(IMqttToken asyncActionToken) {
-//                            Y.i("查询故障/报警");
-//                        }
-//
-//                        @Override
-//                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-//
-//                }
-//            });
+
             isFirst = false;
         }
     }
 
-    private void initHandlerNS() {
-        Message message = handlerTime10.obtainMessage(1);
-        handlerTime10.sendMessageDelayed(message, 10000);
-    }
 
     private void showguzhangla(List<String> strings) {
         if (guzhangDialog == null) {
@@ -645,7 +582,6 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
      * 注册订阅Mqtt
      */
     private void registerKtMqtt() {
-        showProgressDialog("设备连接中...");
         initHandlerStart();
         getNs();
     }
@@ -723,14 +659,13 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
         handlerStart.sendMessageDelayed(message, 1000);
     }
 
-
     private Handler handlerStart = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(@NonNull Message msg) {
             time++;
             switch (msg.what) {
                 case 1:
-                    if (!isZaixian) {
+                    if (typeZaixian != 1) {
                         if (time >= 30) {
                             showTishiDialog();
                         } else {
@@ -740,73 +675,83 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                             initHandlerStart();
                         }
                     } else {
-                        dismissProgressDialog();
                         time = 0;
                     }
                     break;
                 case 2:
                     if (iskaijiDianhou != isKaiji) {
                         if (time >= 30) {
+                            isCanGetNs = true;
                             iskaijiDianhou = !iskaijiDianhou;
-                            showZhiling();
+                            if (iskaijiDianhou) {
+                                setUiKaiji();
+                            } else {
+                                setUiGuanji();
+                            }
+
+                            shubengIson = false;
+                            youbengIson = false;
+                            time = 0;
                         } else {
                             if (time == 5 || time == 10 || time == 15 || time == 20 || time == 25) {
-                                getNs();
+                                sendMingling();
                             }
                             initHandlerClick();
                         }
                     } else {
-                        if (iskaijiDianhou) {
-                            SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_end_on);
-                        } else {
-                            SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_end_off);
-                        }
-
-                        dismissProgressDialog();
+                        isCanGetNs = true;
                         time = 0;
                     }
                     break;
                 case 3:
                     if (shoubengisdianhou != shubengIson) {
                         if (time >= 30) {
+                            isCanGetNs = true;
                             shoubengisdianhou = !shoubengisdianhou;
-                            showZhiling();
+                            if (shoubengisdianhou) {
+                                tv_shuinuan_shuibeng.setText("水泵已开启");
+                                tv_shebei_state.setText("加热器状态：水泵模式");
+                                tv_shuinuan_shuibeng.setTextColor(Y.getColor(R.color.text_color_blue));
+                            } else {
+                                tv_shuinuan_shuibeng.setText("水泵已关闭");
+                                tv_shebei_state.setText("加热器状态：关机");
+                                tv_shuinuan_shuibeng.setTextColor(Y.getColor(R.color.text_color_9));
+                            }
+                            time = 0;
                         } else {
                             if (time == 5 || time == 10 || time == 15 || time == 20 || time == 25) {
-                                getNs();
+                                sendMingling();
                             }
                             initHandlerShuibeng();
                         }
                     } else {
-                        if (shoubengisdianhou) {
-                            SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_shuibeng_on_a);
-                        } else {
-                            SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_shuibeng_off_a);
-                        }
-
-                        dismissProgressDialog();
+                        isCanGetNs = true;
                         time = 0;
                     }
                     break;
                 case 4:
                     if (youbengIsdianhou != youbengIson) {
                         if (time >= 30) {
+                            isCanGetNs = true;
                             youbengIsdianhou = !youbengIsdianhou;
-                            showZhiling();
+                            if (youbengIsdianhou) {
+                                tv_shuinuan_youbeng.setText("油泵已开启");
+                                tv_shebei_state.setText("加热器状态：油泵模式");
+                                tv_shuinuan_youbeng.setTextColor(Y.getColor(R.color.text_color_blue));
+                            } else {
+                                tv_shuinuan_youbeng.setText("油泵已关闭");
+                                tv_shebei_state.setText("加热器状态：关机");
+                                tv_shuinuan_youbeng.setTextColor(Y.getColor(R.color.text_color_9));
+                            }
+                            time = 0;
                         } else {
                             if (time == 5 || time == 10 || time == 15 || time == 20 || time == 25) {
-                                getNs();
+                                sendMingling();
                             }
                             initHandlerYoubeng();
                         }
                     } else {
-                        if (youbengIsdianhou) {
-                            SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_youbeng_on_a);
-                        } else {
-                            SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_youbeng_off_a);
-                        }
-
-                        dismissProgressDialog();
+                        isCanGetNs = true;
                         time = 0;
                     }
                     break;
@@ -817,9 +762,9 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     });
 
     private void showTishiDialog() {
-        isZaixian = false;
+        isCanGetNs = true;
+        typeZaixian = 2;
         time = 0;
-        dismissProgressDialog();
         TishiDialog tishiDialog = new TishiDialog(mContext, TishiDialog.TYPE_CAOZUO, new TishiDialog.TishiDialogListener() {
             @Override
             public void onClickCancel(View v, TishiDialog dialog) {
@@ -841,45 +786,6 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
         tishiDialog.setTextConfirm("重试");
         tishiDialog.setTextCancel("忽略");
         tishiDialog.show();
-    }
-
-    private void showZhiling() {
-        showTishiDialog();
-//        time = 0;
-//        dismissProgressDialog();
-//        isZaixian = false;
-//        TishiDialog tishiDialog = new TishiDialog(mContext, TishiDialog.TYPE_CAOZUO, new TishiDialog.TishiDialogListener() {
-//            @Override
-//            public void onClickCancel(View v, TishiDialog dialog) {
-//
-//            }
-//
-//            @Override
-//            public void onClickConfirm(View v, TishiDialog dialog) {
-//                getNs();
-//
-//                if (zhilingma == zhiling_kaiji) {
-//                    kaiji();
-//                } else if (zhilingma == zhiling_guanji) {
-//                    guanji();
-//                } else if (zhilingma == zhiling_shuibeng) {
-//                    shuibeng();
-//                } else if (zhilingma == zhiling_youbeng) {
-//                    youbeng();
-//                }
-//            }
-//
-//            @Override
-//            public void onDismiss(TishiDialog dialog) {
-//
-//            }
-//        });
-//
-//        tishiDialog.setTextTitle("提示");
-//        tishiDialog.setTextContent("指令发送失败，是否重新发送？");
-//        tishiDialog.setTextConfirm("重试");
-//        tishiDialog.setTextCancel("关闭");
-//        tishiDialog.show();
     }
 
 
@@ -921,6 +827,309 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
         dialog.show();
     }
 
+    @Override
+    public boolean onLongClick(View v) {
+        if (typeZaixian == 1) {
+            if (typeMingling == 1 || typeMingling == 2) {
+                handlerStart.removeMessages(2);
+            } else if (typeMingling == 3 || typeMingling == 4) {
+                handlerStart.removeMessages(4);
+            } else if (typeMingling == 5 || typeMingling == 6) {
+                handlerStart.removeMessages(3);
+            } else {
+                handlerStart.removeMessages(1);
+            }
+
+            time = 0;
+
+            switch (v.getId()) {
+                case R.id.rv_shuinuan_kaiji:
+                    kaiji();
+                    break;
+                case R.id.rv_shuinuan_guanji:
+                    guanji();
+                    break;
+                case R.id.tv_shuinuan_shuibeng:
+                    shuibeng();
+                    break;
+                case R.id.tv_shuinuan_youbeng:
+                    youbeng();
+                    break;
+            }
+        } else if (typeZaixian == 3) {
+            Y.t("正在连接设备，请稍后...");
+        } else if (typeZaixian == 2) {
+            chonglian();
+        }
+        return false;
+    }
+
+    private void youbeng() {
+        if (iskaijiDianhou) {
+            Y.t("开机状态无法开启油泵");
+            return;
+        }
+
+        if (shoubengisdianhou) {
+            Y.t("水泵开启时无法开启油泵");
+            return;
+        }
+
+        initHandlerYoubeng();
+        if (youbengIsdianhou) {
+            typeMingling = 4;
+            youbengIsdianhou = false;
+            SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_youbeng_off);
+            sendMingling();
+            tv_shuinuan_youbeng.setText("油泵已关闭");
+            tv_shebei_state.setText("加热器状态：关机");
+            tv_shuinuan_youbeng.setTextColor(Y.getColor(R.color.text_color_9));
+        } else {
+            typeMingling = 3;
+            youbengIsdianhou = true;
+            SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_youbeng_on);
+            sendMingling();
+            tv_shuinuan_youbeng.setText("油泵已开启");
+            tv_shebei_state.setText("加热器状态：油泵模式");
+            tv_shuinuan_youbeng.setTextColor(Y.getColor(R.color.text_color_blue));
+        }
+    }
+
+    private void shuibeng() {
+        if (iskaijiDianhou) {
+            Y.t("开机状态无法开启水泵");
+            return;
+        }
+
+        if (youbengIsdianhou) {
+            Y.t("油泵开启时无法开启水泵");
+            return;
+        }
+
+        initHandlerShuibeng();
+        if (shoubengisdianhou) {
+            typeMingling = 6;
+            shoubengisdianhou = false;
+            SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_shuibeng_off);
+            sendMingling();
+            tv_shuinuan_shuibeng.setText("水泵已关闭");
+            tv_shebei_state.setText("加热器状态：关机");
+            tv_shuinuan_shuibeng.setTextColor(Y.getColor(R.color.text_color_9));
+        } else {
+            typeMingling = 5;
+            shoubengisdianhou = true;
+            SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_shuibeng_on);
+            sendMingling();
+            tv_shuinuan_shuibeng.setText("水泵已开启");
+            tv_shebei_state.setText("加热器状态：水泵模式");
+            tv_shuinuan_shuibeng.setTextColor(Y.getColor(R.color.text_color_blue));
+        }
+    }
+
+    private void guanji() {
+        if (!iskaijiDianhou) {
+            return;
+        }
+
+        initHandlerClick();
+        iskaijiDianhou = false;
+        SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_start_off);
+        typeMingling = 2;
+        sendMingling();
+        setUiGuanji();
+    }
+
+    private void setUiGuanji() {
+        iv_shuinuan_kaijie.setVisibility(View.GONE);
+        iv_shuinuan_guanji.setVisibility(View.VISIBLE);
+        tv_shuinuan_kaiji.setTextColor(Y.getColor(R.color.white));
+        tv_shuinuan_guanji.setTextColor(Y.getColor(R.color.text_color_blue));
+        rv_shuinuan_kaiji.setSelected(false);
+        rv_shuinuan_guanji.setSelected(true);
+        isKaiji = false;
+        tv_shebei_state.setText("加热器状态：关机");
+        iv_heater_host.setBackgroundResource(R.drawable.shuinuan_guanji);
+    }
+
+    private void kaiji() {
+        if (iskaijiDianhou) {
+            return;
+        }
+
+        if (youbengIsdianhou) {
+            Y.t("油泵开启时无法进行开机");
+            return;
+        }
+
+        if (shoubengisdianhou) {
+            Y.t("水泵开启时无法进行开机");
+            return;
+        }
+
+        initHandlerClick();
+        iskaijiDianhou = true;
+        SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_start_on);
+        typeMingling = 1;
+        sendMingling();
+        setUiKaiji();
+    }
+
+    private void setUiKaiji() {
+        iv_shuinuan_kaijie.setVisibility(View.VISIBLE);
+        iv_shuinuan_guanji.setVisibility(View.GONE);
+        tv_shuinuan_kaiji.setTextColor(Y.getColor(R.color.text_color_blue));
+        tv_shuinuan_guanji.setTextColor(Y.getColor(R.color.white));
+        rv_shuinuan_kaiji.setSelected(true);
+        rv_shuinuan_guanji.setSelected(false);
+        isKaiji = true;
+        tv_shebei_state.setText("加热器状态：开机");
+        iv_heater_host.setBackgroundResource(R.drawable.shuinuan_kaiji);
+        animationDrawable = (AnimationDrawable) iv_heater_host.getBackground();
+        animationDrawable.start();
+    }
+
+    private void sendMingling() {
+        isCanGetNs = false;
+        if (typeMingling == 1) {//开机
+            String data = "M_s011000080.";
+            AndMqtt.getInstance().publish(new MqttPublish()
+                    .setMsg(data)
+                    .setQos(2).setRetained(false)
+                    .setTopic(SN_Send), new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                }
+            });
+        } else if (typeMingling == 2) {//关机
+            String data = "M_s012.";
+            AndMqtt.getInstance().publish(new MqttPublish()
+                    .setMsg(data)
+                    .setQos(2).setRetained(false)
+                    .setTopic(SN_Send), new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                }
+            });
+        } else if (typeMingling == 3) {//开启油泵
+            String data = "M_s051.";
+            AndMqtt.getInstance().publish(new MqttPublish()
+                    .setMsg(data)
+                    .setQos(2).setRetained(false)
+                    .setTopic(SN_Send), new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                }
+            });
+        } else if (typeMingling == 4) {//关闭油泵
+            String data = "M_s052.";
+            AndMqtt.getInstance().publish(new MqttPublish()
+                    .setMsg(data)
+                    .setQos(2).setRetained(false)
+                    .setTopic(SN_Send), new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                }
+            });
+        } else if (typeMingling == 5) {//水泵开启
+            String data = "M_s021.";
+            AndMqtt.getInstance().publish(new MqttPublish()
+                    .setMsg(data)
+                    .setQos(2).setRetained(false)
+                    .setTopic(SN_Send), new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                }
+            });
+        } else if (typeMingling == 6) {//水泵关闭
+            String data = "M_s022.";
+            AndMqtt.getInstance().publish(new MqttPublish()
+                    .setMsg(data)
+                    .setQos(2).setRetained(false)
+                    .setTopic(SN_Send), new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                }
+            });
+        }
+    }
+
+    private void chonglian() {
+        if (handlerStart != null) {
+            handlerStart.removeMessages(1);
+        }
+        showTishiDialog();
+    }
+
+    private Handler handlerTime10 = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(@NonNull Message msg) {
+            switch (msg.what) {
+                case 1:
+                    if (isOnActivity && isCanGetNs) {
+                        getNsData();
+                        Y.e("我执行了一次查询实时数据啦");
+                    } else {
+                        Y.e("我啥都没查询");
+                    }
+                    initHandlerNS();
+                    break;
+            }
+            return false;
+        }
+    });
+
+    private void initHandlerNS() {
+        Message message = handlerTime10.obtainMessage(1);
+        handlerTime10.sendMessageDelayed(message, 10000);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isOnActivity = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isOnActivity = false;
+    }
 
     @Override
     protected void onDestroy() {
@@ -966,202 +1175,5 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                 MyApplication.mqttDingyue.remove(i);
             }
         }
-    }
-
-    @Override
-    public boolean onLongClick(View v) {
-        if (!isZaixian) {
-            chonglian();
-            return false;
-        } else {
-            switch (v.getId()) {
-                case R.id.rv_shuinuan_kaiji:
-                    kaiji();
-                    break;
-                case R.id.rv_shuinuan_guanji:
-                    guanji();
-                    break;
-                case R.id.tv_shuinuan_shuibeng:
-                    shuibeng();
-                    break;
-                case R.id.tv_shuinuan_youbeng:
-                    youbeng();
-                    break;
-            }
-            return false;
-        }
-    }
-
-    private void youbeng() {
-        if (isKaiji) {
-            return;
-        }
-
-        if (shuibeng_state.equals("1")) {
-            return;
-        }
-
-        showProgressDialog("发送指令中...");
-        initHandlerYoubeng();
-        if (youbeng_state.equals("1")) {
-            youbengIsdianhou = false;
-            String data = "M_s052.";
-            SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_youbeng_off);
-            AndMqtt.getInstance().publish(new MqttPublish()
-                    .setMsg(data)
-                    .setQos(2).setRetained(false)
-                    .setTopic(SN_Send), new IMqttActionListener() {
-                @Override
-                public void onSuccess(IMqttToken asyncActionToken) {
-
-                }
-
-                @Override
-                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-
-                }
-            });
-        } else {
-            youbengIsdianhou = true;
-            String data = "M_s051.";
-            SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_youbeng_on);
-            AndMqtt.getInstance().publish(new MqttPublish()
-                    .setMsg(data)
-                    .setQos(2).setRetained(false)
-                    .setTopic(SN_Send), new IMqttActionListener() {
-                @Override
-                public void onSuccess(IMqttToken asyncActionToken) {
-
-                }
-
-                @Override
-                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-
-                }
-            });
-        }
-    }
-
-    private void shuibeng() {
-        if (isKaiji) {
-            return;
-        }
-
-        if (youbeng_state.equals("1")) {
-            return;
-        }
-
-        showProgressDialog("发送指令中...");
-        initHandlerShuibeng();
-        if (shuibeng_state.equals("1")) {
-            shoubengisdianhou = false;
-            String data = "M_s022.";
-            SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_shuibeng_off);
-            AndMqtt.getInstance().publish(new MqttPublish()
-                    .setMsg(data)
-                    .setQos(2).setRetained(false)
-                    .setTopic(SN_Send), new IMqttActionListener() {
-                @Override
-                public void onSuccess(IMqttToken asyncActionToken) {
-
-                }
-
-                @Override
-                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-
-                }
-            });
-        } else {
-            shoubengisdianhou = true;
-            String data = "M_s021.";
-            SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_shuibeng_on);
-            AndMqtt.getInstance().publish(new MqttPublish()
-                    .setMsg(data)
-                    .setQos(2).setRetained(false)
-                    .setTopic(SN_Send), new IMqttActionListener() {
-                @Override
-                public void onSuccess(IMqttToken asyncActionToken) {
-
-                }
-
-                @Override
-                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-
-                }
-            });
-        }
-    }
-
-    private void guanji() {
-        if (!isKaiji) {
-            return;
-        }
-
-        showProgressDialog("发送指令中...");
-        initHandlerClick();
-
-        iskaijiDianhou = false;
-        SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_start_off);
-        String data = "M_s012.";
-        AndMqtt.getInstance().publish(new MqttPublish()
-                .setMsg(data)
-                .setQos(2).setRetained(false)
-                .setTopic(SN_Send), new IMqttActionListener() {
-            @Override
-            public void onSuccess(IMqttToken asyncActionToken) {
-
-            }
-
-            @Override
-            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-
-            }
-        });
-    }
-
-    private void kaiji() {
-        if (isKaiji) {
-            return;
-        }
-
-
-        if (shubengIson) {
-            Y.t("水泵模式下无法开机");
-            return;
-        }
-
-        if (youbengIson) {
-            Y.t("油泵模式下无法开机");
-            return;
-        }
-
-        showProgressDialog("发送指令中...");
-        initHandlerClick();
-
-        iskaijiDianhou = true;
-        String data = "M_s011000080.";
-        SoundPoolUtils.soundPool(mContext, R.raw.shuinuan_start_on);
-        AndMqtt.getInstance().publish(new MqttPublish()
-                .setMsg(data)
-                .setQos(2).setRetained(false)
-                .setTopic(SN_Send), new IMqttActionListener() {
-            @Override
-            public void onSuccess(IMqttToken asyncActionToken) {
-
-            }
-
-            @Override
-            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-
-            }
-        });
-    }
-
-    private void chonglian(){
-        if (handlerStart!=null){
-            handlerStart.removeMessages(1);
-        }
-
-        showTishiDialog();
     }
 }

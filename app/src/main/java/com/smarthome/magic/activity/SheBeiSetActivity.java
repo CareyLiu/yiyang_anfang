@@ -72,7 +72,6 @@ public class SheBeiSetActivity extends ShuinuanBaseNewActivity {
         super.onCreate(savedInstanceState);
 
         type = getIntent().getIntExtra("type", 0);
-
         if (type == TYPE_SHUINUAN) {
             rlGuzhang.setVisibility(View.GONE);
             rlZhujicanshu.setVisibility(View.VISIBLE);
@@ -256,7 +255,6 @@ public class SheBeiSetActivity extends ShuinuanBaseNewActivity {
     @Override
     protected void initToolbar() {
         super.initToolbar();
-
         tv_title.setText("设置");
         tv_title.setTextSize(17);
         tv_title.setTextColor(getResources().getColor(R.color.black));
@@ -264,7 +262,6 @@ public class SheBeiSetActivity extends ShuinuanBaseNewActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //imm.hideSoftInputFromWindow(findViewById(R.id.cl_layout).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 finish();
             }
         });

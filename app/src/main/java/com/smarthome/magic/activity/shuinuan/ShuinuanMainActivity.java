@@ -9,6 +9,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.FengnuandishiActivity;
 import com.smarthome.magic.activity.SheBeiSetActivity;
 import com.smarthome.magic.activity.shuinuan.dialog.GuzhangDialog;
 import com.smarthome.magic.app.App;
@@ -102,8 +104,11 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     TextView tv_daqiya;
     @BindView(R.id.iv_heater_host)
     ImageView iv_heater_host;
+    @BindView(R.id.ll_dingshi)
+    LinearLayout llDingshi;
+    @BindView(R.id.smartRefreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
 
-    private SmartRefreshLayout smartRefreshLayout;
     private AnimationDrawable animationDrawable;
     private GuzhangDialog guzhangDialog;
 
@@ -165,7 +170,6 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     }
 
     private void initSM() {
-        smartRefreshLayout = findViewById(R.id.smartRefreshLayout);
         smartRefreshLayout.setEnableLoadMore(false);
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -406,89 +410,89 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
             List<String> guzhangs = new ArrayList<>();
 
             if (dianya.equals("1")) {
-                guzhangs.add("故障报警：电压过高");
+                guzhangs.add("电压过高");
             } else if (dianya.equals("2")) {
-                guzhangs.add("故障报警：电压过低");
+                guzhangs.add("电压过低");
             } else if (dianya.equals("3")) {
-                guzhangs.add("故障报警：电压故障");
+                guzhangs.add("电压故障");
             }
 
             if (youbeng.equals("1")) {
-                guzhangs.add("故障报警：油泵开路");
+                guzhangs.add("油泵开路");
             } else if (youbeng.equals("2")) {
-                guzhangs.add("故障报警：油泵短路");
+                guzhangs.add("油泵短路");
             } else if (youbeng.equals("3")) {
-                guzhangs.add("故障报警：油泵故障");
+                guzhangs.add("油泵故障");
             }
 
             if (shuibeng.equals("1")) {
-                guzhangs.add("故障报警：水泵开路");
+                guzhangs.add("水泵开路");
             } else if (shuibeng.equals("2")) {
-                guzhangs.add("故障报警：水泵短路");
+                guzhangs.add("水泵短路");
             } else if (shuibeng.equals("3")) {
-                guzhangs.add("故障报警：水泵过流");
+                guzhangs.add("水泵过流");
             } else if (shuibeng.equals("4")) {
-                guzhangs.add("故障报警：水泵堵转");
+                guzhangs.add("水泵堵转");
             } else if (shuibeng.equals("5")) {
-                guzhangs.add("故障报警：水泵故障");
+                guzhangs.add("水泵故障");
             }
 
             if (chushuiko.equals("1")) {
-                guzhangs.add("故障报警：出水口开路");
+                guzhangs.add("出水口开路");
             } else if (chushuiko.equals("2")) {
-                guzhangs.add("故障报警：出水口短路");
+                guzhangs.add("出水口短路");
             } else if (chushuiko.equals("3")) {
-                guzhangs.add("故障报警：出水口高温");
+                guzhangs.add("出水口高温");
             } else if (chushuiko.equals("4")) {
-                guzhangs.add("故障报警：出水口故障");
+                guzhangs.add("出水口故障");
             }
 
             if (rushuiko.equals("1")) {
-                guzhangs.add("故障报警：入水口开路");
+                guzhangs.add("入水口开路");
             } else if (rushuiko.equals("2")) {
-                guzhangs.add("故障报警：入水口短路");
+                guzhangs.add("入水口短路");
             } else if (rushuiko.equals("3")) {
-                guzhangs.add("故障报警：入水口高温");
+                guzhangs.add("入水口高温");
             } else if (rushuiko.equals("4")) {
-                guzhangs.add("故障报警：入水口故障");
+                guzhangs.add("入水口故障");
             }
 
             if (wensheng.equals("1")) {
-                guzhangs.add("故障报警：升温异常");
+                guzhangs.add("升温异常");
             }
 
             if (fengji.equals("1")) {
-                guzhangs.add("故障报警：风机开路");
+                guzhangs.add("风机开路");
             } else if (fengji.equals("2")) {
-                guzhangs.add("故障报警：风机短路");
+                guzhangs.add("风机短路");
             } else if (fengji.equals("3")) {
-                guzhangs.add("故障报警：风机过流");
+                guzhangs.add("风机过流");
             } else if (fengji.equals("4")) {
-                guzhangs.add("故障报警：风机堵转");
+                guzhangs.add("风机堵转");
             } else if (fengji.equals("5")) {
-                guzhangs.add("故障报警：风机故障");
+                guzhangs.add("风机故障");
             }
 
             if (chufengko.equals("1")) {
-                guzhangs.add("故障报警：出风口开路");
+                guzhangs.add("出风口开路");
             } else if (chufengko.equals("2")) {
-                guzhangs.add("故障报警：出风口短路");
+                guzhangs.add("出风口短路");
             } else if (chufengko.equals("3")) {
-                guzhangs.add("故障报警：出风口高温");
+                guzhangs.add("出风口高温");
             } else if (chufengko.equals("4")) {
-                guzhangs.add("故障报警：出风口故障");
+                guzhangs.add("出风口故障");
             }
 
             if (dianhuosai.equals("1")) {
-                guzhangs.add("故障报警：点火塞开路");
+                guzhangs.add("点火塞开路");
             } else if (dianhuosai.equals("2")) {
-                guzhangs.add("故障报警：点火塞短路");
+                guzhangs.add("点火塞短路");
             } else if (dianhuosai.equals("3")) {
-                guzhangs.add("故障报警：点火塞故障");
+                guzhangs.add("点火塞故障");
             }
 
             if (houyan.equals("1")) {
-                guzhangs.add("故障报警：火焰熄火");
+                guzhangs.add("火焰熄火");
             }
 
             if (dianhuo.equals("1")) {
@@ -497,6 +501,10 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
 
             if (guzhangs.size() > 0) {
                 showguzhangla(guzhangs);
+            } else {
+                if (guzhangDialog != null) {
+                    guzhangDialog.dismiss();
+                }
             }
         }
     }
@@ -553,6 +561,11 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                 public void onDismiss(GuzhangDialog dialog) {
 
                 }
+
+                @Override
+                public void onHulue(View view, GuzhangDialog dialog) {
+                    finish();
+                }
             });
         }
         guzhangDialog.showDD(strings);
@@ -574,7 +587,35 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
 
             }
         });
+
+        Message message = handlerGuanzhang.obtainMessage(1);
+        handlerGuanzhang.sendMessageDelayed(message, 700);
     }
+
+    Handler handlerGuanzhang = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(@NonNull Message msg) {
+            switch (msg.what) {
+                case 1:
+                    AndMqtt.getInstance().publish(new MqttPublish()
+                            .setMsg("Z_s.")
+                            .setQos(2).setRetained(false)
+                            .setTopic(SN_Send), new IMqttActionListener() {
+                        @Override
+                        public void onSuccess(IMqttToken asyncActionToken) {
+                            Y.i("查询一次故障");
+                        }
+
+                        @Override
+                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                        }
+                    });
+                    break;
+            }
+            return false;
+        }
+    });
 
     /**
      * 注册订阅Mqtt
@@ -760,7 +801,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
         TishiDialog tishiDialog = new TishiDialog(mContext, TishiDialog.TYPE_CAOZUO, new TishiDialog.TishiDialogListener() {
             @Override
             public void onClickCancel(View v, TishiDialog dialog) {
-
+                finish();
             }
 
             @Override
@@ -781,7 +822,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
     }
 
 
-    @OnClick({R.id.rl_back, R.id.rl_set, R.id.iv_shebeima})
+    @OnClick({R.id.rl_back, R.id.rl_set, R.id.iv_shebeima, R.id.ll_dingshi})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_back:
@@ -792,6 +833,9 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
                 break;
             case R.id.iv_shebeima:
                 showShebeima();
+                break;
+            case R.id.ll_dingshi:
+                FengnuandishiActivity.actionStart(mContext);
                 break;
         }
     }
@@ -1109,7 +1153,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
         public boolean handleMessage(@NonNull Message msg) {
             switch (msg.what) {
                 case 1:
-                    if (isOnActivity && isCanGetNs) {
+                    if (isOnActivity && isCanGetNs && isKaiji) {
                         getNsData();
                         Y.e("我执行了一次查询实时数据啦");
                     } else {
@@ -1124,7 +1168,7 @@ public class ShuinuanMainActivity extends ShuinuanBaseNewActivity implements Vie
 
     private void initHandlerNS() {
         Message message = handlerTime10.obtainMessage(1);
-        handlerTime10.sendMessageDelayed(message, 30000);
+        handlerTime10.sendMessageDelayed(message, 5000);
     }
 
     @Override

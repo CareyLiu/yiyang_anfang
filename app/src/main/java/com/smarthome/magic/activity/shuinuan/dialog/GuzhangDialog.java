@@ -14,9 +14,9 @@ import java.util.List;
 
 
 public class GuzhangDialog extends Dialog implements View.OnClickListener {
-
     public LinearLayout ll_guzhang;
     public TextView bt_clear;
+    public TextView tv_cancel;
 
 
     protected boolean dismissAfterClick = true;
@@ -42,14 +42,18 @@ public class GuzhangDialog extends Dialog implements View.OnClickListener {
         setCancelable(false);
         setContentView(R.layout.dialog_shuinuan_guzhang);
         bt_clear = findViewById(R.id.bt_clear);
+        tv_cancel = findViewById(R.id.tv_cancel);
         ll_guzhang = findViewById(R.id.ll_guzhang);
         bt_clear.setOnClickListener(this);
+        tv_cancel.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         if (v == bt_clear) {
             clickConfirm(v);
+        } else if (v == tv_cancel) {
+            hulue(v);
         }
     }
 
@@ -66,6 +70,13 @@ public class GuzhangDialog extends Dialog implements View.OnClickListener {
         }
     }
 
+    private void hulue(View v) {
+        if (mListener != null) {
+            mListener.onHulue(v, GuzhangDialog.this);
+        }
+        dismissAfterClick();
+    }
+
     /**
      * 设置是否点击按钮后自动关闭窗口,默认true(是)
      */
@@ -76,6 +87,8 @@ public class GuzhangDialog extends Dialog implements View.OnClickListener {
 
     public interface Guzhang {
         void onClickConfirm(View v, GuzhangDialog dialog);
+
+        void onHulue(View view, GuzhangDialog dialog);
 
         void onDismiss(GuzhangDialog dialog);
     }

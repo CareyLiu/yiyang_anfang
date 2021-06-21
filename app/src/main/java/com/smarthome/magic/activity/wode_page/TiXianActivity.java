@@ -286,7 +286,7 @@ public class TiXianActivity extends BaseActivity implements PayPassWordInter {
                         super.onError(response);
                         String str = response.getException().getMessage();
                         //    Log.i("cuifahuo", str);
-                        finish();
+                        //finish();
                         String[] str1 = str.split("：");
 
                         if (str1.length == 3) {

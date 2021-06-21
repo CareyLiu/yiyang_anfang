@@ -45,6 +45,7 @@ import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.dialog.LordingDialog;
 
+import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Notify;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.util.DoMqttValue;
 import com.smarthome.magic.util.SoundPoolUtils;
@@ -141,7 +142,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
     public String car_server_id;
     public String ccid;
     public String of_user_id;
-    TishiDialog myCarCaoZuoDialog_notify;
+    MyCarCaoZuoDialog_Notify myCarCaoZuoDialog_notify;
     String version;
     private String dangWeiMoShiValue = "0";//0 关 1 开
     private String kongTiaoMoshiValue = "0";//0关 1 开
@@ -253,32 +254,27 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
         ivKaiji.setVisibility(View.GONE);
         ivGuanji.setVisibility(View.VISIBLE);
 
-        myCarCaoZuoDialog_notify = new TishiDialog(getAppContext(), 1, new TishiDialog.TishiDialogListener() {
+        myCarCaoZuoDialog_notify = new MyCarCaoZuoDialog_Notify(getAppContext(), new MyCarCaoZuoDialog_Notify.OnDialogItemClickListener() {
             @Override
-            public void onClickCancel(View v, TishiDialog dialog) {
+            public void clickLeft() {
+                // player.stop();
 
             }
 
             @Override
-            public void onClickConfirm(View v, TishiDialog dialog) {
+            public void clickRight() {
                 DiagnosisActivity.actionStart(mContext);
                 //SoundPoolUtils.soundPool.release();
                 myCarCaoZuoDialog_notify.dismiss();
-                //SoundPoolUtils.soundPool.release();
                 if (SoundPoolUtils.soundPool != null) {
                     SoundPoolUtils.soundPool.release();
                 }
-            }
-
-            @Override
-            public void onDismiss(TishiDialog dialog) {
 
             }
         }
-
         );
 
-       // myCarCaoZuoDialog_notify.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG);
+        myCarCaoZuoDialog_notify.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG);
 
         getTongZhi();
 
@@ -388,7 +384,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
             }
         });
-        lordingDialog.setTextMsg("正在加载数据，请稍后");
+        lordingDialog.setTextMsg("设备连接中...");
         lordingDialog.show();
 
         tvShuibeng.setOnClickListener(new View.OnClickListener() {
@@ -986,7 +982,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
                     Log.i("rair", "我的当前信号: " + xinhaoQiangDu);
                     // 驻车加热器:电压->0253 = 25.3	4	是
-                    String machine_voltage = messageData.substring(10, 13) + "." + messageData.substring(13, 14);
+                    String machine_voltage = Y.getInt(messageData.substring(10, 13)) + "." + messageData.substring(13, 14);
                     tvDianya.setText(machine_voltage + "V");
                     // 驻车加热器:风机转速->13245	5	是
                     String revolution = messageData.substring(14, 19);
@@ -998,10 +994,10 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                     // 驻车加热器:入风口温度->例如:-026	4	是
 
                     String in_temperature = messageData.substring(27, 31);
-                    tvRufengkouwendu.setText(in_temperature + "℃");
+                    tvRufengkouwendu.setText(Y.getInt(in_temperature) + "℃");
                     // 驻车加热器:出风口温度->0128	4	是
                     String out_temperature = messageData.substring(31, 35);
-                    tvChufengkouwendu.setText(out_temperature + "℃");
+                    tvChufengkouwendu.setText(Y.getInt(out_temperature) + "℃");
 
                     String wendu = out_temperature.substring(2, 4);
                     if (kongTiaoMoshiValue.equals("1")) {
@@ -1106,13 +1102,13 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
                     if (messageData.length() > 46) {
                         String daqiya = messageData.substring(46, 49);
-                        tvDaqiya.setText(daqiya + "kpa");
+                        tvDaqiya.setText(Y.getInt(daqiya) + "kpa");
 
                         String haiBaGaoDu = messageData.substring(49, 53);
-                        tvHaibagaodu.setText(haiBaGaoDu + "m");
+                        tvHaibagaodu.setText(Y.getInt(haiBaGaoDu) + "m");
 
                         String hanYangLiang = messageData.substring(53);
-                        tvHanyangliang.setText(hanYangLiang + "g/m3");
+                        tvHanyangliang.setText(Y.getInt(hanYangLiang) + "g/m3");
                     }
 
 
@@ -1747,17 +1743,17 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
             xunHuanN.interrupt();
         }
         PreferenceHelper.getInstance(mContext).removeKey(App.CHOOSE_KONGZHI_XIANGMU);
-//        AndMqtt.getInstance().unSubscribe(new MqttUnSubscribe().setTopic(CAR_NOTIFY), new IMqttActionListener() {
-//            @Override
-//            public void onSuccess(IMqttToken asyncActionToken) {
-//                Log.i("Rair", "(MainActivity.java:93)-onSuccess:-&gt;取消订阅成功");
-//            }
-//
-//            @Override
-//            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-//                Log.i("Rair", "(MainActivity.java:98)-onFailure:-&gt;取消订阅失败");
-//            }
-//        });
+        AndMqtt.getInstance().unSubscribe(new MqttUnSubscribe().setTopic(CAR_NOTIFY), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+                Log.i("Rair", "(MainActivity.java:93)-onSuccess:-&gt;取消订阅成功");
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                Log.i("Rair", "(MainActivity.java:98)-onFailure:-&gt;取消订阅失败");
+            }
+        });
 
         AndMqtt.getInstance().unSubscribe(new MqttUnSubscribe().setTopic(CARBOX_GETNOW), new IMqttActionListener() {
             @Override
@@ -2405,7 +2401,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                         public void onSuccess(IMqttToken asyncActionToken) {
                             Log.i("Rair", "(MainActivity.java:79)-onSuccess:-&gt;发布成功");
 
-                            if (i==0){
+                            if (i == 0) {
                                 ivKaiji.setVisibility(View.GONE);
                                 ivGuanji.setVisibility(View.VISIBLE);
 
@@ -2621,7 +2617,11 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
     }
 
-//    private boolean run = true;
+    @Override
+    public boolean onSearchRequested() {
+        return super.onSearchRequested();
+    }
+    //    private boolean run = true;
 //    private int count = 0;
 //
 //    private Handler handler = new Handler();
@@ -2660,5 +2660,6 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 //
 //        }
 //    };
+
 
 }

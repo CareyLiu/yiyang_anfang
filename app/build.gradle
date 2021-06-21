@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.huawei.agconnect'
 android {
     signingConfigs {
         debug {
@@ -38,8 +38,13 @@ android {
                 JPUSH_PKGNAME: applicationId,
                 JPUSH_APPKEY : "02c5d1167fe464e61186e333", //JPush 上注册的包名对应的 Appkey.
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+                // 华为 设置manifest.xml中的变量
+                HUAWEI_APPID : "102236539"
+
+
         ]
     }
+
 
     buildTypes {
         release {
@@ -351,6 +356,7 @@ dependencies {
     implementation 'org.xclcharts:lib:2.4'
     implementation 'com.amap.api:search:latest.integration'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
-
+    implementation 'com.huawei.hms:push:5.0.0.300'
+    implementation 'cn.jiguang.sdk.plugin:huawei:3.8.5'
 
 }

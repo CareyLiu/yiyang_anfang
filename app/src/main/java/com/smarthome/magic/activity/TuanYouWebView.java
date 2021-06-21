@@ -21,6 +21,7 @@ import com.smarthome.magic.app.ConstanceValue;
 import com.smarthome.magic.app.Notice;
 import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.util.x5.utils.MyX5WebView;
+import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
@@ -121,6 +122,8 @@ public class TuanYouWebView extends BaseActivity {
         webview.addJavascriptInterface(customNavigationActivity, "czb");//第二个参数czb不可更改，
 
         webview.setWebViewClient(client);
+        webview.setWebChromeClient(new WebChromeClient());
+
 
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override

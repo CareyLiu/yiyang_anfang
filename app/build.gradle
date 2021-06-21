@@ -39,8 +39,9 @@ android {
                 JPUSH_APPKEY : "02c5d1167fe464e61186e333", //JPush 上注册的包名对应的 Appkey.
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
                 // 华为 设置manifest.xml中的变量
-                HUAWEI_APPID : "102236539"
-
+                HUAWEI_APPID : "102236539",
+                XIAOMI_APPKEY : "MI-5371840092664", // 小米平台注册的appkey,注意不要将前缀去掉 MI-appkey
+                XIAOMI_APPID : "MI-2882303761518400664", // 小米平台注册的appid，注意不要将前缀去掉 MI-appid
 
         ]
     }
@@ -358,5 +359,5 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     implementation 'com.huawei.hms:push:5.0.0.300'
     implementation 'cn.jiguang.sdk.plugin:huawei:3.8.5'
-
+    implementation 'cn.jiguang.sdk.plugin:xiaomi:3.8.5'
 }

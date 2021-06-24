@@ -361,10 +361,10 @@ public class SuiYiTieTwoActivity extends BaseActivity {
     }
 
     public void showSuiYiTie(Response<AppResponse<SuiYiTieModel.DataBean>> response) {
-        {
+
             tvsuiyitie.setVisibility(View.GONE);
 
-            if (StringUtils.isEmail(response.body().data.get(0).getDevice_list().get(0).getBinding_device_type_pic())) {
+            if (StringUtils.isEmpty(response.body().data.get(0).getDevice_list().get(0).getBinding_device_type_pic())) {
                 Glide.with(mContext).load(R.mipmap.tuya_nav_icon_add).into(ivAdd1);
 
                 bangDingLeft = "0";
@@ -399,7 +399,7 @@ public class SuiYiTieTwoActivity extends BaseActivity {
             }
 
 
-        }
+
     }
 
     private boolean flag = false;

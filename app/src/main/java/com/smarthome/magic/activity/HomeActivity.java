@@ -33,6 +33,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
+import com.rairmmd.andmqtt.MqttSubscribe;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.gaiban.HomeFragment_New;
 import com.smarthome.magic.activity.zhinengjiaju.RenTiGanYingActivity;
@@ -78,6 +79,7 @@ import com.tuya.smart.wrapper.api.TuyaWrapper;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
+import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -93,6 +95,7 @@ import static com.smarthome.magic.app.ConstanceValue.MSG_PEIWANG_SUCCESS;
 import static com.smarthome.magic.config.MyApplication.CAR_NOTIFY;
 import static com.smarthome.magic.config.MyApplication.context;
 import static com.smarthome.magic.config.MyApplication.getAppContext;
+import static com.smarthome.magic.config.MyApplication.getUser_id;
 import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
 
@@ -300,6 +303,23 @@ public class HomeActivity extends BaseActivity {
             }
         });
         dognTaiShiTiUrl();
+
+        if (AndMqtt.getInstance().isConnect()) {
+            AndMqtt.getInstance().subscribe(new MqttSubscribe()
+                    .setTopic("wit/server/01/" + getUser_id())
+                    .setQos(2), new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                }
+            });
+        }
+
     }
 
     private List<String> roomList = new ArrayList<>();
@@ -616,7 +636,7 @@ public class HomeActivity extends BaseActivity {
 
                 );
 
-               // myCarCaoZuoDialog_notify.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG);
+                // myCarCaoZuoDialog_notify.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG);
                 myCarCaoZuoDialog_notify.show();
 
                 myCarCaoZuoDialog_notify.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -644,24 +664,51 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-
+        Log.i("HomeActivity_xxx", "onRestart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        Log.i("HomeActivity_xxx", "onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        Log.i("HomeActivity_xxx", "onPause");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.i("HomeActivity_xxx", "onDestroy");
 
-
+//        if (AndMqtt.getInstance().getMqttClient().isConnected()) {
+//            try {
+//                //要做的事情
+//                AndMqtt.getInstance().publish(new MqttPublish()
+//                        .setMsg("K.")
+//                        .setQos(2).setRetained(false)
+//                        .setTopic("wit/server/01/" + getUser_id()), new IMqttActionListener() {
+//                    @Override
+//                    public void onSuccess(IMqttToken asyncActionToken) {
+//                        Log.i("Rair", "订阅K.成功");
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+//                        Log.i("Rair", "(MainActivity.java:84)-onFailure:-&gt;发布失败");
+//                    }
+//                });
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//
+//
+//
+//        }
     }
 
 

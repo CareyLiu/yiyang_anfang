@@ -1,6 +1,7 @@
 package com.smarthome.magic.service;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.xiaomi.mipush.sdk.MiPushCommandMessage;
 import com.xiaomi.mipush.sdk.MiPushMessage;
@@ -25,6 +26,7 @@ public class XMPushReceiver extends PushMessageReceiver {
     @Override
     public void onNotificationMessageArrived(Context context, MiPushMessage message) {
         receiver.onNotificationMessageArrived(context, message);
+        Log.i("jgpush", message.getContent().toString());
     }
 
     @Override

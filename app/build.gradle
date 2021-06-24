@@ -35,13 +35,17 @@ android {
 
 
         manifestPlaceholders = [
-                JPUSH_PKGNAME: applicationId,
-                JPUSH_APPKEY : "02c5d1167fe464e61186e333", //JPush 上注册的包名对应的 Appkey.
-                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY  : "02c5d1167fe464e61186e333", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
                 // 华为 设置manifest.xml中的变量
-                HUAWEI_APPID : "102236539",
+                HUAWEI_APPID  : "102236539",
                 XIAOMI_APPKEY : "MI-5371840092664", // 小米平台注册的appkey,注意不要将前缀去掉 MI-appkey
-                XIAOMI_APPID : "MI-2882303761518400664", // 小米平台注册的appid，注意不要将前缀去掉 MI-appid
+                XIAOMI_APPID  : "MI-2882303761518400664", // 小米平台注册的appid，注意不要将前缀去掉 MI-appid
+
+                OPPO_APPKEY   : "19787702a8284c7da7bed54a9230758f", // OPPO平台注册的appkey
+                OPPO_APPID    : "30286123", // OPPO平台注册的appid
+                OPPO_APPSECRET: "04e6317bc09841b9b521083a96cd9260"//OPPO平台注册的appsecret
 
         ]
     }
@@ -360,4 +364,6 @@ dependencies {
     implementation 'com.huawei.hms:push:5.0.0.300'
     implementation 'cn.jiguang.sdk.plugin:huawei:3.8.5'
     implementation 'cn.jiguang.sdk.plugin:xiaomi:3.8.5'
+    implementation 'cn.jiguang.sdk.plugin:oppo:3.8.5'
+    //implementation 'cn.jiguang.sdk.plugin:vivo:3.8.5'
 }

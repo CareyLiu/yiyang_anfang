@@ -429,29 +429,29 @@ public class DiagnosisActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        AndMqtt.getInstance().unSubscribe(new MqttUnSubscribe().setTopic(CAR_CTROL), new IMqttActionListener() {
-            @Override
-            public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("Rair", "(MainActivity.java:93)-onSuccess:-&gt;取消订阅成功");
-            }
+//        AndMqtt.getInstance().unSubscribe(new MqttUnSubscribe().setTopic(CAR_CTROL), new IMqttActionListener() {
+//            @Override
+//            public void onSuccess(IMqttToken asyncActionToken) {
+//                Log.i("Rair", "(MainActivity.java:93)-onSuccess:-&gt;取消订阅成功");
+//            }
+//
+//            @Override
+//            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+//                Log.i("Rair", "(MainActivity.java:98)-onFailure:-&gt;取消订阅失败");
+//            }
+//        });
 
-            @Override
-            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                Log.i("Rair", "(MainActivity.java:98)-onFailure:-&gt;取消订阅失败");
-            }
-        });
-
-        AndMqtt.getInstance().unSubscribe(new MqttUnSubscribe().setTopic(CARBOX_GETNOW), new IMqttActionListener() {
-            @Override
-            public void onSuccess(IMqttToken asyncActionToken) {
-                Log.i("Rair", "(MainActivity.java:93)-onSuccess:-&gt;取消订阅成功");
-            }
-
-            @Override
-            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                Log.i("Rair", "(MainActivity.java:98)-onFailure:-&gt;取消订阅失败");
-            }
-        });
+//        AndMqtt.getInstance().unSubscribe(new MqttUnSubscribe().setTopic(CARBOX_GETNOW), new IMqttActionListener() {
+//            @Override
+//            public void onSuccess(IMqttToken asyncActionToken) {
+//                Log.i("Rair", "(MainActivity.java:93)-onSuccess:-&gt;取消订阅成功");
+//            }
+//
+//            @Override
+//            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+//                Log.i("Rair", "(MainActivity.java:98)-onFailure:-&gt;取消订阅失败");
+//            }
+//        });
     }
 
     @OnClick({R.id.rl_back, R.id.btn_clean,R.id.rl_consult})

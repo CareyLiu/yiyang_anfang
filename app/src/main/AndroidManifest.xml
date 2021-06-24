@@ -52,12 +52,18 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" /> <!-- <uses-permission android:name="android.permission.WRITE_SETTINGS" /> -->
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <uses-permission android:name="com.coloros.mcs.permission.RECIEVE_MCS_MESSAGE"/>
+    <uses-permission android:name="com.heytap.mcs.permission.RECIEVE_MCS_MESSAGE"/>
     <uses-permission
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission
         android:name="com.smarthome.magic.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signature" />
+
+
+
+
 
     <application
         android:name=".config.MyApplication"
@@ -73,6 +79,8 @@
         android:supportsRtl="true"
         android:theme="@style/Base_BizBundle_Theme"
         tools:replace="android:theme,android:allowBackup,android:supportsRtl">
+
+
 
         <service
             android:name="com.xiaomi.push.service.XMJobService"

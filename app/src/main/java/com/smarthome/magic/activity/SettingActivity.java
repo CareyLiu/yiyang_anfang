@@ -84,6 +84,7 @@ import java.util.Observer;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 
 import static com.smarthome.magic.config.MyApplication.CAR_CTROL;
@@ -404,6 +405,7 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
                                 n.type = ConstanceValue.MSG_UNSUB_MQTT;
                                 RxBus.getDefault().sendRx(n);
                                 RongIM.getInstance().logout();
+                                JPushInterface.deleteAlias(SettingActivity.this,0);
                                 startActivity(new Intent(SettingActivity.this, LoginActivity.class));
                                 TuyaHomeSdk.getUserInstance().logout(new ILogoutCallback() {
                                     @Override

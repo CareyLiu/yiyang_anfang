@@ -97,6 +97,7 @@ import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.entity.UMessage;
+import com.xiaomi.mipush.sdk.MiPushClient;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -246,6 +247,7 @@ public class MyApplication extends MultiDexApplication {
 
         JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);
+        MiPushClient.getRegId(getApplicationContext());
         doMqttValue = new DoMqttValue();
         context = getApplicationContext();
         initRongYun();
@@ -609,7 +611,7 @@ public class MyApplication extends MultiDexApplication {
                         .setCleanSession(true)
                         .setKeepAlive(60)
                         .setCleanSession(true)
-                        .setLastWill("K.", "wit/server/" + getUser_id(), 2, true)
+                        .setLastWill("K.", "wit/server/01/" + getUser_id(), 2, true)
                         .setUserName("witandroid")
                         .setUserPassword("aG678om34buysdi")
                         .setServer(getMqttUrl()).setTimeout(1);
@@ -1108,6 +1110,9 @@ public class MyApplication extends MultiDexApplication {
         n.content = strContent;
         RxBus.getDefault().sendRx(n);
     }
+
+
+
 
 }
 

@@ -334,7 +334,7 @@ public class XiupeichangShangActivity extends BaseActivity {
         rv_pingjia.setAdapter(pingjiaAdapter);
     }
 
-    @OnClick({R.id.bt_maidan, R.id.rl_select_fuwu, R.id.rl_select_pingjia, R.id.ll_lianxi, R.id.ll_daohang})
+    @OnClick({R.id.bt_maidan, R.id.rl_select_fuwu, R.id.rl_select_pingjia, R.id.ll_lianxi, R.id.ll_daohang,R.id.tv_address})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bt_maidan:
@@ -350,6 +350,7 @@ public class XiupeichangShangActivity extends BaseActivity {
                 clickLianxi();
                 break;
             case R.id.ll_daohang:
+            case R.id.tv_address:
                 clickDaohang();
                 break;
         }
@@ -382,6 +383,7 @@ public class XiupeichangShangActivity extends BaseActivity {
                             Double x = Double.valueOf(lat_x);
                             Double y = Double.valueOf(lon_y);
                             LatLng latLng = new LatLng(x, y);
+                            NavigationUtils.NavigationBaidu(latLng,inst_name);
                         } catch (Exception e) {
                             UIHelper.ToastMessage(MyApplication.getApp().getApplicationContext(), "请下载百度地图后重新尝试", Toast.LENGTH_SHORT);
                         }

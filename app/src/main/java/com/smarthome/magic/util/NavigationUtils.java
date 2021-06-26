@@ -35,10 +35,7 @@ public class NavigationUtils {
 
     public static void Navigation(com.amap.api.maps2d.model.LatLng latLng) {
         mContext = MyApplication.getAppContext();
-
-
         if (isInstallPackage("com.autonavi.minimap")) {
-//            Toast.makeText(getContext(), "安装有高德地图", Toast.LENGTH_SHORT).show();
             SkipToGD(latLng);
         } else {
             Toast.makeText(mContext, "请下载安装高德地图", Toast.LENGTH_SHORT).show();
@@ -46,15 +43,13 @@ public class NavigationUtils {
         }
     }
 
-
     public static void NavigationBaidu(com.amap.api.maps2d.model.LatLng latLng, String name) {
         mContext = MyApplication.getAppContext();
         if (isInstallPackage("com.baidu.BaiduMap")) {
-//            Toast.makeText(getContext(), "安装有高德地图", Toast.LENGTH_SHORT).show();
             SkipToBaidu(latLng, name);
         } else {
             Toast.makeText(mContext, "请下载安装百度地图", Toast.LENGTH_SHORT).show();
-            DownloadMapApp();
+            DownloadMapAppBaidu();
         }
     }
 
@@ -64,6 +59,17 @@ public class NavigationUtils {
     private static void DownloadMapApp() {
         //显示手机上所有的market商店
         Uri uri = Uri.parse("market://details?id=com.autonavi.minimap");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(intent);
+    }
+
+    /**
+     * 到应用市场下载百度地图app
+     */
+    private static void DownloadMapAppBaidu() {
+        //显示手机上所有的market商店
+        Uri uri = Uri.parse("market://details?id=com.baidu.BaiduMap");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(intent);

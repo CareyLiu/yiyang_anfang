@@ -97,6 +97,7 @@ import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.entity.UMessage;
+import com.vivo.push.PushClient;
 import com.xiaomi.mipush.sdk.MiPushClient;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -233,6 +234,8 @@ public class MyApplication extends MultiDexApplication {
     String doMqtt = "0";//0 不执行mqtt相关功能 1执行mqtt相关功能
 
     public void onCreate() {
+
+
         PreferenceHelper.getInstance(this).removeKey(App.CHOOSE_KONGZHI_XIANGMU);
         StringBuffer param = new StringBuffer();
         param.append("appid=" + getString(R.string.app_id));
@@ -1110,8 +1113,6 @@ public class MyApplication extends MultiDexApplication {
         n.content = strContent;
         RxBus.getDefault().sendRx(n);
     }
-
-
 
 
 }

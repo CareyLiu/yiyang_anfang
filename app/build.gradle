@@ -43,9 +43,12 @@ android {
                 XIAOMI_APPKEY : "MI-5371840092664", // 小米平台注册的appkey,注意不要将前缀去掉 MI-appkey
                 XIAOMI_APPID  : "MI-2882303761518400664", // 小米平台注册的appid，注意不要将前缀去掉 MI-appid
 
-                OPPO_APPKEY   : "19787702a8284c7da7bed54a9230758f", // OPPO平台注册的appkey
-                OPPO_APPID    : "30286123", // OPPO平台注册的appid
-                OPPO_APPSECRET: "04e6317bc09841b9b521083a96cd9260"//OPPO平台注册的appsecret
+                OPPO_APPKEY   : "OP-19787702a8284c7da7bed54a9230758f", // OPPO平台注册的appkey
+                OPPO_APPID    : "OP-30286123", // OPPO平台注册的appid
+                OPPO_APPSECRET: "OP-04e6317bc09841b9b521083a96cd9260",//OPPO平台注册的appsecret
+
+                VIVO_APPKEY : "621d169a87b3a465d1e734cee0e98e36", // VIVO平台注册的appkey
+                VIVO_APPID : "105491607", // VIVO平台注册的appid
 
         ]
     }
@@ -365,5 +368,5 @@ dependencies {
     implementation 'cn.jiguang.sdk.plugin:huawei:3.8.5'
     implementation 'cn.jiguang.sdk.plugin:xiaomi:3.8.5'
     implementation 'cn.jiguang.sdk.plugin:oppo:3.8.5'
-    //implementation 'cn.jiguang.sdk.plugin:vivo:3.8.5'
+    implementation 'cn.jiguang.sdk.plugin:vivo:3.8.5'
 }

@@ -52,17 +52,14 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" /> <!-- <uses-permission android:name="android.permission.WRITE_SETTINGS" /> -->
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
-    <uses-permission android:name="com.coloros.mcs.permission.RECIEVE_MCS_MESSAGE"/>
-    <uses-permission android:name="com.heytap.mcs.permission.RECIEVE_MCS_MESSAGE"/>
+    <uses-permission android:name="com.coloros.mcs.permission.RECIEVE_MCS_MESSAGE" />
+    <uses-permission android:name="com.heytap.mcs.permission.RECIEVE_MCS_MESSAGE" />
     <uses-permission
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission
         android:name="com.smarthome.magic.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signature" />
-
-
-
 
 
     <application
@@ -81,6 +78,57 @@
         tools:replace="android:theme,android:allowBackup,android:supportsRtl">
 
 
+        <!-- since JPushv3.6.8 ，oppov2.1.0 oppo 核心功能-->
+        <service android:name="cn.jpush.android.service.PluginOppoPushService"
+            android:permission="com.coloros.mcs.permission.SEND_MCS_MESSAGE">
+            <intent-filter>
+                <action android:name="com.coloros.mcs.action.RECEIVE_MCS_MESSAGE" />
+            </intent-filter>
+        </service>
+
+        <!-- since JPushv3.6.8 ，oppov2.1.0 oppo 核心功能-->
+        <service
+            android:name="com.heytap.msp.push.service.DataMessageCallbackService"
+            android:permission="com.heytap.mcs.permission.SEND_PUSH_MESSAGE">
+
+            <intent-filter>
+                <action android:name="com.heytap.mcs.action.RECEIVE_MCS_MESSAGE"/>
+
+                <action android:name="com.heytap.msp.push.RECEIVE_MCS_MESSAGE"/>
+            </intent-filter>
+        </service> <!--兼容Q版本-->
+
+        <receiver android:name="cn.jpush.android.service.PluginVivoMessageReceiver">
+            <intent-filter>
+                <!-- 接收 push 消息 -->
+                <action android:name="com.vivo.pushclient.action.RECEIVE" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name="com.vivo.push.sdk.service.CommandClientService"
+            android:exported="true" />
+        <activity
+            android:name="com.vivo.push.sdk.LinkProxyClientActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+
+        <meta-data
+            android:name="com.vivo.push.api_key"
+            android:value="621d169a87b3a465d1e734cee0e98e36" />
+        <meta-data
+            android:name="com.vivo.push.app_id"
+            android:value="105491607" />
+
+        <meta-data android:name="OPPO_APPKEY"
+            android:value="OP-19787702a8284c7da7bed54a9230758f" />
+
+        <meta-data android:name="OPPO_APPID"
+            android:value="OP-30286123" />
+
+        <meta-data android:name="OPPO_APPSECRET"
+            android:value="OP-04e6317bc09841b9b521083a96cd9260" />
 
         <service
             android:name="com.xiaomi.push.service.XMJobService"
@@ -211,6 +259,13 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="c4fa107f21600a897caa2d5417c2f8a5" /> <!-- <provider -->
+
+
+
+
+
+
+
 
         <service android:name="com.amap.api.location.APSService" />
         <service android:name=".service.DownLoadApkService" />

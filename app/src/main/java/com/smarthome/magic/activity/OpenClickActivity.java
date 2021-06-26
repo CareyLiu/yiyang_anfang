@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.smarthome.magic.app.UIHelper;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,15 +19,25 @@ import cn.jpush.android.api.JPushInterface;
 
 public class OpenClickActivity extends Activity {
     private static final String TAG = "OpenClickActivity";
-    /**消息Id**/
+    /**
+     * 消息Id
+     **/
     private static final String KEY_MSGID = "msg_id";
-    /**该通知的下发通道**/
+    /**
+     * 该通知的下发通道
+     **/
     private static final String KEY_WHICH_PUSH_SDK = "rom_type";
-    /**通知标题**/
+    /**
+     * 通知标题
+     **/
     private static final String KEY_TITLE = "n_title";
-    /**通知内容**/
+    /**
+     * 通知内容
+     **/
     private static final String KEY_CONTENT = "n_content";
-    /**通知附加字段**/
+    /**
+     * 通知附加字段
+     **/
     private static final String KEY_EXTRAS = "n_extras";
     private TextView mTextView;
 
@@ -53,7 +65,7 @@ public class OpenClickActivity extends Activity {
         }
 
         //获取fcm、oppo、vivo、华硕、小米平台附带的jpush信息
-        if(TextUtils.isEmpty(data) && getIntent().getExtras() != null){
+        if (TextUtils.isEmpty(data) && getIntent().getExtras() != null) {
             data = getIntent().getExtras().getString("JMessageExtra");
         }
 
@@ -94,7 +106,7 @@ public class OpenClickActivity extends Activity {
 
     private String getPushSDKName(byte whichPushSDK) {
         String name;
-        switch (whichPushSDK){
+        switch (whichPushSDK) {
             case 0:
                 name = "jpush";
                 break;
@@ -108,7 +120,7 @@ public class OpenClickActivity extends Activity {
                 name = "meizu";
                 break;
             case 4:
-                name= "oppo";
+                name = "oppo";
                 break;
             case 5:
                 name = "vivo";

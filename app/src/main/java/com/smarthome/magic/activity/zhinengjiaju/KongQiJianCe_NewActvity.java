@@ -239,6 +239,8 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
                         tvKongqiZhiliang.setText(response.body().data.get(0).getGd_air_quality());
                         tvCo2.setText(response.body().data.get(0).getGd_carbon_dioxide());
 
+                        tvShow.setText(response.body().data.get(0).getGd_air_quality());
+
                     }
 
                     @Override

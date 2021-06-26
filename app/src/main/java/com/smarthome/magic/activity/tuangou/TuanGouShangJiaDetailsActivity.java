@@ -11,13 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amap.api.maps.model.LatLng;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.ActionSheetDialog;
 import com.flyco.roundview.RoundTextView;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.google.gson.Gson;
@@ -33,11 +37,13 @@ import com.smarthome.magic.adapter.tuangou.TuanGouShangJiaHighScoreList1Adapter;
 import com.smarthome.magic.adapter.tuangou.TuanGouShangJiaHighScoreListAdapter;
 import com.smarthome.magic.adapter.tuangou.TuanGouShangJiaListAdapter;
 import com.smarthome.magic.app.App;
+import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 
 import com.smarthome.magic.config.GlideImageLoader;
+import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.TuanGouShangJiaDetailsModel;
@@ -188,6 +194,42 @@ public class TuanGouShangJiaDetailsActivity extends AbStracTuanGouShangJiaDetail
                 if (!StringUtils.isEmpty(storeListBean.getX())) {
                     LatLng latLng = new LatLng(Double.valueOf(storeListBean.getX()), Double.valueOf(storeListBean.getY()));
                     NavigationUtils.Navigation(latLng);
+
+                    if (TextUtils.isEmpty(storeListBean.getX()) || TextUtils.isEmpty(storeListBean.getY())) {
+                        return;
+                    }
+
+                    String items[] = {"高德地图导航", "百度地图导航"};
+                    final ActionSheetDialog dialog = new ActionSheetDialog(TuanGouShangJiaDetailsActivity.this, items, null);
+                    dialog.isTitleShow(false).show();
+                    dialog.setOnOperItemClickL(new OnOperItemClickL() {
+                        @Override
+                        public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            switch (position) {
+                                case 0:
+                                    try {
+                                        Double x = Double.valueOf(storeListBean.getX());
+                                        Double y = Double.valueOf(storeListBean.getY());
+                                        com.amap.api.maps2d.model.LatLng latLng = new com.amap.api.maps2d.model.LatLng(x, y);
+                                        NavigationUtils.Navigation(latLng);
+                                    } catch (Exception e) {
+                                        UIHelper.ToastMessage(MyApplication.getApp().getApplicationContext(), "请下载高德地图后重新尝试", Toast.LENGTH_SHORT);
+                                    }
+                                    break;
+                                case 1:
+                                    try {
+                                        Double x = Double.valueOf(storeListBean.getX());
+                                        Double y = Double.valueOf(storeListBean.getY());
+                                        com.amap.api.maps2d.model.LatLng latLng = new com.amap.api.maps2d.model.LatLng(x, y);
+                                        NavigationUtils.NavigationBaidu(latLng,"");
+                                    } catch (Exception e) {
+                                        UIHelper.ToastMessage(MyApplication.getApp().getApplicationContext(), "请下载百度地图后重新尝试", Toast.LENGTH_SHORT);
+                                    }
+                                    break;
+                            }
+                            dialog.dismiss();
+                        }
+                    });
                 }
             }
         });

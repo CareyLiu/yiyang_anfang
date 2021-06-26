@@ -129,11 +129,12 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                     for (int i = 0; i < mDatas.size(); i++) {
                         if (mDatas.get(i).getDevice_ccid().equals(zhuangZhiId)) {
                             mDatas.get(i).setWork_state(kaiGuanDengZhuangTai);
+                            if (zhiNengDeviceListAdapter != null) {
+                                zhiNengDeviceListAdapter.notifyItemChanged(i);
+                            }
                         }
                     }
-                    if (zhiNengDeviceListAdapter != null) {
-                        zhiNengDeviceListAdapter.notifyDataSetChanged();
-                    }
+
 
                 } else if (message.type == ConstanceValue.MSG_DEVICE_DELETE_TUYA) {
                     String tuyaId = message.devId;

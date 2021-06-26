@@ -192,8 +192,8 @@ public class TuanGouShangJiaDetailsActivity extends AbStracTuanGouShangJiaDetail
             @Override
             public void onClick(View v) {
                 if (!StringUtils.isEmpty(storeListBean.getX())) {
-                    LatLng latLng = new LatLng(Double.valueOf(storeListBean.getX()), Double.valueOf(storeListBean.getY()));
-                    NavigationUtils.Navigation(latLng);
+//                    LatLng latLng = new LatLng(Double.valueOf(storeListBean.getX()), Double.valueOf(storeListBean.getY()));
+//                    NavigationUtils.Navigation(latLng);
 
                     if (TextUtils.isEmpty(storeListBean.getX()) || TextUtils.isEmpty(storeListBean.getY())) {
                         return;

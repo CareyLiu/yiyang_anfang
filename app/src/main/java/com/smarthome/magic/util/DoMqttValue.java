@@ -84,11 +84,7 @@ public class DoMqttValue {
                         Thread thread = new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                try {
-                                    Thread.sleep(1000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
+
                                 Notice notice = new Notice();
                                 notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
                                 notice.content = stringList;
@@ -100,8 +96,11 @@ public class DoMqttValue {
                                 RxBus.getDefault().sendRx(notice1);
                                 Log.i("Rair", "发送了一次");
 
-
-
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         });
                         thread.start();

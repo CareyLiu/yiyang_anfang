@@ -27,6 +27,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
+import com.heytap.msp.push.HeytapPushManager;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.jaeger.library.StatusBarUtil;
 import com.lzy.okgo.OkGo;
@@ -76,6 +77,7 @@ import com.smarthome.magic.util.SoundPoolUtils;
 import com.smarthome.magic.util.YuYinChuLiTool;
 import com.smarthome.magic.view.NoScrollViewPager;
 import com.tuya.smart.wrapper.api.TuyaWrapper;
+import com.vivo.push.PushClient;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
@@ -149,6 +151,11 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        boolean vPush = PushClient.getInstance(context).isSupport();
+        Log.i("vPush", "" + vPush);
+
+        boolean OPush =  HeytapPushManager.isSupportPush();
+        Log.i("OPush", "" + OPush);
         //  getZhuJiNet();
         StatusBarUtil.setLightMode(this);
         ButterKnife.bind(this);

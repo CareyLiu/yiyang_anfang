@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.amap.api.maps.model.LatLng;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.roundview.RoundTextView;
@@ -41,6 +42,7 @@ import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.TuanGouShangJiaDetailsModel;
 import com.smarthome.magic.util.AlertUtil;
+import com.smarthome.magic.util.NavigationUtils;
 import com.smarthome.magic.util.phoneview.sample.ImageShowActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
@@ -180,6 +182,15 @@ public class TuanGouShangJiaDetailsActivity extends AbStracTuanGouShangJiaDetail
         tvRenJun.setText(storeListBean.getAverage_cost());
         tvAddr.setText(storeListBean.getAddr_all());
 
+        tvAddr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!StringUtils.isEmpty(storeListBean.getX())) {
+                    LatLng latLng = new LatLng(Double.valueOf(storeListBean.getX()), Double.valueOf(storeListBean.getY()));
+                    NavigationUtils.Navigation(latLng);
+                }
+            }
+        });
 
         ArrayList<String> items = new ArrayList<>();
         if (response.body().data != null) {

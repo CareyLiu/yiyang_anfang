@@ -10,12 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -23,7 +17,6 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.DefaultX5WebView_HaveNameActivity;
 import com.smarthome.magic.activity.TuanYouWebView;
 import com.smarthome.magic.activity.WebViewActivity;
 import com.smarthome.magic.activity.xin_tuanyou.TuanYouList;
@@ -31,7 +24,6 @@ import com.smarthome.magic.activity.xiupeichang.XiuPeiChangSearchActivity;
 import com.smarthome.magic.activity.xiupeichang.XiupeichangShangActivity;
 import com.smarthome.magic.adapter.TuanGouShangJiaHeaderListAdapter;
 import com.smarthome.magic.adapter.tuangou.TuanGouShangJiaListAdapter;
-import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
@@ -40,8 +32,6 @@ import com.smarthome.magic.config.GlideImageLoader;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.TuanGouShangJiaListBean;
-import com.smarthome.magic.project_A.tuangou.TuanGouShangJiaList;
-import com.smarthome.magic.util.GlideShowImageUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
@@ -51,6 +41,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -69,6 +64,8 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
     ConstraintLayout constrain;
     @BindView(R.id.srL_smart)
     SmartRefreshLayout srLSmart;
+    @BindView(R.id.ll_search)
+    LinearLayout llSearch;
     private String type;//首页图标类型 1.美食 2.电影/演出 3.酒店住宿 4.休闲娱乐 5.旅游
     private String imgType;//
 
@@ -90,9 +87,15 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
     protected void onCreate(Bundle savedInstanceState) {
         type = getIntent().getStringExtra("type");
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_tuan_gou_shang_jia_list);
         ButterKnife.bind(this);
         initToolbar();
+        llSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                XiuPeiChangSearchActivity.actionStart(mContext);
+            }
+        });
+
         constrain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,6 +132,8 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
         });
 
     }
+
+
 
     Banner banner;
     List<TuanGouShangJiaListBean.DataBean.IconBean> iconListBeans = new ArrayList<>();
@@ -489,15 +494,11 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
         tvQuanBu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (quanbuShow) {
-                    //   quanbuShow = !quanbuShow;
-
                     constrain.setVisibility(View.GONE);
                     quanbuShow = false;
                     ivImage1.setBackgroundResource(R.mipmap.shangjia_icon_shouqi);
                     tvQuanBu.setTextColor(TuanGouShangJiaListActivity.this.getResources().getColor(R.color.black_666666));
-
                 } else {
                     quanbuShow = true;
                     zhinengpaixuShow = false;
@@ -522,7 +523,6 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                     iconListBeans1.add(iconBean);
                     for (int i = 0; i < iconListBeans.size(); i++) {
                         iconListBeans1.add(iconListBeans.get(i));
-
                     }
                     for (int i = 0; i < iconListBeans1.size(); i++) {
                         View viewHortial = View.inflate(TuanGouShangJiaListActivity.this, R.layout.item_hortial_view, null);
@@ -535,8 +535,6 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                             public void onClick(View v) {
                                 tvQuanBu.setText(iconListBeans1.get(finalI).getName());
                                 if (type.equals("10")) {
-
-
                                     if (iconListBeans1.get(finalI).getId().equals("6")) {
                                         String jingdu = PreferenceHelper.getInstance(mContext).getString(JINGDU, "0X11");
                                         String weidu = PreferenceHelper.getInstance(mContext).getString(WEIDU, "0X11");
@@ -736,12 +734,10 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
             }
         });
 
-
         tuanGouShangJiaListAdapter = new TuanGouShangJiaListAdapter(R.layout.item_shangjia, storeListBeans);
         tuanGouShangJiaListAdapter.setOnItemChildClickListener(new com.chad.library.adapter.base.BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(com.chad.library.adapter.base.BaseQuickAdapter adapter, View view, int position) {
-
                 switch (view.getId()) {
                     case R.id.constrain:
                         if (type.equals("7")) {
@@ -754,20 +750,11 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
             }
         });
 
-//        refreshLayout.setEnableLoadMore(false);
-//        refreshLayout.setEnableRefresh(false);
-        //   initHeaderView(view);
-
         //初始化一下
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(this);
         swipeTarget.setLayoutManager(gridLayoutManager);
-
-        //  taoKeListAdapter = new TaoKeListAdapter(R.layout.layout_taokeshop, dataBeanList);
         tuanGouShangJiaListAdapter.openLoadAnimation();//默认为渐显效果
         swipeTarget.setAdapter(tuanGouShangJiaListAdapter);
-        //   refreshLayout.setEnableAutoLoadMore(true);
-        //  smartRefreshLayout.setEnableRefresh(true);
-        // refreshLayout.setEnableLoadMore(true);
         tuanGouShangJiaListAdapter.addHeaderView(view);
     }
 
@@ -782,7 +769,6 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("type", type);
         context.startActivity(intent);
-
     }
 
 
@@ -821,14 +807,6 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
                 break;
             case "7":
                 strTitle = "修配厂";
-                iv_rightTitle.setVisibility(View.VISIBLE);
-                iv_rightTitle.setBackgroundResource(R.mipmap.dingdan_icon_sousuo);
-                iv_rightTitle.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        XiuPeiChangSearchActivity.actionStart(mContext);
-                    }
-                });
                 break;
             case "8":
                 strTitle = "体检";
@@ -848,14 +826,8 @@ public class TuanGouShangJiaListActivity extends AbStractTuanGouShangJia {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //imm.hideSoftInputFromWindow(findViewById(R.id.cl_layout).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 finish();
             }
         });
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 }

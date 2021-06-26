@@ -2,14 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:rv="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_custom3_search"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/activity_bg_color"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -58,22 +56,20 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
-
                         android:src="@mipmap/doudaren_title_sousuo" />
 
                     <EditText
                         android:id="@+id/et_serarchKey"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="11dp"
                         android:background="@null"
+                        android:gravity="center_vertical"
                         android:hint="请输入关键词"
                         android:imeOptions="actionSearch"
                         android:singleLine="true"
                         android:textColor="@color/sousuo"
                         android:textSize="13sp" />
-
-
                 </com.flyco.roundview.RoundLinearLayout>
 
                 <TextView
@@ -94,107 +90,6 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/grayline_ececec" />
-        <LinearLayout
-            android:id="@+id/rl_ll"
-            android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/rlv_list">
-
-            <RelativeLayout
-                android:id="@+id/rl_quanbu"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <LinearLayout
-                    android:id="@+id/ll_quanbu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_quanbu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:includeFontPadding="false"
-                        android:text="全部"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/dianpu_jiage_jiangxu" />
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_zhinengpaixu"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <LinearLayout
-                    android:id="@+id/ll_zhinengpaixu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_zhinengpaixu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:includeFontPadding="false"
-                        android:text="智能排序"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/dianpu_jiage_jiangxu" />
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_shaixuan"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <LinearLayout
-                    android:id="@+id/ll_shaixuan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_shaixuan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:includeFontPadding="false"
-                        android:text="筛选"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/dianpu_jiage_jiangxu" />
-
-                </LinearLayout>
-            </RelativeLayout>
-
-        </LinearLayout>
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/srL_smart"
@@ -207,7 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:srlTextSizeTime="10sp"
-                    app:srlTextSizeTitle="12sp" />
+                app:srlTextSizeTitle="12sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/swipe_target"
@@ -217,40 +112,14 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
             <com.scwang.smartrefresh.layout.footer.ClassicsFooter
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#ffeeeeee"
                 app:srlTextSizeTime="10sp"
-                    app:srlTextSizeTitle="12sp" />
-
-
+                app:srlTextSizeTitle="12sp" />
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constrain"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#282828"
-            android:visibility="visible">
-
-            <LinearLayout
-                android:id="@+id/constrain_xx"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical"
-                app:layout_constraintTop_toTopOf="parent">
-
-
-            </LinearLayout>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/ll_none"
@@ -259,7 +128,6 @@
         android:layout_centerInParent="true"
         android:orientation="vertical"
         android:visibility="gone">
-
 
         <ImageView
             android:layout_width="wrap_content"

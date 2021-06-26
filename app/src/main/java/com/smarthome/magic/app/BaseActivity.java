@@ -240,12 +240,12 @@ public abstract class BaseActivity<T extends BasicPresenter, E extends BasicMode
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
-    @Override
-    public Resources getResources() {
-        Resources res = super.getResources();
-        Configuration config = new Configuration();
-        config.setToDefaults();
-        res.updateConfiguration(config, res.getDisplayMetrics());
-        return res;
-    }
+//    @Override
+//    public Resources getResources() {
+//        Resources res = super.getResources();
+//        Configuration config = new Configuration();
+//        config.setToDefaults();
+//        res.updateConfiguration(config, res.getDisplayMetrics());
+//        return res;
+//    }
 }

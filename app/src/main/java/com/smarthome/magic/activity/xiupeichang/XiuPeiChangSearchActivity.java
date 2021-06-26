@@ -123,8 +123,8 @@ public class XiuPeiChangSearchActivity extends BaseActivity {
                                 //发送请求
                                 insertKeyword(textView.getText().toString().trim(), XIUPEICHANGSEARCH);
                                 XiuPeiChangSearchThingActivity.actionStart(XiuPeiChangSearchActivity.this, textView.getText().toString().trim());
+                                finish();
                             }
-
                             return true;
                         default:
                             return true;
@@ -277,12 +277,9 @@ public class XiuPeiChangSearchActivity extends BaseActivity {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.rl_layout:
-                        //发送请求
-                      //  Log.i("searchKey", searchKeywords1.size() + "");
-
-
                         XiuPeiChangSearchThingActivity.actionStart(XiuPeiChangSearchActivity.this, searchKeywords1.get(position).getName().toString());
                         insertKeyword(searchKeywords1.get(position).getName().toString(), XIUPEICHANGSEARCH);
+                        finish();
                         break;
                     case R.id.iv_delete:
                         delOneItemword(searchKeywords1.get(position).getName().toString());

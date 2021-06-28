@@ -138,8 +138,7 @@ public class XiuPeiChangSearchThingActivity extends BaseActivity {
         tuanGouShangJiaListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-
-
+                type = storeListBeans.get(position).getValue_1();
                 switch (view.getId()) {
                     case R.id.constrain:
                         if (type.equals("7")) {
@@ -166,7 +165,6 @@ public class XiuPeiChangSearchThingActivity extends BaseActivity {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 getNet();
-
             }
         });
         srLSmart.setOnLoadMoreListener(new OnLoadMoreListener() {

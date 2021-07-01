@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.huawei.hms.push.HmsMessageService;
 import com.huawei.hms.push.RemoteMessage;
+import com.smarthome.magic.R;
+import com.smarthome.magic.util.SoundPoolUtils;
 
 import cn.jpush.android.service.PluginHuaweiPlatformsService;
 
@@ -37,6 +39,7 @@ public class MyHWPushService extends HmsMessageService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         service.onMessageReceived(remoteMessage);
         Log.i("huawei_tuisong", remoteMessage.getData().toString());
+
     }
 
     @Override

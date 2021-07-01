@@ -1,12 +1,28 @@
 package com.smarthome.magic.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.smarthome.magic.R;
+import com.smarthome.magic.activity.shuinuan.Y;
+import com.smarthome.magic.activity.zhinengjiaju.function.LouShuiActivity;
+import com.smarthome.magic.activity.zhinengjiaju.function.MenCiActivity;
+import com.smarthome.magic.activity.zhinengjiaju.function.MenSuoActivity;
+import com.smarthome.magic.activity.zhinengjiaju.function.SosActivity;
+import com.smarthome.magic.activity.zhinengjiaju.function.YanGanActivity;
+import com.smarthome.magic.app.AppManager;
+import com.smarthome.magic.app.ConstanceValue;
+import com.smarthome.magic.app.Notice;
+import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.app.UIHelper;
+import com.smarthome.magic.model.OpenClickModel;
+import com.smarthome.magic.model.ZhiNengJiaJuNotifyJson;
+import com.smarthome.magic.util.SoundPoolUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,6 +34,7 @@ import cn.jpush.android.api.JPushInterface;
  */
 
 public class OpenClickActivity extends Activity {
+    OpenClickModel openClickModel;
     private static final String TAG = "OpenClickActivity";
     /**
      * 消息Id
@@ -70,6 +87,7 @@ public class OpenClickActivity extends Activity {
         }
 
         Log.w(TAG, "msg content is " + String.valueOf(data));
+
         if (TextUtils.isEmpty(data)) return;
         try {
             JSONObject jsonObject = new JSONObject(data);
@@ -95,12 +113,94 @@ public class OpenClickActivity extends Activity {
             sb.append(getPushSDKName(whichPushSDK));
             mTextView.setText(sb.toString());
 
+            openClickModel = new Gson().fromJson(data, OpenClickModel.class);
+
             //上报点击事件
             JPushInterface.reportNotificationOpened(this, msgId, whichPushSDK);
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(intent);
+            function(openClickModel);
+            finish();
         } catch (JSONException e) {
             Log.w(TAG, "parse notification error");
         }
 
+
+    }
+
+    private void function(OpenClickModel openClickModel) {
+
+        /**
+         * * o	1.风暖加热器
+         * 2.水暖加热器
+         * 3.汽车
+         * 4.货车防盗
+         * 5.智能家居
+         * 6.驻车空调	带有提示音的风暖、水暖报警提示（字母o为历史版本，特殊）
+         *
+         * jyj_0000		app_type 1:ios 2:安卓IOS / Android版本有更新
+         * jyj_0001		tx_state 0:提现失败1:提现成功提现处理：通知
+         * jyj_0002		online_state 0：离线 1：上线聚易佳智能主机离线 、上线提醒
+         * jyj_0003		href_url广告推送，跳转h5链接，h5链接放在url字段处
+         * jyj_0004		通知消息推送，跳转消息列表
+         * jyj_0005		kind_type
+         * jyj_0006
+         * 0:普通商品 1: 团购商品 2:修配厂店铺类型详情
+         * 商品推送，点击推送消息进入商品详情，推送信息中带有商品对应id，字段参考普通商品详情以及团购商品详情
+         */
+        switch (openClickModel.getN_extras().getCode()) {
+            case "o"://风暖加热器
+                break;
+            case "jyj_0000":
+                break;
+            case "jyj_0001":
+                break;
+            case "jyj_0002":
+                //刷新列表
+                Log.i("设备离线", "设备离线刷新列表");
+//                if (zhiNengJiaJuNotifyJson.online_state.equals("0")) {//离线
+//                    Notice notice = new Notice();
+//                    notice.type = ConstanceValue.MSG_ZHINENGJIAJU_ZHUJI;
+//                    notice.content = "0";
+//                    RxBus.getDefault().sendRx(notice);
+//
+//                } else if (zhiNengJiaJuNotifyJson.online_state.equals("1")) {//在线
+//                    Notice notice = new Notice();
+//                    notice.type = ConstanceValue.MSG_ZHINENGJIAJU_ZHUJI;
+//                    notice.content = "1";
+//                    RxBus.getDefault().sendRx(notice);
+//
+//
+//                }
+                break;
+            case "jyj_0003":
+                break;
+            case "jyj_0004":
+                break;
+            case "jyj_0005":
+                break;
+            case "jyj_0006":
+                Y.e("见风使舵老师的打快速反击 ");
+
+                if (openClickModel.getN_extras().getDevice_type().equals("12")) {
+                    MenCiActivity.actionStart(getApplicationContext(), openClickModel.getN_extras().getDevice_id());
+                } else if (openClickModel.getN_extras().getDevice_type().equals("11")) {
+                    YanGanActivity.actionStart(getApplicationContext(), openClickModel.getN_extras().getDevice_id());
+                } else if (openClickModel.getN_extras().getDevice_type().equals("15")) {
+                    SosActivity.actionStart(getApplicationContext(), openClickModel.getN_extras().getDevice_id(), true);
+                   // SoundPoolUtils.soundPool(getApplicationContext(), R.raw.baojingyin_1);
+                } else if (openClickModel.getN_extras().getDevice_type().equals("05")) {
+                    MenSuoActivity.actionStart(getApplicationContext(), openClickModel.getN_extras().getDevice_id());
+                } else if (openClickModel.getN_extras().getDevice_type().equals("13")) {
+                    LouShuiActivity.actionStart(getApplicationContext(), openClickModel.getN_extras().getDevice_id());
+                }
+
+                break;
+            case "jyj_0007":
+                break;
+
+
+        }
 
     }
 
@@ -136,4 +236,6 @@ public class OpenClickActivity extends Activity {
         }
         return name;
     }
+
+
 }

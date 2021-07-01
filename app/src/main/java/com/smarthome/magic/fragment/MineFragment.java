@@ -1,6 +1,7 @@
 package com.smarthome.magic.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -213,7 +214,8 @@ public class MineFragment extends BaseFragment implements Observer {
     ImageView ivTongji;
     @BindView(R.id.tv_tuiguang_tongji)
     TextView tvTuiguangTongji;
-
+    @BindView(R.id.rl_lianxidianhua)
+    RelativeLayout rlLianXiDianHua;
 
     @Override
     protected void initLogic() {
@@ -369,7 +371,7 @@ public class MineFragment extends BaseFragment implements Observer {
             R.id.iv_zhanghu_chongzhi, R.id.iv_kapianchongzhi, R.id.tv_kapianchongzhi, R.id.iv_chongzhi_jilu, R.id.tv_chongzhi_jilu, R.id.iv_shouhou_fuwu,
             R.id.tv_xiaofeijilu, R.id.iv_xiche_erwei, R.id.rlv_xiche, R.id.iv_tuiguangma, R.id.tv_tuiguangma, R.id.iv_dailishang, R.id.iv_about_us, R.id.iv_bazism,
             R.id.view, R.id.rlv_about_us, R.id.ll_kaquan, R.id.tv_daifukuan, R.id.tv_daishouhuo, R.id.tv_daodian, R.id.ll_shoucangjia,
-            R.id.ll_guanzhudianpu, R.id.tv_dalishang, R.id.iv_tongji, R.id.tv_tuiguang_tongji})
+            R.id.ll_guanzhudianpu, R.id.tv_dalishang, R.id.iv_tongji, R.id.tv_tuiguang_tongji, R.id.rl_lianxidianhua})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_tongji:
@@ -540,6 +542,11 @@ public class MineFragment extends BaseFragment implements Observer {
                 if (!StringUtils.isEmpty(agentUrl)) {
                     DefaultX5WebViewActivity.actionStart(getActivity(), agentUrl);
                 }
+                break;
+
+            case R.id.rl_lianxidianhua:
+                Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "0451-86302963"));//跳转到拨号界面，同时传递电话号码
+                startActivity(dialIntent);
                 break;
         }
     }

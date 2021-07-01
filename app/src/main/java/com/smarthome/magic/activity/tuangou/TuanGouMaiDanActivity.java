@@ -11,6 +11,7 @@ import com.flyco.roundview.RoundTextView;
 import com.smarthome.magic.R;
 import com.smarthome.magic.app.BaseActivity;
 import com.smarthome.magic.app.UIHelper;
+import com.smarthome.magic.common.StringUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,6 +65,8 @@ public class TuanGouMaiDanActivity extends BaseActivity {
             public void onClick(View v) {
                 if (etJine.getText().toString().equals("0")) {
                     UIHelper.ToastMessage(TuanGouMaiDanActivity.this, "输入金额不能为0");
+                } else if (StringUtils.isEmpty(etJine.getText().toString())) {
+                    UIHelper.ToastMessage(TuanGouMaiDanActivity.this, "请填写输入金额");
                 } else {
                     TuanGouMaiDanDingDanActivity.actionStart(TuanGouMaiDanActivity.this, etJine.getText().toString().trim(), inst_id, typeID);
                     finish();

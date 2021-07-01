@@ -111,6 +111,8 @@ public class OnlineFragment extends BaseFragment implements Observer {
                     switch (view.getId()) {
                         case R.id.constrain:
                             if (mDatas.get(position).device_type.equals("1")) {
+                            //    mDatas.get(position).ccid = "aaaaaaaaaaaaaa2010070018";
+
                                 int i = mDatas.get(position).ccid.length() - 1;
                                 String str = String.valueOf(mDatas.get(position).ccid.charAt(i));
                                 PreferenceHelper.getInstance(getActivity()).putString("car_server_id", str + "/");
@@ -154,7 +156,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
                                 if (NetworkUtils.isConnected(getActivity())) {
                                     Activity currentActivity = AppManager.getAppManager().currentActivity();
                                     if (currentActivity != null) {
-                                        AirConditionerActivity.actionStart(getActivity(), ccid,"驻车空调");
+                                        AirConditionerActivity.actionStart(getActivity(), ccid, "驻车空调");
                                     }
                                 } else {
                                     UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");

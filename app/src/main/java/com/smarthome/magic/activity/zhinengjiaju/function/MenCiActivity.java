@@ -645,16 +645,16 @@ public class MenCiActivity extends BaseActivity {
                     @Override
                     public void onStart(Request<AppResponse<MenCiListModel.DataBean>, ? extends Request> request) {
                         super.onStart(request);
-                        lordingDialog.setTextMsg("数据加载中，请稍后");
-                        lordingDialog.show();
+//                        lordingDialog.setTextMsg("数据加载中，请稍后");
+//                        lordingDialog.show();
                     }
 
                     @Override
                     public void onFinish() {
                         super.onFinish();
-                        if (lordingDialog.isShowing()) {
-                            lordingDialog.dismiss();
-                        }
+//                        if (lordingDialog.isShowing()) {
+//                            lordingDialog.dismiss();
+//                        }
                     }
                 });
     }

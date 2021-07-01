@@ -520,16 +520,7 @@ public class HomeActivity extends BaseActivity {
         String message = (String) notice.content;
         Gson gson = new Gson();
         alarmClass = gson.fromJson(message.toString(), AlarmClass.class);
-
-
         Log.i("alarmClass", alarmClass.changjia_name + alarmClass.sell_phone);
-//
-//                    if (player != null) {
-//                        player.stop();
-//                        player.release();
-//                        audioFocusManage.releaseTheAudioFocus();
-//                        player = null;
-//                    }
 
         if (alarmClass.type.equals("1")) {
             switch (alarmClass.sound) {

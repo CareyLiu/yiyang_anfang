@@ -235,6 +235,7 @@ public class LouShuiActivity extends BaseActivity {
                             ivLouShui.setBackgroundResource(R.mipmap.tuya_loushui_pic_no_baojing);
                         }
                     }
+                    getNet();
 
                 } else if (notice.type == ConstanceValue.MSG_ROOM_DEVICE_CHANGENAME) {
                     changeDevice(notice.content.toString());
@@ -407,7 +408,7 @@ public class LouShuiActivity extends BaseActivity {
                         srLSmart.finishRefresh();
                         dataBean = response.body().data.get(0);
                         deviceCCid = dataBean.getDevice_ccid();
-
+                        mDatas.clear();
                         String onlineState = dataBean.getOnline_state();
                         if (onlineState.equals("1")) {
                             zaiXianLiXian.setText("设备在线");

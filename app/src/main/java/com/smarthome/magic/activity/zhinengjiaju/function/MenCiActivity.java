@@ -111,7 +111,6 @@ public class MenCiActivity extends BaseActivity {
         srLSmart.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                pageNumber = pageNumber + 1;
                 getNet();
             }
         });
@@ -269,6 +268,7 @@ public class MenCiActivity extends BaseActivity {
                             viewZhongJian.setVisibility(View.GONE);
                         }
                     }
+                    getNet();
 
                 } else if (notice.type == ConstanceValue.MSG_ROOM_DEVICE_CHANGENAME) {
                     changeDevice(notice.content.toString());
@@ -544,6 +544,7 @@ public class MenCiActivity extends BaseActivity {
                         srLSmart.finishRefresh();
                         dataBean = response.body().data.get(0);
                         deviceCCid = dataBean.getDevice_ccid();
+                        mDatas.clear();
                         if (firstEnter) {
                             znjjMqttMingLing = new ZnjjMqttMingLing(mContext, dataBean.getDevice_ccid_up(), dataBean.getServer_id());
                             znjjMqttMingLing.subscribeAppShiShiXinXi(new IMqttActionListener() {

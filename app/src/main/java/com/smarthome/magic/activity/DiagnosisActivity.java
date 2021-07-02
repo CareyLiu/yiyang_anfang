@@ -227,7 +227,7 @@ public class DiagnosisActivity extends BaseActivity {
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
             public void call(Notice message) {
-                if (message.type == ConstanceValue.MSG_GUZHANG) {
+                if (message.type == ConstanceValue.MSG_GUZHANG_SHOUYE) {
                     Gson gson = new Gson();
                     try {
                         AlarmClass alarmClass = gson.fromJson(message.content.toString(), AlarmClass.class);
@@ -263,7 +263,7 @@ public class DiagnosisActivity extends BaseActivity {
                     String zhu_car_stoppage_no = messageData.substring(35, 37);
                     zhu_car_stoppage_no = 0 <= zhu_car_stoppage_no.indexOf("a") ? "" : String.valueOf(Integer.parseInt(zhu_car_stoppage_no));
 
-                    if (zhu_car_stoppage_no != null) {
+                    if (!StringUtils.isEmpty(zhu_car_stoppage_no)) {
                         layoutMessage.setVisibility(View.VISIBLE);
                         btnClean.setVisibility(View.VISIBLE);
 

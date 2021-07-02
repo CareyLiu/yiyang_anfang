@@ -118,10 +118,14 @@ public class ZhiNengJiaJuKaiGuanOneActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (kaiGuanZhuagnTai.equals("0")) {
+                    setQuanKaiQuanGuanBac("1", R.mipmap.tuya_icon_switch_quankai, R.mipmap.kaiguan_pic_quankai_close, R.mipmap.kaiguan_pic_quanguan_open, R.mipmap.tuya_icon_switch_quanguan);
+
                     daKaiKaiGuan("1", zhuangZhiId);
                     kaiGuanZhuagnTai = "1";
                     viewSwitchLeft.setSelected(true);
                 } else {
+                    setQuanKaiQuanGuanBac("0", R.mipmap.tuya_icon_switch_quankai, R.mipmap.kaiguan_pic_quankai_close, R.mipmap.kaiguan_pic_quanguan_open, R.mipmap.tuya_icon_switch_quanguan);
+
                     daKaiKaiGuan("0", zhuangZhiId);
                     kaiGuanZhuagnTai = "0";
                     viewSwitchLeft.setSelected(false);

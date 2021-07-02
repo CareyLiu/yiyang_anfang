@@ -91,6 +91,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -129,9 +130,22 @@ public class ZhiNengDeviceFragment extends BaseFragment {
                     for (int i = 0; i < mDatas.size(); i++) {
                         if (mDatas.get(i).getDevice_ccid().equals(zhuangZhiId)) {
                             mDatas.get(i).setWork_state(kaiGuanDengZhuangTai);
-                            if (zhiNengDeviceListAdapter != null) {
-                                zhiNengDeviceListAdapter.notifyItemChanged(i);
+                            /**
+                             / 00 主机 01.灯 02.插座 03.喂鱼 04.浇花 05门锁 06.空调电视(开关，加风，减风，讯飞语音配置)
+                             / 07.车库门  08.开关 09.晾衣架 10.窗磁 11.烟雾报警 12.门磁 13.漏水14.雷达
+                             / 15.紧急开关 16.窗帘 17.电视(开关，加减音量，加减亮暗，讯飞语音配置) 18.摄像头
+                             / 19.空气检测 20.温湿度检测 21.煤气管道关闭 22.自来水管道关闭 23.宠物喂食 24.宠物喂水
+                             / 25.智能手环 26.排风 27背景音乐显示控制 28.电视遥控 29.空气净化 30.体质检测
+                             / 31.光敏控制 32.燃气报警 33.风扇 34.雷达
+                             */
+                            String type = mDatas.get(i).getDevice_type();
+                            if (type.equals("01")||type.equals("02")){
+                                if (zhiNengDeviceListAdapter != null) {
+                                    zhiNengDeviceListAdapter.notifyItemChanged(i);
+                                }
                             }
+
+
                         }
                     }
 
@@ -193,6 +207,12 @@ public class ZhiNengDeviceFragment extends BaseFragment {
         recyclerView.addItemDecoration(new GridAverageUIDecoration(14, 10));
 
         recyclerView.setLayoutManager(layoutManager);
+        // 第一种，直接取消动画，解决闪烁问题
+        RecyclerView.ItemAnimator animator = recyclerView.getItemAnimator();
+        if (animator instanceof SimpleItemAnimator) {
+            ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
+        }
+
         zhiNengDeviceListAdapter = new ZhiNengDeviceListNewAdapter(R.layout.item_zhineng_device, mDatas);
 
         View view1 = LayoutInflater.from(getActivity()).inflate(R.layout.activity_zhineng_device_none, null);

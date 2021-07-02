@@ -43,29 +43,46 @@ public class DoMqttValue {
             case ZHINENGJIAJU:
                 //  收到的数据信息：  i01082.
 //                UIHelper.ToastMessage(context, "接收到的message信息： " + message);
-                if (message.charAt(0) == 'i') {
+//                if (message.charAt(0) == 'q') {
+//                    String zhuangZhiId = message.substring(1, 9);
+//                    String kaiGuanDengZhuangTai = message.substring(9, 10);
+//
+//                    stringList = new ArrayList<>();
+//                    stringList.add(zhuangZhiId);
+//                    stringList.add(kaiGuanDengZhuangTai);
+//
+//                    Notice notice = new Notice();
+//                    notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
+//                    notice.content = stringList;
+//                    Log.i("Rair", notice.content.toString());
+//                    RxBus.getDefault().sendRx(notice);
+//
+//                } else
+//
+
+                    if (message.charAt(0) == 'i') {
 
                     if (message.contains("_")) {
 
                         String[] messageSplit = message.split("_");
 
-                        for (int i = 0; i < messageSplit.length; i++) {
-
-                            String zhuangZhiId = messageSplit[i].substring(1, 9);
-                            String kaiGuanDengZhuangTai = messageSplit[i].substring(9, 10);
-
-                            stringList = new ArrayList<>();
-                            stringList.add(zhuangZhiId);
-                            stringList.add(kaiGuanDengZhuangTai);
-
-
-                        }
-
-                        Notice notice = new Notice();
-                        notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
-                        notice.content = stringList;
-                        Log.i("Rair", notice.content.toString());
-                        RxBus.getDefault().sendRx(notice);
+//                        for (int i = 0; i < messageSplit.length; i++) {
+//
+//                            String zhuangZhiId = messageSplit[i].substring(1, 9);
+//                            String kaiGuanDengZhuangTai = messageSplit[i].substring(9, 10);
+//
+//                            stringList = new ArrayList<>();
+//                            stringList.add(zhuangZhiId);
+//                            stringList.add(kaiGuanDengZhuangTai);
+//
+//
+//                        }
+//
+//                        Notice notice = new Notice();
+//                        notice.type = ConstanceValue.MSG_SHEBEIZHUANGTAI;
+//                        notice.content = stringList;
+//                        Log.i("Rair", notice.content.toString());
+//                        RxBus.getDefault().sendRx(notice);
 
 
                         Notice notice1 = new Notice();
@@ -91,10 +108,10 @@ public class DoMqttValue {
                                 Log.i("Rair", notice.content.toString());
                                 RxBus.getDefault().sendRx(notice);
 
-                                Notice notice1 = new Notice();
-                                notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
-                                RxBus.getDefault().sendRx(notice1);
-                                Log.i("Rair", "发送了一次");
+//                                Notice notice1 = new Notice();
+//                                notice1.type = ConstanceValue.MSG_ZHINENGJIAJU_SHOUYE_SHUAXIN;
+//                                RxBus.getDefault().sendRx(notice1);
+//                                Log.i("Rair", "发送了一次");
 
                                 try {
                                     Thread.sleep(1000);

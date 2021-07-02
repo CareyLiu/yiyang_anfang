@@ -223,6 +223,7 @@ public class YanGanActivity extends BaseActivity {
                     } else if (kaiGuanDengZhuangTai.equals("1")) {//关
                         ivYanGan.setBackgroundResource(R.mipmap.tuya_yanwu_pic_no);
                     }
+                    getNet();
                 } else if (notice.type == ConstanceValue.MSG_ROOM_DEVICE_CHANGENAME) {
                     changeDevice(notice.content.toString());
                 }
@@ -399,6 +400,7 @@ public class YanGanActivity extends BaseActivity {
                     public void onSuccess(Response<AppResponse<MenCiListModel.DataBean>> response) {
                         srLSmart.finishRefresh();
                         dataBean = response.body().data.get(0);
+                        mDatas.clear();
                         if (dataBean.getWarn_state().equals("1")) {
                             ivYanGan.setBackgroundResource(R.mipmap.tuya_yanwu_pic_normal);
                         } else if (dataBean.getWarn_state().equals("2")) {

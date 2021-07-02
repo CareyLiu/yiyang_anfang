@@ -223,6 +223,7 @@ public class SosActivity extends BaseActivity {
 
                         }
                     }
+                    getNet();
 
                 }
             }
@@ -447,6 +448,7 @@ public class SosActivity extends BaseActivity {
                         srLSmart.finishRefresh();
                         dataBean = response.body().data.get(0);
                         deviceCCid = dataBean.getDevice_ccid();
+                        mDatas.clear();
                         if (firstEnter) {
                             znjjMqttMingLing = new ZnjjMqttMingLing(mContext, dataBean.getDevice_ccid_up(), dataBean.getServer_id());
                             znjjMqttMingLing.subscribeAppShiShiXinXi(new IMqttActionListener() {

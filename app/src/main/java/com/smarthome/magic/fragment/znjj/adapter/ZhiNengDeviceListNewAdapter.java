@@ -25,6 +25,7 @@ public class ZhiNengDeviceListNewAdapter extends BaseQuickAdapter<ZhiNengModel.D
 
     @Override
     protected void convert(BaseViewHolder helper, ZhiNengModel.DataBean.DeviceBean item) {
+        helper.setIsRecyclable(false);
         Glide.with(mContext).applyDefaultRequestOptions(GlideShowImageUtils.showZhengFangXing()).load(item.getDevice_type_pic()).into((ImageView) helper.getView(R.id.iv_device));
         helper.setText(R.id.tv_device_name, item.getDevice_name());
         helper.setText(R.id.tv_room_name, item.getRoom_name());
@@ -49,6 +50,9 @@ public class ZhiNengDeviceListNewAdapter extends BaseQuickAdapter<ZhiNengModel.D
         }
 
         ImageView ivImage = helper.getView(R.id.iv_switch);
+        if (item.getDevice_type().equals("01") || item.getDevice_type().equals("02")) {
+
+        }
         if (item.getWork_state().equals("1")) {
             helper.setBackgroundRes(R.id.iv_switch, R.mipmap.img_device_switch_open);
             ivImage.setVisibility(View.VISIBLE);
@@ -57,7 +61,7 @@ public class ZhiNengDeviceListNewAdapter extends BaseQuickAdapter<ZhiNengModel.D
             ivImage.setVisibility(View.VISIBLE);
         } else if (item.getWork_state().equals("3")) {
             ivImage.setVisibility(View.INVISIBLE);
-        }else {
+        } else {
             ivImage.setVisibility(View.INVISIBLE);
         }
         helper.addOnClickListener(R.id.ll_content);

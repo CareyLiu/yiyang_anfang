@@ -689,10 +689,6 @@ public class MyApplication extends MultiDexApplication {
                                 n.content = message.toString();
                                 RxBus.getDefault().sendRx(n);
 
-                                Notice n1 = new Notice();
-                                n1.type = ConstanceValue.MSG_GUZHANG;
-                                n1.content = message.toString();
-                                RxBus.getDefault().sendRx(n1);
                             } else if (codeClass.code.equals("jyj_0006")) {
                                 Notice n = new Notice();
                                 n.type = ConstanceValue.MSG_ZHINENGJIAJU_MENCI;

@@ -9,7 +9,6 @@
     <item
         android:id="@+id/i_zhinengjiaju"
         android:icon="@drawable/selector_car_online"
-
         android:title="智能家居" />
 
     <item

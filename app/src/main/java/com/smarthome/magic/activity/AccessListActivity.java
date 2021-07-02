@@ -40,9 +40,9 @@ public class AccessListActivity extends BaseActivity {
     @BindView(R.id.srL_smart)
     SmartRefreshLayout srLSmart;
     private String page_num = "0";
-    String waresId;
+    private String waresId;
     private AccessListAdapter accessListAdapter;
-    List<AccessListModel.DataBean> mDatas = new ArrayList<>();
+    private List<AccessListModel.DataBean> mDatas = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

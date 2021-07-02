@@ -294,4 +294,9 @@ public class AppConfig {
     public final static String TUYA_PEIWANG_MIMA_GET = "TUYA_PEIWANG_MIMA_GET";
     public final static String TUYA_HOME_ID = "TUYA_HOME_ID";
     public final static String MC_DEVICE_CCID = "MC_DEVICE_CCID";
+
+
+    public final static String FONT_SETTINGS="font_settings";
+    public final static String FONT_DA="font_da";
+    public final static String FONT_XIAO="font_xiao";
 }

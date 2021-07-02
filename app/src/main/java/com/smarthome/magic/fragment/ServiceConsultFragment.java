@@ -51,19 +51,16 @@ public class ServiceConsultFragment extends BaseFragment {
     SmartRefreshLayout smartRefreshLayout;
     private List<ConsultModel.DataBean> modelList = new ArrayList<>();
     private ZixunAdapter adapter;
-    private String servicefromId = "";
-
     private View mEmptyView;
 
     private boolean isOn = false;
-    private boolean isShow = false;
 
     @Override
     public void onResume() {
         super.onResume();
         isOn = true;
         if (isSupportVisible()) {
-            adapter.notifyDataSetChanged();
+            getNet();
         }
     }
 
@@ -86,8 +83,6 @@ public class ServiceConsultFragment extends BaseFragment {
 
     @Override
     protected void initView(View rootView) {
-        Unbinder bind = ButterKnife.bind(this, rootView);
-
         mEmptyView = rootView.findViewById(R.id.empty_view);
         initAdapter();
         initSM();
@@ -100,8 +95,8 @@ public class ServiceConsultFragment extends BaseFragment {
             @Override
             public void call(Notice message) {
                 if (message.type == ConstanceValue.MSG_RONGYUN_REVICE) {
-                    if (isOn) {
-                        adapter.notifyDataSetChanged();
+                    if (isOn){
+                        getNet();
                     }
                 }
             }
@@ -160,7 +155,7 @@ public class ServiceConsultFragment extends BaseFragment {
     }
 
     public void getNet() {
-        page_number=0;
+        page_number = 0;
         Map<String, String> map = new HashMap<>();
         map.put("code", "03317");
         map.put("key", Urls.key);
@@ -178,7 +173,6 @@ public class ServiceConsultFragment extends BaseFragment {
                         adapter.setNewData(modelList);
                         adapter.notifyDataSetChanged();
                         if (modelList.size() > 0) {
-                            servicefromId = modelList.get(modelList.size() - 1).getService_form_id();
                             mEmptyView.setVisibility(View.GONE);
                         } else {
                             mEmptyView.setVisibility(View.VISIBLE);
@@ -221,7 +215,6 @@ public class ServiceConsultFragment extends BaseFragment {
                         adapter.setNewData(modelList);
                         adapter.notifyDataSetChanged();
                         if (modelList.size() > 0) {
-                            servicefromId = modelList.get(modelList.size() - 1).getService_form_id();
                             mEmptyView.setVisibility(View.GONE);
                         } else {
                             mEmptyView.setVisibility(View.VISIBLE);

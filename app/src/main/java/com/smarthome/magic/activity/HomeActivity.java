@@ -8,6 +8,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.KeyEvent;
@@ -103,13 +104,12 @@ import static com.smarthome.magic.get_net.Urls.ZHINENGJIAJU;
 
 public class HomeActivity extends BaseActivity {
 
-    BottomNavigationViewEx mBnve;
     @BindView(R.id.vp)
     NoScrollViewPager mVp;
     @BindView(R.id.activity_with_view_pager)
     RelativeLayout activityWithViewPager;
     @BindView(R.id.bnve)
-    BottomNavigationViewEx bnve;
+    BottomNavigationViewEx mBnve;
     @BindView(R.id.tv_yuyin_image)
     ImageView tvYuyinImage;
     @BindView(R.id.iv_close)
@@ -154,7 +154,7 @@ public class HomeActivity extends BaseActivity {
         boolean vPush = PushClient.getInstance(context).isSupport();
         Log.i("vPush", "" + vPush);
 
-        boolean OPush =  HeytapPushManager.isSupportPush();
+        boolean OPush = HeytapPushManager.isSupportPush();
         Log.i("OPush", "" + OPush);
         //  getZhuJiNet();
         StatusBarUtil.setLightMode(this);
@@ -164,7 +164,6 @@ public class HomeActivity extends BaseActivity {
 
         TuyaWrapper.onLogin();
 
-        mBnve = findViewById(R.id.bnve);
         initView();
         initData();
         initEvent();
@@ -674,11 +673,6 @@ public class HomeActivity extends BaseActivity {
         Log.i("HomeActivity_xxx", "onRestart");
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i("HomeActivity_xxx", "onResume");
-    }
 
     @Override
     protected void onPause() {
@@ -758,8 +752,6 @@ public class HomeActivity extends BaseActivity {
      * change BottomNavigationViewEx style
      */
     private void initView() {
-
-
         mBnve.enableAnimation(false);
         mBnve.enableShiftingMode(false);
         mBnve.enableItemShiftingMode(false);
@@ -809,22 +801,11 @@ public class HomeActivity extends BaseActivity {
 
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
                 int position = items.get(item.getItemId());
-                //   if (position == 3) {
-                //  layoutBg.setBackground(getResources().getDrawable(R.color.app_bg));
-                // StatusBarUtil.setDarkMode(HomeActivity.this);
-                //    } else {
-                //   layoutBg.setBackground(getResources().getDrawable(R.color.white));
-                //   StatusBarUtil.setLightMode(HomeActivity.this);
-                // }
-
                 if (previousPosition != position) {
                     previousPosition = position;
                     mVp.setCurrentItem(position, false);
                 }
-
-
                 return true;
             }
         });
@@ -838,7 +819,6 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                 mBnve.setCurrentItem(position);
-
                 if (position == 1) {
                     PreferenceHelper.getInstance(mContext).putString(App.CHOOSE_KONGZHI_XIANGMU, DoMqttValue.ZHINENGJIAJU);
                 } else {
@@ -895,4 +875,26 @@ public class HomeActivity extends BaseActivity {
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String font_settings = PreferenceHelper.getInstance(mContext).getString(AppConfig.FONT_SETTINGS, "");
+        if (TextUtils.isEmpty(font_settings)) {
+            setFortXiao();
+        } else {
+            if (font_settings.equals(AppConfig.FONT_DA)) {
+                setFortDa();
+            } else {
+                setFortXiao();
+            }
+        }
+    }
+
+    private void setFortXiao() {
+        mBnve.setTextSize(12);
+    }
+
+    private void setFortDa() {
+        mBnve.setTextSize(15);
+    }
 }

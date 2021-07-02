@@ -90,9 +90,7 @@ public class ZhiNengFamilyMemberDetailActivity extends BaseActivity implements V
         StatusBarUtil.setLightMode(this);
         initToolbar();
         initView();
-        Y.e("我是多少啊" + ty_family_id);
-        initMember();
-
+//        initMember();
         llQieHuanChengYuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -199,6 +197,9 @@ public class ZhiNengFamilyMemberDetailActivity extends BaseActivity implements V
     }
 
     private void initMember() {
+        Y.e("涂鸦成员ID是多少" + tuya_memberId);
+        Y.e("涂鸦家庭ID是多少" + ty_family_id);
+
         TuyaHomeSdk.getMemberInstance().queryMemberList(Y.getLong(ty_family_id), new ITuyaGetMemberListCallback() {
             @Override
             public void onSuccess(List<MemberBean> memberBeans) {
@@ -237,7 +238,6 @@ public class ZhiNengFamilyMemberDetailActivity extends BaseActivity implements V
         } else {
             tv_delete.setVisibility(View.GONE);
         }
-        Y.e("涂鸦成员ID是多少" + tuya_memberId);
     }
 
     @Override

@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -25,14 +27,10 @@ import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
 import com.flyco.dialog.widget.NormalDialog;
 import com.google.gson.Gson;
-import com.iflytek.cloud.Setting;
 import com.jaeger.library.StatusBarUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
-import com.rairmmd.andmqtt.AndMqtt;
-import com.rairmmd.andmqtt.MqttPublish;
 import com.smarthome.magic.R;
-import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.activity.zhinengjiaju.peinet.v1.EspTouchActivity;
 import com.smarthome.magic.app.App;
 import com.smarthome.magic.app.AppConfig;
@@ -42,7 +40,6 @@ import com.smarthome.magic.app.RxBus;
 import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.config.AppEvent;
 import com.smarthome.magic.config.AppResponse;
-
 import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
@@ -54,7 +51,6 @@ import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.CleanMessageUtil;
 import com.tuya.smart.android.user.api.ILogoutCallback;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
-import com.tuya.smart.sdk.api.IResultCallback;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UTrack;
 
@@ -67,8 +63,6 @@ import org.devio.takephoto.model.TResult;
 import org.devio.takephoto.permission.InvokeListener;
 import org.devio.takephoto.permission.PermissionManager;
 import org.devio.takephoto.permission.TakePhotoInvocationHandler;
-import org.eclipse.paho.client.mqttv3.IMqttActionListener;
-import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.jaaksi.pickerview.picker.TimePicker;
 
 import java.io.File;
@@ -87,23 +81,15 @@ import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 
-import static com.smarthome.magic.config.MyApplication.CAR_CTROL;
-
 public class SettingActivity extends BaseActivity implements Observer, TakePhoto.TakeResultListener, InvokeListener {
     @BindView(R.id.iv_header)
     ImageView ivHeader;
     @BindView(R.id.layout_header)
     LinearLayout layoutHeader;
-    @BindView(R.id.tv_nickname)
-    TextView tvNickname;
     @BindView(R.id.layout_nickname)
     LinearLayout layoutNickname;
-    @BindView(R.id.tv_gender)
-    TextView tvGender;
     @BindView(R.id.layout_gender)
     LinearLayout layoutGender;
-    @BindView(R.id.tv_birthday)
-    TextView tvBirthday;
     @BindView(R.id.layout_birthday)
     LinearLayout layoutBirthday;
     @BindView(R.id.layout_address)
@@ -116,21 +102,59 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
     LinearLayout layoutPayPassword;
     @BindView(R.id.layout_clear_cache)
     LinearLayout layoutClearCache;
-    @BindView(R.id.tv_exit)
-    TextView tvExit;
-    private static final String TAG = "SettingActivity";
-    @BindView(R.id.tv_cache)
-    TextView tvCache;
     @BindView(R.id.shebei_peiwang)
     LinearLayout shebeiPeiwang;
     @BindView(R.id.rl_back)
     RelativeLayout rlBack;
+    @BindView(R.id.ll_shezhi_weixin)
+    LinearLayout llShezhiWeixin;
+    @BindView(R.id.ll_fort_set)
+    LinearLayout ll_fort_set;
+
+
+    @BindView(R.id.tv_gender)
+    TextView tvGender;
+    @BindView(R.id.tv_birthday)
+    TextView tvBirthday;
+    @BindView(R.id.tv_exit)
+    TextView tvExit;
+    @BindView(R.id.tv_cache)
+    TextView tvCache;
     @BindView(R.id.tv_zhifubao_ming)
     TextView tvZhifubaoMing;
     @BindView(R.id.tv_weixin_ming)
     TextView tvWeixinMing;
-    @BindView(R.id.ll_shezhi_weixin)
-    LinearLayout llShezhiWeixin;
+    @BindView(R.id.tv_nickname)
+    TextView tvNickname;
+    @BindView(R.id.tv_fort)
+    TextView tv_fort;
+    @BindView(R.id.tv13)
+    TextView tv13;
+    @BindView(R.id.tv1)
+    TextView tv1;
+    @BindView(R.id.tv2)
+    TextView tv2;
+    @BindView(R.id.tv3)
+    TextView tv3;
+    @BindView(R.id.tv4)
+    TextView tv4;
+    @BindView(R.id.tv5)
+    TextView tv5;
+    @BindView(R.id.tv6)
+    TextView tv6;
+    @BindView(R.id.tv7)
+    TextView tv7;
+    @BindView(R.id.tv8)
+    TextView tv8;
+    @BindView(R.id.tv9)
+    TextView tv9;
+    @BindView(R.id.tv10)
+    TextView tv10;
+    @BindView(R.id.tv11)
+    TextView tv11;
+    @BindView(R.id.tv12)
+    TextView tv12;
+
     private BaseAnimatorSet mBasIn = new BounceBottomEnter();
     private BaseAnimatorSet mBasOut = new SlideBottomExit();
     private TakePhoto takePhoto;
@@ -163,6 +187,70 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
             }
         });
 
+
+        String font_settings = PreferenceHelper.getInstance(this).getString(AppConfig.FONT_SETTINGS, "");
+        if (TextUtils.isEmpty(font_settings)) {
+            tv_fort.setText("标准");
+            setFortXiao();
+        } else {
+            if (font_settings.equals(AppConfig.FONT_DA)) {
+                tv_fort.setText("大");
+                setFortDa();
+            } else {
+                tv_fort.setText("标准");
+                setFortXiao();
+            }
+        }
+    }
+
+    private void setFortDa() {
+        tvGender.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+        tvBirthday.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+        tvExit.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+        tvCache.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+        tvZhifubaoMing.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+        tvWeixinMing.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+        tvNickname.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+        tv_fort.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+
+        tv1.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+        tv2.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+        tv3.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+        tv4.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+        tv5.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+        tv6.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+        tv7.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+        tv8.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+        tv9.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+        tv10.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+        tv11.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+        tv12.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+        tv13.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+    }
+
+    private void setFortXiao() {
+        tvGender.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+        tvBirthday.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+        tvExit.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+        tvCache.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+        tvZhifubaoMing.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+        tvWeixinMing.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+        tvNickname.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+        tv_fort.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+
+        tv1.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+        tv2.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+        tv3.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+        tv4.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+        tv5.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+        tv6.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+        tv7.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+        tv8.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+        tv9.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+        tv10.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+        tv11.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+        tv12.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+        tv13.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
     }
 
 
@@ -238,11 +326,14 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
     }
 
 
-    @OnClick({R.id.rl_back, R.id.layout_header, R.id.layout_nickname, R.id.layout_gender, R.id.layout_birthday,
+    @OnClick({R.id.rl_back, R.id.ll_fort_set, R.id.layout_header, R.id.layout_nickname, R.id.layout_gender, R.id.layout_birthday,
             R.id.layout_address, R.id.layout_cash_account, R.id.layout_login_password, R.id.layout_pay_password, R.id.layout_clear_cache,
             R.id.tv_exit, R.id.ll_shezhi_weixin})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.ll_fort_set:
+                showFortDialog();
+                break;
             case R.id.rl_back:
                 finish();
                 break;
@@ -284,7 +375,6 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
                         tvGender.setText(item.get(options1));
                         index = options1;
                         updateInfo("2");
-
                     }
                 }).build();
                 item.clear();
@@ -405,7 +495,7 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
                                 n.type = ConstanceValue.MSG_UNSUB_MQTT;
                                 RxBus.getDefault().sendRx(n);
                                 RongIM.getInstance().logout();
-                                JPushInterface.deleteAlias(SettingActivity.this,0);
+                                JPushInterface.deleteAlias(SettingActivity.this, 0);
                                 startActivity(new Intent(SettingActivity.this, LoginActivity.class));
                                 TuyaHomeSdk.getUserInstance().logout(new ILogoutCallback() {
                                     @Override
@@ -428,6 +518,31 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
                         });
                 break;
         }
+    }
+
+    private void showFortDialog() {
+        String items[] = {"标准", "大"};
+        final ActionSheetDialog dialog = new ActionSheetDialog(this, items, null);
+        dialog.isTitleShow(false).show();
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        tv_fort.setText("标准");
+                        PreferenceHelper.getInstance(SettingActivity.this).putString(AppConfig.FONT_SETTINGS, AppConfig.FONT_XIAO);
+                        setFortXiao();
+                        break;
+                    case 1:
+                        tv_fort.setText("大");
+                        PreferenceHelper.getInstance(SettingActivity.this).putString(AppConfig.FONT_SETTINGS, AppConfig.FONT_DA);
+                        setFortDa();
+                        break;
+                }
+                dialog.dismiss();
+
+            }
+        });
     }
 
     @Override
@@ -530,5 +645,4 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
             requestData();
         }
     }
-
 }

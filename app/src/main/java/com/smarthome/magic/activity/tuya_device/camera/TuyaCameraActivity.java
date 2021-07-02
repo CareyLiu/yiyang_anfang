@@ -312,10 +312,12 @@ public class TuyaCameraActivity extends TuyaBaseCameraDeviceActivity implements 
             isYinsi = jsonObject.getBoolean("105");
             if (isYinsi) {
                 setAdapterCanClikc(false);
+                tv_yinsimoshi.setVisibility(View.VISIBLE);
                 mCameraP2P.disconnect(null);
             } else {
                 setAdapterCanClikc(true);
                 tv_yinsimoshi.setVisibility(View.GONE);
+                cameraConnect();
             }
         }
     }

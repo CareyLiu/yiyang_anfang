@@ -53,6 +53,8 @@ import com.smarthome.magic.model.ChandiModel;
 import com.smarthome.magic.model.ZhiNengFamilyEditBean;
 import com.smarthome.magic.model.ZhiNengFamilyMAnageDetailBean;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.home.sdk.bean.MemberBean;
+import com.tuya.smart.home.sdk.callback.ITuyaGetMemberListCallback;
 import com.tuya.smart.sdk.api.IResultCallback;
 
 import java.io.File;
@@ -243,7 +245,7 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
 
     private void delete() {
         String tishi;
-        if (member_type.equals("1") || member_type.equals("3")) {
+        if (member_type.equals("1")) {
             tishi = "确定要删除该家庭吗？";
         } else {
             tishi = "确定要退出该家庭吗？";
@@ -283,7 +285,6 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                         member_type = dataBean.getMember_type();
                         if (member_type.equals("1")) {
                             tv_family_delete.setText("删除家庭");
-
                             if (zhiNengFamilyManageDetailAdapter.getFooterViewsCount() == 0) {
                                 zhiNengFamilyManageDetailAdapter.addFooterView(footerView);
                             }
@@ -307,8 +308,64 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                         if (!TextUtils.isEmpty(province_name)) {
                             tv_family_address.setText(province_name + "-" + dataBean.getCity_name() + "-" + dataBean.getArea_name());
                         }
+
+                        initMember();
                     }
                 });
+    }
+
+
+    private void initMember() {
+        TuyaHomeSdk.getMemberInstance().queryMemberList(Y.getLong(ty_family_id), new ITuyaGetMemberListCallback() {
+            @Override
+            public void onSuccess(List<MemberBean> tuyaMembers) {
+                for (int i = 0; i < tuyaMembers.size(); i++) {
+                    MemberBean tuyaMeberBean = tuyaMembers.get(i);
+                    String account = tuyaMeberBean.getAccount();
+                    long tuyaMemberId = tuyaMeberBean.getMemberId();
+                    boolean isDelete = true;
+                    for (int j = 0; j < memberBeans.size(); j++) {
+                        ZhiNengFamilyMAnageDetailBean.DataBean.MemberBean memberBean = memberBeans.get(j);
+                        String ty_member_id = memberBean.getTy_member_id();
+                        if (ty_member_id.equals(String.valueOf(tuyaMemberId))) {
+                            isDelete = false;
+                        }
+
+                        if (memberBean.getMember_type().equals("1")) {
+                            if (account.equals(memberBean.getMember_phone())) {
+                                isDelete = false;
+                            }
+                        }
+                    }
+
+                    if (isDelete) {
+                        Y.e("账号是多少啊啊啊 " + account + "   " + tuyaMemberId + "   应该被删除");
+                        removeMember(tuyaMemberId);
+                    } else {
+                        Y.e("账号是多少啊啊啊 " + account + "   " + tuyaMemberId + "   不删除");
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String errorCode, String error) {
+                Y.e("我失败了么啊啊啊" + error);
+            }
+        });
+    }
+
+    private void removeMember(long memberId) {
+        TuyaHomeSdk.getMemberInstance().removeMember(memberId, new IResultCallback() {
+            @Override
+            public void onSuccess() {
+                Y.e("删除成功");
+            }
+
+            @Override
+            public void onError(String code, String error) {
+                Y.e("删除失败" + code + "   " + error);
+            }
+        });
     }
 
     /**
@@ -407,7 +464,7 @@ public class ZhiNengFamilyManageDetailActivity extends BaseActivity implements V
                             RxBus.getDefault().sendRx(notice);
 
                             String title = "";
-                            if (member_type.equals("1") || member_type.equals("3")) {
+                            if (member_type.equals("1")) {
                                 title = "删除家庭";
                                 deleteTuyaJiating();
                             } else {

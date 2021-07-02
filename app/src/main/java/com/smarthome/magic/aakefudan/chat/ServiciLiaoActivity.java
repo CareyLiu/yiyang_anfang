@@ -244,7 +244,6 @@ public class ServiciLiaoActivity extends BaseActivity implements View.OnClickLis
 
                     @Override
                     public void onError(Response<AppResponse<ZixunModel.DataBean>> response) {
-                        String msg = response.getException().getMessage();
                         Y.tError(response);
                     }
 
@@ -608,7 +607,7 @@ public class ServiciLiaoActivity extends BaseActivity implements View.OnClickLis
             //每像素代表几米
             //float scale = aMap.getScalePerPixel();
 
-//            aMap.setMyLocationEnabled(true);//显示定位层并且可以触发定位,默认是flase
+            //aMap.setMyLocationEnabled(true);//显示定位层并且可以触发定位,默认是flase
 
             for (int i = 0; i < weixiuList.size(); i++) {
                 ZixunModel.DataBean.ListBean listBean = weixiuList.get(i);

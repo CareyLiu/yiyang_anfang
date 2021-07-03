@@ -825,6 +825,7 @@ public class MyApplication extends MultiDexApplication {
         AppConfig.getAppConfig(this).remove(key);
     }
 
+    Activity nowActivity;
 
     private void initLifecycle() {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {

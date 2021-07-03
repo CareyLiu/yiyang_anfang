@@ -178,6 +178,8 @@ public class AppConfig {
     private Context mContext;
     private volatile static AppConfig appConfig; //声明成 volatile
 
+
+
     private AppConfig() {
     }
 

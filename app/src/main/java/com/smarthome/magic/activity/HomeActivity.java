@@ -56,6 +56,7 @@ import com.smarthome.magic.callback.JsonCallback;
 import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.AudioFocusManager;
+import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Notify;
@@ -501,17 +502,25 @@ public class HomeActivity extends BaseActivity {
         } else {
             tishiDialog.setTextContent("您家庭中有新的状况，是否前去查看?");
         }
+        String simpleName = MyApplication.getApp().activity_main.getClass().getSimpleName();
+        boolean menciFlag = !simpleName.equals(MenCiActivity.class.getSimpleName());
+        boolean yanganFlag = !simpleName.equals(YanGanActivity.class.getSimpleName());
+        boolean sosFlag = !simpleName.equals(SosActivity.class.getSimpleName());
+        boolean loushuiFalg = !simpleName.equals(LouShuiActivity.class.getSimpleName());
 
+        if (menciFlag && yanganFlag && sosFlag && loushuiFalg) {
+            if (tishiDialog != null && !tishiDialog.isShowing()) {
+                tishiDialog.show();
+                String strBaoJingYin = PreferenceHelper.getInstance(mContext).getString(AppConfig.BAOJING_YANGAN, "2");
+                if (strBaoJingYin.equals("0")) {
 
-        if (tishiDialog != null && !tishiDialog.isShowing()) {
-            tishiDialog.show();
-            String strBaoJingYin = PreferenceHelper.getInstance(mContext).getString(AppConfig.BAOJING_YANGAN, "2");
-            if (strBaoJingYin.equals("0")) {
-
-            } else {
-                SoundPoolUtils.soundPool(mContext, R.raw.baojingyin3);
+                } else {
+                    SoundPoolUtils.soundPool(mContext, R.raw.baojingyin3);
+                }
             }
         }
+
+
     }
 
     private void tuiSongTanChuang(Notice notice) {
@@ -561,6 +570,7 @@ public class HomeActivity extends BaseActivity {
             }
         } else if (alarmClass.type.equals("5")) {
             if (alarmClass.code.equals("jyj_0006")) {
+
                 tishiDialog = new TishiDialog(mContext, 1, new TishiDialog.TishiDialogListener() {
                     @Override
                     public void onClickCancel(View v, TishiDialog dialog) {
@@ -568,6 +578,7 @@ public class HomeActivity extends BaseActivity {
 
                     @Override
                     public void onClickConfirm(View v, TishiDialog dialog) {
+
                         if (alarmClass.device_type.equals("12")) {
                             MenCiActivity.actionStart(mContext, alarmClass.device_id);
                         } else if (alarmClass.device_type.equals("11")) {
@@ -588,7 +599,7 @@ public class HomeActivity extends BaseActivity {
                     }
                 });
                 tishiDialog.setTextContent("您的家庭有新的状况，是否前去查看?");
-                tishiDialog.show();
+
 
             } else if (alarmClass.code.equals("jyj_0007")) {
 

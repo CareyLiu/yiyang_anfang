@@ -705,6 +705,12 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (tishiDialog != null) {
+            tishiDialog.dismiss();
+        }
+        if (tishiPhoneDialog != null) {
+            tishiPhoneDialog.dismiss();
+        }
         if (mTask != null) {
             mTask.cancelEsptouch();
         }
@@ -866,6 +872,9 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
             }
         }));
     }
+
+
+
 
     private String smsId;
 

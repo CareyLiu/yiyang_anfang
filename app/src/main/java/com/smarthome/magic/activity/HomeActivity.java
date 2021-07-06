@@ -530,6 +530,13 @@ public class HomeActivity extends BaseActivity {
         alarmClass = gson.fromJson(message.toString(), AlarmClass.class);
         Log.i("alarmClass", alarmClass.changjia_name + alarmClass.sell_phone);
 
+        if (MyApplication.activity_main.getClass().getSimpleName().equals(FengNuanActivity.class.getSimpleName())) {
+            return;
+        } else if (MyApplication.activity_main.getClass().getSimpleName().equals(DiagnosisActivity.class.getSimpleName())) {
+            return;
+        }
+
+        Log.i("HomeActivity", "11111");
         if (alarmClass.type.equals("1")) {
             switch (alarmClass.sound) {
 
@@ -615,9 +622,11 @@ public class HomeActivity extends BaseActivity {
     public void playMusic(int res) {
         boolean flag = false;
 
-        Activity currentActivity = AppManager.getAppManager().currentActivity();
+        Activity currentActivity = MyApplication.activity_main;
+        boolean flag1 = !currentActivity.getClass().getSimpleName().equals(DiagnosisActivity.class.getSimpleName());
+        boolean flag2 = !currentActivity.getClass().getSimpleName().equals(FengNuanActivity.class.getSimpleName());
         if (currentActivity != null) {
-            if (!currentActivity.getClass().getSimpleName().equals(DiagnosisActivity.class.getSimpleName())) {
+            if (flag1 && flag2) {
                 TishiDialog myCarCaoZuoDialog_notify = new TishiDialog(HomeActivity.this, 1, new TishiDialog.TishiDialogListener() {
 
                     @Override

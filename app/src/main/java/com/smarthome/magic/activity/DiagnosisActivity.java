@@ -308,7 +308,7 @@ public class DiagnosisActivity extends BaseActivity {
                                 break;
                         }
                     }else {
-                        if (whatUWant.equals("qingchuguzhang") && StringUtils.isEmpty(zhu_car_stoppage_no)) {
+                        if (StringUtils.isEmpty(zhu_car_stoppage_no)) {
 
                             whatUWant = "";
 //                            MyCarCaoZuoDialog_Success dialog_success = new MyCarCaoZuoDialog_Success(DiagnosisActivity.this);

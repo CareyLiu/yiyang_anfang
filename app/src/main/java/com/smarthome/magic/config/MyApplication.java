@@ -140,7 +140,7 @@ public class MyApplication extends MultiDexApplication {
     public static int windowHeight;
     public static int windowWidth;
 
-    public Activity activity_main;
+    public static Activity activity_main;
 
 
     //String mqttUrl = "tcp://192.168.1.127";//大个本地
@@ -865,6 +865,7 @@ public class MyApplication extends MultiDexApplication {
                 } else {
                     context = activity;
                 }
+                activity_main = activity;
                 Log.i(TAG, "onActivityResumed  activityName:" + activity_main.getClass().getSimpleName());
             }
 

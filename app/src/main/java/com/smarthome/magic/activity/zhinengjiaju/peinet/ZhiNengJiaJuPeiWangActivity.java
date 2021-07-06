@@ -623,6 +623,11 @@ public class ZhiNengJiaJuPeiWangActivity extends EspTouchActivityAbsBase {
                     public void onFinish() {
                         super.onFinish();
                     }
+
+                    @Override
+                    public void onError(Response<AppResponse<TianJiaZhuJiMoel>> response) {
+                        super.onError(response);
+                    }
                 });
     }
 

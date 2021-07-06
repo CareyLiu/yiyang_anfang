@@ -194,7 +194,7 @@ public class DiagnosisActivity extends BaseActivity {
             Log.i("alarmClass", alarmClass.changjia_name + alarmClass.sell_phone);
 
             mTvTitle.setText("整机运转异常");
-            layoutInfo.setVisibility(View.GONE);
+            layoutInfo.setVisibility(View.VISIBLE);
             layoutMessage.setVisibility(View.VISIBLE);
             btnClean.setVisibility(View.VISIBLE);
             mTvMessage.setText(alarmClass.failure_name);
@@ -233,7 +233,7 @@ public class DiagnosisActivity extends BaseActivity {
                         AlarmClass alarmClass = gson.fromJson(message.content.toString(), AlarmClass.class);
                         Log.i("alarmClass", alarmClass.changjia_name + alarmClass.sell_phone);
                         mTvTitle.setText("整机运转异常");
-                        layoutInfo.setVisibility(View.GONE);
+                        layoutInfo.setVisibility(View.VISIBLE);
                         layoutMessage.setVisibility(View.VISIBLE);
                         btnClean.setVisibility(View.VISIBLE);
                         mTvMessage.setText(alarmClass.failure_name);
@@ -266,20 +266,10 @@ public class DiagnosisActivity extends BaseActivity {
                     if (!StringUtils.isEmpty(zhu_car_stoppage_no)) {
                         layoutMessage.setVisibility(View.VISIBLE);
                         btnClean.setVisibility(View.VISIBLE);
+                        layoutInfo.setVisibility(View.VISIBLE);
 
 
-                        if (whatUWant.equals("qingchuguzhang") && StringUtils.isEmpty(zhu_car_stoppage_no)) {
-                            lordingDialog.dismiss();
-                            whatUWant = "";
-//                            MyCarCaoZuoDialog_Success dialog_success = new MyCarCaoZuoDialog_Success(DiagnosisActivity.this);
-//                            dialog_success.show();
-                            layoutInfo.setVisibility(View.GONE);
-                            layoutMessage.setVisibility(View.GONE);
-                            btnClean.setVisibility(View.GONE);
-                            mTvTitle.setText("整机运转正常");
-                            UIHelper.ToastMessage(DiagnosisActivity.this, "故障已清除", Toast.LENGTH_LONG);
-                            finish();
-                        }
+
 
                         switch (zhu_car_stoppage_no) {
 
@@ -316,6 +306,19 @@ public class DiagnosisActivity extends BaseActivity {
                             case "18":
                                 mTvMessage.setText("晶屏与主机失联故障");
                                 break;
+                        }
+                    }else {
+                        if (whatUWant.equals("qingchuguzhang") && StringUtils.isEmpty(zhu_car_stoppage_no)) {
+
+                            whatUWant = "";
+//                            MyCarCaoZuoDialog_Success dialog_success = new MyCarCaoZuoDialog_Success(DiagnosisActivity.this);
+//                            dialog_success.show();
+                            layoutInfo.setVisibility(View.GONE);
+                            layoutMessage.setVisibility(View.GONE);
+                            btnClean.setVisibility(View.GONE);
+                            mTvTitle.setText("整机运转正常");
+                            UIHelper.ToastMessage(DiagnosisActivity.this, "故障已清除", Toast.LENGTH_LONG);
+
                         }
                     }
 
@@ -372,7 +375,7 @@ public class DiagnosisActivity extends BaseActivity {
                             });
 
                             mTvTitle.setText("整机运转异常");
-                            // layoutInfo.setVisibility(View.VISIBLE);
+                            layoutInfo.setVisibility(View.VISIBLE);
                             layoutMessage.setVisibility(View.VISIBLE);
                             btnClean.setVisibility(View.VISIBLE);
                             mTvMessage.setText(response.body().data.get(0).getFailure_name());
@@ -454,7 +457,7 @@ public class DiagnosisActivity extends BaseActivity {
 //        });
     }
 
-    @OnClick({R.id.rl_back, R.id.btn_clean,R.id.rl_consult})
+    @OnClick({R.id.rl_back, R.id.btn_clean, R.id.rl_consult})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_back:
@@ -499,9 +502,9 @@ public class DiagnosisActivity extends BaseActivity {
                     @Override
                     public void clickRight() {
 
-                        lordingDialog = new LordingDialog(mContext);
-                        lordingDialog.setTextMsg("正在清除，请稍后");
-                        lordingDialog.show();
+//                        lordingDialog = new LordingDialog(mContext);
+//                        lordingDialog.setTextMsg("正在清除，请稍后");
+//                        lordingDialog.show();
 
 
                         AndMqtt.getInstance().publish(new MqttPublish()
@@ -513,11 +516,11 @@ public class DiagnosisActivity extends BaseActivity {
                                 Log.i("Rair", "(清除故障 --- 发布成功");
                                 //      UIHelper.ToastMessage(DiagnosisActivity.this, "故障清除中，请稍候", Toast.LENGTH_SHORT);
                                 // dialog.dismiss();
-                                UIHelper.ToastMessage(DiagnosisActivity.this, "故障已清除", Toast.LENGTH_SHORT);
+                                UIHelper.ToastMessage(DiagnosisActivity.this, "故障清除中", Toast.LENGTH_SHORT);
                                 mTvTitle.setText("整机运转正常");
-                                layoutInfo.setVisibility(View.GONE);
-                                layoutMessage.setVisibility(View.GONE);
-                                btnClean.setVisibility(View.GONE);
+//                                layoutInfo.setVisibility(View.VISIBLE);
+//                                layoutMessage.setVisibility(View.VISIBLE);
+//                                btnClean.setVisibility(View.VISIBLE);
                                 whatUWant = "qingchuguzhang";
                                 //finish();
                             }
@@ -548,6 +551,6 @@ public class DiagnosisActivity extends BaseActivity {
     @Override
     public void initImmersion() {
         mImmersionBar = ImmersionBar.with(this);
-        mImmersionBar.init();
+        mImmersionBar.with(this).statusBarColor(R.color.black).init();
     }
 }

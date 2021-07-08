@@ -1,6 +1,7 @@
 package com.smarthome.magic.fragment.znjj.adapter;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -50,9 +51,7 @@ public class ZhiNengDeviceListNewAdapter extends BaseQuickAdapter<ZhiNengModel.D
         }
 
         ImageView ivImage = helper.getView(R.id.iv_switch);
-        if (item.getDevice_type().equals("01") || item.getDevice_type().equals("02")) {
 
-        }
         if (item.getWork_state().equals("1")) {
             helper.setBackgroundRes(R.id.iv_switch, R.mipmap.img_device_switch_open);
             ivImage.setVisibility(View.VISIBLE);
@@ -66,5 +65,17 @@ public class ZhiNengDeviceListNewAdapter extends BaseQuickAdapter<ZhiNengModel.D
         }
         helper.addOnClickListener(R.id.ll_content);
         helper.addOnClickListener(R.id.iv_switch);
+
+
+        Log.i("devicelistnewadapter", item.getDevice_name() + "---" + item.getWork_state());
+
+        if (item.getDevice_type().equals("01") || item.getDevice_type().equals("02")) {
+            //ivImage.setVisibility(View.INVISIBLE);
+        } else {
+            ivImage.setVisibility(View.INVISIBLE);
+        }
+
+
+
     }
 }

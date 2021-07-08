@@ -478,6 +478,11 @@ public class ZhiNengJiaJuFragment extends BaseFragment implements View.OnClickLi
                             ZhiNengModel.DataBean.DeviceBean deviceBean = device.get(0);
                             if (TextUtils.isEmpty(deviceBean.getTy_device_ccid())) {
                                 PreferenceHelper.getInstance(getActivity()).putString(App.HAS_ZHUJI, "1");
+
+//                                双城主机ccid
+//                                String nowData = "zn/app/" + deviceBean.getServer_id() + "aaaaaaaaaaaaa01000140118";
+//                                String hardwareData = "zn/hardware/" + deviceBean.getServer_id() + "aaaaaaaaaaaaa01000140118";
+
                                 String nowData = "zn/app/" + deviceBean.getServer_id() + deviceBean.getDevice_ccid();
                                 String hardwareData = "zn/hardware/" + deviceBean.getServer_id() + deviceBean.getDevice_ccid();
                                 try {

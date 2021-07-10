@@ -1,5 +1,6 @@
 package com.smarthome.magic.activity.zhinengjiaju;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ import com.smarthome.magic.model.KongQiJianCeZ;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -120,6 +122,8 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         device_id = getIntent().getStringExtra("device_id");
+        Locale locale = Locale.CHINA;
+
         // UIHelper.ToastMessage(mContext, "我的device_id是" + device_id);
 //        FrameLayout content = new FrameLayout(this);
 //
@@ -170,14 +174,14 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
             public void onClick(View v) {
 
                 if (strType.equals("kongQiZhiLiang")) {
-                    KongQiJianCeShuoMingDialog kongQiJianCeShuoMingDialog = new KongQiJianCeShuoMingDialog(mContext, "空气质量值小于等于50：\n" +
+                    KongQiJianCeShuoMingDialog kongQiJianCeShuoMingDialog = new KongQiJianCeShuoMingDialog(mContext, "空气质量值小于等于350：\n" +
                             "说明空气质量为优。\n" +
-                            "空气质量值大于50且小于等于100：\n" +
+                            "空气质量值大于350 且小于等于750：\n" +
                             "表明空气质量良好。\n" +
-                            "空气质量值大于100且小于等于200：\n" +
+                            "空气质量值大于750且小于1150：\n" +
                             "表明空气质量为轻度污染，长期接触，易感人群病状\n" +
                             "有轻度加剧，健康人群出现刺激症状。\n" +
-                            "空气质量值大于200：\n" +
+                            "空气质量值大于1150：\n" +
                             "表明空气质量较差，一定时间接触后，对人体危害较大", "空气检测说明");
                     kongQiJianCeShuoMingDialog.show();
                 } else if (strType.equals("pm2dian5")) {
@@ -247,6 +251,8 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
                     public void onError(Response<AppResponse<KongQiJianCeZ.DataBean>> response) {
                         String str = response.getException().getMessage();
                         UIHelper.ToastMessage(mContext, response.getException().getMessage());
+                        Activity activity = new Activity();
+                        activity.closeContextMenu();
 
                     }
 
@@ -335,6 +341,7 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
                         super.onFinish();
                     }
                 });
+
     }
 
     @Override
@@ -387,6 +394,7 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
      *
      * @param context
      */
+
     public static void actionStart(Context context, String device_id) {
         Intent intent = new Intent(context, KongQiJianCe_NewActvity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -412,14 +420,19 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
                     Integer kongQiZhiLiang = Integer.valueOf(tvKongqiZhiliang.getText().toString().trim());
                     if (kongQiZhiLiang < 350) {
                         tvText.setText("优");
+                        rlYan.setVisibility(View.VISIBLE);
                     } else if (kongQiZhiLiang > 350 && kongQiZhiLiang < 750) {
                         tvText.setText("良");
+                        rlYan.setVisibility(View.VISIBLE);
                     } else if (kongQiZhiLiang > 750 && kongQiZhiLiang < 1150) {
                         tvText.setText("轻度污染");
+                        rlYan.setVisibility(View.VISIBLE);
                     } else if (kongQiZhiLiang > 1150 && kongQiZhiLiang < 1500) {
                         tvText.setText("中度污染");
+                        rlYan.setVisibility(View.VISIBLE);
                     } else if (kongQiZhiLiang > 1500) {
                         tvText.setText("重度污染");
+                        rlYan.setVisibility(View.VISIBLE);
                     }
                 }
                 break;
@@ -442,10 +455,10 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
                     Integer pm2Dian5 = Integer.valueOf(tvPmText.getText().toString().trim());
                     if (pm2Dian5 < 35) {
                         tvText.setText("优");
-                        rlYan.setVisibility(View.GONE);
+                        rlYan.setVisibility(View.VISIBLE);
                     } else if (pm2Dian5 > 35 && pm2Dian5 < 75) {
                         tvText.setText("良");
-                        rlYan.setVisibility(View.GONE);
+                        rlYan.setVisibility(View.VISIBLE);
                     } else if (pm2Dian5 > 75 && pm2Dian5 < 115) {
                         tvText.setText("轻度污染");
                         rlYan.setVisibility(View.VISIBLE);
@@ -482,7 +495,7 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
                      */
                     if (jiaquan < 80) {
                         tvText.setText("正常");
-                        rlYan.setVisibility(View.GONE);
+                        rlYan.setVisibility(View.VISIBLE);
                     } else if (jiaquan > 80 && jiaquan < 100) {
                         tvText.setText("轻度污染");
                         rlYan.setVisibility(View.VISIBLE);
@@ -517,10 +530,10 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
                      */
                     if (co2Int < 450) {
                         tvText.setText("优");
-                        rlYan.setVisibility(View.GONE);
+                        rlYan.setVisibility(View.VISIBLE);
                     } else if (co2Int > 450 && co2Int < 1000) {
                         tvText.setText("良");
-                        rlYan.setVisibility(View.GONE);
+                        rlYan.setVisibility(View.VISIBLE);
                     } else if (co2Int > 1000 && co2Int < 2000) {
                         tvText.setText("轻度污染");
                         rlYan.setVisibility(View.VISIBLE);
@@ -672,6 +685,7 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
             tvPm2dian5Danwei.setTextColor(mContext.getResources().getColor(R.color.black_333333));
             tvPm2dian5Text.setTextColor(mContext.getResources().getColor(R.color.black_333333));
             tvPmText.setTextColor(mContext.getResources().getColor(R.color.black_333333));
+
 
             tvJiaquan.setTextColor(mContext.getResources().getColor(R.color.black_333333));
             tvJiaquanDanwei.setTextColor(mContext.getResources().getColor(R.color.black_333333));

@@ -58,7 +58,8 @@
                 android:layout_width="643pt"
                 android:layout_height="107pt"
                 android:layout_marginTop="31pt"
-                android:background="@mipmap/tongyong_shezhi_bg">
+                android:background="@mipmap/tongyong_shezhi_bg"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -168,7 +169,8 @@
                 android:layout_width="643pt"
                 android:layout_height="107pt"
                 android:layout_marginTop="31pt"
-                android:background="@mipmap/tongyong_shezhi_bg">
+                android:background="@mipmap/tongyong_shezhi_bg"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -222,7 +224,8 @@
                 android:layout_width="643pt"
                 android:layout_height="107pt"
                 android:layout_marginTop="31pt"
-                android:background="@mipmap/tongyong_shezhi_bg">
+                android:background="@mipmap/tongyong_shezhi_bg"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -250,7 +253,8 @@
                 android:layout_width="643pt"
                 android:layout_height="107pt"
                 android:layout_marginTop="31pt"
-                android:background="@mipmap/tongyong_shezhi_bg">
+                android:background="@mipmap/tongyong_shezhi_bg"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -278,7 +282,8 @@
                 android:layout_width="643pt"
                 android:layout_height="107pt"
                 android:layout_marginTop="31pt"
-                android:background="@mipmap/tongyong_shezhi_bg">
+                android:background="@mipmap/tongyong_shezhi_bg"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -388,7 +393,8 @@
                 android:layout_width="643pt"
                 android:layout_height="107pt"
                 android:layout_marginTop="31pt"
-                android:background="@mipmap/tongyong_shezhi_bg">
+                android:background="@mipmap/tongyong_shezhi_bg"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -545,7 +551,6 @@
                     android:textColor="#ffffffff"
                     android:textSize="31pt" />
             </RelativeLayout>
-
 
             <RelativeLayout
                 android:layout_width="643pt"

@@ -272,7 +272,6 @@ public class CameraSetActivity extends TuyaBaseCameraDeviceActivity {
                     TuyaDialogUtils.t(mContext, "设备已失效!");
                     return;
                 }
-                CameraSetJichuActivity.actionStart(mContext);
                 CameraSetBaojingActivity.actionStart(mContext);
                 break;
             case R.id.ll_cunchu:
@@ -280,7 +279,6 @@ public class CameraSetActivity extends TuyaBaseCameraDeviceActivity {
                     TuyaDialogUtils.t(mContext, "设备已失效!");
                     return;
                 }
-                CameraSetJichuActivity.actionStart(mContext);
                 CameraSetCunchuActivity.actionStart(mContext);
                 break;
             case R.id.iv_switch_yinsi:
@@ -386,7 +384,6 @@ public class CameraSetActivity extends TuyaBaseCameraDeviceActivity {
             TuyaDialogUtils.t(mContext, "设备已失效!");
             return;
         }
-        CameraSetJichuActivity.actionStart(mContext);
 
         List<String> names = new ArrayList<>();
         names.add("自动");

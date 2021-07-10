@@ -55,6 +55,7 @@ public class CameraSetCunchuActivity extends TuyaBaseCameraDeviceActivity {// im
     LinearLayout ll_luxiang_mode;
     private DeviceBean mDeviceBeen;
 
+    private boolean isGeshihua;
     private boolean isluxiang;//是否开启录像
     private int cardZhuangtai;
     private String cardRongliang;
@@ -208,7 +209,8 @@ public class CameraSetCunchuActivity extends TuyaBaseCameraDeviceActivity {// im
 
             @Override
             public void onClickConfirm(View v, TuyaTishiDialog dialog) {
-                setDps("111", true);
+                isGeshihua = true;
+                setDp("111", true);
             }
 
             @Override
@@ -218,6 +220,7 @@ public class CameraSetCunchuActivity extends TuyaBaseCameraDeviceActivity {// im
         });
         dialog.setTextTitle("格式化");
         dialog.setTextCont("是否格式化存储卡？");
+        dialog.show();
     }
 
     private void clickLuxiang() {
@@ -272,8 +275,12 @@ public class CameraSetCunchuActivity extends TuyaBaseCameraDeviceActivity {// im
         } else if (key.equals("111")) {//存储卡格式化
 
         } else if (key.equals("117")) {//存储卡格式化状态
-            showProgressDialog("格式化：" + value.toString() + "%");
+            if (isGeshihua) {
+                showProgressDialog("格式化：" + value.toString() + "%");
+            }
+
             if (Y.getInt(value.toString()) >= 100) {
+                isGeshihua = false;
                 dismissProgressDialog();
             }
         } else if (key.equals("150")) {

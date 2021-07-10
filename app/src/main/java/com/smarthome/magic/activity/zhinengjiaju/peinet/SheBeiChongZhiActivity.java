@@ -2,8 +2,10 @@ package com.smarthome.magic.activity.zhinengjiaju.peinet;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiInfo;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -11,11 +13,13 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
+import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.ActionSheetDialog;
 import com.flyco.roundview.RoundRelativeLayout;
 import com.smarthome.magic.R;
+import com.smarthome.magic.activity.tuya_device.add.zi.TuyaAddCameraActivity;
 import com.smarthome.magic.activity.yaokongqi.KongQiJingHuaPeiActivity;
 import com.smarthome.magic.activity.yaokongqi.WanNengYaoKongQiPeiDui;
-import com.smarthome.magic.activity.tuya_device.add.zi.TuyaAddCameraActivity;
 import com.smarthome.magic.activity.yaokongqi.YaokongKTPei;
 import com.smarthome.magic.activity.yaokongqi.ZhenWanNengYaoKongQiPeiDuiZidingyi;
 import com.smarthome.magic.activity.zhinengjiaju.TianJiaPuTongSheBeiActivity;
@@ -56,6 +60,7 @@ public class SheBeiChongZhiActivity extends BaseActivity {
     private String ccid;
     private String serverId;
     private FenLeiContentModel fenLeiContentModel;
+    private String cameraType;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,7 +103,7 @@ public class SheBeiChongZhiActivity extends BaseActivity {
 
                     } else if (fenLeiContentModel.type.equals("18")) {//摄像头
                         // TODO: 2021/2/3 添加摄像头
-                        TuyaAddCameraActivity.actionStart(mContext);
+                        TuyaAddCameraActivity.actionStart(mContext,cameraType);
                     } else if (fenLeiContentModel.type.equals("28")) {//其实是电视
                         WanNengYaoKongQiPeiDui.actionStart(SheBeiChongZhiActivity.this);
                     } else if (fenLeiContentModel.type.equals("37")) {
@@ -107,7 +112,6 @@ public class SheBeiChongZhiActivity extends BaseActivity {
                         KongQiJingHuaPeiActivity.actionStart(mContext);
                     } else if (fenLeiContentModel.type.equals("39")) {
                         ZhenWanNengYaoKongQiPeiDuiZidingyi.actionStart(mContext);
-
                     } else {
                         TianJiaPuTongSheBeiActivity.actionStart(mContext, fenLeiContentModel);
                     }
@@ -120,9 +124,55 @@ public class SheBeiChongZhiActivity extends BaseActivity {
                 if (message.type == ConstanceValue.MSG_PEIWANG_SUCCESS) {
                     finish();
                     //配网成功后的后续处理
+                }else if (message.type == ConstanceValue.MSG_DEVICE_ADD) {
+                    finish();
                 }
             }
         }));
+
+        if (fenLeiContentModel.type.equals("18")) {
+            cameraType = "0";
+
+            tv_rightTitle.setText("Wi-Fi快连");
+            tv_rightTitle.setVisibility(View.VISIBLE);
+            iv_rightTitle.setVisibility(View.VISIBLE);
+            iv_rightTitle.setImageResource(R.mipmap.peiwang);
+            iv_rightTitle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    chooseType();
+                }
+            });
+            tv_rightTitle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    chooseType();
+                }
+            });
+        }
+    }
+
+    private void chooseType() {
+        String items[] = {"Wi-Fi快连", "二维码配网"};
+        final ActionSheetDialog dialog = new ActionSheetDialog(this, items, null);
+        dialog.isTitleShow(false).show();
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        cameraType = "0";
+                        tv_rightTitle.setText("Wi-Fi快连");
+                        break;
+                    case 1:
+                        cameraType = "1";
+                        tv_rightTitle.setText("二维码配网");
+                        break;
+                }
+                dialog.dismiss();
+
+            }
+        });
     }
 
     @Override

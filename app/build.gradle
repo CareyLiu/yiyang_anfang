@@ -154,7 +154,6 @@ dependencies {
     //noinspection GradleCompatible
     implementation 'androidx.percentlayout:percentlayout:1.0.0'
     implementation 'com.github.ZS-ZhangsShun:EasyMqttAndroidClient:1.0.2'
-    implementation 'cn.bingoogolapple:bga-qrcode-zbar:1.2.1'
     implementation 'pub.devrel:easypermissions:1.0.1'
     implementation 'org.jaaksi:pickerview:2.0.1'
 
@@ -298,11 +297,10 @@ dependencies {
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
     implementation 'org.greenrobot:greendao:3.2.2'
 
-    //    implementation 'com.google.zxing:core:3.2.1'
+    //二维码
+    implementation 'cn.bingoogolapple:bga-qrcode-zbar:1.2.1'
+    implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.2.1'
 
-    //   implementation 'cn.bingoogolapple:bga-qrcodecore:1.0.7@aar'
-
-    //    implementation 'cn.bingoogolapple:bga-zxing:1.0.7@aar'
     implementation 'androidx.cardview:cardview'
     implementation 'org.apache.commons:commons-lang3:3.7'
     implementation project(path: ':esptouch')

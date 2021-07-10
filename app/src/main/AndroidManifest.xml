@@ -79,7 +79,8 @@
 
 
         <!-- since JPushv3.6.8 ，oppov2.1.0 oppo 核心功能-->
-        <service android:name="cn.jpush.android.service.PluginOppoPushService"
+        <service
+            android:name="cn.jpush.android.service.PluginOppoPushService"
             android:permission="com.coloros.mcs.permission.SEND_MCS_MESSAGE">
             <intent-filter>
                 <action android:name="com.coloros.mcs.action.RECEIVE_MCS_MESSAGE" />
@@ -92,9 +93,9 @@
             android:permission="com.heytap.mcs.permission.SEND_PUSH_MESSAGE">
 
             <intent-filter>
-                <action android:name="com.heytap.mcs.action.RECEIVE_MCS_MESSAGE"/>
+                <action android:name="com.heytap.mcs.action.RECEIVE_MCS_MESSAGE" />
 
-                <action android:name="com.heytap.msp.push.RECEIVE_MCS_MESSAGE"/>
+                <action android:name="com.heytap.msp.push.RECEIVE_MCS_MESSAGE" />
             </intent-filter>
         </service> <!--兼容Q版本-->
 
@@ -121,13 +122,16 @@
             android:name="com.vivo.push.app_id"
             android:value="105491607" />
 
-        <meta-data android:name="OPPO_APPKEY"
+        <meta-data
+            android:name="OPPO_APPKEY"
             android:value="OP-19787702a8284c7da7bed54a9230758f" />
 
-        <meta-data android:name="OPPO_APPID"
+        <meta-data
+            android:name="OPPO_APPID"
             android:value="OP-30286123" />
 
-        <meta-data android:name="OPPO_APPSECRET"
+        <meta-data
+            android:name="OPPO_APPSECRET"
             android:value="OP-04e6317bc09841b9b521083a96cd9260" />
 
         <service
@@ -259,12 +263,6 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="c4fa107f21600a897caa2d5417c2f8a5" /> <!-- <provider -->
-
-
-
-
-
-
 
 
         <service android:name="com.amap.api.location.APSService" />
@@ -1328,188 +1326,267 @@
             android:name=".activity.zhinengjiaju.function.MenSuoActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 涂鸦wifi监听 -->
-        <receiver android:name=".activity.tuya_device.utils.WifiReceiver" /> <!-- 涂鸦设备配网 -->
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 涂鸦wifi监听 -->
+        <receiver android:name=".activity.tuya_device.utils.WifiReceiver" />
+
+        <!-- 涂鸦设备配网 -->
         <activity
             android:name=".activity.tuya_device.add.TuyaDevicePeiwangActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦摄像机配网 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦摄像机配网 -->
         <activity
             android:name=".activity.tuya_device.add.zi.TuyaAddCameraActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦添加设备 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦摄像机配网Wifi -->
+        <activity
+            android:name=".activity.tuya_device.add.zi.TuyaAddCameraWifiActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦摄像机配网二维码 -->
+        <activity
+            android:name=".activity.tuya_device.add.zi.TuyaAddCameraEwmActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦添加设备 -->
         <activity
             android:name=".activity.tuya_device.add.TuyaDeviceAddActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦添加设备成功 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦添加设备成功 -->
         <activity
             android:name=".activity.tuya_device.add.TuyaDeviceAddFinishActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦摄像机 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦摄像机 -->
         <activity
             android:name=".activity.tuya_device.camera.TuyaCameraActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|smallestScreenSize|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦设置 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦设置 -->
         <activity
             android:name=".activity.tuya_device.camera.CameraSetActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦基础设置 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦基础设置 -->
         <activity
             android:name=".activity.tuya_device.camera.CameraSetJichuActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦报警设置 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦报警设置 -->
         <activity
             android:name=".activity.tuya_device.camera.CameraSetBaojingActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦存储设置 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦存储设置 -->
         <activity
             android:name=".activity.tuya_device.camera.CameraSetCunchuActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦相册 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦相册 -->
         <activity
             android:name=".activity.tuya_device.camera.CameraXiangceActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦回放 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦回放 -->
         <activity
             android:name=".activity.tuya_device.camera.CameraHuifangActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦回放 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦回放 -->
         <activity
             android:name=".activity.tuya_device.camera.ceshi.CameraPlaybackActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦插座 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦插座 -->
         <activity
             android:name=".activity.tuya_device.device.DeviceChazuoActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦网关插座 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦网关插座 -->
         <activity
             android:name=".activity.tuya_device.device.DeviceWgCzActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦网关插座设置 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦网关插座设置 -->
         <activity
             android:name=".activity.tuya_device.device.DeviceWgCzSetActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦网关插座日志 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦网关插座日志 -->
         <activity
             android:name=".activity.tuya_device.device.DeviceWgCzLogActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦蓝牙三联开关 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦蓝牙三联开关 -->
         <activity
             android:name=".activity.tuya_device.device.DeviceSwitchThreeActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦蓝牙二联开关 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦蓝牙二联开关 -->
         <activity
             android:name=".activity.tuya_device.device.DeviceSwitchTwoActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦蓝牙开关设置 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦蓝牙开关设置 -->
         <activity
             android:name=".activity.tuya_device.device.DeviceSwitchSetActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦网关 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦网关 -->
         <activity
             android:name=".activity.tuya_device.device.DeviceWangguanActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦网关添加子设备 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦网关添加子设备 -->
         <activity
             android:name=".activity.tuya_device.add.TuyaWangguanAddActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦通用设置 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦通用设置 -->
         <activity
             android:name=".activity.tuya_device.device.tongyong.DeviceSetActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦定时 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦定时 -->
         <activity
             android:name=".activity.tuya_device.device.tongyong.DeviceDingshiActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦定时设置 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦定时设置 -->
         <activity
             android:name=".activity.tuya_device.device.tongyong.DeviceDingshiSetActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦定时设置 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦定时设置 -->
         <activity
             android:name=".activity.tuya_device.device.tongyong.DeviceDingshiEditActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦定时设置重复 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦定时设置重复 -->
         <activity
             android:name=".activity.tuya_device.device.tongyong.DeviceDingshiChongfuActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦门磁传感器 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦门磁传感器 -->
         <activity
             android:name=".activity.tuya_device.device.DeviceMenciActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦水浸传感器 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦水浸传感器 -->
         <activity
             android:name=".activity.tuya_device.device.DeviceLoushuiActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦天气 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦天气 -->
         <activity
             android:name=".activity.tuya_device.changjing.TuyaTianqiActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            tools:ignore="LockedOrientationActivity" /> <!-- 涂鸦场景 -->
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- 涂鸦场景 -->
         <activity
             android:name=".activity.tuya_device.changjing.TuyaChangjingActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
             tools:ignore="LockedOrientationActivity" />
+
         <activity
             android:name=".activity.zhinengjiaju.function.LouShuiActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"

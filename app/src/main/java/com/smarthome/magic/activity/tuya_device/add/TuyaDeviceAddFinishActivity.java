@@ -95,10 +95,7 @@ public class TuyaDeviceAddFinishActivity extends BaseActivity {
         lv_conten.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                AddDeviceModel model = deviceModels.get(i);
-//                model.setSelect(!model.isSelect());
-//                deviceModels.set(i, model);
-//                adapter.notifyDataSetChanged();
+
             }
         });
     }

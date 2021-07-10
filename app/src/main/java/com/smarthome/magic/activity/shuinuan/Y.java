@@ -27,7 +27,7 @@ import java.util.TimeZone;
 public class Y {
 
 
-    private static final boolean open = true;
+    private static final boolean open = false;
 
     public static void i(String str) {
         if (open)

@@ -41,6 +41,21 @@ public class BuTianYaoQingMaDialog extends Dialog {
         tvQuXiao = theView.findViewById(R.id.tv_quxiao);
         etText = theView.findViewById(R.id.tv_butian);
 
+        //EditText 获得焦点时hint消失，失去焦点时hint显示
+        etText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+                if (!hasFocus) {
+                    ((TextView) v).setHint("补填邀请码");
+                } else {
+                    ((TextView) v).setHint("");
+                }
+
+            }
+        });
+
+
         tvQueDing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

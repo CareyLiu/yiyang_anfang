@@ -123,6 +123,7 @@ public class SheBeiSetActivity extends ShuinuanBaseNewActivity {
                     ShuinuanZhuangtaiActivity.actionStart(mContext);
                 } else if (type == TYPE_FENGNUAN) {
                     JiaReQiCanShuActivity.actionStart(mContext);
+
                 }
             }
         });

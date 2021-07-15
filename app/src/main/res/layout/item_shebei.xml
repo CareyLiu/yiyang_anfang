@@ -56,7 +56,7 @@
 
         <TextView
             android:id="@+id/tv_name"
-            android:layout_width="84dp"
+            android:layout_width="wrap_content"
             android:layout_height="22dp"
             android:includeFontPadding="false"
             android:text="风暖加热器"

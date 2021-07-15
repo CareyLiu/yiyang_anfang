@@ -1,6 +1,7 @@
 package com.smarthome.magic.adapter;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,6 +13,7 @@ import com.smarthome.magic.activity.shuinuan.Y;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseSectionQuickAdapter;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseViewHolder;
+import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.model.SheBeiModel;
 
 import java.util.List;
@@ -40,6 +42,17 @@ public class SheBeiListAdapter extends BaseSectionQuickAdapter<SheBeiModel, Base
     @Override
     protected void convert(BaseViewHolder helper, SheBeiModel item) {
         helper.addOnClickListener(R.id.constrain);
+
+        if (!StringUtils.isEmpty(item.share_type)) {
+            if (item.share_type.equals("2")) {
+                helper.setText(R.id.tv_name, item.device_name + "(共享)");
+            } else {
+                helper.setText(R.id.tv_name, item.device_name);
+            }
+        } else {
+            helper.setText(R.id.tv_name, item.device_name);
+        }
+
         helper.setText(R.id.tv_ccid, "ccid: " + item.ccid);
         helper.setText(R.id.tv_youxiaoqi, "设备有效期至：" + item.validity_time);
         helper.setText(R.id.tv_shiyong_zhuangtai, item.validity_term);
@@ -54,12 +67,8 @@ public class SheBeiListAdapter extends BaseSectionQuickAdapter<SheBeiModel, Base
             tv.setTextColor(mContext.getResources().getColor(R.color.gray_999999));
         }
 
-        if (!TextUtils.isEmpty(item.share_type)) {
-            if (item.share_type.equals("2")) {
-                helper.setText(R.id.tv_name, item.device_name + "(共享)");
-            } else {
-                helper.setText(R.id.tv_name, item.device_name);
-            }
-        }
+
+
+        Log.i("SheBeiListAdapter", item.share_type + item.ccid);
     }
 }

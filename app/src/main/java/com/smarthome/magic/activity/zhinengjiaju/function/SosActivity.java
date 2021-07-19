@@ -28,6 +28,7 @@ import com.rairmmd.andmqtt.MqttPublish;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.zhinengjiaju.GengDuoJingBaoActivity;
 import com.smarthome.magic.adapter.SosListAdapter;
@@ -106,9 +107,16 @@ public class SosActivity extends BaseActivity {
 
         lordingDialog = new LordingDialog(mContext);
         PreferenceHelper.getInstance(mContext).putString(App.CHOOSE_KONGZHI_XIANGMU, DoMqttValue.ZHINENGJIAJU);
-        srLSmart.setOnRefreshListener(new OnRefreshListener() {
+        srLSmart.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                pageNumber = pageNumber + 1;
+                getNet();
+            }
+
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                pageNumber = 0;
                 getNet();
             }
         });
@@ -428,14 +436,14 @@ public class SosActivity extends BaseActivity {
     MenCiListModel.DataBean dataBean;
 
     private boolean firstEnter = true;
-
+    private int pageNumber = 0;
     public void getNet() {
         Map<String, String> map = new HashMap<>();
         map.put("code", "16043");
         map.put("key", Urls.key);
         map.put("token", UserManager.getManager(mContext).getAppToken());
         map.put("device_id", device_id);
-        map.put("page_num", "0");
+        map.put("page_num", String.valueOf(pageNumber));
 
         Gson gson = new Gson();
         Log.e("map_data", gson.toJson(map));

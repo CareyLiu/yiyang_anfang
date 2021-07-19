@@ -16,7 +16,7 @@ public class Urls {
     public static String DALIBAO_PAY = SERVER_URL + "msg/pay/create";//大礼包支付
     public static String ZIJIANHOME = SERVER_URL + "shop_new/app";//自建商城
     public static String ZIYINGFENLEI = SERVER_URL + "shop_new/app";//自建分类
-    public static String JDWEB = "https://store.ixiaocong.net/#/index/Z66Q3A";//京东的连接
+    public static String JDWEB = "https://jmall.ixiaocong.net/#/index/Q6HUHA";//京东的连接
     public static String PDDWEB = "https://u.jd.com/SgYbff";//京东的连接
     public static String HOME_PICTURE_HOME = SERVER_URL + "shop_new/app/user";
 

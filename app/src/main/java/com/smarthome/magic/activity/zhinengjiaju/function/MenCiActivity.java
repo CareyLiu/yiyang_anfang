@@ -108,9 +108,16 @@ public class MenCiActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         lordingDialog = new LordingDialog(mContext);
         PreferenceHelper.getInstance(mContext).putString(App.CHOOSE_KONGZHI_XIANGMU, DoMqttValue.ZHINENGJIAJU);
-        srLSmart.setOnRefreshListener(new OnRefreshListener() {
+        srLSmart.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                pageNumber = pageNumber + 1;
+                getNet();
+            }
+
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                pageNumber = 0;
                 getNet();
             }
         });

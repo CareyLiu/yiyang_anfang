@@ -44,10 +44,8 @@ import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.LoginUser;
 import com.smarthome.magic.model.Message;
-import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.TimeCount;
 import com.tuya.smart.android.user.api.ILoginCallback;
-import com.tuya.smart.android.user.api.IUidLoginCallback;
 import com.tuya.smart.android.user.bean.User;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.api.IResultCallback;
@@ -98,6 +96,10 @@ public class LoginActivity extends BaseActivity {
     TextView tvYinsi;
     @BindView(R.id.tv_yonghu)
     TextView tvYonghushiyong;
+    @BindView(R.id.iv_tongyi)
+    ImageView ivTongyi;
+    @BindView(R.id.ll_tongyi)
+    LinearLayout llTongyi;
 
     private boolean isExit;
     private TimeCount timeCount;
@@ -210,13 +212,23 @@ public class LoginActivity extends BaseActivity {
             PreferenceHelper.getInstance(this).putString(AppConfig.TANCHUFUWUTANKUANG, "1");
         }
 
+        ivTongyi.setBackgroundResource(R.mipmap.kaquan_select_n);
+        llTongyi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (shifoutongyi.equals("0")) {
+                    ivTongyi.setBackgroundResource(R.mipmap.kaquan_select_s);
+                    shifoutongyi = "1";
+                } else {
+                    ivTongyi.setBackgroundResource(R.mipmap.kaquan_select_n);
+                    shifoutongyi = "0";
+                }
 
-
-
-
+            }
+        });
     }
 
-
+    private String shifoutongyi = "0";//默认不同意
     // 用来计算返回键的点击间隔时间
     private long exitTime = 0;
 
@@ -282,6 +294,10 @@ public class LoginActivity extends BaseActivity {
 
                 break;
             case R.id.bt_login:
+                if (shifoutongyi.equals("0")) {
+                    UIHelper.ToastMessage(mContext, "请您先点击勾选同意按钮，再进行后续操作");
+                    return;
+                }
                 beforehand_login();
                 break;
         }

@@ -191,7 +191,7 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
                             "严重污染 大于250及以上。", "pm2.5说明");
                     kongQiJianCeShuoMingDialog.show();
                 } else if (strType.equals("jiaQuan")) {
-                    KongQiJianCeShuoMingDialog kongQiJianCeShuoMingDialog = new KongQiJianCeShuoMingDialog(mContext, "根据国家强制性标准，关闭门窗1小时后，每立方米室内空气中，甲醛释放量不得大于0.08毫克；如达到0.1-2.0毫克，50%的正常人能闻到臭气;达到2.0-5.0毫克，眼睛、气管将受到强烈刺激，出现打喷嚏、咳嗽等症状；达到10毫克以上，呼吸困难;达到50毫克以上，会\n" +
+                    KongQiJianCeShuoMingDialog kongQiJianCeShuoMingDialog = new KongQiJianCeShuoMingDialog(mContext, "根据国家强制性标准，关闭门窗1小时后，每立方米室内空气中，甲醛释放量不得大于80微克/立方米；如达到100-200微克/立方米，50%的正常人能闻到臭气;达到200-500微克/立方米，眼睛、气管将受到强烈刺激，出现打喷嚏、咳嗽等症状；达到1000微克/立方米以上，呼吸困难;达到5000微克/立方米以上，会\n" +
                             "引发肺炎等危重疾病，甚至导致死亡。", "甲醛说明");
                     kongQiJianCeShuoMingDialog.show();
                 } else if (strType.equals("erYangHuaTan")) {
@@ -238,12 +238,13 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
                             return;
                         }
 
-                        tvJiaquan.setText(response.body().data.get(0).getGd_cascophen());
-                        tvPmText.setText(response.body().data.get(0).getGd_particulate_matter());
-                        tvKongqiZhiliang.setText(response.body().data.get(0).getGd_air_quality());
-                        tvCo2.setText(response.body().data.get(0).getGd_carbon_dioxide());
+//String str = String.valueOf(Integer.parseInt(s));
+                        tvJiaquan.setText(String.valueOf(Integer.parseInt(response.body().data.get(0).getGd_cascophen())));
+                        tvPmText.setText(String.valueOf(Integer.parseInt(response.body().data.get(0).getGd_particulate_matter())));
+                        tvKongqiZhiliang.setText(String.valueOf(Integer.parseInt(response.body().data.get(0).getGd_air_quality())));
+                        tvCo2.setText(String.valueOf(Integer.parseInt(response.body().data.get(0).getGd_carbon_dioxide())));
 
-                        tvShow.setText(response.body().data.get(0).getGd_air_quality());
+                        tvShow.setText(String.valueOf(Integer.parseInt(response.body().data.get(0).getGd_air_quality())));
 
                     }
 

@@ -24,7 +24,7 @@
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srlTextSizeTime="10sp"
+
                 app:srlTextSizeTitle="12sp" />
 
         <androidx.recyclerview.widget.RecyclerView

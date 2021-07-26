@@ -59,6 +59,7 @@ import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Delete;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Success;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.AlarmClass;
+import com.smarthome.magic.model.ChuLiGuZhangMa;
 import com.smarthome.magic.model.HeaterDetails;
 import com.smarthome.magic.model.ServiceModel;
 import com.smarthome.magic.service.HeaterMqttService;
@@ -269,45 +270,12 @@ public class DiagnosisActivity extends BaseActivity {
                         btnClean.setVisibility(View.VISIBLE);
                         layoutInfo.setVisibility(View.VISIBLE);
 
+                        String ccid = PreferenceHelper.getInstance(mContext).getString("ccid", "");
+                        zhu_car_stoppage_no = ChuLiGuZhangMa.getGuZhangMa(ccid,zhu_car_stoppage_no);
+                        mTvMessage.setText(ChuLiGuZhangMa.codeXinXiShow(ccid,zhu_car_stoppage_no));
 
 
 
-                        switch (zhu_car_stoppage_no) {
-
-                            case "1":
-                                mTvMessage.setText("电压过低或过高");
-                                break;
-                            case "2":
-                                mTvMessage.setText("油泵开路或短路");
-                                break;
-                            case "3":
-                                mTvMessage.setText("壳体温度传感器开路或短路");
-                                break;
-                            case "4":
-                                mTvMessage.setText("入风口传感器开路或短路");
-                                break;
-                            case "5":
-                                mTvMessage.setText("点火塞开路或短路");
-                                break;
-                            case "6":
-                                mTvMessage.setText("入风口传感器高温报警");
-                                break;
-                            case "8":
-                                mTvMessage.setText("风机传感器开路或短路");
-                                break;
-                            case "9":
-                                mTvMessage.setText("火焰熄灭故障");
-                                break;
-                            case "10":
-                                mTvMessage.setText("点火失败故障");
-                                break;
-                            case "11":
-                                mTvMessage.setText("壳体高温报警");
-                                break;
-                            case "18":
-                                mTvMessage.setText("晶屏与主机失联故障");
-                                break;
-                        }
                     }else {
                         if (StringUtils.isEmpty(zhu_car_stoppage_no)) {
 

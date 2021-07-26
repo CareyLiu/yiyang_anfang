@@ -45,6 +45,7 @@ import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_CaoZuo_Base;
 import com.smarthome.magic.get_net.Urls;
+import com.smarthome.magic.model.EmptyModel;
 import com.smarthome.magic.model.Upload;
 import com.smarthome.magic.model.UserInfo;
 import com.smarthome.magic.util.AlertUtil;
@@ -80,6 +81,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
+
+import static com.smarthome.magic.get_net.Urls.MESSAGE_URL;
 
 public class SettingActivity extends BaseActivity implements Observer, TakePhoto.TakeResultListener, InvokeListener {
     @BindView(R.id.iv_header)
@@ -486,6 +489,27 @@ public class SettingActivity extends BaseActivity implements Observer, TakePhoto
                         new OnBtnClickL() {
                             @Override
                             public void onBtnClick() {
+                                Map<String, String> map = new HashMap<>();
+                                map.put("code", "03013");
+                                map.put("key", Urls.key);
+                                map.put("token", UserManager.getManager(SettingActivity.this).getAppToken());
+                                Gson gson = new Gson();
+
+                                OkGo.<AppResponse<EmptyModel>>post(MESSAGE_URL)
+                                        .tag(this)//
+                                        .upJson(gson.toJson(map))
+                                        .execute(new JsonCallback<AppResponse<EmptyModel>>() {
+                                            @Override
+                                            public void onSuccess(final Response<AppResponse<EmptyModel>> response) {
+
+                                            }
+
+                                            @Override
+                                            public void onError(Response<AppResponse<EmptyModel>> response) {
+                                                AlertUtil.t(SettingActivity.this, response.getException().getMessage());
+                                            }
+                                        });
+
                                 UserManager.getManager(SettingActivity.this).removeUser();
                                 PreferenceHelper.getInstance(SettingActivity.this).removeKey(AppConfig.SERVERID);
                                 PreferenceHelper.getInstance(SettingActivity.this).removeKey(AppConfig.DEVICECCID);

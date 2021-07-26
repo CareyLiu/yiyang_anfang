@@ -1081,6 +1081,8 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                                 tvShuibeng.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
 
+
+
                                 break;
                         }
                     }

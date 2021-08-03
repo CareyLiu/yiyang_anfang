@@ -633,6 +633,10 @@ public class MenCiActivity extends BaseActivity {
                                 menCiListAdapter.notifyDataSetChanged();
                             }
 
+                        } else {
+                            if (view != null) {
+                                menCiListAdapter.removeAllHeaderView();
+                            }
                         }
                         menCiListAdapter.notifyDataSetChanged();
 

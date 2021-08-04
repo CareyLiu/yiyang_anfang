@@ -264,7 +264,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                      */
                     switch (oper_open_close) {
                         case "1":
-                            tvYuShe_WenDu.setText("当前的挡位为：" + oper_dang + "挡");
+                            tvYuShe_WenDu.setText("当前的档位为：" + oper_dang + "档");
                             PreferenceHelper.getInstance(mContext).putString(STARTSHELVES, "1");
                             openMode(Integer.parseInt(oper_dang));
                             switchModel(rbHeaterGearMode, 1);
@@ -308,7 +308,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
 //                            }
 //
 //                            if (flag) {
-//                                tvYuShe_WenDu.setText("当前的挡位为：" + oper_dang + "挡");
+//                                tvYuShe_WenDu.setText("当前的档位为：" + oper_dang + "档");
 //                                PreferenceHelper.getInstance(mContext).putString(STARTSHELVES, "4");
 //                                button = rbHeaterPumpMode;
 //
@@ -325,7 +325,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                             break;
                         case "6":
                             showLoadSuccess();
-                            tvYuShe_WenDu.setText("当前的挡位为：" + oper_dang + "挡");
+                            tvYuShe_WenDu.setText("当前的档位为：" + oper_dang + "档");
                             PreferenceHelper.getInstance(mContext).putString(STARTSHELVES, "6");
                             button = rbHeaterYbyMode;
                             switchModel(rbHeaterYbyMode, 6);
@@ -337,7 +337,7 @@ public class WindHeaterActivity extends BaseActivity implements View.OnLongClick
                             break;
                         case "7":
                             showLoadSuccess();
-                            tvYuShe_WenDu.setText("当前的挡位为：" + oper_dang + "挡");
+                            tvYuShe_WenDu.setText("当前的档位为：" + oper_dang + "档");
                             button = rbHeaterYtfMode;
                             PreferenceHelper.getInstance(mContext).putString(STARTSHELVES, "7");
 

@@ -167,7 +167,7 @@ public class DiagnosisActivity extends BaseActivity {
         intent.putExtra("alarmClass", alarmClass);
         context.startActivity(intent);
     }
-
+    String guZhangMa="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -226,6 +226,7 @@ public class DiagnosisActivity extends BaseActivity {
             requestData();
         }
 
+
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
             public void call(Notice message) {
@@ -271,8 +272,10 @@ public class DiagnosisActivity extends BaseActivity {
                         layoutInfo.setVisibility(View.VISIBLE);
 
                         String ccid = PreferenceHelper.getInstance(mContext).getString("ccid", "");
-                        zhu_car_stoppage_no = ChuLiGuZhangMa.getGuZhangMa(ccid,zhu_car_stoppage_no);
-                        mTvMessage.setText(ChuLiGuZhangMa.codeXinXiShow(ccid,zhu_car_stoppage_no));
+                        guZhangMa = zhu_car_stoppage_no;
+                        guZhangMa = ChuLiGuZhangMa.getGuZhangMa(ccid,zhu_car_stoppage_no);
+
+                        mTvMessage.setText(ChuLiGuZhangMa.codeXinXiShow(ccid,guZhangMa));
 
 
 

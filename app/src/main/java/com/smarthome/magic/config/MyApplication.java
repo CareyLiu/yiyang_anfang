@@ -674,7 +674,7 @@ public class MyApplication extends MultiDexApplication {
                         if (doMqtt.equals("0")) {
                             return;
                         }
-                        System.out.println("Rair-MqttMessage    " + "收到的消息的主题是   ： 订阅的主题：" + topic + "  收到的数据信息：  " + message.toString());
+                        System.out.println("Rair 订阅的主题：" + topic + "  收到的数据信息：  " + message.toString());
                         if (message.toString().contains("{")) {
                             //解析对象 code
                             Gson gson = new Gson();

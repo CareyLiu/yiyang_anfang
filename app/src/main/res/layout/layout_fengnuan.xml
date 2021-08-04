@@ -193,9 +193,10 @@
 
 
                                 <TextView
+                                    android:id="@+id/tv_gongzuo_shichang"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="剩余服务天数：100"
+                                    android:text="工作时长：0天"
                                     android:textColor="#23CEFD"
                                     android:textSize="26pt" />
                             </LinearLayout>
@@ -214,7 +215,7 @@
                                     android:id="@+id/tv_shebeizhuangtai"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="设备状态：空调模式"
+                                    android:text="设备状态：连接中"
                                     android:textColor="#ffffffff"
                                     android:textSize="27pt"
                                     android:textStyle="bold" />
@@ -331,7 +332,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="12pt"
-                                    android:text="当前温度: - -"
+                                    android:text="当前温度/档位: - -"
                                     android:textColor="#ffffffff"
                                     android:textSize="31pt" />
                             </LinearLayout>
@@ -352,7 +353,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="12pt"
-                                    android:text="设定温度: - -"
+                                    android:text="设定温度/档位: - -"
                                     android:textColor="#ffffffff"
                                     android:textSize="31pt" />
                             </LinearLayout>
@@ -406,7 +407,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="41pt"
                             android:layout_marginTop="12pt"
-                            android:text="0℃/1挡"
+                            android:text="0℃/1档"
                             android:textColor="#ffffffff"
                             android:textSize="27pt"
                             app:layout_constraintLeft_toLeftOf="parent"
@@ -418,7 +419,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12pt"
                             android:layout_marginRight="41pt"
-                            android:text="32℃/5挡"
+                            android:text="32℃/5档"
                             android:textColor="#ffffffff"
                             android:textSize="27pt"
                             app:layout_constraintRight_toRightOf="parent"

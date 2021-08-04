@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,7 +22,6 @@ import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
-
 import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
 import com.rairmmd.andmqtt.MqttSubscribe;
@@ -44,12 +42,10 @@ import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.config.MyApplication;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.dialog.LordingDialog;
-
 import com.smarthome.magic.dialog.MyCarCaoZuoDialog_Notify;
 import com.smarthome.magic.dialog.newdia.TishiDialog;
 import com.smarthome.magic.util.DoMqttValue;
 import com.smarthome.magic.util.SoundPoolUtils;
-
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
@@ -138,6 +134,8 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
     ImageView ivShezhi;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
+    @BindView(R.id.tv_gongzuo_shichang)
+    TextView tvGongzuoShichang;
     private LordingDialog lordingDialog;
     public String car_server_id;
     public String ccid;
@@ -181,7 +179,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
     BengYouKaiJiThread bengYouKaiJiThread = null;// 泵油开机
     BengYouGuanJiThread bengYouGuanJiThread = null;//泵油关机
     XunHuanN xunHuanN = null;
-    String dangQianDangWei = "3";//默认3挡
+    String dangQianDangWei = "3";//默认3档
 
     String simKaIdFlag = null;
 
@@ -195,7 +193,9 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                 if (message.type == ConstanceValue.MSG_JIEBANG) {
                     finish();
                 } else if (message.type == ConstanceValue.MSG_NETWORK_CHANGE) {
-                    n9Thread.start();
+//                    if (!n9Thread.isAlive()){
+//                        n9Thread.start();
+//                    }
                 }
             }
         }));
@@ -705,10 +705,48 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 //                                handler.post(myRunnable);
 //                            }
 
-                            tvShebeizhuangtai.setText("设备状态：挡位模式");
-                            tvDangqianWenduOrDangwei.setText("当前挡位：" + oper_dang + "挡");
+                            tvShebeizhuangtai.setText("设备状态：档位模式");
+                            tvDangqianWenduOrDangwei.setText("当前档位：" + oper_dang + "档");
+
+
+                            //   UIHelper.ToastMessage(mContext, seekBar.getProgress() + "");
+                            if (seekBar1.getProgress() >= 0 && seekBar1.getProgress() < 20) {
+
+                                tvShedingWenduOrDangwei.setText("当前档位：" + "1" + "档");
+                            } else if (seekBar1.getProgress() >= 20 && seekBar1.getProgress() < 40) {
+
+                                if (seekBar1.getProgress() >= 20 && seekBar1.getProgress() < 30) {
+                                    tvShedingWenduOrDangwei.setText("当前档位：" + "1" + "档");
+                                } else {
+
+                                    tvShedingWenduOrDangwei.setText("当前档位：" + "2" + "档");
+                                }
+
+                            } else if (seekBar1.getProgress() >= 40 && seekBar1.getProgress() < 60) {
+                                if (seekBar1.getProgress() >= 40 && seekBar1.getProgress() < 50) {
+                                    tvShedingWenduOrDangwei.setText("当前档位：" + "2" + "档");
+                                } else {
+                                    tvShedingWenduOrDangwei.setText("当前档位：" + "3" + "档");
+                                }
+
+                            } else if (seekBar1.getProgress() >= 60 && seekBar1.getProgress() < 80) {
+                                if (seekBar1.getProgress() >= 60 && seekBar1.getProgress() < 70) {
+                                    tvShedingWenduOrDangwei.setText("当前档位：" + "3" + "档");
+                                } else {
+                                    tvShedingWenduOrDangwei.setText("当前档位：" + "4" + "档");
+                                }
+
+                            } else if (seekBar1.getProgress() >= 80 && seekBar1.getProgress() < 100) {
+                                if (seekBar1.getProgress() >= 80 && seekBar1.getProgress() < 90) {
+                                    tvShedingWenduOrDangwei.setText("当前档位：" + "4" + "档");
+                                } else {
+                                    tvShedingWenduOrDangwei.setText("当前档位：" + "5" + "档");
+                                }
+                            }
+
+
                             if (firstSetDangWei.equals("0")) {
-                                tvShedingWenduOrDangwei.setText("设定挡位：" + oper_dang + "挡");
+                                tvShedingWenduOrDangwei.setText("当前档位：" + oper_dang + "档");
                                 firstSetDangWei = "1";
                             }
                             PreferenceHelper.getInstance(mContext).putString(STARTSHELVES, "1");
@@ -725,8 +763,8 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                             ivDangweimoshi.setBackgroundResource(R.mipmap.fengnuan_button_dangwei_sel);
                             ivKongtiaomoshi.setBackgroundResource(R.mipmap.fengnuan_button_kongtiao_nor);
 
-                            tvZuidiwendu.setText("1挡");
-                            tvZuigaowendu.setText("5挡");
+                            tvZuidiwendu.setText("1档");
+                            tvZuigaowendu.setText("5档");
 
                             dangWeiMoShiValue = "1";
 
@@ -772,6 +810,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                             if (oper_wendu_now != null) {
                                 tvDangqianWenduOrDangwei.setText("当前温度：" + oper_wendu_now + "℃");
                             }
+                            tvShedingWenduOrDangwei.setText("设定温度：" + seekBarKongtiao.getProgress() + "℃");
                             tvZuidiwendu.setText("0℃");
                             tvZuigaowendu.setText("32℃");
                             kongTiaoMoshiValue = "1";
@@ -847,6 +886,10 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                             //  AlertUtil.t(WindHeaterActivity.this, "当前设备已关机");
                             //tvYuShe_WenDu.setText("长按选择开机模式");
 
+                            tvDangqianWenduOrDangwei.setText("当前温度/档位: - -");
+                            tvShedingWenduOrDangwei.setText("设定温度/档位: - -");
+                            tvZuidiwendu.setText("0℃/1档");
+                            tvZuigaowendu.setText("32℃/5档");
                             if (whatUWant.equals(DANGWEIGUANJI)) {
                                 lordingDialog.dismiss();
                                 SoundPoolUtils.soundPool(mContext, R.raw.yiguanji);
@@ -923,7 +966,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                             tvShebeizhuangtai.setText("设备状态：预通风");
                             tvYutongfeng.setTextColor(mContext.getResources().getColor(R.color.blue00fff));
                             tongFengValue = "1";
-//                            tvYuShe_WenDu.setText("当前的挡位为：" + oper_dang + "挡");
+//                            tvYuShe_WenDu.setText("当前的档位为：" + oper_dang + "档");
 //                            button = rbHeaterYtfMode;
 //                            PreferenceHelper.getInstance(mContext).putString(STARTSHELVES, "7");
 //
@@ -1081,8 +1124,6 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                                 tvShuibeng.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
 
-
-
                                 break;
                         }
                     }
@@ -1092,7 +1133,10 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 
                     if (messageData.length() >= 44) {
                         worktime = messageData.substring(38, 44);        // 风暖加热器:工作时长(小时)
+                      //  worktime = worktime.replaceFirst("0", "");
+                        tvGongzuoShichang.setText(worktime + "天");
                     }
+
 
                     if (messageData.length() >= 46) {
                         // 驻车加热器故障码->01至18	2	其它公司用
@@ -1814,7 +1858,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 //                }
 
                 if (kongTiaoMoshiValue.equals("1") || bengYouValue.equals("1") || tongFengValue.equals("1")) {
-                    UIHelper.ToastMessage(mContext, "请关机后重新以挡位模式启动");
+                    UIHelper.ToastMessage(mContext, "请关机后重新以档位模式启动");
                     return false;
                 }
                 if (dangWeiMoShiValue.equals("0")) {
@@ -1865,7 +1909,7 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
         if (dangQianDangWei.equals(String.valueOf(dangValue))) {
             return;
         }
-        tvShedingWenduOrDangwei.setText("设定挡位：" + String.valueOf(dangValue) + "挡");
+        tvShedingWenduOrDangwei.setText("设定档位：" + String.valueOf(dangValue) + "档");
 
         AndMqtt.getInstance().publish(new MqttPublish()
                 .setMsg("M62" + dangValue + ".")
@@ -2123,8 +2167,8 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                                 ivDangweimoshi.setBackgroundResource(R.mipmap.fengnuan_button_dangwei_sel);
                                 ivKongtiaomoshi.setBackgroundResource(R.mipmap.fengnuan_button_kongtiao_nor);
 
-                                tvZuidiwendu.setText("1挡");
-                                tvZuigaowendu.setText("5挡");
+                                tvZuidiwendu.setText("1档");
+                                tvZuigaowendu.setText("5档");
 
                                 dangWeiMoShiValue = "1";
 

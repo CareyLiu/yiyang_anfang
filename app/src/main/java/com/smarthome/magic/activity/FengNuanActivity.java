@@ -859,11 +859,11 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
 //                                handler.removeCallbacks(myRunnable);
 //                            }
 
-                            if (xunHuanN != null) {
-                                xunHuanNFlag = false;
-                                xunHuanN.interrupt();
-                                xunHuanN = null;
-                            }
+//                            if (xunHuanN != null) {
+//                                xunHuanNFlag = false;
+//                                xunHuanN.interrupt();
+//                                xunHuanN = null;
+//                            }
 
 
                             tvShebeizhuangtai.setText("设备状态：关机");
@@ -1617,6 +1617,18 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
                                 banBenHao = str.substring(2, 6);
                                 Log.i("banbenhao", banBenHao);
 
+                                if (banBenHao != null) {
+                                    if (banBenHao.equals("2020")) {
+                                        if (xunHuanN == null) {
+                                            Log.i("xunhuancishu", "开启循环线程");
+                                            //  UIHelper.ToastMessage(mContext, "xunhuan xunhuan");
+                                            xunHuanNFlag = true;
+                                            xunHuanN = new XunHuanN();
+                                            xunHuanN.start();
+                                        }
+                                    }
+
+                                }
                             }
                         }
 

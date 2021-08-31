@@ -1,15 +1,9 @@
 package com.smarthome.magic.aakefudan.chat;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -54,7 +48,6 @@ import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.util.AlertUtil;
 import com.smarthome.magic.util.NavigationUtils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -333,6 +326,9 @@ public class ServiciLiaoActivity extends BaseActivity implements View.OnClickLis
                             @Override
                             public void onSuccess(Response<AppResponse<ZixunModel.DataBean>> response) {
                                 AlertUtil.t(mContext, "咨询完成");
+                                if (popKeshi != null) {
+                                    popKeshi.dismiss();
+                                }
                             }
 
                             @Override

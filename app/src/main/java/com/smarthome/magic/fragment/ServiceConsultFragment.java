@@ -49,6 +49,8 @@ public class ServiceConsultFragment extends BaseFragment {
     RecyclerView lv_dangan;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
+    private Unbinder unbinder;
+
     private List<ConsultModel.DataBean> modelList = new ArrayList<>();
     private ZixunAdapter adapter;
     private View mEmptyView;
@@ -83,6 +85,7 @@ public class ServiceConsultFragment extends BaseFragment {
 
     @Override
     protected void initView(View rootView) {
+        unbinder = ButterKnife.bind(this, rootView);
         mEmptyView = rootView.findViewById(R.id.empty_view);
         initAdapter();
         initSM();

@@ -50,6 +50,7 @@
                         app:layout_constraintTop_toTopOf="@+id/iv_logo" />
 
                     <TextView
+                        android:id="@+id/tv_city_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="3dp"

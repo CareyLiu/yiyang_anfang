@@ -545,7 +545,7 @@ public class MineFragment extends BaseFragment implements Observer {
                 break;
 
             case R.id.rl_lianxidianhua:
-                Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "0451-86302963"));//跳转到拨号界面，同时传递电话号码
+                Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "0451-86302963"));//跳转到拨号界面，同时传递电话号码
                 startActivity(dialIntent);
                 break;
         }

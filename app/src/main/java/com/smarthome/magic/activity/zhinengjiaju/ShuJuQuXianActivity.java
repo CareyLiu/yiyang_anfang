@@ -36,6 +36,7 @@ import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.WenShiDuChuanGanQiModel;
 import com.smarthome.magic.util.icon_util.QuXianLineChart02View;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +68,7 @@ public class ShuJuQuXianActivity extends BaseActivity {
     TextView tvRiqi;
 
     private String deviceId;
-    private String dataType = "3";
+    private String dataType = "1";
 
     private TimePickerView pvDate, pvTime;
     private String chooseHour = "";//小时
@@ -121,7 +122,23 @@ public class ShuJuQuXianActivity extends BaseActivity {
                 getnet();
             }
         });
+        //获取系统的日期
+
+        Calendar calendar = Calendar.getInstance();
+
+        //年
+        int year = calendar.get(Calendar.YEAR);
+
+        //月
+        int month = calendar.get(Calendar.MONTH) + 1;
+
+        //日
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        time = year + "-" + month + "-" + day;
+
+        tvRiqi.setText(time);
         getnet();
+
 
         rrlTime.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -147,21 +164,22 @@ public class ShuJuQuXianActivity extends BaseActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 if (str.equals("1")) {
-                    time = year + "-" + month+1 + "-" + dayOfMonth;
+                    time = year + "-" + month + 1 + "-" + dayOfMonth;
                 } else if (str.equals("2")) {
-                    time = year + "-" + month+1;
+                    time = year + "-" + month + 1;
                 } else if (str.equals("3")) {
                     time = year + "";
                 }
 
 
                 if (str.equals("1")) {
-                    time = year + "-" + month+1 + "-" + dayOfMonth;
+                    time = year + "-" + month + 1 + "-" + dayOfMonth;
                 } else if (str.equals("2")) {
-                    time = year + "-" + month+1;
+                    time = year + "-" + month + 1;
                 } else if (str.equals("3")) {
                     time = year + "";
                 }
+                month = month + 1;
                 time = year + "-" + month + "-" + dayOfMonth;
                 tvRiqi.setText(time);
                 getnet();

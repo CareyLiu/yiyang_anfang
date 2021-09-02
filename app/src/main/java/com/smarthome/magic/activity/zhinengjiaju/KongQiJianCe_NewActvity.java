@@ -231,6 +231,35 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
                         showLoadSuccess();
                         tvShowText.setText("AQI");
                         setChuShi4XiangZhi(R.id.ll_kongqizhiliang);
+
+                        String jiaQuan = response.body().data.get(0).getGd_cascophen();
+                        String pm = response.body().data.get(0).getGd_particulate_matter();
+                        String kongQiZhiLiang = response.body().data.get(0).getGd_air_quality();
+                        String co2 = response.body().data.get(0).getGd_carbon_dioxide();
+
+                        if (StringUtils.isEmpty(jiaQuan)) {
+                            tvJiaquan.setText("暂无");
+                        }
+
+                        if (StringUtils.isEmpty(pm)) {
+                            tvPmText.setText("暂无");
+                        }
+                        if (StringUtils.isEmpty(kongQiZhiLiang)) {
+                            tvKongqiZhiliang.setText("暂无");
+                        }
+                        if (StringUtils.isEmpty(co2)) {
+                            tvCo2.setText("暂无");
+                        }
+                        //String str = String.valueOf(Integer.parseInt(s));
+                        tvJiaquan.setText(String.valueOf(Integer.parseInt(response.body().data.get(0).getGd_cascophen())));
+                        tvPmText.setText(String.valueOf(Integer.parseInt(response.body().data.get(0).getGd_particulate_matter())));
+                        tvKongqiZhiliang.setText(String.valueOf(Integer.parseInt(response.body().data.get(0).getGd_air_quality())));
+                        tvCo2.setText(String.valueOf(Integer.parseInt(response.body().data.get(0).getGd_carbon_dioxide())));
+
+
+
+                        tvShow.setText(String.valueOf(Integer.parseInt(response.body().data.get(0).getGd_air_quality())));
+
                         if (response.body().data.size() == 0) {
                             return;
                         }
@@ -238,13 +267,8 @@ public class KongQiJianCe_NewActvity extends BaseActivity {
                             return;
                         }
 
-//String str = String.valueOf(Integer.parseInt(s));
-                        tvJiaquan.setText(String.valueOf(Integer.parseInt(response.body().data.get(0).getGd_cascophen())));
-                        tvPmText.setText(String.valueOf(Integer.parseInt(response.body().data.get(0).getGd_particulate_matter())));
-                        tvKongqiZhiliang.setText(String.valueOf(Integer.parseInt(response.body().data.get(0).getGd_air_quality())));
-                        tvCo2.setText(String.valueOf(Integer.parseInt(response.body().data.get(0).getGd_carbon_dioxide())));
 
-                        tvShow.setText(String.valueOf(Integer.parseInt(response.body().data.get(0).getGd_air_quality())));
+
 
                     }
 

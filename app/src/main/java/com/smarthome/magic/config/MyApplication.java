@@ -45,6 +45,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
+import com.lzy.okgo.model.HttpHeaders;
 import com.lzy.okgo.model.Response;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
@@ -761,7 +762,7 @@ public class MyApplication extends MultiDexApplication {
                     @Override
                     public void deliveryComplete(IMqttDeliveryToken token) {
                         try {
-                            Log.i("Rair", "消息送达完成： "+token.getMessage().toString());
+                            Log.i("Rair", "消息送达完成： " + token.getMessage().toString());
                         } catch (MqttException e) {
                             e.printStackTrace();
                         }
@@ -969,6 +970,7 @@ public class MyApplication extends MultiDexApplication {
                 .setCacheTime(CacheEntity.CACHE_NEVER_EXPIRE)   //全局统一缓存时间，默认永不过期，可以不传
                 .setRetryCount(3);                         //全局统一超时重连次数，默认为三次，那么最差的情况会请求4次(一次原始请求，三次重连请求)，不需要可以设置为0
 //				.addCommonParams(params);                       //全局公共参数
+
 
 
     }

@@ -8,11 +8,16 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.os.ConfigurationCompat;
 
+import android.os.MessageQueue;
 import android.text.TextUtils;
+import android.transition.Scene;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -147,8 +152,11 @@ public class DiagnosisActivity extends BaseActivity {
 
     /**
      * 用于其他Activty跳转到该Activity
+
+     * @param
+     * @param
      *
-     * @param context
+     *  @param context
      */
     public static void actionStart(Context context) {
         Intent intent = new Intent(context, DiagnosisActivity.class);
@@ -167,7 +175,8 @@ public class DiagnosisActivity extends BaseActivity {
         intent.putExtra("alarmClass", alarmClass);
         context.startActivity(intent);
     }
-    String guZhangMa="";
+
+    String guZhangMa = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -233,6 +242,16 @@ public class DiagnosisActivity extends BaseActivity {
                 if (message.type == ConstanceValue.MSG_GUZHANG_SHOUYE) {
                     Gson gson = new Gson();
                     try {
+//                        MyCarCaoZuoDialog_Success dialog_success = new MyCarCaoZuoDialog_Success(DiagnosisActivity.this);
+//                        dialog_success.show();
+
+
+
+
+//                        MyCarCaoZuoDialog_Success dialog_success = new MyCarCaoZuoDialog_Success(DiagnosisActivity.this);
+//                        dialog_success.show();
+
+
                         AlarmClass alarmClass = gson.fromJson(message.content.toString(), AlarmClass.class);
                         Log.i("alarmClass", alarmClass.changjia_name + alarmClass.sell_phone);
                         mTvTitle.setText("整机运转异常");
@@ -245,6 +264,8 @@ public class DiagnosisActivity extends BaseActivity {
                         mTvFactory.setText(alarmClass.changjia_name);
                         mTvPhone.setText(alarmClass.sell_phone);
                         mTvType.setText(alarmClass.xinghao);
+
+
 
                         //重新获取ccid
 //                        CAR_CTROL = "wit/cbox/hardware/" + MyApplication.getServer_id() + alarmClass.ccid;
@@ -273,23 +294,25 @@ public class DiagnosisActivity extends BaseActivity {
 
                         String ccid = PreferenceHelper.getInstance(mContext).getString("ccid", "");
                         guZhangMa = zhu_car_stoppage_no;
-                        guZhangMa = ChuLiGuZhangMa.getGuZhangMa(ccid,zhu_car_stoppage_no);
+                        guZhangMa = ChuLiGuZhangMa.getGuZhangMa(ccid, zhu_car_stoppage_no);
 
-                        mTvMessage.setText(ChuLiGuZhangMa.codeXinXiShow(ccid,guZhangMa));
+                        mTvMessage.setText(ChuLiGuZhangMa.codeXinXiShow(ccid, guZhangMa));
 
 
-
-                    }else {
+                    } else {
                         if (StringUtils.isEmpty(zhu_car_stoppage_no)) {
 
                             whatUWant = "";
 //                            MyCarCaoZuoDialog_Success dialog_success = new MyCarCaoZuoDialog_Success(DiagnosisActivity.this);
 //                            dialog_success.show();
+
+
                             layoutInfo.setVisibility(View.GONE);
                             layoutMessage.setVisibility(View.GONE);
                             btnClean.setVisibility(View.GONE);
                             mTvTitle.setText("整机运转正常");
                             //UIHelper.ToastMessage(DiagnosisActivity.this, "故障已清除", Toast.LENGTH_LONG);
+
 
                         }
                     }

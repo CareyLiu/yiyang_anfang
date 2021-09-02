@@ -2,7 +2,6 @@ package com.smarthome.magic.activity.gaiban;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -44,22 +43,15 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.smarthome.magic.R;
 import com.smarthome.magic.activity.DefaultX5WebView_HaveNameActivity;
 import com.smarthome.magic.activity.SheBeiLieBiaoActivity;
-import com.smarthome.magic.activity.TuBiaoActivity;
 import com.smarthome.magic.activity.TuanYouWebView;
 import com.smarthome.magic.activity.gouwuche.GouWuCheActivity;
 import com.smarthome.magic.activity.homepage.DaLiBaoActivity;
 import com.smarthome.magic.activity.jd_taobao_pinduoduo.TaoBao_Jd_PinDuoDuoActivity;
 import com.smarthome.magic.activity.saoma.ScanActivity;
-import com.smarthome.magic.activity.tongcheng58.BianMinFaBuActivity;
 import com.smarthome.magic.activity.tongcheng58.GongJiangLieBiaoNewActivity;
-import com.smarthome.magic.activity.tongcheng58.GongJiangRuZhuActivity;
-import com.smarthome.magic.activity.tongcheng58.GongJiangYeActivity;
-import com.smarthome.magic.activity.tongcheng58.PoiKeywordSearchActivity;
 import com.smarthome.magic.activity.tongcheng58.TongChengMainActivity;
 import com.smarthome.magic.activity.tuangou.TuanGouShangJiaListActivity;
 import com.smarthome.magic.activity.xin_tuanyou.TuanYouList;
-import com.smarthome.magic.activity.zhinengjiaju.KongQiJianCeActvity;
-import com.smarthome.magic.activity.zhinengjiaju.KongQiJianCe_NewActvity;
 import com.smarthome.magic.activity.zijian_shangcheng.FenLeiThirdActivity;
 import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallActivity;
 import com.smarthome.magic.activity.zijian_shangcheng.ZiJianShopMallDetailsActivity;
@@ -79,15 +71,12 @@ import com.smarthome.magic.app.UIHelper;
 import com.smarthome.magic.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.smarthome.magic.basicmvp.BaseFragment;
 import com.smarthome.magic.callback.JsonCallback;
-import com.smarthome.magic.common.StringUtils;
 import com.smarthome.magic.config.AppResponse;
 import com.smarthome.magic.config.PreferenceHelper;
 import com.smarthome.magic.config.Radius_GlideImageLoader;
 import com.smarthome.magic.config.Radius_XiuPeiChangImageLoader;
 import com.smarthome.magic.config.UserManager;
 import com.smarthome.magic.dialog.LordingDialog;
-import com.smarthome.magic.dialog.newdia.TishiDialog;
-import com.smarthome.magic.dialog.newdia.YuYinZhiFuDialog;
 import com.smarthome.magic.get_net.Urls;
 import com.smarthome.magic.model.AccessListModel;
 import com.smarthome.magic.model.Home;
@@ -98,10 +87,6 @@ import com.smarthome.magic.util.GridAverageUIDecoration;
 import com.smarthome.magic.util.Utils;
 import com.smarthome.magic.view.ObservableScrollView;
 import com.tbruyelle.rxpermissions.RxPermissions;
-import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-import com.umeng.commonsdk.UMConfigure;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
@@ -110,6 +95,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import rx.android.schedulers.AndroidSchedulers;
@@ -117,7 +103,6 @@ import rx.functions.Action1;
 
 import static com.smarthome.magic.app.App.JINGDU;
 import static com.smarthome.magic.app.App.WEIDU;
-import static com.smarthome.magic.app.ConstanceValue.MSG_PEIWANG_SUCCESS;
 import static com.smarthome.magic.get_net.Urls.HOME_PICTURE;
 
 /**
@@ -128,6 +113,8 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
 
 
     ImageView ivGouwuche;
+    @BindView(R.id.tv_city_name)
+    TextView tvCityName;
 
 
     private View view;
@@ -1061,6 +1048,10 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                 PreferenceHelper.getInstance(getActivity()).putString(AppConfig.LOCATION_CITY_NAME, "哈尔滨");
                 Log.i("Location_result", "定位失败");
             }
+
+            String cityName = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.LOCATION_CITY_NAME, "");
+            Log.i("location_city", cityName);
+            tvCityName.setText(cityName);
         }
     };
 

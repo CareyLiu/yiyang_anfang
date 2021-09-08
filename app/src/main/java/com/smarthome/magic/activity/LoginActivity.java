@@ -1,5 +1,6 @@
 package com.smarthome.magic.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -15,6 +16,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
@@ -66,12 +69,13 @@ import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import pub.devrel.easypermissions.EasyPermissions;
 import rx.functions.Action1;
 
 import static com.smarthome.magic.get_net.Urls.SERVER_URL;
 
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks{
     @BindView(R.id.iv_icon)
     ImageView ivIcon;
     @BindView(R.id.tv_title)
@@ -188,6 +192,11 @@ public class LoginActivity extends BaseActivity {
                 @Override
                 public void onClickConfirm() {
 
+                    String[] perms = {
+                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                    EasyPermissions.requestPermissions(LoginActivity.this, "申请开启app需要的权限", 0, perms);
                     fuWuDialog.dismiss();
                 }
 
@@ -582,5 +591,25 @@ public class LoginActivity extends BaseActivity {
                         finish();
                     }
                 });
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+        Log.i("LoginActivity_xx", "通过了......");
+        if (fuWuDialog.isShowing()) {
+            fuWuDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        UIHelper.ToastMessage(mContext, "拒绝了");
+        Log.i("LoginActivity_xx", "拒绝了......");
+        fuWuDialog.show();
     }
 }

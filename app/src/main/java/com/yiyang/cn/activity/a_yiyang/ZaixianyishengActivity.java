@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.yiyang.cn.R;
+import com.yiyang.cn.activity.KeShiLieBiaoActivity;
 import com.yiyang.cn.adapter.yiyang.ZaixianyishengAdapter;
 import com.yiyang.cn.app.BaseActivity;
 import com.yiyang.cn.model.yiyang.XiaoxiModel;
@@ -89,6 +90,7 @@ public class ZaixianyishengActivity extends BaseActivity {
             case R.id.ll_search:
                 break;
             case R.id.iv_zixun_mianfei:
+                KeShiLieBiaoActivity.actionStart(ZaixianyishengActivity.this);
                 break;
             case R.id.iv_zixun_zhuanjia:
                 break;

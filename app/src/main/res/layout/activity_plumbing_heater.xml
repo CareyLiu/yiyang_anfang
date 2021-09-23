@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:fitsSystemWindows="true"
-            tools:context="com.smarthome.magic.activity.WindHeaterActivity">
+            tools:context="com.yiyang.cn.activity.WindHeaterActivity">
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:fitsSystemWindows="true"
-                tools:context="com.smarthome.magic.activity.WindHeaterActivity">
+                tools:context="com.yiyang.cn.activity.WindHeaterActivity">
 
                 <androidx.percentlayout.widget.PercentRelativeLayout
                     android:layout_width="match_parent"
@@ -253,7 +253,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginBottom="25dp">
 
-                        <com.smarthome.magic.view.ArcProgressBar
+                        <com.yiyang.cn.view.ArcProgressBar
                             android:id="@+id/arcProgressBar"
                             android:layout_width="180dp"
                             android:layout_height="180dp"
@@ -265,7 +265,7 @@
                             app:back_color="@color/dark_black"
                             app:max_progress="100">
 
-                        </com.smarthome.magic.view.ArcProgressBar>
+                        </com.yiyang.cn.view.ArcProgressBar>
 
                         <ImageView
                             android:layout_width="140dp"

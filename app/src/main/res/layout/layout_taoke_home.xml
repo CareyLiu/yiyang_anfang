@@ -102,7 +102,7 @@ android:layout_marginHorizontal="15dp"
         <!--android:layout_alignParentLeft="true"-->
         <!--android:src="@mipmap/backbutton" />-->
 
-        <com.smarthome.magic.view.magicindicator.MagicIndicator
+        <com.yiyang.cn.view.magicindicator.MagicIndicator
             android:id="@+id/magic_indicator4"
             android:layout_width="match_parent"
             android:layout_height="45dp"
@@ -125,7 +125,7 @@ android:layout_marginHorizontal="15dp"
         android:layout_height="1dp"
         android:background="@color/grayfff5f5f5" />
 
-    <com.smarthome.magic.view.CustomViewPager
+    <com.yiyang.cn.view.CustomViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -17,7 +17,7 @@
 		"project_id":"736430079244457064",
 		"app_id":"102236539",
 		"api_key":"CgB6e3x9qHyw4ItmrfYqXCRlepfGKnRSoCkY08xLv/vSlgE1q2ymXd9y7waJW/7paNgxoCW0lijwwMuBUmSUicr/",
-		"package_name":"com.smarthome.magic"
+		"package_name":"com.yiyang.cn"
 	},
 	"oauth_client":{
 		"client_id":"102236539",
@@ -25,17 +25,17 @@
 	},
 	"app_info":{
 		"app_id":"102236539",
-		"package_name":"com.smarthome.magic"
+		"package_name":"com.yiyang.cn"
 	},
 	"configuration_version":"3.0",
 	"appInfos":[
 		{
-			"package_name":"com.smarthome.magic",
+			"package_name":"com.yiyang.cn",
 			"client":{
 				"app_id":"102236539"
 			},
 			"app_info":{
-				"package_name":"com.smarthome.magic",
+				"package_name":"com.yiyang.cn",
 				"app_id":"102236539"
 			},
 			"oauth_client":{

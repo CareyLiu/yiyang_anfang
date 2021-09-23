@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.smarthome.magic.activity.tuya_device.dialog.TuyaBottomDialogView
+    <com.yiyang.cn.activity.tuya_device.dialog.TuyaBottomDialogView
         android:id="@+id/view_bottom"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

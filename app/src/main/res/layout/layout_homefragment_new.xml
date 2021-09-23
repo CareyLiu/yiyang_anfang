@@ -21,7 +21,7 @@
             app:srlTextSizeTime="10sp"
             app:srlTextSizeTitle="12sp" />
 
-        <com.smarthome.magic.view.ObservableScrollView
+        <com.yiyang.cn.view.ObservableScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -452,7 +452,7 @@
 
             </LinearLayout>
 
-        </com.smarthome.magic.view.ObservableScrollView>
+        </com.yiyang.cn.view.ObservableScrollView>
 
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"

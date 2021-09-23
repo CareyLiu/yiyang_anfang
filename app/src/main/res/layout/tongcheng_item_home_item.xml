@@ -34,7 +34,7 @@
                 android:textSize="27pt"
                 android:textStyle="bold" />
 
-            <com.smarthome.magic.view.AutoNextLineLinearlayout
+            <com.yiyang.cn.view.AutoNextLineLinearlayout
                 android:id="@+id/ll_tag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -14,29 +14,29 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView
+            <com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView
                 android:id="@+id/ming6"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"></com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView>
+                android:layout_weight="1"></com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView>
 
-            <com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView
+            <com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView
                 android:id="@+id/ming7"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"></com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView>
+                android:layout_weight="1"></com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView>
 
-            <com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView
+            <com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView
                 android:id="@+id/ming8"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"></com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView>
+                android:layout_weight="1"></com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView>
 
-            <com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView
+            <com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView
                 android:id="@+id/ming9"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"></com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView>
+                android:layout_weight="1"></com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView>
         </LinearLayout>
 
         <LinearLayout
@@ -51,17 +51,17 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView
+                <com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView
                     android:id="@+id/ming5"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"></com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView>
+                    android:layout_weight="1"></com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView>
 
-                <com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView
+                <com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView
                     android:id="@+id/ming4"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"></com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView>
+                    android:layout_weight="1"></com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView>
             </LinearLayout>
 
             <FrameLayout
@@ -574,11 +574,11 @@
                 </ScrollView>
 
 
-                <com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView
+                <com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView
                     android:id="@+id/ming_main"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="gone"></com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView>
+                    android:visibility="gone"></com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView>
 
                 <ImageView
                     android:id="@+id/iv_line"
@@ -594,17 +594,17 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView
+                <com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView
                     android:id="@+id/ming10"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"></com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView>
+                    android:layout_weight="1"></com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView>
 
-                <com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView
+                <com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView
                     android:id="@+id/ming11"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"></com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView>
+                    android:layout_weight="1"></com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView>
             </LinearLayout>
         </LinearLayout>
 
@@ -614,29 +614,29 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView
+            <com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView
                 android:id="@+id/ming3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"></com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView>
+                android:layout_weight="1"></com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView>
 
-            <com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView
+            <com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView
                 android:id="@+id/ming2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"></com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView>
+                android:layout_weight="1"></com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView>
 
-            <com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView
+            <com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView
                 android:id="@+id/ming1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"></com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView>
+                android:layout_weight="1"></com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView>
 
-            <com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView
+            <com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView
                 android:id="@+id/ming12"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"></com.smarthome.magic.activity.wode_page.bazinew.view.BaziMingpanView>
+                android:layout_weight="1"></com.yiyang.cn.activity.wode_page.bazinew.view.BaziMingpanView>
         </LinearLayout>
     </LinearLayout>
 

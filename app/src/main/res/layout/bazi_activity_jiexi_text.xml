@@ -52,7 +52,7 @@
             android:background="@color/white"></androidx.recyclerview.widget.RecyclerView>
 
 
-        <com.smarthome.magic.view.magicindicator.MagicIndicator
+        <com.yiyang.cn.view.magicindicator.MagicIndicator
             android:id="@+id/magic_indicator4"
             android:layout_width="match_parent"
             android:background="@color/white"
@@ -60,10 +60,10 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="10dp" />
 
-        <com.smarthome.magic.view.CustomViewPager
+        <com.yiyang.cn.view.CustomViewPager
             android:id="@+id/vpg_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></com.smarthome.magic.view.CustomViewPager>
+            android:layout_height="wrap_content"></com.yiyang.cn.view.CustomViewPager>
 
 
         <LinearLayout

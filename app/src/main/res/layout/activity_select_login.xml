@@ -89,30 +89,30 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <com.smarthome.magic.aakefudan.view.LoginBtnView
+        <com.yiyang.cn.aakefudan.view.LoginBtnView
             android:id="@+id/bt1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></com.smarthome.magic.aakefudan.view.LoginBtnView>
+            android:layout_height="wrap_content"></com.yiyang.cn.aakefudan.view.LoginBtnView>
 
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <com.smarthome.magic.aakefudan.view.LoginBtnView
+        <com.yiyang.cn.aakefudan.view.LoginBtnView
             android:id="@+id/bt2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></com.smarthome.magic.aakefudan.view.LoginBtnView>
+            android:layout_height="wrap_content"></com.yiyang.cn.aakefudan.view.LoginBtnView>
 
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <com.smarthome.magic.aakefudan.view.LoginBtnView
+        <com.yiyang.cn.aakefudan.view.LoginBtnView
             android:id="@+id/bt3"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></com.smarthome.magic.aakefudan.view.LoginBtnView>
+            android:layout_height="wrap_content"></com.yiyang.cn.aakefudan.view.LoginBtnView>
 
         <View
             android:id="@+id/view"

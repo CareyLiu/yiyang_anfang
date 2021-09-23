@@ -29,7 +29,7 @@
     </RelativeLayout>
 
 
-    <com.smarthome.magic.view.ChaosGestureView
+    <com.yiyang.cn.view.ChaosGestureView
         android:id="@+id/gesture"
         android:layout_width="match_parent"
         android:layout_height="0dp"

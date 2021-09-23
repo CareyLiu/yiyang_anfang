@@ -20,7 +20,7 @@
             app:itemTextColor="@drawable/selector_service_color"
             app:menu="@menu/menu_service" />
 
-        <com.smarthome.magic.view.NoScrollViewPager
+        <com.yiyang.cn.view.NoScrollViewPager
             android:id="@+id/vp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

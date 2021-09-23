@@ -6,7 +6,7 @@
     android:fitsSystemWindows="true"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="com.smarthome.magic.activity.CarBrandActivity">
+    tools:context="com.yiyang.cn.activity.CarBrandActivity">
 
     <LinearLayout
         android:layout_width="317dp"

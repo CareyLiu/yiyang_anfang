@@ -21,7 +21,7 @@
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/view">
 
-        <com.smarthome.magic.view.magicindicator.MagicIndicator
+        <com.yiyang.cn.view.magicindicator.MagicIndicator
             android:id="@+id/magic_indicator4"
             android:layout_width="match_parent"
             android:layout_height="45dp"
@@ -32,7 +32,7 @@
     </RelativeLayout>
 
 
-    <com.smarthome.magic.view.CustomViewPager
+    <com.yiyang.cn.view.CustomViewPager
         android:layout_marginTop="46dp"
         android:id="@+id/view_pager"
         android:layout_width="match_parent"

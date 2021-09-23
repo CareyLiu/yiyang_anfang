@@ -3,26 +3,22 @@ apply plugin: 'com.huawei.agconnect'
 android {
     signingConfigs {
         debug {
-//            keyAlias 'debug'
-//            keyPassword '123456'
-//            storeFile file('D:/keystore/magic_lamp_debug.jks')
-//            storePassword '123456'
-
-            keyAlias 'release'
-            keyPassword 'zxc741asd852qwe963'
-            storeFile file('C:/keystore/magic_lamp_release.jks')
-            storePassword 'zxc741asd852qwe963'
+            keyAlias 'key0'
+            keyPassword 'yiyangapp'
+            storeFile file('C:/keystore/yiyangapp.jks')
+            storePassword 'yiyangapp'
         }
         release {
-            keyAlias 'release'
-            keyPassword 'zxc741asd852qwe963'
-            storeFile file('C:/keystore/magic_lamp_release.jks')
-            storePassword 'zxc741asd852qwe963'
+            keyAlias 'key0'
+            keyPassword 'yiyangapp'
+            storeFile file('C:/keystore/yiyangapp.jks')
+            storePassword 'yiyangapp'
         }
     }
+
     compileSdkVersion 29
     defaultConfig {
-        applicationId "com.smarthome.magic"
+        applicationId "com.yiyang.cn"
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 50

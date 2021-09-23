@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="智能家居"
+            android:text="安防"
             android:textColor="#ff111111"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -226,7 +226,7 @@
                                     android:gravity="center"
                                     android:orientation="vertical">
 
-                                    <com.smarthome.magic.view.magicindicator.MagicIndicator
+                                    <com.yiyang.cn.view.magicindicator.MagicIndicator
                                         android:id="@+id/magic_indicator"
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
@@ -237,7 +237,7 @@
                         </RelativeLayout>
                     </com.google.android.material.appbar.AppBarLayout>
 
-                    <com.smarthome.magic.view.NoSlidingViewPager
+                    <com.yiyang.cn.view.NoSlidingViewPager
                         android:id="@+id/viewPager"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

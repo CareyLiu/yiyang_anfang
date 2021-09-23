@@ -73,7 +73,7 @@
                         android:layout_below="@+id/iv_taobao"
                         android:orientation="vertical">
 
-                        <com.smarthome.magic.view.magicindicator.MagicIndicator
+                        <com.yiyang.cn.view.magicindicator.MagicIndicator
                             android:id="@+id/magic_indicator4"
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
@@ -97,7 +97,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-            <com.smarthome.magic.view.CustomViewPager
+            <com.yiyang.cn.view.CustomViewPager
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

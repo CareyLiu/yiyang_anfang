@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.smarthome.magic.view.ObservableScrollView
+    <com.yiyang.cn.view.ObservableScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -35,7 +35,7 @@
 
         </LinearLayout>
 
-    </com.smarthome.magic.view.ObservableScrollView>
+    </com.yiyang.cn.view.ObservableScrollView>
 
     <include
         android:id="@+id/topPanel"

@@ -88,7 +88,7 @@
         android:layout_height="1dp"
         android:background="@color/line" />
 
-    <com.smarthome.magic.activity.tuya_device.add.adapter.MyViewPager
+    <com.yiyang.cn.activity.tuya_device.add.adapter.MyViewPager
         android:id="@+id/vpg"
         android:layout_width="match_parent"
         android:layout_height="0dp"

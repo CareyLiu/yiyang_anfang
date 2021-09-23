@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.smarthome.magic">
+    package="com.yiyang.cn">
 
     <supports-screens
         android:anyDensity="true"
@@ -10,7 +10,7 @@
         android:resizeable="true"
         android:smallScreens="true" />
 
-    <uses-permission android:name="com.smarthome.magic.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="com.yiyang.cn.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 用于访问GPS定位 -->
@@ -58,7 +58,7 @@
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission
-        android:name="com.smarthome.magic.permission.MIPUSH_RECEIVE"
+        android:name="com.yiyang.cn.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signature" />
 
 
@@ -278,7 +278,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.smarthome.magic.fileprovider"
+            android:authorities="com.yiyang.cn.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true"
             tools:replace="android:authorities">
@@ -428,7 +428,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
 
                 <data
-                    android:host="com.smarthome.magic"
+                    android:host="com.yiyang.cn"
                     android:pathPrefix="/conversation/"
                     android:scheme="rong" />
             </intent-filter>
@@ -1083,7 +1083,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="com.smarthome.magic"
+                    android:host="com.yiyang.cn"
                     android:pathPrefix="/conversationlist"
                     android:scheme="rong" />
             </intent-filter>
@@ -1098,7 +1098,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="com.smarthome.magic"
+                    android:host="com.yiyang.cn"
                     android:pathPrefix="/conversationnew"
                     android:scheme="rong" />
             </intent-filter>
@@ -1113,7 +1113,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="com.smarthome.magic"
+                    android:host="com.yiyang.cn"
                     android:pathPrefix="/conversationGuzhang"
                     android:scheme="rong" />
             </intent-filter>
@@ -1128,7 +1128,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="com.smarthome.magic"
+                    android:host="com.yiyang.cn"
                     android:pathPrefix="/conversation/"
                     android:scheme="rong" />
             </intent-filter>
@@ -1226,13 +1226,13 @@
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
 
-                <category android:name="com.smarthome.magic" />
+                <category android:name="com.yiyang.cn" />
             </intent-filter>
         </receiver> <!-- since 3.0.9 Required SDK 核心功能 -->
 
         <provider
             android:name="cn.jpush.android.service.DataProvider"
-            android:authorities="com.smarthome.magic.DataProvider"
+            android:authorities="com.yiyang.cn.DataProvider"
             android:exported="false" />
 
         <activity
@@ -1970,5 +1970,42 @@
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+
+
+        <!--    医养设置    -->
+        <activity
+            android:name=".activity.a_yiyang.YySetAactivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+
+        <!--    在线医生    -->
+        <activity
+            android:name=".activity.a_yiyang.ZaixianyishengActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+
+        <!--    在线医生    -->
+        <activity
+            android:name=".activity.a_yiyang.JibingchaxunActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+
+        <!--    在线医生    -->
+        <activity
+            android:name=".activity.a_yiyang.YiyangTuTActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
     </application>
 </manifest>

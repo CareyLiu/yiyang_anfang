@@ -459,15 +459,15 @@ public class HomeActivity extends BaseActivity {
                 tv_main_shouye.setTextColor(Y.getColor(R.color.color_main_yiyang));
                 break;
             case 1:
-                iv_main_anfang.setImageResource(R.mipmap.yiyang_main_shouye_sel);
+                iv_main_anfang.setImageResource(R.mipmap.yiyang_main_anfang_sel);
                 tv_main_anfang.setTextColor(Y.getColor(R.color.color_main_yiyang));
                 break;
             case 2:
-                iv_main_xiaoxi.setImageResource(R.mipmap.yiyang_main_shouye_sel);
+                iv_main_xiaoxi.setImageResource(R.mipmap.yiyang_main_xiaoxi_sel);
                 tv_main_xiaoxi.setTextColor(Y.getColor(R.color.color_main_yiyang));
                 break;
             case 3:
-                iv_main_wode.setImageResource(R.mipmap.yiyang_main_shouye_sel);
+                iv_main_wode.setImageResource(R.mipmap.yiyang_main_wd_sel);
                 tv_main_wode.setTextColor(Y.getColor(R.color.color_main_yiyang));
                 break;
         }

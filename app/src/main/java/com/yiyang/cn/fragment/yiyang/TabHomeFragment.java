@@ -20,9 +20,14 @@ import com.yiyang.cn.R;
 import com.yiyang.cn.activity.a_yiyang.JibingchaxunActivity;
 import com.yiyang.cn.activity.a_yiyang.YiyangTuTActivity;
 import com.yiyang.cn.activity.a_yiyang.ZaixianyishengActivity;
+import com.yiyang.cn.activity.tongcheng58.TongChengMainActivity;
 import com.yiyang.cn.activity.tongcheng58.model.TcHomeModel;
+import com.yiyang.cn.activity.zijian_shangcheng.ZiJianShopMallActivity;
 import com.yiyang.cn.adapter.yiyang.HomeZhylAdapter;
 import com.yiyang.cn.app.AppConfig;
+import com.yiyang.cn.app.ConstanceValue;
+import com.yiyang.cn.app.Notice;
+import com.yiyang.cn.app.RxBus;
 import com.yiyang.cn.basicmvp.BaseFragment;
 import com.yiyang.cn.config.GlideImageLoader;
 import com.yiyang.cn.config.PreferenceHelper;
@@ -178,9 +183,9 @@ public class TabHomeFragment extends BaseFragment {
 
             String cityName = PreferenceHelper.getInstance(getActivity()).getString(AppConfig.LOCATION_CITY_NAME, "");
             Log.i("location_city", cityName);
-            if (TextUtils.isEmpty(cityName)){
+            if (TextUtils.isEmpty(cityName)) {
                 tv_weizhi.setText("长春市");
-            }else {
+            } else {
                 tv_weizhi.setText(cityName);
             }
         }
@@ -287,6 +292,9 @@ public class TabHomeFragment extends BaseFragment {
         List<Integer> items = new ArrayList<>();
         items.add(R.mipmap.a_img_banner_1);
         items.add(R.mipmap.a_img_banner_2);
+        items.add(R.mipmap.a_img_banner_3);
+        items.add(R.mipmap.a_img_banner_4);
+        items.add(R.mipmap.a_img_banner_5);
 
         //设置图片加载器
         banner_main.setImageLoader(new GlideImageLoader());
@@ -315,16 +323,19 @@ public class TabHomeFragment extends BaseFragment {
     private List<TcHomeModel.DataBean.IconListBean> jjshList = new ArrayList<>();
 
     private void initZhylList() {
-        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_zhihuiyanglao, "智慧养老"));
-        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_dianhuojizhen, "电话急诊"));
-        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_zaixianyisheng, "在线医生"));
-        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_yibingchaxun, "疾病查询"));
-        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_yuyueguanhao, "预约挂号"));
-        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_jijiufuwu, "急救服务"));
-        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_hujaiozhongxin, "呼叫中心"));
+        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_zhuyifuwu, "助医服务"));
+        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_zhucanfuwu, "助餐服务"));
+        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_zhuyufuwu, "助浴服务"));
+        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_zhujiefuwu, "助洁服务"));
+        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_zhuxingfuwu, "助行服务"));
+        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_zhujifuwu, "助急服务"));
+
+        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_jibingchaxun, "疾病查询"));
+        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_yuyueguahao, "预约挂号"));
+        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_fuwutaocan, "服务套餐"));
+        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_jiankangshuju, "健康数据"));
+        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_hujiaozhongxin, "呼叫中心"));
         zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_huodongzhongxin, "活动中心"));
-        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_yanglaoshitang, "养老食堂"));
-        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_jiankangshujun, "健康数据"));
     }
 
     private void initJjshList() {
@@ -338,7 +349,7 @@ public class TabHomeFragment extends BaseFragment {
     private void initZhylAdapter() {
         initZhylList();
         HomeZhylAdapter zhylAdapter = new HomeZhylAdapter(R.layout.yiyang_item_home_zhyl, zhylList);
-        rv_zhihuiyanglao.setLayoutManager(new GridLayoutManager(getContext(), 5));
+        rv_zhihuiyanglao.setLayoutManager(new GridLayoutManager(getContext(), 6));
         rv_zhihuiyanglao.setAdapter(zhylAdapter);
         zhylAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -346,38 +357,37 @@ public class TabHomeFragment extends BaseFragment {
                 TcHomeModel.DataBean.IconListBean listBean = zhylList.get(position);
                 switch (position) {
                     case 0:
-                        YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_zhihuiyanglao);
-                        break;
-                    case 1:
-                        YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_dianhuajizhen);
-                        break;
-                    case 2:
                         ZaixianyishengActivity.actionStart(getContext());
                         break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
                     case 3:
-                        JibingchaxunActivity.actionStart(getContext());
                         break;
                     case 4:
-                        YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_yuyueguahao);
                         break;
                     case 5:
-                        YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_jijiufuwu);
                         break;
+
                     case 6:
-                        YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_hujiaozhongxin);
+                        JibingchaxunActivity.actionStart(getContext());
                         break;
                     case 7:
-                        YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_huodongzhongxin);
                         break;
                     case 8:
-                        YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_yanglaoshitanbg);
                         break;
                     case 9:
-                        YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_jiankangshuju);
+                        break;
+                    case 10:
+                        break;
+                    case 11:
                         break;
                 }
             }
         });
+
+//        YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_jiankangshuju);
     }
 
     private void initJjshAdapter() {
@@ -391,19 +401,13 @@ public class TabHomeFragment extends BaseFragment {
                 TcHomeModel.DataBean.IconListBean listBean = zhylList.get(position);
                 switch (position) {
                     case 0:
-                        YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_zhihuiyanglao);
-                        break;
                     case 1:
-                        YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_dianhuajizhen);
-                        break;
                     case 2:
-                        YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_zaixianyisheng);
-                        break;
                     case 3:
-                        YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_jibingchaxun);
-                        break;
                     case 4:
-                        YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_yuyueguahao);
+                        Notice n = new Notice();
+                        n.type = ConstanceValue.MSG_ZHINENGJIAJU;
+                        RxBus.getDefault().sendRx(n);
                         break;
                 }
             }
@@ -430,8 +434,10 @@ public class TabHomeFragment extends BaseFragment {
             case R.id.iv_tab_jitingdangan:
                 break;
             case R.id.iv_tab_bianminshenghuo:
+                TongChengMainActivity.actionStart(getActivity());
                 break;
             case R.id.iv_tab_zhihuishangcheng:
+                ZiJianShopMallActivity.actionStart(getActivity());
                 break;
         }
     }

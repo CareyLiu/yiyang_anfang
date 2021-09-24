@@ -52,6 +52,5 @@ public class FuwuZhujiActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
-        initAdapter();
     }
 }

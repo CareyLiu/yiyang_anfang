@@ -53,5 +53,6 @@ public class JibingchaxunActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+
     }
 }

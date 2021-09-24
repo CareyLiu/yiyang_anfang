@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.yiyang.cn.R;
 import com.yiyang.cn.app.BaseActivity;
@@ -25,11 +26,14 @@ public class YiShengZhuYeActivity extends BaseActivity {
     View viewJieshao;
     @BindView(R.id.frame_layout)
     FrameLayout frameLayout;
+    @BindView(R.id.rlv_list)
+    RecyclerView rlvList;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -46,4 +50,26 @@ public class YiShengZhuYeActivity extends BaseActivity {
                 break;
         }
     }
+
+    @Override
+    public boolean showToolBar() {
+        return true;
+    }
+
+    @Override
+    protected void initToolbar() {
+        super.initToolbar();
+        tv_title.setText("医生主页");
+        tv_title.setTextSize(17);
+        tv_title.setTextColor(getResources().getColor(R.color.black));
+        mToolbar.setNavigationIcon(R.mipmap.backbutton);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //imm.hideSoftInputFromWindow(findViewById(R.id.cl_layout).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                finish();
+            }
+        });
+    }
+
 }

@@ -156,6 +156,6 @@
             android:layout_gravity="bottom|right"
             android:layout_marginRight="33pt"
             android:layout_marginBottom="263pt"
-            android:background="@color/black" />
+            android:src="@mipmap/yiyang_w_d_zixun" />
     </FrameLayout>
 </LinearLayout>

@@ -1,44 +1,28 @@
 package com.yiyang.cn.activity;
 
-import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.text.TextUtils;
 import android.util.Log;
-import android.util.SparseIntArray;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.heytap.msp.push.HeytapPushManager;
-import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.jaeger.library.StatusBarUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
 import com.rairmmd.andmqtt.MqttSubscribe;
+import com.tuya.smart.wrapper.api.TuyaWrapper;
+import com.vivo.push.PushClient;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.gaiban.HomeFragment_New;
 import com.yiyang.cn.activity.shuinuan.Y;
 import com.yiyang.cn.activity.zhinengjiaju.RenTiGanYingActivity;
 import com.yiyang.cn.activity.zhinengjiaju.function.LouShuiActivity;
@@ -46,66 +30,51 @@ import com.yiyang.cn.activity.zhinengjiaju.function.MenCiActivity;
 import com.yiyang.cn.activity.zhinengjiaju.function.MenSuoActivity;
 import com.yiyang.cn.activity.zhinengjiaju.function.SosActivity;
 import com.yiyang.cn.activity.zhinengjiaju.function.YanGanActivity;
-import com.yiyang.cn.app.App;
 import com.yiyang.cn.app.AppConfig;
 import com.yiyang.cn.app.AppManager;
 import com.yiyang.cn.app.BaseActivity;
 import com.yiyang.cn.app.ConstanceValue;
 import com.yiyang.cn.app.Notice;
-import com.yiyang.cn.app.RxBus;
 import com.yiyang.cn.app.UIHelper;
 import com.yiyang.cn.callback.JsonCallback;
 import com.yiyang.cn.common.StringUtils;
 import com.yiyang.cn.config.AppResponse;
-import com.yiyang.cn.config.AudioFocusManager;
 import com.yiyang.cn.config.MyApplication;
 import com.yiyang.cn.config.PreferenceHelper;
 import com.yiyang.cn.config.UserManager;
-import com.yiyang.cn.dialog.MyCarCaoZuoDialog_Notify;
 import com.yiyang.cn.dialog.newdia.TishiDialog;
-import com.yiyang.cn.fragment.MessagerFragment;
-import com.yiyang.cn.fragment.MineFragment;
-import com.yiyang.cn.fragment.OnlineFragment;
-import com.yiyang.cn.fragment.yiyang.TabAnfangFragment;
 import com.yiyang.cn.fragment.yiyang.TabHomeFragment;
+import com.yiyang.cn.fragment.yiyang.TabShengxianFragment;
 import com.yiyang.cn.fragment.yiyang.TabWodeFragment;
 import com.yiyang.cn.fragment.yiyang.TabXiaoxiFragment;
 import com.yiyang.cn.fragment.znjj.ZhiNengJiaJuFragment;
 import com.yiyang.cn.get_net.Urls;
-import com.yiyang.cn.inter.YuYinInter;
-import com.yiyang.cn.model.AccessListModel;
-import com.yiyang.cn.model.AlarmClass;
 import com.yiyang.cn.model.DongTaiShiTiZhuangTaiModel;
 import com.yiyang.cn.model.ZhiNengJiaJuNotifyJson;
-import com.yiyang.cn.util.AlertUtil;
 import com.yiyang.cn.util.AppToast;
-import com.yiyang.cn.util.DoMqttValue;
-import com.yiyang.cn.util.ShangChuanDongTaiShiTiTool;
 import com.yiyang.cn.util.SoundPoolUtils;
 import com.yiyang.cn.util.YuYinChuLiTool;
 import com.yiyang.cn.view.NoScrollViewPager;
-import com.tuya.smart.wrapper.api.TuyaWrapper;
-import com.vivo.push.PushClient;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
-import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-import static com.yiyang.cn.app.ConstanceValue.MSG_PEIWANG_SUCCESS;
 import static com.yiyang.cn.config.MyApplication.CAR_NOTIFY;
 import static com.yiyang.cn.config.MyApplication.context;
-import static com.yiyang.cn.config.MyApplication.getAppContext;
 import static com.yiyang.cn.config.MyApplication.getUser_id;
 import static com.yiyang.cn.get_net.Urls.ZHINENGJIAJU;
 
@@ -138,6 +107,12 @@ public class HomeActivity extends BaseActivity {
     TextView tv_main_wode;
     @BindView(R.id.ll_main_wode)
     LinearLayout ll_main_wode;
+    @BindView(R.id.iv_main_shengxian)
+    ImageView iv_main_shengxian;
+    @BindView(R.id.tv_main_shengxian)
+    TextView tv_main_shengxian;
+    @BindView(R.id.ll_main_shengxian)
+    LinearLayout ll_main_shengxian;
 
     private List<String> roomList = new ArrayList<>();
     private List<String> deviceList = new ArrayList<>();
@@ -406,25 +381,26 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void initView(Bundle savedInstanceState) {
-        List<Fragment> fragments = new ArrayList<>(4);
+        List<Fragment> fragments = new ArrayList<>(5);
         TabHomeFragment tabHomeFragment = new TabHomeFragment();
-//        TabAnfangFragment tabAnfangFragment = new TabAnfangFragment(savedInstanceState);
         ZhiNengJiaJuFragment tabAnfangFragment = new ZhiNengJiaJuFragment();
+        TabShengxianFragment shengxianFragment = new TabShengxianFragment(savedInstanceState);
         TabXiaoxiFragment tabXiaoxiFragment = new TabXiaoxiFragment();
         TabWodeFragment tabWodeFragment = new TabWodeFragment();
 
         fragments.add(tabHomeFragment);
         fragments.add(tabAnfangFragment);
+        fragments.add(shengxianFragment);
         fragments.add(tabXiaoxiFragment);
         fragments.add(tabWodeFragment);
 
         VpAdapter adapter = new VpAdapter(getSupportFragmentManager(), fragments);
-        vpg_content.setOffscreenPageLimit(4);
+        vpg_content.setOffscreenPageLimit(5);
         vpg_content.setScroll(false);
         vpg_content.setAdapter(adapter);
     }
 
-    @OnClick({R.id.ll_main_shouye, R.id.ll_main_anfang, R.id.ll_main_xiaoxi, R.id.ll_main_wode})
+    @OnClick({R.id.ll_main_shouye, R.id.ll_main_anfang, R.id.ll_main_shengxian, R.id.ll_main_xiaoxi, R.id.ll_main_wode})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_main_shouye:
@@ -433,23 +409,29 @@ public class HomeActivity extends BaseActivity {
             case R.id.ll_main_anfang:
                 select(1);
                 break;
-            case R.id.ll_main_xiaoxi:
+            case R.id.ll_main_shengxian:
                 select(2);
                 break;
-            case R.id.ll_main_wode:
+            case R.id.ll_main_xiaoxi:
                 select(3);
+                break;
+            case R.id.ll_main_wode:
+                select(4);
                 break;
         }
     }
 
     private void select(int item) {
         vpg_content.setCurrentItem(item);
-        iv_main_shouye.setImageResource(R.mipmap.yiyang_main_shouye_sel);
+        iv_main_shouye.setImageResource(R.mipmap.yiyang_main_shouye_nor);
         iv_main_anfang.setImageResource(R.mipmap.yiyang_main_anfang_nor);
+        iv_main_shengxian.setImageResource(R.mipmap.yiyang_main_shengxian_nor);
         iv_main_xiaoxi.setImageResource(R.mipmap.yiyang_main_xiaoxi_nor);
         iv_main_wode.setImageResource(R.mipmap.yiyang_main_wd_nor);
+
         tv_main_shouye.setTextColor(Y.getColor(R.color.color_3));
         tv_main_anfang.setTextColor(Y.getColor(R.color.color_3));
+        tv_main_shengxian.setTextColor(Y.getColor(R.color.color_3));
         tv_main_xiaoxi.setTextColor(Y.getColor(R.color.color_3));
         tv_main_wode.setTextColor(Y.getColor(R.color.color_3));
 
@@ -463,10 +445,14 @@ public class HomeActivity extends BaseActivity {
                 tv_main_anfang.setTextColor(Y.getColor(R.color.color_main_yiyang));
                 break;
             case 2:
+                iv_main_shengxian.setImageResource(R.mipmap.yiyang_main_shengxian_sel);
+                tv_main_shengxian.setTextColor(Y.getColor(R.color.color_main_yiyang));
+                break;
+            case 3:
                 iv_main_xiaoxi.setImageResource(R.mipmap.yiyang_main_xiaoxi_sel);
                 tv_main_xiaoxi.setTextColor(Y.getColor(R.color.color_main_yiyang));
                 break;
-            case 3:
+            case 4:
                 iv_main_wode.setImageResource(R.mipmap.yiyang_main_wd_sel);
                 tv_main_wode.setTextColor(Y.getColor(R.color.color_main_yiyang));
                 break;

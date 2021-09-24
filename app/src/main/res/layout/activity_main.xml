@@ -75,6 +75,34 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_main_shengxian"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_main_shengxian"
+                android:layout_width="38pt"
+                android:layout_height="38pt"
+                android:layout_marginTop="10pt"
+                android:src="@mipmap/yiyang_main_shengxian_nor" />
+
+            <TextView
+                android:id="@+id/tv_main_shengxian"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5pt"
+                android:layout_marginBottom="12pt"
+                android:includeFontPadding="false"
+                android:text="生鲜柜"
+                android:textColor="@color/color_3"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
             android:id="@+id/ll_main_xiaoxi"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

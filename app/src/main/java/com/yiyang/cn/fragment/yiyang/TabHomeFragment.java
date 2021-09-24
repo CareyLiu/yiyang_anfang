@@ -340,8 +340,8 @@ public class TabHomeFragment extends BaseFragment {
 
     private void initJjshList() {
         jjshList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.jujiaanfang, "居家养老"));
-        jjshList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.shengmingtizhengdian, "生命体征垫"));
         jjshList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.zhinengshouhuan, "智能手环"));
+        jjshList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.shengmingtizhengdian, "生命体征垫"));
         jjshList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.meiqibaojingqi, "煤气报警器"));
         jjshList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yanwubaojingqi, "烟雾报警器"));
     }
@@ -374,6 +374,7 @@ public class TabHomeFragment extends BaseFragment {
                         JibingchaxunActivity.actionStart(getContext());
                         break;
                     case 7:
+                        YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_yuyueguahao);
                         break;
                     case 8:
                         break;
@@ -381,8 +382,10 @@ public class TabHomeFragment extends BaseFragment {
                         YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_jiankangshuju);
                         break;
                     case 10:
+                        YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_hujiaozhongxin);
                         break;
                     case 11:
+                        YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_huodongzhongxin);
                         break;
                 }
             }

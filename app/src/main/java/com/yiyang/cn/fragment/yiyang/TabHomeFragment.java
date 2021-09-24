@@ -426,6 +426,7 @@ public class TabHomeFragment extends BaseFragment {
 
                 break;
             case R.id.banner_two:
+                YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_kuaisuwenzhen);
                 break;
             case R.id.iv_tab_jiatingyisheng:
                 YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_zaixianyisheng);

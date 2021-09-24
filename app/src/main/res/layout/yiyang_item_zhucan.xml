@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="202pt"
+        android:layout_marginHorizontal="29pt"
+        android:layout_marginBottom="19pt"
+        android:background="@drawable/yiyang_bg_white_radius_10"
+        android:paddingLeft="29pt">
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="163pt"
+            android:layout_height="163pt"
+            android:layout_centerVertical="true"
+            android:background="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="19pt"
+            android:layout_marginTop="18pt"
+            android:layout_toRightOf="@id/iv_icon"
+            android:includeFontPadding="false"
+            android:text="好吃点美食食堂"
+            android:textColor="@color/color_3"
+            android:textSize="27pt" />
+
+        <TextView
+            android:id="@+id/tv_candan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_name"
+            android:layout_marginLeft="19pt"
+            android:layout_marginTop="17pt"
+            android:layout_toRightOf="@id/iv_icon"
+            android:includeFontPadding="false"
+            android:text="今日菜单：三荤一素一汤"
+            android:textColor="#C1C1C1"
+            android:textSize="23pt" />
+
+        <TextView
+            android:id="@+id/tv_taocan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_candan"
+            android:layout_marginLeft="19pt"
+            android:layout_marginTop="19pt"
+            android:layout_toRightOf="@id/iv_icon"
+            android:text="【地三鲜+锅包肉+溜肉段+地三鲜+蘑菇汤】"
+            android:textColor="@color/red"
+            android:textSize="23pt" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_taocan"
+            android:layout_marginLeft="19pt"
+            android:layout_marginTop="19pt"
+            android:layout_toRightOf="@id/iv_icon"
+            android:text="营业时间 早8：00~晚19：00"
+            android:textColor="@color/color_3"
+            android:textSize="23pt" />
+    </RelativeLayout>
+</LinearLayout>
+
+

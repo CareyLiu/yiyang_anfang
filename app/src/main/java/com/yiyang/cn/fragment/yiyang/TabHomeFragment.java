@@ -17,6 +17,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yiyang.cn.R;
+import com.yiyang.cn.activity.a_yiyang.FuwuZhucanActivity;
 import com.yiyang.cn.activity.a_yiyang.JibingchaxunActivity;
 import com.yiyang.cn.activity.a_yiyang.YiyangTuTActivity;
 import com.yiyang.cn.activity.a_yiyang.ZaixianyishengActivity;
@@ -360,6 +361,7 @@ public class TabHomeFragment extends BaseFragment {
                         ZaixianyishengActivity.actionStart(getContext());
                         break;
                     case 1:
+                        FuwuZhucanActivity.actionStart(getContext());
                         break;
                     case 2:
                         break;

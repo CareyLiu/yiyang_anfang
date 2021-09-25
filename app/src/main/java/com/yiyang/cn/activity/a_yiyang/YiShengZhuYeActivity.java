@@ -51,6 +51,7 @@ public class YiShengZhuYeActivity extends BaseActivity {
         }
     }
 
+
     @Override
     public boolean showToolBar() {
         return true;

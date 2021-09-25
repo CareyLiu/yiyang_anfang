@@ -1,15 +1,15 @@
 package com.yiyang.cn;
 
-import android.widget.ImageView;
+        import android.widget.ImageView;
 
-import androidx.annotation.Nullable;
+        import androidx.annotation.Nullable;
 
-import com.bumptech.glide.Glide;
-import com.yiyang.cn.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
-import com.yiyang.cn.baseadapter.baserecyclerviewadapterhelper.BaseViewHolder;
-import com.yiyang.cn.model.DaLiBaoModel;
+        import com.bumptech.glide.Glide;
+        import com.yiyang.cn.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
+        import com.yiyang.cn.baseadapter.baserecyclerviewadapterhelper.BaseViewHolder;
+        import com.yiyang.cn.model.DaLiBaoModel;
 
-import java.util.List;
+        import java.util.List;
 
 public class DaLiBaoAdapter extends BaseQuickAdapter<DaLiBaoModel.DataBean.WaresListBean, BaseViewHolder> {
     public DaLiBaoAdapter(int layoutResId, @Nullable List<DaLiBaoModel.DataBean.WaresListBean> data) {

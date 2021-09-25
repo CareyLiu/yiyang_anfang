@@ -46,7 +46,7 @@ public class ZaixianyishengActivity extends BaseActivity {
     ImageView ivZixunWode;
 
 
-    private List<XiaoxiModel> xiaoxiModels=new ArrayList<>();
+    private List<XiaoxiModel> xiaoxiModels = new ArrayList<>();
 
     @Override
     public int getContentViewResId() {
@@ -76,7 +76,7 @@ public class ZaixianyishengActivity extends BaseActivity {
         xiaoxiModels.add(new XiaoxiModel("王医生", "前天13:22", 0));
         xiaoxiModels.add(new XiaoxiModel("张护士", "2021-09-08", 0));
 
-        ZaixianyishengAdapter adapter=new ZaixianyishengAdapter(R.layout.yiyang_item_zaixianyisheng,xiaoxiModels);
+        ZaixianyishengAdapter adapter = new ZaixianyishengAdapter(R.layout.yiyang_item_zaixianyisheng, xiaoxiModels);
         rvYisheng.setLayoutManager(new LinearLayoutManager(mContext));
         rvYisheng.setAdapter(adapter);
     }
@@ -90,13 +90,15 @@ public class ZaixianyishengActivity extends BaseActivity {
             case R.id.ll_search:
                 break;
             case R.id.iv_zixun_mianfei:
-                KeShiLieBiaoActivity.actionStart(ZaixianyishengActivity.this);
+
                 break;
             case R.id.iv_zixun_zhuanjia:
+                JibingchaxunActivity.actionStart(mContext);
                 break;
             case R.id.iv_zixun_dianhua:
                 break;
             case R.id.iv_zixun_menzhen:
+                KeShiLieBiaoActivity.actionStart(mContext);
                 break;
             case R.id.iv_zixun_wode:
                 break;

@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="29pt"
+            android:layout_marginVertical="19pt"
+            android:background="@drawable/yiyang_bg_grey_e9_radius_10"
+            android:gravity="center_vertical"
+            android:paddingVertical="19pt">
+
+            <ImageView
+                android:layout_width="24pt"
+                android:layout_height="24pt"
+                android:layout_marginLeft="11pt"
+                android:scaleType="fitXY"
+                android:src="@mipmap/doudaren_title_sousuo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="12pt"
+                android:layout_marginLeft="10pt"
+                android:text="请输入搜索关键词"
+                android:textColor="#A8a8a8"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1pt"
+            android:layout_marginHorizontal="29pt"
+            android:background="@color/line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56pt"
+            android:gravity="center_vertical">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="2pt"
+                    android:text="综合排序"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+
+                <ImageView
+                    android:layout_width="23pt"
+                    android:layout_height="12pt"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/tv_select_name"
+                    android:src="@mipmap/yiyang_anfang_select" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="2pt"
+                    android:text="机构类型"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+
+                <ImageView
+                    android:layout_width="23pt"
+                    android:layout_height="12pt"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/tv_select_name"
+                    android:src="@mipmap/yiyang_anfang_select" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="2pt"
+                    android:text="区县选择"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+
+                <ImageView
+                    android:layout_width="23pt"
+                    android:layout_height="12pt"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/tv_select_name"
+                    android:src="@mipmap/yiyang_anfang_select" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="29pt"
+        android:layout_marginTop="10pt"
+        android:layout_marginBottom="19pt"
+        android:background="@drawable/yiyang_bg_white_radius_10"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="211pt"
+            android:scaleType="fitXY"
+            android:src="@mipmap/yiyang_yanglaojigou_tu" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="19pt"
+            android:layout_marginBottom="16pt"
+            android:gravity="bottom"
+            android:paddingHorizontal="20pt">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="哈尔滨市鑫夕阳温泉养老院"
+                android:textColor="@color/color_3"
+                android:textSize="35pt" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="床位:0"
+                android:textColor="@color/red"
+                android:textSize="27pt" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="19pt"
+            android:paddingHorizontal="20pt">
+
+            <ImageView
+                android:layout_width="24pt"
+                android:layout_height="24pt"
+                android:layout_marginRight="4pt"
+                android:src="@mipmap/yanglaojigou_xingxing" />
+
+            <ImageView
+                android:layout_width="24pt"
+                android:layout_height="24pt"
+                android:layout_marginRight="4pt"
+                android:src="@mipmap/yanglaojigou_xingxing" />
+
+            <ImageView
+                android:layout_width="24pt"
+                android:layout_height="24pt"
+                android:layout_marginRight="4pt"
+                android:src="@mipmap/yanglaojigou_xingxing" />
+
+            <ImageView
+                android:layout_width="24pt"
+                android:layout_height="24pt"
+                android:layout_marginRight="4pt"
+                android:src="@mipmap/yanglaojigou_xingxing" />
+
+            <ImageView
+                android:layout_width="24pt"
+                android:layout_height="24pt"
+                android:layout_marginRight="4pt"
+                android:src="@mipmap/yanglaojigou_xingxing" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="19pt"
+            android:layout_marginBottom="19pt"
+            android:includeFontPadding="false"
+            android:text="民办"
+            android:textColor="@color/color_3"
+            android:textSize="27pt" />
+
+        <include layout="@layout/view_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="63pt"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="20pt">
+
+            <ImageView
+                android:layout_width="23pt"
+                android:layout_height="29pt"
+                android:layout_marginRight="12pt"
+                android:src="@mipmap/yanglaojigou_dingwei" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="黑龙江黑哈尔滨市松北区江都街209号"
+                android:textSize="27pt" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="29pt"
+        android:layout_marginTop="10pt"
+        android:layout_marginBottom="19pt"
+        android:background="@drawable/yiyang_bg_white_radius_10"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="211pt"
+            android:scaleType="fitXY"
+            android:src="@mipmap/yiyang_yanglaojigou_tu" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="19pt"
+            android:layout_marginBottom="16pt"
+            android:gravity="bottom"
+            android:paddingHorizontal="20pt">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="哈尔滨市鑫夕阳温泉养老院"
+                android:textColor="@color/color_3"
+                android:textSize="35pt" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="床位:0"
+                android:textColor="@color/red"
+                android:textSize="27pt" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="19pt"
+            android:paddingHorizontal="20pt">
+
+            <ImageView
+                android:layout_width="24pt"
+                android:layout_height="24pt"
+                android:layout_marginRight="4pt"
+                android:src="@mipmap/yanglaojigou_xingxing" />
+
+            <ImageView
+                android:layout_width="24pt"
+                android:layout_height="24pt"
+                android:layout_marginRight="4pt"
+                android:src="@mipmap/yanglaojigou_xingxing" />
+
+            <ImageView
+                android:layout_width="24pt"
+                android:layout_height="24pt"
+                android:layout_marginRight="4pt"
+                android:src="@mipmap/yanglaojigou_xingxing" />
+
+            <ImageView
+                android:layout_width="24pt"
+                android:layout_height="24pt"
+                android:layout_marginRight="4pt"
+                android:src="@mipmap/yanglaojigou_xingxing" />
+
+            <ImageView
+                android:layout_width="24pt"
+                android:layout_height="24pt"
+                android:layout_marginRight="4pt"
+                android:src="@mipmap/yanglaojigou_xingxing" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="19pt"
+            android:layout_marginBottom="19pt"
+            android:includeFontPadding="false"
+            android:text="民办"
+            android:textColor="@color/color_3"
+            android:textSize="27pt" />
+
+        <include layout="@layout/view_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="63pt"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="20pt">
+
+            <ImageView
+                android:layout_width="23pt"
+                android:layout_height="29pt"
+                android:layout_marginRight="12pt"
+                android:src="@mipmap/yanglaojigou_dingwei" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="黑龙江黑哈尔滨市松北区江都街209号"
+                android:textSize="27pt" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

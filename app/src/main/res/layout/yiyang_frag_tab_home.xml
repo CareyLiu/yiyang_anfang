@@ -116,7 +116,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="9pt"
-                        android:text="智慧养老"
+                        android:text="智慧医养"
                         android:textColor="@color/color_3"
                         android:textSize="13sp" />
                 </LinearLayout>

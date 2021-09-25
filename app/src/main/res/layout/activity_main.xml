@@ -69,7 +69,7 @@
                 android:layout_marginTop="5pt"
                 android:layout_marginBottom="12pt"
                 android:includeFontPadding="false"
-                android:text="安防"
+                android:text="居家养老"
                 android:textColor="@color/color_3"
                 android:textSize="12sp" />
         </LinearLayout>

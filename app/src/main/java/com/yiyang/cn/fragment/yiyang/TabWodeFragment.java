@@ -13,6 +13,10 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.yiyang.cn.R;
+import com.yiyang.cn.activity.a_yiyang.AddJiarenActivity;
+import com.yiyang.cn.activity.a_yiyang.JigouyanglaoActivity;
+import com.yiyang.cn.activity.a_yiyang.JigouyanglaoWdActivity;
+import com.yiyang.cn.activity.a_yiyang.YiyangTuTActivity;
 import com.yiyang.cn.activity.a_yiyang.YySetAactivity;
 import com.yiyang.cn.activity.dingdan.MyOrderActivity;
 import com.yiyang.cn.activity.wode_page.MyQianBaoActivity;
@@ -71,6 +75,9 @@ public class TabWodeFragment extends BaseFragment {
     @BindView(R.id.ll_dingdan)
     LinearLayout llDingdan;
 
+    @BindView(R.id.iv_add_jiaren)
+    ImageView iv_add_jiaren;
+
     @Override
     protected void immersionInit(ImmersionBar mImmersionBar) {
         mImmersionBar
@@ -97,9 +104,12 @@ public class TabWodeFragment extends BaseFragment {
         initData();
     }
 
-    @OnClick({R.id.ll_dingdan, R.id.iv_set, R.id.iv_erweima, R.id.iv_head, R.id.ll_wd_fuwu, R.id.ll_wd_huodong, R.id.ll_wd_jiankang, R.id.ll_wd_jigou, R.id.ll_qianbao, R.id.ll_daifukuan, R.id.ll_daifahuo, R.id.ll_daishouhuo, R.id.ll_pingjia})
+    @OnClick({R.id.iv_add_jiaren, R.id.ll_dingdan, R.id.iv_set, R.id.iv_erweima, R.id.iv_head, R.id.ll_wd_fuwu, R.id.ll_wd_huodong, R.id.ll_wd_jiankang, R.id.ll_wd_jigou, R.id.ll_qianbao, R.id.ll_daifukuan, R.id.ll_daifahuo, R.id.ll_daishouhuo, R.id.ll_pingjia})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.iv_add_jiaren:
+                AddJiarenActivity.actionStart(getContext());
+                break;
             case R.id.iv_set:
                 YySetAactivity.actionStart(getContext());
                 break;
@@ -110,10 +120,13 @@ public class TabWodeFragment extends BaseFragment {
             case R.id.ll_wd_fuwu:
                 break;
             case R.id.ll_wd_huodong:
+                YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_hujiaozhongxin);
                 break;
             case R.id.ll_wd_jiankang:
+                YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_jiankangshuju);
                 break;
             case R.id.ll_wd_jigou:
+                JigouyanglaoWdActivity.actionStart(getContext());
                 break;
             case R.id.ll_qianbao:
                 MyQianBaoActivity.actionStart(getActivity());

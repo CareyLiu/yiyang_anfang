@@ -19,6 +19,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yiyang.cn.R;
 import com.yiyang.cn.activity.a_yiyang.FuwuZhucanActivity;
 import com.yiyang.cn.activity.a_yiyang.FuwuZhujiActivity;
+import com.yiyang.cn.activity.a_yiyang.JiashuDanganActivity;
 import com.yiyang.cn.activity.a_yiyang.JibingchaxunActivity;
 import com.yiyang.cn.activity.a_yiyang.JigouyanglaoActivity;
 import com.yiyang.cn.activity.a_yiyang.YiyangTuTActivity;
@@ -381,7 +382,7 @@ public class TabHomeFragment extends BaseFragment {
                         JigouyanglaoActivity.actionStart(getContext());
                         break;
                     case 3:
-                        YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_hujiaozhongxin);
+                        FuwuZhujiActivity.actionStart(getContext(), "呼叫中心");
                         break;
                     case 4:
                         YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_huodongzhongxin);
@@ -424,7 +425,7 @@ public class TabHomeFragment extends BaseFragment {
                         ZhuxingActivity.actionStart(getContext());
                         break;
                     case 5:
-                        FuwuZhujiActivity.actionStart(getContext());
+                        FuwuZhujiActivity.actionStart(getContext(), "助急服务");
                         break;
                 }
             }
@@ -450,6 +451,7 @@ public class TabHomeFragment extends BaseFragment {
             case R.id.iv_tab_yanglaopinggu:
                 break;
             case R.id.iv_tab_jitingdangan:
+                JiashuDanganActivity.actionStart(getContext());
                 break;
             case R.id.iv_tab_bianminshenghuo:
                 TongChengMainActivity.actionStart(getActivity());

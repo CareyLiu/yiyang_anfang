@@ -10,27 +10,20 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
-import com.yiyang.cn.activity.shuinuan.gongxiang.GongxiangModel;
 import com.yiyang.cn.adapter.SuiYiTieTianjiaSheBeiAdapter;
 import com.yiyang.cn.app.BaseActivity;
-import com.yiyang.cn.app.ConstanceValue;
-import com.yiyang.cn.app.Notice;
-import com.yiyang.cn.app.RxBus;
 import com.yiyang.cn.app.UIHelper;
 import com.yiyang.cn.callback.JsonCallback;
 import com.yiyang.cn.config.AppResponse;
 import com.yiyang.cn.config.UserManager;
 import com.yiyang.cn.dialog.newdia.TishiDialog;
 import com.yiyang.cn.get_net.Urls;
-import com.yiyang.cn.model.SuiYiTieModel;
 import com.yiyang.cn.model.SuiYiTieSheBeiLieBiaoModel;
 
 import java.util.ArrayList;

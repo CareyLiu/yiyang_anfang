@@ -1,6 +1,5 @@
 package com.yiyang.cn.fragment;
 
-import android.app.Activity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,29 +17,20 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yiyang.cn.R;
 import com.yiyang.cn.activity.BindBoxActivity;
-import com.yiyang.cn.activity.FengNuanActivity;
-import com.yiyang.cn.activity.shuinuan.ShuinuanMainActivity;
-import com.yiyang.cn.activity.zckt.AirConditionerActivity;
 import com.yiyang.cn.adapter.CarList1Adapter;
 import com.yiyang.cn.adapter.SheBeiListAdapter;
-import com.yiyang.cn.app.AppManager;
 import com.yiyang.cn.app.ConstanceValue;
 import com.yiyang.cn.app.Notice;
-import com.yiyang.cn.app.UIHelper;
 import com.yiyang.cn.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.yiyang.cn.basicmvp.BaseFragment;
 import com.yiyang.cn.callback.JsonCallback;
 import com.yiyang.cn.config.AppResponse;
 
-import com.yiyang.cn.config.MyApplication;
-import com.yiyang.cn.config.PreferenceHelper;
 import com.yiyang.cn.config.UserManager;
-import com.yiyang.cn.dialog.BangdingFailDialog;
 import com.yiyang.cn.get_net.Urls;
 import com.yiyang.cn.model.SheBeiLieBieListModel;
 import com.yiyang.cn.model.SheBeiModel;
 import com.yiyang.cn.model.SmartDevice_car_0364;
-import com.yiyang.cn.tools.NetworkUtils;
 import com.yiyang.cn.util.AlertUtil;
 
 import java.util.ArrayList;
@@ -55,8 +45,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-
-import static com.yiyang.cn.config.MyApplication.getServer_id;
 
 
 /**
@@ -103,72 +91,7 @@ public class OnlineFragment extends BaseFragment implements Observer {
         sheBeiListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (mqtt_connect_state.equals("1")) {
-                    if (mDatas.get(position).validity_state.equals("2")) {
-                        UIHelper.ToastMessage(getActivity(), "当前设备已过期");
-                        return;
-                    }
-                    switch (view.getId()) {
-                        case R.id.constrain:
-                            if (mDatas.get(position).device_type.equals("1")) {
-                            //    mDatas.get(position).ccid = "aaaaaaaaaaaaaa2010070018";
 
-                                int i = mDatas.get(position).ccid.length() - 1;
-                                String str = String.valueOf(mDatas.get(position).ccid.charAt(i));
-                                PreferenceHelper.getInstance(getActivity()).putString("car_server_id", str + "/");
-                                PreferenceHelper.getInstance(getContext()).putString("share_type", mDatas.get(position).share_type);
-                                PreferenceHelper.getInstance(getActivity()).putString("ccid", mDatas.get(position).ccid);
-                                PreferenceHelper.getInstance(getContext()).putString("sim_ccid_save_type", mDatas.get(position).sim_ccid_save_type);
-
-                                MyApplication.CARBOX_GETNOW = "wit/cbox/app/" + getServer_id() + mDatas.get(position).ccid;
-                                MyApplication.CAR_NOTIFY = "witrver/" + getServer_id() + MyApplication.getUser_id();
-                                MyApplication.CAR_CTROL = "wit/cbox/hardware/" + getServer_id() + MyApplication.getCcid();
-
-                                if (NetworkUtils.isConnected(getActivity())) {
-                                    Activity currentActivity = AppManager.getAppManager().currentActivity();
-                                    if (currentActivity != null) {
-                                        FengNuanActivity.actionStart(getActivity(), mDatas.get(position).sim_ccid_save_type);
-                                    }
-                                } else {
-                                    UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
-                                }
-                            } else if (mDatas.get(position).device_type.equals("6")) {
-                                String ccid = mDatas.get(position).ccid;
-                                int pos = ccid.length() - 1;
-                                String count = String.valueOf(ccid.charAt(pos)) + "/";
-                                PreferenceHelper.getInstance(getContext()).putString("ccid", mDatas.get(position).ccid);
-                                PreferenceHelper.getInstance(getContext()).putString("car_server_id", count);
-                                PreferenceHelper.getInstance(getContext()).putString("share_type", mDatas.get(position).share_type);
-                                PreferenceHelper.getInstance(getContext()).putString("sim_ccid_save_type", mDatas.get(position).sim_ccid_save_type);
-                                if (NetworkUtils.isConnected(getActivity())) {
-                                    Activity currentActivity = AppManager.getAppManager().currentActivity();
-                                    if (currentActivity != null) {
-                                        ShuinuanMainActivity.actionStart(getActivity(), ccid, count, mDatas.get(position).validity_time);
-                                    }
-                                } else {
-                                    UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
-                                }
-                            } else if (mDatas.get(position).device_type.equals("5")) {
-                                String ccid = mDatas.get(position).ccid;
-                                PreferenceHelper.getInstance(getContext()).putString("ccid", mDatas.get(position).ccid);
-                                PreferenceHelper.getInstance(getContext()).putString("share_type", mDatas.get(position).share_type);
-                                PreferenceHelper.getInstance(getContext()).putString("sim_ccid_save_type", mDatas.get(position).sim_ccid_save_type);
-                                if (NetworkUtils.isConnected(getActivity())) {
-                                    Activity currentActivity = AppManager.getAppManager().currentActivity();
-                                    if (currentActivity != null) {
-                                        AirConditionerActivity.actionStart(getActivity(), ccid, "驻车空调");
-                                    }
-                                } else {
-                                    UIHelper.ToastMessage(getActivity(), "请连接网络后重新尝试");
-                                }
-                            }
-                            break;
-                    }
-                } else {
-                    BangdingFailDialog dialog = new BangdingFailDialog(getContext());
-                    dialog.setTextContent(mqtt_connect_prompt);
-                    dialog.show();
-                }
             }
         });
 

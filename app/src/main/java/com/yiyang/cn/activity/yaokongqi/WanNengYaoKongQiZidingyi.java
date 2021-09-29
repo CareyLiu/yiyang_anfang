@@ -4,13 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.yaokongqi.model.YaokongDetailsModel;
-import com.yiyang.cn.activity.yaokongqi.model.YaokongKeyModel;
 import com.yiyang.cn.app.AppConfig;
 import com.yiyang.cn.app.BaseActivity;
 import com.yiyang.cn.config.PreferenceHelper;

@@ -189,14 +189,7 @@
                         android:layout_marginTop="14pt"
                         android:background="@mipmap/dipan">
 
-                        <ImageView
-                            android:id="@+id/iv_heater_host"
-                            android:layout_width="396pt"
-                            android:layout_height="175pt"
-                            android:layout_marginLeft="29pt"
-                            android:layout_marginTop="79pt"
-                            android:background="@drawable/shuinuan_guanji" />
-                    </FrameLayout>
+                          </FrameLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"

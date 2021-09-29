@@ -36,10 +36,10 @@
 
                     <ImageView
                         android:id="@+id/iv_weizhi"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="42pt"
+                        android:layout_height="42pt"
                         android:layout_marginLeft="11dp"
-                        android:src="@mipmap/home_nav_icon_weizhi"
+                        android:src="@mipmap/home_dingwei"
                         app:layout_constraintBottom_toBottomOf="@+id/iv_logo"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/iv_logo" />
@@ -125,6 +125,7 @@
                     android:id="@+id/rv_zhihuiyanglao"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="19pt"
                     android:layout_marginTop="19pt" />
 
                 <ImageView

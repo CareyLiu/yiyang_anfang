@@ -25,7 +25,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yiyang.cn.R;
 import com.yiyang.cn.activity.DefaultX5WebViewActivity;
-import com.yiyang.cn.activity.SettingActivity;
 import com.yiyang.cn.activity.a_yiyang.YySetAactivity;
 import com.yiyang.cn.activity.dingdan.MyOrderActivity;
 import com.yiyang.cn.activity.fenxiang_tuisong.TuanYouTuiGuangActivity;
@@ -36,7 +35,6 @@ import com.yiyang.cn.activity.wode_page.DianPuListActivity;
 import com.yiyang.cn.activity.wode_page.MyQianBaoActivity;
 import com.yiyang.cn.activity.wode_page.ShangPinShouCangActivity;
 import com.yiyang.cn.activity.wode_page.TuiGuangMaActivity;
-import com.yiyang.cn.activity.wode_page.bazinew.BazismMainActivity;
 import com.yiyang.cn.app.App;
 import com.yiyang.cn.app.ConstanceValue;
 import com.yiyang.cn.app.Notice;
@@ -511,7 +509,6 @@ public class MineFragment extends BaseFragment implements Observer {
                 AboutUsActivity.actionStart(getActivity());
                 break;
             case R.id.iv_bazism:
-                BazismMainActivity.actionStart(getActivity());
                 break;
             case R.id.view:
                 break;

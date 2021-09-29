@@ -1,5 +1,7 @@
 package com.yiyang.cn.activity.a_yiyang;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -16,19 +18,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class YiShengZhuYeActivity extends BaseActivity {
-    @BindView(R.id.iv_image)
-    ImageView ivImage;
-    @BindView(R.id.tv_yisheng_ming)
-    TextView tvYishengMing;
-    @BindView(R.id.view_guahao)
-    View viewGuahao;
-    @BindView(R.id.view_jieshao)
-    View viewJieshao;
-    @BindView(R.id.frame_layout)
-    FrameLayout frameLayout;
-    @BindView(R.id.rlv_list)
-    RecyclerView rlvList;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,14 +30,13 @@ public class YiShengZhuYeActivity extends BaseActivity {
         return R.layout.layout_yishengzhuye;
     }
 
-    @OnClick({R.id.view_guahao, R.id.view_jieshao})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.view_guahao:
-                break;
-            case R.id.view_jieshao:
-                break;
-        }
+    /**
+     * 用于其他Activty跳转到该Activity
+     */
+    public static void actionStart(Context context) {
+        Intent intent = new Intent(context, YiShengZhuYeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     @Override

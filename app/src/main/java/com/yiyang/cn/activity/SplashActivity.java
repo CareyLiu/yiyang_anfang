@@ -90,7 +90,6 @@ public class SplashActivity extends AppCompatActivity implements EasyPermissions
                             case "2"://维修厂
                                 break;
                             case "3"://代理商
-                                mWeakReference.get().startActivity(new Intent(mWeakReference.get(), ServiceActivity.class));
                                 break;
                             case "4"://未知
                                 break;

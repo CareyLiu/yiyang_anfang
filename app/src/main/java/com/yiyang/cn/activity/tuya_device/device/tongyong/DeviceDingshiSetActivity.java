@@ -16,7 +16,7 @@ import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.google.gson.Gson;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.tuya_device.TuyaBaseDeviceActivity;
 import com.yiyang.cn.activity.tuya_device.device.model.DpsTimeModel;
 import com.yiyang.cn.activity.tuya_device.dialog.TuyaInputDialog;
@@ -28,7 +28,6 @@ import com.yiyang.cn.app.RxBus;
 import com.tuya.smart.android.device.builder.TuyaTimerBuilder;
 import com.tuya.smart.android.device.enums.TimerDeviceTypeEnum;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
-import com.tuya.smart.home.sdk.constant.TimerUpdateEnum;
 import com.tuya.smart.sdk.api.IResultCallback;
 import com.tuya.smart.sdk.bean.DeviceBean;
 

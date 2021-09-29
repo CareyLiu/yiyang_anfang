@@ -1,16 +1,11 @@
 package com.yiyang.cn.adapter;
 
-import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-
 import com.bumptech.glide.Glide;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
-import com.yiyang.cn.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.yiyang.cn.baseadapter.baserecyclerviewadapterhelper.BaseSectionQuickAdapter;
 import com.yiyang.cn.baseadapter.baserecyclerviewadapterhelper.BaseViewHolder;
 import com.yiyang.cn.common.StringUtils;

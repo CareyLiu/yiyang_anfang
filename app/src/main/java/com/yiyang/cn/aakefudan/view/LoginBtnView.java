@@ -16,8 +16,6 @@ import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.yiyang.cn.R;
 import com.yiyang.cn.activity.HomeActivity;
-import com.yiyang.cn.activity.SelectLoginActivity;
-import com.yiyang.cn.activity.ServiceActivity;
 import com.yiyang.cn.app.BaseActivity;
 import com.yiyang.cn.app.ConstanceValue;
 import com.yiyang.cn.app.Notice;
@@ -146,8 +144,6 @@ public class LoginBtnView extends LinearLayout {
                             case "2"://维修厂
                                 break;
                             case "3"://客服端
-                                activity.startActivity(new Intent(activity, ServiceActivity.class));
-                                activity.finish();
                                 break;
                         }
                     }

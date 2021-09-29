@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.app.BaseActivity;
 import com.tuya.smart.api.MicroContext;
 import com.tuya.smart.commonbiz.bizbundle.family.api.AbsBizBundleFamilyService;
@@ -20,8 +20,6 @@ import com.tuya.smart.home.sdk.callback.ITuyaResultCallback;
 import com.tuya.smart.scene.business.api.ITuyaSceneBusinessService;
 import com.tuya.smart.utils.ToastUtil;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.List;
 

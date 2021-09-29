@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_line" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="19pt"
+                android:background="@color/white"
+                android:paddingTop="19pt" />
+
+            <LinearLayout
+                android:id="@+id/ll_quanbu_huodong"
+                android:layout_width="match_parent"
+                android:layout_height="70pt"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="30pt">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="优选活动"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5pt"
+                    android:includeFontPadding="false"
+                    android:text="查看全部"
+                    android:textColor="@color/color_9"
+                    android:textSize="23pt" />
+
+                <ImageView
+                    android:layout_width="12pt"
+                    android:layout_height="24pt"
+                    android:src="@mipmap/push_gray_999" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingHorizontal="29pt">
+
+                <LinearLayout
+                    android:layout_width="217pt"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="217pt"
+                        android:src="@mipmap/youhuihuodong_3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginVertical="5pt"
+                        android:includeFontPadding="false"
+                        android:text="疗养旅居体验|1..."
+                        android:textSize="23pt" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="9pt"
+                            android:includeFontPadding="false"
+                            android:text="￥1888"
+                            android:textColor="@color/color_9"
+                            android:textSize="17pt" />
+
+                        <RelativeLayout
+                            android:layout_width="134pt"
+                            android:layout_height="42pt"
+                            android:layout_alignParentRight="true"
+                            android:background="@mipmap/youhuikuang">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="9pt"
+                                android:includeFontPadding="false"
+                                android:text="￥1698"
+                                android:textColor="@color/white"
+                                android:textSize="23pt" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="11pt"
+                                android:includeFontPadding="false"
+                                android:text="抢"
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
+                        </RelativeLayout>
+                    </RelativeLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="217pt"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="217pt"
+                        android:src="@mipmap/youhuihuodong_2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginVertical="5pt"
+                        android:includeFontPadding="false"
+                        android:text="康旅居体验|1..."
+                        android:textSize="23pt" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="9pt"
+                            android:includeFontPadding="false"
+                            android:text="￥1888"
+                            android:textColor="@color/color_9"
+                            android:textSize="17pt" />
+
+                        <RelativeLayout
+                            android:layout_width="134pt"
+                            android:layout_height="42pt"
+                            android:layout_alignParentRight="true"
+                            android:background="@mipmap/youhuikuang">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="9pt"
+                                android:includeFontPadding="false"
+                                android:text="￥1698"
+                                android:textColor="@color/white"
+                                android:textSize="23pt" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="11pt"
+                                android:includeFontPadding="false"
+                                android:text="抢"
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
+                        </RelativeLayout>
+                    </RelativeLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="217pt"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="217pt"
+                        android:src="@mipmap/youhuihuodong_1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginVertical="5pt"
+                        android:includeFontPadding="false"
+                        android:text="颐养旅居体验|1..."
+                        android:textSize="23pt" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="9pt"
+                            android:includeFontPadding="false"
+                            android:text="￥1888"
+                            android:textColor="@color/color_9"
+                            android:textSize="17pt" />
+
+                        <RelativeLayout
+                            android:layout_width="134pt"
+                            android:layout_height="42pt"
+                            android:layout_alignParentRight="true"
+                            android:background="@mipmap/youhuikuang">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="9pt"
+                                android:includeFontPadding="false"
+                                android:text="￥1698"
+                                android:textColor="@color/white"
+                                android:textSize="23pt" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="11pt"
+                                android:includeFontPadding="false"
+                                android:text="抢"
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
+                        </RelativeLayout>
+                    </RelativeLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_quanbu_zhengce"
+                android:layout_width="match_parent"
+                android:layout_height="70pt"
+                android:layout_marginTop="19pt"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="30pt">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="最新政策"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5pt"
+                    android:includeFontPadding="false"
+                    android:text="查看全部"
+                    android:textColor="@color/color_9"
+                    android:textSize="23pt" />
+
+                <ImageView
+                    android:layout_width="12pt"
+                    android:layout_height="24pt"
+                    android:src="@mipmap/push_gray_999" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_zhengce"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

@@ -5,7 +5,7 @@ import androidx.annotation.Nullable;
 import com.yiyang.cn.R;
 import com.yiyang.cn.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.yiyang.cn.baseadapter.baserecyclerviewadapterhelper.BaseViewHolder;
-import com.yiyang.cn.model.yiyang.MenZhenLieBiaoModel;
+import com.yiyang.cn.activity.a_yiyang.model.MenZhenLieBiaoModel;
 
 import java.util.List;
 

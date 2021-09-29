@@ -1,7 +1,5 @@
 package com.yiyang.cn.fragment.znjj;
 
-import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,11 +25,10 @@ import com.rairmmd.andmqtt.MqttSubscribe;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.yiyang.cn.R;
 import com.yiyang.cn.activity.ZhiNengFamilyManageDetailActivity;
 import com.yiyang.cn.activity.ZhiNengHomeListActivity;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.tuya_device.add.TuyaDeviceAddActivity;
 import com.yiyang.cn.activity.tuya_device.changjing.TuyaTianqiActivity;
 import com.yiyang.cn.activity.tuya_device.utils.manager.TuyaHomeManager;
@@ -52,7 +49,6 @@ import com.yiyang.cn.fragment.znjj.model.ZhiNengModel;
 import com.yiyang.cn.get_net.Urls;
 import com.yiyang.cn.model.ZhiNengFamilyManageBean;
 import com.yiyang.cn.util.DensityUtils;
-import com.yiyang.cn.util.DoMqttValue;
 import com.yiyang.cn.util.GlideShowImageUtils;
 import com.yiyang.cn.view.NoSlidingViewPager;
 import com.yiyang.cn.view.magicindicator.MagicIndicator;

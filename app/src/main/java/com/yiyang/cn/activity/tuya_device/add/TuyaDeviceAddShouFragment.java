@@ -10,7 +10,6 @@ import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
 import com.yiyang.cn.activity.tuya_device.add.model.DeviceListModel;
 import com.yiyang.cn.adapter.FenLeiHomeLeftListAdapter;
 import com.yiyang.cn.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;

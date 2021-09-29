@@ -16,7 +16,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.yiyang.cn.R;
 import com.yiyang.cn.activity.ZhiNengRoomManageActivity;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.tuya_device.TuyaBaseDeviceActivity;
 import com.yiyang.cn.activity.tuya_device.dialog.TuyaBottomDialog;
 import com.yiyang.cn.activity.tuya_device.dialog.TuyaBottomDialogView;

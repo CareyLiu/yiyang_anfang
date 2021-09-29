@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.tuya_device.utils.WifiReceiver;
 import com.yiyang.cn.app.AppConfig;
 import com.yiyang.cn.app.BaseActivity;

@@ -23,7 +23,7 @@ import com.rairmmd.andmqtt.MqttSubscribe;
 import com.tuya.smart.wrapper.api.TuyaWrapper;
 import com.vivo.push.PushClient;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.zhinengjiaju.RenTiGanYingActivity;
 import com.yiyang.cn.activity.zhinengjiaju.function.LouShuiActivity;
 import com.yiyang.cn.activity.zhinengjiaju.function.MenCiActivity;
@@ -43,10 +43,10 @@ import com.yiyang.cn.config.MyApplication;
 import com.yiyang.cn.config.PreferenceHelper;
 import com.yiyang.cn.config.UserManager;
 import com.yiyang.cn.dialog.newdia.TishiDialog;
-import com.yiyang.cn.fragment.yiyang.TabHomeFragment;
-import com.yiyang.cn.fragment.yiyang.TabShengxianFragment;
-import com.yiyang.cn.fragment.yiyang.TabWodeFragment;
-import com.yiyang.cn.fragment.yiyang.TabXiaoxiFragment;
+import com.yiyang.cn.activity.a_yiyang.frag.TabHomeFragment;
+import com.yiyang.cn.activity.a_yiyang.frag.TabShengxianFragment;
+import com.yiyang.cn.activity.a_yiyang.frag.TabWodeFragment;
+import com.yiyang.cn.activity.a_yiyang.frag.TabXiaoxiFragment;
 import com.yiyang.cn.fragment.znjj.ZhiNengJiaJuFragment;
 import com.yiyang.cn.get_net.Urls;
 import com.yiyang.cn.model.DongTaiShiTiZhuangTaiModel;
@@ -390,9 +390,9 @@ public class HomeActivity extends BaseActivity {
 
         fragments.add(tabHomeFragment);
         fragments.add(tabAnfangFragment);
-        fragments.add(shengxianFragment);
         fragments.add(tabXiaoxiFragment);
         fragments.add(tabWodeFragment);
+        fragments.add(shengxianFragment);
 
         VpAdapter adapter = new VpAdapter(getSupportFragmentManager(), fragments);
         vpg_content.setOffscreenPageLimit(5);
@@ -410,13 +410,13 @@ public class HomeActivity extends BaseActivity {
                 select(1);
                 break;
             case R.id.ll_main_shengxian:
-                select(2);
+                select(4);
                 break;
             case R.id.ll_main_xiaoxi:
-                select(3);
+                select(2);
                 break;
             case R.id.ll_main_wode:
-                select(4);
+                select(3);
                 break;
         }
     }
@@ -444,15 +444,15 @@ public class HomeActivity extends BaseActivity {
                 iv_main_anfang.setImageResource(R.mipmap.yiyang_main_anfang_sel);
                 tv_main_anfang.setTextColor(Y.getColor(R.color.color_main_yiyang));
                 break;
-            case 2:
+            case 4:
                 iv_main_shengxian.setImageResource(R.mipmap.yiyang_main_shengxian_sel);
                 tv_main_shengxian.setTextColor(Y.getColor(R.color.color_main_yiyang));
                 break;
-            case 3:
+            case 2:
                 iv_main_xiaoxi.setImageResource(R.mipmap.yiyang_main_xiaoxi_sel);
                 tv_main_xiaoxi.setTextColor(Y.getColor(R.color.color_main_yiyang));
                 break;
-            case 4:
+            case 3:
                 iv_main_wode.setImageResource(R.mipmap.yiyang_main_wd_sel);
                 tv_main_wode.setTextColor(Y.getColor(R.color.color_main_yiyang));
                 break;

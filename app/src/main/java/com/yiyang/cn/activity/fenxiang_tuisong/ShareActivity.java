@@ -9,18 +9,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.bumptech.glide.request.transition.Transition;
-import com.gyf.barlibrary.ImmersionBar;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
 import com.yiyang.cn.app.AppManager;
 import com.yiyang.cn.app.Notice;
 import com.yiyang.cn.app.RxBus;
@@ -35,12 +29,9 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,9 +67,7 @@ public class ShareActivity extends Activity {
     @BindView(R.id.rl_layout)
     RelativeLayout rlLayout;
 
-
     private IWXAPI api;
-    Home.DataBean.activity activity;
     private String share_title;
     private String share_detail;
     private String share_url;

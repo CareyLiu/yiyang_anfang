@@ -22,7 +22,6 @@ import com.amap.api.services.core.LatLonPoint;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
@@ -34,12 +33,10 @@ import com.lzy.okgo.request.base.Request;
 import com.orhanobut.logger.Logger;
 import com.yiyang.cn.R;
 import com.yiyang.cn.activity.DefaultX5WebView_HaveNameActivity;
-import com.yiyang.cn.activity.SettingActivity;
 import com.yiyang.cn.activity.ShuRuInterView;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.tongcheng58.model.TcUpLoadModel;
 import com.yiyang.cn.adapter.XiangQingTuAdapter;
-import com.yiyang.cn.app.App;
 import com.yiyang.cn.app.AppConfig;
 import com.yiyang.cn.app.BaseActivity;
 import com.yiyang.cn.app.ConstanceValue;
@@ -51,15 +48,12 @@ import com.yiyang.cn.config.AppResponse;
 import com.yiyang.cn.config.PreferenceHelper;
 import com.yiyang.cn.config.UserManager;
 import com.yiyang.cn.dialog.TongYongShuRuDIalog;
-import com.yiyang.cn.dialog.TongYongShuRuEditTextDIalog;
 import com.yiyang.cn.dialog.newdia.FaBuLanMuDialog;
 import com.yiyang.cn.dialog.newdia.TishiDialog;
 import com.yiyang.cn.get_net.Urls;
 import com.yiyang.cn.model.BianMinFaBuBean;
 import com.yiyang.cn.model.Home;
 import com.yiyang.cn.model.JingYingXiangBean;
-import com.yiyang.cn.model.Upload;
-import com.yiyang.cn.model.XiangQingTuBean;
 import com.yiyang.cn.util.AlertUtil;
 
 import org.devio.takephoto.app.TakePhoto;
@@ -84,7 +78,6 @@ import rx.functions.Action1;
 
 import static com.yiyang.cn.app.App.JINGDU;
 import static com.yiyang.cn.app.App.WEIDU;
-import static com.yiyang.cn.app.App.getInstance;
 import static com.yiyang.cn.get_net.Urls.TONGCHENG;
 
 public class BianMinFaBuActivity extends BaseActivity implements TakePhoto.TakeResultListener, InvokeListener {

@@ -52,8 +52,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.yiyang.cn.activity.shuinuan.Y.getResources;
-import static com.yiyang.cn.activity.shuinuan.Y.getString;
+import static com.yiyang.cn.util.Y.getResources;
+import static com.yiyang.cn.util.Y.getString;
 import static com.yiyang.cn.config.MyApplication.CAR_NOTIFY;
 
 public class YuYinChuLiTool {

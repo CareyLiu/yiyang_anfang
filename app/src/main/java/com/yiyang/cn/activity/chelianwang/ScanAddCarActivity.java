@@ -1,6 +1,5 @@
 package com.yiyang.cn.activity.chelianwang;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,21 +15,15 @@ import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.DefaultX5WebViewActivity;
-import com.yiyang.cn.activity.HandAddActivity;
-import com.yiyang.cn.activity.shuinuan.Y;
 import com.yiyang.cn.app.BaseActivity;
 import com.yiyang.cn.app.ConstanceValue;
 import com.yiyang.cn.app.Notice;
-import com.yiyang.cn.app.UIHelper;
 import com.yiyang.cn.callback.JsonCallback;
 import com.yiyang.cn.config.AppResponse;
-import com.yiyang.cn.config.PreferenceHelper;
 import com.yiyang.cn.config.UserManager;
 import com.yiyang.cn.dialog.BangdingFailDialog;
 import com.yiyang.cn.get_net.Urls;
 import com.yiyang.cn.model.CarBrand;
-import com.yiyang.cn.util.AlertUtil;
 
 import java.util.HashMap;
 import java.util.Map;

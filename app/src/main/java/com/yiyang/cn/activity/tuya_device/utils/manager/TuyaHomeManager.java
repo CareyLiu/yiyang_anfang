@@ -1,22 +1,18 @@
 package com.yiyang.cn.activity.tuya_device.utils.manager;
 
-import com.yiyang.cn.activity.shuinuan.Y;
-import com.yiyang.cn.activity.tuya_device.utils.TuyaDialogUtils;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.app.ConstanceValue;
 import com.yiyang.cn.app.Notice;
 import com.yiyang.cn.app.RxBus;
 import com.tuya.smart.api.service.MicroServiceManager;
 import com.tuya.smart.commonbiz.bizbundle.family.api.AbsBizBundleFamilyService;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
-import com.tuya.smart.home.sdk.api.ITuyaHomeDeviceStatusListener;
 import com.tuya.smart.home.sdk.api.ITuyaHomeStatusListener;
 import com.tuya.smart.home.sdk.bean.HomeBean;
 import com.tuya.smart.home.sdk.bean.WeatherBean;
 import com.tuya.smart.home.sdk.callback.IIGetHomeWetherSketchCallBack;
 import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
-import com.tuya.smart.home.sdk.callback.ITuyaResultCallback;
 import com.tuya.smart.sdk.bean.DeviceBean;
-import com.tuya.smart.sdk.bean.SigMeshBean;
 
 import java.util.List;
 

@@ -1,8 +1,7 @@
 package com.yiyang.cn.activity.tuya_device;
 
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.tuya_device.utils.manager.TuyaDeviceManager;
-import com.yiyang.cn.activity.tuya_device.utils.manager.TuyaDeviceManagerTwo;
 import com.yiyang.cn.app.BaseActivity;
 import com.tuya.smart.sdk.api.IResultCallback;
 

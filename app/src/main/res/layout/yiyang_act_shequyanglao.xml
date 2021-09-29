@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_line" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="82pt"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="30pt">
+
+                <ImageView
+                    android:layout_width="42pt"
+                    android:layout_height="42pt"
+                    android:layout_marginRight="5pt"
+                    android:src="@mipmap/home_dingwei" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="哈尔滨市幸福养老院"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+            </LinearLayout>
+
+            <com.youth.banner.Banner
+                android:id="@+id/banner"
+                android:layout_width="match_parent"
+                android:layout_height="269pt"
+                android:layout_marginHorizontal="29pt"
+                android:layout_marginBottom="19pt" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="29pt">
+
+                <ImageView
+                    android:id="@+id/iv_zhucan"
+                    android:layout_width="326pt"
+                    android:layout_height="192pt"
+                    android:src="@mipmap/shequyanglao_zhucan" />
+
+                <ImageView
+                    android:id="@+id/iv_zhujie"
+                    android:layout_width="326pt"
+                    android:layout_height="192pt"
+                    android:layout_alignParentRight="true"
+                    android:src="@mipmap/shequyanglao_zhujie" />
+
+                <ImageView
+                    android:id="@+id/iv_zhuyu"
+                    android:layout_width="326pt"
+                    android:layout_height="192pt"
+                    android:layout_below="@id/iv_zhucan"
+                    android:layout_marginTop="10pt"
+                    android:src="@mipmap/sheqiyanglao_zhuyu" />
+
+                <ImageView
+                    android:id="@+id/iv_zhuyi"
+                    android:layout_width="326pt"
+                    android:layout_height="192pt"
+                    android:layout_below="@id/iv_zhucan"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="10pt"
+                    android:src="@mipmap/shequyanglao_shuyi" />
+
+                <ImageView
+                    android:id="@+id/iv_zhuxing"
+                    android:layout_width="326pt"
+                    android:layout_height="192pt"
+                    android:layout_below="@id/iv_zhuyu"
+                    android:layout_marginTop="10pt"
+                    android:src="@mipmap/sheuqyanglao_zhuxing" />
+
+                <ImageView
+                    android:id="@+id/iv_zhuji"
+                    android:layout_width="326pt"
+                    android:layout_height="192pt"
+                    android:layout_below="@id/iv_zhuyu"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="10pt"
+                    android:src="@mipmap/shequyanglao_zhuji" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_shequhuodong"
+                android:layout_width="match_parent"
+                android:layout_height="70pt"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="30pt">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="社区活动"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5pt"
+                    android:includeFontPadding="false"
+                    android:text="查看全部"
+                    android:textColor="@color/color_9"
+                    android:textSize="23pt" />
+
+                <ImageView
+                    android:layout_width="12pt"
+                    android:layout_height="24pt"
+                    android:src="@mipmap/push_gray_999" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_shequhuodong"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="19pt" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.tuya_device.changjing.adapter.TuyaTianqiAdapter;
 import com.yiyang.cn.activity.tuya_device.utils.manager.TuyaHomeManager;
 import com.yiyang.cn.app.BaseActivity;

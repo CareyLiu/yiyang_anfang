@@ -22,7 +22,6 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
 import com.yiyang.cn.adapter.ZhiNengRoomManageAdapter;
 import com.yiyang.cn.app.AppConfig;
 import com.yiyang.cn.app.BaseActivity;

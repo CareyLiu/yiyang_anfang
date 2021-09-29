@@ -5,26 +5,37 @@
     android:background="@color/bg_app"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="444pt"
         android:layout_marginHorizontal="29pt"
         android:layout_marginTop="19pt"
-        android:background="@drawable/yiyang_bg_white_radius_10">
+        android:background="@drawable/yiyang_bg_white_radius_10"
+        android:gravity="center"
+        android:orientation="vertical">
 
 
         <ImageView
             android:layout_width="276pt"
             android:layout_height="276pt"
-            android:layout_centerInParent="true"
             android:src="@mipmap/yiyang_sos" />
-    </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18pt"
+            android:includeFontPadding="false"
+            android:text="一键呼救紧急联系人"
+            android:textColor="@color/color_3"
+            android:textSize="27pt" />
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="144pt"
         android:layout_marginHorizontal="29pt"
-        android:layout_marginTop="19pt">
+        android:layout_marginTop="19pt"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="211pt"
@@ -43,4 +54,12 @@
             android:layout_alignParentRight="true"
             android:src="@mipmap/yiyang_120" />
     </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="497pt"
+        android:layout_marginHorizontal="29pt"
+        android:layout_marginTop="19pt"
+        android:src="@mipmap/yiyang_dianhua" />
+
 </LinearLayout>

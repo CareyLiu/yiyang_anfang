@@ -24,7 +24,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.tuangou.TuanGouShangJiaDetailsActivity;
 import com.yiyang.cn.adapter.Custom5HistoryAdapter;
 import com.yiyang.cn.adapter.tuangou.TuanGouShangJiaListAdapterTwo;

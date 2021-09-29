@@ -32,7 +32,7 @@ import com.lzy.okgo.request.base.Request;
 import com.yiyang.cn.R;
 import com.yiyang.cn.activity.DefaultX5WebViewActivity;
 import com.yiyang.cn.activity.ShuRuInterView;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.tongcheng58.adapter.ShangpinBannerAdapter;
 import com.yiyang.cn.activity.tongcheng58.adapter.TcSheshiAdapter;
 import com.yiyang.cn.activity.tongcheng58.model.ShangjiaDetailModel;

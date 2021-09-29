@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.tuya_device.TuyaBaseCameraDeviceActivity;
 import com.yiyang.cn.activity.tuya_device.dialog.TuyaBottomDialog;
 import com.yiyang.cn.activity.tuya_device.dialog.TuyaBottomDialogView;
@@ -20,7 +20,6 @@ import com.yiyang.cn.activity.tuya_device.utils.TuyaDialogUtils;
 import com.yiyang.cn.activity.tuya_device.utils.manager.TuyaDeviceManagerTwo;
 import com.yiyang.cn.app.ConstanceValue;
 import com.yiyang.cn.app.Notice;
-import com.yiyang.cn.get_net.Urls;
 import com.tuya.smart.sdk.bean.DeviceBean;
 
 import java.util.ArrayList;

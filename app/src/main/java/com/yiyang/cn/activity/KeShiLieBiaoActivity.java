@@ -18,8 +18,8 @@ import com.yiyang.cn.adapter.KeShiZuoCeListAdapter;
 import com.yiyang.cn.app.BaseActivity;
 import com.yiyang.cn.app.UIHelper;
 import com.yiyang.cn.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
-import com.yiyang.cn.model.yiyang.KeShiMingChengModel;
-import com.yiyang.cn.model.yiyang.MenZhenLieBiaoModel;
+import com.yiyang.cn.activity.a_yiyang.model.KeShiMingChengModel;
+import com.yiyang.cn.activity.a_yiyang.model.MenZhenLieBiaoModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -226,7 +226,7 @@ public class KeShiLieBiaoActivity extends BaseActivity {
     @Override
     protected void initToolbar() {
         super.initToolbar();
-        tv_title.setText("科室列表");
+        tv_title.setText("开药门诊");
         tv_title.setTextSize(17);
         tv_title.setTextColor(getResources().getColor(R.color.black));
         mToolbar.setNavigationIcon(R.mipmap.backbutton);

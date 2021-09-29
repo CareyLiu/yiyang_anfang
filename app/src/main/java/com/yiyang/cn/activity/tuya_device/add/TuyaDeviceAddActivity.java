@@ -7,14 +7,12 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.tuya_device.add.adapter.MainVpAdapter;
 import com.yiyang.cn.activity.tuya_device.add.adapter.MyViewPager;
 import com.yiyang.cn.activity.tuya_device.utils.WifiReceiver;
@@ -23,7 +21,6 @@ import com.yiyang.cn.app.ConstanceValue;
 import com.yiyang.cn.app.Notice;
 import com.yiyang.cn.basicmvp.BaseFragment;
 import com.tbruyelle.rxpermissions.RxPermissions;
-import com.tuya.smart.home.sdk.bean.WeatherBean;
 
 import java.util.ArrayList;
 import java.util.List;

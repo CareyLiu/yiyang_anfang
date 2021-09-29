@@ -11,8 +11,6 @@ import android.widget.TextView;
 import com.yiyang.cn.R;
 import com.yiyang.cn.activity.ZhiNengRoomManageActivity;
 import com.yiyang.cn.activity.ZhiNengRoomSettingActivity;
-import com.yiyang.cn.activity.shuinuan.Y;
-import com.yiyang.cn.adapter.ZhiNengRoomListAdapter;
 import com.yiyang.cn.app.AppConfig;
 import com.yiyang.cn.app.ConstanceValue;
 import com.yiyang.cn.app.Notice;

@@ -12,7 +12,7 @@ import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.adapter.tuangou.YouhuiquanDuihuanAdapter;
 import com.yiyang.cn.app.BaseActivity;
 import com.yiyang.cn.app.ConstanceValue;

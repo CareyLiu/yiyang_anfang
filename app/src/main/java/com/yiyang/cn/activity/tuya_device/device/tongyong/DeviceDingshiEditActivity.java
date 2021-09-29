@@ -1,6 +1,5 @@
 package com.yiyang.cn.activity.tuya_device.device.tongyong;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,8 +18,7 @@ import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.google.gson.Gson;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.ZhiNengFamilyManageDetailActivity;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.tuya_device.TuyaBaseDeviceActivity;
 import com.yiyang.cn.activity.tuya_device.device.model.DpsTimeModel;
 import com.yiyang.cn.activity.tuya_device.dialog.TuyaInputDialog;

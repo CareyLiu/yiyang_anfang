@@ -8,9 +8,8 @@ import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSON;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.tuya_device.TuyaBaseCameraDeviceActivity;
-import com.yiyang.cn.activity.tuya_device.TuyaBaseDeviceActivity;
 import com.yiyang.cn.activity.tuya_device.camera.ceshi.TimePieceBean;
 import com.yiyang.cn.activity.tuya_device.camera.model.TuyaPlayDataModel;
 import com.yiyang.cn.activity.tuya_device.camera.model.TuyaPlayPieceModel;

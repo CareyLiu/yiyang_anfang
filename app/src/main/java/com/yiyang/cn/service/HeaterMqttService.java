@@ -62,7 +62,7 @@ public class HeaterMqttService extends Service {
     public static String[] topics;
     private CustomBaseDialog dialog;
     public static NotifyModel notifyModel;
-    public static String activity[] = {"activity.WindHeaterActivity", "activity.HostActivity", "activity.DiagnosisActivity", "activity.ControCarActivity"};
+    public static String activity[] = {"activity.WindHeaterActivity", "activity.HostActivity", "activity.DiagnosisActivity"};
 
     @Nullable
     @Override

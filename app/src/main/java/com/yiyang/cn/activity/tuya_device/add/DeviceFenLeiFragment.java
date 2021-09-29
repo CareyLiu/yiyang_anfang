@@ -1,27 +1,18 @@
 package com.yiyang.cn.activity.tuya_device.add;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
 import com.yiyang.cn.activity.tuya_device.add.model.DeviceListModel;
-import com.yiyang.cn.activity.zhinengjiaju.peinet.PeiWangYinDaoPageActivity;
 import com.yiyang.cn.activity.zhinengjiaju.peinet.SheBeiChongZhiActivity;
-import com.yiyang.cn.activity.zhinengjiaju.peinet.ZhiNengJiaJuPeiWangActivity;
-import com.yiyang.cn.activity.zijian_shangcheng.FenLeiThirdActivity;
 import com.yiyang.cn.adapter.FenLeiRightAdapter;
-import com.yiyang.cn.app.AppConfig;
 import com.yiyang.cn.app.UIHelper;
 import com.yiyang.cn.basicmvp.BaseFragment;
-import com.yiyang.cn.config.PreferenceHelper;
 import com.yiyang.cn.model.FenLeiContentModel;
-import com.yiyang.cn.model.ZiJianFenLeiBean;
 import com.yiyang.cn.project_A.zijian_interface.FenLeiContenInterface;
 import com.yiyang.cn.util.GridSectionAverageGapItemDecoration;
-import com.umeng.commonsdk.UMConfigure;
 
 import java.util.ArrayList;
 import java.util.List;

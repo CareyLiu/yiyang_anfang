@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="156pt">
+
+            <ImageView
+                android:layout_width="12pt"
+                android:layout_height="24pt"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="23pt"
+                android:src="@mipmap/push_gray_999" />
+
+            <ImageView
+                android:id="@+id/iv_head"
+                android:layout_width="77pt"
+                android:layout_height="77pt"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15pt"
+                android:src="@mipmap/touxiangnan" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10pt"
+                android:layout_toRightOf="@id/iv_head"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="评估人：李某"
+                    android:textColor="@color/color_9"
+                    android:textSize="23pt" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="性别：男"
+                    android:textColor="@color/color_9"
+                    android:textSize="23pt" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="年龄：80"
+                    android:textColor="@color/color_9"
+                    android:textSize="23pt" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="评估等级：5级"
+                    android:textColor="@color/color_9"
+                    android:textSize="23pt" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="23pt"
+                android:layout_marginBottom="12pt"
+                android:includeFontPadding="false"
+                android:text="2021.9.28"
+                android:textColor="@color/color_9"
+                android:textSize="23pt" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/view_line"
+            android:layout_width="match_parent"
+            android:layout_height="1pt"
+            android:layout_marginLeft="15pt"
+            android:layout_marginRight="23pt"
+            android:background="@color/line" />
+    </LinearLayout>
+</LinearLayout>
+
+

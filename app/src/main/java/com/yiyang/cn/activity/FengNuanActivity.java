@@ -30,7 +30,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.app.App;
 import com.yiyang.cn.app.AppManager;
 import com.yiyang.cn.app.BaseActivity;
@@ -205,7 +205,6 @@ public class FengNuanActivity extends BaseActivity implements View.OnLongClickLi
         ivShezhi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SheBeiSetActivity.actionStart(mContext, SheBeiSetActivity.TYPE_FENGNUAN);
             }
         });
         llDingshi.setOnClickListener(new View.OnClickListener() {

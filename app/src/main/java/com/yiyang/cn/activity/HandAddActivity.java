@@ -1,34 +1,26 @@
 package com.yiyang.cn.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.jaeger.library.StatusBarUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
 import com.yiyang.cn.app.BaseActivity;
 import com.yiyang.cn.app.ConstanceValue;
 import com.yiyang.cn.app.Notice;
-import com.yiyang.cn.app.RxBus;
 import com.yiyang.cn.app.UIHelper;
 import com.yiyang.cn.callback.JsonCallback;
 import com.yiyang.cn.common.StringUtils;
 import com.yiyang.cn.config.AppResponse;
 
-import com.yiyang.cn.config.PreferenceHelper;
 import com.yiyang.cn.config.UserManager;
 import com.yiyang.cn.dialog.BangdingFailDialog;
 import com.yiyang.cn.get_net.Urls;
 import com.yiyang.cn.model.CarBrand;
-import com.yiyang.cn.util.AlertUtil;
 
 import java.util.HashMap;
 import java.util.Map;

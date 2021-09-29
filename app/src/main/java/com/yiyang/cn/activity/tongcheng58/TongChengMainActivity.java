@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.adapter.NewsFragmentPagerAdapter;
 import com.yiyang.cn.app.BaseActivity;
 import com.yiyang.cn.dialog.newdia.FaBuDialog;

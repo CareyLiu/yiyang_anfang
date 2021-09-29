@@ -11,10 +11,8 @@ import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
 import com.yiyang.cn.activity.zhinengjiaju.ChuangJianZhiNengActivity;
 import com.yiyang.cn.activity.zhinengjiaju.ZhiNengChangJingDetailsActivity;
-import com.yiyang.cn.adapter.ZhiNengChangJingAdapter;
 import com.yiyang.cn.app.AppConfig;
 import com.yiyang.cn.app.ConstanceValue;
 import com.yiyang.cn.app.Notice;
@@ -27,9 +25,7 @@ import com.yiyang.cn.config.UserManager;
 import com.yiyang.cn.fragment.znjj.adapter.ZhiNengChangJingNewAdapter;
 import com.yiyang.cn.fragment.znjj.model.ZhiNengModel;
 import com.yiyang.cn.get_net.Urls;
-import com.yiyang.cn.model.ChangJingModel;
 import com.yiyang.cn.model.ChangJingXiangQingModel;
-import com.yiyang.cn.model.ZhiNengHomeBean;
 import com.suke.widget.SwitchButton;
 
 import java.util.ArrayList;
@@ -41,7 +37,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 

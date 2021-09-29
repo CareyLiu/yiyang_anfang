@@ -13,7 +13,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.adapter.tuangou.TuanGouYouHuiJuanAdapter;
 import com.yiyang.cn.app.BaseActivity;
 import com.yiyang.cn.app.ConstanceValue;

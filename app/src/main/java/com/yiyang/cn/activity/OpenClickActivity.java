@@ -8,21 +8,13 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.zhinengjiaju.function.LouShuiActivity;
 import com.yiyang.cn.activity.zhinengjiaju.function.MenCiActivity;
 import com.yiyang.cn.activity.zhinengjiaju.function.MenSuoActivity;
 import com.yiyang.cn.activity.zhinengjiaju.function.SosActivity;
 import com.yiyang.cn.activity.zhinengjiaju.function.YanGanActivity;
-import com.yiyang.cn.app.AppManager;
-import com.yiyang.cn.app.ConstanceValue;
-import com.yiyang.cn.app.Notice;
-import com.yiyang.cn.app.RxBus;
-import com.yiyang.cn.app.UIHelper;
 import com.yiyang.cn.model.OpenClickModel;
-import com.yiyang.cn.model.ZhiNengJiaJuNotifyJson;
-import com.yiyang.cn.util.SoundPoolUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;

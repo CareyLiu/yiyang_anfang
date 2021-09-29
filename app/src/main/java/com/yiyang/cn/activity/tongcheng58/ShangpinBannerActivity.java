@@ -18,7 +18,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.tongcheng58.adapter.ShangpinBannerAdapter;
 import com.yiyang.cn.activity.tongcheng58.model.TcUpLoadModel;
 import com.yiyang.cn.app.BaseActivity;
@@ -48,7 +48,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;

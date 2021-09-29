@@ -9,7 +9,7 @@ import android.widget.ListView;
 
 
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.tuya_device.add.adapter.TuyaDeviceFinishAdapter;
 import com.yiyang.cn.activity.tuya_device.add.model.TuyaAddDeviceModel;
 import com.yiyang.cn.app.BaseActivity;

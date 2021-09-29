@@ -42,7 +42,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yiyang.cn.R;
 import com.yiyang.cn.activity.DefaultX5WebView_HaveNameActivity;
-import com.yiyang.cn.activity.SheBeiLieBiaoActivity;
 import com.yiyang.cn.activity.TuanYouWebView;
 import com.yiyang.cn.activity.gouwuche.GouWuCheActivity;
 import com.yiyang.cn.activity.homepage.DaLiBaoActivity;
@@ -66,7 +65,6 @@ import com.yiyang.cn.app.App;
 import com.yiyang.cn.app.AppConfig;
 import com.yiyang.cn.app.ConstanceValue;
 import com.yiyang.cn.app.Notice;
-import com.yiyang.cn.app.RxBus;
 import com.yiyang.cn.app.UIHelper;
 import com.yiyang.cn.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;
 import com.yiyang.cn.basicmvp.BaseFragment;
@@ -531,24 +529,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.constrain:
-                        /**
-                         *  1.智能家居 2.风暖3.水暖 4.空调 5.神灯控车
-                         */
-                        Home.DataBean.IntellectListBean intellectListBean = (Home.DataBean.IntellectListBean) adapter.getData().get(position);
-                        if (intellectListBean.getId().equals("1")) {
-                            Notice n = new Notice();
-                            n.type = ConstanceValue.MSG_ZHINENGJIAJU;
-                            RxBus.getDefault().sendRx(n);
-                            UIHelper.ToastMessage(getActivity(), "");
-                        } else if (intellectListBean.getId().equals("2")) {
-                            SheBeiLieBiaoActivity.actionStart(getActivity(), "1");
-                        } else if (intellectListBean.getId().equals("3")) {
-                            SheBeiLieBiaoActivity.actionStart(getActivity(), "6");
-                        } else if (intellectListBean.getId().equals("4")) {//空调
-                            SheBeiLieBiaoActivity.actionStart(getActivity(), "5");
-                        } else if (intellectListBean.getId().equals("5")) {//神灯控车
-                            UIHelper.ToastMessage(getActivity(), "开发中,敬请期待");
-                        }
+
                         break;
                 }
             }

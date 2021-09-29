@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.yaokongqi.dialog.YaokongNameDialog;
 import com.yiyang.cn.activity.yaokongqi.dialog.YaokongPeiDialog;
 import com.yiyang.cn.activity.yaokongqi.model.YaokongKeyModel;

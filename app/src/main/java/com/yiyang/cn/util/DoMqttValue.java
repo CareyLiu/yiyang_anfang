@@ -3,21 +3,15 @@ package com.yiyang.cn.util;
 import android.content.Context;
 import android.util.Log;
 
-import com.iflytek.cloud.Setting;
-import com.yiyang.cn.activity.shuinuan.Y;
 import com.yiyang.cn.app.App;
 import com.yiyang.cn.app.ConfigValue;
 import com.yiyang.cn.app.ConstanceValue;
 import com.yiyang.cn.app.Notice;
 import com.yiyang.cn.app.RxBus;
-import com.yiyang.cn.app.UIHelper;
 import com.yiyang.cn.config.PreferenceHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.internal.ListenerClass;
-import io.reactivex.exceptions.MissingBackpressureException;
 
 public class DoMqttValue {
 

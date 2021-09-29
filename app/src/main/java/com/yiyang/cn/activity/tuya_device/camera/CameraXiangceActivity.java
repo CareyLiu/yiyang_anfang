@@ -9,9 +9,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.tuya_device.TuyaBaseCameraDeviceActivity;
-import com.yiyang.cn.activity.tuya_device.TuyaBaseDeviceActivity;
 import com.yiyang.cn.activity.tuya_device.camera.adapter.TuyaXiangceAdapter;
 import com.yiyang.cn.activity.tuya_device.camera.model.TuyaFilesModel;
 import com.yiyang.cn.baseadapter.baserecyclerviewadapterhelper.BaseQuickAdapter;

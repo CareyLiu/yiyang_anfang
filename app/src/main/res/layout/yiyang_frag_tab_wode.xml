@@ -394,6 +394,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="26pt"
                     android:layout_marginRight="20pt"
+                    android:visibility="gone"
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
@@ -415,10 +416,12 @@
 
 
                 <ImageView
+                    android:id="@+id/iv_add_jiaren"
                     android:layout_width="84pt"
                     android:layout_height="84pt"
                     android:layout_marginTop="19pt"
                     android:layout_marginBottom="11pt"
+                    android:layout_marginLeft="29pt"
                     android:scaleType="fitXY"
                     android:src="@mipmap/wd_tianjai" />
             </LinearLayout>

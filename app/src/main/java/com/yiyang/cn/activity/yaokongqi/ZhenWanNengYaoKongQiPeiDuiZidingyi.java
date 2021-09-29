@@ -15,7 +15,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.yaokongqi.dialog.YaokongNameDialog;
 import com.yiyang.cn.activity.yaokongqi.dialog.YaokongPeiDialog;
 import com.yiyang.cn.activity.yaokongqi.dialog.YaokongPeiFirstDialog;
@@ -38,7 +38,6 @@ import com.yiyang.cn.util.SoundPoolUtils;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +51,6 @@ import rx.functions.Action1;
 
 import static com.yiyang.cn.app.ConstanceValue.MSG_PEIWANG_SUCCESS;
 import static com.yiyang.cn.get_net.Urls.ZHINENGJIAJU;
-import static com.yiyang.cn.get_net.Urls.key;
 
 public class ZhenWanNengYaoKongQiPeiDuiZidingyi extends BaseActivity {
 

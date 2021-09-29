@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.yiyang.cn.R;
-import com.yiyang.cn.adapter.yiyang.FuwuZhucanAdapter;
 import com.yiyang.cn.app.BaseActivity;
 
 import androidx.recyclerview.widget.RecyclerView;

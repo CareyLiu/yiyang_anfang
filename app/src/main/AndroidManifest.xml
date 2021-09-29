@@ -306,8 +306,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeNoTranslucent"
-            android:windowSoftInputMode="adjustPan" />
+            android:theme="@style/AppThemeNoTranslucent" />
         <activity
             android:name="com.huawei.hms.activity.BridgeActivity"
             android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
@@ -389,11 +388,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.HeaterSettingActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
             android:name=".activity.UserInfoActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
@@ -418,21 +412,7 @@
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" /> <!-- 会话界面 -->
-        <activity
-            android:name=".activity.ConsultDetailsActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-
-                <data
-                    android:host="com.yiyang.cn"
-                    android:pathPrefix="/conversation/"
-                    android:scheme="rong" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".activity.LocationActivity"
             android:configChanges="locale|keyboardHidden|orientation"
@@ -503,36 +483,7 @@
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.ServiceActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity
-            android:name=".activity.PersonInfoAcctivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.ReviseNicknameActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity
-            android:name=".activity.ConsultActiviy"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.ServiceAboutActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.ControCarActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+
         <activity
             android:name=".activity.GoosDetailsActivity"
             android:configChanges="locale|keyboardHidden|orientation"
@@ -545,11 +496,6 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activity.ShopCartActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.ServerPassWordActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
@@ -776,127 +722,8 @@
             android:name=".activity.wode_page.AboutUsActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 水暖主页 -->
-        <activity
-            android:name=".activity.shuinuan.ShuinuanMainActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 水暖主机参数 -->
-        <activity
-            android:name=".activity.shuinuan.ShuinuanHostNewActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 水暖设备状态 -->
-        <activity
-            android:name=".activity.shuinuan.ShuinuanZhuangtaiActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 设备共享 -->
-        <activity
-            android:name=".activity.shuinuan.gongxiang.GongxiangActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 删除设备共享成员 -->
-        <activity
-            android:name=".activity.shuinuan.gongxiang.GongxiangDelectActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 添加设备共享成员 -->
-        <activity
-            android:name=".activity.shuinuan.gongxiang.GongxiangAddActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 八紫首页 -->
-        <activity
-            android:name=".activity.wode_page.bazinew.BazismMainActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 新建命盘 -->
-        <activity
-            android:name=".activity.wode_page.bazinew.DanganNewActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 编辑命盘 -->
-        <activity
-            android:name=".activity.wode_page.bazinew.DanganEditActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 档案管理 -->
-        <activity
-            android:name=".activity.wode_page.bazinew.DanganguanliActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 运势 -->
-        <activity
-            android:name=".activity.wode_page.bazinew.YunshiActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 穿衣指数 -->
-        <activity
-            android:name=".activity.wode_page.bazinew.YunshiChuanyiActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 八紫支付 -->
-        <activity
-            android:name=".activity.wode_page.bazinew.BaziPayActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 推广总人数 -->
-        <activity
-            android:name=".activity.wode_page.bazinew.TuiguangActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 本命盘 -->
-        <activity
-            android:name=".activity.wode_page.bazinew.MingpanActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 解析 -->
-        <activity
-            android:name=".activity.wode_page.bazinew.JiexiMainActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 解析详情 -->
-        <activity
-            android:name=".activity.wode_page.bazinew.JiexiDetailsActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 验盘 -->
-        <activity
-            android:name=".activity.wode_page.bazinew.YanpanActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 风水摆件档案 -->
-        <activity
-            android:name=".activity.wode_page.bazinew.FengshuiDanganActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /> <!-- 风水摆件绑定 -->
-        <activity
-            android:name=".activity.wode_page.bazinew.FengshuiBindActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 风水摆件绑定二维码扫描 -->
-        <activity
-            android:name=".activity.wode_page.bazinew.FengshuiScanActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 风水摆件绑定手动 -->
-        <activity
-            android:name=".activity.wode_page.bazinew.FengshuiSHandActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 风水摆件完成 -->
-        <activity
-            android:name=".activity.wode_page.bazinew.FengshuiBangSActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 服务端地图页面 -->
-        <activity
-            android:name=".aakefudan.chat.ServiceMapActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".activity.zhinengjiaju.peinet.v1.EspTouchActivity"
             android:configChanges="locale|keyboardHidden|orientation"
@@ -1088,36 +915,7 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity> <!-- 会话新 -->
-        <activity
-            android:name=".aakefudan.chat.ServiciLiaoActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data
-                    android:host="com.yiyang.cn"
-                    android:pathPrefix="/conversationnew"
-                    android:scheme="rong" />
-            </intent-filter>
-        </activity> <!-- 会话故障 -->
-        <activity
-            android:name=".aakefudan.chat.GuzhangHuiActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data
-                    android:host="com.yiyang.cn"
-                    android:pathPrefix="/conversationGuzhang"
-                    android:scheme="rong" />
-            </intent-filter>
-        </activity> <!-- 会话界面 -->
         <activity
             android:name=".activity.rongyun_liaotian.ConversationActivity"
             android:screenOrientation="portrait"
@@ -1207,11 +1005,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".activity.SheBeiLieBiaoActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
             android:name=".activity.FengNuanJieBangActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
@@ -1248,11 +1041,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.SheBeiSetActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".activity.JiaReQiCanShuActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
@@ -1989,8 +1777,6 @@
             android:windowSoftInputMode="stateHidden|adjustResize"
             tools:ignore="LockedOrientationActivity" />
 
-
-        <!--    在线医生    -->
         <activity
             android:name=".activity.a_yiyang.JibingchaxunActivity"
             android:configChanges="locale|keyboardHidden|orientation"
@@ -1998,8 +1784,6 @@
             android:windowSoftInputMode="stateHidden|adjustResize"
             tools:ignore="LockedOrientationActivity" />
 
-
-        <!--    在线医生    -->
         <activity
             android:name=".activity.a_yiyang.YiyangTuTActivity"
             android:configChanges="locale|keyboardHidden|orientation"
@@ -2031,6 +1815,102 @@
 
         <activity
             android:name=".activity.a_yiyang.FuwuZhujiActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.JigouyanglaoActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.JigouyanglaoWdActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+
+        <activity
+            android:name=".activity.a_yiyang.AddJiarenActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+
+        <activity
+            android:name=".activity.a_yiyang.ZhujieActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+
+        <activity
+            android:name=".activity.a_yiyang.ZhuyuActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.ZhuxingActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.JiashuDanganActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.TabMoreActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.ZhengceActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.ShequyanglaoActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.ShequhuodongActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.YanglaopingguActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+
+        <activity
+            android:name=".activity.a_yiyang.YiShengZhuYeActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"

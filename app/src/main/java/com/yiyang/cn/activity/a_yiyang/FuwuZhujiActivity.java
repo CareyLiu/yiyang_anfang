@@ -21,9 +21,10 @@ public class FuwuZhujiActivity extends BaseActivity {
     /**
      * 用于其他Activty跳转到该Activity
      */
-    public static void actionStart(Context context) {
+    public static void actionStart(Context context, String name) {
         Intent intent = new Intent(context, FuwuZhujiActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("name", name);
         context.startActivity(intent);
     }
 
@@ -35,7 +36,6 @@ public class FuwuZhujiActivity extends BaseActivity {
     @Override
     protected void initToolbar() {
         super.initToolbar();
-        tv_title.setText("助急服务");
         tv_title.setTextSize(17);
         tv_title.setTextColor(getResources().getColor(R.color.black));
         mToolbar.setNavigationIcon(R.mipmap.backbutton);
@@ -52,5 +52,7 @@ public class FuwuZhujiActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+        String name = getIntent().getStringExtra("name");
+        tv_title.setText(name);
     }
 }

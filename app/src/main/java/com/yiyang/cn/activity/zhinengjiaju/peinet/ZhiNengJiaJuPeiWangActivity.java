@@ -43,11 +43,8 @@ import com.flyco.roundview.RoundRelativeLayout;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
-import com.rairmmd.andmqtt.AndMqtt;
-import com.rairmmd.andmqtt.MqttPublish;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.AccessListActivity;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.zhinengjiaju.peinet.v1.EspTouchActivity;
 import com.yiyang.cn.adapter.OneImageAdapter;
 import com.yiyang.cn.app.AppConfig;
@@ -64,7 +61,6 @@ import com.yiyang.cn.config.UserManager;
 import com.yiyang.cn.dialog.newdia.TishiDialog;
 import com.yiyang.cn.dialog.newdia.TishiPhoneDialog;
 import com.yiyang.cn.get_net.Urls;
-import com.yiyang.cn.model.AccessListModel;
 import com.yiyang.cn.model.Message;
 import com.yiyang.cn.model.PeiwangOtherModel;
 import com.yiyang.cn.model.TianJiaZhuJiMoel;
@@ -72,8 +68,6 @@ import com.yiyang.cn.model.ZhiNengFamilyEditBean;
 import com.yiyang.cn.model.ZhiNengJiaJu_0007Model;
 import com.yiyang.cn.model.ZhiNengJiaJu_0009Model;
 import com.yiyang.cn.mqtt_zhiling.ZnjjMqttMingLing;
-import com.yiyang.cn.util.AlertUtil;
-import com.yiyang.cn.util.SoundPoolUtils;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
@@ -89,7 +83,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 import static com.yiyang.cn.app.ConstanceValue.MSG_PEIWANG_SUCCESS;
-import static com.yiyang.cn.config.MyApplication.CAR_CTROL;
 import static com.yiyang.cn.get_net.Urls.SERVER_URL;
 import static com.yiyang.cn.get_net.Urls.ZHINENGJIAJU;
 

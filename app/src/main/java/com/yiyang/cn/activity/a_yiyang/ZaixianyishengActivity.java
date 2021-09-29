@@ -7,11 +7,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yiyang.cn.R;
 import com.yiyang.cn.activity.KeShiLieBiaoActivity;
-import com.yiyang.cn.adapter.yiyang.ZaixianyishengAdapter;
+import com.yiyang.cn.activity.a_yiyang.adapter.ZaixianyishengAdapter;
 import com.yiyang.cn.app.BaseActivity;
-import com.yiyang.cn.model.yiyang.XiaoxiModel;
+import com.yiyang.cn.activity.a_yiyang.model.XiaoxiModel;
 import com.yiyang.cn.view.ColorFilterImageView;
 
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class ZaixianyishengActivity extends BaseActivity {
     ImageView ivZixunWode;
 
 
-    private List<XiaoxiModel> xiaoxiModels=new ArrayList<>();
+    private List<XiaoxiModel> xiaoxiModels = new ArrayList<>();
 
     @Override
     public int getContentViewResId() {
@@ -76,9 +77,15 @@ public class ZaixianyishengActivity extends BaseActivity {
         xiaoxiModels.add(new XiaoxiModel("王医生", "前天13:22", 0));
         xiaoxiModels.add(new XiaoxiModel("张护士", "2021-09-08", 0));
 
-        ZaixianyishengAdapter adapter=new ZaixianyishengAdapter(R.layout.yiyang_item_zaixianyisheng,xiaoxiModels);
+        ZaixianyishengAdapter adapter = new ZaixianyishengAdapter(R.layout.yiyang_item_zaixianyisheng, xiaoxiModels);
         rvYisheng.setLayoutManager(new LinearLayoutManager(mContext));
         rvYisheng.setAdapter(adapter);
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                YiShengZhuYeActivity.actionStart(mContext);
+            }
+        });
     }
 
     @OnClick({R.id.iv_back, R.id.ll_search, R.id.iv_zixun_mianfei, R.id.iv_zixun_zhuanjia, R.id.iv_zixun_dianhua, R.id.iv_zixun_menzhen, R.id.iv_zixun_wode})
@@ -88,17 +95,22 @@ public class ZaixianyishengActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.ll_search:
+                KeShiLieBiaoSearchActivity.actionStart(mContext);
                 break;
             case R.id.iv_zixun_mianfei:
-                KeShiLieBiaoActivity.actionStart(ZaixianyishengActivity.this);
+
                 break;
             case R.id.iv_zixun_zhuanjia:
+                JibingchaxunActivity.actionStart(mContext);
                 break;
             case R.id.iv_zixun_dianhua:
+
                 break;
             case R.id.iv_zixun_menzhen:
+                KeShiLieBiaoActivity.actionStart(mContext);
                 break;
             case R.id.iv_zixun_wode:
+                YiyangTuTActivity.actionStart(mContext, R.mipmap.act_zaixianyisheng);
                 break;
         }
     }

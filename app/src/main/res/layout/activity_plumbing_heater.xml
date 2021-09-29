@@ -267,20 +267,7 @@
 
                         </com.yiyang.cn.view.ArcProgressBar>
 
-                        <ImageView
-                            android:layout_width="140dp"
-                            android:layout_height="140dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/shuinuan_neiihuan" />
-
-                        <Button
-                            android:id="@+id/btn_heater_close"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="1dp"
-                            android:background="@drawable/bg_heater_close_btn_off" />
-                    </FrameLayout>
+                       </FrameLayout>
                 </androidx.percentlayout.widget.PercentRelativeLayout>
 
 

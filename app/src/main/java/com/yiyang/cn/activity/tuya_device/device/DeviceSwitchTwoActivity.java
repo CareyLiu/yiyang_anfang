@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.tuya_device.TuyaBaseDeviceActivity;
 import com.yiyang.cn.activity.tuya_device.device.tongyong.DeviceDingshiActivity;
 import com.yiyang.cn.activity.tuya_device.utils.TuyaDialogUtils;

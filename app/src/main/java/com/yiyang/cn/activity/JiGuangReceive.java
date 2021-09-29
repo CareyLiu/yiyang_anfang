@@ -3,9 +3,8 @@ package com.yiyang.cn.activity;
 import android.content.Context;
 import android.util.Log;
 
-import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.zhinengjiaju.function.MenCiActivity;
 import com.yiyang.cn.app.AppManager;
 import com.yiyang.cn.app.ConstanceValue;

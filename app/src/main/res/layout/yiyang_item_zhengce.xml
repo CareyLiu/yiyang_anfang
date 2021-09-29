@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingHorizontal="30pt">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="43pt"
+            android:layout_toLeftOf="@id/iv_img"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="第九届世界华侨华人社团联谊大会部分代表参访上海中共上海市委常委"
+            android:textSize="35pt" />
+
+        <ImageView
+            android:id="@+id/iv_img"
+            android:layout_width="211pt"
+            android:layout_height="132pt"
+            android:layout_alignParentRight="true"
+            android:scaleType="fitXY"
+            android:src="@mipmap/banner_2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_img"
+            android:layout_marginTop="18pt"
+            android:layout_marginBottom="28pt"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="51pt"
+                android:layout_height="21pt"
+                android:layout_marginRight="13pt"
+                android:background="@drawable/yiyang_zhiding_bg"
+                android:gravity="center"
+                android:text="置顶"
+                android:textColor="@color/red"
+                android:textSize="17pt" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="13pt"
+                android:includeFontPadding="false"
+                android:text="央视新闻网"
+                android:textColor="@color/color_3"
+                android:textSize="23pt" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:includeFontPadding="false"
+                android:text="阅读22346"
+                android:textColor="@color/color_9"
+                android:textSize="17pt" />
+
+            <ImageView
+                android:layout_width="27pt"
+                android:layout_height="27pt"
+                android:layout_marginRight="10pt"
+                android:src="@mipmap/yiyang_pinglun" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="13pt"
+                android:includeFontPadding="false"
+                android:text="659评论"
+                android:textColor="@color/color_9"
+                android:textSize="17pt" />
+
+            <ImageView
+                android:layout_width="27pt"
+                android:layout_height="27pt"
+                android:layout_marginRight="10pt"
+                android:src="@mipmap/yiyang_dianzan" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="234点赞"
+                android:textColor="@color/color_9"
+                android:textSize="17pt" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
+
+

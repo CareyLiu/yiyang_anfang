@@ -23,7 +23,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yiyang.cn.R;
 import com.yiyang.cn.activity.fenxiang_tuisong.ShareActivity;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.tongcheng58.model.ShangjiaDetailModel;
 import com.yiyang.cn.app.App;
 import com.yiyang.cn.app.BaseActivity;

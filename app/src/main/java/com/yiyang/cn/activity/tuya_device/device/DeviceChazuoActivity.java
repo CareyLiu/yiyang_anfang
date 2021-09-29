@@ -20,7 +20,7 @@ import com.bigkoo.pickerview.view.TimePickerView;
 import com.gyf.barlibrary.ImmersionBar;
 
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.tuya_device.TuyaBaseDeviceActivity;
 import com.yiyang.cn.activity.tuya_device.device.tongyong.DeviceDingshiActivity;
 import com.yiyang.cn.activity.tuya_device.device.tongyong.DeviceSetActivity;
@@ -28,7 +28,7 @@ import com.yiyang.cn.activity.tuya_device.utils.TuyaConfig;
 import com.yiyang.cn.activity.tuya_device.utils.TuyaDialogUtils;
 import com.yiyang.cn.activity.tuya_device.utils.manager.TuyaDeviceManager;
 import com.yiyang.cn.activity.tuya_device.utils.manager.TuyaHomeManager;
-import com.yiyang.cn.activity.wode_page.bazinew.utils.TimeUtils;
+import com.yiyang.cn.util.TimeUtils;
 import com.yiyang.cn.app.ConstanceValue;
 import com.yiyang.cn.app.Notice;
 import com.yiyang.cn.app.RxBus;

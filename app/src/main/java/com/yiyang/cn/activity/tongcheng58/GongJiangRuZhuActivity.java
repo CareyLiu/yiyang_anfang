@@ -30,7 +30,7 @@ import com.orhanobut.logger.Logger;
 import com.yiyang.cn.R;
 import com.yiyang.cn.activity.DefaultX5WebView_HaveNameActivity;
 import com.yiyang.cn.activity.ShuRuInterView;
-import com.yiyang.cn.activity.shuinuan.Y;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.activity.tongcheng58.model.TcUpLoadModel;
 import com.yiyang.cn.adapter.XiangQingTuAdapter;
 import com.yiyang.cn.app.AppConfig;
@@ -68,7 +68,6 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import retrofit2.http.Url;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 

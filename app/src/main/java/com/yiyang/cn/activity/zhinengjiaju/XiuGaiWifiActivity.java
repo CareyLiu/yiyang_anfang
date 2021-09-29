@@ -1,20 +1,14 @@
 package com.yiyang.cn.activity.zhinengjiaju;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,34 +16,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.espressif.iot.esptouch.EsptouchTask;
-import com.espressif.iot.esptouch.IEsptouchResult;
-import com.espressif.iot.esptouch.IEsptouchTask;
-import com.espressif.iot.esptouch.util.ByteUtil;
-import com.espressif.iot.esptouch.util.TouchNetUtil;
 import com.flyco.roundview.RoundLinearLayout;
 import com.flyco.roundview.RoundRelativeLayout;
-import com.google.gson.Gson;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.model.Response;
 import com.rairmmd.andmqtt.AndMqtt;
-import com.rairmmd.andmqtt.MqttSubscribe;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.shuinuan.Y;
-import com.yiyang.cn.activity.zhinengjiaju.peinet.EspTouchActivityAbsBase;
 import com.yiyang.cn.activity.zhinengjiaju.peinet.PeiWangHelpActivity;
 import com.yiyang.cn.activity.zhinengjiaju.peinet.v1.EspTouchActivity;
 import com.yiyang.cn.adapter.OneImageAdapter;
@@ -57,43 +36,25 @@ import com.yiyang.cn.app.AppConfig;
 import com.yiyang.cn.app.BaseActivity;
 import com.yiyang.cn.app.ConstanceValue;
 import com.yiyang.cn.app.Notice;
-import com.yiyang.cn.app.RxBus;
 import com.yiyang.cn.app.UIHelper;
-import com.yiyang.cn.callback.JsonCallback;
 import com.yiyang.cn.common.StringUtils;
-import com.yiyang.cn.config.AppResponse;
-import com.yiyang.cn.config.MyApplication;
 import com.yiyang.cn.config.PreferenceHelper;
-import com.yiyang.cn.config.UserManager;
 import com.yiyang.cn.dialog.newdia.TishiDialog;
-import com.yiyang.cn.dialog.newdia.TishiPhoneDialog;
-import com.yiyang.cn.get_net.Urls;
-import com.yiyang.cn.model.Message;
 import com.yiyang.cn.model.PeiwangOtherModel;
-import com.yiyang.cn.model.TianJiaZhuJiMoel;
-import com.yiyang.cn.model.ZhiNengFamilyEditBean;
 import com.yiyang.cn.model.ZhiNengJiaJu_0007Model;
 import com.yiyang.cn.model.ZhiNengJiaJu_0009Model;
 import com.yiyang.cn.mqtt_zhiling.NewZhiNengJiajuMqttMingLing;
 import com.yiyang.cn.mqtt_zhiling.ZnjjMqttMingLing;
-import com.tuya.smart.ipc.recognition.view.IFaceAddedServiceStatueView;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-
-import static com.yiyang.cn.app.ConstanceValue.MSG_PEIWANG_SUCCESS;
-import static com.yiyang.cn.get_net.Urls.SERVER_URL;
-import static com.yiyang.cn.get_net.Urls.ZHINENGJIAJU;
 
 public class XiuGaiWifiActivity extends BaseActivity {
 

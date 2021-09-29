@@ -2,43 +2,20 @@ package com.yiyang.cn.util;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.os.Handler;
-import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
-
-import com.google.gson.Gson;
 
 import com.iflytek.aiui.AIUIAgent;
 import com.iflytek.aiui.AIUIConstant;
 import com.iflytek.aiui.AIUIEvent;
 import com.iflytek.aiui.AIUIListener;
-import com.iflytek.aiui.AIUIMessage;
-import com.rairmmd.andmqtt.AndMqtt;
-import com.rairmmd.andmqtt.MqttPublish;
-import com.yiyang.cn.app.AppConfig;
-import com.yiyang.cn.app.ConstanceValue;
-import com.yiyang.cn.app.Notice;
-import com.yiyang.cn.app.RxBus;
-import com.yiyang.cn.app.UIHelper;
-import com.yiyang.cn.common.StringUtils;
-import com.yiyang.cn.config.PreferenceHelper;
-import com.yiyang.cn.model.DongTaiShiTiModel;
-import com.yiyang.cn.model.ResultModel;
 
-import org.eclipse.paho.client.mqttv3.IMqttActionListener;
-import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
 
-import static com.yiyang.cn.activity.shuinuan.Y.getResources;
-import static com.yiyang.cn.config.MyApplication.CAR_NOTIFY;
+import static com.yiyang.cn.util.Y.getResources;
 
 public class ShangChuanDongTaiShiTiTool {
 

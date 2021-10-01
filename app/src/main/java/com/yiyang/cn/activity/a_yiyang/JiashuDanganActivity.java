@@ -4,20 +4,37 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 
+import com.alibaba.fastjson.JSON;
 import com.yiyang.cn.R;
+import com.yiyang.cn.activity.a_yiyang.adapter.JiashuAdapter;
+import com.yiyang.cn.activity.a_yiyang.model.JiashuModel;
+import com.yiyang.cn.app.AppConfig;
 import com.yiyang.cn.app.BaseActivity;
+import com.yiyang.cn.app.ConstanceValue;
+import com.yiyang.cn.app.Notice;
+import com.yiyang.cn.config.PreferenceHelper;
+import com.yiyang.cn.inter.OnItemClickListener;
+import com.yiyang.cn.util.Y;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 public class JiashuDanganActivity extends BaseActivity {
 
 
-    @BindView(R.id.ll_dianji)
-    LinearLayout ll_dianji;
+    @BindView(R.id.rv_content)
+    RecyclerView rv_content;
+
+    private List<JiashuModel> jiashuModels;
+    private JiashuAdapter adapter;
 
     @Override
     public int getContentViewResId() {
@@ -67,11 +84,48 @@ public class JiashuDanganActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+        initData();
+        initHuidiao();
+        initAdapter();
     }
 
-    @OnClick(R.id.ll_dianji)
-    public void onViewClicked() {
+    private void initAdapter() {
+        adapter = new JiashuAdapter(mContext, jiashuModels);
+        rv_content.setLayoutManager(new LinearLayoutManager(mContext));
+        rv_content.setAdapter(adapter);
+        adapter.setListener(new OnItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                JiashuModel model = jiashuModels.get(position);
+            }
+        });
+    }
 
 
+    private void initData() {
+        String jiashudanganString = PreferenceHelper.getInstance(mContext).getString(AppConfig.YIYANG_GET_JIASHUDANGAN, "");
+        Y.e("我获取到的数据是什么呢  " + jiashudanganString);
+        jiashuModels = JSON.parseArray(jiashudanganString, JiashuModel.class);
+        if (jiashuModels != null && jiashuModels.size() > 0) {
+
+        } else {
+            jiashuModels = new ArrayList<>();
+        }
+    }
+
+    private void initHuidiao() {
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_YIYANG_ADDJIAREN) {
+                    JiashuModel modelNew = (JiashuModel) message.content;
+                    jiashuModels.add(modelNew);
+                    adapter.setJiashuModels(jiashuModels);
+                    String jiashudanganString = JSON.toJSONString(jiashuModels);
+                    Y.e("我保存的数据是什么呢  " + jiashudanganString);
+                    PreferenceHelper.getInstance(mContext).putString(AppConfig.YIYANG_GET_JIASHUDANGAN, jiashudanganString);
+                }
+            }
+        }));
     }
 }

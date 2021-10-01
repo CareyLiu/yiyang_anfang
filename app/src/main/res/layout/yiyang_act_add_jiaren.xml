@@ -14,7 +14,6 @@
         android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/rl_head"
             android:layout_width="match_parent"
             android:layout_height="96pt"
             android:paddingHorizontal="20pt">
@@ -25,7 +24,7 @@
                 android:layout_centerVertical="true"
                 android:text="照片"
                 android:textColor="@color/color_2"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
             <ImageView
                 android:id="@+id/iv_head"
@@ -50,18 +49,19 @@
                 android:layout_height="wrap_content"
                 android:text="姓名"
                 android:textColor="@color/color_2"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
-            <EditText
+            <TextView
+                android:id="@+id/tv_name"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@null"
                 android:gravity="center_vertical|right"
                 android:hint="请输入姓名"
                 android:textColor="@color/color_9"
                 android:textColorHint="@color/color_9"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
         </LinearLayout>
 
         <include layout="@layout/view_line" />
@@ -77,18 +77,48 @@
                 android:layout_height="wrap_content"
                 android:text="性别"
                 android:textColor="@color/color_2"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
-            <EditText
+            <TextView
+                android:id="@+id/tv_sex"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@null"
                 android:gravity="center_vertical|right"
-                android:hint="请输入性别"
+                android:hint="请选择性别"
                 android:textColor="@color/color_9"
                 android:textColorHint="@color/color_9"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
+        </LinearLayout>
+
+        <include layout="@layout/view_line" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="96pt"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="20pt">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="年龄"
+                android:textColor="@color/color_2"
+                android:textSize="27pt" />
+
+            <TextView
+                android:id="@+id/tv_age"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical|right"
+                android:hint="请输入年龄"
+                android:textColor="@color/color_9"
+                android:textColorHint="@color/color_9"
+                android:textSize="27pt" />
         </LinearLayout>
 
         <include layout="@layout/view_line" />
@@ -104,18 +134,19 @@
                 android:layout_height="wrap_content"
                 android:text="身份证号"
                 android:textColor="@color/color_2"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
-            <EditText
+            <TextView
+                android:id="@+id/tv_id_card"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@null"
                 android:gravity="center_vertical|right"
                 android:hint="请输入身份证号"
                 android:textColor="@color/color_9"
                 android:textColorHint="@color/color_9"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
         </LinearLayout>
 
         <include layout="@layout/view_line" />
@@ -129,20 +160,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="年龄"
+                android:text="手机号"
                 android:textColor="@color/color_2"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
-            <EditText
+            <TextView
+                android:id="@+id/tv_phone"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@null"
                 android:gravity="center_vertical|right"
-                android:hint="请输入年龄"
+                android:hint="请输入手机号"
                 android:textColor="@color/color_9"
                 android:textColorHint="@color/color_9"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
         </LinearLayout>
 
         <include layout="@layout/view_line" />
@@ -156,24 +188,24 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="配偶"
+                android:text="关系"
                 android:textColor="@color/color_2"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
-            <EditText
+            <TextView
+                android:id="@+id/tv_guanxi"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@null"
                 android:gravity="center_vertical|right"
-                android:hint="请输入配偶姓名"
+                android:hint="请输入与测评人关系"
                 android:textColor="@color/color_9"
                 android:textColorHint="@color/color_9"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
         </LinearLayout>
 
         <include layout="@layout/view_line" />
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -186,18 +218,19 @@
                 android:layout_height="wrap_content"
                 android:text="身高"
                 android:textColor="@color/color_2"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
-            <EditText
+            <TextView
+                android:id="@+id/tv_shengao"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@null"
                 android:gravity="center_vertical|right"
-                android:hint="请输入身高"
+                android:hint="请输入身高(cm)"
                 android:textColor="@color/color_9"
                 android:textColorHint="@color/color_9"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
         </LinearLayout>
 
         <include layout="@layout/view_line" />
@@ -211,25 +244,111 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="体重"
+                android:textColor="@color/color_2"
+                android:textSize="27pt" />
+
+            <TextView
+                android:id="@+id/tv_tizhong"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical|right"
+                android:hint="请输入体重(kg)"
+                android:textColor="@color/color_9"
+                android:textColorHint="@color/color_9"
+                android:textSize="27pt" />
+        </LinearLayout>
+
+        <include layout="@layout/view_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="96pt"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="20pt">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="血型"
+                android:textColor="@color/color_2"
+                android:textSize="27pt" />
+
+            <TextView
+                android:id="@+id/tv_xuexing"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical|right"
+                android:hint="请选择血型"
+                android:textColor="@color/color_9"
+                android:textColorHint="@color/color_9"
+                android:textSize="27pt" />
+        </LinearLayout>
+
+        <include layout="@layout/view_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="96pt"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="20pt">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="婚姻状况"
+                android:textColor="@color/color_2"
+                android:textSize="27pt" />
+
+            <TextView
+                android:id="@+id/tv_hunyinzhuangkuang"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical|right"
+                android:hint="请选择婚姻状况"
+                android:textColor="@color/color_9"
+                android:textColorHint="@color/color_9"
+                android:textSize="27pt" />
+        </LinearLayout>
+
+        <include layout="@layout/view_line" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="96pt"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="20pt">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="兴趣爱好"
                 android:textColor="@color/color_2"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
-            <EditText
+            <TextView
+                android:id="@+id/tv_aihao"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@null"
                 android:gravity="center_vertical|right"
                 android:hint="请输入兴趣爱好"
                 android:textColor="@color/color_9"
                 android:textColorHint="@color/color_9"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
         </LinearLayout>
     </LinearLayout>
 
     <TextView
-        android:id="@+id/bt_login_out"
+        android:id="@+id/bt_save"
         android:layout_width="match_parent"
         android:layout_height="76pt"
         android:layout_marginHorizontal="72pt"
@@ -238,5 +357,5 @@
         android:gravity="center"
         android:text="保存"
         android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:textSize="35pt" />
 </LinearLayout>

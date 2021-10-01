@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app">
+
+
+    <ImageView
+        android:id="@+id/iv_head"
+        android:layout_width="134pt"
+        android:layout_height="134pt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="19pt" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="29pt"
+        android:layout_marginTop="86pt"
+        android:background="@drawable/yiyang_bg_white_radius_10"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="19pt"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_shenfen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10pt"
+                android:includeFontPadding="false"
+                android:text="父亲"
+                android:textColor="@color/color_9"
+                android:textSize="27pt" />
+
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="李老弟"
+                android:textColor="@color/color_3"
+                android:textSize="35pt"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="38pt"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="19pt">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:includeFontPadding="false"
+                android:text="年龄"
+                android:textColor="@color/color_9"
+                android:textSize="27pt" />
+
+            <TextView
+                android:id="@+id/tv_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="28"
+                android:textColor="@color/color_3"
+                android:textSize="27pt" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="38pt"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="19pt">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:includeFontPadding="false"
+                android:text=""
+                android:textColor="@color/color_9"
+                android:textSize="27pt" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

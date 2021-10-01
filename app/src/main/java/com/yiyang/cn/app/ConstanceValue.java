@@ -189,6 +189,10 @@ public interface ConstanceValue {
 
     int MSG_NETWORK_CHANGE = 0x10140;//网络监听发生变化
 
-    int MSG_SHOUYELIEBIAO = 0x10141;//智能家居设备列表
+
+
+    int MSG_YIYANG_ADDJIAREN = 0x10141;//添加家人成功
+
+
 
 }

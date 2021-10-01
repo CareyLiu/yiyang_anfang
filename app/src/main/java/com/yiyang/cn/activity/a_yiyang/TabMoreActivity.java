@@ -99,7 +99,7 @@ public class TabMoreActivity extends BaseActivity {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+                ZhengceDetailsActivity.actionStart(mContext);
             }
         });
     }
@@ -151,6 +151,13 @@ public class TabMoreActivity extends BaseActivity {
                         break;
                     case 11:
                         FuwuZhujiActivity.actionStart(mContext, "助急服务");
+                        break;
+                    case 12:
+                        break;
+                    case 13:
+                        ErtongjiuzhuActivity.actionStart(mContext);
+                        break;
+                    case 14:
                         break;
                 }
             }

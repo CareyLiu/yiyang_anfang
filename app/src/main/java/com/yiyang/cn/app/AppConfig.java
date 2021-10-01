@@ -301,4 +301,8 @@ public class AppConfig {
     public final static String FONT_SETTINGS="font_settings";
     public final static String FONT_DA="font_da";
     public final static String FONT_XIAO="font_xiao";
+
+
+
+    public final static String YIYANG_GET_JIASHUDANGAN = "YIYANG_GET_JIASHUDANGAN";
 }

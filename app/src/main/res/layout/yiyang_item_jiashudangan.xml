@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/ll_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -39,12 +40,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="13pt"
                         android:includeFontPadding="false"
-                        android:text="父亲"
+                        android:text="姓名（父亲）"
                         android:textColor="@color/color_3"
                         android:textSize="35pt"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tv_pinggu"
                         android:layout_width="58pt"
                         android:layout_height="23pt"
                         android:background="@drawable/yiyang_yipinggu"

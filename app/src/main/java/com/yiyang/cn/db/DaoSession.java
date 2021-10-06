@@ -35,7 +35,7 @@ public class DaoSession extends AbstractDaoSession {
 
         registerDao(HistoryRecord.class, historyRecordDao);
     }
-    
+
     public void clear() {
         historyRecordDaoConfig.clearIdentityScope();
     }

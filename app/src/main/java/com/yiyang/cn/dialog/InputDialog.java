@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.yiyang.cn.R;
+import com.yiyang.cn.util.Y;
 
 
 public class InputDialog extends Dialog implements View.OnClickListener {

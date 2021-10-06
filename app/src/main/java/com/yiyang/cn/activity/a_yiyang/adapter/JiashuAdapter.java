@@ -5,23 +5,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.a_yiyang.model.AnfangModel;
 import com.yiyang.cn.activity.a_yiyang.model.JiashuModel;
-import com.yiyang.cn.config.MyApplication;
 import com.yiyang.cn.inter.OnItemClickListener;
-import com.yiyang.cn.util.Y;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class JiashuAdapter extends RecyclerView.Adapter<JiashuAdapter.JiashuViewHolder> {
@@ -56,7 +51,7 @@ public class JiashuAdapter extends RecyclerView.Adapter<JiashuAdapter.JiashuView
         if (jiashuModels != null && jiashuModels.size() > position) {
             JiashuModel model = jiashuModels.get(position);
             Glide.with(context)
-                    .load(model.getImgPath())
+                    .load(model.getHeadImgPath())
                     .apply(RequestOptions.circleCropTransform())
                     .into(holder.iv_head);
 
@@ -76,6 +71,22 @@ public class JiashuAdapter extends RecyclerView.Adapter<JiashuAdapter.JiashuView
                     }
                 }
             });
+
+            holder.ll_main.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onClick(holder.ll_main, position);
+                    }
+                }
+            });
+
+            boolean pinggu = model.isPinggu();
+            if (pinggu){
+                holder.tv_pinggu.setVisibility(View.VISIBLE);
+            }else {
+                holder.tv_pinggu.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -87,13 +98,17 @@ public class JiashuAdapter extends RecyclerView.Adapter<JiashuAdapter.JiashuView
     protected class JiashuViewHolder extends RecyclerView.ViewHolder {
         private ImageView iv_head;
         private TextView tv_name;
+        private TextView tv_pinggu;
         private View view_line;
+        private LinearLayout ll_main;
 
         public JiashuViewHolder(@NonNull View itemView) {
             super(itemView);
             iv_head = itemView.findViewById(R.id.iv_head);
             tv_name = itemView.findViewById(R.id.tv_name);
+            tv_pinggu = itemView.findViewById(R.id.tv_pinggu);
             view_line = itemView.findViewById(R.id.view_line);
+            ll_main = itemView.findViewById(R.id.ll_main);
         }
     }
 }

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_head"
+                android:layout_width="86pt"
+                android:layout_height="86pt"
+                android:layout_marginLeft="29pt"
+                android:layout_marginTop="29pt"
+                android:src="@mipmap/touxiangnan" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_head"
+                android:layout_marginLeft="29pt"
+                android:layout_marginTop="19pt"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="27pt"
+                    android:layout_height="27pt"
+                    android:layout_marginRight="5pt"
+                    android:background="@drawable/yiyang_state_zaixian"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="在线"
+                    android:textColor="@color/color_3"
+                    android:textSize="23pt" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="29pt"
+                android:layout_toRightOf="@id/iv_head"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="19pt"
+                    android:includeFontPadding="false"
+                    android:text="姓名"
+                    android:textColor="@color/color_3"
+                    android:textSize="35pt" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10pt"
+                    android:includeFontPadding="false"
+                    android:text="哈尔滨市 南岗区 执业3年"
+                    android:textColor="@color/color_3"
+                    android:textSize="23pt" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10pt"
+                    android:includeFontPadding="false"
+                    android:text="哈尔滨市 南岗区 执业3年"
+                    android:textColor="@color/color_3"
+                    android:textSize="23pt" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10pt"
+                    android:includeFontPadding="false"
+                    android:text="服务 524人     评价 524人"
+                    android:textColor="@color/color_3"
+                    android:textSize="23pt" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="144pt"
+                android:layout_height="56pt"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30pt"
+                android:background="@drawable/bt_login_denglu"
+                android:gravity="center"
+                android:text="咨询他"
+                android:textColor="@color/white"
+                android:textSize="35pt" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/view_line"
+            android:layout_width="match_parent"
+            android:layout_height="1pt"
+            android:layout_marginHorizontal="44pt"
+            android:layout_marginTop="29pt"
+            android:background="@color/line" />
+    </LinearLayout>
+</LinearLayout>
+
+

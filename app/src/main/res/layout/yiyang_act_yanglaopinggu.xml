@@ -18,6 +18,7 @@
 
 
             <TextView
+                android:id="@+id/tv_pinggu"
                 android:layout_width="480pt"
                 android:layout_height="480pt"
                 android:layout_gravity="center_horizontal"

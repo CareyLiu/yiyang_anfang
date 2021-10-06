@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="311pt"
+        android:layout_height="252pt"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="36pt"
+        android:layout_marginBottom="36pt"
+        android:background="@mipmap/pingji"
+        android:gravity="center"
+        android:text="3级"
+        android:textColor="@color/white"
+        android:textSize="80pt"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="29pt">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="健康管理方案"
+            android:textColor="@color/color_3"
+            android:textSize="35pt"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15pt"
+            android:includeFontPadding="false"
+            android:text="饮食方案"
+            android:textColor="@color/color_main_yiyang"
+            android:textSize="27pt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="1、注意饮食搭配,营养均衡。"
+            android:textColor="@color/color_3"
+            android:textSize="23pt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="2、多吃各种蔬菜和水果,补充微量元素。"
+            android:textColor="@color/color_3"
+            android:textSize="23pt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="3、避免暴饮暴食,八九分饱即可。"
+            android:textColor="@color/color_3"
+            android:textSize="23pt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="水果方案"
+            android:textColor="@color/color_main_yiyang"
+            android:textSize="27pt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="多吃水果,补充营养元素。"
+            android:textColor="@color/color_3"
+            android:textSize="23pt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="运动方案"
+            android:textColor="@color/color_main_yiyang"
+            android:textSize="27pt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="1、参加轻到中度的锻炼,避免剧烈运动,避免劳累跟情绪过度紧张。"
+            android:textColor="@color/color_3"
+            android:textSize="23pt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="2、运动前做好热身运动,在运动的过程中最好有家属和朋友陪伴,中途有不适处应及时终止锻炼。"
+            android:textColor="@color/color_3"
+            android:textSize="23pt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="睡眠方案"
+            android:textColor="@color/color_main_yiyang"
+            android:textSize="27pt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="1、睡前避免情绪激动、环境吵闹、饮食过饱、吸烟、喝咖啡和吃巧克力。"
+            android:textColor="@color/color_3"
+            android:textSize="23pt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="2、睡觉姿势以右侧卧为好,注意睡眠的温度不要太低。"
+            android:textColor="@color/color_3"
+            android:textSize="23pt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="3、保证充足的睡眠。"
+            android:textColor="@color/color_3"
+            android:textSize="23pt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="生活习惯"
+            android:textColor="@color/color_main_yiyang"
+            android:textSize="27pt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="1、尽量减少主动吸烟和被动吸二手烟。"
+            android:textColor="@color/color_3"
+            android:textSize="23pt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="2、尽量避免饮酒。中医养生方案、保持身心愉悦, 健康养生。"
+            android:textColor="@color/color_3"
+            android:textSize="23pt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="其他事项"
+            android:textColor="@color/color_main_yiyang"
+            android:textSize="27pt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="减轻心理压力,保持心理平衡。"
+            android:textColor="@color/color_3"
+            android:textSize="23pt" />
+    </LinearLayout>
+</LinearLayout>

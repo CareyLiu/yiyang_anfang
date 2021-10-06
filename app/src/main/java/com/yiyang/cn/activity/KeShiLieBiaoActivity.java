@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.flyco.roundview.RoundRelativeLayout;
 import com.yiyang.cn.R;
 import com.yiyang.cn.activity.a_yiyang.activity.KeShiLieBiaoSearchActivity;
+
+import com.yiyang.cn.activity.a_yiyang.XuanZeYiShengActivity;
 import com.yiyang.cn.adapter.KeShiYouCeListAdapter;
 import com.yiyang.cn.adapter.KeShiZuoCeListAdapter;
 import com.yiyang.cn.app.BaseActivity;
@@ -197,6 +199,7 @@ public class KeShiLieBiaoActivity extends BaseActivity {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 UIHelper.ToastMessage(mContext, menZhenListStr.get(position).name);
+                XuanZeYiShengActivity.actionStart(mContext,menZhenListStr.get(position).name);
 
             }
         });

@@ -4,13 +4,6 @@ import android.content.Context;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
-/**
- * Author: hualw
- * Version: V1.0版本
- * Description:
- * Date: 2018/8/16
- * Email: 313312768@qq.com
- */
 public class DBManager {
     private final static String dbName = "mfang_consumer.db";
     private static DBManager mInstance;

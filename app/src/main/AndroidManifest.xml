@@ -1970,5 +1970,12 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustUnspecified"
             tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.XuanZeYiShengActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
     </application>
 </manifest>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.flyco.roundview.RoundRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="250pt"
+        android:layout_marginHorizontal="29pt"
+        android:layout_marginVertical="20pt"
+        app:rv_backgroundColor="@color/white"
+        app:rv_cornerRadius="10dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/cir_image"
+            android:layout_width="115pt"
+            android:layout_height="115pt"
+            android:layout_marginLeft="19pt"
+            android:layout_marginTop="17pt"
+            tools:background="@color/blue" />
+
+        <com.flyco.roundview.RoundRelativeLayout
+            android:layout_width="110pt"
+            app:rv_cornerRadius="10pt"
+            app:rv_backgroundColor="#018AFE"
+            android:layout_marginRight="48pt"
+            android:layout_height="48pt"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="19pt">
+            <TextView
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="挂号"
+                android:textColor="#ffffffff"
+                android:textSize="13sp"
+                />
+
+        </com.flyco.roundview.RoundRelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="11pt"
+            android:layout_toRightOf="@+id/cir_image"
+            android:orientation="vertical">
+
+            <RelativeLayout
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+
+                    android:id="@+id/daifuming"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="张大为"
+                    android:textColor="#ff1c1c1c"
+                    android:textSize="17dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12pt"
+                    android:layout_toRightOf="@+id/daifuming"
+                    android:text="医师"
+                    android:textColor="#ffa8a8a8"
+                    android:textSize="13sp" />
+
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="19pt"
+                android:text="骨科  哈尔滨医科大学附属第二医院"
+                android:textColor="#ffa8a8a8"
+                android:textSize="11.5sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18pt"
+                android:text="擅长：骨折  骨关节炎   腰椎间盘突出  颈椎病…"
+                android:textColor="#ffa8a8a8"
+                android:textSize="11.5sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="18pt"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="26pt"
+                    android:layout_height="26pt"
+                    android:src="@mipmap/yellow_star" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="9pt"
+                    android:text="5.0 ￥123  "
+                    android:textColor="#ffffa200"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥123  142人已咨询"
+                    android:textColor="#ffffa200"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18pt">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5pt"
+                    android:background="@drawable/qianlan_bac"
+                    android:text="骨科类优秀医生"
+                    android:textColor="#ff018afe"
+                    android:textSize="11sp">
+
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+    </com.flyco.roundview.RoundRelativeLayout>
+
+</LinearLayout>

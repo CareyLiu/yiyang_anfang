@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_line" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="384pt"
+                    android:layout_marginHorizontal="29pt"
+                    android:layout_marginTop="19pt"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/ertongjiushu" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18pt"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="30pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="已筹集 "
+                        android:textColor="@color/color_9"
+                        android:textSize="23pt" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="￥ "
+                        android:textColor="@color/red"
+                        android:textSize="23pt" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="155588"
+                        android:textColor="@color/red"
+                        android:textSize="27pt" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8pt"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="30pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="已献爱心 "
+                        android:textColor="@color/color_9"
+                        android:textSize="23pt" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="230323"
+                        android:textColor="@color/red"
+                        android:textSize="27pt" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30pt"
+                    android:layout_marginTop="20pt"
+                    android:layout_marginBottom="18pt"
+                    android:includeFontPadding="false"
+                    android:text="      在重庆市涪陵区一个偏僻乡村里，一间不满60平米的昏暗小屋，就是小杨一家四口的住所。母亲没有工作能力，弟弟还在蹒跚咿呀，一家人只有靠父亲务农维持生计。刚来到小杨家时，脏乱潮湿的环境让人颇为触动，不要说基本的卫生设施，整个屋子连一块肥皂也没有..."
+                    android:textColor="@color/color_9"
+                    android:textSize="23pt" />
+
+
+                <TextView
+                    android:layout_width="576pt"
+                    android:layout_height="76pt"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="21pt"
+                    android:background="@drawable/yiyang_bg_red_radius_10"
+                    android:gravity="center"
+                    android:text="捐款"
+                    android:textColor="@color/white"
+                    android:textSize="35pt" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10pt"
+                    android:background="@color/bg_app" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="29pt"
+                    android:layout_marginBottom="84pt"
+                    android:background="@drawable/yiyang_bg_white_radius_10" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <include layout="@layout/view_line" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="84pt">
+
+                <LinearLayout
+                    android:id="@+id/ll_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="56pt"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="29pt"
+                    android:layout_marginRight="60pt"
+                    android:layout_toLeftOf="@id/iv_pinglun"
+                    android:background="@drawable/yiyang_bg_grey_e9_radius_45"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="24pt"
+                        android:layout_height="24pt"
+                        android:layout_marginHorizontal="22pt"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/bianji_icon" />
+
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="想评论点什么..."
+                        android:textColor="@color/color_3"
+                        android:textColorHint="@color/color_3" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_fenxiang"
+                    android:layout_width="40pt"
+                    android:layout_height="40pt"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="29pt"
+                    android:src="@mipmap/fenxiang_icon" />
+
+
+                <ImageView
+                    android:id="@+id/iv_dianzan"
+                    android:layout_width="40pt"
+                    android:layout_height="40pt"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="48pt"
+                    android:layout_toLeftOf="@id/iv_fenxiang"
+                    android:src="@mipmap/shoucang_icon" />
+
+
+                <ImageView
+                    android:id="@+id/iv_pinglun"
+                    android:layout_width="40pt"
+                    android:layout_height="40pt"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="48pt"
+                    android:layout_toLeftOf="@id/iv_dianzan"
+                    android:src="@mipmap/xioaxi_icon" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

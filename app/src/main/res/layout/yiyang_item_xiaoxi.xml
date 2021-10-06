@@ -18,7 +18,8 @@
             android:id="@+id/iv_icon"
             android:layout_width="77pt"
             android:layout_height="77pt"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:src="@mipmap/home_pic_touxiang_man" />
 
         <TextView
             android:id="@+id/tv_name"

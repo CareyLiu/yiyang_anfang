@@ -1762,158 +1762,213 @@
 
         <!--    医养设置    -->
         <activity
-            android:name=".activity.a_yiyang.YySetAactivity"
-            android:configChanges="locale|keyboardHidden|orientation"
+            android:name=".activity.a_yiyang.activity.YySetAactivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
             tools:ignore="LockedOrientationActivity" />
 
 
         <!--    在线医生    -->
         <activity
-            android:name=".activity.a_yiyang.ZaixianyishengActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
+            android:name=".activity.a_yiyang.activity.ZaixianyishengActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".activity.a_yiyang.JibingchaxunActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
+            android:name=".activity.a_yiyang.activity.JibingchaxunActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".activity.a_yiyang.YiyangTuTActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
+            android:name=".activity.a_yiyang.activity.YiyangTuTActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
             tools:ignore="LockedOrientationActivity" />
 
 
         <activity
             android:name=".activity.KeShiLieBiaoActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".activity.a_yiyang.KeShiLieBiaoSearchActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
+            android:name=".activity.a_yiyang.activity.KeShiLieBiaoSearchActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".activity.a_yiyang.FuwuZhucanActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
+            android:name=".activity.a_yiyang.activity.FuwuZhucanActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".activity.a_yiyang.FuwuZhujiActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
+            android:name=".activity.a_yiyang.activity.FuwuZhujiActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".activity.a_yiyang.JigouyanglaoActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
+            android:name=".activity.a_yiyang.activity.JigouyanglaoActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".activity.a_yiyang.JigouyanglaoWdActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
+            android:name=".activity.a_yiyang.activity.JigouyanglaoWdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            tools:ignore="LockedOrientationActivity" />
-
-
-        <activity
-            android:name=".activity.a_yiyang.AddJiarenActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
             tools:ignore="LockedOrientationActivity" />
 
 
         <activity
-            android:name=".activity.a_yiyang.ZhujieActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
+            android:name=".activity.a_yiyang.activity.pinggu.AddJiarenActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
             tools:ignore="LockedOrientationActivity" />
 
 
         <activity
-            android:name=".activity.a_yiyang.ZhuyuActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
+            android:name=".activity.a_yiyang.activity.ZhujieActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
-            android:name=".activity.a_yiyang.ZhuxingActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
-            android:name=".activity.a_yiyang.JiashuDanganActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
-            android:name=".activity.a_yiyang.TabMoreActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
-            android:name=".activity.a_yiyang.ZhengceActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
-            android:name=".activity.a_yiyang.ShequyanglaoActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
-            android:name=".activity.a_yiyang.ShequhuodongActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
-            android:name=".activity.a_yiyang.YanglaopingguActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
             tools:ignore="LockedOrientationActivity" />
 
 
         <activity
-            android:name=".activity.a_yiyang.YiShengZhuYeActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
+            android:name=".activity.a_yiyang.activity.ZhuyuActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.activity.ZhuxingActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.activity.pinggu.JiashuDanganActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.activity.TabMoreActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.activity.ZhengceActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.activity.ShequyanglaoActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.activity.ShequhuodongActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.activity.pinggu.YanglaopingguActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
+            tools:ignore="LockedOrientationActivity" />
+
+
+        <activity
+            android:name=".activity.a_yiyang.activity.YiShengZhuYeActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.activity.ErtongjiuzhuActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.activity.ErtongjiuzhuDetailsActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.activity.ZhengceDetailsActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.activity.pinggu.JiashuDanganDetailsActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.activity.pinggu.PinggujieguoActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.activity.pinggu.EditJiarenActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.activity.ZhinengActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.a_yiyang.activity.falvfuwu.FalvfuwuActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
             tools:ignore="LockedOrientationActivity" />
     </application>
 </manifest>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/yiyang_bg_white_radius_10"
+        android:orientation="vertical"
+        android:paddingHorizontal="29pt"
+        android:paddingTop="19pt">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="50pt"
+                android:layout_height="50pt"
+                android:layout_marginRight="8pt"
+                android:src="@mipmap/home_pic_touxiang_man" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:includeFontPadding="false"
+                android:text="新闻小白"
+                android:textColor="@color/color_3"
+                android:textSize="27pt" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="2019-06-06"
+                android:textColor="@color/color_3"
+                android:textSize="23pt" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="18pt"
+            android:includeFontPadding="false"
+            android:text="      请献出自己的一份爱心帮助贫困山区的孩子们，帮助他们走出大山，去外面的世界看看。"
+            android:textColor="@color/color_3"
+            android:textSize="23pt" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1pt"
+            android:layout_marginHorizontal="15pt"
+            android:background="@color/line" />
+    </LinearLayout>
+</LinearLayout>

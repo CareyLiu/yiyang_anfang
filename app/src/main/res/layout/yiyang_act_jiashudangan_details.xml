@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="100pt"
+        android:layout_marginHorizontal="29pt"
+        android:layout_marginTop="86pt"
+        android:background="@drawable/yiyang_bg_white_radius_10" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="29pt"
+        android:layout_marginTop="86pt"
+        android:paddingTop="86pt">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="86pt"
+            android:background="@drawable/yiyang_bg_white_radius_10"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="19pt"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_shenfen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10pt"
+                    android:includeFontPadding="false"
+                    android:text="父亲"
+                    android:textColor="@color/color_9"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="李老弟"
+                    android:textColor="@color/color_3"
+                    android:textSize="35pt"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38pt"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="19pt">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="性别"
+                    android:textColor="@color/color_9"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:id="@+id/tv_sex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="28"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38pt"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="19pt">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="出生日期"
+                    android:textColor="@color/color_9"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:id="@+id/tv_birthday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="28"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38pt"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="19pt">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="手机号"
+                    android:textColor="@color/color_9"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:id="@+id/tv_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="28"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38pt"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="19pt">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="身高"
+                    android:textColor="@color/color_9"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:id="@+id/tv_shengao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="28"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38pt"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="19pt">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="体重"
+                    android:textColor="@color/color_9"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:id="@+id/tv_tizhong"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="28"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38pt"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="19pt">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="血型"
+                    android:textColor="@color/color_9"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:id="@+id/tv_xuexing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="28"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38pt"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="19pt">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="文化程度"
+                    android:textColor="@color/color_9"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:id="@+id/tv_wenhuachengdu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="28"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38pt"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="19pt">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="婚姻情况"
+                    android:textColor="@color/color_9"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:id="@+id/tv_hunyinzhuangkuang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="28"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38pt"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="19pt">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="职业情况"
+                    android:textColor="@color/color_9"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:id="@+id/tv_zhiyeqingkuang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="28"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38pt"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="19pt">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="是否具有养老保险"
+                    android:textColor="@color/color_9"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:id="@+id/tv_yanglaobaoxian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="28"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38pt"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="19pt">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="是否具有医疗保险"
+                    android:textColor="@color/color_9"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:id="@+id/tv_yiliaobaoxian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="28"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38pt"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="19pt">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="是否患有高血压或者服用过治疗高血压药物"
+                    android:textColor="@color/color_9"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:id="@+id/tv_gaoxueya"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="28"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38pt"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="19pt">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="是否具有心脏病或血管疾病"
+                    android:textColor="@color/color_9"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:id="@+id/tv_xinzangbing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="28"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38pt"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="19pt">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="是否饮酒"
+                    android:textColor="@color/color_9"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:id="@+id/tv_is_yinjiu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="28"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38pt"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="19pt">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="是否吸烟"
+                    android:textColor="@color/color_9"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:id="@+id/tv_is_xiya"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="28"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38pt"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="19pt">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="能否自理"
+                    android:textColor="@color/color_9"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:id="@+id/tv_is_zili"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="28"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38pt"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="19pt">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="行动能力"
+                    android:textColor="@color/color_9"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:id="@+id/tv_xingdongnengli"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="28"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38pt"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="19pt">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="语言能力"
+                    android:textColor="@color/color_9"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:id="@+id/tv_yuyannengli"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="28"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38pt"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="19pt">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="是否患有老年痴呆"
+                    android:textColor="@color/color_9"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:id="@+id/tv_is_chidai"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="28"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38pt"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="19pt">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="兴趣爱好"
+                    android:textColor="@color/color_9"
+                    android:textSize="27pt" />
+
+                <TextView
+                    android:id="@+id/tv_aihao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="28"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="38pt" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+    <ImageView
+        android:id="@+id/iv_head"
+        android:layout_width="134pt"
+        android:layout_height="134pt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="19pt"
+        android:src="@mipmap/touxiangnan" />
+</RelativeLayout>

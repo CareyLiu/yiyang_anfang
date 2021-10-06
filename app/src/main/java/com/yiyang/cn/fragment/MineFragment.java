@@ -25,7 +25,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yiyang.cn.R;
 import com.yiyang.cn.activity.DefaultX5WebViewActivity;
-import com.yiyang.cn.activity.a_yiyang.YySetAactivity;
+import com.yiyang.cn.activity.a_yiyang.activity.YySetAactivity;
 import com.yiyang.cn.activity.dingdan.MyOrderActivity;
 import com.yiyang.cn.activity.fenxiang_tuisong.TuanYouTuiGuangActivity;
 import com.yiyang.cn.activity.gouwuche.GouWuCheActivity;

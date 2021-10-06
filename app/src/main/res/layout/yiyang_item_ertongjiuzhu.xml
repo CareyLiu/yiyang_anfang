@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="29pt"
+        android:layout_marginTop="19pt"
+        android:background="@drawable/yiyang_bg_white_radius_10"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="384pt"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ertongjiushu" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15pt"
+            android:layout_marginTop="15pt"
+            android:includeFontPadding="false"
+            android:text="一根蜡烛点亮未来"
+            android:textColor="@color/color_3"
+            android:textSize="35pt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15pt"
+            android:includeFontPadding="false"
+            android:text="已献爱心25645"
+            android:textColor="@color/color_9"
+            android:textSize="23pt" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="84pt">
+
+            <TextView
+                android:layout_width="120pt"
+                android:layout_height="48pt"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15pt"
+                android:background="@drawable/yiyang_bg_red_radius_45"
+                android:gravity="center"
+                android:text="帮助TA"
+                android:textColor="@color/white"
+                android:textSize="27pt" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

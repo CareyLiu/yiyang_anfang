@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_line" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_main_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25pt"
+                    android:includeFontPadding="false"
+                    android:paddingHorizontal="30pt"
+                    android:text="第九届世界华侨华人社团联谊大会部分代表参访上海中共上海市委常委"
+                    android:textColor="@color/color_3"
+                    android:textSize="35pt" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40pt"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="30pt">
+
+
+                    <ImageView
+                        android:layout_width="65pt"
+                        android:layout_height="65pt"
+                        android:layout_marginRight="21pt"
+                        android:src="@mipmap/yangshixinwen" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="木子李 记者"
+                            android:textColor="@color/color_9"
+                            android:textSize="23pt" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5pt"
+                            android:includeFontPadding="false"
+                            android:text="2019-06-04   13:00   |  央视新闻网"
+                            android:textColor="@color/color_9"
+                            android:textSize="23pt" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="400pt"
+                    android:layout_marginHorizontal="29pt"
+                    android:layout_marginTop="19pt"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/a_img_banner_1" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="29pt"
+                    android:layout_marginTop="20pt"
+                    android:layout_marginBottom="18pt"
+                    android:includeFontPadding="false"
+                    android:text="     中新网上海5月31日电 (记者 许婧)中共上海市委常委、中共上海市委统战部部长、上海海外联谊会会长郑钢淼30日晚间在上海会见了来沪的第九届世界华侨华人社团联谊大会部分代表参访团。
+      中新网上海5月31日电 (记者 许婧)中共上海市委常委、中共上海市委统战部部长、上海海外联谊会会长郑钢淼30日晚间在上海会见了来沪的第九届世界华侨华人社团联谊大会部分代表参访团。"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="19pt"
+                    android:paddingHorizontal="29pt">
+
+                    <View
+                        android:layout_width="4dp"
+                        android:layout_height="30dp"
+                        android:layout_marginRight="10dp"
+                        android:background="#018AFE" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="优质评价 (5)"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="29pt"
+                    android:layout_marginBottom="84pt"
+                    android:background="@drawable/yiyang_bg_white_radius_10" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <include layout="@layout/view_line" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="84pt">
+
+                <LinearLayout
+                    android:id="@+id/ll_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="56pt"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="29pt"
+                    android:layout_marginRight="60pt"
+                    android:layout_toLeftOf="@id/iv_pinglun"
+                    android:background="@drawable/yiyang_bg_grey_e9_radius_45"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="24pt"
+                        android:layout_height="24pt"
+                        android:layout_marginHorizontal="22pt"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/bianji_icon" />
+
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="想评论点什么..."
+                        android:textColor="@color/color_3"
+                        android:textColorHint="@color/color_3" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_fenxiang"
+                    android:layout_width="40pt"
+                    android:layout_height="40pt"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="29pt"
+                    android:src="@mipmap/fenxiang_icon" />
+
+
+                <ImageView
+                    android:id="@+id/iv_dianzan"
+                    android:layout_width="40pt"
+                    android:layout_height="40pt"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="48pt"
+                    android:layout_toLeftOf="@id/iv_fenxiang"
+                    android:src="@mipmap/shoucang_icon" />
+
+
+                <ImageView
+                    android:id="@+id/iv_pinglun"
+                    android:layout_width="40pt"
+                    android:layout_height="40pt"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="48pt"
+                    android:layout_toLeftOf="@id/iv_dianzan"
+                    android:src="@mipmap/xioaxi_icon" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

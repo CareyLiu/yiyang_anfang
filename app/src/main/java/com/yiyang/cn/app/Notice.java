@@ -24,7 +24,7 @@ public class Notice {
     public Notice() {
     }
 
+    public int pinggu_id;
     public String devId;
-
     public String input_type;
 }

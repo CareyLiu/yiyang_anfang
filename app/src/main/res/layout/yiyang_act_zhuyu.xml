@@ -6,300 +6,311 @@
     android:orientation="vertical">
 
 
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="336pt"
-        android:layout_marginHorizontal="29pt"
-        android:layout_marginTop="19pt"
-        android:background="@mipmap/zhuyu">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="31pt"
-            android:layout_marginTop="29pt"
-            android:includeFontPadding="false"
-            android:text="上门助浴"
-            android:textColor="@color/white"
-            android:textSize="35pt"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tv_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="31pt"
-            android:layout_marginTop="81pt"
-            android:includeFontPadding="false"
-            android:text="上门服务，为老人提供助浴、皮肤护理、肌肉恢复性按摩等护理级服务，单次服务时长90分钟"
-            android:textColor="@color/white"
-            android:textSize="23pt" />
-
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="38pt"
-            android:layout_marginLeft="29pt"
-            android:layout_marginTop="28pt"
-            android:layout_below="@id/tv_content"
-            android:gravity="bottom"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="77pt"
-                android:layout_height="38pt"
-                android:background="@drawable/yiyang_bg_red_radius_10"
-                android:gravity="center"
-                android:text="价格"
-                android:textColor="@color/white"
-                android:textSize="23pt" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="336pt"
+                android:layout_marginHorizontal="29pt"
+                android:layout_marginTop="19pt"
+                android:background="@mipmap/zhuyu">
 
-            <TextView
-                android:layout_width="wrap_content"
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="31pt"
+                    android:layout_marginTop="29pt"
+                    android:includeFontPadding="false"
+                    android:text="上门助浴"
+                    android:textColor="@color/white"
+                    android:textSize="35pt"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="31pt"
+                    android:layout_marginTop="81pt"
+                    android:includeFontPadding="false"
+                    android:text="上门服务，为老人提供助浴、皮肤护理、肌肉恢复性按摩等护理级服务，单次服务时长90分钟"
+                    android:textColor="@color/white"
+                    android:textSize="23pt" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="38pt"
+                    android:layout_below="@id/tv_content"
+                    android:layout_marginLeft="29pt"
+                    android:layout_marginTop="28pt"
+                    android:gravity="bottom"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="77pt"
+                        android:layout_height="38pt"
+                        android:background="@drawable/yiyang_bg_red_radius_10"
+                        android:gravity="center"
+                        android:text="价格"
+                        android:textColor="@color/white"
+                        android:textSize="23pt" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="26pt"
+                        android:includeFontPadding="false"
+                        android:text="￥600.00"
+                        android:textColor="@color/white"
+                        android:textSize="30pt" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19pt"
+                        android:includeFontPadding="false"
+                        android:text="90分钟"
+                        android:textColor="@color/white"
+                        android:textSize="23pt" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="26pt"
-                android:includeFontPadding="false"
-                android:text="￥600.00"
-                android:textColor="@color/white"
-                android:textSize="30pt" />
+                android:orientation="vertical"
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="19pt"
-                android:includeFontPadding="false"
-                android:text="90分钟"
+                android:paddingHorizontal="29pt">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingVertical="18pt">
+
+                    <View
+                        android:layout_width="45pt"
+                        android:layout_height="4pt"
+                        android:layout_marginRight="35pt"
+                        android:background="@color/color_main_yiyang" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="服务流程"
+                        android:textColor="@color/black"
+                        android:textSize="30pt" />
+
+                    <View
+                        android:layout_width="45pt"
+                        android:layout_height="4pt"
+                        android:layout_marginLeft="35pt"
+                        android:background="@color/color_main_yiyang" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="88pt"
+                    android:layout_marginBottom="19pt"
+                    android:background="#D2E8FF">
+
+                    <TextView
+                        android:layout_width="46pt"
+                        android:layout_height="46pt"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="96pt"
+                        android:background="@drawable/yiyang_qiu_lan"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textColor="@color/white"
+                        android:textSize="23pt" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="线上预约"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="88pt"
+                    android:layout_marginBottom="19pt"
+                    android:background="#FFF1DE">
+
+                    <TextView
+                        android:layout_width="46pt"
+                        android:layout_height="46pt"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="96pt"
+                        android:background="@drawable/yiyang_qiu_huang"
+                        android:gravity="center"
+                        android:text="2"
+                        android:textColor="@color/white"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="预约确定、派单"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="88pt"
+                    android:layout_marginBottom="19pt"
+                    android:background="#D2E8FF">
+
+                    <TextView
+                        android:layout_width="46pt"
+                        android:layout_height="46pt"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="96pt"
+                        android:background="@drawable/yiyang_qiu_lan"
+                        android:gravity="center"
+                        android:text="3"
+                        android:textColor="@color/white"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="服务人员接单"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="88pt"
+                    android:layout_marginBottom="19pt"
+                    android:background="#FFF1DE">
+
+                    <TextView
+                        android:layout_width="46pt"
+                        android:layout_height="46pt"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="96pt"
+                        android:background="@drawable/yiyang_qiu_huang"
+                        android:gravity="center"
+                        android:text="4"
+                        android:textColor="@color/white"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="确定服务时间、地址"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="88pt"
+                    android:layout_marginBottom="19pt"
+                    android:background="#D2E8FF">
+
+                    <TextView
+                        android:layout_width="46pt"
+                        android:layout_height="46pt"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="96pt"
+                        android:background="@drawable/yiyang_qiu_lan"
+                        android:gravity="center"
+                        android:text="5"
+                        android:textColor="@color/white"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="服务人员上门签到"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="88pt"
+                    android:layout_marginBottom="19pt"
+                    android:background="#FFF1DE">
+
+                    <TextView
+                        android:layout_width="46pt"
+                        android:layout_height="46pt"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="96pt"
+                        android:background="@drawable/yiyang_qiu_huang"
+                        android:gravity="center"
+                        android:text="6"
+                        android:textColor="@color/white"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="提供服务"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="88pt"
+                    android:layout_marginBottom="19pt"
+                    android:background="#D2E8FF">
+
+                    <TextView
+                        android:layout_width="46pt"
+                        android:layout_height="46pt"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="96pt"
+                        android:background="@drawable/yiyang_qiu_lan"
+                        android:gravity="center"
+                        android:text="7"
+                        android:textColor="@color/white"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="客户验收服务结果"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/bt_login"
+                android:layout_width="match_parent"
+                android:layout_height="76pt"
+                android:layout_marginHorizontal="72pt"
+                android:layout_marginTop="19pt"
+                android:background="@drawable/bt_login_denglu"
+                android:text="立即预约"
                 android:textColor="@color/white"
-                android:textSize="23pt" />
+                android:textSize="36pt" />
         </LinearLayout>
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-
-        android:paddingHorizontal="29pt">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingVertical="18pt">
-
-            <View
-                android:layout_width="45pt"
-                android:layout_height="4pt"
-                android:layout_marginRight="35pt"
-                android:background="@color/color_main_yiyang" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:includeFontPadding="false"
-                android:text="服务流程"
-                android:textColor="@color/black"
-                android:textSize="27pt" />
-
-            <View
-                android:layout_width="45pt"
-                android:layout_height="4pt"
-                android:layout_marginLeft="35pt"
-                android:background="@color/color_main_yiyang" />
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="48pt"
-            android:layout_marginBottom="19pt"
-            android:background="#D2E8FF">
-
-            <TextView
-                android:layout_width="30pt"
-                android:layout_height="30pt"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="96pt"
-                android:background="@drawable/yiyang_qiu_lan"
-                android:gravity="center"
-                android:text="1"
-                android:textColor="@color/white"
-                android:textSize="23pt" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="线上预约"
-                android:textColor="@color/color_3"
-                android:textSize="23pt" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="48pt"
-            android:layout_marginBottom="19pt"
-            android:background="#FFF1DE">
-
-            <TextView
-                android:layout_width="30pt"
-                android:layout_height="30pt"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="96pt"
-                android:background="@drawable/yiyang_qiu_huang"
-                android:gravity="center"
-                android:text="2"
-                android:textColor="@color/white"
-                android:textSize="23pt" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="预约确定、派单"
-                android:textColor="@color/color_3"
-                android:textSize="23pt" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="48pt"
-            android:layout_marginBottom="19pt"
-            android:background="#D2E8FF">
-
-            <TextView
-                android:layout_width="30pt"
-                android:layout_height="30pt"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="96pt"
-                android:background="@drawable/yiyang_qiu_lan"
-                android:gravity="center"
-                android:text="3"
-                android:textColor="@color/white"
-                android:textSize="23pt" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="服务人员接单"
-                android:textColor="@color/color_3"
-                android:textSize="23pt" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="48pt"
-            android:layout_marginBottom="19pt"
-            android:background="#FFF1DE">
-
-            <TextView
-                android:layout_width="31pt"
-                android:layout_height="31pt"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="96pt"
-                android:background="@drawable/yiyang_qiu_huang"
-                android:gravity="center"
-                android:text="4"
-                android:textColor="@color/white"
-                android:textSize="23pt" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="确定服务时间、地址"
-                android:textColor="@color/color_3"
-                android:textSize="23pt" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="48pt"
-            android:layout_marginBottom="19pt"
-            android:background="#D2E8FF">
-
-            <TextView
-                android:layout_width="31pt"
-                android:layout_height="31pt"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="96pt"
-                android:background="@drawable/yiyang_qiu_lan"
-                android:gravity="center"
-                android:text="5"
-                android:textColor="@color/white"
-                android:textSize="23pt" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="服务人员上门签到"
-                android:textColor="@color/color_3"
-                android:textSize="23pt" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="48pt"
-            android:layout_marginBottom="19pt"
-            android:background="#FFF1DE">
-
-            <TextView
-                android:layout_width="30pt"
-                android:layout_height="30pt"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="96pt"
-                android:background="@drawable/yiyang_qiu_huang"
-                android:gravity="center"
-                android:text="6"
-                android:textColor="@color/white"
-                android:textSize="23pt" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="提供服务"
-                android:textColor="@color/color_3"
-                android:textSize="23pt" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="48pt"
-            android:layout_marginBottom="19pt"
-            android:background="#D2E8FF">
-
-            <TextView
-                android:layout_width="30pt"
-                android:layout_height="30pt"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="96pt"
-                android:background="@drawable/yiyang_qiu_lan"
-                android:gravity="center"
-                android:text="7"
-                android:textColor="@color/white"
-                android:textSize="23pt" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="客户验收服务结果"
-                android:textColor="@color/color_3"
-                android:textSize="23pt" />
-        </RelativeLayout>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/bt_login"
-        android:layout_width="match_parent"
-        android:layout_height="76pt"
-        android:layout_marginHorizontal="72pt"
-        android:layout_marginTop="19pt"
-        android:background="@drawable/bt_login_denglu"
-        android:text="注册/登录"
-        android:textColor="@color/white"
-        android:textSize="18sp" />
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

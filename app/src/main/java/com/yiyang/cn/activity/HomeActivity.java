@@ -43,10 +43,10 @@ import com.yiyang.cn.config.MyApplication;
 import com.yiyang.cn.config.PreferenceHelper;
 import com.yiyang.cn.config.UserManager;
 import com.yiyang.cn.dialog.newdia.TishiDialog;
-import com.yiyang.cn.activity.a_yiyang.frag.TabHomeFragment;
-import com.yiyang.cn.activity.a_yiyang.frag.TabShengxianFragment;
-import com.yiyang.cn.activity.a_yiyang.frag.TabWodeFragment;
-import com.yiyang.cn.activity.a_yiyang.frag.TabXiaoxiFragment;
+import com.yiyang.cn.activity.a_yiyang.fragment.TabHomeFragment;
+import com.yiyang.cn.activity.a_yiyang.fragment.TabShengxianFragment;
+import com.yiyang.cn.activity.a_yiyang.fragment.TabWodeFragment;
+import com.yiyang.cn.activity.a_yiyang.fragment.TabXiaoxiFragment;
 import com.yiyang.cn.fragment.znjj.ZhiNengJiaJuFragment;
 import com.yiyang.cn.get_net.Urls;
 import com.yiyang.cn.model.DongTaiShiTiZhuangTaiModel;
@@ -168,6 +168,8 @@ public class HomeActivity extends BaseActivity {
                     dognTaiShiTiUrl();
                 } else if (notice.type == ConstanceValue.MSG_XIUGAIDONGTAISHITIFINISH) {
                     xiuGaiDongTaiShiTiFinish();
+                } else if (notice.type == ConstanceValue.MSG_YIYANG_ZNJJ_BACK) {
+                    select(0);
                 }
             }
         }));

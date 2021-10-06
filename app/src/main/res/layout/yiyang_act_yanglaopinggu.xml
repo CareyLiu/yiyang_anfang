@@ -17,12 +17,17 @@
             android:orientation="vertical">
 
 
-            <ImageView
+            <TextView
+                android:id="@+id/tv_pinggu"
                 android:layout_width="480pt"
                 android:layout_height="480pt"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="38pt"
-                android:src="@mipmap/yanglaopinggu_kaishipingguyuanquan" />
+                android:background="@mipmap/yanglaopinggu_kaishipingguyuanquan"
+                android:gravity="center"
+                android:text="开始评估"
+                android:textColor="@color/white"
+                android:textSize="38pt" />
 
 
             <LinearLayout

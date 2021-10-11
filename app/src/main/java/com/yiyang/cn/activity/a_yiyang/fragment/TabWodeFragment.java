@@ -13,7 +13,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.yiyang.cn.R;
 import com.yiyang.cn.activity.a_yiyang.activity.pinggu.AddJiarenActivity;
-import com.yiyang.cn.activity.a_yiyang.activity.JigouyanglaoWdActivity;
+import com.yiyang.cn.activity.a_yiyang.activity.jigou.JigouyanglaoWdActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.YiyangTuTActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.YySetAactivity;
 import com.yiyang.cn.activity.dingdan.MyOrderActivity;

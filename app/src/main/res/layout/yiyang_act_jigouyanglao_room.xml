@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="29pt"
+                android:layout_marginTop="30pt"
+                android:background="@drawable/yiyang_bg_white_radius_10"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="288pt"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/yiyang_jigou_room_main" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70pt"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="19pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="18pt"
+                        android:includeFontPadding="false"
+                        android:text="单人间"
+                        android:textColor="@color/color_3"
+                        android:textSize="35pt" />
+
+                    <TextView
+                        android:layout_width="124pt"
+                        android:layout_height="38pt"
+                        android:layout_marginRight="12pt"
+                        android:background="@drawable/yiyang_room_zhekou"
+                        android:gravity="center"
+                        android:text="活动8折"
+                        android:textColor="@color/white"
+                        android:textSize="23pt" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="仅限双十一，先到先得，原价8888"
+                        android:textColor="@color/color_3"
+                        android:textSize="23pt" />
+                </LinearLayout>
+
+                <include layout="@layout/view_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70pt"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="19pt">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="8pt"
+                            android:includeFontPadding="false"
+                            android:text="面积"
+                            android:textColor="@color/color_3"
+                            android:textSize="27pt" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="8pt"
+                            android:includeFontPadding="false"
+                            android:text="40.00㎡"
+                            android:textColor="@color/color_9"
+                            android:textSize="27pt" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="8pt"
+                            android:includeFontPadding="false"
+                            android:text="房数"
+                            android:textColor="@color/color_3"
+                            android:textSize="27pt" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="8pt"
+                            android:includeFontPadding="false"
+                            android:text="0"
+                            android:textColor="@color/color_9"
+                            android:textSize="27pt" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="29pt"
+                android:layout_marginTop="19pt"
+                android:background="@drawable/yiyang_bg_white_radius_10"
+                android:orientation="vertical"
+                android:paddingHorizontal="18pt">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="19pt"
+                    android:includeFontPadding="false"
+                    android:text="房间详情"
+                    android:textColor="@color/color_3"
+                    android:textSize="35pt" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10pt"
+                    android:layout_marginBottom="16pt"
+                    android:includeFontPadding="false"
+                    android:text="      房间可供二人居住，通风良好、光线明亮、智能门禁、网络电视、无线网络WIFI、储物柜、通道宽敞、紧急呼叫系统、独立卫生间、24小时热水、会客厅、办公桌、空调暖气、防滑地板，轻松拎包入住。"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="29pt"
+                android:layout_marginTop="19pt"
+                android:layout_marginBottom="90pt"
+                android:background="@drawable/yiyang_bg_white_radius_10"
+                android:orientation="vertical"
+                android:paddingHorizontal="18pt">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="19pt"
+                    android:layout_marginBottom="18pt"
+                    android:includeFontPadding="false"
+                    android:text="房间设施"
+                    android:textColor="@color/color_3"
+                    android:textSize="35pt" />
+
+                <include layout="@layout/view_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10pt"
+                    android:layout_marginBottom="18pt"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="29pt"
+                        android:layout_height="29pt"
+                        android:layout_marginRight="11pt"
+                        android:src="@mipmap/tese_shesdhi" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="特色设施"
+                        android:textColor="@color/color_a"
+                        android:textSize="27pt" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="通风良好"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="自然采光"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="视线通达"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20pt"
+                    android:layout_marginBottom="18pt"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="29pt"
+                        android:layout_height="29pt"
+                        android:layout_marginRight="11pt"
+                        android:src="@mipmap/jichusheshi" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="基础设施"
+                        android:textColor="@color/color_a"
+                        android:textSize="27pt" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="19pt">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="空调"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="无障碍卫生间"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="独立卫浴"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="86pt"
+        android:layout_gravity="bottom"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="34pt"
+            android:text="￥3500/月"
+            android:textColor="@color/color_3"
+            android:textSize="30pt" />
+
+        <TextView
+            android:layout_width="226pt"
+            android:layout_height="66pt"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="25pt"
+            android:background="@drawable/yiyang_bt_main"
+            android:gravity="center"
+            android:text="立即预定"
+            android:textColor="@color/white"
+            android:textSize="35pt" />
+    </RelativeLayout>
+</FrameLayout>

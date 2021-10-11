@@ -20,7 +20,7 @@ import com.yiyang.cn.R;
 import com.yiyang.cn.activity.a_yiyang.activity.FuwuZhucanActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.FuwuZhujiActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.pinggu.JiashuDanganActivity;
-import com.yiyang.cn.activity.a_yiyang.activity.JigouyanglaoActivity;
+import com.yiyang.cn.activity.a_yiyang.activity.jigou.JigouyanglaoActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.ShequyanglaoActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.TabMoreActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.pinggu.YanglaopingguActivity;
@@ -346,7 +346,7 @@ public class TabHomeFragment extends BaseFragment {
         jjshList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_zhuyufuwu, "助浴服务"));
         jjshList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_zhujiefuwu, "助洁服务"));
         jjshList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_zhuxingfuwu, "助行服务"));
-        jjshList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_zhujifuwu, "助急服务"));
+        jjshList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_fuwutaocan, "助急服务"));
 
     }
 

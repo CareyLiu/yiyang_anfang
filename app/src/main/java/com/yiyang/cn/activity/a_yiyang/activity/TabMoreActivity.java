@@ -9,13 +9,11 @@ import android.widget.LinearLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yiyang.cn.R;
 import com.yiyang.cn.activity.a_yiyang.activity.falvfuwu.FalvfuwuActivity;
+import com.yiyang.cn.activity.a_yiyang.activity.jigou.JigouyanglaoActivity;
 import com.yiyang.cn.activity.tongcheng58.model.TcHomeModel;
 import com.yiyang.cn.activity.a_yiyang.adapter.AYiyangAdapter;
 import com.yiyang.cn.activity.a_yiyang.adapter.HomeZhylAdapter;
 import com.yiyang.cn.app.BaseActivity;
-import com.yiyang.cn.app.ConstanceValue;
-import com.yiyang.cn.app.Notice;
-import com.yiyang.cn.app.RxBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,7 +114,7 @@ public class TabMoreActivity extends BaseActivity {
                 TcHomeModel.DataBean.IconListBean listBean = zhylList.get(position);
                 switch (position) {
                     case 0:
-                        JibingchaxunActivity.actionStart(mContext);
+                        ShequyanglaoActivity.actionStart(mContext);
                         break;
                     case 1:
                         ZhinengActivity.actionStart(mContext);
@@ -159,6 +157,11 @@ public class TabMoreActivity extends BaseActivity {
                         break;
                     case 14:
                         break;
+                    case 15:
+                        JijinActivity.actionStart(mContext);
+                        break;
+                    case 16:
+                        break;
                 }
             }
         });
@@ -178,10 +181,13 @@ public class TabMoreActivity extends BaseActivity {
         zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_zhujiefuwu, "助洁服务"));
 
         zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_zhuxingfuwu, "助行服务"));
-        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_zhujifuwu, "助急服务"));
+        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_fuwutaocan, "助急服务"));
         zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_falvfuwu, "法律服务"));
         zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_ertongjiuzhu, "儿童救助"));
         zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_zhengfucaigou, "政府采购"));
+
+        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_yanglaojijin, "养老基金"));
+        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_jinglaoka, "敬老卡"));
     }
 
     @OnClick({R.id.ll_quanbu_huodong, R.id.ll_quanbu_zhengce})

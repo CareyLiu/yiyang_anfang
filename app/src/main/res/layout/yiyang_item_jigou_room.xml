@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5pt"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_room"
+            android:layout_width="match_parent"
+            android:layout_height="192pt"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10pt"
+            android:includeFontPadding="false"
+            android:text="三人间"
+            android:textColor="@color/color_3"
+            android:textSize="27pt" />
+
+        <TextView
+            android:id="@+id/tv_jieshao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10pt"
+            android:includeFontPadding="false"
+            android:text="三个床位的标准住房..."
+            android:textColor="@color/color_9"
+            android:textSize="27pt" />
+
+        <TextView
+            android:id="@+id/tv_jiage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18pt"
+            android:includeFontPadding="false"
+            android:text="￥2500/月"
+            android:textColor="@color/red"
+            android:textSize="27pt" />
+    </LinearLayout>
+</LinearLayout>
+
+

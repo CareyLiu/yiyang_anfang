@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="412pt"
+                android:layout_marginBottom="19pt">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/yiyang_jijin_tu" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_back"
+                    android:layout_width="88pt"
+                    android:layout_height="88pt"
+                    android:layout_marginTop="48pt">
+
+                    <ImageView
+                        android:layout_width="46pt"
+                        android:layout_height="46pt"
+                        android:layout_centerInParent="true"
+                        android:src="@mipmap/back_white" />
+                </RelativeLayout>
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="29pt"
+                android:layout_marginBottom="19pt"
+                android:background="@drawable/yiyang_bg_white_radius_10"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="19pt"
+                    android:layout_marginTop="18pt"
+                    android:includeFontPadding="false"
+                    android:text="为谁投保"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="19pt"
+                    android:layout_marginTop="19pt"
+                    android:layout_marginBottom="19pt">
+
+                    <TextView
+                        android:id="@+id/tv_select1"
+                        android:layout_width="144pt"
+                        android:layout_height="77pt"
+                        android:layout_marginRight="16pt"
+                        android:background="@drawable/yiyang_jijin_select_sel"
+                        android:gravity="center"
+                        android:text="自己"
+                        android:textColor="@color/color_main_yiyang"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:id="@+id/tv_select2"
+                        android:layout_width="144pt"
+                        android:layout_height="77pt"
+                        android:layout_marginRight="16pt"
+                        android:background="@drawable/yiyang_jijin_select_nor"
+                        android:gravity="center"
+                        android:text="配偶"
+                        android:textColor="@color/color_9"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:id="@+id/tv_select3"
+                        android:layout_width="144pt"
+                        android:layout_height="77pt"
+                        android:layout_marginRight="16pt"
+                        android:background="@drawable/yiyang_jijin_select_nor"
+                        android:gravity="center"
+                        android:text="子女"
+                        android:textColor="@color/color_9"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:id="@+id/tv_select4"
+                        android:layout_width="144pt"
+                        android:layout_height="77pt"
+                        android:layout_marginRight="16pt"
+                        android:background="@drawable/yiyang_jijin_select_nor"
+                        android:gravity="center"
+                        android:text="父母"
+                        android:textColor="@color/color_9"
+                        android:textSize="27pt" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingTop="19pt"
+                    android:paddingRight="19pt"
+                    android:paddingBottom="19pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19pt"
+                        android:includeFontPadding="false"
+                        android:text="被保人姓名"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19pt"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:hint="请填写被保人姓名"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/color_9"
+                        android:textColorHint="@color/color_9"
+                        android:textSize="27pt" />
+                </LinearLayout>
+
+                <include layout="@layout/view_line" />
+
+                <LinearLayout
+                    android:id="@+id/ll_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingTop="19pt"
+                    android:paddingRight="19pt"
+                    android:paddingBottom="19pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19pt"
+                        android:includeFontPadding="false"
+                        android:text="身份证号码"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:id="@+id/tv_card"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19pt"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:hint="请填写被保人身份证号码"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/color_9"
+                        android:textColorHint="@color/color_9"
+                        android:textSize="27pt" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="29pt"
+                android:layout_marginBottom="19pt"
+                android:background="@drawable/yiyang_bg_white_radius_10"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="19pt"
+                    android:layout_marginTop="18pt"
+                    android:includeFontPadding="false"
+                    android:text="给未来投一笔钱"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="29pt"
+                android:layout_marginBottom="19pt"
+                android:background="@drawable/yiyang_bg_white_radius_10"
+                android:orientation="vertical"
+                android:paddingLeft="40pt"
+                android:paddingTop="19pt"
+                android:paddingBottom="19pt">
+
+                <ImageView
+                    android:id="@+id/iv_zhuyi"
+                    android:layout_width="19pt"
+                    android:layout_height="19pt"
+                    android:layout_marginTop="6pt"
+                    android:layout_marginRight="6pt"
+                    android:src="@mipmap/yiyang_jijin_zhuyi" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/iv_zhuyi"
+                    android:text="此产品为万能保险，最低保证年化利率3%，结算利率超过次利率的部分是不确定的，请仔细阅读"
+                    android:textSize="23pt" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/bt_xiayibu"
+                android:layout_width="match_parent"
+                android:layout_height="76pt"
+                android:layout_marginHorizontal="72pt"
+                android:layout_marginBottom="30pt"
+                android:background="@drawable/bt_login_denglu"
+                android:gravity="center"
+                android:text="下一步"
+                android:textColor="@color/white"
+                android:textSize="35pt" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

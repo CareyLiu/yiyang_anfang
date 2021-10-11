@@ -1,16 +1,24 @@
-package com.yiyang.cn.activity.a_yiyang.activity;
+package com.yiyang.cn.activity.a_yiyang.activity.jigou;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.yiyang.cn.R;
 import com.yiyang.cn.app.BaseActivity;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class JigouyanglaoWdActivity extends BaseActivity {
+
+    @BindView(R.id.ll1)
+    LinearLayout ll1;
+    @BindView(R.id.ll2)
+    LinearLayout ll2;
 
     @Override
     public int getContentViewResId() {
@@ -52,5 +60,15 @@ public class JigouyanglaoWdActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+    }
+
+    @OnClick({R.id.ll1, R.id.ll2})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll1:
+            case R.id.ll2:
+                JigouDetailsActivity.actionStart(mContext);
+                break;
+        }
     }
 }

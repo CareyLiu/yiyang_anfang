@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="58pt"
+                android:layout_marginBottom="19pt"
+                android:background="#C5E0F8"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="29pt"
+                    android:layout_height="29pt"
+                    android:layout_marginRight="8pt"
+                    android:src="@mipmap/yanglaojijin_quanyibaohu" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="权益保护中"
+                    android:textColor="@color/color_main_yiyang"
+                    android:textSize="27pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="29pt"
+                android:layout_marginBottom="19pt"
+                android:background="@drawable/yiyang_bg_white_radius_10"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingTop="19pt"
+                    android:paddingRight="19pt"
+                    android:paddingBottom="19pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19pt"
+                        android:includeFontPadding="false"
+                        android:text="保险名称"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19pt"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:includeFontPadding="false"
+                        android:text="栎阳养老爱心基金"
+                        android:textColor="@color/color_9"
+                        android:textSize="27pt" />
+                </LinearLayout>
+
+                <include layout="@layout/view_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingTop="19pt"
+                    android:paddingRight="19pt"
+                    android:paddingBottom="19pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19pt"
+                        android:includeFontPadding="false"
+                        android:text="被保险人"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19pt"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:includeFontPadding="false"
+                        android:text="请填写被保人身份证号码"
+                        android:textColor="@color/color_9"
+                        android:textSize="27pt" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingRight="19pt"
+                    android:paddingBottom="19pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19pt"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:id="@+id/tv_card"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19pt"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:includeFontPadding="false"
+                        android:text="请填写被保人身份证号码"
+                        android:textColor="@color/color_9"
+                        android:textSize="27pt" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="29pt"
+                android:layout_marginBottom="19pt"
+                android:background="@drawable/yiyang_bg_white_radius_10"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingTop="19pt"
+                    android:paddingRight="19pt"
+                    android:paddingBottom="19pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19pt"
+                        android:includeFontPadding="false"
+                        android:text="付款周期"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19pt"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:includeFontPadding="false"
+                        android:text="每月"
+                        android:textColor="@color/color_9"
+                        android:textSize="27pt" />
+                </LinearLayout>
+
+                <include layout="@layout/view_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingTop="19pt"
+                    android:paddingRight="19pt"
+                    android:paddingBottom="19pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19pt"
+                        android:includeFontPadding="false"
+                        android:text="付款期限"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19pt"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:includeFontPadding="false"
+                        android:text="5年"
+                        android:textColor="@color/color_9"
+                        android:textSize="27pt" />
+                </LinearLayout>
+
+                <include layout="@layout/view_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingTop="19pt"
+                    android:paddingRight="19pt"
+                    android:paddingBottom="19pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19pt"
+                        android:includeFontPadding="false"
+                        android:text="保费"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19pt"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:includeFontPadding="false"
+                        android:text="300元/月"
+                        android:textColor="@color/red"
+                        android:textSize="27pt" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="29pt"
+                android:layout_marginBottom="19pt"
+                android:background="@drawable/yiyang_bg_white_radius_10"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingTop="19pt"
+                    android:paddingRight="19pt"
+                    android:paddingBottom="19pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19pt"
+                        android:includeFontPadding="false"
+                        android:text="温馨提示"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="*"
+                        android:textColor="@color/red"
+                        android:textSize="27pt" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="100pt"
+                    android:text="1.同意开通分期付款功能:"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5pt"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="100pt"
+                    android:paddingRight="50pt"
+                    android:text="开通后，智慧医养将自动扣取保费。扣款顺序为智慧医养里设置的自定义扣款顺序。"
+                    android:textColor="@color/color_3"
+                    android:textSize="23pt" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5pt"
+                    android:layout_marginBottom="30pt"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="100pt"
+                    android:paddingRight="50pt"
+                    android:text="可随时退保，退保后不再自动扣费"
+                    android:textColor="@color/color_3"
+                    android:textSize="23pt" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="100pt"
+                    android:text="2.犹豫期:"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5pt"
+                    android:layout_marginBottom="30pt"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="100pt"
+                    android:paddingRight="50pt"
+                    android:text="从您首次收到本合同并签收之日起，有15日的犹豫期。
+在犹豫期内请您认真审视本合同，如果您认为本合同与
+您的需求不相符，您可以在此期间提出解除本合同，我
+们将无息退还您所支付的全部保险费。"
+                    android:textColor="@color/color_3"
+                    android:textSize="23pt" />
+                android:textSize="23pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="29pt"
+                android:layout_marginBottom="19pt"
+                android:background="@drawable/yiyang_bg_white_radius_10"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingTop="19pt"
+                    android:paddingRight="19pt"
+                    android:paddingBottom="19pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19pt"
+                        android:includeFontPadding="false"
+                        android:text="免责条款"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="*"
+                        android:textColor="@color/red"
+                        android:textSize="27pt" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5pt"
+                    android:layout_marginBottom="20pt"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="100pt"
+                    android:paddingRight="50pt"
+                    android:text="因下列情形之一，导致被保险人身故的，我们不承担给付保险金的责任："
+                    android:textColor="@color/color_3"
+                    android:textSize="23pt" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5pt"
+                    android:layout_marginBottom="20pt"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="100pt"
+                    android:paddingRight="50pt"
+                    android:text="（1）投保人对被保险人的故意杀害、故意伤害；"
+                    android:textColor="@color/color_3"
+                    android:textSize="23pt" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5pt"
+                    android:layout_marginBottom="20pt"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="100pt"
+                    android:paddingRight="50pt"
+                    android:text="（2）被保险人故意自伤、故意犯罪或者抗拒依法采取的刑事强制措施。"
+                    android:textColor="@color/color_3"
+                    android:textSize="23pt" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5pt"
+                    android:layout_marginBottom="30pt"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="100pt"
+                    android:paddingRight="50pt"
+                    android:text="     发生上述第（1）项情形导致被保险人身故的，本合同
+终止，我们向投保人之外的其他权利人退还被保险人身
+故时本合同的现金价值。发生（2）项情形导致被保险人身故的，本合同终止，
+我们向您退还被保险人身故时本合同的现金价值。"
+                    android:textColor="@color/color_3"
+                    android:textSize="23pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="29pt"
+                android:layout_marginBottom="19pt"
+                android:background="@drawable/yiyang_bg_white_radius_10"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingTop="19pt"
+                    android:paddingRight="19pt"
+                    android:paddingBottom="19pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19pt"
+                        android:includeFontPadding="false"
+                        android:text="特别预定"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="*"
+                        android:textColor="@color/red"
+                        android:textSize="27pt" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="100pt"
+                    android:text="同意开通分期付款功能:"
+                    android:textColor="@color/color_3"
+                    android:textSize="27pt"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5pt"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="100pt"
+                    android:paddingRight="50pt"
+                    android:text="开通后，智慧医养将自动扣取保费。扣款顺序为智慧医养里设置的自定义扣款顺序。"
+                    android:textColor="@color/color_3"
+                    android:textSize="23pt" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5pt"
+                    android:layout_marginBottom="30pt"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="100pt"
+                    android:paddingRight="50pt"
+                    android:text="可随时退保，退保后不再自动扣费"
+                    android:textColor="@color/color_3"
+                    android:textSize="23pt" />
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="29pt"
+                android:layout_marginBottom="19pt"
+                android:background="@drawable/yiyang_bg_white_radius_10"
+                android:paddingLeft="30pt"
+                android:paddingTop="20pt">
+
+                <ImageView
+                    android:layout_width="29pt"
+                    android:layout_height="29pt"
+                    android:layout_marginTop="3pt"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/tuya_faxian_icon_selector_sel_1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="45pt"
+                    android:text="请仔细阅读并同意智慧医养代扣服务协议/投保须知/保险
+条款/保险代理平台服务协议/产品说明书/重要告知/风
+险评测须知"
+                    android:layout_marginBottom="20pt"
+                    android:textColor="#018AFE"
+                    android:textSize="23pt" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/bt_xiayibu"
+                android:layout_width="match_parent"
+                android:layout_height="76pt"
+                android:layout_marginHorizontal="72pt"
+                android:layout_marginBottom="30pt"
+                android:background="@drawable/bt_login_denglu"
+                android:gravity="center"
+                android:text="同意协议并投保"
+                android:textColor="@color/white"
+                android:textSize="35pt" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

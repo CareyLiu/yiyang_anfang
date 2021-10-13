@@ -102,7 +102,7 @@
                         android:layout_weight="1"
                         android:gravity="right"
                         android:includeFontPadding="false"
-                        android:text="请填写被保人身份证号码"
+                        android:hint="请填写被保人姓名"
                         android:textColor="@color/color_9"
                         android:textSize="27pt" />
                 </LinearLayout>
@@ -130,7 +130,7 @@
                         android:layout_weight="1"
                         android:gravity="right"
                         android:includeFontPadding="false"
-                        android:text="请填写被保人身份证号码"
+                        android:hint="请填写被保人身份证号码"
                         android:textColor="@color/color_9"
                         android:textSize="27pt" />
                 </LinearLayout>

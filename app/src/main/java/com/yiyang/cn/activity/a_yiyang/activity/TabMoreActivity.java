@@ -3,17 +3,26 @@ package com.yiyang.cn.activity.a_yiyang.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yiyang.cn.R;
 import com.yiyang.cn.activity.a_yiyang.activity.falvfuwu.FalvfuwuActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.jigou.JigouyanglaoActivity;
+import com.yiyang.cn.activity.a_yiyang.activity.jijin.JijinActivity;
+import com.yiyang.cn.activity.a_yiyang.activity.jijin.JijinListActivity;
+import com.yiyang.cn.activity.a_yiyang.activity.jinlaoka.JinglaokaWuActivity;
+import com.yiyang.cn.activity.a_yiyang.activity.jinlaoka.JinglaokaYouActivity;
+import com.yiyang.cn.activity.a_yiyang.model.JinglaokaModel;
 import com.yiyang.cn.activity.tongcheng58.model.TcHomeModel;
 import com.yiyang.cn.activity.a_yiyang.adapter.AYiyangAdapter;
 import com.yiyang.cn.activity.a_yiyang.adapter.HomeZhylAdapter;
+import com.yiyang.cn.app.AppConfig;
 import com.yiyang.cn.app.BaseActivity;
+import com.yiyang.cn.config.PreferenceHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -158,13 +167,28 @@ public class TabMoreActivity extends BaseActivity {
                     case 14:
                         break;
                     case 15:
-                        JijinActivity.actionStart(mContext);
+                        JijinListActivity.actionStart(mContext);
                         break;
                     case 16:
+                        clickYanglaoka();
                         break;
                 }
             }
         });
+    }
+
+    private void clickYanglaoka() {
+        String yaolaoka = PreferenceHelper.getInstance(mContext).getString(AppConfig.YIYANG_YANGLAOKA, "");
+        JinglaokaModel jinglaokaModel = JSON.parseObject(yaolaoka, JinglaokaModel.class);
+        if (jinglaokaModel!=null){
+            if (TextUtils.isEmpty(jinglaokaModel.getHaveCard())){
+                JinglaokaWuActivity.actionStart(mContext);
+            }else {
+                JinglaokaYouActivity.actionStart(mContext,jinglaokaModel);
+            }
+        }else {
+            JinglaokaWuActivity.actionStart(mContext);
+        }
     }
 
     private void initZhylList() {

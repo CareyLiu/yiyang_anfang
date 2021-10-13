@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="29pt"
+                android:layout_marginTop="19pt"
+                android:background="@drawable/yiyang_bg_white_radius_10"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/ll_head"
+                    android:layout_width="match_parent"
+                    android:layout_height="96pt"
+                    android:paddingHorizontal="20pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="照片"
+                        android:textColor="@color/color_2"
+                        android:textSize="27pt" />
+
+                    <ImageView
+                        android:id="@+id/iv_head"
+                        android:layout_width="58pt"
+                        android:layout_height="58pt"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/wd_tianjai" />
+                </RelativeLayout>
+
+                <include layout="@layout/view_line" />
+
+                <LinearLayout
+                    android:id="@+id/ll_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="96pt"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="20pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="姓名"
+                        android:textColor="@color/color_2"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:hint="请输入用户真实姓名"
+                        android:gravity="center_vertical|right"
+                        android:textColor="@color/color_9"
+                        android:textColorHint="@color/color_9"
+                        android:textSize="27pt" />
+                </LinearLayout>
+
+                <include layout="@layout/view_line" />
+
+                <LinearLayout
+                    android:id="@+id/ll_sex"
+                    android:layout_width="match_parent"
+                    android:layout_height="96pt"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="20pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="性别"
+                        android:textColor="@color/color_2"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:id="@+id/tv_sex"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:hint="请选择用户性别"
+                        android:gravity="center_vertical|right"
+                        android:textColor="@color/color_9"
+                        android:textColorHint="@color/color_9"
+                        android:textSize="27pt" />
+                </LinearLayout>
+
+                <include layout="@layout/view_line" />
+
+
+                <LinearLayout
+                    android:id="@+id/ll_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="96pt"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="20pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="身份证号"
+                        android:textColor="@color/color_2"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:id="@+id/tv_card"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center_vertical|right"
+                        android:textColor="@color/color_9"
+                        android:hint="请输入身份证号"
+                        android:textColorHint="@color/color_9"
+                        android:textSize="27pt" />
+                </LinearLayout>
+
+                <include layout="@layout/view_line" />
+
+                <LinearLayout
+                    android:id="@+id/ll_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="96pt"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="20pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="手机号"
+                        android:textColor="@color/color_2"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:id="@+id/tv_phone"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center_vertical|right"
+                        android:textColor="@color/color_9"
+                        android:hint="请输入手机号码"
+                        android:textColorHint="@color/color_9"
+                        android:textSize="27pt" />
+                </LinearLayout>
+
+                <include layout="@layout/view_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="96pt"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="20pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="卡类型"
+                        android:textColor="@color/color_2"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center_vertical|right"
+                        android:text="免费卡"
+                        android:textColor="@color/color_9"
+                        android:textColorHint="@color/color_9"
+                        android:textSize="27pt" />
+                </LinearLayout>
+
+                <include layout="@layout/view_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="96pt"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="20pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="自取地点"
+                        android:textColor="@color/color_2"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center_vertical|right"
+                        android:hint="请输入取卡地点"
+                        android:textColor="@color/color_9"
+                        android:textColorHint="@color/color_9"
+                        android:textSize="27pt" />
+                </LinearLayout>
+
+                <include layout="@layout/view_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="96pt"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="20pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="办卡金额"
+                        android:textColor="@color/color_2"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center_vertical|right"
+                        android:text="15.00元"
+                        android:textColor="@color/color_9"
+                        android:textColorHint="@color/color_9"
+                        android:textSize="27pt" />
+                </LinearLayout>
+
+                <include layout="@layout/view_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="96pt"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="20pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="合计"
+                        android:textColor="@color/color_2"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center_vertical|right"
+                        android:text="15.00元"
+                        android:textColor="@color/color_9"
+                        android:textColorHint="@color/color_9"
+                        android:textSize="27pt" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="29pt"
+                android:layout_marginTop="19pt"
+                android:background="@drawable/yiyang_bg_white_radius_10"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_zhifubao"
+                    android:layout_width="match_parent"
+                    android:layout_height="96pt"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="20pt">
+
+                    <ImageView
+                        android:layout_width="58pt"
+                        android:layout_height="58pt"
+                        android:src="@mipmap/shenqingxinxi_ico_alipay" />
+
+                    <ImageView
+                        android:id="@+id/iv_zhifubao"
+                        android:layout_width="46pt"
+                        android:layout_height="46pt"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginHorizontal="15pt"
+                        android:src="@mipmap/tuya_faxian_icon_selector_sel_1" />
+                </RelativeLayout>
+
+                <include layout="@layout/view_line" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_weixin"
+                    android:layout_width="match_parent"
+                    android:layout_height="96pt"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="20pt">
+
+                    <ImageView
+                        android:layout_width="58pt"
+                        android:layout_height="58pt"
+                        android:src="@mipmap/shenqingxinxi_ico_weichat" />
+
+                    <ImageView
+                        android:id="@+id/iv_weixin"
+                        android:layout_width="46pt"
+                        android:layout_height="46pt"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginHorizontal="15pt"
+                        android:src="@mipmap/tuya_faxian_icon_selector_nor" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/bt_pay"
+                android:layout_width="match_parent"
+                android:layout_height="76pt"
+                android:layout_marginHorizontal="72pt"
+                android:layout_marginTop="39pt"
+                android:layout_marginBottom="30pt"
+                android:background="@drawable/bt_login_denglu"
+                android:gravity="center"
+                android:text="支付"
+                android:textColor="@color/white"
+                android:textSize="35pt" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

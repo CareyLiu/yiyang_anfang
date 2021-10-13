@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="396pt"
+        android:layout_marginHorizontal="23pt"
+        android:layout_marginTop="19pt"
+        android:scaleType="fitXY"
+        android:src="@mipmap/jinglaoka" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:paddingVertical="18pt"
+            android:text="开通并同意"
+            android:textColor="@color/color_3"
+            android:textSize="23pt" />
+
+        <TextView
+            android:id="@+id/tv_shiyongxuzhi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10pt"
+            android:includeFontPadding="false"
+            android:paddingVertical="18pt"
+            android:text="《业务使用须知》"
+            android:textColor="@color/color_main_yiyang"
+            android:textSize="23pt" />
+
+        <TextView
+            android:id="@+id/tv_yewufufu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:paddingVertical="18pt"
+            android:text="《NFC交通卡业务服务协议》"
+            android:textColor="@color/color_main_yiyang"
+            android:textSize="23pt" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/bt_xiayibu"
+        android:layout_width="match_parent"
+        android:layout_height="76pt"
+        android:layout_marginHorizontal="72pt"
+        android:layout_marginBottom="30pt"
+        android:background="@drawable/bt_login_denglu"
+        android:gravity="center"
+        android:text="同意协议并领卡"
+        android:textColor="@color/white"
+        android:textSize="35pt" />
+</LinearLayout>

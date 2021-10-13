@@ -4,13 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.a_yiyang.adapter.AYiyangAdapter;
-import com.yiyang.cn.activity.a_yiyang.adapter.JiashuAdapter;
 import com.yiyang.cn.activity.a_yiyang.adapter.PingguAdapter;
 import com.yiyang.cn.activity.a_yiyang.model.JiashuModel;
 import com.yiyang.cn.app.AppConfig;
@@ -18,7 +17,6 @@ import com.yiyang.cn.app.BaseActivity;
 import com.yiyang.cn.app.ConstanceValue;
 import com.yiyang.cn.app.Notice;
 import com.yiyang.cn.config.PreferenceHelper;
-import com.yiyang.cn.inter.OnItemClickListener;
 import com.yiyang.cn.util.Y;
 
 import java.util.ArrayList;
@@ -39,6 +37,10 @@ public class YanglaopingguActivity extends BaseActivity {
     RecyclerView rv_content;
     @BindView(R.id.tv_pinggu)
     TextView tv_pinggu;
+    @BindView(R.id.ll_you_data)
+    LinearLayout ll_you_data;
+    @BindView(R.id.ll_no_data)
+    LinearLayout ll_no_data;
 
     private List<JiashuModel> jiashuModels;
     private PingguAdapter adapter;
@@ -90,7 +92,7 @@ public class YanglaopingguActivity extends BaseActivity {
 
     @OnClick(R.id.tv_pinggu)
     public void onViewClicked() {
-        AddJiarenActivity.actionStart(mContext,"2");
+        AddJiarenActivity.actionStart(mContext, "2");
     }
 
     private void initAdapter() {
@@ -111,9 +113,12 @@ public class YanglaopingguActivity extends BaseActivity {
         Y.e("我获取到的数据是什么呢  " + jiashudanganString);
         jiashuModels = JSON.parseArray(jiashudanganString, JiashuModel.class);
         if (jiashuModels != null && jiashuModels.size() > 0) {
-
+            ll_no_data.setVisibility(View.GONE);
+            ll_you_data.setVisibility(View.VISIBLE);
         } else {
             jiashuModels = new ArrayList<>();
+            ll_no_data.setVisibility(View.VISIBLE);
+            ll_you_data.setVisibility(View.GONE);
         }
     }
 
@@ -124,6 +129,14 @@ public class YanglaopingguActivity extends BaseActivity {
                 if (message.type == ConstanceValue.MSG_YIYANG_ADDJIAREN) {
                     JiashuModel modelNew = (JiashuModel) message.content;
                     jiashuModels.add(modelNew);
+                    if (jiashuModels != null && jiashuModels.size() > 0) {
+                        ll_no_data.setVisibility(View.GONE);
+                        ll_you_data.setVisibility(View.VISIBLE);
+                    } else {
+                        jiashuModels = new ArrayList<>();
+                        ll_no_data.setVisibility(View.VISIBLE);
+                        ll_you_data.setVisibility(View.GONE);
+                    }
                     adapter.setNewData(jiashuModels);
                     adapter.notifyDataSetChanged();
                     String jiashudanganString = JSON.toJSONString(jiashuModels);
@@ -132,6 +145,14 @@ public class YanglaopingguActivity extends BaseActivity {
                 } else if (message.type == ConstanceValue.MSG_YIYANG_DELETEJIAREN) {
                     int pos = (int) message.content;
                     jiashuModels.remove(pos);
+                    if (jiashuModels != null && jiashuModels.size() > 0) {
+                        ll_no_data.setVisibility(View.GONE);
+                        ll_you_data.setVisibility(View.VISIBLE);
+                    } else {
+                        jiashuModels = new ArrayList<>();
+                        ll_no_data.setVisibility(View.VISIBLE);
+                        ll_you_data.setVisibility(View.GONE);
+                    }
                     adapter.setNewData(jiashuModels);
                     adapter.notifyDataSetChanged();
                     String jiashudanganString = JSON.toJSONString(jiashuModels);
@@ -142,6 +163,14 @@ public class YanglaopingguActivity extends BaseActivity {
                     JiashuModel modelNew = (JiashuModel) message.content;
                     int pos = message.pinggu_id;
                     jiashuModels.set(pos, modelNew);
+                    if (jiashuModels != null && jiashuModels.size() > 0) {
+                        ll_no_data.setVisibility(View.GONE);
+                        ll_you_data.setVisibility(View.VISIBLE);
+                    } else {
+                        jiashuModels = new ArrayList<>();
+                        ll_no_data.setVisibility(View.VISIBLE);
+                        ll_you_data.setVisibility(View.GONE);
+                    }
                     adapter.setNewData(jiashuModels);
                     adapter.notifyDataSetChanged();
                     String jiashudanganString = JSON.toJSONString(jiashuModels);

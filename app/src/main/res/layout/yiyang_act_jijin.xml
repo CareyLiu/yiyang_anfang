@@ -193,6 +193,216 @@
                     android:text="给未来投一笔钱"
                     android:textColor="@color/color_3"
                     android:textSize="27pt" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18pt">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingLeft="38pt">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical">
+
+                            <LinearLayout
+                                android:layout_width="125pt"
+                                android:layout_height="48pt"
+                                android:layout_marginRight="5pt"
+                                android:background="@drawable/yiyang_bg_grey_f6_radius_24"
+                                android:gravity="center">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="每月投"
+                                    android:textColor="@color/color_3"
+                                    android:textSize="23pt" />
+
+                                <ImageView
+                                    android:layout_width="14pt"
+                                    android:layout_height="14pt"
+                                    android:src="@mipmap/dianpu_jiage_jiangxu" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:includeFontPadding="false"
+                                android:text="（元）"
+                                android:textColor="@color/color_3"
+                                android:textSize="23pt" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="66pt"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="29pt"
+                                android:layout_height="29pt"
+                                android:src="@mipmap/yiyang_jijin_jian" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="29pt"
+                                android:includeFontPadding="false"
+                                android:text="300"
+                                android:textColor="@color/color_3"
+                                android:textSize="35pt"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:layout_width="29pt"
+                                android:layout_height="29pt"
+                                android:src="@mipmap/yiyang_jijin_jia" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="共投18000元"
+                            android:textColor="@color/color_3"
+                            android:textSize="23pt" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1pt"
+                        android:layout_height="125pt" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="30pt">
+
+                            <LinearLayout
+                                android:layout_width="144pt"
+                                android:layout_height="48pt"
+                                android:layout_marginRight="12pt"
+                                android:background="@drawable/yiyang_bg_grey_f6_radius_24"
+                                android:gravity="center">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="至65周岁"
+                                    android:textColor="@color/color_3"
+                                    android:textSize="23pt" />
+
+                                <ImageView
+                                    android:layout_width="14pt"
+                                    android:layout_height="14pt"
+                                    android:src="@mipmap/dianpu_jiage_jiangxu" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:includeFontPadding="false"
+                                android:text="预估可领"
+                                android:textColor="@color/color_3"
+                                android:textSize="23pt" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="66pt"
+                            android:gravity="center"
+                            android:text="84523.36"
+                            android:textColor="@color/red"
+                            android:textSize="35pt"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="按中档收益4.5%预估"
+                            android:textColor="@color/color_3"
+                            android:textSize="23pt" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingTop="19pt"
+                    android:paddingRight="19pt"
+                    android:paddingBottom="19pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19pt"
+                        android:includeFontPadding="false"
+                        android:text="领取方式"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19pt"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:hint="退休后可按月/年领至终身"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/color_9"
+                        android:textColorHint="@color/color_9"
+                        android:textSize="27pt" />
+                </LinearLayout>
+
+                <include layout="@layout/view_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingTop="19pt"
+                    android:paddingRight="19pt"
+                    android:paddingBottom="19pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19pt"
+                        android:includeFontPadding="false"
+                        android:text="发放至"
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19pt"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:hint="银行卡"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/color_9"
+                        android:textColorHint="@color/color_9"
+                        android:textSize="27pt" />
+                </LinearLayout>
             </LinearLayout>
 
             <RelativeLayout

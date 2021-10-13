@@ -305,4 +305,5 @@ public class AppConfig {
 
 
     public final static String YIYANG_GET_JIASHUDANGAN = "YIYANG_GET_JIASHUDANGAN";
+    public final static String YIYANG_YANGLAOKA = "YIYANG_YANGLAOKA";// 1、有    2、无
 }

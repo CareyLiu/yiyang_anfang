@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="396pt"
+        android:layout_marginHorizontal="23pt"
+        android:layout_marginTop="19pt"
+        android:scaleType="fitXY"
+        android:src="@mipmap/jinglaoka" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="29pt"
+        android:layout_marginTop="19pt"
+        android:background="@drawable/yiyang_bg_white_radius_10"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/ll_chongzhi"
+            android:layout_width="match_parent"
+            android:layout_height="96pt"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="19pt">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:includeFontPadding="false"
+                android:text="充值"
+                android:textColor="@color/color_3"
+                android:textSize="27pt" />
+
+            <ImageView
+                android:layout_width="16pt"
+                android:layout_height="26pt"
+                android:src="@drawable/push_gray" />
+        </LinearLayout>
+
+        <include layout="@layout/view_line" />
+
+        <LinearLayout
+            android:id="@+id/ll_chongzhijilu"
+            android:layout_width="match_parent"
+            android:layout_height="96pt"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="19pt">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:includeFontPadding="false"
+                android:text="充值记录"
+                android:textColor="@color/color_3"
+                android:textSize="27pt" />
+
+            <ImageView
+                android:layout_width="16pt"
+                android:layout_height="26pt"
+                android:src="@drawable/push_gray" />
+        </LinearLayout>
+
+        <include layout="@layout/view_line" />
+
+        <LinearLayout
+            android:id="@+id/ll_jiaoyijilu"
+            android:layout_width="match_parent"
+            android:layout_height="96pt"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="19pt">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:includeFontPadding="false"
+                android:text="交易记录"
+                android:textColor="@color/color_3"
+                android:textSize="27pt" />
+
+            <ImageView
+                android:layout_width="16pt"
+                android:layout_height="26pt"
+                android:src="@drawable/push_gray" />
+        </LinearLayout>
+
+        <include layout="@layout/view_line" />
+
+        <LinearLayout
+            android:id="@+id/ll_nianjian"
+            android:layout_width="match_parent"
+            android:layout_height="96pt"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="19pt">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:includeFontPadding="false"
+                android:text="年检"
+                android:textColor="@color/color_3"
+                android:textSize="27pt" />
+
+            <ImageView
+                android:layout_width="16pt"
+                android:layout_height="26pt"
+                android:src="@drawable/push_gray" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

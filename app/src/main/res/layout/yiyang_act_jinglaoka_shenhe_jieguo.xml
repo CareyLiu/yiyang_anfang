@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="161pt"
+        android:layout_height="161pt"
+        android:layout_marginTop="68pt"
+        android:layout_marginBottom="38pt"
+        android:scaleType="fitXY"
+        android:src="@mipmap/jinglaoka" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="38pt"
+        android:includeFontPadding="false"
+        android:text="审核成功"
+        android:textColor="@color/color_3"
+        android:textSize="46pt"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/bt_fanhui"
+        android:layout_width="match_parent"
+        android:layout_height="76pt"
+        android:layout_marginHorizontal="72pt"
+        android:layout_marginBottom="30pt"
+        android:background="@drawable/bt_login_denglu"
+        android:gravity="center"
+        android:text="返回"
+        android:textColor="@color/white"
+        android:textSize="35pt" />
+</LinearLayout>

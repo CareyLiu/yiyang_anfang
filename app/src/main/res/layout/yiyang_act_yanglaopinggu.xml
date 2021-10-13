@@ -29,37 +29,67 @@
                 android:textColor="@color/white"
                 android:textSize="38pt" />
 
-
             <LinearLayout
+                android:id="@+id/ll_you_data"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="29pt"
-                android:layout_marginTop="38pt"
-                android:layout_marginBottom="19pt"
-                android:gravity="center_vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="29pt"
+                    android:layout_marginTop="38pt"
+                    android:layout_marginBottom="19pt"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="33pt"
+                        android:layout_height="33pt"
+                        android:src="@mipmap/jiankangshuju_jiangkangjilu" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10pt"
+                        android:includeFontPadding="false"
+                        android:text="评估历史"
+                        android:textColor="@color/color_3"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="29pt"
+                    android:background="@drawable/yiyang_bg_white_radius_10" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_no_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="200pt"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <ImageView
-                    android:layout_width="33pt"
-                    android:layout_height="33pt"
-                    android:src="@mipmap/jiankangshuju_jiangkangjilu" />
+                    android:layout_width="336pt"
+                    android:layout_height="202pt"
+                    android:layout_marginBottom="74pt"
+                    android:src="@mipmap/zanwushuju" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10pt"
-                    android:includeFontPadding="false"
-                    android:text="评估历史"
-                    android:textColor="@color/color_3"
-                    android:textSize="18sp" />
+                    android:text="暂无历史数据"
+                    android:textColor="#9A9FB4"
+                    android:textSize="27pt" />
             </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="29pt"
-                android:background="@drawable/yiyang_bg_white_radius_10" />
-
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

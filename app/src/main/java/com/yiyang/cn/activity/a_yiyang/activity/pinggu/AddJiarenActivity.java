@@ -174,10 +174,8 @@ public class AddJiarenActivity extends BaseActivity implements TakePhoto.TakeRes
     private String is_chidai;
     private String aihao;
 
-
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
-    private OptionsPickerView pvOptions;
 
     private final static int INPUT_SEX = 0;//性别
     private String type;

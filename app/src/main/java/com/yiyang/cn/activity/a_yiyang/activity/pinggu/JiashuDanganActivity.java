@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.yiyang.cn.R;
@@ -31,6 +32,8 @@ public class JiashuDanganActivity extends BaseActivity {
 
     @BindView(R.id.rv_content)
     RecyclerView rv_content;
+    @BindView(R.id.ll_no_data)
+    LinearLayout ll_no_data;
 
     private List<JiashuModel> jiashuModels;
     private JiashuAdapter adapter;
@@ -64,7 +67,7 @@ public class JiashuDanganActivity extends BaseActivity {
         tv_rightTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddJiarenActivity.actionStart(mContext,"1");
+                AddJiarenActivity.actionStart(mContext, "1");
             }
         });
         tv_title.setTextColor(getResources().getColor(R.color.black));
@@ -105,9 +108,12 @@ public class JiashuDanganActivity extends BaseActivity {
         Y.e("我获取到的数据是什么呢  " + jiashudanganString);
         jiashuModels = JSON.parseArray(jiashudanganString, JiashuModel.class);
         if (jiashuModels != null && jiashuModels.size() > 0) {
-
+            ll_no_data.setVisibility(View.GONE);
+            rv_content.setVisibility(View.VISIBLE);
         } else {
             jiashuModels = new ArrayList<>();
+            ll_no_data.setVisibility(View.VISIBLE);
+            rv_content.setVisibility(View.GONE);
         }
     }
 
@@ -118,13 +124,33 @@ public class JiashuDanganActivity extends BaseActivity {
                 if (message.type == ConstanceValue.MSG_YIYANG_ADDJIAREN) {
                     JiashuModel modelNew = (JiashuModel) message.content;
                     jiashuModels.add(modelNew);
+
+                    if (jiashuModels != null && jiashuModels.size() > 0) {
+                        ll_no_data.setVisibility(View.GONE);
+                        rv_content.setVisibility(View.VISIBLE);
+                    } else {
+                        jiashuModels = new ArrayList<>();
+                        ll_no_data.setVisibility(View.VISIBLE);
+                        rv_content.setVisibility(View.GONE);
+                    }
+
                     adapter.setJiashuModels(jiashuModels);
                     String jiashudanganString = JSON.toJSONString(jiashuModels);
                     Y.e("我保存的数据是什么呢  " + jiashudanganString);
                     PreferenceHelper.getInstance(mContext).putString(AppConfig.YIYANG_GET_JIASHUDANGAN, jiashudanganString);
-                }else if (message.type == ConstanceValue.MSG_YIYANG_DELETEJIAREN){
-                    int pos= (int) message.content;
+                } else if (message.type == ConstanceValue.MSG_YIYANG_DELETEJIAREN) {
+                    int pos = (int) message.content;
                     jiashuModels.remove(pos);
+
+                    if (jiashuModels != null && jiashuModels.size() > 0) {
+                        ll_no_data.setVisibility(View.GONE);
+                        rv_content.setVisibility(View.VISIBLE);
+                    } else {
+                        jiashuModels = new ArrayList<>();
+                        ll_no_data.setVisibility(View.VISIBLE);
+                        rv_content.setVisibility(View.GONE);
+                    }
+
                     adapter.setJiashuModels(jiashuModels);
                     String jiashudanganString = JSON.toJSONString(jiashuModels);
                     Y.e("我保存的数据是什么呢  " + jiashudanganString);

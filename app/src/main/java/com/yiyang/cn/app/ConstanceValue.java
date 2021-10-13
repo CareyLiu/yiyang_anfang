@@ -194,6 +194,7 @@ public interface ConstanceValue {
     int MSG_YIYANG_DELETEJIAREN = 0x10142;//删除家人成功
     int MSG_YIYANG_EDITJAREN = 0x10143;//编辑家人成功
     int MSG_YIYANG_ZNJJ_BACK = 0x10144;//智能家居返回
+    int MSG_YIYANG_JINGLAOKA = 0x10145;//添加敬老卡成功
 
 
 }

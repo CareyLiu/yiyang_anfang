@@ -9,7 +9,7 @@ public class AddressModel {
      * msg_code : 0000
      * msg : ok
      * row_num : 2
-     * data : [{"area_name":"南岗区","of_user_id":"499","create_time":"2018-11-17","user_name":"大仙","addr_all":"黑龙江省哈尔滨市南岗区胜多负少的","area_id":"230103","province_name":"黑龙江省","users_addr_id":"102","addr_check":"1","user_addr_state":"1","city_name":"哈尔滨市","province_id":"23","x":"","user_phone":"13233445566","y":"","addr":"胜多负少的","city_id":"2301"},{"area_name":"同仁县","of_user_id":"499","create_time":"2018-11-18","user_name":"大神","addr_all":"青海省黄南州同仁县大哥大哥大","area_id":"632321","province_name":"青海省","users_addr_id":"103","addr_check":"2","user_addr_state":"1","city_name":"黄南州","province_id":"63","x":"","user_phone":"13566666666","y":"","addr":"大哥大哥大","city_id":"6323"}]
+     * data : [{"area_name":"南关区","of_user_id":"499","create_time":"2018-11-17","user_name":"大仙","addr_all":"吉林省长春市南关区胜多负少的","area_id":"230103","province_name":"吉林省","users_addr_id":"102","addr_check":"1","user_addr_state":"1","city_name":"长春市","province_id":"23","x":"","user_phone":"13233445566","y":"","addr":"胜多负少的","city_id":"2301"},{"area_name":"同仁县","of_user_id":"499","create_time":"2018-11-18","user_name":"大神","addr_all":"青海省黄南州同仁县大哥大哥大","area_id":"632321","province_name":"青海省","users_addr_id":"103","addr_check":"2","user_addr_state":"1","city_name":"黄南州","province_id":"63","x":"","user_phone":"13566666666","y":"","addr":"大哥大哥大","city_id":"6323"}]
      */
 
     private String msg_code;
@@ -51,17 +51,17 @@ public class AddressModel {
 
     public static class DataBean implements Serializable {
         /**
-         * area_name : 南岗区
+         * area_name : 南关区
          * of_user_id : 499
          * create_time : 2018-11-17
          * user_name : 大仙
-         * addr_all : 黑龙江省哈尔滨市南岗区胜多负少的
+         * addr_all : 吉林省长春市南关区胜多负少的
          * area_id : 230103
-         * province_name : 黑龙江省
+         * province_name : 吉林省
          * users_addr_id : 102
          * addr_check : 1
          * user_addr_state : 1
-         * city_name : 哈尔滨市
+         * city_name : 长春市
          * province_id : 23
          * x :
          * user_phone : 13233445566

@@ -21,7 +21,7 @@
         android:layout_marginLeft="14dp"
         android:layout_marginTop="14dp"
         android:textColor="#fffa7e00"
-        android:textSize="18sp"
+        android:textSize="35pt"
         tools:text="¥68.00" />
 
     <TextView
@@ -48,7 +48,7 @@
             android:layout_marginTop="14dp"
             android:text="快递:10"
             android:textColor="#ff999999"
-            android:textSize="12sp" />
+            android:textSize="23pt" />
 
         <TextView
             android:id="@+id/tv_yuexiao"
@@ -58,7 +58,7 @@
             android:layout_centerInParent="true"
             android:text="月销: 0件"
             android:textColor="#ff999999"
-            android:textSize="12sp" />
+            android:textSize="23pt" />
 
         <TextView
             android:id="@+id/tv_dizhi"
@@ -67,9 +67,9 @@
             android:layout_alignTop="@+id/tv_kuaidi"
             android:layout_alignParentRight="true"
             android:layout_marginRight="14dp"
-            android:text="黑龙江哈尔滨"
+            android:text="吉林长春"
             android:textColor="#ff999999"
-            android:textSize="12sp" />
+            android:textSize="23pt" />
     </RelativeLayout>
 
     <View
@@ -92,7 +92,7 @@
             android:layout_marginLeft="14dp"
             android:text="选择"
             android:textColor="#ff999999"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -102,7 +102,7 @@
             android:layout_toRightOf="@+id/tv_choose"
             android:text="套餐1"
             android:textColor="#ff111111"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -118,7 +118,7 @@
             android:layout_marginLeft="14dp"
             android:text="参数"
             android:textColor="#ff999999"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:id="@+id/tv_pinpai_xinghao"
@@ -129,7 +129,7 @@
             android:layout_toRightOf="@+id/tv_canshu"
             android:text="品牌 型号..."
             android:textColor="#ff111111"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
     </RelativeLayout>
 
 
@@ -150,7 +150,7 @@
             android:layout_centerVertical="true"
             android:text="宝贝评价"
             android:textColor="#ff111111"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:id="@+id/tv_see_more"
@@ -161,7 +161,7 @@
             android:layout_marginRight="27dp"
             android:text="查看全部"
             android:textColor="#ffff5000"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
         <ImageView
             android:id="@+id/iv_see_more_back"

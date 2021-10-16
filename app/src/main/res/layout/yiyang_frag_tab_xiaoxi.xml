@@ -17,7 +17,7 @@
             android:layout_centerInParent="true"
             android:text="消息"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="35pt"
             android:textStyle="bold" />
     </RelativeLayout>
 
@@ -44,7 +44,7 @@
                 android:layout_marginBottom="17pt"
                 android:text="聊天"
                 android:textColor="@color/color_1"
-                android:textSize="18sp" />
+                android:textSize="35pt" />
 
             <View
                 android:id="@+id/line_title_liaotian"
@@ -73,7 +73,7 @@
                 android:layout_marginBottom="17pt"
                 android:text="服务"
                 android:textColor="@color/color_c"
-                android:textSize="18sp" />
+                android:textSize="35pt" />
 
             <View
                 android:id="@+id/line_title_fuwu"
@@ -101,7 +101,7 @@
                 android:layout_marginBottom="17pt"
                 android:text="日志"
                 android:textColor="@color/color_c"
-                android:textSize="18sp" />
+                android:textSize="35pt" />
 
             <View
                 android:id="@+id/line_title_xitong"

@@ -41,7 +41,7 @@
                         android:layout_centerInParent="true"
                         android:text="重置"
                         android:textColor="#ff333333"
-                        android:textSize="14sp" />
+                        android:textSize="27pt" />
 
                 </RelativeLayout>
 
@@ -64,7 +64,7 @@
                         android:layout_centerInParent="true"
                         android:text="确定"
                         android:textColor="#ffffffff"
-                        android:textSize="14sp" />
+                        android:textSize="27pt" />
 
                 </RelativeLayout>
 

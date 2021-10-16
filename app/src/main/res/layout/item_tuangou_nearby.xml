@@ -24,7 +24,7 @@
         android:layout_marginLeft="11dp"
         android:text="寻味烤肉"
         android:textColor="#ff111111"
-        android:textSize="14sp"
+        android:textSize="27pt"
         android:textStyle="bold"
         app:layout_constraintLeft_toRightOf="@+id/iv_image"
         app:layout_constraintTop_toTopOf="@+id/iv_image" />
@@ -38,7 +38,7 @@
         android:lines="2"
         android:text="精品肥牛，新西兰羊排，澳洲肥牛..."
         android:textColor="#ff666666"
-        android:textSize="12sp"
+        android:textSize="23pt"
         app:layout_constraintLeft_toLeftOf="@+id/tv_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:text="￥258.00"
         android:textColor="#ff57c3b3"
-        android:textSize="13sp"
+        android:textSize="27pt"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/iv_image"
         app:layout_constraintLeft_toLeftOf="@+id/tv_shuoming"
@@ -61,7 +61,7 @@
         android:layout_marginRight="13dp"
         android:text="16.9km"
         android:textColor="#ff666666"
-        android:textSize="12sp"
+        android:textSize="23pt"
         app:layout_constraintBottom_toBottomOf="@+id/tv_shuoming"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_shuoming" />
@@ -73,7 +73,7 @@
         android:layout_marginTop="14dp"
         android:text="已售：10"
         android:textColor="#ff666666"
-        android:textSize="12sp"
+        android:textSize="23pt"
         app:layout_constraintRight_toRightOf="@+id/tv_distance"
         app:layout_constraintTop_toBottomOf="@+id/tv_distance" />
 </androidx.constraintlayout.widget.ConstraintLayout>

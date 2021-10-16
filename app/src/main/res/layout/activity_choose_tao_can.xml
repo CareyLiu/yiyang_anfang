@@ -75,7 +75,7 @@
                     android:gravity="center"
                     android:text="库存数量"
                     android:textColor="#ff999999"
-                    android:textSize="13sp"
+                    android:textSize="27pt"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_price" />
 
@@ -88,7 +88,7 @@
                     android:gravity="center"
                     android:text="选择分类"
                     android:textColor="#ff666666"
-                    android:textSize="13sp"
+                    android:textSize="27pt"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_kucun" />
             </androidx.constraintlayout.widget.ConstraintLayout>

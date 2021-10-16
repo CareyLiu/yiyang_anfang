@@ -121,7 +121,7 @@
                     android:layout_marginTop="21dp"
                     android:text="语音唤醒功能"
                     android:textColor="#ff333333"
-                    android:textSize="18sp"
+                    android:textSize="35pt"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -142,7 +142,7 @@
                     android:layout_marginBottom="15dp"
                     android:text="语音呼叫小妮需在智慧医养内使用麦克风，仅用于随时响应“小妮小妮”等语音交互命令。"
                     android:textColor="#ff999999"
-                    android:textSize="13sp"
+                    android:textSize="27pt"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent" />

@@ -54,7 +54,7 @@
                 android:includeFontPadding="false"
                 android:text="智慧医养欢迎您的到来："
                 android:textColor="#fffc0100"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
                 android:includeFontPadding="false"
                 android:text="输入邀请码，可享受自买省，分享赚，智慧医养多项豪礼，打折优惠等活动"
                 android:textColor="#ff666666"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -71,7 +71,7 @@
                 android:includeFontPadding="false"
                 android:text="友情提示："
                 android:textColor="#fffc0100"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
 
             <TextView
@@ -80,7 +80,7 @@
                 android:includeFontPadding="false"
                 android:text="输入好友邀请码，好友可获得高额返现红包"
                 android:textColor="#ff666666"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </LinearLayout>
 

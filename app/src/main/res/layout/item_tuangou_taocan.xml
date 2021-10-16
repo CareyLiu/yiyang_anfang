@@ -24,7 +24,7 @@
         android:layout_marginLeft="11dp"
         android:text="双人餐"
         android:textColor="#ff111111"
-        android:textSize="14sp"
+        android:textSize="27pt"
         android:textStyle="bold"
         app:layout_constraintLeft_toRightOf="@+id/iv_image"
         app:layout_constraintTop_toTopOf="@+id/iv_image" />
@@ -37,7 +37,7 @@
         android:lines="1"
         android:text="精品肥牛，新西兰羊排，澳洲肥牛..."
         android:textColor="#ff666666"
-        android:textSize="12sp"
+        android:textSize="23pt"
         app:layout_constraintLeft_toLeftOf="@+id/tv_taocan_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_taocan_name" />
 
@@ -48,7 +48,7 @@
         android:layout_marginTop="2dp"
         android:text="周一至周日 | 免预约"
         android:textColor="#ff666666"
-        android:textSize="12sp"
+        android:textSize="23pt"
         app:layout_constraintLeft_toLeftOf="@+id/tv_shuoming"
         app:layout_constraintTop_toBottomOf="@+id/tv_shuoming" />
 
@@ -59,7 +59,7 @@
         android:layout_marginTop="2dp"
         android:text="￥258.00"
         android:textColor="@color/text_red"
-        android:textSize="13sp"
+        android:textSize="27pt"
         app:layout_constraintLeft_toLeftOf="@+id/tv_data"
         app:layout_constraintTop_toBottomOf="@+id/tv_data" />
 
@@ -86,7 +86,7 @@
         android:layout_marginTop="20dp"
         android:text="半年销量：100"
         android:textColor="#ff666666"
-        android:textSize="12sp"
+        android:textSize="23pt"
         app:layout_constraintRight_toRightOf="@+id/rtv_qianggou"
         app:layout_constraintTop_toBottomOf="@+id/rtv_qianggou" />
 

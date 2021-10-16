@@ -30,7 +30,7 @@
             android:layout_toRightOf="@+id/iv_image"
             android:text="张大为"
             android:textColor="#ffffffff"
-            android:textSize="18sp" />
+            android:textSize="35pt" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
             android:layout_toRightOf="@+id/iv_image"
             android:text="神经内科   主治医生"
             android:textColor="#ffffffff"
-            android:textSize="14sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -88,7 +88,7 @@
                     android:gravity="center"
                     android:text="挂号"
                     android:textColor="#ff141414"
-                    android:textSize="18sp" />
+                    android:textSize="35pt" />
 
                 <View
 
@@ -116,7 +116,7 @@
                     android:gravity="center"
                     android:text="介绍"
                     android:textColor="#ffc1c1c1"
-                    android:textSize="18sp" />
+                    android:textSize="35pt" />
 
                 <View
                     android:id="@+id/view_jieshao"

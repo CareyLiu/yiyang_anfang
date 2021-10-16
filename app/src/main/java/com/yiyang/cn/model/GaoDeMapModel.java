@@ -4,7 +4,7 @@ public class GaoDeMapModel {
     /**
      * gps_x : 45.77467
      * gps_y : 126.65317
-     * gps_address : 哈尔滨市道外区南极街2号
+     * gps_address : 长春市道外区南极街2号
      */
 
     private double gps_x;

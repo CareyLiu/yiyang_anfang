@@ -8,7 +8,7 @@ public class CarDetails {
      * msg_code : 0000
      * msg : ok
      * row_num : 1
-     * data : [{"oil_wear":"","car_trunk":"","gearbox_temperature":"","cut_time_s":"","car_acc":"1","benzin_total":"50","gps_state":"2","urgency_start":"","gps_addr":"哈尔滨市南岗区电缆街170","cut_thread":"","rev":"0","mph":"0","bath_glass":"","cbox_battery":"","car_brand_url_one":"https://shop.hljsdkj.com/commons/images/siye_autoparts/brand/130131578038733348.jpg","car_window":"","cbox_state_name":"静止","car_orientations":"1","plate_number":"黑E6666654","car_acc_start":"2","car_high_beam":"","coolant":"-30","gps_x":"45.6679638","per_benzin":"0.0","gps_y":"126.611563","car_foglight":"","traffic_collision":"","car_electric":"","benzin":"20","cbox_signal":"","car_flasher":"","cbox_state":"1","ccid":"aaaaaaaaaaaaaaaaaaaaaa05","tyre_pressure":"","car_air":"","car_scuttle":"","gaode_y":"126.611563","car_oil":"","car_light":"","total_km":"","cut_electricity":"","weilan_url":"https://shop.hljsdkj.com/wit/web/weilan?u=27","user_car_id":"27","air_conditioner":"","urgency_stop":"","gps_mi":"0","remaining_km":"15200","car_brand_name_one":"阿斯顿·马丁","car_door":"","gaode_x":"45.6679638"}]
+     * data : [{"oil_wear":"","car_trunk":"","gearbox_temperature":"","cut_time_s":"","car_acc":"1","benzin_total":"50","gps_state":"2","urgency_start":"","gps_addr":"长春市南关区电缆街170","cut_thread":"","rev":"0","mph":"0","bath_glass":"","cbox_battery":"","car_brand_url_one":"https://shop.hljsdkj.com/commons/images/siye_autoparts/brand/130131578038733348.jpg","car_window":"","cbox_state_name":"静止","car_orientations":"1","plate_number":"黑E6666654","car_acc_start":"2","car_high_beam":"","coolant":"-30","gps_x":"45.6679638","per_benzin":"0.0","gps_y":"126.611563","car_foglight":"","traffic_collision":"","car_electric":"","benzin":"20","cbox_signal":"","car_flasher":"","cbox_state":"1","ccid":"aaaaaaaaaaaaaaaaaaaaaa05","tyre_pressure":"","car_air":"","car_scuttle":"","gaode_y":"126.611563","car_oil":"","car_light":"","total_km":"","cut_electricity":"","weilan_url":"https://shop.hljsdkj.com/wit/web/weilan?u=27","user_car_id":"27","air_conditioner":"","urgency_stop":"","gps_mi":"0","remaining_km":"15200","car_brand_name_one":"阿斯顿·马丁","car_door":"","gaode_x":"45.6679638"}]
      */
 
     private String msg_code;
@@ -58,7 +58,7 @@ public class CarDetails {
          * benzin_total : 50
          * gps_state : 2
          * urgency_start :
-         * gps_addr : 哈尔滨市南岗区电缆街170
+         * gps_addr : 长春市南关区电缆街170
          * cut_thread :
          * rev : 0
          * mph : 0

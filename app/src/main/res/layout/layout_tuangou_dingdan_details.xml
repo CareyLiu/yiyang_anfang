@@ -63,7 +63,7 @@
                             android:includeFontPadding="false"
                             android:text="酷烤达人烤肉烧烤3-4人餐"
                             android:textColor="#ff111111"
-                            android:textSize="14sp"
+                            android:textSize="27pt"
                             android:textStyle="bold" />
 
                         <TextView
@@ -74,7 +74,7 @@
                             android:includeFontPadding="false"
                             android:text="一个好的套餐"
                             android:textColor="#ff666666"
-                            android:textSize="12sp" />
+                            android:textSize="23pt" />
 
 
                         <TextView
@@ -85,7 +85,7 @@
                             android:includeFontPadding="false"
                             android:text="￥258.00"
                             android:textColor="#fffa7e00"
-                            android:textSize="13sp" />
+                            android:textSize="27pt" />
 
                     </LinearLayout>
 
@@ -119,7 +119,7 @@
                         android:includeFontPadding="false"
                         android:text="二维码"
                         android:textColor="#ff111111"
-                        android:textSize="14sp"
+                        android:textSize="27pt"
                         android:textStyle="bold" />
 
 
@@ -207,7 +207,7 @@
                             android:includeFontPadding="false"
                             android:text="套餐详情"
                             android:textColor="#ff111111"
-                            android:textSize="14sp"
+                            android:textSize="27pt"
                             android:textStyle="bold" />
 
 
@@ -274,7 +274,7 @@
                 android:gravity="center"
                 android:text="去支付"
                 android:textColor="#ffffff"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
         </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

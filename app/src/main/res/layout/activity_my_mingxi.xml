@@ -43,7 +43,7 @@
             android:includeFontPadding="false"
             android:text="当前状态"
             android:textColor="#909090"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:id="@+id/tv_zhuangtai"
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
             android:textColor="#353535"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
     </LinearLayout>
 
     <LinearLayout
@@ -68,7 +68,7 @@
             android:includeFontPadding="false"
             android:text="提现金额"
             android:textColor="#909090"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:id="@+id/tv_tixianjine"
@@ -77,7 +77,7 @@
             android:includeFontPadding="false"
             android:text="¥2859.98"
             android:textColor="#353535"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
     </LinearLayout>
 
     <LinearLayout
@@ -94,7 +94,7 @@
             android:includeFontPadding="false"
             android:text="服务费"
             android:textColor="#909090"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:id="@+id/tv_fuwufei"
@@ -103,7 +103,7 @@
             android:includeFontPadding="false"
             android:text="¥2.80"
             android:textColor="#353535"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
     </LinearLayout>
 
     <LinearLayout
@@ -120,7 +120,7 @@
             android:includeFontPadding="false"
             android:text="申请时间"
             android:textColor="#909090"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:id="@+id/tv_shenqingshijian"
@@ -129,7 +129,7 @@
             android:includeFontPadding="false"
             android:text="2019-03-08 22:11:44"
             android:textColor="#353535"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
     </LinearLayout>
 
     <LinearLayout
@@ -146,7 +146,7 @@
             android:includeFontPadding="false"
             android:text="到账时间"
             android:textColor="#909090"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:id="@+id/tv_daozhangshijian"
@@ -155,7 +155,7 @@
             android:includeFontPadding="false"
             android:text="2019-03-08 22:11:59"
             android:textColor="#353535"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
     </LinearLayout>
 
     <LinearLayout
@@ -172,7 +172,7 @@
             android:includeFontPadding="false"
             android:text="提现方式"
             android:textColor="#909090"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:id="@+id/tv_tixianfangshi"
@@ -181,7 +181,7 @@
             android:includeFontPadding="false"
             android:text="支付宝"
             android:textColor="#353535"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
     </LinearLayout>
 
     <LinearLayout
@@ -198,7 +198,7 @@
             android:includeFontPadding="false"
             android:text="提现单号"
             android:textColor="#909090"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:id="@+id/tv_tixiandanhao"
@@ -207,7 +207,7 @@
             android:includeFontPadding="false"
             android:text="2071903810007544"
             android:textColor="#353535"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
     </LinearLayout>
 
     <LinearLayout
@@ -224,7 +224,7 @@
             android:includeFontPadding="false"
             android:text="商品"
             android:textColor="#909090"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:id="@+id/tv_shangpin"
@@ -233,7 +233,7 @@
             android:includeFontPadding="false"
             android:text="2071903810007544"
             android:textColor="#353535"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
     </LinearLayout>
 
     <LinearLayout
@@ -250,7 +250,7 @@
             android:includeFontPadding="false"
             android:text="商户全称"
             android:textColor="#909090"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:id="@+id/tv_shanghu"
@@ -259,7 +259,7 @@
             android:includeFontPadding="false"
             android:text="2071903810007544"
             android:textColor="#353535"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
     </LinearLayout>
 
 
@@ -277,7 +277,7 @@
             android:includeFontPadding="false"
             android:text="支付时间"
             android:textColor="#909090"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:id="@+id/tv_zhifushijian"
@@ -286,7 +286,7 @@
             android:includeFontPadding="false"
             android:text="2071903810007544"
             android:textColor="#353535"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
     </LinearLayout>
 
 
@@ -304,7 +304,7 @@
             android:includeFontPadding="false"
             android:text="支付方式"
             android:textColor="#909090"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:id="@+id/tv_zhifupay"
@@ -313,7 +313,7 @@
             android:includeFontPadding="false"
             android:text="2071903810007544"
             android:textColor="#353535"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
     </LinearLayout>
 
     <LinearLayout
@@ -330,7 +330,7 @@
             android:includeFontPadding="false"
             android:text="交易单号"
             android:textColor="#909090"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:id="@+id/tv_jianyidanhao"
@@ -339,7 +339,7 @@
             android:includeFontPadding="false"
             android:text="2071903810007544"
             android:textColor="#353535"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
     </LinearLayout>
 
 
@@ -357,7 +357,7 @@
             android:includeFontPadding="false"
             android:text="收款方式"
             android:textColor="#909090"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:id="@+id/tv_shou_type"
@@ -366,7 +366,7 @@
             android:includeFontPadding="false"
             android:text="2071903810007544"
             android:textColor="#353535"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
     </LinearLayout>
 
     <LinearLayout
@@ -383,7 +383,7 @@
             android:includeFontPadding="false"
             android:text="收款时间"
             android:textColor="#909090"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:id="@+id/tv_shou_time"
@@ -392,7 +392,7 @@
             android:includeFontPadding="false"
             android:text="2071903810007544"
             android:textColor="#353535"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
     </LinearLayout>
 
 
@@ -410,7 +410,7 @@
             android:includeFontPadding="false"
             android:text="退款个单号"
             android:textColor="#909090"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:id="@+id/tv_tuikuan_danhao"
@@ -419,6 +419,6 @@
             android:includeFontPadding="false"
             android:text="2071903810007544"
             android:textColor="#353535"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
     </LinearLayout>
 </LinearLayout>

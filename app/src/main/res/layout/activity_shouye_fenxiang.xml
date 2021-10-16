@@ -72,7 +72,7 @@
                         android:includeFontPadding="false"
                         android:text="朋友圈"
                         android:textColor="#ff333333"
-                        android:textSize="12sp"
+                        android:textSize="23pt"
                         app:layout_constraintLeft_toLeftOf="@+id/iv_pengyouquan"
                         app:layout_constraintRight_toRightOf="@+id/iv_pengyouquan"
                         app:layout_constraintTop_toBottomOf="@+id/iv_pengyouquan" />
@@ -106,7 +106,7 @@
                         android:includeFontPadding="false"
                         android:text="微信好友"
                         android:textColor="#ff333333"
-                        android:textSize="12sp"
+                        android:textSize="23pt"
                         app:layout_constraintLeft_toLeftOf="@id/iv_weixin"
                         app:layout_constraintRight_toRightOf="@+id/iv_weixin"
                         app:layout_constraintTop_toBottomOf="@+id/iv_weixin" />
@@ -139,7 +139,7 @@
                         android:includeFontPadding="false"
                         android:text="复制链接"
                         android:textColor="#ff333333"
-                        android:textSize="12sp"
+                        android:textSize="23pt"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/iv_fuzhi" />
                 </androidx.constraintlayout.widget.ConstraintLayout>

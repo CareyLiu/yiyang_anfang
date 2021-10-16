@@ -59,7 +59,7 @@
                 android:includeFontPadding="false"
                 android:text="长按「静音」按键，并等待5秒钟，直道提示音响起，根据提示音进行操作"
                 android:textColor="#ff425670"
-                android:textSize="13sp"
+                android:textSize="27pt"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_fangan1" />
 
@@ -81,7 +81,7 @@
                 android:layout_marginTop="19dp"
                 android:text="将设备断电，等待15秒后再接通电源，并重新开始配网"
                 android:textColor="#ff425670"
-                android:textSize="13sp"
+                android:textSize="27pt"
                 app:layout_constraintLeft_toLeftOf="@+id/tv_fangan2"
                 app:layout_constraintTop_toBottomOf="@+id/tv_fangan2" />
         </androidx.constraintlayout.widget.ConstraintLayout>

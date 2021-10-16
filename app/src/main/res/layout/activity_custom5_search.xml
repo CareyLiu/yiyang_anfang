@@ -60,7 +60,7 @@
                         android:imeOptions="actionSearch"
                         android:singleLine="true"
                         android:textColor="@color/sousuo"
-                        android:textSize="12sp" />
+                        android:textSize="23pt" />
 
 
                 </com.flyco.roundview.RoundLinearLayout>
@@ -121,7 +121,7 @@
                         android:layout_marginLeft="7dp"
                         android:text="清空历史记录"
                         android:textColor="@color/sousuo"
-                        android:textSize="12sp" />
+                        android:textSize="23pt" />
                 </LinearLayout>
 
 

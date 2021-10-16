@@ -181,7 +181,7 @@
                     android:padding="10dp"
                     android:text="我的订单"
                     android:textColor="#313131"
-                    android:textSize="14sp" />
+                    android:textSize="27pt" />
 
                 <TextView
                     android:id="@+id/tv_all_order"
@@ -190,7 +190,7 @@
                     android:gravity="center|right"
                     android:padding="10dp"
                     android:text="查看全部订单"
-                    android:textSize="12sp" />
+                    android:textSize="23pt" />
 
 
             </LinearLayout>
@@ -324,7 +324,7 @@
                         android:padding="10dp"
                         android:text="我的拼团"
                         android:textColor="#313131"
-                        android:textSize="14sp" />
+                        android:textSize="27pt" />
 
 
                     <TextView
@@ -333,7 +333,7 @@
                         android:gravity="center"
                         android:padding="10dp"
                         android:text="查看全部订单"
-                        android:textSize="12sp" />
+                        android:textSize="23pt" />
 
                     <ImageView
                         android:layout_width="wrap_content"

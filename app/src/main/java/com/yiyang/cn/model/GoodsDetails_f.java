@@ -8,7 +8,7 @@ public class GoodsDetails_f implements Serializable {
      * msg_code : 0000
      * msg : ok
      * row_num : 1
-     * data : [{"inst_accid":"jcz_sub_214","shop_product_title":"神灯教育机器人","shop_colour":"-","isCollection":"0","index_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=10709","assList":[{"user_to_text":"物美价廉","user_to_time":"2020-05-15 17:32:04","of_user_id":"1526","user_img_url":"https://shop.hljsdkj.com/commons/easyui/images/portrait86x86.png","user_to_score":"5.00","user_name":"未设置"}],"wares_sales_volume":"已售0件","wares_id":"197","money_begin":"1.00","ass_count":"1","bannerList":[{"vedio_url":"","img_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=10745"},{"vedio_url":"","img_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=10799"}],"wares_type":"1","inst_id":"205","make_num":"","wares_go_type":"1","addr":"黑龙江省哈尔滨市","shop_brand":"-","alone_money":"","wares_detail":"","wares_state":"1","inst_logo_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=4638","detailImgList":[{"img_width":"752","img_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=10800","img_height":"3090"}],"shop_product_norms":"-","wares_money_go":"10.00","inst_name":"22","money_end":"1.00","productList":[{"flag":"true","red_packet_money":"8.00","money_now":"1.00","shop_product_count":"70","shop_product_id":"110","index_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=10709","money_make":"","product_title":"套餐A"}]}]
+     * data : [{"inst_accid":"jcz_sub_214","shop_product_title":"神灯教育机器人","shop_colour":"-","isCollection":"0","index_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=10709","assList":[{"user_to_text":"物美价廉","user_to_time":"2020-05-15 17:32:04","of_user_id":"1526","user_img_url":"https://shop.hljsdkj.com/commons/easyui/images/portrait86x86.png","user_to_score":"5.00","user_name":"未设置"}],"wares_sales_volume":"已售0件","wares_id":"197","money_begin":"1.00","ass_count":"1","bannerList":[{"vedio_url":"","img_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=10745"},{"vedio_url":"","img_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=10799"}],"wares_type":"1","inst_id":"205","make_num":"","wares_go_type":"1","addr":"吉林省长春市","shop_brand":"-","alone_money":"","wares_detail":"","wares_state":"1","inst_logo_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=4638","detailImgList":[{"img_width":"752","img_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=10800","img_height":"3090"}],"shop_product_norms":"-","wares_money_go":"10.00","inst_name":"22","money_end":"1.00","productList":[{"flag":"true","red_packet_money":"8.00","money_now":"1.00","shop_product_count":"70","shop_product_id":"110","index_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=10709","money_make":"","product_title":"套餐A"}]}]
      */
 
     private String msg_code;
@@ -65,7 +65,7 @@ public class GoodsDetails_f implements Serializable {
          * inst_id : 205
          * make_num :
          * wares_go_type : 1
-         * addr : 黑龙江省哈尔滨市
+         * addr : 吉林省长春市
          * shop_brand : -
          * alone_money :
          * wares_detail :

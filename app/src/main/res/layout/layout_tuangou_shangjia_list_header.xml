@@ -42,7 +42,7 @@
         android:padding="3dp"
         android:text="全部"
         android:textColor="#ff666666"
-        android:textSize="13sp"
+        android:textSize="27pt"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
@@ -73,7 +73,7 @@
             android:padding="3dp"
             android:text="智能排序"
             android:textColor="#ff666666"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
         <ImageView
             android:id="@+id/iv_image2"
@@ -102,7 +102,7 @@
         android:padding="3dp"
         android:text="筛选"
         android:textColor="#ff666666"
-        android:textSize="13sp"
+        android:textSize="27pt"
         app:layout_constraintBottom_toBottomOf="@+id/iv_image3"
         app:layout_constraintRight_toLeftOf="@+id/iv_image3"
         app:layout_constraintTop_toTopOf="@+id/iv_image3" />
@@ -148,7 +148,7 @@
             android:layout_marginTop="3dp"
             android:text="没有符合条件的商家"
             android:textColor="#ff666666"
-            android:textSize="13sp"
+            android:textSize="27pt"
             android:visibility="visible"
             app:layout_constraintLeft_toLeftOf="@+id/empty_view"
             app:layout_constraintRight_toRightOf="@+id/empty_view"

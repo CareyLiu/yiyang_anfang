@@ -47,7 +47,7 @@
         android:layout_marginTop="4dp"
         android:text="人均:40/人"
         android:textColor="#ff666666"
-        android:textSize="13sp"
+        android:textSize="27pt"
         app:layout_constraintLeft_toRightOf="@+id/star"
         app:layout_constraintTop_toBottomOf="@+id/tv_shop_name" />
 
@@ -77,9 +77,9 @@
         android:layout_marginRight="15dp"
         android:ellipsize="end"
         android:maxLines="2"
-        android:text="黑龙江省哈尔滨市平房区友协哈尔滨市平房区友协哈尔滨市平房区区友协哈尔滨市平房区友协友协哈尔滨市平房区友协街道"
+        android:text="吉林省长春市平房区友协长春市平房区友协长春市平房区区友协长春市平房区友协友协长春市平房区友协街道"
         android:textColor="#ff333333"
-        android:textSize="13sp"
+        android:textSize="27pt"
         app:layout_constraintBottom_toBottomOf="@+id/iv_image1"
         app:layout_constraintLeft_toRightOf="@+id/iv_image1"
         app:layout_constraintTop_toTopOf="@+id/iv_image1" />
@@ -123,7 +123,7 @@
         android:layout_marginLeft="3dp"
         android:text="套餐"
         android:textColor="#ff111111"
-        android:textSize="13sp"
+        android:textSize="27pt"
         android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/iv_tuangou"
@@ -138,7 +138,7 @@
         android:layout_marginTop="15dp"
         android:text="买单"
         android:textColor="#ff111111"
-        android:textSize="13sp"
+        android:textSize="27pt"
         app:layout_constraintLeft_toLeftOf="@+id/iv_tuangou"
         app:layout_constraintTop_toBottomOf="@+id/tv_taocan" />
 
@@ -149,7 +149,7 @@
         android:layout_marginTop="5dp"
         android:text="买单手机更方便"
         android:textColor="#ff999999"
-        android:textSize="12sp"
+        android:textSize="23pt"
         app:layout_constraintLeft_toLeftOf="@+id/tv_maidan"
         app:layout_constraintTop_toBottomOf="@+id/tv_maidan" />
 

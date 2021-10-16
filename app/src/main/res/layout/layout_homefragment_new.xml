@@ -55,7 +55,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="3dp"
                         android:includeFontPadding="false"
-                        android:text="哈尔滨"
+                        android:text="长春"
                         android:textColor="#ff333333"
                         android:textSize="15sp"
                         app:layout_constraintBottom_toBottomOf="@+id/iv_weizhi"
@@ -141,7 +141,7 @@
                         android:includeFontPadding="false"
                         android:text="团购"
                         android:textColor="#ff333333"
-                        android:textSize="13sp"
+                        android:textSize="27pt"
                         app:layout_constraintBottom_toBottomOf="@id/iv_tuan"
                         app:layout_constraintLeft_toRightOf="@+id/iv_tuan"
                         app:layout_constraintTop_toTopOf="@id/iv_tuan" />
@@ -179,7 +179,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:text="生活"
                                 android:textColor="#ff333333"
-                                android:textSize="13sp" />
+                                android:textSize="27pt" />
 
                         </LinearLayout>
 
@@ -219,7 +219,7 @@
                         android:includeFontPadding="false"
                         android:text="智控"
                         android:textColor="#ff333333"
-                        android:textSize="13sp"
+                        android:textSize="27pt"
                         app:layout_constraintBottom_toBottomOf="@+id/iv_zhikong"
                         app:layout_constraintLeft_toRightOf="@+id/iv_zhikong"
                         app:layout_constraintTop_toTopOf="@+id/iv_zhikong" />

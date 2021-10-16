@@ -10,7 +10,7 @@ public class TcBianminModel {
      * msg_code : 0000
      * msg : ok
      * row_num : 4
-     * data : [{"irNoticeList":[{"ir_title":"专业清洗地暖以及家电","ir_audit_state":"2","meter":"6608.9","x":"45.662479","y":"126.611618","notice_img_url":"https://test.hljsdkj.com/Frame/uploadFile/showImg?file_id=12016","ir_contact_phone":"15248494682","addr":"黑龙江哈尔滨","ir_id":"14"},{"ir_title":"专业清洗地暖以及家电","ir_audit_state":"2","meter":"6608.9","x":"45.662479","y":"126.611618","notice_img_url":"https://test.hljsdkj.com/Frame/uploadFile/showImg?file_id=12016","ir_contact_phone":"15248494682","addr":"黑龙江哈尔滨","ir_id":"10"},{"ir_title":"专业清洗地暖以及家电","ir_audit_state":"2","meter":"6608.9","x":"45.662479","y":"126.611618","notice_img_url":"https://test.hljsdkj.com/Frame/uploadFile/showImg?file_id=12016","ir_contact_phone":"15248494682","addr":"黑龙江哈尔滨","ir_id":"9"},{"ir_title":"买鞋修鞋","ir_audit_state":"2","meter":"6608.9","x":"45.662479","y":"126.611618","notice_img_url":"https://test.hljsdkj.com/Frame/uploadFile/showImg?file_id=12016","ir_contact_phone":"15248494682","addr":"","ir_id":"8"}],"irNoticeTypeList":[{"ir_column_type":"1852","ir_column_type_name":"附近"},{"ir_column_type":"1805","ir_column_type_name":"二手物品"},{"ir_column_type":"1803","ir_column_type_name":"招聘"},{"ir_column_type":"1801","ir_column_type_name":"卖房"},{"ir_column_type":"1799","ir_column_type_name":"出兑"},{"ir_column_type":"1797","ir_column_type_name":"出租"}]}]
+     * data : [{"irNoticeList":[{"ir_title":"专业清洗地暖以及家电","ir_audit_state":"2","meter":"6608.9","x":"45.662479","y":"126.611618","notice_img_url":"https://test.hljsdkj.com/Frame/uploadFile/showImg?file_id=12016","ir_contact_phone":"15248494682","addr":"吉林长春","ir_id":"14"},{"ir_title":"专业清洗地暖以及家电","ir_audit_state":"2","meter":"6608.9","x":"45.662479","y":"126.611618","notice_img_url":"https://test.hljsdkj.com/Frame/uploadFile/showImg?file_id=12016","ir_contact_phone":"15248494682","addr":"吉林长春","ir_id":"10"},{"ir_title":"专业清洗地暖以及家电","ir_audit_state":"2","meter":"6608.9","x":"45.662479","y":"126.611618","notice_img_url":"https://test.hljsdkj.com/Frame/uploadFile/showImg?file_id=12016","ir_contact_phone":"15248494682","addr":"吉林长春","ir_id":"9"},{"ir_title":"买鞋修鞋","ir_audit_state":"2","meter":"6608.9","x":"45.662479","y":"126.611618","notice_img_url":"https://test.hljsdkj.com/Frame/uploadFile/showImg?file_id=12016","ir_contact_phone":"15248494682","addr":"","ir_id":"8"}],"irNoticeTypeList":[{"ir_column_type":"1852","ir_column_type_name":"附近"},{"ir_column_type":"1805","ir_column_type_name":"二手物品"},{"ir_column_type":"1803","ir_column_type_name":"招聘"},{"ir_column_type":"1801","ir_column_type_name":"卖房"},{"ir_column_type":"1799","ir_column_type_name":"出兑"},{"ir_column_type":"1797","ir_column_type_name":"出租"}]}]
      */
 
     private String next;
@@ -88,7 +88,7 @@ public class TcBianminModel {
              * y : 126.611618
              * notice_img_url : https://test.hljsdkj.com/Frame/uploadFile/showImg?file_id=12016
              * ir_contact_phone : 15248494682
-             * addr : 黑龙江哈尔滨
+             * addr : 吉林长春
              * ir_id : 14
              */
 

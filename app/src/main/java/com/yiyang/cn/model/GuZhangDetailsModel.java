@@ -6,7 +6,7 @@ public class GuZhangDetailsModel {
     /**
      * msg_code : 0000
      * msg : ok
-     * data : [{"install_time":"2020-03-28","of_user_id":"1526","notify_text":"风暖驻车加热器故障：电压过低或过高","gps_x":"45.666027","gaode_y":"126.611563","car_brand_name":"ARCFOXARCFOX-1","gps_y":"126.605662","create_time":"2020-06-28 13:06:15","failure_name":"电压过低或过高","user_name":"no more","car_brand_url_two":"https://shop.hljsdkj.com/commons/images/siye_autoparts/cartype/160_autohomecar__wKgH0Fgu_aSAHWKpAAJCsWK5fVo406.jpg","changjia_name":"无","baidu_y":"126.617946","baidu_x":"45.6742758","notify_id":"2235","sell_phone":"13946026970","ccid":"aaaaaaaaaaaaaaaaaaaaaaa9","car_code":"","xinghao":"无","plate_number":"","gaode_x":"45.6679638","zhu_car_stoppage_no":"1","install_addr":"哈尔滨南岗区电缆街219号","gps_addr":"哈尔滨市南岗区电缆街170号"}]
+     * data : [{"install_time":"2020-03-28","of_user_id":"1526","notify_text":"风暖驻车加热器故障：电压过低或过高","gps_x":"45.666027","gaode_y":"126.611563","car_brand_name":"ARCFOXARCFOX-1","gps_y":"126.605662","create_time":"2020-06-28 13:06:15","failure_name":"电压过低或过高","user_name":"no more","car_brand_url_two":"https://shop.hljsdkj.com/commons/images/siye_autoparts/cartype/160_autohomecar__wKgH0Fgu_aSAHWKpAAJCsWK5fVo406.jpg","changjia_name":"无","baidu_y":"126.617946","baidu_x":"45.6742758","notify_id":"2235","sell_phone":"13946026970","ccid":"aaaaaaaaaaaaaaaaaaaaaaa9","car_code":"","xinghao":"无","plate_number":"","gaode_x":"45.6679638","zhu_car_stoppage_no":"1","install_addr":"长春南关区电缆街219号","gps_addr":"长春市南关区电缆街170号"}]
      */
 
     private String msg_code;
@@ -61,8 +61,8 @@ public class GuZhangDetailsModel {
          * plate_number :
          * gaode_x : 45.6679638
          * zhu_car_stoppage_no : 1
-         * install_addr : 哈尔滨南岗区电缆街219号
-         * gps_addr : 哈尔滨市南岗区电缆街170号
+         * install_addr : 长春南关区电缆街219号
+         * gps_addr : 长春市南关区电缆街170号
          */
 
         private String install_time;

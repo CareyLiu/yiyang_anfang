@@ -43,7 +43,7 @@
                 android:includeFontPadding="false"
                 android:text="首页"
                 android:textColor="@color/color_main_yiyang"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
         </LinearLayout>
 
 
@@ -71,7 +71,7 @@
                 android:includeFontPadding="false"
                 android:text="居家养老"
                 android:textColor="@color/color_3"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
         </LinearLayout>
 
         <LinearLayout
@@ -99,7 +99,7 @@
                 android:includeFontPadding="false"
                 android:text="生鲜柜"
                 android:textColor="@color/color_3"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
         </LinearLayout>
 
 
@@ -127,7 +127,7 @@
                 android:includeFontPadding="false"
                 android:text="消息"
                 android:textColor="@color/color_3"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
         </LinearLayout>
 
         <LinearLayout
@@ -154,7 +154,7 @@
                 android:includeFontPadding="false"
                 android:text="我的"
                 android:textColor="@color/color_3"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -6,7 +6,7 @@ public class TuanGouShangPinDetailsModel {
     /**
      * msg_code : 0000
      * msg : ok
-     * data : [{"pay_count":"0","commentList":[],"agio":"8.6","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9077","inst_text":"蛋糕","text_1":[{"menu_title":"头盘","menu":[{"menu_text":"萨拉米肠配熏肉","menu_count":"3份","menu_pay":"48"}]}],"inst_number":"1.0","shop_money_old":"300.00","wares_id":"75","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_type":"1","shop_title":"美食三","text_2":[{"prompt_title":"有效期","prompt":[{"prompt_text":"·2015.7.27至2108.12.25（周末、法定节日通用）"}]},{"prompt_title":"使用时间","prompt":[{"prompt_text":"·11:00-20:00"}]},{"prompt_title":"使用规则","prompt":[{"prompt_text":"·无需预约，消费高峰时需要等位"}]}],"inst_id":"263","shop_money_now":"258.00","inst_name":"麦香村西饼屋（平房店）","addr":"黑龙江省哈尔滨市"}]
+     * data : [{"pay_count":"0","commentList":[],"agio":"8.6","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9077","inst_text":"蛋糕","text_1":[{"menu_title":"头盘","menu":[{"menu_text":"萨拉米肠配熏肉","menu_count":"3份","menu_pay":"48"}]}],"inst_number":"1.0","shop_money_old":"300.00","wares_id":"75","img_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","shop_type":"1","shop_title":"美食三","text_2":[{"prompt_title":"有效期","prompt":[{"prompt_text":"·2015.7.27至2108.12.25（周末、法定节日通用）"}]},{"prompt_title":"使用时间","prompt":[{"prompt_text":"·11:00-20:00"}]},{"prompt_title":"使用规则","prompt":[{"prompt_text":"·无需预约，消费高峰时需要等位"}]}],"inst_id":"263","shop_money_now":"258.00","inst_name":"麦香村西饼屋（平房店）","addr":"吉林省长春市"}]
      */
 
     private String msg_code;
@@ -55,7 +55,7 @@ public class TuanGouShangPinDetailsModel {
          * inst_id : 263
          * shop_money_now : 258.00
          * inst_name : 麦香村西饼屋（平房店）
-         * addr : 黑龙江省哈尔滨市
+         * addr : 吉林省长春市
          */
 
         private String pay_count;

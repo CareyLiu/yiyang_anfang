@@ -32,7 +32,7 @@
                 android:text="客厅"
                 android:textColor="#333333"
                 android:textStyle="bold"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:text="2个房间"
                     android:textColor="#999999"
-                    android:textSize="12sp" />
+                    android:textSize="23pt" />
 
                 <View
                     android:layout_width="1dp"
@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:text="0个设备"
                     android:textColor="#999999"
-                    android:textSize="12sp" />
+                    android:textSize="23pt" />
             </LinearLayout>
         </LinearLayout>
 

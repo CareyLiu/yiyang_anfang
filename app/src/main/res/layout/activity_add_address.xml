@@ -132,7 +132,7 @@
                 android:inputType="textMultiLine"
                 android:paddingLeft="10dp"
                 android:paddingTop="5dp"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
         </LinearLayout>
 
         <LinearLayout

@@ -18,7 +18,7 @@ import java.util.Properties;
 public class AppConfig {
 
 
-    public static String DefaultCity = "哈尔滨市";
+    public static String DefaultCity = "长春市";
     public static boolean ADSTATE = true;
     public static String SCREEN = "-1";//检索预约
     public static String SORT = "-1"; //检索预约

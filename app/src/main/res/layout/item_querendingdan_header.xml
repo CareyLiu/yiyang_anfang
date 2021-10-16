@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="13dp"
         android:textColor="#ff000000"
-        android:textSize="12sp"
+        android:textSize="23pt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/shop_img"
         app:layout_constraintTop_toTopOf="parent"

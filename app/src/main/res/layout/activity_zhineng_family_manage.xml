@@ -67,7 +67,7 @@
             android:layout_marginTop="8dp"
             android:text="新建家庭"
             android:textColor="#333333"
-            android:textSize="14sp"
+            android:textSize="27pt"
             android:textStyle="bold" />
     </LinearLayout>
 </RelativeLayout>

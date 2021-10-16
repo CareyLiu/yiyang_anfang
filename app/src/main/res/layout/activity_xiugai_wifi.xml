@@ -103,7 +103,7 @@
                     android:includeFontPadding="false"
                     android:text="目前暂不支持"
                     android:textColor="#ff999999"
-                    android:textSize="14sp" />
+                    android:textSize="27pt" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -112,7 +112,7 @@
                     android:includeFontPadding="false"
                     android:text="5G"
                     android:textColor="#ff5e5e5e"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     android:textStyle="bold" />
 
                 <TextView
@@ -121,7 +121,7 @@
                     android:includeFontPadding="false"
                     android:text="频段的Wi-Fi"
                     android:textColor="#ff999999"
-                    android:textSize="14sp" />
+                    android:textSize="27pt" />
             </LinearLayout>
 
             <TextView
@@ -132,7 +132,7 @@
                 android:includeFontPadding="false"
                 android:text="以及酒店、机场等需要认证的Wi-Fi"
                 android:textColor="#ff999999"
-                android:textSize="14sp"
+                android:textSize="27pt"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ll_huashu2" />
@@ -162,7 +162,7 @@
                     android:background="@null"
                     android:hint="请输入wifi名"
                     android:textColor="#ff3b4b67"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     tools:text="TP-LINK_F33E" />
 
             </LinearLayout>
@@ -207,7 +207,7 @@
                     android:background="@null"
                     android:inputType="textPassword"
                     android:textColor="#ff3b4b67"
-                    android:textSize="14sp" />
+                    android:textSize="27pt" />
 
 
                 <ImageView
@@ -238,7 +238,7 @@
                 android:includeFontPadding="false"
                 android:text="请使用2.4G 频段的Wi-Fi"
                 android:textColor="#ff999999"
-                android:textSize="13sp"
+                android:textSize="27pt"
                 app:layout_constraintLeft_toLeftOf="@+id/view_line_1"
                 app:layout_constraintTop_toBottomOf="@+id/view_line_1" />
 
@@ -263,7 +263,7 @@
                     android:layout_height="wrap_content"
                     android:text="记住密码"
                     android:textColor="#ff999999"
-                    android:textSize="13sp" />
+                    android:textSize="27pt" />
             </LinearLayout>
 
 
@@ -333,7 +333,7 @@
                 android:includeFontPadding="false"
                 android:text="配对过程中请避免设备断电"
                 android:textColor="#ff999999"
-                android:textSize="13sp"
+                android:textSize="27pt"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/shebeilianjie" />
@@ -360,7 +360,7 @@
                     android:layout_marginLeft="4dp"
                     android:text="手机发送 Wi-Fi 账号密码"
                     android:textColor="#ff999999"
-                    android:textSize="13sp" />
+                    android:textSize="27pt" />
 
             </LinearLayout>
 
@@ -385,7 +385,7 @@
                     android:layout_marginLeft="4dp"
                     android:text="设备验证 Wi-Fi 账号密码"
                     android:textColor="#ff999999"
-                    android:textSize="13sp" />
+                    android:textSize="27pt" />
 
             </LinearLayout>
 
@@ -395,7 +395,7 @@
                 android:layout_marginTop="15dp"
                 android:text="设备连接网络中..."
                 android:textColor="#ff999999"
-                android:textSize="13sp"
+                android:textSize="27pt"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ll_2" />
@@ -441,7 +441,7 @@
                 android:includeFontPadding="false"
                 android:text="可能失败的原因"
                 android:textColor="#ff999999"
-                android:textSize="13sp"
+                android:textSize="27pt"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_shibai" />
@@ -473,7 +473,7 @@
                         android:includeFontPadding="false"
                         android:text="1"
                         android:textColor="#ffffffff"
-                        android:textSize="12sp" />
+                        android:textSize="23pt" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -483,7 +483,7 @@
                         android:includeFontPadding="false"
                         android:text="Wi-Fi 密码输入错误"
                         android:textColor="#ff999999"
-                        android:textSize="13sp" />
+                        android:textSize="27pt" />
 
 
                 </LinearLayout>
@@ -505,7 +505,7 @@
                         android:includeFontPadding="false"
                         android:text="2"
                         android:textColor="#ffffffff"
-                        android:textSize="12sp" />
+                        android:textSize="23pt" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -515,7 +515,7 @@
                         android:includeFontPadding="false"
                         android:text="手机连接的 5G Wi-Fi 路由器"
                         android:textColor="#ff999999"
-                        android:textSize="13sp" />
+                        android:textSize="27pt" />
 
 
                 </LinearLayout>
@@ -537,7 +537,7 @@
                         android:includeFontPadding="false"
                         android:text="3"
                         android:textColor="#ffffffff"
-                        android:textSize="12sp" />
+                        android:textSize="23pt" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -547,7 +547,7 @@
                         android:includeFontPadding="false"
                         android:text="手机和设备距离太远"
                         android:textColor="#ff999999"
-                        android:textSize="13sp" />
+                        android:textSize="27pt" />
 
 
                 </LinearLayout>
@@ -569,7 +569,7 @@
                         android:includeFontPadding="false"
                         android:text="4"
                         android:textColor="#ffffffff"
-                        android:textSize="12sp" />
+                        android:textSize="23pt" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -579,7 +579,7 @@
                         android:includeFontPadding="false"
                         android:text="手机未开启蓝牙"
                         android:textColor="#ff999999"
-                        android:textSize="13sp" />
+                        android:textSize="27pt" />
 
 
                 </LinearLayout>

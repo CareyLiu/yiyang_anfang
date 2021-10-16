@@ -106,7 +106,7 @@
                 android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:text="收藏"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
 
         </LinearLayout>
 
@@ -128,7 +128,7 @@
                 android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:text="店铺"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
 
         </LinearLayout>
 
@@ -150,7 +150,7 @@
                 android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:text="客服"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
 
         </LinearLayout>
 
@@ -164,7 +164,7 @@
             android:gravity="center"
             android:text="加入购物车"
             android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:textSize="23pt" />
 
         <Button
             android:id="@+id/btn_buy"
@@ -176,7 +176,7 @@
             android:gravity="center"
             android:text="立即购买"
             android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:textSize="23pt" />
     </LinearLayout>
 
     <ImageView

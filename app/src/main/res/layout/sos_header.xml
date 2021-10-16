@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:text="高"
                 android:textColor="#ff666666"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/ll_guan"
@@ -118,7 +118,7 @@
                     android:includeFontPadding="false"
                     android:text="设备在线"
                     android:textColor="#666666"
-                    android:textSize="12sp" />
+                    android:textSize="23pt" />
             </LinearLayout>
 
 
@@ -143,7 +143,7 @@
             android:layout_marginLeft="14dp"
             android:text="家庭"
             android:textColor="#ff000000"
-            android:textSize="14sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:id="@+id/tv_jiating_name"
@@ -154,7 +154,7 @@
             android:layout_marginRight="14dp"
             android:text="Rose的家"
             android:textColor="#ff999999"
-            android:textSize="14sp" />
+            android:textSize="27pt" />
     </RelativeLayout>
 
     <View
@@ -175,7 +175,7 @@
             android:layout_marginLeft="14dp"
             android:text="房间"
             android:textColor="#ff000000"
-            android:textSize="14sp" />
+            android:textSize="27pt" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -192,7 +192,7 @@
                 android:layout_gravity="center_vertical"
                 android:text="客厅"
                 android:textColor="#ff999999"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -219,7 +219,7 @@
             android:layout_marginLeft="14dp"
             android:text="名称"
             android:textColor="#ff000000"
-            android:textSize="14sp" />
+            android:textSize="27pt" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -235,7 +235,7 @@
                 android:layout_height="wrap_content"
                 android:text="门磁"
                 android:textColor="#ff999999"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
             <ImageView
 
@@ -263,7 +263,7 @@
             android:layout_marginLeft="14dp"
             android:text="类型"
             android:textColor="#ff000000"
-            android:textSize="14sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:id="@+id/tv_leixing_name"
@@ -274,7 +274,7 @@
             android:layout_marginRight="14dp"
             android:text="自动喂鱼"
             android:textColor="#ff999999"
-            android:textSize="14sp" />
+            android:textSize="27pt" />
     </RelativeLayout>
 
     <View
@@ -294,7 +294,7 @@
             android:layout_marginLeft="14dp"
             android:text="报警提示音"
             android:textColor="#ff000000"
-            android:textSize="14sp" />
+            android:textSize="27pt" />
 
         <Switch
             android:id="@+id/btn_baojing_tishiyin"
@@ -317,7 +317,7 @@
             android:layout_marginLeft="14dp"
             android:text="告警设置"
             android:textColor="#ff000000"
-            android:textSize="14sp" />
+            android:textSize="27pt" />
 
         <Switch
             android:id="@+id/btn_gaojing"
@@ -345,7 +345,7 @@
             android:layout_marginLeft="14dp"
             android:text="低电量提醒"
             android:textColor="#ff000000"
-            android:textSize="14sp" />
+            android:textSize="27pt" />
 
         <Switch
             android:id="@+id/btn_didianliang"
@@ -374,7 +374,7 @@
             android:layout_marginLeft="15dp"
             android:text="操作记录"
             android:textColor="#ff000000"
-            android:textSize="14sp" />
+            android:textSize="27pt" />
 
 
     </LinearLayout>

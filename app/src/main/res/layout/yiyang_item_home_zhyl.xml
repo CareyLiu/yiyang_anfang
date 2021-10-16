@@ -25,6 +25,6 @@
             android:includeFontPadding="false"
             android:maxLines="1"
             android:textColor="@color/color_3"
-            android:textSize="12sp" />
+            android:textSize="23pt" />
     </LinearLayout>
 </LinearLayout>

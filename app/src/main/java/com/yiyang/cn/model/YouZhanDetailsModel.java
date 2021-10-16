@@ -7,7 +7,7 @@ public class YouZhanDetailsModel {
     /**
      * msg_code : 0000
      * msg : ok
-     * data : [{"priceYfq":"5.48","standard_jiang":"0.42","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=10798","oil_jiang":"0.12","x":"45.751592","y":"125.59836","inst_id":"377","inst_name":"道里石化","addr":"黑龙江省哈尔滨市道里区建国街119号","oilPriceList":[{"oilType":"1","oilName":"汽油","isSelect":"1","oilNos":[{"oilNo":"90","oilName":"90#","isSelect":"1","gunNos":[{"gunNo":"7"},{"gunNo":"8"},{"gunNo":"9"}]},{"oilNo":"92","oilName":"92#","isSelect":"0","gunNos":[]}]},{"oilType":"2","oilName":"柴油","isSelect":"0","oilNos":[]}]}]
+     * data : [{"priceYfq":"5.48","standard_jiang":"0.42","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=10798","oil_jiang":"0.12","x":"45.751592","y":"125.59836","inst_id":"377","inst_name":"宽城石化","addr":"吉林省长春市宽城区建国街119号","oilPriceList":[{"oilType":"1","oilName":"汽油","isSelect":"1","oilNos":[{"oilNo":"90","oilName":"90#","isSelect":"1","gunNos":[{"gunNo":"7"},{"gunNo":"8"},{"gunNo":"9"}]},{"oilNo":"92","oilName":"92#","isSelect":"0","gunNos":[]}]},{"oilType":"2","oilName":"柴油","isSelect":"0","oilNos":[]}]}]
      */
 
     private String msg_code;
@@ -47,8 +47,8 @@ public class YouZhanDetailsModel {
          * x : 45.751592
          * y : 125.59836
          * inst_id : 377
-         * inst_name : 道里石化
-         * addr : 黑龙江省哈尔滨市道里区建国街119号
+         * inst_name : 宽城石化
+         * addr : 吉林省长春市宽城区建国街119号
          * oilPriceList : [{"oilType":"1","oilName":"汽油","isSelect":"1","oilNos":[{"oilNo":"90","oilName":"90#","isSelect":"1","gunNos":[{"gunNo":"7"},{"gunNo":"8"},{"gunNo":"9"}]},{"oilNo":"92","oilName":"92#","isSelect":"0","gunNos":[]}]},{"oilType":"2","oilName":"柴油","isSelect":"0","oilNos":[]}]
          */
 

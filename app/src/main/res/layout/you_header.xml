@@ -14,7 +14,7 @@
 android:layout_marginLeft="15dp"
         android:text="新品"
         android:textColor="#ff000000"
-        android:textSize="14sp"
+        android:textSize="27pt"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View

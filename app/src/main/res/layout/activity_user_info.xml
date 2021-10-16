@@ -187,7 +187,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
                         android:layout_weight="0"
-                        android:text="黑龙江省-哈尔滨市-南岗区"
+                        android:text="吉林省-长春市-南关区"
                         android:textColor="@color/white" />
 
                     <ImageView

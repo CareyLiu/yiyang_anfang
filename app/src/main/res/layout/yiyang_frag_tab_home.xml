@@ -118,7 +118,7 @@
                         android:layout_marginLeft="9pt"
                         android:text="智慧医养"
                         android:textColor="@color/color_3"
-                        android:textSize="13sp" />
+                        android:textSize="27pt" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -184,7 +184,7 @@
                         android:layout_marginLeft="9pt"
                         android:text="居家生活"
                         android:textColor="@color/color_3"
-                        android:textSize="13sp" />
+                        android:textSize="27pt" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView

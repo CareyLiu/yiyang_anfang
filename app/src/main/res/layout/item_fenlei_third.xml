@@ -46,7 +46,7 @@
             android:includeFontPadding="false"
             android:text=" 绿茶补水保湿护肤品件套装1111111"
             android:textColor="#ff000000"
-            android:textSize="13sp"
+            android:textSize="27pt"
             app:layout_constraintLeft_toRightOf="@+id/biaozhi"
             app:layout_constraintTop_toBottomOf="@+id/iv_product" />
 
@@ -59,7 +59,7 @@
             android:includeFontPadding="false"
             android:text="已售2391"
             android:textColor="#ff999999"
-            android:textSize="12sp"
+            android:textSize="23pt"
             app:layout_constraintLeft_toLeftOf="@+id/biaozhi"
             app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
@@ -85,7 +85,7 @@
             android:includeFontPadding="false"
             android:text="¥149"
             android:textColor="#ff999999"
-            android:textSize="12sp"
+            android:textSize="23pt"
             app:layout_constraintBottom_toBottomOf="@+id/tv_xianjia"
             app:layout_constraintLeft_toRightOf="@+id/tv_xianjia"
             app:layout_constraintTop_toTopOf="@+id/tv_xianjia" />
@@ -102,7 +102,7 @@
             android:paddingVertical="1dp"
             android:text="110元券"
             android:textColor="@color/white"
-            android:textSize="12sp"
+            android:textSize="23pt"
             app:layout_constraintBottom_toBottomOf="@+id/tv_xianjia"
             app:layout_constraintRight_toRightOf="@+id/iv_product"
             app:layout_constraintTop_toTopOf="@+id/tv_xianjia"

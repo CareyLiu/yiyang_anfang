@@ -8,7 +8,7 @@ public class DianPuXiangQingModel {
      * msg_code : 0000
      * msg : ok
      * row_num : 1
-     * data : [{"inst_accid":"jcz_sub_224","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=10943","inst_photo_id":"10943","isCollection":"1","addr_all":"黑龙江省哈尔滨市道里区抚顺街道黑龙江省哈尔滨市","waresList":[{"wares_sales_volume":"已售0件","wares_id":"203","shop_product_title":"春天安全门","money_begin":"998.00","wares_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=10961","wares_type":"1","shop_product_id":"114"}],"subsystem_id":"jcz","x":"45.756462","shop_type":"","y":"126.617992","collection_count":"1","inst_id":"407","inst_name":"春天门业"}]
+     * data : [{"inst_accid":"jcz_sub_224","inst_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=10943","inst_photo_id":"10943","isCollection":"1","addr_all":"吉林省长春市宽城区抚顺街道吉林省长春市","waresList":[{"wares_sales_volume":"已售0件","wares_id":"203","shop_product_title":"春天安全门","money_begin":"998.00","wares_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=10961","wares_type":"1","shop_product_id":"114"}],"subsystem_id":"jcz","x":"45.756462","shop_type":"","y":"126.617992","collection_count":"1","inst_id":"407","inst_name":"春天门业"}]
      */
 
     private String next;
@@ -63,7 +63,7 @@ public class DianPuXiangQingModel {
          * inst_photo_url : https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=10943
          * inst_photo_id : 10943
          * isCollection : 1
-         * addr_all : 黑龙江省哈尔滨市道里区抚顺街道黑龙江省哈尔滨市
+         * addr_all : 吉林省长春市宽城区抚顺街道吉林省长春市
          * waresList : [{"wares_sales_volume":"已售0件","wares_id":"203","shop_product_title":"春天安全门","money_begin":"998.00","wares_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=10961","wares_type":"1","shop_product_id":"114"}]
          * subsystem_id : jcz
          * x : 45.756462

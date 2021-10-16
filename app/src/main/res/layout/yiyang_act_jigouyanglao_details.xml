@@ -41,7 +41,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:includeFontPadding="false"
-                        android:text="哈尔滨市鑫夕阳温泉养老院"
+                        android:text="长春市鑫夕阳温泉养老院"
                         android:textColor="@color/color_3"
                         android:textSize="35pt" />
 
@@ -123,7 +123,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="黑龙江黑哈尔滨市松北区江都街209号"
+                        android:text="吉林省长春市宽城区江都街209号"
                         android:textSize="27pt" />
                 </LinearLayout>
             </LinearLayout>
@@ -151,7 +151,7 @@
                     android:layout_marginTop="10pt"
                     android:layout_marginBottom="16pt"
                     android:includeFontPadding="false"
-                    android:text="哈尔滨市南岗区鑫夕阳温泉养老院是哈尔滨精心打造
+                    android:text="长春市南关区鑫夕阳温泉养老院是长春精心打造
 的高端医养结合示范基地，是一家集养老、护理、医
 疗、康复和临终关怀等医养融合于一体的非..."
                     android:textColor="@color/color_3"
@@ -246,7 +246,7 @@
                 android:background="@drawable/bt_login_denglu"
                 android:text="预约"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="35pt" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

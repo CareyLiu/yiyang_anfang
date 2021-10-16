@@ -33,7 +33,7 @@
                     android:layout_marginLeft="14dp"
                     android:text="抵用券"
                     android:textColor="#ff222222"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     android:textStyle="bold" />
 
                 <TextView
@@ -45,7 +45,7 @@
                     android:layout_marginRight="15dp"
                     android:text="暂无可用"
                     android:textColor="#ff666666"
-                    android:textSize="13sp" />
+                    android:textSize="27pt" />
             </com.flyco.roundview.RoundRelativeLayout>
 
             <com.flyco.roundview.RoundRelativeLayout
@@ -66,7 +66,7 @@
                     android:layout_marginTop="17dp"
                     android:text="红包抵扣"
                     android:textColor="#ff222222"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     android:textStyle="bold" />
 
                 <ImageView
@@ -96,7 +96,7 @@
                     android:layout_marginTop="17dp"
                     android:text="当前可抵扣金额"
                     android:textColor="#ff222222"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     android:textStyle="bold"
                     android:visibility="gone" />
 
@@ -110,7 +110,7 @@
                     android:layout_marginBottom="17dp"
                     android:text="-50"
                     android:textColor="#ffff2b00"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     android:textStyle="bold"
                     android:visibility="gone" />
             </com.flyco.roundview.RoundRelativeLayout>
@@ -133,7 +133,7 @@
                     android:layout_marginTop="17dp"
                     android:text="实付金额"
                     android:textColor="#ff222222"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     android:textStyle="bold" />
 
                 <TextView
@@ -164,7 +164,7 @@
                     android:layout_marginTop="17dp"
                     android:text="手机号"
                     android:textColor="#ff222222"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     android:textStyle="bold" />
 
                 <TextView
@@ -177,7 +177,7 @@
                     android:layout_marginBottom="17dp"
                     android:text="15946251111"
                     android:textColor="#666666"
-                    android:textSize="14sp" />
+                    android:textSize="27pt" />
             </com.flyco.roundview.RoundRelativeLayout>
 
             <View

@@ -25,7 +25,7 @@ public class NotifyModel {
      * alert : 您的阿斯顿·马丁Rapide黑E6666654,风暖驻车加热器故障：电压过低或过高。
      * xinghao : 无
      * zhu_car_stoppage_no : 1
-     * install_addr : 哈尔滨南岗区电缆街219号
+     * install_addr : 长春南关区电缆街219号
      */
 
     private String install_time;

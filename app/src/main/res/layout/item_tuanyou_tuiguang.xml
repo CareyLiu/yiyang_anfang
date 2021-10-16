@@ -39,7 +39,7 @@
             android:includeFontPadding="false"
             android:text="15546466201"
             android:textColor="#ff999999"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
     </LinearLayout>
 
@@ -68,7 +68,7 @@
             android:layout_marginRight="15dp"
             android:text="2020.10.10"
             android:textColor="#ff999999"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
     </LinearLayout>
 

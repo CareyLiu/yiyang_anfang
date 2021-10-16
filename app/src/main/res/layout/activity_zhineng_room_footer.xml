@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:text="新增房间"
             android:textColor="#333333"
-            android:textSize="14sp"
+            android:textSize="27pt"
             android:textStyle="bold" />
     </LinearLayout>
 </RelativeLayout>

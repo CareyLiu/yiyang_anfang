@@ -45,8 +45,8 @@
             android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
             android:layout_marginBottom="15dp"
-            android:text="黑龙江神灯科技发展有限公司"
-            android:textSize="12sp" />
+            android:text="吉林神灯科技发展有限公司"
+            android:textSize="23pt" />
 
         <TextView
             android:id="@+id/tv_statement"
@@ -56,6 +56,6 @@
             android:layout_centerInParent="true"
             android:layout_marginBottom="@dimen/dp_10"
             android:text="Copyright @2019 All Rights Reserved"
-            android:textSize="12sp" />
+            android:textSize="23pt" />
     </RelativeLayout>
 </LinearLayout>

@@ -68,7 +68,7 @@
                     android:includeFontPadding="false"
                     android:text="点击查看到店二维码大图"
                     android:textColor="#ff969696"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     app:layout_constraintLeft_toLeftOf="@+id/tv_yanzhengma"
                     app:layout_constraintTop_toBottomOf="@+id/tv_yanzhengma" />
 
@@ -133,11 +133,11 @@
                     android:layout_marginLeft="11dp"
                     android:includeFontPadding="false"
                     android:textColor="#ff666666"
-                    android:textSize="13sp"
+                    android:textSize="27pt"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@+id/iv_address"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="哈尔滨市南岗区电缆街2019号" />
+                    tools:text="长春市南关区电缆街2019号" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -178,7 +178,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="7dp"
                     android:textColor="#ff111111"
-                    android:textSize="12sp"
+                    android:textSize="23pt"
                     app:layout_constraintBottom_toBottomOf="@id/iv_image"
                     app:layout_constraintLeft_toRightOf="@+id/iv_image"
                     app:layout_constraintTop_toTopOf="@id/iv_image"
@@ -222,7 +222,7 @@
                     android:maxLines="2"
                     android:text="手机吃鸡手柄吃鸡神器游戏手柄荒野行动绝地求生刺激战场王者荣耀"
                     android:textColor="#ff111111"
-                    android:textSize="13sp"
+                    android:textSize="27pt"
                     app:layout_constraintLeft_toRightOf="@+id/iv_product"
                     app:layout_constraintTop_toTopOf="@+id/iv_product" />
 
@@ -235,7 +235,7 @@
                     android:includeFontPadding="false"
                     android:text="款式：S-01游戏手柄"
                     android:textColor="#ff161616"
-                    android:textSize="12sp"
+                    android:textSize="23pt"
                     app:layout_constraintLeft_toLeftOf="@+id/tv_title"
                     app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
@@ -248,7 +248,7 @@
                     android:includeFontPadding="false"
                     android:text="￥5"
                     android:textColor="#ff111111"
-                    android:textSize="13sp"
+                    android:textSize="27pt"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_product"
                     app:layout_constraintLeft_toLeftOf="@+id/tv_title" />
 
@@ -259,7 +259,7 @@
                     android:layout_marginRight="14dp"
                     android:text="X2"
                     android:textColor="#ff111111"
-                    android:textSize="13sp"
+                    android:textSize="27pt"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tv_danjia" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -279,7 +279,7 @@
                     android:layout_marginRight="14dp"
                     android:includeFontPadding="false"
                     android:textColor="#ff111111"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -334,7 +334,7 @@
             android:gravity="center"
             android:text="去支付"
             android:textColor="#ffffffff"
-            android:textSize="13sp"
+            android:textSize="27pt"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -349,7 +349,7 @@
             android:gravity="center"
             android:text="取消订单"
             android:textColor="#ff111111"
-            android:textSize="13sp"
+            android:textSize="27pt"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/tv_go_pay"
@@ -377,7 +377,7 @@
             android:gravity="center"
             android:text="申请退款"
             android:textColor="#ff111111"
-            android:textSize="13sp"
+            android:textSize="27pt"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -392,7 +392,7 @@
             android:gravity="center"
             android:text="催发货"
             android:textColor="#ff111111"
-            android:textSize="13sp"
+            android:textSize="27pt"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/tv_daifahuo_shenqingtuikuan"
             app:layout_constraintTop_toTopOf="parent" />
@@ -419,7 +419,7 @@
             android:gravity="center"
             android:text="去评价"
             android:textColor="#ff111111"
-            android:textSize="13sp"
+            android:textSize="27pt"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -434,7 +434,7 @@
             android:gravity="center"
             android:text="删除订单"
             android:textColor="#ff111111"
-            android:textSize="13sp"
+            android:textSize="27pt"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/tvdaipingjia"
             app:layout_constraintTop_toTopOf="parent" />

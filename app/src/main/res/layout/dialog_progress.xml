@@ -19,6 +19,6 @@
         android:layout_gravity="center"
         android:layout_marginLeft="10dp"
         android:textColor="@android:color/white"
-        android:textSize="13sp"
+        android:textSize="27pt"
         android:visibility="gone" />
 </LinearLayout>

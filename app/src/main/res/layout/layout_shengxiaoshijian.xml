@@ -34,7 +34,7 @@
                 android:layout_marginTop="10dp"
                 android:text="24小时"
                 android:textColor="#ff999999"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
         </LinearLayout>
 
         <ImageView
@@ -75,7 +75,7 @@
                 android:layout_marginTop="12dp"
                 android:text="当天 07:00 - 当天 18:00"
                 android:textColor="#ff999999"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
         </LinearLayout>
 
         <ImageView
@@ -117,7 +117,7 @@
                 android:layout_marginTop="10dp"
                 android:text="当天 20:00 - 次日 06:00"
                 android:textColor="#ff999999"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
         </LinearLayout>
 
         <ImageView
@@ -158,7 +158,7 @@
                 android:layout_marginTop="10dp"
                 android:text="手动设定时间段"
                 android:textColor="#ff999999"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
         </LinearLayout>
 
         <ImageView
@@ -226,7 +226,7 @@
             android:layout_marginTop="15dp"
             android:text="快捷操作"
             android:textColor="#ff999999"
-            android:textSize="14sp" />
+            android:textSize="27pt" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -243,7 +243,7 @@
                 android:padding="3dp"
                 android:text="周一至周五"
                 android:textColor="#ff999999"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
 
             <TextView
                 android:id="@+id/tv_zhouliu_zhouri"
@@ -254,7 +254,7 @@
                 android:padding="3dp"
                 android:text="周六周日"
                 android:textColor="#ff3a85f8"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
 
             <TextView
                 android:id="@+id/tv_meitian"
@@ -265,7 +265,7 @@
                 android:padding="3dp"
                 android:text="每天"
                 android:textColor="#ff999999"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
 
             <TextView
                 android:id="@+id/tv_jinyici"
@@ -276,7 +276,7 @@
                 android:padding="3dp"
                 android:text="仅一次"
                 android:textColor="#ff999999"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

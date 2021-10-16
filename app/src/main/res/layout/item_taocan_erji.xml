@@ -12,7 +12,7 @@
         android:layout_marginTop="11dp"
         android:text="萨拉米肠配熏肉"
         android:textColor="#ff0b0b0b"
-        android:textSize="13sp"
+        android:textSize="27pt"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,7 +23,7 @@
         android:layout_marginRight="13dp"
         android:text="(1份)"
         android:textColor="#ff999999"
-        android:textSize="13sp"
+        android:textSize="27pt"
         app:layout_constraintBottom_toBottomOf="@+id/tv_shuoming"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_shuoming" />

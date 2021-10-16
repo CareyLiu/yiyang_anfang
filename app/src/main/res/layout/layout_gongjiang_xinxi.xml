@@ -108,7 +108,7 @@
                         android:includeFontPadding="false"
                         android:text="天成家居美容"
                         android:textColor="#ff333333"
-                        android:textSize="13sp" />
+                        android:textSize="27pt" />
 
                     <com.yiyang.cn.view.AutoNextLineLinearlayout
                         android:id="@+id/ll_tag"
@@ -145,7 +145,7 @@
                             android:layout_marginLeft="6dp"
                             android:text="3.0km"
                             android:textColor="#ff000000"
-                            android:textSize="12sp" />
+                            android:textSize="23pt" />
                     </LinearLayout>
 
 
@@ -165,7 +165,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginTop="12dp"
-                    android:text="哈尔滨天成家居美容服务，专业维修高档法式家具"
+                    android:text="长春天成家居美容服务，专业维修高档法式家具"
                     android:textColor="#ff333333"
                     android:textSize="15sp" />
 

@@ -42,7 +42,7 @@
                 android:singleLine="true"
                 android:text="客厅"
                 android:textColor="#222222"
-                android:textSize="14sp"
+                android:textSize="27pt"
                 android:textStyle="bold" />
         </LinearLayout>
 

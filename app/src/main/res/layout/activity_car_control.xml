@@ -43,7 +43,7 @@
                     android:layout_gravity="center"
                     android:text="Title"
                     android:textColor="@color/white"
-                    android:textSize="18sp" />
+                    android:textSize="35pt" />
 
             </androidx.appcompat.widget.Toolbar>
 

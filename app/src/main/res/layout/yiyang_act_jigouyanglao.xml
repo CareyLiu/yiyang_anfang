@@ -35,7 +35,7 @@
                 android:layout_marginLeft="10pt"
                 android:text="请输入搜索关键词"
                 android:textColor="#A8a8a8"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
         </LinearLayout>
 
         <View
@@ -146,7 +146,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
-                android:text="哈尔滨市鑫夕阳温泉养老院"
+                android:text="长春市鑫夕阳温泉养老院"
                 android:textColor="@color/color_3"
                 android:textSize="35pt" />
 
@@ -228,7 +228,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="黑龙江黑哈尔滨市松北区江都街209号"
+                android:text="吉林省长春市宽城区江都街209号"
                 android:textSize="27pt" />
         </LinearLayout>
     </LinearLayout>
@@ -262,7 +262,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
-                android:text="哈尔滨市鑫夕阳温泉养老院"
+                android:text="长春市鑫夕阳温泉养老院"
                 android:textColor="@color/color_3"
                 android:textSize="35pt" />
 
@@ -344,7 +344,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="黑龙江黑哈尔滨市松北区江都街209号"
+                android:text="吉林省长春市宽城区江都街209号"
                 android:textSize="27pt" />
         </LinearLayout>
     </LinearLayout>

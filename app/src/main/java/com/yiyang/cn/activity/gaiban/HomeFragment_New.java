@@ -1000,7 +1000,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
                     // x 纬度 y 经度
                     PreferenceHelper.getInstance(getActivity()).putString(WEIDU, "45.666043");
                     PreferenceHelper.getInstance(getActivity()).putString(JINGDU, "126.605713");
-                    PreferenceHelper.getInstance(getActivity()).putString(AppConfig.LOCATION_CITY_NAME, "哈尔滨");
+                    PreferenceHelper.getInstance(getActivity()).putString(AppConfig.LOCATION_CITY_NAME, "长春");
                     //定位失败
                     sb.append("定位失败" + "\n");
                     sb.append("错误码:" + location.getErrorCode() + "\n");
@@ -1023,7 +1023,7 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
             } else {
                 PreferenceHelper.getInstance(getActivity()).putString(WEIDU, "45.666043");
                 PreferenceHelper.getInstance(getActivity()).putString(JINGDU, "126.605713");
-                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.LOCATION_CITY_NAME, "哈尔滨");
+                PreferenceHelper.getInstance(getActivity()).putString(AppConfig.LOCATION_CITY_NAME, "长春");
                 Log.i("Location_result", "定位失败");
             }
 

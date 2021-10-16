@@ -30,7 +30,7 @@
             android:includeFontPadding="false"
             android:text="智能摄像头"
             android:textColor="@color/color_3"
-            android:textSize="14sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:id="@+id/tv_time"
@@ -43,7 +43,7 @@
             android:includeFontPadding="false"
             android:text="添加日期：2021-09-08"
             android:textColor="#C1C1C1"
-            android:textSize="12sp" />
+            android:textSize="23pt" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:text="在线"
                 android:textColor="@color/color_3"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

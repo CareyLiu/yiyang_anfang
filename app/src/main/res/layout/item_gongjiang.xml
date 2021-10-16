@@ -24,7 +24,7 @@
         android:includeFontPadding="false"
         android:text="天成家居美容"
         android:textColor="#ff333333"
-        android:textSize="13sp" />
+        android:textSize="27pt" />
 
     <LinearLayout
         android:id="@+id/ll_tag"
@@ -59,7 +59,7 @@
             android:layout_marginLeft="6dp"
             android:text="3.0km"
             android:textColor="#ff000000"
-            android:textSize="12sp" />
+            android:textSize="23pt" />
     </LinearLayout>
 
 

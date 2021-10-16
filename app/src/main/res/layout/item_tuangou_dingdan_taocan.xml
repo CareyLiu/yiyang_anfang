@@ -19,7 +19,7 @@
             android:includeFontPadding="false"
             android:text="原滋原味"
             android:textColor="#ff111111"
-            android:textSize="13sp"
+            android:textSize="27pt"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -32,7 +32,7 @@
             android:includeFontPadding="false"
             android:text="(x1)"
             android:textColor="#ff999999"
-            android:textSize="13sp"
+            android:textSize="27pt"
             app:layout_constraintBottom_toBottomOf="@+id/tv_taocanming"
             app:layout_constraintLeft_toRightOf="@+id/tv_taocanming"
             app:layout_constraintTop_toTopOf="@+id/tv_taocanming" />
@@ -45,7 +45,7 @@
             android:layout_marginRight="19dp"
             android:text="¥ 36"
             android:textColor="#ff111111"
-            android:textSize="13sp"
+            android:textSize="27pt"
             app:layout_constraintBottom_toBottomOf="@+id/tv_taocanming"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_taocanming" />

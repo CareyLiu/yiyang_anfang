@@ -41,7 +41,7 @@
                 android:includeFontPadding="false"
                 android:text="自建商城采购省"
                 android:textColor="#fffc0100"
-                android:textSize="12sp"
+                android:textSize="23pt"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ziyingzhigong" />
@@ -100,7 +100,7 @@
                 android:includeFontPadding="false"
                 android:text="热门商品随心选"
                 android:textColor="#ff666666"
-                android:textSize="12sp"
+                android:textSize="23pt"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/remenshangpin" />

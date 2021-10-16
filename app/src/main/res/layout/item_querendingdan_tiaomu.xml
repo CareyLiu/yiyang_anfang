@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
                 android:textColor="#ff000000"
-                android:textSize="12sp"
+                android:textSize="23pt"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="套餐1" />
@@ -57,7 +57,7 @@
                 android:maxLines="1"
                 android:text="横版数码按键开关横版数码按键开关横版数码按键开关"
                 android:textColor="#ff000000"
-                android:textSize="12sp"
+                android:textSize="23pt"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_guige_ming" />
 
@@ -68,7 +68,7 @@
                 android:layout_marginTop="5dp"
                 android:text="￥12.00"
                 android:textColor="#ffe95d34"
-                android:textSize="12sp"
+                android:textSize="23pt"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_shangpin_ming" />
 
@@ -80,7 +80,7 @@
                 android:includeFontPadding="false"
                 android:text="邮寄:￥10"
                 android:textColor="#ff000000"
-                android:textSize="12sp"
+                android:textSize="23pt"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_jine" />
 
@@ -132,7 +132,7 @@ android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"
             android:text="买家留言："
             android:textColor="#ff000000"
-            android:textSize="12sp" />
+            android:textSize="23pt" />
 
         <EditText
 
@@ -147,7 +147,7 @@ android:layout_marginRight="15dp"
             android:layout_toRightOf="@+id/tv_liuyan"
             android:background="@null"
             android:hint="请输入留言"
-            android:textSize="12sp" />
+            android:textSize="23pt" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

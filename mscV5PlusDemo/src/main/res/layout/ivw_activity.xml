@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="唤醒"
-            android:textSize="18sp"/>
+            android:textSize="35pt"/>
         
         <Button 
             android:id="@+id/btn_oneshot"
@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="唤醒+识别"
-            android:textSize="18sp"/>
+            android:textSize="35pt"/>
         
     </LinearLayout>
 

@@ -22,7 +22,7 @@
             android:gravity="center"
             android:text="6km内"
             android:textColor="#ff222222"
-            android:textSize="12sp" />
+            android:textSize="23pt" />
     </LinearLayout>
 
 </RelativeLayout>

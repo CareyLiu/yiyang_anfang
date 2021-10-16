@@ -25,7 +25,7 @@
                 android:layout_centerVertical="true"
                 android:text="用户头像"
                 android:textColor="@color/color_2"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
             <ImageView
                 android:id="@+id/iv_head"
@@ -51,7 +51,7 @@
                 android:layout_centerVertical="true"
                 android:text="用户昵称"
                 android:textColor="@color/color_2"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_name"
@@ -61,7 +61,7 @@
                 android:layout_centerVertical="true"
                 android:text="咕哒王"
                 android:textColor="@color/color_9"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
         </RelativeLayout>
 
         <include layout="@layout/view_line" />
@@ -78,7 +78,7 @@
                 android:layout_centerVertical="true"
                 android:text="用户性别"
                 android:textColor="@color/color_2"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_sex"
@@ -88,7 +88,7 @@
                 android:layout_centerVertical="true"
                 android:text="男"
                 android:textColor="@color/color_9"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
         </RelativeLayout>
 
         <include layout="@layout/view_line" />
@@ -105,7 +105,7 @@
                 android:layout_centerVertical="true"
                 android:text="修改密码"
                 android:textColor="@color/color_2"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
             <ImageView
                 android:layout_width="12pt"
@@ -129,7 +129,7 @@
                 android:layout_centerVertical="true"
                 android:text="用户头像"
                 android:textColor="@color/color_2"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_renzheng"
@@ -139,7 +139,7 @@
                 android:layout_centerVertical="true"
                 android:text="点击认证"
                 android:textColor="#018AFE"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -153,5 +153,5 @@
         android:gravity="center"
         android:text="退出登录"
         android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:textSize="35pt" />
 </LinearLayout>

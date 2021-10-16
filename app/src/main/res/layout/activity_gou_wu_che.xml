@@ -59,7 +59,7 @@
             android:layout_marginLeft="14dp"
             android:text="全选"
             android:textColor="#ff787878"
-            android:textSize="13sp"
+            android:textSize="27pt"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/iv_choose_all"
             app:layout_constraintTop_toTopOf="parent" />
@@ -94,7 +94,7 @@
                     android:includeFontPadding="false"
                     android:text="结算（0）"
                     android:textColor="#ffffffff"
-                    android:textSize="13sp" />
+                    android:textSize="27pt" />
 
             </LinearLayout>
 
@@ -106,7 +106,7 @@
                 android:includeFontPadding="false"
                 android:text="(¥0.00)"
                 android:textColor="#fffc6f25"
-                android:textSize="13sp"
+                android:textSize="27pt"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/ll_jiesuan"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -118,7 +118,7 @@
                 android:layout_marginRight="2dp"
                 android:text="合计:"
                 android:textColor="#ff000000"
-                android:textSize="13sp"
+                android:textSize="27pt"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/tv_price"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -147,7 +147,7 @@
                 android:includeFontPadding="false"
                 android:text="删除"
                 android:textColor="#ffff0000"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
         </LinearLayout>
 
 
@@ -176,7 +176,7 @@
             android:layout_marginTop="10dp"
             android:text="购物车暂无商品"
             android:textColor="#ff666666"
-            android:textSize="13sp"
+            android:textSize="27pt"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_empty" />

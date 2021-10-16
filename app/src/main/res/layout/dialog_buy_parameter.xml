@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:text="TextView"
                 android:textColor="@color/app_bg"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
 
             <TextView
                 android:id="@+id/tv_stock"
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="TextView"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
 
             <TextView
                 android:id="@+id/tv_package"
@@ -52,7 +52,7 @@
                 android:layout_marginTop="5dp"
                 android:text="TextView"
                 android:textColor="@android:color/background_dark"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
         </LinearLayout>
 
         <ImageView
@@ -161,7 +161,7 @@
             android:gravity="center"
             android:text="加入购物车"
             android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:textSize="23pt" />
 
         <Button
             android:id="@+id/btn_buy"
@@ -173,7 +173,7 @@
             android:gravity="center"
             android:text="立即购买"
             android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:textSize="23pt" />
     </LinearLayout>
 
 </LinearLayout>

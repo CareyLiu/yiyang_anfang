@@ -26,7 +26,7 @@
             android:paddingLeft="4dp"
             android:text="奥迪"
             android:textColor="#1a1a1a"
-            android:textSize="14sp" />
+            android:textSize="27pt" />
 
         <ImageView
             android:id="@+id/iv_pic"

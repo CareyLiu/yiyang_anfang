@@ -24,7 +24,7 @@
                 android:layout_marginBottom="12dp"
                 android:text="提示：平台上发布信息，要求真实有效，禁止发布违法乱纪灯信息，如发此类信息平台不予审核与展示，请发布者遵守平台条款。"
                 android:textColor="#ff999999"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
 
             <RelativeLayout
                 android:id="@+id/rl_fabubiaoti"
@@ -51,7 +51,7 @@
                     android:gravity="center_vertical"
                     android:text="请填写标题"
                     android:textColor="#ff999999"
-                    android:textSize="13sp" />
+                    android:textSize="27pt" />
 
             </RelativeLayout>
 
@@ -91,7 +91,7 @@
                         android:gravity="center_vertical"
                         android:text="请选择"
                         android:textColor="#ff999999"
-                        android:textSize="13sp" />
+                        android:textSize="27pt" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -140,7 +140,7 @@
                     android:layout_marginRight="30dp"
                     android:text="请填写公告(可选择)"
                     android:textColor="#ff999999"
-                    android:textSize="13sp" />
+                    android:textSize="27pt" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -225,7 +225,7 @@
                     android:gravity="center_vertical"
                     android:text="请输入联系人"
                     android:textColor="#ff999999"
-                    android:textSize="13sp" />
+                    android:textSize="27pt" />
 
             </RelativeLayout>
 
@@ -264,7 +264,7 @@
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:textColor="#ff999999"
-                        android:textSize="13sp"
+                        android:textSize="27pt"
                         tools:text="" />
 
                     <ImageView
@@ -310,7 +310,7 @@
                         android:gravity="center_vertical"
                         android:text="请选择"
                         android:textColor="#ff999999"
-                        android:textSize="13sp" />
+                        android:textSize="27pt" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -347,7 +347,7 @@
                     android:layout_toRightOf="@+id/iv_none_sel"
                     android:text="我已阅读并同意"
                     android:textColor="#ff999999"
-                    android:textSize="13sp" />
+                    android:textSize="27pt" />
 
                 <TextView
                     android:textStyle="bold"
@@ -359,7 +359,7 @@
                     android:layout_toRightOf="@+id/tv_tongyi_huashu"
                     android:text="《发布须知》"
                     android:textColor="#fffc0100"
-                    android:textSize="13sp" />
+                    android:textSize="27pt" />
             </RelativeLayout>
 
 

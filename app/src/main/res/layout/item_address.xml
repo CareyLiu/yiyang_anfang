@@ -60,7 +60,7 @@
                     android:gravity="center|start"
 
                     android:paddingTop="5dp"
-                    android:text="黑龙江省  哈尔滨市 南岗区" />
+                    android:text="吉林省  长春市 南关区" />
             </LinearLayout>
 
         </LinearLayout>

@@ -33,7 +33,7 @@
                 android:includeFontPadding="false"
                 android:text="添加场景"
                 android:textColor="#ff333333"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
         </LinearLayout>
 
 

@@ -66,7 +66,7 @@
                 android:includeFontPadding="false"
                 android:text="当前状态"
                 android:textColor="#ff909090"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_tixian_dangqianzhuangtai"
@@ -75,7 +75,7 @@
                 android:layout_marginLeft="24dp"
                 android:text="已到账"
                 android:textColor="#ff808080"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </LinearLayout>
 
@@ -92,7 +92,7 @@
                 android:includeFontPadding="false"
                 android:text="当前状态"
                 android:textColor="#ff909090"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_tixian_tixianjine"
@@ -101,7 +101,7 @@
                 android:layout_marginLeft="24dp"
                 android:text="已到账"
                 android:textColor="#ff808080"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </LinearLayout>
 
@@ -118,7 +118,7 @@
                 android:includeFontPadding="false"
                 android:text="当前状态"
                 android:textColor="#ff909090"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_tixian_fuwufei"
@@ -127,7 +127,7 @@
                 android:layout_marginLeft="24dp"
                 android:text="已到账"
                 android:textColor="#ff808080"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </LinearLayout>
 
@@ -144,7 +144,7 @@
                 android:includeFontPadding="false"
                 android:text="申请时间"
                 android:textColor="#ff909090"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_tixian_shenqingshijian"
@@ -153,7 +153,7 @@
                 android:layout_marginLeft="24dp"
                 android:text=""
                 android:textColor="#ff808080"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </LinearLayout>
 
@@ -170,7 +170,7 @@
                 android:includeFontPadding="false"
                 android:text="到账时间"
                 android:textColor="#ff909090"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_tixian_daozhangshijian"
@@ -179,7 +179,7 @@
                 android:layout_marginLeft="24dp"
                 android:text=""
                 android:textColor="#ff808080"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </LinearLayout>
 
@@ -196,7 +196,7 @@
                 android:includeFontPadding="false"
                 android:text="提现方式"
                 android:textColor="#ff909090"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_tixian_tixianfangshi"
@@ -205,7 +205,7 @@
                 android:layout_marginLeft="24dp"
                 android:text="已到账"
                 android:textColor="#ff808080"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </LinearLayout>
 
@@ -222,7 +222,7 @@
                 android:includeFontPadding="false"
                 android:text="提现单号"
                 android:textColor="#ff909090"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_tixian_tixiandanhao"
@@ -231,7 +231,7 @@
                 android:layout_marginLeft="24dp"
                 android:text=""
                 android:textColor="#ff808080"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </LinearLayout>
 
@@ -262,7 +262,7 @@
                 android:includeFontPadding="false"
                 android:text="当前状态"
                 android:textColor="#ff909090"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_zaixian_dangqianzhuangtai"
@@ -271,7 +271,7 @@
                 android:layout_marginLeft="24dp"
                 android:text=""
                 android:textColor="#ff808080"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </LinearLayout>
 
@@ -289,7 +289,7 @@
                 android:includeFontPadding="false"
                 android:text="优惠券"
                 android:textColor="#ff909090"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_zaixian_youhuiquan"
@@ -298,7 +298,7 @@
                 android:layout_marginLeft="24dp"
                 android:text=""
                 android:textColor="#ff808080"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </LinearLayout>
 
@@ -315,7 +315,7 @@
                 android:includeFontPadding="false"
                 android:text="商品"
                 android:textColor="#ff909090"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_zaixian_shangpin"
@@ -324,7 +324,7 @@
                 android:layout_marginLeft="24dp"
                 android:text=""
                 android:textColor="#ff808080"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </LinearLayout>
 
@@ -341,7 +341,7 @@
                 android:includeFontPadding="false"
                 android:text="商户全称"
                 android:textColor="#ff909090"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_zaixian_shanghuquancheng"
@@ -350,7 +350,7 @@
                 android:layout_marginLeft="24dp"
                 android:text=""
                 android:textColor="#ff808080"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </LinearLayout>
 
@@ -368,7 +368,7 @@
                 android:includeFontPadding="false"
                 android:text="支付方式"
                 android:textColor="#ff909090"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_zaixian_zhifu"
@@ -377,7 +377,7 @@
                 android:layout_marginLeft="24dp"
                 android:text=""
                 android:textColor="#ff808080"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </LinearLayout>
 
@@ -394,7 +394,7 @@
                 android:includeFontPadding="false"
                 android:text="交易单号"
                 android:textColor="#ff909090"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_zaixian_jiaoyidanhao"
@@ -403,7 +403,7 @@
                 android:layout_marginLeft="24dp"
                 android:text=""
                 android:textColor="#ff808080"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </LinearLayout>
 
@@ -434,7 +434,7 @@
                 android:includeFontPadding="false"
                 android:text="当前状态"
                 android:textColor="#ff909090"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_fenrun_dangqianzhuangtai"
@@ -443,7 +443,7 @@
                 android:layout_marginLeft="24dp"
                 android:text=""
                 android:textColor="#ff808080"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </LinearLayout>
 
@@ -460,7 +460,7 @@
                 android:includeFontPadding="false"
                 android:text="收款方式"
                 android:textColor="#ff909090"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_fenrun_shoukuanfangshi"
@@ -469,7 +469,7 @@
                 android:layout_marginLeft="24dp"
                 android:text=""
                 android:textColor="#ff808080"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </LinearLayout>
 
@@ -486,7 +486,7 @@
                 android:includeFontPadding="false"
                 android:text="收款时间"
                 android:textColor="#ff909090"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_zaixian_shoukuanshijian"
@@ -495,7 +495,7 @@
                 android:layout_marginLeft="24dp"
                 android:text=""
                 android:textColor="#ff808080"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </LinearLayout>
 
@@ -527,7 +527,7 @@
                 android:includeFontPadding="false"
                 android:text="当前状态"
                 android:textColor="#ff909090"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_tuikuan_dangqianzhuangtai"
@@ -536,7 +536,7 @@
                 android:layout_marginLeft="24dp"
                 android:text=""
                 android:textColor="#ff808080"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </LinearLayout>
 
@@ -553,7 +553,7 @@
                 android:includeFontPadding="false"
                 android:text="商品"
                 android:textColor="#ff909090"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_tuikuan_shangpin"
@@ -562,7 +562,7 @@
                 android:layout_marginLeft="24dp"
                 android:text=""
                 android:textColor="#ff808080"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </LinearLayout>
 
@@ -579,7 +579,7 @@
                 android:includeFontPadding="false"
                 android:text="支付时间"
                 android:textColor="#ff909090"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_tuikuan_zhifushijian"
@@ -588,7 +588,7 @@
                 android:layout_marginLeft="24dp"
                 android:text=""
                 android:textColor="#ff808080"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </LinearLayout>
 
@@ -605,7 +605,7 @@
                 android:includeFontPadding="false"
                 android:text="支付方式"
                 android:textColor="#ff909090"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_tuikuan_zhifufangshi"
@@ -614,7 +614,7 @@
                 android:layout_marginLeft="24dp"
                 android:text=""
                 android:textColor="#ff808080"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </LinearLayout>
 
@@ -631,7 +631,7 @@
                 android:includeFontPadding="false"
                 android:text="退款单号"
                 android:textColor="#ff909090"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_tuikuan_tuikuandanhao"
@@ -640,7 +640,7 @@
                 android:layout_marginLeft="24dp"
                 android:text=""
                 android:textColor="#ff808080"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </LinearLayout>
 

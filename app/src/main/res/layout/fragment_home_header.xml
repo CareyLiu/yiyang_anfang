@@ -47,7 +47,7 @@
                 android:includeFontPadding="false"
                 android:text="自营直供(自买省、分享赚)"
                 android:textColor="#ff333333"
-                android:textSize="13sp"
+                android:textSize="27pt"
 
                 app:layout_constraintLeft_toRightOf="@+id/view_pink_line"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -71,7 +71,7 @@
                 android:includeFontPadding="false"
                 android:text="查看更多"
                 android:textColor="#ff999999"
-                android:textSize="13sp"
+                android:textSize="27pt"
                 app:layout_constraintBottom_toBottomOf="@id/tv_pinpai"
                 app:layout_constraintRight_toLeftOf="@+id/iv_more"
                 app:layout_constraintTop_toTopOf="@id/tv_pinpai" />
@@ -113,7 +113,7 @@
                 android:includeFontPadding="false"
                 android:text="热门商品"
                 android:textColor="#ff333333"
-                android:textSize="13sp"
+                android:textSize="27pt"
 
                 app:layout_constraintLeft_toRightOf="@+id/line"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -137,7 +137,7 @@
                 android:includeFontPadding="false"
                 android:text="查看更多"
                 android:textColor="#ff999999"
-                android:textSize="13sp"
+                android:textSize="27pt"
                 app:layout_constraintBottom_toBottomOf="@id/tv_remen"
                 app:layout_constraintRight_toLeftOf="@+id/iv_remen"
                 app:layout_constraintTop_toTopOf="@id/tv_remen" />

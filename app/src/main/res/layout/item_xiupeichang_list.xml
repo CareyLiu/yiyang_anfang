@@ -20,7 +20,7 @@
         android:layout_marginLeft="12dp"
         android:text="宏博汽配"
         android:textColor="#ff333333"
-        android:textSize="14sp"
+        android:textSize="27pt"
         app:layout_constraintLeft_toRightOf="@+id/iv_image"
         app:layout_constraintTop_toTopOf="@+id/iv_image" />
 
@@ -51,9 +51,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
-            android:text="南岗区"
+            android:text="南关区"
             android:textColor="#ff666666"
-            android:textSize="12sp" />
+            android:textSize="23pt" />
 
         <View
             android:layout_width="1dp"
@@ -70,7 +70,7 @@
             android:includeFontPadding="false"
             android:text="轮胎门店"
             android:textColor="#ff666666"
-            android:textSize="12sp" />
+            android:textSize="23pt" />
 
         <View
             android:layout_width="1dp"
@@ -85,7 +85,7 @@
             android:layout_marginLeft="8dp"
             android:text="销量:100"
             android:textColor="#ff666666"
-            android:textSize="12sp" />
+            android:textSize="23pt" />
     </LinearLayout>
 
 
@@ -117,7 +117,7 @@
             android:layout_height="match_parent"
             android:text="2.5km"
             android:textColor="#ff333333"
-            android:textSize="14sp"
+            android:textSize="27pt"
             app:layout_constraintLeft_toLeftOf="@+id/tv_hezuoshangjia"
             app:layout_constraintRight_toRightOf="@+id/tv_hezuoshangjia"
             app:layout_constraintTop_toTopOf="parent" />

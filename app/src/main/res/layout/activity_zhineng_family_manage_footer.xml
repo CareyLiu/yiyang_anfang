@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:text="+ 共享成员"
             android:textColor="#418DFF"
-            android:textSize="14sp"
+            android:textSize="27pt"
             android:textStyle="bold" />
     </LinearLayout>
 </RelativeLayout>

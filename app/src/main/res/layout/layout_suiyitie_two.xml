@@ -133,7 +133,7 @@
                     android:layout_marginTop="15dp"
                     android:text="左键"
                     android:textColor="#ff666666"
-                    android:textSize="13sp"
+                    android:textSize="27pt"
                     app:layout_constraintLeft_toLeftOf="@id/ll_1"
                     app:layout_constraintRight_toRightOf="@+id/ll_1"
                     app:layout_constraintTop_toBottomOf="@+id/ll_1" />
@@ -146,7 +146,7 @@
                     android:layout_marginTop="15dp"
                     android:text="中键"
                     android:textColor="#ff666666"
-                    android:textSize="13sp"
+                    android:textSize="27pt"
                     app:layout_constraintLeft_toLeftOf="@+id/ll_2"
                     app:layout_constraintRight_toRightOf="@+id/ll_2"
                     app:layout_constraintTop_toBottomOf="@+id/ll_2" />
@@ -158,7 +158,7 @@
                     android:layout_marginTop="15dp"
                     android:text="右键"
                     android:textColor="#ff666666"
-                    android:textSize="13sp"
+                    android:textSize="27pt"
                     app:layout_constraintLeft_toLeftOf="@+id/ll_3"
                     app:layout_constraintRight_toRightOf="@+id/ll_3"
                     app:layout_constraintTop_toBottomOf="@+id/ll_3" />

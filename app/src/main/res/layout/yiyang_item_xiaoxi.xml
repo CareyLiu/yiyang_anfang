@@ -31,7 +31,7 @@
             android:includeFontPadding="false"
             android:text="李医生"
             android:textColor="@color/color_3"
-            android:textSize="14sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:id="@+id/tv_msg"
@@ -44,7 +44,7 @@
             android:includeFontPadding="false"
             android:text="您好，针对您的咨询我已回复，请查看。"
             android:textColor="#C1C1C1"
-            android:textSize="12sp" />
+            android:textSize="23pt" />
 
         <TextView
             android:id="@+id/tv_time"
@@ -55,7 +55,7 @@
             android:layout_marginRight="19pt"
             android:text="昨天19:58"
             android:textColor="@color/color_3"
-            android:textSize="12sp" />
+            android:textSize="23pt" />
 
         <TextView
             android:id="@+id/tv_count"

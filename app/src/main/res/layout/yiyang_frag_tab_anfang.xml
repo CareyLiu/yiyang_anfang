@@ -20,7 +20,7 @@
             android:paddingRight="3pt"
             android:text="李老头"
             android:textColor="@color/color_1"
-            android:textSize="14sp" />
+            android:textSize="27pt" />
 
         <ImageView
             android:id="@+id/iv_select_name"
@@ -36,7 +36,7 @@
             android:layout_centerInParent="true"
             android:text="安防"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="35pt"
             android:textStyle="bold" />
 
         <ImageView
@@ -72,7 +72,7 @@
                 android:layout_marginBottom="17pt"
                 android:text="报警检测"
                 android:textColor="@color/color_1"
-                android:textSize="18sp" />
+                android:textSize="35pt" />
 
             <View
                 android:id="@+id/line_title_baojing"
@@ -99,7 +99,7 @@
                 android:layout_marginBottom="17pt"
                 android:text="日志"
                 android:textColor="@color/color_c"
-                android:textSize="18sp" />
+                android:textSize="35pt" />
 
             <View
                 android:id="@+id/line_title_rizhi"
@@ -147,7 +147,7 @@
                 android:includeFontPadding="false"
                 android:text="报警设备"
                 android:textColor="@color/color_3"
-                android:textSize="18sp" />
+                android:textSize="35pt" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

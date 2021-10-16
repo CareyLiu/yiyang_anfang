@@ -54,7 +54,7 @@
                         android:layout_height="wrap_content"
                         android:text="厂家"
                         android:textColor="@color/dark_blue"
-                        android:textSize="13sp" />
+                        android:textSize="27pt" />
 
                     <com.yiyang.cn.lanya_fengnuan.MyNumberPicker
                         android:id="@+id/mp_first"
@@ -79,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:text="厂家"
                         android:textColor="@color/dark_blue"
-                        android:textSize="13sp" />
+                        android:textSize="27pt" />
 
                     <com.yiyang.cn.lanya_fengnuan.MyNumberPicker
                         android:id="@+id/mp_second"
@@ -104,7 +104,7 @@
                         android:layout_height="wrap_content"
                         android:text="厂家"
                         android:textColor="@color/dark_blue"
-                        android:textSize="13sp" />
+                        android:textSize="27pt" />
 
                     <com.yiyang.cn.lanya_fengnuan.MyNumberPicker
                         android:id="@+id/mp_third"
@@ -142,7 +142,7 @@
                 android:paddingTop="5dp"
                 android:text="确定"
                 android:textColor="@color/white"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
             <View
                 android:id="@+id/view"
@@ -166,7 +166,7 @@
                 android:paddingTop="5dp"
                 android:text="取消"
                 android:textColor="#005e83"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

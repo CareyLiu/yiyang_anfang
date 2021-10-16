@@ -56,7 +56,7 @@
                         android:includeFontPadding="false"
                         android:text="评估历史"
                         android:textColor="@color/color_3"
-                        android:textSize="18sp" />
+                        android:textSize="35pt" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView

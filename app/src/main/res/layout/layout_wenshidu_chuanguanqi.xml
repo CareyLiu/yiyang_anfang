@@ -180,7 +180,7 @@
                     android:layout_toRightOf="@+id/iv_wendu_icon"
                     android:text="当前温度 ℃"
                     android:textColor="#ff333333"
-                    android:textSize="13sp" />
+                    android:textSize="27pt" />
 
                 <ImageView
                     android:id="@+id/iv_shidu_icon"
@@ -201,7 +201,7 @@
                     android:layout_toRightOf="@+id/iv_shidu_icon"
                     android:text="当前湿度 %"
                     android:textColor="#ff333333"
-                    android:textSize="13sp" />
+                    android:textSize="27pt" />
 
                 <LinearLayout
                     android:id="@+id/ll_main"

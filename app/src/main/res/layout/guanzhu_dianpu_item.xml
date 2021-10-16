@@ -33,7 +33,7 @@
         android:layout_marginLeft="10dp"
         android:includeFontPadding="false"
         android:textColor="@color/black_111111"
-        android:textSize="13sp"
+        android:textSize="27pt"
         app:layout_constraintBottom_toBottomOf="parent"
 
         app:layout_constraintLeft_toRightOf="@+id/iv_image"

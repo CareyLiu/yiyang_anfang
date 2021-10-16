@@ -27,7 +27,7 @@
             android:layout_marginTop="11dp"
             android:includeFontPadding="false"
             android:textColor="#ff000000"
-            android:textSize="12sp"
+            android:textSize="23pt"
             tools:text="退货单号:3130845114016541" />
 
         <TextView
@@ -39,7 +39,7 @@
             android:layout_marginBottom="11dp"
             android:includeFontPadding="false"
             android:textColor="#ff000000"
-            android:textSize="12sp"
+            android:textSize="23pt"
             tools:text="订单号:     1903130845114016541-fbs-2-111524-0" />
 
 
@@ -110,7 +110,7 @@
             android:layout_marginLeft="14dp"
             android:layout_marginTop="14dp"
             android:textColor="#ff000000"
-            android:textSize="12sp"
+            android:textSize="23pt"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="收货人：唠唠看 15946256845" />
@@ -122,7 +122,7 @@
             android:layout_marginLeft="14dp"
             android:layout_marginTop="14dp"
             android:textColor="#ff000000"
-            android:textSize="12sp"
+            android:textSize="23pt"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_shouhuoren"
             tools:text="收货地址：独守空房简单来说客服就流口水的开发斯蒂芬" />
@@ -135,7 +135,7 @@
             android:layout_marginLeft="14dp"
             android:layout_marginTop="14dp"
             android:textColor="#ff000000"
-            android:textSize="12sp"
+            android:textSize="23pt"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_shouhuodizhi"
             tools:text="收货地址：独守空房简单来说客服就流口水的开发斯蒂芬" />
@@ -168,7 +168,7 @@
             android:layout_marginLeft="15dp"
             android:text="物流单号"
             android:textColor="#ff201f1e"
-            android:textSize="13sp"
+            android:textSize="27pt"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -181,7 +181,7 @@
             android:background="@null"
             android:hint="请输入您的物流单号"
             android:textColor="#ff201f1e"
-            android:textSize="12sp"
+            android:textSize="23pt"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/tv_wuliudanhao"
             app:layout_constraintTop_toTopOf="parent" />
@@ -200,7 +200,7 @@
             android:paddingVertical="3dp"
             android:text="提交"
             android:textColor="#ff111111"
-            android:textSize="13sp"
+            android:textSize="27pt"
             app:layout_constraintBottom_toBottomOf="@+id/tv_wuliudanhao"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_wuliudanhao" />
@@ -239,7 +239,7 @@
             android:includeFontPadding="false"
             android:text="手机吃鸡手柄吃鸡神奇手机吃鸡手柄吃鸡神奇"
             android:textColor="#ff111111"
-            android:textSize="13sp"
+            android:textSize="27pt"
             app:layout_constraintLeft_toRightOf="@+id/iv_product"
             app:layout_constraintTop_toTopOf="@+id/iv_product" />
 
@@ -261,7 +261,7 @@
             android:includeFontPadding="false"
             android:text="￥500.00"
             android:textColor="#ff000000"
-            android:textSize="13sp"
+            android:textSize="27pt"
             android:visibility="gone"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_title" />
@@ -275,7 +275,7 @@
             android:includeFontPadding="false"
             android:text="x1"
             android:textColor="#ff666666"
-            android:textSize="13sp"
+            android:textSize="27pt"
             android:visibility="gone"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_danjia" />
@@ -288,7 +288,7 @@
             android:includeFontPadding="false"
             android:text="退款金额"
             android:textColor="#ff111111"
-            android:textSize="12sp"
+            android:textSize="23pt"
             app:layout_constraintBottom_toBottomOf="@+id/iv_product"
             app:layout_constraintRight_toRightOf="parent" />
 

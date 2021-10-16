@@ -52,28 +52,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#ff666666"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#ff666666"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#ff666666"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#ff666666"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
         </LinearLayout>
 
         <RelativeLayout

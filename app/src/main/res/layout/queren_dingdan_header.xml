@@ -41,7 +41,7 @@
             android:layout_marginLeft="10dp"
             android:text="请添加收货地址"
             android:textColor="#ff000000"
-            android:textSize="14sp"
+            android:textSize="27pt"
             android:textStyle="bold"
             android:visibility="gone"
             app:layout_constraintLeft_toRightOf="@+id/iv_image"
@@ -55,7 +55,7 @@
             android:layout_marginTop="17dp"
             android:text="奥德赛"
             android:textColor="#ff000000"
-            android:textSize="14sp"
+            android:textSize="27pt"
             app:layout_constraintLeft_toRightOf="@+id/iv_image"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -64,10 +64,10 @@
             android:layout_width="274dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="黑龙江省 哈尔滨市 南岗区 电缆街219号 黑龙江神灯
+            android:text="吉林省 长春市 南关区 电缆街219号 吉林神灯
 科技发展有限公司"
             android:textColor="#ff000000"
-            android:textSize="12sp"
+            android:textSize="23pt"
             app:layout_constraintLeft_toLeftOf="@+id/tv_name"
             app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
@@ -106,7 +106,7 @@
         android:layout_marginTop="12dp"
         android:text="华美数码店111"
         android:textColor="#ff000000"
-        android:textSize="14sp"
+        android:textSize="27pt"
         app:layout_constraintLeft_toRightOf="@+id/iv_shop_image"
         app:layout_constraintTop_toBottomOf="@+id/view_line" />
 

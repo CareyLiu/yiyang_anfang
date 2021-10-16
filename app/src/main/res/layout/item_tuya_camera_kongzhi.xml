@@ -27,7 +27,7 @@
                 android:includeFontPadding="false"
                 android:text="控制类型"
                 android:textColor="@color/color_1"
-                android:textSize="13sp"
+                android:textSize="27pt"
                 android:textStyle="bold" />
         </LinearLayout>
 

@@ -166,9 +166,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="3dp"
                                 android:includeFontPadding="false"
-                                android:text="哈尔滨市南岗区ssdddssddsdds"
+                                android:text="长春市南关区ssdddssddsdds"
                                 android:textColor="#ff666666"
-                                android:textSize="12sp"
+                                android:textSize="23pt"
                                 app:layout_constraintBottom_toBottomOf="@+id/iv_address"
                                 app:layout_constraintLeft_toRightOf="@+id/iv_address"
                                 app:layout_constraintTop_toTopOf="@+id/iv_address" />
@@ -183,7 +183,7 @@
                                 android:includeFontPadding="false"
                                 android:text="¥"
                                 android:textColor="#E31938"
-                                android:textSize="12sp"
+                                android:textSize="23pt"
                                 android:textStyle="bold"
                                 app:layout_constraintLeft_toLeftOf="@+id/tv_shop_name"
                                 app:layout_constraintTop_toBottomOf="@+id/iv_address" />
@@ -281,7 +281,7 @@
                                 android:includeFontPadding="false"
                                 android:text="1.71km"
                                 android:textColor="#ff666666"
-                                android:textSize="14sp"
+                                android:textSize="27pt"
                                 app:layout_constraintLeft_toLeftOf="@+id/iv_daohang"
                                 app:layout_constraintRight_toRightOf="@+id/iv_daohang"
                                 app:layout_constraintTop_toBottomOf="@+id/iv_daohang" />
@@ -306,7 +306,7 @@
                     android:layout_marginTop="24dp"
                     android:text="全部商品："
                     android:textColor="#ff111111"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/rlv_youzhan_info" />
 
@@ -336,7 +336,7 @@
                     android:layout_marginTop="11dp"
                     android:text="选择油号："
                     android:textColor="#ff111111"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     app:layout_constraintLeft_toLeftOf="@id/all_product"
                     app:layout_constraintTop_toBottomOf="@+id/view_white" />
 
@@ -366,7 +366,7 @@
                     android:layout_height="wrap_content"
                     android:text="选择枪号："
                     android:textColor="#ff111111"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     app:layout_constraintLeft_toLeftOf="@+id/all_product"
                     app:layout_constraintTop_toBottomOf="@+id/view_white_1" />
 
@@ -396,7 +396,7 @@
                     android:layout_marginTop="27dp"
                     android:text="加油金额："
                     android:textColor="#ff111111"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view_white_2" />
 

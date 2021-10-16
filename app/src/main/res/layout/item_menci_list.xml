@@ -14,7 +14,7 @@
         android:layout_marginLeft="19dp"
         android:text="上午"
         android:textColor="#ff666666"
-        android:textSize="13sp"
+        android:textSize="27pt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,7 +27,7 @@
         android:layout_marginRight="19dp"
         android:text="门窗开启"
         android:textColor="#ff666666"
-        android:textSize="13sp"
+        android:textSize="27pt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

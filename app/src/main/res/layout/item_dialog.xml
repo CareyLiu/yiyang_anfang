@@ -28,7 +28,7 @@
         android:layout_marginTop="5dp"
         android:layout_below="@id/tv_top"
         android:layout_width="match_parent"
-        android:textSize="12sp"
+        android:textSize="23pt"
         android:text="通过Home键验证已有手机指纹"
         android:gravity="center"
         android:textColor="@color/car_text_black"

@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:textColor="#333333"
-                    android:textSize="14sp" />
+                    android:textSize="27pt" />
             </LinearLayout>
 
             <RelativeLayout
@@ -55,7 +55,7 @@
                     android:layout_marginLeft="16dp"
                     android:text="手机号"
                     android:textColor="#333333"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     android:textStyle="bold" />
 
                 <TextView
@@ -66,7 +66,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="16dp"
                     android:textColor="#999999"
-                    android:textSize="13sp" />
+                    android:textSize="27pt" />
             </RelativeLayout>
 
             <View
@@ -87,7 +87,7 @@
                     android:layout_marginLeft="16dp"
                     android:text="成员身份"
                     android:textColor="#333333"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -106,7 +106,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="5dp"
                         android:textColor="#999999"
-                        android:textSize="13sp"
+                        android:textSize="27pt"
                         tools:text="abcd" />
 
                     <ImageView
@@ -133,7 +133,7 @@
             android:gravity="center"
             android:text="删除该成员"
             android:textColor="#EA3526"
-            android:textSize="14sp"
+            android:textSize="27pt"
             android:visibility="gone" />
     </RelativeLayout>
 </LinearLayout>

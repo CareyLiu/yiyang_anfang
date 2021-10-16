@@ -84,7 +84,7 @@
                 android:paddingBottom="5dp"
                 android:text="获取验证码"
                 android:textColor="@color/text_red"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
         </LinearLayout>
     </LinearLayout>
 

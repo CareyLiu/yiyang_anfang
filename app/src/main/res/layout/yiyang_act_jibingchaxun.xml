@@ -28,7 +28,7 @@
             android:layout_marginLeft="10pt"
             android:text="搜索医生/科室"
             android:textColor="#A8a8a8"
-            android:textSize="12sp" />
+            android:textSize="23pt" />
     </LinearLayout>
 
     <HorizontalScrollView

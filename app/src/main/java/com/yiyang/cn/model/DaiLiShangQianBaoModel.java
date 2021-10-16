@@ -7,7 +7,7 @@ public class DaiLiShangQianBaoModel {
      * msg_code : 0000
      * msg : ok
      * row_num : 0
-     * data : [{"user_money":"484.42","inst_money_cash":"0.99","pay_num":"18249030297","pay_name":"岳建男","userable_red":"0.00","userName":"南岗区经销商","pwd_pay":"1"}]
+     * data : [{"user_money":"484.42","inst_money_cash":"0.99","pay_num":"18249030297","pay_name":"岳建男","userable_red":"0.00","userName":"南关区经销商","pwd_pay":"1"}]
      */
 
     private String msg_code;
@@ -54,7 +54,7 @@ public class DaiLiShangQianBaoModel {
          * pay_num : 18249030297
          * pay_name : 岳建男
          * userable_red : 0.00
-         * userName : 南岗区经销商
+         * userName : 南关区经销商
          * pwd_pay : 1
          */
 

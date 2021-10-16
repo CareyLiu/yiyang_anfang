@@ -45,7 +45,7 @@
                     android:layout_toRightOf="@+id/iv_image"
                     android:text="美食三"
                     android:textColor="#ff222222"
-                    android:textSize="13sp" />
+                    android:textSize="27pt" />
 
                 <TextView
                     android:id="@+id/tv_xianshitui"
@@ -57,7 +57,7 @@
                     android:layout_toRightOf="@+id/iv_image"
                     android:text="限时退 | 过期自动退"
                     android:textColor="#ff666666"
-                    android:textSize="12sp" />
+                    android:textSize="23pt" />
 
                 <TextView
                     android:id="@+id/tv_jine"
@@ -68,7 +68,7 @@
                     android:layout_toRightOf="@+id/iv_image"
                     android:text="¥ 258.00"
                     android:textColor="#ff222222"
-                    android:textSize="13sp" />
+                    android:textSize="27pt" />
 
                 <View
                     android:id="@+id/view_line"
@@ -86,7 +86,7 @@
                     android:layout_marginTop="17dp"
                     android:text="数量"
                     android:textColor="#ff222222"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     android:textStyle="bold" />
 
                 <ImageView
@@ -108,7 +108,7 @@
                     android:layout_toLeftOf="@+id/iv_jia"
                     android:text="1"
                     android:textColor="#ff222222"
-                    android:textSize="13sp" />
+                    android:textSize="27pt" />
 
                 <ImageView
                     android:id="@+id/iv_jian"
@@ -128,7 +128,7 @@
                     android:layout_marginTop="35dp"
                     android:text="小计"
                     android:textColor="#ff222222"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     android:textStyle="bold" />
 
                 <TextView
@@ -141,7 +141,7 @@
                     android:layout_marginBottom="17dp"
                     android:text="¥ 258.00"
                     android:textColor="#fffa7e00"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     android:textStyle="bold" />
             </com.flyco.roundview.RoundRelativeLayout>
 
@@ -162,7 +162,7 @@
                     android:layout_marginLeft="14dp"
                     android:text="抵用券"
                     android:textColor="#ff222222"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     android:textStyle="bold" />
 
                 <TextView
@@ -174,7 +174,7 @@
                     android:layout_marginRight="15dp"
                     android:text="暂无可用红包"
                     android:textColor="#ff666666"
-                    android:textSize="13sp" />
+                    android:textSize="27pt" />
 
             </com.flyco.roundview.RoundRelativeLayout>
 
@@ -197,7 +197,7 @@
                     android:layout_marginTop="17dp"
                     android:text="红包抵扣"
                     android:textColor="#ff222222"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     android:textStyle="bold" />
 
                 <ImageView
@@ -228,7 +228,7 @@
                     android:layout_marginTop="17dp"
                     android:text="当前可抵扣金额"
                     android:textColor="#ff222222"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     android:textStyle="bold" />
 
                 <TextView
@@ -241,7 +241,7 @@
                     android:layout_marginBottom="17dp"
                     android:text="-50"
                     android:textColor="#ffff2b00"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     android:textStyle="bold" />
 
             </com.flyco.roundview.RoundRelativeLayout>
@@ -265,7 +265,7 @@
                     android:layout_marginTop="17dp"
                     android:text="实付金额"
                     android:textColor="#ff222222"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     android:textStyle="bold" />
 
                 <TextView
@@ -297,7 +297,7 @@
                     android:layout_marginTop="17dp"
                     android:text="手机号"
                     android:textColor="#ff222222"
-                    android:textSize="14sp"
+                    android:textSize="27pt"
                     android:textStyle="bold" />
 
                 <TextView
@@ -311,7 +311,7 @@
                     android:layout_marginBottom="17dp"
                     android:text="15946251111"
                     android:textColor="#666666"
-                    android:textSize="14sp" />
+                    android:textSize="27pt" />
 
             </com.flyco.roundview.RoundRelativeLayout>
 

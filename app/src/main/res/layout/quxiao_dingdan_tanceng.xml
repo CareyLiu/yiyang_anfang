@@ -49,7 +49,7 @@
             android:paddingLeft="14dp"
             android:text="请选择取消订单的原因"
             android:textColor="@color/color_999999"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
 
         <RelativeLayout
@@ -64,7 +64,7 @@
                 android:layout_marginLeft="14dp"
                 android:text="我不想买了"
                 android:textColor="#ff333333"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
             <ImageView
                 android:id="@+id/iv_buxiangmaile"
@@ -89,7 +89,7 @@
                 android:layout_marginLeft="14dp"
                 android:text="信息填写错误重新拍"
                 android:textColor="#ff333333"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
             <ImageView
                 android:id="@+id/iv_chongxinpai"
@@ -114,7 +114,7 @@
                 android:layout_marginLeft="14dp"
                 android:text="卖家缺货"
                 android:textColor="#ff333333"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
             <ImageView
                 android:id="@+id/iv_maijiaquehuo"
@@ -139,7 +139,7 @@
                 android:layout_marginLeft="14dp"
                 android:text="同城见面交易"
                 android:textColor="#ff333333"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
             <ImageView
                 android:id="@+id/iv_mianjiaoyi"

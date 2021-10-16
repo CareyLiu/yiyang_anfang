@@ -40,7 +40,7 @@
             android:layout_marginLeft="12dp"
             android:text="关闭"
             android:textColor="#ff999999"
-            android:textSize="12sp"
+            android:textSize="23pt"
             app:layout_constraintBottom_toBottomOf="@+id/iv_image"
             app:layout_constraintLeft_toRightOf="@+id/iv_image" />
 

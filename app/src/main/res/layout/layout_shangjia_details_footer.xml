@@ -20,7 +20,7 @@
         android:layout_marginTop="13dp"
         android:text="附近推荐"
         android:textColor="#ff111111"
-        android:textSize="13sp"
+        android:textSize="27pt"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_1" />
@@ -47,7 +47,7 @@
         android:layout_marginTop="13dp"
         android:text="小伙伴们还喜欢"
         android:textColor="#ff111111"
-        android:textSize="13sp"
+        android:textSize="27pt"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_2" />

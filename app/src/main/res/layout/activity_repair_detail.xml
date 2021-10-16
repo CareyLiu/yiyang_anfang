@@ -27,7 +27,7 @@
             android:gravity="center"
             android:text="订单详情"
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="35pt" />
 
         <ImageView
             android:id="@+id/img_repair_kefu"
@@ -107,7 +107,7 @@
                                     android:layout_alignParentLeft="true"
                                     android:layout_centerVertical="true"
                                     android:textColor="@color/black"
-                                    android:textSize="14sp" />
+                                    android:textSize="27pt" />
 
                                 <TextView
                                     android:id="@+id/tv_state"
@@ -120,7 +120,7 @@
                                     android:layout_toRightOf="@+id/tv_carnum"
                                     android:singleLine="true"
                                     android:textColor="#86d3fb"
-                                    android:textSize="14sp" />
+                                    android:textSize="27pt" />
 
                             </RelativeLayout>
 
@@ -133,7 +133,7 @@
                                 android:layout_marginTop="5dp"
                                 android:singleLine="true"
                                 android:textColor="#c2c2c2"
-                                android:textSize="12sp" />
+                                android:textSize="23pt" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -161,7 +161,7 @@
                                     android:layout_toEndOf="@+id/imgview"
                                     android:layout_toRightOf="@+id/imgview"
                                     android:textColor="#a3a3a3"
-                                    android:textSize="12sp" />
+                                    android:textSize="23pt" />
                             </RelativeLayout>
                         </RelativeLayout>
                     </LinearLayout>
@@ -235,7 +235,7 @@
                                 android:layout_toRightOf="@+id/imageview1"
                                 android:text="修配厂"
                                 android:textColor="#999999"
-                                android:textSize="13sp" />
+                                android:textSize="27pt" />
 
                             <TextView
                                 android:id="@+id/tv_repair"
@@ -248,7 +248,7 @@
                                 android:layout_toRightOf="@+id/tv_repairtext"
                                 android:gravity="right"
                                 android:textColor="#999999"
-                                android:textSize="13sp" />
+                                android:textSize="27pt" />
                         </RelativeLayout>
 
                         <View
@@ -279,7 +279,7 @@
                                 android:layout_toRightOf="@+id/imageview2"
                                 android:text="接单人"
                                 android:textColor="#999999"
-                                android:textSize="13sp" />
+                                android:textSize="27pt" />
 
                             <TextView
                                 android:id="@+id/tv_repair_name"
@@ -292,7 +292,7 @@
                                 android:layout_toRightOf="@+id/tv_repair_nametext"
                                 android:gravity="right"
                                 android:textColor="#999999"
-                                android:textSize="13sp" />
+                                android:textSize="27pt" />
                         </RelativeLayout>
 
                         <View
@@ -323,7 +323,7 @@
                                 android:layout_toRightOf="@+id/imageview3"
                                 android:text="定位"
                                 android:textColor="#999999"
-                                android:textSize="13sp" />
+                                android:textSize="27pt" />
 
                             <RelativeLayout
                                 android:layout_width="wrap_content"
@@ -350,7 +350,7 @@
                                     android:layout_toEndOf="@+id/imgview1"
                                     android:layout_toRightOf="@+id/imgview1"
                                     android:textColor="#999999"
-                                    android:textSize="13sp" />
+                                    android:textSize="27pt" />
                             </RelativeLayout>
 
                         </RelativeLayout>
@@ -414,7 +414,7 @@
                                 android:layout_toRightOf="@+id/imageview5"
                                 android:text="订单时间"
                                 android:textColor="#999999"
-                                android:textSize="13sp" />
+                                android:textSize="27pt" />
 
                             <TextView
                                 android:id="@+id/tv_repair_time"
@@ -426,7 +426,7 @@
                                 android:layout_toRightOf="@+id/tv_repair_timetext"
                                 android:gravity="right"
                                 android:textColor="#999999"
-                                android:textSize="13sp" />
+                                android:textSize="27pt" />
                         </RelativeLayout>
 
                         <View
@@ -457,7 +457,7 @@
                                 android:layout_toRightOf="@+id/imageview6"
                                 android:text="金额"
                                 android:textColor="#999999"
-                                android:textSize="13sp" />
+                                android:textSize="27pt" />
 
                             <TextView
                                 android:id="@+id/tv_repair_money"
@@ -528,7 +528,7 @@
                                 android:paddingBottom="10dp"
                                 android:paddingTop="5dp"
                                 android:textColor="#999999"
-                                android:textSize="13sp" />
+                                android:textSize="27pt" />
                         </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -542,7 +542,7 @@
             android:layout_alignParentBottom="true"
             android:background="#4d9ff4"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="35pt"
             android:textStyle="bold"
             android:visibility="gone" />
     </RelativeLayout>

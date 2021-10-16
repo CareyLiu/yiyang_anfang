@@ -13,7 +13,7 @@
         android:layout_marginTop="15dp"
         android:text="买家留言："
         android:textColor="#ff000000"
-        android:textSize="12sp"
+        android:textSize="23pt"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="13dp"
         android:hint="选填，先和商家协商一致"
-        android:textSize="12sp"
+        android:textSize="23pt"
         app:layout_constraintBottom_toBottomOf="@+id/tv_liuyan_huashu"
         app:layout_constraintLeft_toRightOf="@+id/tv_liuyan_huashu"
         app:layout_constraintTop_toTopOf="@+id/tv_liuyan_huashu" />
@@ -45,7 +45,7 @@
         android:layout_marginRight="18dp"
         android:text="¥66"
         android:textColor="#fffa7e00"
-        android:textSize="14sp"
+        android:textSize="27pt"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_line2" />
 
@@ -56,7 +56,7 @@
         android:layout_marginRight="2dp"
         android:text="小计:"
         android:textColor="#ff000000"
-        android:textSize="14sp"
+        android:textSize="27pt"
         app:layout_constraintBottom_toBottomOf="@+id/tv_xiaoji_price"
         app:layout_constraintRight_toLeftOf="@+id/tv_xiaoji_price"
         app:layout_constraintTop_toTopOf="@+id/tv_xiaoji_price" />
@@ -78,7 +78,7 @@
         android:layout_marginTop="15dp"
         android:text="红包抵扣"
         android:textColor="#ff000000"
-        android:textSize="14sp"
+        android:textSize="27pt"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_line3" />
 
@@ -101,7 +101,7 @@
         android:layout_marginTop="15dp"
         android:text="当前可抵扣金额"
         android:textColor="#ff000000"
-        android:textSize="14sp"
+        android:textSize="27pt"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_hongbaodikou_huashu" />
 
@@ -148,7 +148,7 @@
             android:layout_marginLeft="12dp"
             android:text="微信支付"
             android:textColor="#ff000000"
-            android:textSize="14sp"
+            android:textSize="27pt"
             app:layout_constraintBottom_toBottomOf="@+id/iv_weixin"
             app:layout_constraintLeft_toRightOf="@+id/iv_weixin"
             app:layout_constraintTop_toTopOf="@+id/iv_weixin" />
@@ -186,7 +186,7 @@
             android:layout_marginLeft="11dp"
             android:text="支付宝支付"
             android:textColor="#ff000000"
-            android:textSize="14sp"
+            android:textSize="27pt"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/iv_alipay"
             app:layout_constraintTop_toTopOf="parent" />

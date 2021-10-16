@@ -41,7 +41,7 @@
                 android:paddingHorizontal="30dp"
                 android:text="请你务必审慎阅读，充分理解“服务协议”和隐私政策的各条款，和其中的各项服务"
                 android:textColor="@color/black_666666"
-                android:textSize="13sp"
+                android:textSize="27pt"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -56,7 +56,7 @@
                 <TextView
                android:paddingLeft="30dp"
                     android:textColor="@color/black_666666"
-                    android:textSize="13sp"
+                    android:textSize="27pt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:includeFontPadding="false"

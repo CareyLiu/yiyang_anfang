@@ -41,7 +41,7 @@
             android:layout_marginTop="9dp"
             android:includeFontPadding="false"
             android:textColor="#ff666666"
-            android:textSize="13sp"
+            android:textSize="27pt"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_yonghuming"
             tools:text="车辆型号：ARCFOXSJFKSJ" />
@@ -54,7 +54,7 @@
             android:layout_marginTop="9dp"
             android:includeFontPadding="false"
             android:textColor="#ff666666"
-            android:textSize="13sp"
+            android:textSize="27pt"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_cheliang_xinghao"
             tools:text="车牌号码：" />
@@ -67,7 +67,7 @@
             android:layout_marginTop="9dp"
             android:includeFontPadding="false"
             android:textColor="#ff666666"
-            android:textSize="13sp"
+            android:textSize="27pt"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_chepaihaoma"
             tools:text="发生时间：2020-1-26 13：06：15" />
@@ -80,10 +80,10 @@
             android:layout_marginTop="9dp"
             android:includeFontPadding="false"
             android:textColor="#ff666666"
-            android:textSize="13sp"
+            android:textSize="27pt"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_fashengshijian"
-            tools:text="发生地点：哈尔滨南岗区170号" />
+            tools:text="发生地点：长春南关区170号" />
 
         <View
             android:layout_width="match_parent"
@@ -113,7 +113,7 @@
             android:layout_marginTop="10dp"
             android:includeFontPadding="false"
             android:textColor="#ff666666"
-            android:textSize="12sp"
+            android:textSize="23pt"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="安装时间：2020-03-28" />
@@ -124,7 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="48dp"
             android:textColor="#ff666666"
-            android:textSize="12sp"
+            android:textSize="23pt"
             app:layout_constraintLeft_toRightOf="@+id/tv_anzhuangshijian"
             app:layout_constraintTop_toTopOf="@+id/tv_anzhuangshijian"
             tools:text="型号：无" />
@@ -138,7 +138,7 @@
             android:layout_marginTop="10dp"
             android:includeFontPadding="false"
             android:textColor="#ff666666"
-            android:textSize="12sp"
+            android:textSize="23pt"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_anzhuangshijian"
             tools:text="售后电话：1215454564" />
@@ -150,7 +150,7 @@
             android:includeFontPadding="false"
             android:text="厂家：无"
             android:textColor="#ff666666"
-            android:textSize="12sp"
+            android:textSize="23pt"
             app:layout_constraintLeft_toLeftOf="@+id/tv_xinghao"
             app:layout_constraintLeft_toRightOf="@+id/tv_shouhou_dianhua"
             app:layout_constraintTop_toTopOf="@+id/tv_shouhou_dianhua" />

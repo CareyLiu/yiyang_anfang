@@ -22,7 +22,7 @@
             android:gravity="center"
             android:text="该房间暂无设备"
             android:textColor="#333333"
-            android:textSize="14sp" />
+            android:textSize="27pt" />
 
     </LinearLayout>
 </RelativeLayout>

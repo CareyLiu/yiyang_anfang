@@ -93,7 +93,7 @@
                                         android:layout_marginTop="9dp"
                                         android:text="立即浇花"
                                         android:textColor="#ff333333"
-                                        android:textSize="13sp"
+                                        android:textSize="27pt"
                                         app:layout_constraintLeft_toLeftOf="parent"
                                         app:layout_constraintRight_toRightOf="parent"
                                         app:layout_constraintTop_toBottomOf="@+id/iv_lijiweiyu">
@@ -147,7 +147,7 @@
                                             android:layout_marginTop="9dp"
                                             android:text="停止浇花"
                                             android:textColor="#ff333333"
-                                            android:textSize="13sp"
+                                            android:textSize="27pt"
                                             app:layout_constraintLeft_toLeftOf="parent"
                                             app:layout_constraintRight_toRightOf="parent"
                                             app:layout_constraintTop_toBottomOf="@+id/iv_tingzhiweiyu">
@@ -179,7 +179,7 @@
                             android:layout_marginLeft="14dp"
                             android:text="自动浇花设置"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="27pt"
                             android:textStyle="bold" />
 
                         <com.suke.widget.SwitchButton
@@ -371,7 +371,7 @@
                                 android:gravity="center"
                                 android:text="提交"
                                 android:textColor="#3A85F8"
-                                android:textSize="14sp" />
+                                android:textSize="27pt" />
                         </RelativeLayout>
 
                     </LinearLayout>
@@ -394,7 +394,7 @@
                             android:layout_marginLeft="14dp"
                             android:text="儿童模式"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="27pt"
                             android:textStyle="bold" />
 
                         <com.suke.widget.SwitchButton
@@ -425,7 +425,7 @@
                             android:layout_marginLeft="14dp"
                             android:text="家庭"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="27pt"
                             android:textStyle="bold" />
 
                         <TextView
@@ -441,7 +441,7 @@
                             android:gravity="right"
                             android:singleLine="true"
                             android:textColor="#999999"
-                            android:textSize="14sp" />
+                            android:textSize="27pt" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -460,7 +460,7 @@
                             android:layout_marginLeft="14dp"
                             android:text="房间"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="27pt"
                             android:textStyle="bold" />
 
                         <TextView
@@ -477,7 +477,7 @@
                             android:gravity="right"
                             android:singleLine="true"
                             android:textColor="#999999"
-                            android:textSize="14sp" />
+                            android:textSize="27pt" />
 
                         <ImageView
                             android:id="@+id/img_room_into"
@@ -505,7 +505,7 @@
                             android:layout_marginLeft="14dp"
                             android:text="名称"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="27pt"
                             android:textStyle="bold" />
 
                         <TextView
@@ -522,7 +522,7 @@
                             android:gravity="right"
                             android:singleLine="true"
                             android:textColor="#999999"
-                            android:textSize="14sp" />
+                            android:textSize="27pt" />
 
                         <ImageView
                             android:id="@+id/img_device_into"
@@ -549,7 +549,7 @@
                             android:layout_marginLeft="14dp"
                             android:text="类型"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="27pt"
                             android:textStyle="bold" />
 
                         <TextView
@@ -565,7 +565,7 @@
                             android:gravity="right"
                             android:singleLine="true"
                             android:textColor="#999999"
-                            android:textSize="14sp" />
+                            android:textSize="27pt" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -585,7 +585,7 @@
                             android:layout_marginLeft="14dp"
                             android:text="设备状态"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="27pt"
                             android:textStyle="bold" />
 
                         <TextView
@@ -602,7 +602,7 @@
                             android:singleLine="true"
                             android:text="正常"
                             android:textColor="#09CB80"
-                            android:textSize="14sp" />
+                            android:textSize="27pt" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -622,7 +622,7 @@
                             android:layout_marginLeft="14dp"
                             android:text="操作提示音"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="27pt"
                             android:textStyle="bold" />
 
                         <Switch
@@ -661,7 +661,7 @@
                             android:includeFontPadding="false"
                             android:text="开启自动浇花，设置完相关参数后，点击提交按钮，提示设置成功，表示设置自动浇花已成功"
                             android:textColor="#999999"
-                            android:textSize="12sp" />
+                            android:textSize="23pt" />
                     </RelativeLayout>
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
@@ -678,7 +678,7 @@
                 android:gravity="center"
                 android:text="删除"
                 android:textColor="#F83A47"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
 
         </RelativeLayout>

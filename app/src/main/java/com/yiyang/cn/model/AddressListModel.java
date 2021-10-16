@@ -8,7 +8,7 @@ public class AddressListModel {
      * msg_code : 0000
      * msg : ok
      * row_num : 2
-     * data : [{"area_name":"南岗区","of_user_id":"455","create_time":"2020-04-15","user_name":"孙海龙","addr_all":"黑龙江省哈尔滨市南岗区学府绿景苑5栋2单元502","area_id":"230103","province_name":"黑龙江省","users_addr_id":"184","addr_check":"1","user_addr_state":"1","city_name":"哈尔滨市","province_id":"23","x":"","user_phone":"17645185187","y":"","id":"184","addr":"学府绿景苑5栋2单元502","city_id":"2301"},{"area_name":"南岗区","of_user_id":"455","create_time":"2019-05-16","user_name":"海龙","addr_all":"黑龙江省哈尔滨市南岗区电缆街219号，神灯科技有限公司，209软件研发部","area_id":"230103","province_name":"黑龙江省","users_addr_id":"134","addr_check":"2","user_addr_state":"1","city_name":"哈尔滨市","province_id":"23","x":"","user_phone":"17645185187","y":"","id":"134","addr":"电缆街219号，神灯科技有限公司，209软件研发部","city_id":"2301"}]
+     * data : [{"area_name":"南关区","of_user_id":"455","create_time":"2020-04-15","user_name":"孙海龙","addr_all":"吉林省长春市南关区学府绿景苑5栋2单元502","area_id":"230103","province_name":"吉林省","users_addr_id":"184","addr_check":"1","user_addr_state":"1","city_name":"长春市","province_id":"23","x":"","user_phone":"17645185187","y":"","id":"184","addr":"学府绿景苑5栋2单元502","city_id":"2301"},{"area_name":"南关区","of_user_id":"455","create_time":"2019-05-16","user_name":"海龙","addr_all":"吉林省长春市南关区电缆街219号，神灯科技有限公司，209软件研发部","area_id":"230103","province_name":"吉林省","users_addr_id":"134","addr_check":"2","user_addr_state":"1","city_name":"长春市","province_id":"23","x":"","user_phone":"17645185187","y":"","id":"134","addr":"电缆街219号，神灯科技有限公司，209软件研发部","city_id":"2301"}]
      */
 
     private String available_balance;
@@ -59,17 +59,17 @@ public class AddressListModel {
 
     public static class DataBean {
         /**
-         * area_name : 南岗区
+         * area_name : 南关区
          * of_user_id : 455
          * create_time : 2020-04-15
          * user_name : 孙海龙
-         * addr_all : 黑龙江省哈尔滨市南岗区学府绿景苑5栋2单元502
+         * addr_all : 吉林省长春市南关区学府绿景苑5栋2单元502
          * area_id : 230103
-         * province_name : 黑龙江省
+         * province_name : 吉林省
          * users_addr_id : 184
          * addr_check : 1
          * user_addr_state : 1
-         * city_name : 哈尔滨市
+         * city_name : 长春市
          * province_id : 23
          * x :
          * user_phone : 17645185187

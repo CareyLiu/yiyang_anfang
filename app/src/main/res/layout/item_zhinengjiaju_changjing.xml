@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:text="回家"
                 android:textColor="#ff333333"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_text"
@@ -46,7 +46,7 @@
                 android:layout_marginTop="7dp"
                 android:text="默认场景"
                 android:textColor="#ff999999"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
         </LinearLayout>
 
         <ImageView

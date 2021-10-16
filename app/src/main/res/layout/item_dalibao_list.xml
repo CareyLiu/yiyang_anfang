@@ -41,6 +41,6 @@ android:layout_marginLeft="15dp"
         android:includeFontPadding="false"
         android:text="￥988.00~1588.00"
         android:textColor="#ffff002f"
-        android:textSize="13sp" />
+        android:textSize="27pt" />
 
 </com.flyco.roundview.RoundRelativeLayout>

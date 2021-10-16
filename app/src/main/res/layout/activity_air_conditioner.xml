@@ -61,7 +61,7 @@
                             android:padding="10dp"
                             android:text="点击连接空调ID"
                             android:textColor="#333333"
-                            android:textSize="13sp"
+                            android:textSize="27pt"
                             android:visibility="invisible" />
 
                         <View
@@ -147,7 +147,7 @@
                                     android:paddingBottom="2dp"
                                     android:text="设备离线"
                                     android:textColor="@color/white"
-                                    android:textSize="13sp" />
+                                    android:textSize="27pt" />
                             </RelativeLayout>
                         </RelativeLayout>
                     </RelativeLayout>
@@ -182,7 +182,7 @@
                                 android:layout_marginLeft="13dp"
                                 android:text="环境温度"
                                 android:textColor="#333333"
-                                android:textSize="14sp" />
+                                android:textSize="27pt" />
 
                             <TextView
                                 android:id="@+id/tv_hj_temperature"
@@ -198,7 +198,7 @@
                                 android:singleLine="true"
                                 android:text="0℃"
                                 android:textColor="#DE443A"
-                                android:textSize="14sp" />
+                                android:textSize="27pt" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -218,7 +218,7 @@
                                 android:layout_marginLeft="13dp"
                                 android:text="当前风速"
                                 android:textColor="#333333"
-                                android:textSize="14sp" />
+                                android:textSize="27pt" />
 
                             <TextView
                                 android:id="@+id/tv_device_fengsu"
@@ -234,7 +234,7 @@
                                 android:singleLine="true"
                                 android:text="0"
                                 android:textColor="#76B5F1"
-                                android:textSize="14sp" />
+                                android:textSize="27pt" />
 
                             <ImageView
                                 android:id="@+id/img_fengsu"
@@ -273,7 +273,7 @@
                             android:layout_toRightOf="@+id/img_alert"
                             android:text="控制面板报警"
                             android:textColor="#DE443A"
-                            android:textSize="13sp" />
+                            android:textSize="27pt" />
 
                         <TextView
                             android:id="@+id/tv_clean_alert"

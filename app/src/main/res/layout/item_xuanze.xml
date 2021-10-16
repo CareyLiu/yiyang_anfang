@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:text="挂号"
                 android:textColor="#ffffffff"
-                android:textSize="13sp"
+                android:textSize="27pt"
                 />
 
         </com.flyco.roundview.RoundRelativeLayout>
@@ -69,7 +69,7 @@
                     android:layout_toRightOf="@+id/daifuming"
                     android:text="医师"
                     android:textColor="#ffa8a8a8"
-                    android:textSize="13sp" />
+                    android:textSize="27pt" />
 
 
             </RelativeLayout>
@@ -79,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="19pt"
-                android:text="骨科  哈尔滨医科大学附属第二医院"
+                android:text="骨科  长春医科大学附属第二医院"
                 android:textColor="#ffa8a8a8"
                 android:textSize="11.5sp" />
 

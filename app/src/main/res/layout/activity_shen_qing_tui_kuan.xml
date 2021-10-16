@@ -49,7 +49,7 @@
             android:includeFontPadding="false"
             android:text="已收到货，需要退还已收到的货物"
             android:textColor="#ff656565"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
     </com.flyco.roundview.RoundRelativeLayout>
 
     <com.flyco.roundview.RoundRelativeLayout
@@ -95,7 +95,7 @@
             android:includeFontPadding="false"
             android:text="未收到货，或与商家协商之后申请"
             android:textColor="#ff656565"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
     </com.flyco.roundview.RoundRelativeLayout>
 
 

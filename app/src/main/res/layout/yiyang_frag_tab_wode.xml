@@ -51,7 +51,7 @@
             android:includeFontPadding="false"
             android:text="***********"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="35pt"
             android:textStyle="bold" />
 
         <TextView
@@ -64,7 +64,7 @@
             android:includeFontPadding="false"
             android:text="积分：0"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:id="@+id/tv_shimingzhi"
@@ -115,7 +115,7 @@
                     android:layout_height="wrap_content"
                     android:text="我的服务"
                     android:textColor="@color/color_2"
-                    android:textSize="12sp" />
+                    android:textSize="23pt" />
             </LinearLayout>
 
             <LinearLayout
@@ -138,7 +138,7 @@
                     android:layout_height="wrap_content"
                     android:text="我的活动"
                     android:textColor="@color/color_2"
-                    android:textSize="12sp" />
+                    android:textSize="23pt" />
             </LinearLayout>
 
             <LinearLayout
@@ -161,7 +161,7 @@
                     android:layout_height="wrap_content"
                     android:text="我的健康"
                     android:textColor="@color/color_2"
-                    android:textSize="12sp" />
+                    android:textSize="23pt" />
             </LinearLayout>
 
             <LinearLayout
@@ -184,7 +184,7 @@
                     android:layout_height="wrap_content"
                     android:text="我的机构"
                     android:textColor="@color/color_2"
-                    android:textSize="12sp" />
+                    android:textSize="23pt" />
             </LinearLayout>
         </LinearLayout>
 
@@ -210,7 +210,7 @@
                     android:layout_weight="1"
                     android:text="我的订单"
                     android:textColor="@color/color_2"
-                    android:textSize="14sp" />
+                    android:textSize="27pt" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -218,7 +218,7 @@
                     android:layout_marginRight="19pt"
                     android:text="全部订单"
                     android:textColor="@color/color_4"
-                    android:textSize="12sp" />
+                    android:textSize="23pt" />
 
                 <ImageView
                     android:layout_width="11pt"
@@ -257,7 +257,7 @@
                         android:layout_height="wrap_content"
                         android:text="我的钱包"
                         android:textColor="@color/color_2"
-                        android:textSize="12sp" />
+                        android:textSize="23pt" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -280,7 +280,7 @@
                         android:layout_height="wrap_content"
                         android:text="待付款"
                         android:textColor="@color/color_2"
-                        android:textSize="12sp" />
+                        android:textSize="23pt" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -303,7 +303,7 @@
                         android:layout_height="wrap_content"
                         android:text="代发货"
                         android:textColor="@color/color_2"
-                        android:textSize="12sp" />
+                        android:textSize="23pt" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -326,7 +326,7 @@
                         android:layout_height="wrap_content"
                         android:text="待收货"
                         android:textColor="@color/color_2"
-                        android:textSize="12sp" />
+                        android:textSize="23pt" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -349,7 +349,7 @@
                         android:layout_height="wrap_content"
                         android:text="评价"
                         android:textColor="@color/color_2"
-                        android:textSize="12sp" />
+                        android:textSize="23pt" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -376,7 +376,7 @@
                     android:layout_weight="1"
                     android:text="我的亲友"
                     android:textColor="@color/color_2"
-                    android:textSize="14sp" />
+                    android:textSize="27pt" />
             </LinearLayout>
 
             <View
@@ -411,7 +411,7 @@
                         android:layout_height="wrap_content"
                         android:text="医生"
                         android:textColor="@color/color_2"
-                        android:textSize="12sp" />
+                        android:textSize="23pt" />
                 </LinearLayout>
 
 

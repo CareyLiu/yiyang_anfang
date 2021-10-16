@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="轨迹地图"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
         </RelativeLayout>
     </RelativeLayout>
 
@@ -98,7 +98,7 @@
                     android:layout_weight="0"
                     android:gravity="center_vertical"
                     android:text="2018-05-30 18:32:52"
-                    android:textSize="14sp" />
+                    android:textSize="27pt" />
             </LinearLayout>
 
             <LinearLayout
@@ -130,7 +130,7 @@
                     android:layout_weight="0"
                     android:gravity="center_vertical"
                     android:text="2018-05-30 18:32:52"
-                    android:textSize="14sp" />
+                    android:textSize="27pt" />
             </LinearLayout>
         </LinearLayout>
 

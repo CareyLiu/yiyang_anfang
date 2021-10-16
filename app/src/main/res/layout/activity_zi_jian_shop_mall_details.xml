@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:text="店铺"
             android:textColor="#ff999999"
-            android:textSize="12sp"
+            android:textSize="23pt"
             app:layout_constraintLeft_toLeftOf="@+id/iv_dianpu_iamge"
             app:layout_constraintTop_toBottomOf="@+id/iv_dianpu_iamge" />
 
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:text="客服"
             android:textColor="#ff999999"
-            android:textSize="12sp"
+            android:textSize="23pt"
             app:layout_constraintLeft_toLeftOf="@+id/iv_kefu_image"
             app:layout_constraintRight_toRightOf="@+id/iv_kefu_image"
             app:layout_constraintTop_toTopOf="@+id/tv_dianpu" />
@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:text="收藏"
             android:textColor="#ff999999"
-            android:textSize="12sp"
+            android:textSize="23pt"
             app:layout_constraintLeft_toLeftOf="@+id/iv_shoucang_iamge"
             app:layout_constraintRight_toRightOf="@+id/iv_shoucang_iamge"
             app:layout_constraintTop_toBottomOf="@+id/iv_shoucang_iamge" />
@@ -106,7 +106,7 @@
                     android:gravity="center"
                     android:text="加入购物车"
                     android:textColor="#ffffffff"
-                    android:textSize="14sp" />
+                    android:textSize="27pt" />
 
             </LinearLayout>
 
@@ -123,7 +123,7 @@
                     android:layout_height="wrap_content"
                     android:text="立即购买"
                     android:textColor="#ffffffff"
-                    android:textSize="14sp" />
+                    android:textSize="27pt" />
 
             </LinearLayout>
 

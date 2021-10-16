@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:text="TextView"
             android:textColor="@color/car_text_black"
-            android:textSize="14sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:id="@+id/tv_time"

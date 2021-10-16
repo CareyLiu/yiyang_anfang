@@ -58,7 +58,7 @@
                     android:layout_marginTop="5dp"
                     android:includeFontPadding="false"
                     android:textColor="#ffa8a8a8"
-                    android:textSize="12sp"
+                    android:textSize="23pt"
                     tools:text="400人收藏" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -99,7 +99,7 @@
                                 android:layout_marginLeft="7dp"
                                 android:text="客服"
                                 android:textColor="#ffff7e00"
-                                android:textSize="12sp" />
+                                android:textSize="23pt" />
                         </LinearLayout>
 
 
@@ -128,7 +128,7 @@
                                 android:layout_marginLeft="7dp"
                                 android:text="关注"
                                 android:textColor="#ffff7e00"
-                                android:textSize="12sp" />
+                                android:textSize="23pt" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -172,7 +172,7 @@
                         android:layout_centerInParent="true"
                         android:alpha="0"
                         android:textColor="@color/black_111111"
-                        android:textSize="18sp"
+                        android:textSize="35pt"
                         tools:text="火星社" />
 
 
@@ -217,7 +217,7 @@
                         android:layout_height="wrap_content"
                         android:text="综合"
                         android:textColor="#FFFF7E00"
-                        android:textSize="12sp"
+                        android:textSize="23pt"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
@@ -236,7 +236,7 @@
                         android:layout_height="wrap_content"
                         android:text="销量"
                         android:textColor="#ff000000"
-                        android:textSize="12sp"
+                        android:textSize="23pt"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
@@ -263,7 +263,7 @@
                             android:layout_height="wrap_content"
                             android:text="价格"
                             android:textColor="#ff000000"
-                            android:textSize="12sp"
+                            android:textSize="23pt"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"

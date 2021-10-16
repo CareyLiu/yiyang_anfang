@@ -33,7 +33,7 @@
         android:layout_marginTop="6dp"
         android:text="全部门店"
         android:textColor="#fffc0100"
-        android:textSize="12sp"
+        android:textSize="23pt"
         app:layout_constraintLeft_toLeftOf="@+id/rl_image"
         app:layout_constraintRight_toRightOf="@+id/rl_image"
         app:layout_constraintTop_toBottomOf="@+id/rl_image" />

@@ -34,7 +34,7 @@
             android:includeFontPadding="false"
             android:text="可提现金额"
             android:textColor="#ffffffff"
-            android:textSize="14sp"
+            android:textSize="27pt"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,7 +59,7 @@
             android:includeFontPadding="false"
             android:text="￥00.00"
             android:textColor="#ffffffff"
-            android:textSize="13sp"
+            android:textSize="27pt"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@+id/tv_ketixian_price" />
 
@@ -72,7 +72,7 @@
             android:includeFontPadding="false"
             android:text="可抵扣金额"
             android:textColor="#ffffffff"
-            android:textSize="14sp"
+            android:textSize="27pt"
             app:layout_constraintBottom_toTopOf="@+id/tv_kedikou"
             app:layout_constraintLeft_toLeftOf="@+id/tv_kedikou" />
 
@@ -85,7 +85,7 @@
             android:includeFontPadding="false"
             android:text="￥00.00"
             android:textColor="#ffffffff"
-            android:textSize="14sp"
+            android:textSize="27pt"
             app:layout_constraintLeft_toRightOf="@+id/tv_kedikou"
             app:layout_constraintTop_toTopOf="@+id/tv_kedikou" />
 
@@ -96,7 +96,7 @@
             android:layout_marginBottom="15dp"
             android:text="冻结金额"
             android:textColor="#ffffffff"
-            android:textSize="14sp"
+            android:textSize="27pt"
             app:layout_constraintBottom_toTopOf="@+id/tv_dongjiejine_price"
             app:layout_constraintLeft_toLeftOf="@+id/tv_dongjiejine_price" />
 
@@ -118,7 +118,7 @@
                 android:layout_gravity="center"
                 android:text="立即提现"
                 android:textColor="#fffd7937"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -145,7 +145,7 @@
         android:includeFontPadding="false"
         android:text="支出¥0.00 收入¥0.00"
         android:textColor="#ff999999"
-        android:textSize="13sp"
+        android:textSize="27pt"
         app:layout_constraintLeft_toLeftOf="@+id/tv_mingxi"
         app:layout_constraintTop_toBottomOf="@+id/tv_mingxi" />
 

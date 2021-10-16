@@ -7,7 +7,7 @@ public class OrderTuiKuanDetailsModel {
      * msg_code : 0000
      * msg : ok
      * row_num : 1
-     * data : [{"shop_form_id":"3031","inst_worker_name":"月亮 18249030297","form_no":"20200619165250000003","refund_express_url":"","refund_type":"2","shop_product_title":"横版数码按键开关","refund_express_name":"","user_name":"王大力","refund_rate":"2","refund_over_time":"2020-06-22 16:54:07","refund_no":"rollback_20200619165250000003","index_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9931","pay_money":"0.50","refund_index":"1","product_title":"套餐1","refund_express_no":"","refund_arr":["发起退款","审核通过","用户发货","商家收货","退款"],"inst_addr_all":"黑龙江省哈尔滨市南岗区花园街道哈哈哈哈","user_phone":"15236586932","user_addr_all":"北京北京市东城区丽景花园1栋301","order_info_arr":["订单备注：","订单编号：20200619165250000003","下单时间：2020-06-19 16:52:50","支付方式：微信支付","付款时间：2020-06-19 16:52:57"]}]
+     * data : [{"shop_form_id":"3031","inst_worker_name":"月亮 18249030297","form_no":"20200619165250000003","refund_express_url":"","refund_type":"2","shop_product_title":"横版数码按键开关","refund_express_name":"","user_name":"王大力","refund_rate":"2","refund_over_time":"2020-06-22 16:54:07","refund_no":"rollback_20200619165250000003","index_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9931","pay_money":"0.50","refund_index":"1","product_title":"套餐1","refund_express_no":"","refund_arr":["发起退款","审核通过","用户发货","商家收货","退款"],"inst_addr_all":"吉林省长春市南关区花园街道哈哈哈哈","user_phone":"15236586932","user_addr_all":"北京北京市东城区丽景花园1栋301","order_info_arr":["订单备注：","订单编号：20200619165250000003","下单时间：2020-06-19 16:52:50","支付方式：微信支付","付款时间：2020-06-19 16:52:57"]}]
      */
 
     private String msg_code;
@@ -66,7 +66,7 @@ public class OrderTuiKuanDetailsModel {
          * product_title : 套餐1
          * refund_express_no :
          * refund_arr : ["发起退款","审核通过","用户发货","商家收货","退款"]
-         * inst_addr_all : 黑龙江省哈尔滨市南岗区花园街道哈哈哈哈
+         * inst_addr_all : 吉林省长春市南关区花园街道哈哈哈哈
          * user_phone : 15236586932
          * user_addr_all : 北京北京市东城区丽景花园1栋301
          * order_info_arr : ["订单备注：","订单编号：20200619165250000003","下单时间：2020-06-19 16:52:50","支付方式：微信支付","付款时间：2020-06-19 16:52:57"]

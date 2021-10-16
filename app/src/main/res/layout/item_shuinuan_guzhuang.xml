@@ -8,4 +8,4 @@
     android:maxLines="1"
     android:text="故障代码04 控制面板报警"
     android:textColor="#DD4339"
-    android:textSize="14sp" />
+    android:textSize="27pt" />

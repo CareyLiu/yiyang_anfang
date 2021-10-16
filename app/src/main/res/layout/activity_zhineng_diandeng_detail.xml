@@ -77,7 +77,7 @@
                                     android:includeFontPadding="false"
                                     android:text="设备在线"
                                     android:textColor="#666666"
-                                    android:textSize="12sp" />
+                                    android:textSize="23pt" />
                             </LinearLayout>
 
                             <ImageView
@@ -106,7 +106,7 @@
                             android:layout_marginLeft="14dp"
                             android:text="家庭"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="27pt"
                             android:textStyle="bold" />
 
                         <TextView
@@ -122,7 +122,7 @@
                             android:gravity="right"
                             android:singleLine="true"
                             android:textColor="#999999"
-                            android:textSize="14sp" />
+                            android:textSize="27pt" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -141,7 +141,7 @@
                             android:layout_marginLeft="14dp"
                             android:text="房间"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="27pt"
                             android:textStyle="bold" />
 
                         <TextView
@@ -158,7 +158,7 @@
                             android:gravity="right"
                             android:singleLine="true"
                             android:textColor="#999999"
-                            android:textSize="14sp" />
+                            android:textSize="27pt" />
 
                         <ImageView
                             android:id="@+id/img_room_into"
@@ -186,7 +186,7 @@
                             android:layout_marginLeft="14dp"
                             android:text="名称"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="27pt"
                             android:textStyle="bold" />
 
                         <TextView
@@ -203,7 +203,7 @@
                             android:gravity="right"
                             android:singleLine="true"
                             android:textColor="#999999"
-                            android:textSize="14sp" />
+                            android:textSize="27pt" />
 
                         <ImageView
                             android:id="@+id/img_device_into"
@@ -230,7 +230,7 @@
                             android:layout_marginLeft="14dp"
                             android:text="类型"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="27pt"
                             android:textStyle="bold" />
 
                         <TextView
@@ -246,7 +246,7 @@
                             android:gravity="right"
                             android:singleLine="true"
                             android:textColor="#999999"
-                            android:textSize="14sp" />
+                            android:textSize="27pt" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -266,7 +266,7 @@
                             android:layout_marginLeft="14dp"
                             android:text="设备状态"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="27pt"
                             android:textStyle="bold" />
 
                         <TextView
@@ -283,7 +283,7 @@
                             android:singleLine="true"
                             android:text="正常"
                             android:textColor="#09CB80"
-                            android:textSize="14sp" />
+                            android:textSize="27pt" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -303,7 +303,7 @@
                             android:layout_marginLeft="14dp"
                             android:text="开关"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="27pt"
                             android:textStyle="bold" />
 
                         <Switch
@@ -333,7 +333,7 @@
                             android:layout_marginLeft="14dp"
                             android:text="操作提示音"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="27pt"
                             android:textStyle="bold" />
 
                         <Switch
@@ -362,7 +362,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="14dp"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="27pt"
                             android:textStyle="bold" />
 
                         <com.suke.widget.SwitchButton
@@ -406,7 +406,7 @@
                             android:text="控制设备时，可通过设备的【位置】或【别名】进行控制,如
 有相同【位置】和【别名】的设备存在时，将会同步操作"
                             android:textColor="#999999"
-                            android:textSize="12sp" />
+                            android:textSize="23pt" />
                     </RelativeLayout>
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
@@ -423,7 +423,7 @@
                 android:gravity="center"
                 android:text="删除"
                 android:textColor="#F83A47"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
 
         </RelativeLayout>

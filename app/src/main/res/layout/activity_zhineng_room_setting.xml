@@ -39,7 +39,7 @@
                         android:layout_marginLeft="16dp"
                         android:text="房间名称"
                         android:textColor="#333333"
-                        android:textSize="14sp"
+                        android:textSize="27pt"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -56,7 +56,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="9dp"
                             android:textColor="#999999"
-                            android:textSize="13sp" />
+                            android:textSize="27pt" />
 
                         <ImageView
                             android:id="@+id/img_into"
@@ -79,7 +79,7 @@
                         android:padding="16dp"
                         android:text="该房间有0个设备"
                         android:textColor="#666666"
-                        android:textSize="14sp" />
+                        android:textSize="27pt" />
                 </LinearLayout>                <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
@@ -107,7 +107,7 @@
                 android:gravity="center"
                 android:text="删除房间"
                 android:textColor="#F83A47"
-                android:textSize="14sp"
+                android:textSize="27pt"
                 android:textStyle="bold" />
 
             <TextView
@@ -120,7 +120,7 @@
                 android:gravity="center"
                 android:text="添加设备"
                 android:textColor="#333333"
-                android:textSize="14sp"
+                android:textSize="27pt"
                 android:textStyle="bold" />
         </LinearLayout>
     </RelativeLayout>

@@ -33,7 +33,7 @@
                 android:includeFontPadding="false"
                 android:text="name"
                 android:textColor="@color/black_111111"
-                android:textSize="13sp"
+                android:textSize="27pt"
                 android:textStyle="bold" />
 
             <TextView
@@ -43,7 +43,7 @@
                 android:includeFontPadding="false"
                 android:text="number"
                 android:textColor="@color/black_111111"
-                android:textSize="12sp"
+                android:textSize="23pt"
                 android:textStyle="bold" />
 
             <TextView
@@ -53,7 +53,7 @@
                 android:includeFontPadding="false"
                 android:text="fault_info"
                 android:textColor="@color/black_111111"
-                android:textSize="12sp"
+                android:textSize="23pt"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -77,7 +77,7 @@
                     android:includeFontPadding="false"
                     android:text="2019-03-14"
                     android:textColor="@color/split"
-                    android:textSize="13sp" />
+                    android:textSize="27pt" />
 
                 <TextView
                     android:id="@+id/tv_state"
@@ -87,7 +87,7 @@
                     android:includeFontPadding="false"
                     android:text="进行中"
                     android:textColor="@color/text_red"
-                    android:textSize="13sp"
+                    android:textSize="27pt"
                     android:textStyle="bold" />
             </LinearLayout>
 

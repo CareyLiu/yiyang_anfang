@@ -53,7 +53,7 @@
                 android:layout_marginRight="19pt"
                 android:text="搜索医生/科室"
                 android:textColor="#A8a8a8"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -93,14 +93,14 @@
                         android:layout_marginRight="20pt"
                         android:text="【就医指南】"
                         android:textColor="#FD9322"
-                        android:textSize="14sp" />
+                        android:textSize="27pt" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="一对一在线医生看病不排队看病操作手册"
                         android:textColor="@color/color_a"
-                        android:textSize="12sp" />
+                        android:textSize="23pt" />
                 </LinearLayout>
 
                 <RelativeLayout

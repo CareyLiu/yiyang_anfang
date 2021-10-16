@@ -47,7 +47,7 @@
             android:layout_marginRight="25dp"
             android:text="使用次数3次"
             android:textColor="#ffffffff"
-            android:textSize="12sp"
+            android:textSize="23pt"
             android:visibility="gone" />
     </com.flyco.roundview.RoundRelativeLayout>
 </RelativeLayout>

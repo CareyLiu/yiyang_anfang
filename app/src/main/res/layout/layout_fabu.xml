@@ -38,7 +38,7 @@
                 android:layout_marginTop="12dp"
                 android:text="商家发布"
                 android:textColor="#ff333333"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </RelativeLayout>
 
@@ -66,7 +66,7 @@
                 android:layout_marginTop="12dp"
                 android:text="工匠发布"
                 android:textColor="#ff333333"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </RelativeLayout>
 
@@ -94,7 +94,7 @@
                 android:layout_marginTop="12dp"
                 android:text="便民发布"
                 android:textColor="#ff333333"
-                android:textSize="13sp" />
+                android:textSize="27pt" />
 
         </RelativeLayout>
     </com.flyco.roundview.RoundLinearLayout>

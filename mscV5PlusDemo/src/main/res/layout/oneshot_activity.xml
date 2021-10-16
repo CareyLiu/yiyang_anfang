@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/oneshot_demo_hint"
-        android:textSize="18sp" />
+        android:textSize="35pt" />
  	
  	<TextView
         android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="门限值:"
-            android:textSize="18sp" />
+            android:textSize="35pt" />
 
         <SeekBar
             android:id="@+id/seekBar_thresh"

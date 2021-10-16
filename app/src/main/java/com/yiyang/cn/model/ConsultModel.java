@@ -8,7 +8,7 @@ public class ConsultModel {
      * msg_code : 0000
      * msg : ok
      * row_num : 4
-     * data : [{"user_car_img_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9251","service_form_id":"15","of_user_id_car":"455","sub_user_name":"lsz","of_user_accid":"wit_455","create_time":"2019-07-30","state_name":"进行中","sub_accid":"wit_sub_177","user_name_car":"Sunshine ","plate_number":"黑A6L168G","state":"2","addr":"哈尔滨市南岗区电缆街170"},{"user_car_img_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9256","service_form_id":"14","of_user_id_car":"499","sub_user_name":"小岳岳","of_user_accid":"wit_499","create_time":"2019-07-01","state_name":"进行中","sub_accid":"wit_sub_177","user_name_car":"lsz","plate_number":"黑E6666654","state":"2","addr":"哈尔滨市南岗区电缆街170"},{"user_car_img_url":"https://shop.hljsdkj.com/commons/easyui/images/portrait86x86.png","service_form_id":"10","of_user_id_car":"660","sub_user_name":"小岳岳","of_user_accid":"wit_660","create_time":"2019-05-29","state_name":"进行中","sub_accid":"wit_sub_177","user_name_car":"加热器","plate_number":"黑A06599","state":"2","addr":""},{"user_car_img_url":"https://shop.hljsdkj.com/commons/easyui/images/portrait86x86.png","service_form_id":"9","of_user_id_car":"537","sub_user_name":"小岳岳","of_user_accid":"wit_537","create_time":"2019-05-29","state_name":"进行中","sub_accid":"wit_sub_177","user_name_car":"未设置","plate_number":"黑A12345","state":"2","addr":"哈尔滨市南岗区电缆街170"}]
+     * data : [{"user_car_img_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9251","service_form_id":"15","of_user_id_car":"455","sub_user_name":"lsz","of_user_accid":"wit_455","create_time":"2019-07-30","state_name":"进行中","sub_accid":"wit_sub_177","user_name_car":"Sunshine ","plate_number":"黑A6L168G","state":"2","addr":"长春市南关区电缆街170"},{"user_car_img_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9256","service_form_id":"14","of_user_id_car":"499","sub_user_name":"小岳岳","of_user_accid":"wit_499","create_time":"2019-07-01","state_name":"进行中","sub_accid":"wit_sub_177","user_name_car":"lsz","plate_number":"黑E6666654","state":"2","addr":"长春市南关区电缆街170"},{"user_car_img_url":"https://shop.hljsdkj.com/commons/easyui/images/portrait86x86.png","service_form_id":"10","of_user_id_car":"660","sub_user_name":"小岳岳","of_user_accid":"wit_660","create_time":"2019-05-29","state_name":"进行中","sub_accid":"wit_sub_177","user_name_car":"加热器","plate_number":"黑A06599","state":"2","addr":""},{"user_car_img_url":"https://shop.hljsdkj.com/commons/easyui/images/portrait86x86.png","service_form_id":"9","of_user_id_car":"537","sub_user_name":"小岳岳","of_user_accid":"wit_537","create_time":"2019-05-29","state_name":"进行中","sub_accid":"wit_sub_177","user_name_car":"未设置","plate_number":"黑A12345","state":"2","addr":"长春市南关区电缆街170"}]
      */
 
     private String msg_code;
@@ -61,7 +61,7 @@ public class ConsultModel {
          * user_name_car : Sunshine
          * plate_number : 黑A6L168G
          * state : 2
-         * addr : 哈尔滨市南岗区电缆街170
+         * addr : 长春市南关区电缆街170
          */
 
         private String user_car_img_url;

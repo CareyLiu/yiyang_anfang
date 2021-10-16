@@ -14,7 +14,7 @@
         android:layout_marginTop="15dp"
         android:text="居安普妮智能音箱"
         android:textColor="#ff333333"
-        android:textSize="18sp" />
+        android:textSize="35pt" />
 
     <TextView
         android:id="@+id/tv_miaoshu"
@@ -25,7 +25,7 @@
         android:layout_marginRight="15dp"
         android:text="首次接通电源后，按住设备上的按键5秒以上，确认指示灯闪烁或听到提示音后，设备开启配网模式。"
         android:textColor="#ff666666"
-        android:textSize="14sp" />
+        android:textSize="27pt" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,7 +34,7 @@
         android:layout_marginTop="15dp"
         android:text="注：如果该主机被绑定过，请先按9次按键，重置主机后，主机方可被重新绑定。"
         android:textColor="#ff666666"
-        android:textSize="14sp" />
+        android:textSize="27pt" />
 
     <RelativeLayout
 
@@ -63,7 +63,7 @@
             android:layout_centerVertical="true"
             android:text="尝试按步骤式配网"
             android:textColor="#ff666666"
-            android:textSize="14sp" />
+            android:textSize="27pt" />
 
         <ImageView
             android:layout_width="wrap_content"

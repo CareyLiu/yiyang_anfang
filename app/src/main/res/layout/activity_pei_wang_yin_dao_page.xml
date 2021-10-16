@@ -36,7 +36,7 @@
             android:includeFontPadding="false"
             android:text="打开手机“设置”-“无线局域网”，选取你家的Wi-Fi"
             android:textColor="#ff999999"
-            android:textSize="13sp"
+            android:textSize="27pt"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_lianjiewifi" />
@@ -143,7 +143,7 @@
                 android:layout_marginTop="25dp"
                 android:text="未收到语音提示？查看帮助"
                 android:textColor="#ff488ef8"
-                android:textSize="13sp"
+                android:textSize="27pt"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rll_kaishilianjie" />

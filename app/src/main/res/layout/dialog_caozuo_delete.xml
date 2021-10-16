@@ -47,7 +47,7 @@
             android:gravity="center"
             android:text="是否删除"
             android:textColor="#ffa5a5a5"
-            android:textSize="12sp"
+            android:textSize="23pt"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_caozuochegngong" />

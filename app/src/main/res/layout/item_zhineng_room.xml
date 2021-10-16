@@ -31,7 +31,7 @@
                 android:singleLine="true"
                 android:text="客厅"
                 android:textColor="#333333"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
 
             <TextView
                 android:id="@+id/tv_device_num"
@@ -41,7 +41,7 @@
                 android:layout_marginTop="6dp"
                 android:text="0个设备"
                 android:textColor="#999999"
-                android:textSize="12sp" />
+                android:textSize="23pt" />
         </LinearLayout>
 
         <ImageView

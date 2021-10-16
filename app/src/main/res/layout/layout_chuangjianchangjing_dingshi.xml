@@ -69,7 +69,7 @@
                     android:layout_marginTop="15dp"
                     android:text="快捷操作"
                     android:textColor="#ff999999"
-                    android:textSize="14sp" />
+                    android:textSize="27pt" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -86,7 +86,7 @@
                         android:padding="3dp"
                         android:text="周一至周五"
                         android:textColor="#ff999999"
-                        android:textSize="12sp" />
+                        android:textSize="23pt" />
 
                     <TextView
                         android:id="@+id/tv_zhouliu_zhouri"
@@ -97,7 +97,7 @@
                         android:padding="3dp"
                         android:text="周六周日"
                         android:textColor="#ff3a85f8"
-                        android:textSize="12sp" />
+                        android:textSize="23pt" />
 
                     <TextView
                         android:id="@+id/tv_meitian"
@@ -108,7 +108,7 @@
                         android:padding="3dp"
                         android:text="每天"
                         android:textColor="#ff999999"
-                        android:textSize="12sp" />
+                        android:textSize="23pt" />
 
                     <TextView
                         android:id="@+id/tv_jinyici"
@@ -119,7 +119,7 @@
                         android:padding="3dp"
                         android:text="仅一次"
                         android:textColor="#ff999999"
-                        android:textSize="12sp" />
+                        android:textSize="23pt" />
                 </LinearLayout>
             </RelativeLayout>
 

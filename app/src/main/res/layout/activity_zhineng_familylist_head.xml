@@ -33,6 +33,6 @@
             android:paddingRight="8dp"
             android:paddingBottom="3dp"
             android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:textSize="23pt" />
     </LinearLayout>
 </RelativeLayout>

@@ -129,7 +129,7 @@
                     android:layout_marginTop="15dp"
                     android:text="厂家："
                     android:textColor="@color/white"
-                    android:textSize="12sp"
+                    android:textSize="23pt"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -154,7 +154,7 @@
                     android:gravity="right"
                     android:text="联系方式："
                     android:textColor="@color/white"
-                    android:textSize="12sp"
+                    android:textSize="23pt"
                     app:layout_constraintRight_toLeftOf="@+id/tv_phone"
                     app:layout_constraintTop_toTopOf="@+id/tv_changjia" />
 
@@ -184,7 +184,7 @@
                     android:gravity="right"
                     android:text="型号："
                     android:textColor="@color/white"
-                    android:textSize="12sp"
+                    android:textSize="23pt"
                     app:layout_constraintLeft_toLeftOf="@+id/tv_changjia"
                     app:layout_constraintTop_toBottomOf="@+id/tv_factory" />
 
@@ -208,7 +208,7 @@
                     android:gravity="center"
                     android:text="安装时间："
                     android:textColor="@color/white"
-                    android:textSize="12sp"
+                    android:textSize="23pt"
                     app:layout_constraintLeft_toLeftOf="@+id/tv_lianxifangshi"
 
                     app:layout_constraintTop_toTopOf="@+id/tv_xinghao" />
@@ -233,7 +233,7 @@
                     android:layout_marginTop="8dp"
                     android:text="电压："
                     android:textColor="@color/white"
-                    android:textSize="12sp"
+                    android:textSize="23pt"
                     app:layout_constraintLeft_toLeftOf="@+id/tv_xinghao"
                     app:layout_constraintTop_toBottomOf="@+id/tv_xinghao" />
 
@@ -256,7 +256,7 @@
                     android:layout_marginTop="8dp"
                     android:text="频率："
                     android:textColor="@color/white"
-                    android:textSize="12sp"
+                    android:textSize="23pt"
                     app:layout_constraintLeft_toLeftOf="@+id/tv_changjia"
                     app:layout_constraintTop_toBottomOf="@+id/tv_dianya" />
 
@@ -280,7 +280,7 @@
                     android:gravity="right"
                     android:text="安装地点："
                     android:textColor="@color/white"
-                    android:textSize="12sp"
+                    android:textSize="23pt"
                     app:layout_constraintLeft_toLeftOf="@+id/anzhuang_time"
                     app:layout_constraintTop_toBottomOf="@+id/tv_date" />
 

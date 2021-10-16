@@ -34,7 +34,7 @@
             android:includeFontPadding="false"
             android:text="游戏外设"
             android:textColor="#ff000000"
-            android:textSize="14sp"
+            android:textSize="27pt"
             app:layout_constraintBottom_toBottomOf="@+id/iv_image"
             app:layout_constraintLeft_toRightOf="@+id/iv_image"
             app:layout_constraintTop_toTopOf="@+id/iv_image" />
@@ -57,7 +57,7 @@
             android:includeFontPadding="false"
             android:text="已评价"
             android:textColor="#fffa7e00"
-            android:textSize="14sp"
+            android:textSize="27pt"
             app:layout_constraintBottom_toBottomOf="@+id/iv_enter"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/iv_enter" />
@@ -88,7 +88,7 @@
         android:includeFontPadding="false"
         android:text="手机吃鸡手柄吃鸡神奇手机吃鸡手柄吃鸡神奇"
         android:textColor="#ff111111"
-        android:textSize="13sp"
+        android:textSize="27pt"
         app:layout_constraintLeft_toRightOf="@+id/iv_product"
         app:layout_constraintTop_toTopOf="@+id/iv_product" />
 
@@ -110,7 +110,7 @@
         android:includeFontPadding="false"
         android:text="￥500.00"
         android:textColor="#ff000000"
-        android:textSize="13sp"
+        android:textSize="27pt"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_title" />
 
@@ -123,7 +123,7 @@
         android:includeFontPadding="false"
         android:text="x1"
         android:textColor="#ff666666"
-        android:textSize="13sp"
+        android:textSize="27pt"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_danjia" />
 
@@ -135,7 +135,7 @@
         android:includeFontPadding="false"
         android:text="实付"
         android:textColor="#ff111111"
-        android:textSize="12sp"
+        android:textSize="23pt"
         app:layout_constraintBottom_toBottomOf="@+id/iv_product"
         app:layout_constraintRight_toRightOf="parent" />
 
@@ -167,7 +167,7 @@
             android:paddingVertical="3dp"
             android:text="申请退款"
             android:textColor="#ff111111"
-            android:textSize="13sp"
+            android:textSize="27pt"
             android:visibility="gone" />
 
         <TextView
@@ -182,7 +182,7 @@
             android:paddingVertical="3dp"
             android:text="申请退款"
             android:textColor="#ff111111"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
         <TextView
             android:id="@+id/tv_caozuo1"
@@ -196,7 +196,7 @@
             android:paddingVertical="3dp"
             android:text="删除订单"
             android:textColor="#ff111111"
-            android:textSize="13sp" />
+            android:textSize="27pt" />
 
 
     </LinearLayout>

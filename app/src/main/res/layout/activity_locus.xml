@@ -81,7 +81,7 @@
                 android:gravity="center"
                 android:text="2019-5-30(今天)"
                 android:textColor="@android:color/white"
-                android:textSize="18sp" />
+                android:textSize="35pt" />
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"

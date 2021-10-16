@@ -21,8 +21,8 @@ android {
         applicationId "com.yiyang.cn"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 54
-        versionName "2.1.5"
+        versionCode 55
+        versionName "2.1.6"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         ndk {

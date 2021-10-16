@@ -27,13 +27,13 @@
                 android:layout_height="wrap_content"
                 android:text="当前家庭暂无房间，"
                 android:textColor="#666666"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="请添加"
                 android:textColor="#3A85F8"
-                android:textSize="14sp" />
+                android:textSize="27pt" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

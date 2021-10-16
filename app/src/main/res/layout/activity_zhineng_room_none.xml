@@ -27,6 +27,6 @@
             android:gravity="center"
             android:text="添加房间"
             android:textColor="#111111"
-            android:textSize="14sp" />
+            android:textSize="27pt" />
     </LinearLayout>
 </RelativeLayout>

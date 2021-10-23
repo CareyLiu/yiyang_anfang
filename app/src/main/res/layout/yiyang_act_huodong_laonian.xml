@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="384pt"
+        android:layout_marginHorizontal="28pt"
+        android:layout_marginVertical="18pt"
+        android:scaleType="fitXY"
+        android:src="@mipmap/yiyang_huodong_laonain" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="28pt"
+        android:background="@drawable/yiyang_bg_white_radius_10"
+        android:orientation="vertical"
+        android:paddingHorizontal="19pt">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:paddingVertical="19pt"
+            android:text="活动时间"
+            android:textColor="@color/color_3"
+            android:textSize="27pt"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="19pt"
+            android:includeFontPadding="false"
+            android:text="2021.10.19-2021.10.25"
+            android:textColor="@color/color_9"
+            android:textSize="23pt" />
+
+        <include layout="@layout/view_line" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:paddingVertical="19pt"
+            android:text="活动地点"
+            android:textColor="@color/color_3"
+            android:textSize="27pt"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="19pt"
+            android:includeFontPadding="false"
+            android:text="长春市南关区人民大街1011号"
+            android:textColor="@color/color_9"
+            android:textSize="23pt" />
+
+        <include layout="@layout/view_line" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:paddingVertical="19pt"
+            android:text="报名方式"
+            android:textColor="@color/color_3"
+            android:textSize="27pt"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="19pt"
+            android:includeFontPadding="false"
+            android:text="可以在线上或线下报名"
+            android:textColor="@color/color_9"
+            android:textSize="23pt" />
+
+        <include layout="@layout/view_line" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:paddingVertical="19pt"
+            android:text="奖项设置"
+            android:textColor="@color/color_3"
+            android:textSize="27pt"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="19pt"
+            android:includeFontPadding="false"
+            android:text="500元"
+            android:textColor="@color/color_9"
+            android:textSize="23pt" />
+
+        <include layout="@layout/view_line" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:paddingVertical="19pt"
+            android:text="活动详情"
+            android:textColor="@color/color_3"
+            android:textSize="27pt"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="19pt"
+            android:includeFontPadding="false"
+            android:text="10月14日，山水社区组织辖区太极拳队开展了太极拳健身展示活动。队员们合着音乐节拍，动作轻柔舒缓、刚柔相济，一招一式尽显太极文化的博大精深，展现出现代太极独有的风格和魅力，博得了现场观众的阵阵喝彩，充分展示了辖区老年人幸福晚年的精神风貌，营造了全民健身、健康生活的浓厚氛围。"
+            android:textColor="@color/color_9"
+            android:textSize="23pt" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/bt_baoming"
+        android:layout_width="match_parent"
+        android:layout_height="76pt"
+        android:layout_marginHorizontal="72pt"
+        android:layout_marginBottom="24pt"
+        android:background="@drawable/bt_login_denglu"
+        android:text="立即报名"
+        android:textColor="@color/white"
+        android:textSize="35pt" />
+</LinearLayout>
+
+

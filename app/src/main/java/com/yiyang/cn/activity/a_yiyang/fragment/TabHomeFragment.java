@@ -19,20 +19,21 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yiyang.cn.R;
 import com.yiyang.cn.activity.a_yiyang.activity.FuwuZhucanActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.FuwuZhujiActivity;
-import com.yiyang.cn.activity.a_yiyang.activity.pinggu.JiashuDanganActivity;
-import com.yiyang.cn.activity.a_yiyang.activity.jigou.JigouyanglaoActivity;
+import com.yiyang.cn.activity.a_yiyang.activity.HuodongActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.ShequyanglaoActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.TabMoreActivity;
-import com.yiyang.cn.activity.a_yiyang.activity.pinggu.YanglaopingguActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.YiyangTuTActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.ZaixianyishengActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.ZhujieActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.ZhuxingActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.ZhuyuActivity;
+import com.yiyang.cn.activity.a_yiyang.activity.jigou.JigouyanglaoActivity;
+import com.yiyang.cn.activity.a_yiyang.activity.pinggu.JiashuDanganActivity;
+import com.yiyang.cn.activity.a_yiyang.activity.pinggu.YanglaopingguActivity;
+import com.yiyang.cn.activity.a_yiyang.adapter.HomeZhylAdapter;
 import com.yiyang.cn.activity.tongcheng58.TongChengMainActivity;
 import com.yiyang.cn.activity.tongcheng58.model.TcHomeModel;
 import com.yiyang.cn.activity.zijian_shangcheng.ZiJianShopMallActivity;
-import com.yiyang.cn.activity.a_yiyang.adapter.HomeZhylAdapter;
 import com.yiyang.cn.app.AppConfig;
 import com.yiyang.cn.app.ConstanceValue;
 import com.yiyang.cn.app.Notice;
@@ -41,6 +42,7 @@ import com.yiyang.cn.basicmvp.BaseFragment;
 import com.yiyang.cn.config.GlideImageLoader;
 import com.yiyang.cn.config.PreferenceHelper;
 import com.yiyang.cn.util.Utils;
+import com.yiyang.cn.view.ObservableScrollView;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -82,6 +84,10 @@ public class TabHomeFragment extends BaseFragment {
     ImageView iv_tab_zhihuishangcheng;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
+    @BindView(R.id.iv_logo)
+    TextView ivLogo;
+    @BindView(R.id.banner_one)
+    ImageView banner_one;
 
     @Override
     protected void immersionInit(ImmersionBar mImmersionBar) {
@@ -375,7 +381,7 @@ public class TabHomeFragment extends BaseFragment {
                         FuwuZhujiActivity.actionStart(getContext(), "呼叫中心");
                         break;
                     case 4:
-                        YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_huodongzhongxin);
+                        HuodongActivity.actionStart(getContext());
                         break;
                     case 5:
                         TabMoreActivity.actionStart(getContext());
@@ -422,7 +428,7 @@ public class TabHomeFragment extends BaseFragment {
         });
     }
 
-    @OnClick({R.id.iv_weizhi, R.id.tv_weizhi, R.id.iv_saoma, R.id.banner_two, R.id.iv_tab_jiatingyisheng, R.id.iv_tab_yanglaopinggu, R.id.iv_tab_jitingdangan, R.id.iv_tab_bianminshenghuo, R.id.iv_tab_zhihuishangcheng})
+    @OnClick({R.id.banner_one, R.id.iv_weizhi, R.id.tv_weizhi, R.id.iv_saoma, R.id.banner_two, R.id.iv_tab_jiatingyisheng, R.id.iv_tab_yanglaopinggu, R.id.iv_tab_jitingdangan, R.id.iv_tab_bianminshenghuo, R.id.iv_tab_zhihuishangcheng})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_weizhi:
@@ -449,6 +455,9 @@ public class TabHomeFragment extends BaseFragment {
                 break;
             case R.id.iv_tab_zhihuishangcheng:
                 ZiJianShopMallActivity.actionStart(getActivity());
+                break;
+            case R.id.banner_one:
+
                 break;
         }
     }

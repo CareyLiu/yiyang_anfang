@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="19pt">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18pt"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="48pt"
+                android:layout_height="48pt"
+                android:layout_marginRight="11pt"
+                android:src="@mipmap/yiyang_huodong_head" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:includeFontPadding="false"
+                android:text="行者步调"
+                android:textColor="@color/color_3"
+                android:textSize="27pt"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="1小时前"
+                android:textColor="@color/color_9"
+                android:textSize="23pt" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18pt"
+            android:includeFontPadding="false"
+            android:text="今天社区举行的太极养生大赛活动，现场气氛非常热烈，亲身感受到了太极的风采。"
+            android:textColor="@color/color_3"
+            android:textSize="23pt" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20pt">
+
+            <ImageView
+                android:layout_width="192pt"
+                android:layout_height="144pt"
+                android:scaleType="fitXY"
+                android:src="@mipmap/yiyang_huodong1" />
+
+            <ImageView
+                android:layout_width="192pt"
+                android:layout_height="144pt"
+                android:layout_centerHorizontal="true"
+                android:scaleType="fitXY"
+                android:src="@mipmap/yiyang_huodong2" />
+
+            <ImageView
+                android:layout_width="192pt"
+                android:layout_height="144pt"
+                android:layout_alignParentRight="true"
+                android:scaleType="fitXY"
+                android:src="@mipmap/yiyang_huodong3" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_img"
+            android:layout_marginBottom="20pt"
+            android:gravity="center_vertical|right">
+
+            <ImageView
+                android:layout_width="27pt"
+                android:layout_height="27pt"
+                android:layout_marginRight="10pt"
+                android:src="@mipmap/yiyang_pinglun" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="13pt"
+                android:includeFontPadding="false"
+                android:text="659评论"
+                android:textColor="@color/color_9"
+                android:textSize="17pt" />
+
+            <ImageView
+                android:layout_width="27pt"
+                android:layout_height="27pt"
+                android:layout_marginRight="10pt"
+                android:src="@mipmap/yiyang_dianzan" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="234点赞"
+                android:textColor="@color/color_9"
+                android:textSize="17pt" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+
+

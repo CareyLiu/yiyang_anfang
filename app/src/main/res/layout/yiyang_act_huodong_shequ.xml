@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="384pt"
+                android:layout_marginHorizontal="28pt"
+                android:layout_marginVertical="18pt"
+                android:scaleType="fitXY"
+                android:src="@mipmap/yiyang_huodong_laonain" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="28pt"
+                android:includeFontPadding="false"
+                android:text="      新安社区总面积8.5平方公里,下辖6个居民小组,分别是街口居民小组、上近居民小组、新农村居民小组、横岗头居民小组、增田居民小组、镇地居民小组。目前社区户籍人口3500多人,非户籍人口约56000人。社区在2014年换届选举产生了9名“两委”干部。目前,社区党委下辖4个党支部,有319多名本籍党员,“两新”企业党支部下设9个分支部,共有流动党员60多。"
+                android:textColor="@color/color_3"
+                android:textSize="23pt" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="28pt"
+                android:layout_marginTop="23pt"
+                android:includeFontPadding="false"
+                android:text="经济发展日益蓬勃"
+                android:textColor="@color/color_3"
+                android:textSize="23pt"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="28pt"
+                android:includeFontPadding="false"
+                android:text="      新安社区充分利用优越的地理条件,积极招商引资,大力发展内、外源型经济,推动集体经济成长壮大。截至2014年10月我社区居组两级总收入9199万元,同比减少1%(其中社区级3765万元,小组级5434万元);总支出2609万元,同比增长6%(其中社区级780万元,小组级1829万元);实现纯利6590万元,同比减少3%(其中社区级2985万元,小组级3605万元);居组两级净资产总额83390万元,同比减少1.43%(其中社区级41960万元,小组41430万元)。民营经济充满活力,截至2014年10月新签民营企业3家,资产总投资金额400万元;新签办理个体经营户1009间。增资企业1间,增资额为200万元。现有民营企业80家。外资经济积极稳妥,截至2014年10月我社区累计新签约合同4宗,引进金额96万美元;续期企业4宗,签约金额为1668万港元,增资企业1宗,增资金额为26万美元。本年累计实际利用外资金额为1173万美元。来料加工工缴费结汇为647万港元,三资创汇为29017万美元。集体资产管理实施到位,落实社区集体资产管理责任,截止2014年10月共有集体资产交易18宗,集体资产交易总额达826300元,项目总额3300840元,中标比立项总额增值率达110.86%,实现有效盘活集体资产,促进社区居民经济增收的目标。"
+                android:textColor="@color/color_3"
+                android:textSize="23pt" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="28pt"
+                android:layout_marginTop="23pt"
+                android:includeFontPadding="false"
+                android:text="社会管理日益提高"
+                android:textColor="@color/color_3"
+                android:textSize="23pt"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="28pt"
+                android:layout_marginBottom="23pt"
+                android:includeFontPadding="false"
+                android:text="      新安社区在推动经济发展的同时,进一步健全治安、调解、共青团、妇女等配套组织机构,加强排水、供电、道路、绿化、环卫等服务基础设施建设,完善治安、教育、医疗、餐饮等社区功能配套设施。现时,社区大力发展福利和保障事业,全面实行了居民基本养老保险、人口口粮补贴、老人金补贴,困难户、残疾人、五保户、军烈属优抚等。另外,社区成立社会福利基金、劳动服务站,帮助社会各界人士和弱势群体,使全社区居民学有所教、劳有所得、病有所医、老有所养、住有所居,已成为社区居民和广大新莞人宜居宜商宜工的一片乐土。"
+                android:textColor="@color/color_3"
+                android:textSize="23pt" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>
+
+

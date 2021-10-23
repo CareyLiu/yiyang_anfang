@@ -301,6 +301,7 @@
             android:textSize="30pt" />
 
         <TextView
+            android:id="@+id/bt_yuding"
             android:layout_width="226pt"
             android:layout_height="66pt"
             android:layout_alignParentRight="true"

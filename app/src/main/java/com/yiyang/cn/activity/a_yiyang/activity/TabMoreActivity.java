@@ -12,7 +12,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yiyang.cn.R;
 import com.yiyang.cn.activity.a_yiyang.activity.falvfuwu.FalvfuwuActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.jigou.JigouyanglaoActivity;
-import com.yiyang.cn.activity.a_yiyang.activity.jijin.JijinActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.jijin.JijinListActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.jinlaoka.JinglaokaWuActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.jinlaoka.JinglaokaYouActivity;
@@ -135,7 +134,7 @@ public class TabMoreActivity extends BaseActivity {
                         FuwuZhujiActivity.actionStart(mContext, "呼叫中心");
                         break;
                     case 4:
-                        YiyangTuTActivity.actionStart(mContext, R.mipmap.act_huodongzhongxin);
+                        HuodongActivity.actionStart(mContext);
                         break;
                     case 5:
                         YiyangTuTActivity.actionStart(mContext, R.mipmap.act_jiankangshuju);
@@ -165,12 +164,16 @@ public class TabMoreActivity extends BaseActivity {
                         ErtongjiuzhuActivity.actionStart(mContext);
                         break;
                     case 14:
+                        CaigouActivity.actionStart(mContext);
                         break;
                     case 15:
                         JijinListActivity.actionStart(mContext);
                         break;
                     case 16:
                         clickYanglaoka();
+                        break;
+                    case 17:
+
                         break;
                 }
             }
@@ -212,6 +215,7 @@ public class TabMoreActivity extends BaseActivity {
 
         zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_yanglaojijin, "养老基金"));
         zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_jinglaoka, "敬老卡"));
+        zhylList.add(new TcHomeModel.DataBean.IconListBean(R.mipmap.yiyang_tab_gouyao, "便民购药"));
     }
 
     @OnClick({R.id.ll_quanbu_huodong, R.id.ll_quanbu_zhengce})

@@ -12,6 +12,7 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.yiyang.cn.R;
+import com.yiyang.cn.activity.a_yiyang.activity.HuodongActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.pinggu.AddJiarenActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.jigou.JigouyanglaoWdActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.YiyangTuTActivity;
@@ -118,7 +119,7 @@ public class TabWodeFragment extends BaseFragment {
             case R.id.ll_wd_fuwu:
                 break;
             case R.id.ll_wd_huodong:
-                YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_huodongzhongxin);
+                HuodongActivity.actionStart(getContext());
                 break;
             case R.id.ll_wd_jiankang:
                 YiyangTuTActivity.actionStart(getContext(), R.mipmap.act_jiankangshuju);

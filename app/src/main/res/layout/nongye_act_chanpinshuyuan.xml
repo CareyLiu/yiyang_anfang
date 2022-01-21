@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="205pt"
+                android:layout_marginHorizontal="29pt"
+                android:layout_marginVertical="19pt"
+                android:background="@drawable/yiyang_bg_white_radius_8"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="19pt"
+                    android:includeFontPadding="false"
+                    android:text="农场品区块链溯源"
+                    android:textColor="@color/color_3"
+                    android:textSize="29pt" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <View
+                        android:layout_width="19pt"
+                        android:layout_height="19pt"
+                        android:layout_marginRight="13pt"
+                        android:background="@drawable/yiyang_nongye_shuyuan_quan_shixin" />
+
+                    <ImageView
+                        android:layout_width="134pt"
+                        android:layout_height="10pt"
+                        android:layout_marginRight="13pt"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/nongye_shuiyuan_xian" />
+
+                    <View
+                        android:layout_width="19pt"
+                        android:layout_height="19pt"
+                        android:layout_marginRight="13pt"
+                        android:background="@drawable/yiyang_nongye_shuyuan_quan_shixin" />
+
+                    <ImageView
+                        android:layout_width="134pt"
+                        android:layout_height="10pt"
+                        android:layout_marginRight="13pt"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/nongye_shuiyuan_xian" />
+
+                    <View
+                        android:layout_width="19pt"
+                        android:layout_height="19pt"
+                        android:layout_marginRight="13pt"
+                        android:background="@drawable/yiyang_nongye_shuyuan_quan_shixin" />
+
+                    <ImageView
+                        android:layout_width="134pt"
+                        android:layout_height="10pt"
+                        android:layout_marginRight="13pt"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/nongye_shuiyuan_xian" />
+
+                    <View
+                        android:layout_width="19pt"
+                        android:layout_height="19pt"
+                        android:background="@drawable/yiyang_nongye_shuyuan_quan_shixin" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingRight="17pt">
+
+                        <ImageView
+                            android:layout_width="58pt"
+                            android:layout_height="58pt"
+                            android:layout_marginBottom="12pt"
+                            android:src="@mipmap/nongye_shuyuan_zhongzhi" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="种植信息"
+                            android:textColor="@color/color_3"
+                            android:textSize="23pt" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingLeft="9pt">
+
+                        <ImageView
+                            android:layout_width="58pt"
+                            android:layout_height="58pt"
+                            android:layout_marginBottom="12pt"
+                            android:src="@mipmap/nongye_shuyuan_jiagong" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="加工信息"
+                            android:textColor="@color/color_3"
+                            android:textSize="23pt" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="58pt"
+                            android:layout_height="58pt"
+                            android:layout_marginBottom="12pt"
+                            android:src="@mipmap/nongye_shuyuan_yunshu" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="24dp"
+                            android:includeFontPadding="false"
+                            android:text="运输信息"
+                            android:textColor="@color/color_3"
+                            android:textSize="23pt" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingLeft="20pt">
+
+                        <ImageView
+                            android:layout_width="58pt"
+                            android:layout_height="58pt"
+                            android:layout_marginBottom="12pt"
+                            android:src="@mipmap/nongye_shuyuan_shouhu" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="售后信息"
+                            android:textColor="@color/color_3"
+                            android:textSize="23pt" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="634pt"
+                android:layout_marginHorizontal="29pt"
+                android:background="@drawable/yiyang_bg_white_radius_8"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_saomiao"
+                    android:layout_width="384pt"
+                    android:layout_height="384pt"
+                    android:layout_marginHorizontal="10pt"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/nongye_saomiao" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="点击扫描溯源"
+                    android:textColor="@color/color_3"
+                    android:textSize="35pt" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

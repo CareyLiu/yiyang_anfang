@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app"
+    android:orientation="vertical">
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="88pt"
+        android:background="@color/white"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/ll_title"
+            android:layout_width="match_parent"
+            android:layout_height="88pt"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1pt"
+        android:background="@color/line" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.flyco.roundview.RoundRelativeLayout
+                android:id="@+id/rrl_sousuo"
+                android:layout_width="match_parent"
+                android:layout_height="58pt"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="29pt"
+                android:layout_marginTop="19pt"
+                app:rv_backgroundColor="#e5e5e5"
+                app:rv_cornerRadius="10pt">
+
+                <ImageView
+                    android:layout_width="24pt"
+                    android:layout_height="24pt"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="11pt"
+                    android:src="@mipmap/dingdan_icon_sousuo" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="50pt"
+                    android:layout_toRightOf="@+id/iv_icon_sousuo"
+                    android:background="@null"
+                    android:hint="请输入搜索的内容"
+                    android:textSize="12.5sp" />
+            </com.flyco.roundview.RoundRelativeLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="29pt" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20pt" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

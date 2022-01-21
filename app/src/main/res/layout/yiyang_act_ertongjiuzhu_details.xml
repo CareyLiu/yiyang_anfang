@@ -102,7 +102,7 @@
                     android:layout_height="76pt"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="21pt"
-                    android:background="@drawable/yiyang_bg_red_radius_10"
+                    android:background="@drawable/yiyang_bg_red_radius_8"
                     android:gravity="center"
                     android:text="捐款"
                     android:textColor="@color/white"
@@ -120,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="29pt"
                     android:layout_marginBottom="84pt"
-                    android:background="@drawable/yiyang_bg_white_radius_10" />
+                    android:background="@drawable/yiyang_bg_white_radius_8" />
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

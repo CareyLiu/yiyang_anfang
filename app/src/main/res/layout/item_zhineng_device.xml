@@ -40,7 +40,7 @@
         android:includeFontPadding="false"
         android:text="自动浇花"
         android:textColor="#333333"
-        android:textSize="27pt"
+        android:textSize="14sp"
         app:layout_constraintLeft_toLeftOf="@id/iv_device"
         app:layout_constraintTop_toBottomOf="@+id/iv_device" />
 
@@ -89,7 +89,7 @@
         android:includeFontPadding="false"
         android:text="默认房间"
         android:textColor="#999999"
-        android:textSize="23pt"
+        android:textSize="12sp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/iv_device" />
 

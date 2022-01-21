@@ -569,4 +569,11 @@
     <color name="tongcheng_yfb_beijing">#1AFA7E00</color>
     <color name="tongchneg_shz_beijing">#1A15D78E</color>
     <color name="pink_10">#1AFC0100</color>
+
+
+
+    <color name="color_nongye_main">#1ACF7B</color>
+    <color name="color_nongye_zaihai">#E9E9E9</color>
+
+    <color name="color_nongye_tianqi">#C1C1C1</color>
 </resources>

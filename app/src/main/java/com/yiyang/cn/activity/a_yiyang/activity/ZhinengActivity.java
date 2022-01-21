@@ -4,21 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.alibaba.fastjson.JSON;
 import com.yiyang.cn.R;
-import com.yiyang.cn.activity.HomeActivity;
-import com.yiyang.cn.activity.a_yiyang.fragment.TabHomeFragment;
-import com.yiyang.cn.activity.a_yiyang.fragment.TabShengxianFragment;
-import com.yiyang.cn.activity.a_yiyang.fragment.TabWodeFragment;
-import com.yiyang.cn.activity.a_yiyang.fragment.TabXiaoxiFragment;
-import com.yiyang.cn.activity.a_yiyang.model.JiashuModel;
-import com.yiyang.cn.app.AppConfig;
 import com.yiyang.cn.app.BaseActivity;
 import com.yiyang.cn.app.ConstanceValue;
 import com.yiyang.cn.app.Notice;
-import com.yiyang.cn.config.PreferenceHelper;
 import com.yiyang.cn.fragment.znjj.ZhiNengJiaJuFragment;
-import com.yiyang.cn.util.Y;
 import com.yiyang.cn.view.NoScrollViewPager;
 
 import java.util.ArrayList;

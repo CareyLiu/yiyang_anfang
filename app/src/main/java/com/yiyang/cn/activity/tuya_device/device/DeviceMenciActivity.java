@@ -321,7 +321,7 @@ public class DeviceMenciActivity extends TuyaBaseDeviceActivity {
         Y.e("解析出的数据:  " + "key = " + key + "  |  value = " + value);
         if (key.equals(dpsKaiguanId)) {
             DpModel.DpsBean dpsBean = new DpModel.DpsBean();
-            String data = Y.getDataS(new Date());
+            String data = Y.getDateS(new Date());
             dpsBean.setTimeStr(data);
             dpsBean.setValue(value);
             dps.add(0, dpsBean);

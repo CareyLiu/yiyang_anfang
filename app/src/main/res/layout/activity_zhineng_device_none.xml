@@ -28,6 +28,6 @@
             android:gravity="center"
             android:text="绑定主机"
             android:textColor="#111111"
-            android:textSize="27pt" />
+            android:textSize="14sp" />
     </LinearLayout>
 </RelativeLayout>

@@ -207,4 +207,13 @@
         <!--步骤提示 -->
         <attr name="apv_text" format="string|reference" />
     </declare-styleable>
+
+
+
+    <declare-styleable name="WeatherChartView">
+        <attr name="WeatherChartViewTextColor" format="color"/>
+        <attr name="WeatherChartViewDayColor" format="color"/>
+        <attr name="WeatherChartViewNightColor" format="color"/>
+        <attr name="WeatherChartViewTextSize" format="dimension"/>
+    </declare-styleable>
 </resources>

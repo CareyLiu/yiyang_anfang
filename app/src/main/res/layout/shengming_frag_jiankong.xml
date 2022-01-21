@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smartRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:srlTextSizeTime="10sp"
+            app:srlTextSizeTitle="12sp" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="576pt"
+                    android:background="@mipmap/shengming_jiancebj"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="88pt"
+                        android:layout_marginTop="40pt">
+
+                        <ImageView
+                            android:id="@+id/iv_back"
+                            android:layout_width="88pt"
+                            android:layout_height="88pt"
+                            android:padding="24pt"
+                            android:src="@mipmap/back_white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:includeFontPadding="false"
+                            android:text="实时监测"
+                            android:textColor="@color/white"
+                            android:textSize="35pt"
+                            android:textStyle="bold" />
+
+
+                        <ImageView
+                            android:id="@+id/iv_jilu"
+                            android:layout_width="88pt"
+                            android:layout_height="88pt"
+                            android:layout_alignParentRight="true"
+                            android:padding="24pt"
+                            android:src="@mipmap/shengming_jilu" />
+                    </RelativeLayout>
+
+
+                    <ImageView
+                        android:id="@+id/iv_xin"
+                        android:layout_width="344pt"
+                        android:layout_height="344pt"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="60pt"
+                        android:src="@mipmap/shengming_xin" />
+
+
+                    <TextView
+                        android:id="@+id/tv_xinlv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="353pt"
+                        android:includeFontPadding="false"
+                        android:text="0次/分"
+                        android:textColor="@color/white"
+                        android:textSize="27pt"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_xinlv"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10pt"
+                        android:includeFontPadding="false"
+                        android:text="心率（BPM）"
+                        android:textColor="@color/white"
+                        android:textSize="27pt"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="30pt"
+                        android:includeFontPadding="false"
+                        android:text="最新推送时间:2000/01/01 00:00:00"
+                        android:textColor="@color/color_main_yiyang"
+                        android:textSize="27pt" />
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="121pt"
+                    android:layout_marginHorizontal="29pt"
+                    android:layout_marginTop="10pt"
+                    android:background="@mipmap/shengming_jc_zhuangtai"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="35pt">
+
+                    <ImageView
+                        android:id="@+id/iv_zhuangtai"
+                        android:layout_width="58pt"
+                        android:layout_height="58pt"
+                        android:src="@mipmap/shengming_jc_chuang" />
+
+                    <TextView
+                        android:id="@+id/tv_zhuangtai"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:paddingLeft="30pt"
+                        android:text="状态：离床"
+                        android:textColor="@color/white"
+                        android:textSize="35pt"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="288pt"
+                    android:layout_marginHorizontal="29pt"
+                    android:layout_marginTop="10pt"
+                    android:layout_marginBottom="19pt"
+                    android:background="@mipmap/shengming_huxibg"
+                    android:padding="19pt">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="42pt"
+                            android:layout_height="42pt"
+                            android:layout_marginRight="12pt"
+                            android:background="@mipmap/shengming_fei_white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="实时呼吸频率"
+                            android:textColor="@color/white"
+                            android:textSize="27pt" />
+                    </LinearLayout>
+
+
+                    <ImageView
+                        android:layout_width="536pt"
+                        android:layout_height="142pt"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/shengming_jc_xian" />
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|bottom">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="呼吸"
+                            android:textColor="@color/white"
+                            android:textSize="29pt"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_huxi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="10pt"
+                            android:includeFontPadding="false"
+                            android:text="0"
+                            android:textColor="@color/red"
+                            android:textSize="29pt"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="次/分"
+                            android:textColor="@color/white"
+                            android:textSize="29pt"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </FrameLayout>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</LinearLayout>

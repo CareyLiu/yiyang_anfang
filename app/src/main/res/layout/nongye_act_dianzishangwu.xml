@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.youth.banner.Banner
+                android:id="@+id/banner"
+                android:layout_width="match_parent"
+                android:layout_height="288pt"
+                android:layout_marginHorizontal="29pt"
+                android:layout_marginVertical="19pt" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="29pt"
+                android:layout_marginBottom="19pt">
+
+                <LinearLayout
+                    android:id="@+id/bt_chuan"
+                    android:layout_width="317pt"
+                    android:layout_height="115pt"
+                    android:background="@drawable/yiyang_bg_white_radius_8"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_chuan"
+                        android:layout_width="67pt"
+                        android:layout_height="67pt"
+                        android:layout_marginHorizontal="19pt"
+                        android:background="@drawable/yiyang_nongye_shangwu_chuan"
+                        android:gravity="center"
+                        android:text="传"
+                        android:textColor="@color/white"
+                        android:textSize="38pt"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8pt"
+                            android:includeFontPadding="false"
+                            android:text="传统品种"
+                            android:textColor="@color/color_3"
+                            android:textSize="27pt"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10pt"
+                            android:includeFontPadding="false"
+                            android:text="美味健康"
+                            android:textColor="@color/color_c"
+                            android:textSize="17pt" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bt_shan"
+                    android:layout_width="317pt"
+                    android:layout_height="115pt"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/yiyang_bg_white_radius_8"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_shan"
+                        android:layout_width="67pt"
+                        android:layout_height="67pt"
+                        android:layout_marginHorizontal="19pt"
+                        android:background="@drawable/yiyang_nongye_shangwu_shan"
+                        android:gravity="center"
+                        android:text="山"
+                        android:textColor="@color/white"
+                        android:textSize="38pt"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8pt"
+                            android:includeFontPadding="false"
+                            android:text="下山品种"
+                            android:textColor="@color/color_3"
+                            android:textSize="27pt"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10pt"
+                            android:includeFontPadding="false"
+                            android:text="网罗各地新品种"
+                            android:textColor="@color/color_c"
+                            android:textSize="17pt" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bt_pei"
+                    android:layout_width="317pt"
+                    android:layout_height="115pt"
+                    android:layout_below="@id/bt_chuan"
+                    android:layout_marginTop="19pt"
+                    android:background="@drawable/yiyang_bg_white_radius_8"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_pei"
+                        android:layout_width="67pt"
+                        android:layout_height="67pt"
+                        android:layout_marginHorizontal="19pt"
+                        android:background="@drawable/yiyang_nongye_shangwu_pei"
+                        android:gravity="center"
+                        android:text="培"
+                        android:textColor="@color/white"
+                        android:textSize="38pt"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8pt"
+                            android:includeFontPadding="false"
+                            android:text="组培品种"
+                            android:textColor="@color/color_3"
+                            android:textSize="27pt"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10pt"
+                            android:includeFontPadding="false"
+                            android:text="跟随市场新动态"
+                            android:textColor="@color/color_c"
+                            android:textSize="17pt" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bt_za"
+                    android:layout_width="317pt"
+                    android:layout_height="115pt"
+                    android:layout_below="@id/bt_chuan"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="19pt"
+                    android:background="@drawable/yiyang_bg_white_radius_8"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_za"
+                        android:layout_width="67pt"
+                        android:layout_height="67pt"
+                        android:layout_marginHorizontal="19pt"
+                        android:background="@drawable/yiyang_nongye_shangwu_za"
+                        android:gravity="center"
+                        android:text="杂"
+                        android:textColor="@color/white"
+                        android:textSize="38pt"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8pt"
+                            android:includeFontPadding="false"
+                            android:text="杂交品种"
+                            android:textColor="@color/color_3"
+                            android:textSize="27pt"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10pt"
+                            android:includeFontPadding="false"
+                            android:text="放眼科学领域"
+                            android:textColor="@color/color_c"
+                            android:textSize="17pt" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bt_hua"
+                    android:layout_width="317pt"
+                    android:layout_height="115pt"
+                    android:layout_below="@id/bt_pei"
+                    android:layout_marginTop="19pt"
+                    android:background="@drawable/yiyang_bg_white_radius_8"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_hua"
+                        android:layout_width="67pt"
+                        android:layout_height="67pt"
+                        android:layout_marginHorizontal="19pt"
+                        android:background="@drawable/yiyang_nongye_shangwu_hua"
+                        android:gravity="center"
+                        android:text="花"
+                        android:textColor="@color/white"
+                        android:textSize="38pt"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8pt"
+                            android:includeFontPadding="false"
+                            android:text="带花专区"
+                            android:textColor="@color/color_3"
+                            android:textSize="27pt"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10pt"
+                            android:includeFontPadding="false"
+                            android:text="跟随市场新动态"
+                            android:textColor="@color/color_c"
+                            android:textSize="17pt" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bt_ya"
+                    android:layout_width="317pt"
+                    android:layout_height="115pt"
+                    android:layout_below="@id/bt_pei"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="19pt"
+                    android:background="@drawable/yiyang_bg_white_radius_8"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_ya"
+                        android:layout_width="67pt"
+                        android:layout_height="67pt"
+                        android:layout_marginHorizontal="19pt"
+                        android:background="@drawable/yiyang_nongye_shangwu_ya"
+                        android:gravity="center"
+                        android:text="芽"
+                        android:textColor="@color/white"
+                        android:textSize="38pt"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8pt"
+                            android:includeFontPadding="false"
+                            android:text="带芽专区"
+                            android:textColor="@color/color_3"
+                            android:textSize="27pt"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10pt"
+                            android:includeFontPadding="false"
+                            android:text="放眼科学领域"
+                            android:textColor="@color/color_c"
+                            android:textSize="17pt" />
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="29pt" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

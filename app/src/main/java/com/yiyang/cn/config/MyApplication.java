@@ -79,11 +79,7 @@ import com.tuya.smart.commonbiz.bizbundle.family.api.AbsBizBundleFamilyService;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.optimus.sdk.TuyaOptimusSdk;
 import com.tuya.smart.wrapper.api.TuyaWrapper;
-import com.umeng.commonsdk.UMConfigure;
-import com.umeng.message.IUmengRegisterCallback;
-import com.umeng.message.PushAgent;
-import com.umeng.message.UmengMessageHandler;
-import com.umeng.message.entity.UMessage;
+
 import com.xiaomi.mipush.sdk.MiPushClient;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -124,20 +120,14 @@ public class MyApplication extends MultiDexApplication {
     //获取屏幕宽高
     public static int windowHeight;
     public static int windowWidth;
-
     public static Activity activity_main;
 
-
-    //String mqttUrl = "tcp://192.168.1.127";//大个本地
-    String mqttUrl = "tcp://mqtt.hljsdkj.com";//正式
-    //String mqttUrl = "tcp://ggw.hljsdkj.com";//ggw
 
     public String getMqttUrl() {
         if (Urls.SERVER_URL.equals("https://shop.hljsdkj.com/")) {
             return "tcp://mqtt.hljsdkj.com";
         } else {
-            return "tcp://ggw.hljsdkj.com";
-//            return "tcp://mqtt.hljsdkj.com";
+            return "tcp://mqrn.hljsdkj.com";
         }
     }
 
@@ -244,18 +234,15 @@ public class MyApplication extends MultiDexApplication {
         initDefaultPicker();
         initOkgo();
         initTuya();//涂鸦智能家居
-        initYoumeng();//友盟推送
 
         // 获取当前包名
         String packageName = context.getPackageName();
-// 获取当前进程名
+        // 获取当前进程名
         String processName = JinChengUtils.getProcessName();
-// 设置是否为上报进程
+        // 设置是否为上报进程
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(context);
         strategy.setUploadProcess(processName == null || processName.equals(packageName));
-// 初始化Bugly
-
-
+        // 初始化Bugly
         Bugly.init(getApplicationContext(), "28ca17503e", false);
         AndMqtt.getInstance().init(MyApplication.this);
 
@@ -266,9 +253,7 @@ public class MyApplication extends MultiDexApplication {
             @Override
             public void call(Notice message) {
                 if (message.type == ConstanceValue.MSG_UNSUB_MQTT) {//取消订阅 application 里面所有的关于mqtt 服务的基本信息
-                    // AndMqtt.getInstance().init(MyApplication.this);
                     if (AndMqtt.getInstance().isConnect()) {
-
                         AndMqtt.getInstance().unSubscribe(new MqttUnSubscribe().setTopic(CARBOX_JINGBAO), new IMqttActionListener() {
                             @Override
                             public void onSuccess(IMqttToken asyncActionToken) {
@@ -278,7 +263,6 @@ public class MyApplication extends MultiDexApplication {
                             @Override
                             public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                                 Log.i("Rair", "(MainActivity.java:98)-onFailure:-&gt;取消订阅失败");
-                                Log.i("Rair", "(MainActivity.java)");
                             }
                         });
 
@@ -297,9 +281,7 @@ public class MyApplication extends MultiDexApplication {
 
                     }
                 } else if (message.type == ConstanceValue.MSG_CONNET_MQTT) {
-
                     setMqttConnect();
-
                 } else if (message.type == ConstanceValue.MSG_RONGYUN_CHONGZHI) {
                     initRongYun();
                 }
@@ -314,17 +296,13 @@ public class MyApplication extends MultiDexApplication {
                 // 初始化成功，设置相关的全局配置参数
                 // 设置是否使用同步淘客打点
                 AlibcTradeSDK.setSyncForTaoke(true);
-
-
                 // 设置全局淘客参数，方便开发者用同一个淘客参数，不需要在show接口重复传入
-                //   AlibcTradeSDK.setTaokeParams(taokeParams);
                 Log.i("AlibcTradeSDK", "success");
             }
 
             @Override
             public void onFailure(int code, String msg) {
                 //初始化失败，可以根据code和msg判断失败原因，详情参见错误说明
-
                 Log.i("AlibcTradeSDK", "fail" + "code:" + code + "msg:" + msg);
             }
         });
@@ -335,73 +313,21 @@ public class MyApplication extends MultiDexApplication {
 
         mBroadcastData = new MutableLiveData<>();
         IntentFilter filter = new IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-//            filter.addAction(LocationManager.PROVIDERS_CHANGED_ACTION);
-//        }
         registerReceiver(mReceiver, filter);
 
         //view
         Gloading.initDefault(new GlobalAdapter());
         Logger.addLogAdapter(new AndroidLogAdapter());
-
-//        List<String> roomList = new ArrayList<>();
-//        roomList.add("茶杯");
-//        roomList.add("缸子");
-//        List<String> sheBeiList = new ArrayList<>();
-//        sheBeiList.add("英雄");
-//        sheBeiList.add("大熊猫");
-
-        //  new ShangChuanDongTaiShiTiTool(context, roomList, sheBeiList);
     }
 
-    private void initYoumeng() {
-        UMConfigure.init(this, "5fdff473842ba953b890dd98", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, "a51f307db82a88eaa46cf1cef4009316");
-        PushAgent mPushAgent = PushAgent.getInstance(this);
-        mPushAgent.register(new IUmengRegisterCallback() {
-            @Override
-            public void onSuccess(String token) {
-
-            }
-
-            @Override
-            public void onFailure(String s, String s1) {
-
-            }
-        });
-
-        UmengMessageHandler messageHandler = new UmengMessageHandler() {
-            @Override
-            public void dealWithCustomMessage(final Context context, final UMessage msg) {
-                new Handler(getMainLooper()).post(new Runnable() {
-
-                    @Override
-                    public void run() {
-
-                    }
-                });
-            }
-
-//            @Override
-//            public Notification getNotification(Context context, UMessage msg) {
-//                Notification.Builder builder = new Notification.Builder(context).setContentTitle(msg.title).setContentText(msg.text).setDefaults(Notification.DEFAULT_ALL);
-//                return builder.build();
-//            }
-        };
-
-        mPushAgent.setMessageHandler(messageHandler);
-    }
 
     private void initTuya() {//涂鸦智能家居
-//        TuyaHomeSdk.init(this);
-//        TuyaHomeSdk.setDebugMode(true);
         Fresco.initialize(this);
         TuyaHomeSdk.init(this);
         TuyaWrapper.init(this, new RouteEventListener() {
             @Override
             public void onFaild(int errorCode, UrlBuilder urlBuilder) {
-                // urlBuilder.target is a router address, urlBuilder.params is a router params
-                // urlBuilder.target 目标路由， urlBuilder.params 路由参数
-                Log.e("router not implement", errorCode + "  帆帆帆帆  " + urlBuilder.target + "  嘎嘎嘎  " + urlBuilder.params.toString());
+
             }
         }, new ServiceEventListener() {
             @Override
@@ -411,7 +337,6 @@ public class MyApplication extends MultiDexApplication {
         });
         TuyaOptimusSdk.init(this);
 
-        // register family service，mall bizbundle don't have to implement it.
         // 注册家庭服务，商城业务包可以不注册此服务
         TuyaWrapper.registerService(AbsBizBundleFamilyService.class, new BizBundleFamilyServiceImpl());
     }
@@ -952,7 +877,6 @@ public class MyApplication extends MultiDexApplication {
                 .setCacheTime(CacheEntity.CACHE_NEVER_EXPIRE)   //全局统一缓存时间，默认永不过期，可以不传
                 .setRetryCount(3);                         //全局统一超时重连次数，默认为三次，那么最差的情况会请求4次(一次原始请求，三次重连请求)，不需要可以设置为0
 //				.addCommonParams(params);                       //全局公共参数
-
 
 
     }

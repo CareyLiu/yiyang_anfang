@@ -9,7 +9,7 @@
         android:layout_height="100pt"
         android:layout_marginHorizontal="29pt"
         android:layout_marginTop="86pt"
-        android:background="@drawable/yiyang_bg_white_radius_10" />
+        android:background="@drawable/yiyang_bg_white_radius_8" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="86pt"
-            android:background="@drawable/yiyang_bg_white_radius_10"
+            android:background="@drawable/yiyang_bg_white_radius_8"
             android:orientation="vertical">
 
             <LinearLayout

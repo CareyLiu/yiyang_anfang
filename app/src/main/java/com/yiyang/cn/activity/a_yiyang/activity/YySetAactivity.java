@@ -28,8 +28,6 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.tuya.smart.android.user.api.ILogoutCallback;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
-import com.umeng.message.PushAgent;
-import com.umeng.message.UTrack;
 import com.yiyang.cn.R;
 import com.yiyang.cn.activity.LoginActivity;
 import com.yiyang.cn.activity.NickActivity;
@@ -242,13 +240,7 @@ public class YySetAactivity extends BaseActivity implements TakePhoto.TakeResult
                         TuyaHomeSdk.getUserInstance().logout(new ILogoutCallback() {
                             @Override
                             public void onSuccess() {
-                                String strPhone = PreferenceHelper.getInstance(mContext).getString("user_phone", "");
-                                PushAgent.getInstance(mContext).deleteAlias(strPhone, "TUYA_SMART", new UTrack.ICallBack() {
-                                    @Override
-                                    public void onMessage(boolean isSuccess, String message) {
 
-                                    }
-                                });
                             }
 
                             @Override

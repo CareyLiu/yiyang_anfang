@@ -21,8 +21,8 @@ android {
         applicationId "com.yiyang.cn"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 56
-        versionName "2.1.7"
+        versionCode 57
+        versionName "2.1.8"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         ndk {
@@ -288,11 +288,6 @@ dependencies {
     implementation 'com.tuya.smart:tuyasmart-ipc-camera-outside:3.20.0'
     implementation 'com.tuya.smart:tuyasmart-base-utils:3.18.0r143-rc.9'
     implementation 'com.tuya.smart:tuyasmart-ipc-camera-timeline:1.0.0'
-    implementation project(path: ':push')
-    implementation files('libs\\umeng-common-9.3.3.jar')
-    implementation files('libs\\umeng-asms-armeabi-v1.1.4.aar')
-    implementation files('libs\\aranger-1.0.6.jar')
-    implementation files('libs/Msc.jar')
     implementation project(path: ':LRecyclerview_library')
 
     implementation 'com.tuya.smart:tuyasmart:3.22.0'
@@ -307,4 +302,11 @@ dependencies {
     implementation 'cn.jiguang.sdk.plugin:xiaomi:3.8.5'
     implementation 'cn.jiguang.sdk.plugin:oppo:3.8.5'
     implementation 'cn.jiguang.sdk.plugin:vivo:3.8.5'
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+
+    //华为二维码扫描
+    implementation 'com.huawei.hms:scanplus:2.2.0.300'
+
+    implementation files('libs/Msc.jar')
 }

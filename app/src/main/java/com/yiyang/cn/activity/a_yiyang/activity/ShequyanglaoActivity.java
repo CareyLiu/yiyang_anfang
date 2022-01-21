@@ -91,10 +91,10 @@ public class ShequyanglaoActivity extends BaseActivity {
 
     private void initBanner() {
         List<Integer> items = new ArrayList<>();
-        items.add(R.mipmap.banner_1);
-        items.add(R.mipmap.banner_2);
-        items.add(R.mipmap.banner_3);
-        items.add(R.mipmap.banner_4);
+        items.add(R.mipmap.yanglao_banner_1);
+        items.add(R.mipmap.yanglao_banner_2);
+        items.add(R.mipmap.yanglao_banner_3);
+        items.add(R.mipmap.yanglao_banner_4);
 
         //设置图片加载器
         banner.setImageLoader(new GlideImageLoader());

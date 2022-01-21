@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
@@ -12,7 +13,10 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.location.AMapLocationQualityReport;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -33,22 +37,35 @@ import com.yiyang.cn.activity.a_yiyang.activity.pinggu.YanglaopingguActivity;
 import com.yiyang.cn.activity.a_yiyang.adapter.HomeZhylAdapter;
 import com.yiyang.cn.activity.tongcheng58.TongChengMainActivity;
 import com.yiyang.cn.activity.tongcheng58.model.TcHomeModel;
+import com.yiyang.cn.activity.zijian_shangcheng.FenLeiThirdActivity;
 import com.yiyang.cn.activity.zijian_shangcheng.ZiJianShopMallActivity;
+import com.yiyang.cn.adapter.gaiban.HomeReMenAdapter;
+import com.yiyang.cn.adapter.gaiban.HomeZiYingAdapter;
 import com.yiyang.cn.app.AppConfig;
 import com.yiyang.cn.app.ConstanceValue;
 import com.yiyang.cn.app.Notice;
 import com.yiyang.cn.app.RxBus;
 import com.yiyang.cn.basicmvp.BaseFragment;
+import com.yiyang.cn.callback.JsonCallback;
+import com.yiyang.cn.config.AppResponse;
 import com.yiyang.cn.config.GlideImageLoader;
 import com.yiyang.cn.config.PreferenceHelper;
+import com.yiyang.cn.config.UserManager;
+import com.yiyang.cn.get_net.Urls;
+import com.yiyang.cn.model.Home;
+import com.yiyang.cn.util.GridAverageUIDecoration;
 import com.yiyang.cn.util.Utils;
+import com.yiyang.cn.util.Y;
 import com.yiyang.cn.view.ObservableScrollView;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -57,7 +74,7 @@ import butterknife.OnClick;
 import static com.yiyang.cn.app.App.JINGDU;
 import static com.yiyang.cn.app.App.WEIDU;
 
-public class TabHomeFragment extends BaseFragment {
+public class TabHomeFragment extends BaseFragment implements ObservableScrollView.ScrollViewListener {
     @BindView(R.id.iv_weizhi)
     ImageView iv_weizhi;
     @BindView(R.id.tv_weizhi)
@@ -88,6 +105,30 @@ public class TabHomeFragment extends BaseFragment {
     TextView ivLogo;
     @BindView(R.id.banner_one)
     ImageView banner_one;
+    @BindView(R.id.iv_tianmao_or_taobao)
+    ImageView ivTianmaoOrTaobao;
+
+
+    private View topPanel, middlePanel;
+    private int topHeight;
+    private ConstraintLayout clZiYing_Middle, clReMen_Middle;
+    private ConstraintLayout clZiYing_Top, clReMen_Top;
+    private LinearLayout llBackground_Top, llBackground_Middle;
+    private TextView tvZiYingTop, tvRemTop, tvZiYingZhiGongTop, tvReMenShangPinTop;
+    private TextView tvZiYingMiddle, tvReMenMiddle, tvZiYingZhiGongMiddle, tvReMenShangPinMiddle;
+    private ConstraintLayout clQuanBu;
+    private ObservableScrollView nestedScrollView;
+    private View viewLineTop, viewLineMiddle, remenViewLineTop;
+
+    private RecyclerView rlv_ziYing;
+    private RecyclerView rlvRemen;
+
+    private String rimenOrZiYing = "0"; //0 自营直供 1 热门商品
+
+    private List<Home.DataBean.ProShowListBean> ziYingListBean = new ArrayList<>();
+    private List<Home.DataBean.IndexShowListBean> remenListBean = new ArrayList<>();
+    private HomeZiYingAdapter homeZiYingAdapter;
+    private HomeReMenAdapter homeReMenAdapter;
 
     @Override
     protected void immersionInit(ImmersionBar mImmersionBar) {
@@ -118,9 +159,106 @@ public class TabHomeFragment extends BaseFragment {
         initAdapter();
         initSM();
         initBanner();
+        initViewNew(rootView);
+        getData();
+//        initLocation();
+//        startLocation();
+    }
 
-        initLocation();
-        startLocation();
+    private void initViewNew(View view) {
+        nestedScrollView = view.findViewById(R.id.scrollView);
+        topPanel = view.findViewById(R.id.topPanel);
+        middlePanel = view.findViewById(R.id.middlePanel);
+        clZiYing_Top = topPanel.findViewById(R.id.cl_ziying);
+        clReMen_Top = topPanel.findViewById(R.id.cl_remen);
+        clZiYing_Middle = middlePanel.findViewById(R.id.cl_ziying);
+        clReMen_Middle = middlePanel.findViewById(R.id.cl_remen);
+        tvZiYingTop = topPanel.findViewById(R.id.tv_ziying);
+        tvRemTop = topPanel.findViewById(R.id.tv_remen);
+        clQuanBu = view.findViewById(R.id.cl_quanbu);
+        clQuanBu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (rimenOrZiYing.equals("0")) {
+                    FenLeiThirdActivity.actionStart(getActivity(), "品牌直供", "2");
+                } else {
+                    FenLeiThirdActivity.actionStart(getActivity(), "热门商品", "1");
+                }
+            }
+        });
+
+        tvZiYingZhiGongTop = topPanel.findViewById(R.id.ziyingzhigong);
+        tvReMenShangPinTop = topPanel.findViewById(R.id.remenshangpin);
+        tvZiYingMiddle = middlePanel.findViewById(R.id.tv_ziying);
+        tvReMenMiddle = middlePanel.findViewById(R.id.tv_remen);
+        tvZiYingZhiGongMiddle = middlePanel.findViewById(R.id.ziyingzhigong);
+        tvReMenShangPinMiddle = middlePanel.findViewById(R.id.remenshangpin);
+        nestedScrollView.setScrollViewListener(this);
+        rlv_ziYing = view.findViewById(R.id.rlv_ziying_or_remen);
+        rlv_ziYing.setFocusable(false);
+        viewLineTop = topPanel.findViewById(R.id.view_line);
+        rlvRemen = view.findViewById(R.id.rlv_remen);
+        rlvRemen.setFocusable(false);
+        remenViewLineTop = topPanel.findViewById(R.id.view_line_remen);
+        clZiYing_Top.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //UIHelper.ToastMessage(getActivity(), "点击了自营");
+                rlv_ziYing.setVisibility(View.VISIBLE);
+                rlvRemen.setVisibility(View.GONE);
+                setZiYingOrReMenLine("0");
+                rimenOrZiYing = "0";
+            }
+        });
+        clReMen_Top.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //UIHelper.ToastMessage(getActivity(), "点击了热门");
+                rlv_ziYing.setVisibility(View.GONE);
+                rlvRemen.setVisibility(View.VISIBLE);
+                setZiYingOrReMenLine("1");
+                rimenOrZiYing = "1";
+            }
+        });
+
+        clReMen_Middle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //UIHelper.ToastMessage(getActivity(), "点击了热门");
+                rlv_ziYing.setVisibility(View.GONE);
+                rlvRemen.setVisibility(View.VISIBLE);
+                setZiYingOrReMenLine("1");
+                rimenOrZiYing = "1";
+            }
+        });
+
+        clZiYing_Middle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //UIHelper.ToastMessage(getActivity(), "点击了自营");
+                rlv_ziYing.setVisibility(View.VISIBLE);
+                rlvRemen.setVisibility(View.GONE);
+                setZiYingOrReMenLine("0");
+                rimenOrZiYing = "0";
+            }
+        });
+
+        Y.e("发动快速了解放松的地方");
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+        rlv_ziYing.addItemDecoration(new GridAverageUIDecoration(14, 10));
+        rlv_ziYing.setLayoutManager(layoutManager);
+        homeZiYingAdapter = new HomeZiYingAdapter(R.layout.item_home_ziying, ziYingListBean);
+        rlv_ziYing.setAdapter(homeZiYingAdapter);
+
+
+        GridLayoutManager layoutManager1 = new GridLayoutManager(getActivity(), 2);
+        rlvRemen.addItemDecoration(new GridAverageUIDecoration(9, 10));
+        rlvRemen.setLayoutManager(layoutManager1);
+        homeReMenAdapter = new HomeReMenAdapter(R.layout.item_home_remen, remenListBean);
+        rlvRemen.setAdapter(homeReMenAdapter);
+
+        Y.e("愤愤愤愤看见纷纷");
     }
 
 
@@ -267,13 +405,18 @@ public class TabHomeFragment extends BaseFragment {
     private AMapLocationClientOption locationOption = null;
 
     private void initLocation() {
-        //初始化client
-        locationClient = new AMapLocationClient(getActivity().getApplicationContext());
-        locationOption = getDefaultOption();
-        //设置定位参数
-        locationClient.setLocationOption(locationOption);
-        // 设置定位监听
-        locationClient.setLocationListener(gaodeDingWeiListener);
+        try {
+            //初始化client
+            locationClient = new AMapLocationClient(getActivity().getApplicationContext());
+            locationOption = getDefaultOption();
+            //设置定位参数
+            locationClient.setLocationOption(locationOption);
+            // 设置定位监听
+            locationClient.setLocationListener(gaodeDingWeiListener);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -428,7 +571,7 @@ public class TabHomeFragment extends BaseFragment {
         });
     }
 
-    @OnClick({R.id.banner_one, R.id.iv_weizhi, R.id.tv_weizhi, R.id.iv_saoma, R.id.banner_two, R.id.iv_tab_jiatingyisheng, R.id.iv_tab_yanglaopinggu, R.id.iv_tab_jitingdangan, R.id.iv_tab_bianminshenghuo, R.id.iv_tab_zhihuishangcheng})
+    @OnClick({R.id.iv_tianmao_or_taobao, R.id.banner_one, R.id.iv_weizhi, R.id.tv_weizhi, R.id.iv_saoma, R.id.banner_two, R.id.iv_tab_jiatingyisheng, R.id.iv_tab_yanglaopinggu, R.id.iv_tab_jitingdangan, R.id.iv_tab_bianminshenghuo, R.id.iv_tab_zhihuishangcheng})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_weizhi:
@@ -457,8 +600,108 @@ public class TabHomeFragment extends BaseFragment {
                 ZiJianShopMallActivity.actionStart(getActivity());
                 break;
             case R.id.banner_one:
-
+//                TaoBao_Jd_PinDuoDuoActivity.actionStart(getActivity(), taobaoPicture, jingdongPicture, pinduoduoPicture);
                 break;
+            case R.id.iv_tianmao_or_taobao:
+                break;
+        }
+    }
+
+
+    /**
+     * private TextView tvZiYingTop, tvRemTop, tvZiYingZhiGongTop, tvReMenShangPinTop;
+     * private TextView tvZiYingMiddle, tvReMenMiddle, tvZiYingZhiGongMiddle, tvReMenShangPinMiddle;
+     */
+    //0 自营 1 热门
+    private void setZiYingOrReMenLine(String remenOrZiYing) {
+        if (remenOrZiYing.equals("0")) {
+            tvZiYingTop.setTextColor(getActivity().getResources().getColor(R.color.color_FFFC0100));
+            tvZiYingZhiGongTop.setTextColor(getActivity().getResources().getColor(R.color.color_FFFC0100));
+
+            tvZiYingMiddle.setTextColor(getActivity().getResources().getColor(R.color.color_FFFC0100));
+            tvZiYingZhiGongMiddle.setTextColor(getActivity().getResources().getColor(R.color.color_FFFC0100));
+
+
+            tvRemTop.setTextColor(getActivity().getResources().getColor(R.color.black_666666));
+            tvReMenShangPinTop.setTextColor(getActivity().getResources().getColor(R.color.black_333333));
+
+            tvReMenMiddle.setTextColor(getActivity().getResources().getColor(R.color.black_666666));
+            tvReMenShangPinMiddle.setTextColor(getActivity().getResources().getColor(R.color.black_333333));
+
+            viewLineTop.setVisibility(View.VISIBLE);
+            remenViewLineTop.setVisibility(View.GONE);
+
+            tvZiYingMiddle.setBackgroundResource(R.drawable.bg_color_fc0100_1a);
+            tvReMenMiddle.setBackgroundResource(0);
+        } else {
+            tvZiYingTop.setTextColor(getActivity().getResources().getColor(R.color.black_666666));
+            tvZiYingZhiGongTop.setTextColor(getActivity().getResources().getColor(R.color.black_333333));
+            tvZiYingMiddle.setTextColor(getActivity().getResources().getColor(R.color.black_666666));
+            tvZiYingZhiGongMiddle.setTextColor(getActivity().getResources().getColor(R.color.black_333333));
+
+
+            tvRemTop.setTextColor(getActivity().getResources().getColor(R.color.color_FFFC0100));
+            tvReMenShangPinTop.setTextColor(getActivity().getResources().getColor(R.color.color_FFFC0100));
+
+            tvReMenMiddle.setTextColor(getActivity().getResources().getColor(R.color.color_FFFC0100));
+            tvReMenShangPinMiddle.setTextColor(getActivity().getResources().getColor(R.color.color_FFFC0100));
+
+            tvReMenMiddle.setBackgroundResource(R.drawable.bg_color_fc0100_1a);
+            tvZiYingMiddle.setBackgroundResource(0);
+
+            viewLineTop.setVisibility(View.GONE);
+            remenViewLineTop.setVisibility(View.VISIBLE);
+        }
+    }
+
+
+    public void getData() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "04131");
+        map.put("key", Urls.key);
+        map.put("token", UserManager.getManager(getActivity()).getAppToken());
+        map.put("gps_x", PreferenceHelper.getInstance(getActivity()).getString(WEIDU, ""));
+        map.put("gps_y", PreferenceHelper.getInstance(getActivity()).getString(JINGDU, ""));
+        Gson gson = new Gson();
+        OkGo.<AppResponse<Home.DataBean>>post(Urls.HOME_PICTURE)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<Home.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<Home.DataBean>> response) {
+                        remenListBean = response.body().data.get(0).getIndexShowList();
+                        ziYingListBean = response.body().data.get(0).getProShowList();
+
+                        homeZiYingAdapter.setNewData(ziYingListBean);
+                        homeZiYingAdapter.notifyDataSetChanged();
+
+                        homeReMenAdapter.setNewData(remenListBean);
+                        homeReMenAdapter.notifyDataSetChanged();
+                    }
+                });
+
+
+    }
+
+    @Override
+    public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
+        int[] location = new int[2];
+        clZiYing_Middle.getLocationOnScreen(location);
+        int locationY = location[1];
+        if (locationY <= topHeight && (topPanel.getVisibility() == View.GONE || topPanel.getVisibility() == View.INVISIBLE)) {
+            topPanel.setVisibility(View.VISIBLE);
+            tvRemTop.setVisibility(View.GONE);
+            tvZiYingTop.setVisibility(View.GONE);
+            clReMen_Top.setBackgroundResource(R.color.white);
+            clZiYing_Top.setBackgroundResource(R.color.white);
+        }
+
+        if (locationY > topHeight && topPanel.getVisibility() == View.VISIBLE) {
+            topPanel.setVisibility(View.GONE);
+            tvRemTop.setVisibility(View.VISIBLE);
+            tvZiYingTop.setVisibility(View.VISIBLE);
+            clReMen_Top.setBackgroundResource(R.color.grayfff5f5f5);
+            clZiYing_Top.setBackgroundResource(R.color.grayfff5f5f5);
         }
     }
 }

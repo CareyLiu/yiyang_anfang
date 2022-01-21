@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="29pt"
         android:layout_marginTop="19pt"
-        android:background="@drawable/yiyang_bg_white_radius_10"
+        android:background="@drawable/yiyang_bg_white_radius_8"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -149,7 +149,7 @@
         android:layout_height="76pt"
         android:layout_marginHorizontal="72pt"
         android:layout_marginTop="39pt"
-        android:background="@drawable/yiyang_bg_grey_d0_radius_10"
+        android:background="@drawable/yiyang_bg_grey_d0_radius_8"
         android:gravity="center"
         android:text="退出登录"
         android:textColor="@color/white"

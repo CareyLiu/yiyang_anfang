@@ -52,8 +52,6 @@ import com.tuya.smart.android.user.api.ILoginCallback;
 import com.tuya.smart.android.user.bean.User;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.api.IResultCallback;
-import com.umeng.message.PushAgent;
-import com.umeng.message.UTrack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -394,7 +392,6 @@ public class LoginActivity extends BaseActivity implements EasyPermissions.Permi
             @Override
             public void onSuccess(User user) {
                 loginXiayibu();
-                loginYoumeng(phone);
             }
 
             @Override
@@ -404,24 +401,6 @@ public class LoginActivity extends BaseActivity implements EasyPermissions.Permi
         });
     }
 
-    private void loginYoumeng(String phone) {
-        PushAgent.getInstance(this).setAlias(phone, "TUYA_SMART", new UTrack.ICallBack() {
-            @Override
-            public void onMessage(boolean isSuccess, String message) {
-                TuyaHomeSdk.getPushInstance().registerDevice(phone, "umeng", new IResultCallback() {
-                    @Override
-                    public void onError(String code, String error) {
-
-                    }
-
-                    @Override
-                    public void onSuccess() {
-
-                    }
-                });
-            }
-        });
-    }
 
     private void loginXiayibu() {
         //保存用户手机号码

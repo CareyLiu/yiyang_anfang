@@ -35,7 +35,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="29pt"
-            android:background="@drawable/yiyang_bg_grey_e9_radius_10"
+            android:background="@drawable/yiyang_bg_grey_e9_radius_8"
             android:gravity="center">
 
             <ImageView

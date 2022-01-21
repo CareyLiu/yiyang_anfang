@@ -56,7 +56,7 @@
                     <TextView
                         android:layout_width="77pt"
                         android:layout_height="38pt"
-                        android:background="@drawable/yiyang_bg_red_radius_10"
+                        android:background="@drawable/yiyang_bg_red_radius_8"
                         android:gravity="center"
                         android:text="价格"
                         android:textColor="@color/white"

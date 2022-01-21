@@ -77,12 +77,12 @@ public class TabWodeFragment extends BaseFragment {
     @BindView(R.id.iv_add_jiaren)
     ImageView iv_add_jiaren;
 
+
     @Override
     protected void immersionInit(ImmersionBar mImmersionBar) {
         mImmersionBar
                 .init();
     }
-
     @Override
     protected boolean immersionEnabled() {
         return true;

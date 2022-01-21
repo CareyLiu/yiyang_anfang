@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19pt"
+        android:layout_marginRight="29pt"
+        android:background="@drawable/yiyang_bg_white_radius_8"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="288pt">
+
+            <ImageView
+                android:id="@+id/iv_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@mipmap/nongye_banner_2" />
+
+            <ImageView
+                android:layout_width="96pt"
+                android:layout_height="96pt"
+                android:layout_gravity="center"
+                android:src="@mipmap/nongye_bofang" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20pt"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="11pt">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:includeFontPadding="false"
+                android:text="基地水稻"
+                android:textColor="@color/color_3"
+                android:textSize="29pt"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_yichang"
+                android:layout_width="58pt"
+                android:layout_height="29pt"
+                android:background="@color/color_nongye_main"
+                android:gravity="center"
+                android:text="正常"
+                android:textColor="@color/white"
+                android:textSize="17pt" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10pt"
+            android:includeFontPadding="false"
+            android:paddingHorizontal="11pt"
+            android:text="ID：1585742633"
+            android:textColor="@color/color_nongye_main"
+            android:textSize="17pt" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10pt"
+            android:layout_marginBottom="15pt"
+            android:includeFontPadding="false"
+            android:paddingHorizontal="11pt"
+            android:text="2021-01-05 08:27"
+            android:textColor="@color/color_6"
+            android:textSize="17pt" />
+    </LinearLayout>
+</LinearLayout>

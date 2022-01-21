@@ -30,16 +30,16 @@
     <output-test url="file://$MODULE_DIR$/build/intermediates/javac/debugUnitTest/classes" />
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/renderscript_source_output_dir/debug/out" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/ap_generated_sources/debug/out" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/debug" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/aidl_source_output_dir/debug/out" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/renderscript_source_output_dir/debug/out" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/res/agc/debug" type="java-resource" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/debug" type="java-resource" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/renderscript_source_output_dir/debugAndroidTest/out" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/ap_generated_sources/debugAndroidTest/out" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/aidl_source_output_dir/debugAndroidTest/out" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/renderscript_source_output_dir/debugAndroidTest/out" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/debug" type="java-test-resource" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/ap_generated_sources/debugUnitTest/out" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/res" type="java-resource" />
@@ -95,7 +95,6 @@
     <orderEntry type="library" name="Gradle: __local_aars__:D./andriod/work/yiyang_anfang/app/libs/Msc.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: __local_aars__:D./andriod/work/yiyang_anfang/app/libs/pinyin4j-2.5.0.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: __local_aars__:D./andriod/work/yiyang_anfang/app/libs/tbs_sdk_thirdapp_v3.1.0.1034_43100_sharewithdownload_obfs_20170301_182143.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:D./andriod/work/yiyang_anfang/app/libs/umeng-common-9.3.3.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.alipay.mobile.android.securitysdk:apsecuritysdk-all:3.3.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.constraintlayout:constraintlayout-solver:1.1.3@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.jakewharton:butterknife-annotations:10.0.0@jar" level="project" />
@@ -135,8 +134,8 @@
     <orderEntry type="library" name="Gradle: com.googlecode.mp4parser:isoparser:1.0.6@jar" level="project" />
     <orderEntry type="library" name="Gradle: org.aspectj:aspectjrt:1.8.2@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.amap.api:map2d:6.0.0@jar" level="project" />
-    <orderEntry type="library" name="Gradle: com.amap.api:location:5.5.1@jar" level="project" />
-    <orderEntry type="library" name="Gradle: com.amap.api:search:7.9.0@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.amap.api:location:5.6.2@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.amap.api:search:8.1.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.3.72@jar" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72@jar" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains:annotations:13.0@jar" level="project" />
@@ -149,15 +148,6 @@
     <orderEntry type="library" name="Gradle: javax.inject:javax.inject:1@jar" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.commons:commons-compress:1.19@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.tuya.smart:optimus-annotation:1.0.0@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:D./andriod/work/yiyang_anfang/push/libs/accs_sdk_taobao-3.3.9.7-open.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:D./andriod/work/yiyang_anfang/push/libs/alicloud-android-beacon-1.0.1.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:D./andriod/work/yiyang_anfang/push/libs/alicloud-android-sdk-httpdns-1.2.5.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:D./andriod/work/yiyang_anfang/push/libs/alicloud-android-utils-1.1.5.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:D./andriod/work/yiyang_anfang/push/libs/networksdk-3.5.5-open.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:D./andriod/work/yiyang_anfang/push/libs/tlog_adapter-3.0.0.17.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:D./andriod/work/yiyang_anfang/push/libs/tnet4android-3.1.14.9.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:D./andriod/work/yiyang_anfang/push/libs/umeng-push-6.2.0.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:D./andriod/work/yiyang_anfang/app/libs/umeng-asms-armeabi-v1.1.4.aar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.multidex:multidex:2.0.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.tuya.smart:tuyasmart-bizbundle-panel:3.22.0-5@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.tuya.smart:tuyasmart-bizbundle-scene:3.22.0-5@aar" level="project" />
@@ -233,6 +223,14 @@
     <orderEntry type="library" name="Gradle: androidx.localbroadcastmanager:localbroadcastmanager:1.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.print:print:1.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.savedstate:savedstate:1.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.hms:scanplus:2.2.0.300@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.hms:push:5.0.0.300@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.hms:opendevice:5.0.0.300@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.hms:base:4.0.4.300@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.hms:availableupdate:4.0.4.300@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.hms:stats:4.0.4.300@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.hms:network-grs:4.0.20.301@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.android.hms:security-ssl:1.1.5.301@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-livedata:2.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-livedata-core:2.2.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.arch.core:core-runtime:2.1.0@aar" level="project" />
@@ -540,26 +538,24 @@
     <orderEntry type="library" name="Gradle: com.tuya.smart:tuyasmart-video:3.20.0r149-rc.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.tuya.smart:tuyasmart-webcontainer:3.21.5-rc.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: org.xclcharts:lib:2.4@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.huawei.hms:push:5.0.0.300@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.huawei.hms:opendevice:5.0.0.300@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.huawei.hms:base:4.0.4.300@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.huawei.hms:availableupdate:4.0.4.300@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.huawei.hms:ui:4.0.4.300@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.huawei.hms:stats:4.0.4.300@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.huawei.hms:device:4.0.4.300@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.huawei.hms:log:4.0.4.300@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.huawei.hms:network-grs:4.0.2.300@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.huawei.hms:network-common:4.0.2.300@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.huawei.agconnect:agconnect-core:1.0.0.300@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.hms:network-framework-compat:4.0.20.301@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.hms:network-common:4.0.20.301@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.hms:ml-computer-sdkbase-inner:2.0.5.304@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.hms:ml-computer-agc-inner:2.0.5.304@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.agconnect:agconnect-core:1.4.0.300@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.huawei.hmf:tasks:1.4.1.300@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.huawei.hms:update:2.0.6.300@aar" level="project" />
     <orderEntry type="library" name="Gradle: cn.jiguang.sdk.plugin:huawei:3.8.5@aar" level="project" />
     <orderEntry type="library" name="Gradle: cn.jiguang.sdk.plugin:xiaomi:3.8.5@aar" level="project" />
     <orderEntry type="library" name="Gradle: cn.jiguang.sdk.plugin:oppo:3.8.5@aar" level="project" />
     <orderEntry type="library" name="Gradle: cn.jiguang.sdk.plugin:vivo:3.8.5@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.hms:dynamic-api:1.0.13.303@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.huawei.hms:ml-computer-commonutils-inner:2.0.5.304@aar" level="project" />
     <orderEntry type="library" name="Gradle: :alipaySdk-15.6.8-20191021122455-noUtdid:@aar" level="project" />
     <orderEntry type="module" module-name="esptouch" />
-    <orderEntry type="module" module-name="push" />
     <orderEntry type="module" module-name="LRecyclerview_library" />
   </component>
 </module>

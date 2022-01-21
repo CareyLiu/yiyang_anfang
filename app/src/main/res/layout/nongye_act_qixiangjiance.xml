@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:wcv="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="29pt"
+                android:layout_marginTop="19pt"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="19pt"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="19pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10pt"
+                        android:includeFontPadding="false"
+                        android:text="农业一号基地"
+                        android:textColor="@color/color_3"
+                        android:textSize="29pt"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="29pt"
+                        android:layout_height="29pt"
+                        android:src="@mipmap/dianpu_jiage_jiangxu" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="58pt"
+                    android:layout_marginHorizontal="19pt"
+                    android:layout_marginTop="25pt"
+                    android:layout_marginBottom="45pt">
+
+                    <TextView
+                        android:id="@+id/bt_wendu"
+                        android:layout_width="209pt"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/yiyang_nongye_zaihai_left_sel"
+                        android:gravity="center"
+                        android:text="温度"
+                        android:textColor="@color/color_nongye_main"
+                        android:textSize="29pt"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/bt_voc"
+                        android:layout_width="209pt"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/yiyang_nongye_zaihai_right_nor"
+                        android:gravity="center"
+                        android:text="VOC"
+                        android:textColor="@color/color_3"
+                        android:textSize="29pt"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/bt_shidu"
+                        android:layout_width="210pt"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/yiyang_nongye_zaihai_center_nor"
+                        android:gravity="center"
+                        android:text="湿度"
+                        android:textColor="@color/color_3"
+                        android:textSize="29pt"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:id="@+id/view_line_left"
+                        android:layout_width="3pt"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="208pt"
+                        android:background="@color/color_nongye_main" />
+
+
+                    <View
+                        android:id="@+id/view_line_right"
+                        android:layout_width="3pt"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="208pt"
+                        android:background="@color/color_nongye_zaihai" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10pt"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="19pt"
+                    android:text="实时数据"
+                    android:textColor="@color/color_3"
+                    android:textSize="29pt"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="307pt"
+                    android:layout_height="307pt"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@mipmap/nongye_wendu"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_shuzhi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="30pt"
+                        android:includeFontPadding="false"
+                        android:text="20℃"
+                        android:textColor="@color/white"
+                        android:textSize="58pt"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="当前温度"
+                        android:textColor="@color/white"
+                        android:textSize="23pt" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/tv_danqian_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="19pt"
+                    android:layout_marginBottom="40pt"
+                    android:text="注意：当前温度正常"
+                    android:textColor="@color/color_c"
+                    android:textSize="23pt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="365pt"
+                android:layout_marginHorizontal="29pt"
+                android:layout_marginTop="19pt"
+                android:background="@drawable/yiyang_bg_white_radius_8"
+                android:orientation="vertical"
+                android:paddingHorizontal="19pt">
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@mipmap/qixiangshuju" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

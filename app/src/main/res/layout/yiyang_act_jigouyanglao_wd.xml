@@ -12,7 +12,7 @@
         android:layout_marginHorizontal="29pt"
         android:layout_marginTop="10pt"
         android:layout_marginBottom="19pt"
-        android:background="@drawable/yiyang_bg_white_radius_10"
+        android:background="@drawable/yiyang_bg_white_radius_8"
         android:orientation="vertical">
 
         <ImageView
@@ -128,7 +128,7 @@
         android:layout_marginHorizontal="29pt"
         android:layout_marginTop="10pt"
         android:layout_marginBottom="19pt"
-        android:background="@drawable/yiyang_bg_white_radius_10"
+        android:background="@drawable/yiyang_bg_white_radius_8"
         android:orientation="vertical">
 
         <ImageView

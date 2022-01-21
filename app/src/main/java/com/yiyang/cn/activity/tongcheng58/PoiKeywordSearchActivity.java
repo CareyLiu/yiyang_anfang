@@ -44,6 +44,7 @@ import com.yiyang.cn.app.BaseActivity;
 import com.yiyang.cn.app.ConstanceValue;
 import com.yiyang.cn.app.Notice;
 import com.yiyang.cn.app.UIHelper;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -161,9 +162,13 @@ public class PoiKeywordSearchActivity extends BaseActivity implements
         query.setPageSize(10);// 设置每页最多返回多少条poiitem
         query.setPageNum(currentPage);// 设置查第一页
 
-        poiSearch = new PoiSearch(this, query);
-        poiSearch.setOnPoiSearchListener(this);
-        poiSearch.searchPOIAsyn();
+        try {
+            poiSearch = new PoiSearch(this, query);
+            poiSearch.setOnPoiSearchListener(this);
+            poiSearch.searchPOIAsyn();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -155,7 +155,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="29pt"
-            android:background="@drawable/yiyang_bg_white_radius_10" />
+            android:background="@drawable/yiyang_bg_white_radius_8" />
     </LinearLayout>
 
     <LinearLayout

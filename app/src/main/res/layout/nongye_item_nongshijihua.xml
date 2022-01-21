@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="29pt"
+        android:layout_marginTop="19pt"
+        android:background="@drawable/yiyang_bg_white_radius_8"
+        android:orientation="vertical"
+        android:paddingVertical="35pt">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="40pt">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15pt"
+                android:includeFontPadding="false"
+                android:text="农业基地"
+                android:textColor="@color/color_1"
+                android:textSize="29pt" />
+
+            <TextView
+                android:layout_width="58pt"
+                android:layout_height="29pt"
+                android:background="#00C0FF"
+                android:gravity="center"
+                android:text="未开始"
+                android:textColor="@color/white"
+                android:textSize="17pt" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="38pt"
+                android:layout_height="38pt"
+                android:layout_marginRight="30pt"
+                android:src="@mipmap/nongye_bianji" />
+
+            <ImageView
+                android:layout_width="38pt"
+                android:layout_height="38pt"
+                android:src="@mipmap/nongye_shanchu" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40pt"
+            android:layout_marginTop="20pt"
+            android:layout_marginBottom="20pt"
+            android:includeFontPadding="false"
+            android:text="显示内容："
+            android:textColor="@color/color_1"
+            android:textSize="29pt" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40pt"
+            android:layout_marginBottom="20pt"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_leixing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30pt"
+                android:includeFontPadding="false"
+                android:text="类型：施肥"
+                android:textColor="@color/color_6"
+                android:textSize="29pt" />
+
+            <TextView
+                android:id="@+id/tv_fangshi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30pt"
+                android:includeFontPadding="false"
+                android:text="方式：穴施"
+                android:textColor="@color/color_6"
+                android:textSize="29pt" />
+
+            <TextView
+                android:id="@+id/tv_person"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="更新人：木子李"
+                android:textColor="@color/color_6"
+                android:textSize="29pt" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40pt">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="01-07"
+                android:textColor="@color/color_nongye_main"
+                android:textSize="17pt" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="01-07"
+                android:textColor="@color/color_nongye_main"
+                android:textSize="17pt" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40pt"
+            android:layout_marginTop="5pt"
+            android:layout_marginBottom="10pt">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="11:44"
+                android:textColor="@color/color_nongye_main"
+                android:textSize="17pt" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="12:44"
+                android:textColor="@color/color_nongye_main"
+                android:textSize="17pt" />
+        </LinearLayout>
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20pt"
+            android:background="@color/transparent"
+            android:max="100"
+            android:maxHeight="10pt"
+            android:min="1"
+            android:minHeight="10pt"
+            android:progress="50"
+            android:progressDrawable="@drawable/seekbar_img"
+            android:secondaryProgress="100"
+            android:thumb="@mipmap/nongye_seek_anniu" />
+    </LinearLayout>
+</LinearLayout>

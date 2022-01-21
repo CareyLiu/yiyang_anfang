@@ -19,6 +19,7 @@
             app:srlTextSizeTitle="12sp" />
 
         <com.yiyang.cn.view.ObservableScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -223,6 +224,72 @@
                         android:scaleType="fitXY"
                         android:src="@mipmap/zhinengshangcheng" />
                 </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/iv_tianmao_or_taobao"
+                    android:layout_width="750pt"
+                    android:layout_height="200pt"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/banner_40wan" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bg_app"
+                    android:orientation="vertical">
+                    <include
+                        android:id="@+id/middlePanel"
+                        layout="@layout/middle_item_layout">
+
+                    </include>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rlv_ziying_or_remen"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rlv_remen"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="9dp"
+                        android:paddingRight="9dp"
+                        android:visibility="gone" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_quanbu"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:layout_width="61dp"
+                                android:layout_height="21dp"
+                                android:text="查看全部"
+                                android:textColor="#fffc0100"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="5dp"
+                                android:src="@mipmap/arrow_red" />
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
             </LinearLayout>
         </com.yiyang.cn.view.ObservableScrollView>
 
@@ -232,5 +299,10 @@
             app:srlTextSizeTime="10sp"
             app:srlTextSizeTitle="12sp" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <include
+        android:id="@+id/topPanel"
+        layout="@layout/middle_item_layout"
+        android:visibility="gone" />
 </RelativeLayout>
 

@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="29pt"
         android:layout_marginBottom="19pt"
-        android:background="@drawable/yiyang_bg_white_radius_10"
+        android:background="@drawable/yiyang_bg_white_radius_8"
         android:orientation="vertical"
         android:paddingHorizontal="19pt">
 
@@ -39,7 +39,7 @@
                 android:layout_width="96pt"
                 android:layout_height="48pt"
                 android:layout_marginLeft="10pt"
-                android:background="@drawable/yiyang_bg_grey_e9_radius_10"
+                android:background="@drawable/yiyang_bg_grey_e9_radius_8"
                 android:gravity="center"
                 android:text="已竞标"
                 android:textColor="@color/color_9"

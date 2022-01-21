@@ -44,7 +44,7 @@ import com.yiyang.cn.config.PreferenceHelper;
 import com.yiyang.cn.config.UserManager;
 import com.yiyang.cn.dialog.newdia.TishiDialog;
 import com.yiyang.cn.activity.a_yiyang.fragment.TabHomeFragment;
-import com.yiyang.cn.activity.a_yiyang.fragment.TabShengxianFragment;
+import com.yiyang.cn.activity.a_yiyang.fragment.TabNongyeFragment;
 import com.yiyang.cn.activity.a_yiyang.fragment.TabWodeFragment;
 import com.yiyang.cn.activity.a_yiyang.fragment.TabXiaoxiFragment;
 import com.yiyang.cn.fragment.znjj.ZhiNengJiaJuFragment;
@@ -386,7 +386,7 @@ public class HomeActivity extends BaseActivity {
         List<Fragment> fragments = new ArrayList<>(5);
         TabHomeFragment tabHomeFragment = new TabHomeFragment();
         ZhiNengJiaJuFragment tabAnfangFragment = new ZhiNengJiaJuFragment();
-        TabShengxianFragment shengxianFragment = new TabShengxianFragment(savedInstanceState);
+        TabNongyeFragment shengxianFragment = new TabNongyeFragment();
         TabXiaoxiFragment tabXiaoxiFragment = new TabXiaoxiFragment();
         TabWodeFragment tabWodeFragment = new TabWodeFragment();
 
@@ -427,7 +427,7 @@ public class HomeActivity extends BaseActivity {
         vpg_content.setCurrentItem(item);
         iv_main_shouye.setImageResource(R.mipmap.yiyang_main_shouye_nor);
         iv_main_anfang.setImageResource(R.mipmap.yiyang_main_anfang_nor);
-        iv_main_shengxian.setImageResource(R.mipmap.yiyang_main_shengxian_nor);
+        iv_main_shengxian.setImageResource(R.mipmap.yiyang_main_nongye_nor);
         iv_main_xiaoxi.setImageResource(R.mipmap.yiyang_main_xiaoxi_nor);
         iv_main_wode.setImageResource(R.mipmap.yiyang_main_wd_nor);
 
@@ -447,7 +447,7 @@ public class HomeActivity extends BaseActivity {
                 tv_main_anfang.setTextColor(Y.getColor(R.color.color_main_yiyang));
                 break;
             case 4:
-                iv_main_shengxian.setImageResource(R.mipmap.yiyang_main_shengxian_sel);
+                iv_main_shengxian.setImageResource(R.mipmap.yiyang_main_nongye_sel);
                 tv_main_shengxian.setTextColor(Y.getColor(R.color.color_main_yiyang));
                 break;
             case 2:

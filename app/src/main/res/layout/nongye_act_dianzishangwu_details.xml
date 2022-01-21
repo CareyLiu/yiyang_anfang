@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/iv_main"
+                android:layout_width="match_parent"
+                android:layout_height="480pt"
+                android:layout_marginHorizontal="29pt"
+                android:scaleType="fitXY"
+                android:layout_marginVertical="19pt"
+                app:riv_corner_radius="4dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="144pt"
+                android:layout_marginHorizontal="29pt"
+                android:background="@drawable/yiyang_bg_white_radius_8"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingHorizontal="19pt">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tv_address"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:includeFontPadding="false"
+                        android:text="永兴老李村水稻"
+                        android:textColor="@color/color_1"
+                        android:textSize="35pt" />
+
+                    <TextView
+                        android:id="@+id/tv_money"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="1.46/斤"
+                        android:textColor="@color/red"
+                        android:textSize="35pt" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20pt"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:includeFontPadding="false"
+                        android:text="品种：杂交水稻"
+                        android:textColor="@color/color_6"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="咨询电话：15112345678"
+                        android:textColor="@color/color_6"
+                        android:textSize="27pt" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="29pt"
+                android:layout_marginTop="19pt"
+                android:background="@drawable/yiyang_bg_white_radius_8"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="58pt"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="19pt"
+                    android:text="介绍"
+                    android:textColor="@color/color_1"
+                    android:textSize="27pt" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1pt"
+                    android:layout_marginBottom="18pt"
+                    android:background="@color/line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="19pt"
+                    android:paddingBottom="20pt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="描述："
+                        android:textColor="@color/color_3"
+                        android:textSize="27pt" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="29pt"
+                        android:includeFontPadding="false"
+                        android:text="圆锥花序大型疏展，长约30厘米，分枝多，棱
+粗糙，成熟期向下弯垂;小穗含1成熟花，两侧
+甚压扁，长圆状卵形至椭圆形，长约10毫米，
+宽2-4毫米;颖极小，仅在小穗柄先端留下半月
+形的痕迹退化外稃2枚，锥刺状，长2-4毫米;两
+侧孕性花外稃质厚，具5脉，中脉成脊，表面有
+方格状小乳状突起，厚纸质，遍布细毛端毛较
+密，有芒或无芒;内稃与外稃同质，具3脉，先端
+尖而无喙;雄蕊6枚药长2-3毫米。"
+                        android:textColor="@color/color_6"
+                        android:textSize="27pt" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

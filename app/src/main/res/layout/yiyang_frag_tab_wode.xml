@@ -92,7 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="159pt"
             android:layout_marginHorizontal="29pt"
-            android:background="@drawable/yiyang_bg_white_radius_10"
+            android:background="@drawable/yiyang_bg_white_radius_8"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -193,7 +193,7 @@
             android:layout_height="182pt"
             android:layout_marginHorizontal="29pt"
             android:layout_marginTop="19pt"
-            android:background="@drawable/yiyang_bg_white_radius_10"
+            android:background="@drawable/yiyang_bg_white_radius_8"
             android:orientation="vertical">
 
             <LinearLayout
@@ -360,7 +360,7 @@
             android:layout_marginHorizontal="29pt"
             android:layout_marginTop="19pt"
             android:layout_marginBottom="29pt"
-            android:background="@drawable/yiyang_bg_white_radius_10"
+            android:background="@drawable/yiyang_bg_white_radius_8"
             android:orientation="vertical">
 
             <LinearLayout

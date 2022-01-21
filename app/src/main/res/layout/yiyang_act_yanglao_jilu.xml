@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="29pt"
         android:layout_marginTop="19pt"
-        android:background="@drawable/yiyang_bg_white_radius_10"
+        android:background="@drawable/yiyang_bg_white_radius_8"
         android:divider="@color/line"
         android:dividerHeight="1dp" />
 </LinearLayout>

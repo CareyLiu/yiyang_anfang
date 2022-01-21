@@ -1094,13 +1094,17 @@ public class HomeFragment_New extends BaseFragment implements ObservableScrollVi
     private AMapLocationClientOption locationOption = null;
 
     private void initLocation() {
-        //初始化client
-        locationClient = new AMapLocationClient(getActivity().getApplicationContext());
-        locationOption = getDefaultOption();
-        //设置定位参数
-        locationClient.setLocationOption(locationOption);
-        // 设置定位监听
-        locationClient.setLocationListener(gaodeDingWeiListener);
+        try {
+            //初始化client
+            locationClient = new AMapLocationClient(getActivity().getApplicationContext());
+            locationOption = getDefaultOption();
+            //设置定位参数
+            locationClient.setLocationOption(locationOption);
+            // 设置定位监听
+            locationClient.setLocationListener(gaodeDingWeiListener);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

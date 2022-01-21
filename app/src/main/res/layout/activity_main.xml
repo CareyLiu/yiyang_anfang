@@ -81,14 +81,14 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <ImageView
                 android:id="@+id/iv_main_shengxian"
                 android:layout_width="38pt"
                 android:layout_height="38pt"
                 android:layout_marginTop="10pt"
-                android:src="@mipmap/yiyang_main_shengxian_nor" />
+                android:src="@mipmap/yiyang_main_nongye_nor" />
 
             <TextView
                 android:id="@+id/tv_main_shengxian"
@@ -97,7 +97,7 @@
                 android:layout_marginTop="5pt"
                 android:layout_marginBottom="12pt"
                 android:includeFontPadding="false"
-                android:text="生鲜柜"
+                android:text="农业"
                 android:textColor="@color/color_3"
                 android:textSize="23pt" />
         </LinearLayout>

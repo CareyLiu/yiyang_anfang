@@ -1391,10 +1391,6 @@
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".about_yu_yin.NlpDemo"
-            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.YuYinSheZhiActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
@@ -2107,6 +2103,173 @@
 
         <activity
             android:name=".activity.a_yiyang.activity.CaigouActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+
+
+        <!--    农业基地    -->
+        <activity
+            android:name=".activity.nongye.JIdiActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!--    虫情监测    -->
+        <activity
+            android:name=".activity.nongye.ChongqingActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!--    实时监控    -->
+        <activity
+            android:name=".activity.nongye.ShijiankongActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!--    实时数据    -->
+        <activity
+            android:name=".activity.nongye.ShishujuActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!--    农事计划    -->
+        <activity
+            android:name=".activity.nongye.NongshijihuaActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!--    设备管理    -->
+        <activity
+            android:name=".activity.nongye.ShebeiguanliActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+
+        <!--    苗情监测    -->
+        <activity
+            android:name=".activity.nongye.MiaoqingjianceActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+
+        <!--    苗情搜索    -->
+        <activity
+            android:name=".activity.nongye.MiaoqingSearchActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!--    电子商务    -->
+        <activity
+            android:name=".activity.nongye.DianzishangwuActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!--    电子商务类型列表    -->
+        <activity
+            android:name=".activity.nongye.DianzishangwuTypeActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!--    电子商务详情    -->
+        <activity
+            android:name=".activity.nongye.DianzishangwuDetailsActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!--    灾害预警    -->
+        <activity
+            android:name=".activity.nongye.ZaihaiyujingActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!--    农产品溯源    -->
+        <activity
+            android:name=".activity.nongye.ChanpinshuyuanActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+
+        <!--    农产品溯源信息    -->
+        <activity
+            android:name=".activity.nongye.ChanpinshuyuanDetailsActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!--    气象监测    -->
+        <activity
+            android:name=".activity.nongye.QixiangjianceActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+
+        <!--    生命监测首页    -->
+        <activity
+            android:name=".activity.shengming.SmHomeActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+
+        <!--    生命监测设置页    -->
+        <activity
+            android:name=".activity.shengming.SmSetActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!--    设备预警参数配置    -->
+        <activity
+            android:name=".activity.shengming.SmSetYujingActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!--    设备历史心率&呼吸    -->
+        <activity
+            android:name=".activity.shengming.SmJianceLishActivtiy"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!--    生命监测接口页面    -->
+        <activity
+            android:name=".activity.shengming.ShengmingtestActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"

@@ -17,6 +17,8 @@ import com.yiyang.cn.callback.JsonCallback;
 import com.yiyang.cn.config.PreferenceHelper;
 import com.yiyang.cn.util.Y;
 
+import java.net.URLEncoder;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -126,12 +128,19 @@ public class SmSetActivity extends BaseActivity {
         showProgressDialog();
         String timestamp = System.currentTimeMillis() + "";
         String ltoken = UrlUtils.getLtoken(sessionId, timestamp);
-        OkGo.<CreateSession>get(UrlUtils.registerPushMultiAddress)
-                .params("sessionId", sessionId)
-                .params("timestamp", timestamp)
-                .params("ltoken", ltoken)
-                .params("host", "117.74.21.11:2001")
-                .params("flag", shishishuju)
+
+        String urls = UrlUtils.registerPushMultiAddress + "?sessionId=" + sessionId
+                + "&timestamp=" + timestamp
+                + "&ltoken=" + ltoken
+                + "&host=" + "112.124.21.39:10005"
+                + "&flag=" + shishishuju;
+
+        OkGo.<CreateSession>get(urls)
+//                .params("sessionId", sessionId)
+//                .params("timestamp", timestamp)
+//                .params("ltoken", ltoken)
+//                .params("host", "47.96.234.171:123")
+//                .params("flag", shishishuju)
                 .tag(this)//
                 .execute(new JsonCallback<CreateSession>() {
                     @Override
@@ -139,7 +148,7 @@ public class SmSetActivity extends BaseActivity {
                         String code = response.body().getCode();
                         if (code.equals("0000")) {
                             Y.t("设置成功");
-                            PreferenceHelper.getInstance(mContext).putString("sm_syujingshuju", shishishuju);
+                            PreferenceHelper.getInstance(mContext).putString("sm_sshishishuju", shishishuju);
                         } else {
                             Y.t("设置失败");
                         }
@@ -160,23 +169,31 @@ public class SmSetActivity extends BaseActivity {
     }
 
     private void cilickYujingshuju() {
-        if (shishishuju.equals("1")) {
-            shishishuju = "0";
-            iv_switch_shishishuju.setImageResource(R.mipmap.switch_close);
+        if (yujingshuju.equals("1")) {
+            yujingshuju = "0";
+            iv_switch_yujingshuju.setImageResource(R.mipmap.switch_close);
         } else {
-            shishishuju = "1";
-            iv_switch_shishishuju.setImageResource(R.mipmap.switch_open);
+            yujingshuju = "1";
+            iv_switch_yujingshuju.setImageResource(R.mipmap.switch_open);
         }
 
         showProgressDialog();
         String timestamp = System.currentTimeMillis() + "";
         String ltoken = UrlUtils.getLtoken(sessionId, timestamp);
-        OkGo.<CreateSession>get(UrlUtils.registerAlarmPushAddress)
-                .params("sessionId", sessionId)
-                .params("timestamp", timestamp)
-                .params("ltoken", ltoken)
-                .params("host", "117.74.21.11:2001")
-                .params("flag", shishishuju)
+
+
+        String urls = UrlUtils.registerAlarmPushAddress + "?sessionId=" + sessionId
+                + "&timestamp=" + timestamp
+                + "&ltoken=" + ltoken
+                + "&host=" + "112.124.21.39:10005"
+                + "&flag=" + yujingshuju;
+
+        OkGo.<CreateSession>get(urls)
+//                .params("sessionId", sessionId)
+//                .params("timestamp", timestamp)
+//                .params("ltoken", ltoken)
+//                .params("host", "117.74.21.11:2001")
+//                .params("flag", yujingshuju)
                 .tag(this)//
                 .execute(new JsonCallback<CreateSession>() {
                     @Override

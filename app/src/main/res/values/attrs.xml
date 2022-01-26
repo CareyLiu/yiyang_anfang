@@ -8,8 +8,8 @@
 
     -->
     <declare-styleable name="ButtonBarContainerTheme">
-<!--         <attr name="buttonBarStyle" format="reference" /> -->
-<!--         <attr name="buttonBarButtonStyle" format="reference" /> -->
+        <!--         <attr name="buttonBarStyle" format="reference" /> -->
+        <!--         <attr name="buttonBarButtonStyle" format="reference" /> -->
     </declare-styleable>
     <declare-styleable name="TabWidget">
         <attr name="bottom_labels" format="reference" />
@@ -36,7 +36,7 @@
     </declare-styleable>
 
     <declare-styleable name="LoadMoreFooterView">
-        <attr name="foot_view_id" format="reference"/>
+        <attr name="foot_view_id" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="CircleImageView">
@@ -52,11 +52,11 @@
         <attr name="selecredTextColor" format="color" />
         <attr name="selecredTextSize" format="dimension" />
         <attr name="unitHight" format="dimension" />
-        <attr name="itemNumber" format="integer"/>
+        <attr name="itemNumber" format="integer" />
         <attr name="lineColor" format="color" />
-        <attr name="maskHight" format="dimension"/>
-        <attr name="noEmpty" format="boolean"/>
-        <attr name="isEnable" format="boolean"/>
+        <attr name="maskHight" format="dimension" />
+        <attr name="noEmpty" format="boolean" />
+        <attr name="isEnable" format="boolean" />
     </declare-styleable>
 
 
@@ -79,8 +79,8 @@
             <enum name="ring" value="3" />
             <enum name="smartisan" value="4" />
         </attr>
-        <attr name="refreshColors" format="reference"/>
-        <attr name="refreshColor" format="reference"/>
+        <attr name="refreshColors" format="reference" />
+        <attr name="refreshColor" format="reference" />
     </declare-styleable>
     <declare-styleable name="HorizontalListView">
         <attr name="dividerWidth" format="dimension" />
@@ -102,29 +102,29 @@
     </declare-styleable>
     <attr name="circularProgressBarStyle" format="reference" />
     <declare-styleable name="SwipeMenuView">
-        <attr name="swipeEnable" format="boolean"/>
-        <attr name="ios" format="boolean"/>
-        <attr name="leftSwipe" format="boolean"/>
+        <attr name="swipeEnable" format="boolean" />
+        <attr name="ios" format="boolean" />
+        <attr name="leftSwipe" format="boolean" />
     </declare-styleable>
     <declare-styleable name="SecurityCenter">
         <!-- 选中状态的手势点-->
-        <attr name="selectedBitmap" format="reference"/>
+        <attr name="selectedBitmap" format="reference" />
         <!-- 未选中状态的手势点-->
-        <attr name="unselectedBitmap" format="reference"/>
+        <attr name="unselectedBitmap" format="reference" />
         <!-- 选中状态的手势小点-->
-        <attr name="selectedBitmapSmall" format="reference"/>
+        <attr name="selectedBitmapSmall" format="reference" />
         <!-- 未选中状态的手势小点-->
-        <attr name="unselectedBitmapSmall" format="reference"/>
+        <attr name="unselectedBitmapSmall" format="reference" />
         <!-- 验证失败后再次验证的拦截时间-->
-        <attr name="waitTime" format="integer"/>
+        <attr name="waitTime" format="integer" />
         <!-- 验证的最大失败次数-->
-        <attr name="maxFailCounts" format="integer"/>
+        <attr name="maxFailCounts" format="integer" />
         <!-- 绘制时最少连接的点数-->
-        <attr name="minPoint" format="integer"/>
+        <attr name="minPoint" format="integer" />
         <!-- 字体的颜色-->
-        <attr name="paintColor" format="color"/>
+        <attr name="paintColor" format="color" />
         <!-- 字体的大小-->
-        <attr name="paintTextSize" format="dimension"/>
+        <attr name="paintTextSize" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="ItemTitleInfo">
@@ -209,11 +209,20 @@
     </declare-styleable>
 
 
-
     <declare-styleable name="WeatherChartView">
-        <attr name="WeatherChartViewTextColor" format="color"/>
-        <attr name="WeatherChartViewDayColor" format="color"/>
-        <attr name="WeatherChartViewNightColor" format="color"/>
-        <attr name="WeatherChartViewTextSize" format="dimension"/>
+        <attr name="WeatherChartViewTextColor" format="color" />
+        <attr name="WeatherChartViewDayColor" format="color" />
+        <attr name="WeatherChartViewNightColor" format="color" />
+        <attr name="WeatherChartViewTextSize" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="CircularProgressView">
+        <attr name="backWidth" format="dimension" />    <!--背景圆环宽度-->
+        <attr name="progWidth" format="dimension" />    <!--进度圆环宽度-->
+        <attr name="backColor" format="color" />        <!--背景圆环颜色-->
+        <attr name="progColor" format="color" />        <!--进度圆环颜色-->
+        <attr name="progStartColor" format="color" />   <!--进度圆环开始颜色-->
+        <attr name="progFirstColor" format="color" />   <!--进度圆环结束颜色-->
+        <attr name="circular_progress" format="integer" />       <!--圆环进度-->
     </declare-styleable>
 </resources>

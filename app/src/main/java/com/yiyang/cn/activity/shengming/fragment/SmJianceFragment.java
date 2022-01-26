@@ -19,6 +19,8 @@ import com.yiyang.cn.R;
 import com.yiyang.cn.activity.shengming.SmJianceLishActivtiy;
 import com.yiyang.cn.activity.shengming.shengmingmodel.RealHrRrData;
 import com.yiyang.cn.activity.shengming.utils.UrlUtils;
+import com.yiyang.cn.app.ConstanceValue;
+import com.yiyang.cn.app.Notice;
 import com.yiyang.cn.basicmvp.BaseFragment;
 import com.yiyang.cn.callback.JsonCallback;
 import com.yiyang.cn.config.PreferenceHelper;
@@ -187,6 +189,7 @@ public class SmJianceFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
+                clickBack();
                 break;
             case R.id.iv_jilu:
                 SmJianceLishActivtiy.actionStart(getContext());
@@ -221,5 +224,9 @@ public class SmJianceFragment extends BaseFragment {
         handler.removeMessages(1);
     }
 
-
+    private void clickBack() {
+        Notice notice = new Notice();
+        notice.type = ConstanceValue.MSG_SHENGMIN_HOME_BACK;
+        sendRx(notice);
+    }
 }

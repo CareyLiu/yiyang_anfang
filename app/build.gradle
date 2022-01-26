@@ -309,4 +309,6 @@ dependencies {
     implementation 'com.huawei.hms:scanplus:2.2.0.300'
 
     implementation files('libs/Msc.jar')
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

@@ -22,6 +22,7 @@ import com.yiyang.cn.callback.JsonCallback;
 import com.yiyang.cn.config.AppResponse;
 import com.yiyang.cn.config.UserManager;
 import com.yiyang.cn.dialog.BangdingFailDialog;
+import com.yiyang.cn.dialog.newdia.TishiDialog;
 import com.yiyang.cn.get_net.Urls;
 import com.yiyang.cn.model.CarBrand;
 
@@ -125,88 +126,29 @@ public class ScanAddCarActivity extends BaseActivity implements QRCodeView.Deleg
         vibrate();
         // mQRCodeView.startSpot();
         waitdialog.dismiss();
-        if (result.length() == 24) {
-            addSheBei(result);
-        } else {
-            BangdingFailDialog dialog = new BangdingFailDialog(mContext);
-            dialog.setClick(new BangdingFailDialog.BangdingClick() {
-                @Override
-                public void close() {
-                    Notice notice = new Notice();
-                    notice.type = ConstanceValue.MSG_ADD_CHELIANG_SUCCESS;
-                    sendRx(notice);
-                    finish();
-                }
 
-                @Override
-                public void jixu() {
-                    mQRCodeView.startSpot();
-                    mQRCodeView.setDelegate(ScanAddCarActivity.this);
-                }
-            });
-            dialog.setTextContent("您的设备码不正确");
-            dialog.show();
-        }
+        addSheBei();
     }
 
-    public void addSheBei(String ccid) {
-        Map<String, String> map = new HashMap<>();
-        map.put("code", "03509");//正式的
-//        map.put("code", "03519");//测试用
-        map.put("key", Urls.key);
-        map.put("token", UserManager.getManager(mContext).getAppToken());
-        map.put("ccid", ccid);
+    public void addSheBei() {
+        TishiDialog dialog = new TishiDialog(mContext, TishiDialog.TYPE_SUCESS, new TishiDialog.TishiDialogListener() {
+            @Override
+            public void onClickCancel(View v, TishiDialog dialog) {
 
-        Gson gson = new Gson();
-        OkGo.<AppResponse<CarBrand.DataBean>>post(Urls.SERVER_URL + "wit/app/user")
-                .tag(this)//
-                .upJson(gson.toJson(map))
-                .execute(new JsonCallback<AppResponse<CarBrand.DataBean>>() {
-                    @Override
-                    public void onSuccess(final Response<AppResponse<CarBrand.DataBean>> response) {
-                        BangdingFailDialog dialog = new BangdingFailDialog(mContext);
-                        dialog.setClick(new BangdingFailDialog.BangdingClick() {
-                            @Override
-                            public void close() {
-                                Notice notice = new Notice();
-                                notice.type = ConstanceValue.MSG_ADD_CHELIANG_SUCCESS;
-                                sendRx(notice);
-                                finish();
-                            }
+            }
 
-                            @Override
-                            public void jixu() {
-                                mQRCodeView.startSpot();
-                                mQRCodeView.setDelegate(ScanAddCarActivity.this);
-                            }
-                        });
-                        dialog.setTextContent("设备添加成功");
-                        dialog.show();
-                    }
+            @Override
+            public void onClickConfirm(View v, TishiDialog dialog) {
 
-                    @Override
-                    public void onError(Response<AppResponse<CarBrand.DataBean>> response) {
-                        String msg = response.getException().getMessage();
-                        BangdingFailDialog dialog = new BangdingFailDialog(mContext);
-                        dialog.setClick(new BangdingFailDialog.BangdingClick() {
-                            @Override
-                            public void close() {
-                                Notice notice = new Notice();
-                                notice.type = ConstanceValue.MSG_ADD_CHELIANG_SUCCESS;
-                                sendRx(notice);
-                                finish();
-                            }
+            }
 
-                            @Override
-                            public void jixu() {
-                                mQRCodeView.startSpot();
-                                mQRCodeView.setDelegate(ScanAddCarActivity.this);
-                            }
-                        });
-                        dialog.setTextContent(msg);
-                        dialog.show();
-                    }
-                });
+            @Override
+            public void onDismiss(TishiDialog dialog) {
+                finish();
+            }
+        });
+        dialog.setTextContent("设备绑定成功");
+        dialog.show();
     }
 
 

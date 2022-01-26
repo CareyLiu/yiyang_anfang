@@ -1,16 +1,21 @@
 package com.yiyang.cn.activity.shengming.fragment;
 
+import android.Manifest;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gyf.barlibrary.ImmersionBar;
 import com.yiyang.cn.R;
+import com.yiyang.cn.activity.chelianwang.ScanAddCarActivity;
 import com.yiyang.cn.activity.shengming.SmSetActivity;
+import com.yiyang.cn.app.ConstanceValue;
+import com.yiyang.cn.app.Notice;
 import com.yiyang.cn.basicmvp.BaseFragment;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class SmWodeFragment extends BaseFragment {
 
@@ -22,6 +27,8 @@ public class SmWodeFragment extends BaseFragment {
     ImageView iv_head;
     @BindView(R.id.tv_name)
     TextView tv_name;
+    @BindView(R.id.bt_saoma)
+    TextView bt_saoma;
 
     @Override
     protected void immersionInit(ImmersionBar mImmersionBar) {
@@ -50,10 +57,14 @@ public class SmWodeFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.iv_back, R.id.iv_set})
+    @OnClick({R.id.iv_back, R.id.bt_saoma, R.id.iv_set})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
+                clickBack();
+                break;
+            case R.id.bt_saoma:
+                clickSaoma();
                 break;
             case R.id.iv_set:
                 clickSet();
@@ -61,7 +72,23 @@ public class SmWodeFragment extends BaseFragment {
         }
     }
 
+    private void clickSaoma() {
+        if (EasyPermissions.hasPermissions(getContext(), Manifest.permission.CAMERA)) {
+            ScanAddCarActivity.actionStart(getContext());
+        } else {
+            EasyPermissions.requestPermissions(this, getString(R.string.xjqx), 0, Manifest.permission.CAMERA);
+        }
+    }
+
+    private void clickBack() {
+        Notice notice = new Notice();
+        notice.type = ConstanceValue.MSG_SHENGMIN_HOME_BACK;
+        sendRx(notice);
+    }
+
     private void clickSet() {
         SmSetActivity.actionStart(getContext());
     }
+
+
 }

@@ -196,5 +196,5 @@ public interface ConstanceValue {
     int MSG_YIYANG_ZNJJ_BACK = 0x10144;//智能家居返回
     int MSG_YIYANG_JINGLAOKA = 0x10145;//添加敬老卡成功
 
-
+    int MSG_SHENGMIN_HOME_BACK= 0x10146;//生命体征带返回首页
 }

@@ -15,6 +15,8 @@ import com.yiyang.cn.activity.shengming.fragment.SmBaojingFragment;
 import com.yiyang.cn.activity.shengming.fragment.SmJianceFragment;
 import com.yiyang.cn.activity.shengming.fragment.SmWodeFragment;
 import com.yiyang.cn.app.BaseActivity;
+import com.yiyang.cn.app.ConstanceValue;
+import com.yiyang.cn.app.Notice;
 import com.yiyang.cn.util.Y;
 import com.yiyang.cn.view.NoScrollViewPager;
 
@@ -27,6 +29,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 public class SmHomeActivity extends BaseActivity {
 
@@ -88,6 +92,18 @@ public class SmHomeActivity extends BaseActivity {
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
         initVpg();
+        initHuidiao();
+    }
+
+    private void initHuidiao() {
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_SHENGMIN_HOME_BACK) {
+                    select(0);
+                }
+            }
+        }));
     }
 
     private void initVpg() {

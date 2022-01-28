@@ -35,6 +35,9 @@ import com.yiyang.cn.activity.a_yiyang.activity.jigou.JigouyanglaoActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.pinggu.JiashuDanganActivity;
 import com.yiyang.cn.activity.a_yiyang.activity.pinggu.YanglaopingguActivity;
 import com.yiyang.cn.activity.a_yiyang.adapter.HomeZhylAdapter;
+import com.yiyang.cn.activity.shengming.SmHomeActivity;
+import com.yiyang.cn.activity.shengming.shengmingmodel.CreateSession;
+import com.yiyang.cn.activity.shengming.utils.UrlUtils;
 import com.yiyang.cn.activity.tongcheng58.TongChengMainActivity;
 import com.yiyang.cn.activity.tongcheng58.model.TcHomeModel;
 import com.yiyang.cn.activity.zijian_shangcheng.FenLeiThirdActivity;
@@ -55,7 +58,6 @@ import com.yiyang.cn.get_net.Urls;
 import com.yiyang.cn.model.Home;
 import com.yiyang.cn.util.GridAverageUIDecoration;
 import com.yiyang.cn.util.Utils;
-import com.yiyang.cn.util.Y;
 import com.yiyang.cn.view.ObservableScrollView;
 import com.youth.banner.Banner;
 
@@ -161,8 +163,7 @@ public class TabHomeFragment extends BaseFragment implements ObservableScrollVie
         initBanner();
         initViewNew(rootView);
         getData();
-//        initLocation();
-//        startLocation();
+        initLocation();
     }
 
     private void initViewNew(View view) {
@@ -213,7 +214,6 @@ public class TabHomeFragment extends BaseFragment implements ObservableScrollVie
         clReMen_Top.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //UIHelper.ToastMessage(getActivity(), "点击了热门");
                 rlv_ziYing.setVisibility(View.GONE);
                 rlvRemen.setVisibility(View.VISIBLE);
@@ -244,21 +244,17 @@ public class TabHomeFragment extends BaseFragment implements ObservableScrollVie
             }
         });
 
-        Y.e("发动快速了解放松的地方");
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         rlv_ziYing.addItemDecoration(new GridAverageUIDecoration(14, 10));
         rlv_ziYing.setLayoutManager(layoutManager);
         homeZiYingAdapter = new HomeZiYingAdapter(R.layout.item_home_ziying, ziYingListBean);
         rlv_ziYing.setAdapter(homeZiYingAdapter);
 
-
         GridLayoutManager layoutManager1 = new GridLayoutManager(getActivity(), 2);
         rlvRemen.addItemDecoration(new GridAverageUIDecoration(9, 10));
         rlvRemen.setLayoutManager(layoutManager1);
         homeReMenAdapter = new HomeReMenAdapter(R.layout.item_home_remen, remenListBean);
         rlvRemen.setAdapter(homeReMenAdapter);
-
-        Y.e("愤愤愤愤看见纷纷");
     }
 
 
@@ -413,6 +409,7 @@ public class TabHomeFragment extends BaseFragment implements ObservableScrollVie
             locationClient.setLocationOption(locationOption);
             // 设置定位监听
             locationClient.setLocationListener(gaodeDingWeiListener);
+            startLocation();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -600,13 +597,37 @@ public class TabHomeFragment extends BaseFragment implements ObservableScrollVie
                 ZiJianShopMallActivity.actionStart(getActivity());
                 break;
             case R.id.banner_one:
-//                TaoBao_Jd_PinDuoDuoActivity.actionStart(getActivity(), taobaoPicture, jingdongPicture, pinduoduoPicture);
+                enterShengming();
                 break;
             case R.id.iv_tianmao_or_taobao:
                 break;
         }
     }
 
+    private void enterShengming() {
+        showProgressDialog();
+        String timestamp = System.currentTimeMillis() + "";
+        String ltoken = UrlUtils.getMainLtoken(timestamp);
+        OkGo.<CreateSession>get(UrlUtils.createSession)
+                .params("customerCode", UrlUtils.CUSTOMERCODE)
+                .params("timestamp", timestamp)
+                .params("ltoken", ltoken)
+                .tag(this)//
+                .execute(new JsonCallback<CreateSession>() {
+                    @Override
+                    public void onSuccess(Response<CreateSession> response) {
+                        String sessionId = response.body().getData();
+                        PreferenceHelper.getInstance(getContext()).putString("sm_sessionId", sessionId);
+                        SmHomeActivity.actionStart(getContext());
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
+                    }
+                });
+    }
 
     /**
      * private TextView tvZiYingTop, tvRemTop, tvZiYingZhiGongTop, tvReMenShangPinTop;

@@ -14,6 +14,7 @@ import com.yiyang.cn.activity.nongye.ChongqingActivity;
 import com.yiyang.cn.activity.nongye.DianzishangwuActivity;
 import com.yiyang.cn.activity.nongye.JIdiActivity;
 import com.yiyang.cn.activity.nongye.MiaoqingjianceActivity;
+import com.yiyang.cn.activity.nongye.NongshijihuaActivity;
 import com.yiyang.cn.activity.nongye.QixiangjianceActivity;
 import com.yiyang.cn.activity.nongye.ShijiankongActivity;
 import com.yiyang.cn.activity.nongye.ShishujuActivity;
@@ -131,7 +132,7 @@ public class TabNongyeFragment extends BaseFragment {
                 ShijiankongActivity.actionStart(getContext());
                 break;
             case R.id.ll_sssj:
-                ShishujuActivity.actionStart(getContext(),"实时数据");
+                ShishujuActivity.actionStart(getContext(), "实时数据");
                 break;
             case R.id.ll_mqbj:
                 MiaoqingjianceActivity.actionStart(getContext(), "全部");
@@ -152,37 +153,12 @@ public class TabNongyeFragment extends BaseFragment {
                 DianzishangwuActivity.actionStart(getContext());
                 break;
             case R.id.ll_tjc:
-                ShishujuActivity.actionStart(getContext(),"碳监测");
+                ShishujuActivity.actionStart(getContext(), "碳监测");
                 break;
             case R.id.ll_nongshijihua:
-//                NongshijihuaActivity.actionStart(getContext());
-                getNet();
+                NongshijihuaActivity.actionStart(getContext());
+//                getNet();
                 break;
         }
-    }
-
-    private void getNet() {
-        showProgressDialog();
-        String timestamp = System.currentTimeMillis() + "";
-        String ltoken = UrlUtils.getMainLtoken(timestamp);
-        OkGo.<CreateSession>get(UrlUtils.createSession)
-                .params("customerCode", UrlUtils.CUSTOMERCODE)
-                .params("timestamp", timestamp)
-                .params("ltoken", ltoken)
-                .tag(this)//
-                .execute(new JsonCallback<CreateSession>() {
-                    @Override
-                    public void onSuccess(Response<CreateSession> response) {
-                        String sessionId = response.body().getData();
-                        PreferenceHelper.getInstance(getContext()).putString("sm_sessionId", sessionId);
-                        SmHomeActivity.actionStart(getContext());
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        super.onFinish();
-                        dismissProgressDialog();
-                    }
-                });
     }
 }

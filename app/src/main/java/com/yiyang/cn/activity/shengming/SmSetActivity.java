@@ -17,8 +17,6 @@ import com.yiyang.cn.callback.JsonCallback;
 import com.yiyang.cn.config.PreferenceHelper;
 import com.yiyang.cn.util.Y;
 
-import java.net.URLEncoder;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

@@ -2,6 +2,7 @@ package com.yiyang.cn.activity.shengming.fragment;
 
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
@@ -9,6 +10,7 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -17,6 +19,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yiyang.cn.R;
 import com.yiyang.cn.activity.shengming.SmJianceLishActivtiy;
+import com.yiyang.cn.activity.shengming.shengmingmodel.Device;
 import com.yiyang.cn.activity.shengming.shengmingmodel.RealHrRrData;
 import com.yiyang.cn.activity.shengming.utils.UrlUtils;
 import com.yiyang.cn.app.ConstanceValue;
@@ -24,9 +27,9 @@ import com.yiyang.cn.app.Notice;
 import com.yiyang.cn.basicmvp.BaseFragment;
 import com.yiyang.cn.callback.JsonCallback;
 import com.yiyang.cn.config.PreferenceHelper;
-import com.yiyang.cn.util.Y;
 
-import java.util.Date;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import androidx.annotation.NonNull;
 import butterknife.BindView;
@@ -53,10 +56,25 @@ public class SmJianceFragment extends BaseFragment {
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.iv_zhuangtai)
     ImageView iv_zhuangtai;
+    @BindView(R.id.iv_huxipinlv)
+    ImageView iv_huxipinlv;
+    @BindView(R.id.tvv_titlte)
+    TextView tvvTitlte;
+    @BindView(R.id.tv_xinlv_max)
+    TextView tvXinlvMax;
+    @BindView(R.id.tv_huxi_max)
+    TextView tvHuxiMax;
+    @BindView(R.id.tv_dianya)
+    TextView tvDianya;
+    @BindView(R.id.tv_jinshuikou_wendu)
+    TextView tvJinshuikouWendu;
+    @BindView(R.id.tv_chushuikou_wendu)
+    TextView tvChushuikouWendu;
 
     private String sessionId;
     private RealHrRrData.DataBean dataBean;
     private boolean isOnFrag;
+    private Device deviceModel;
 
     @Override
     protected void immersionInit(ImmersionBar mImmersionBar) {
@@ -85,6 +103,15 @@ public class SmJianceFragment extends BaseFragment {
         initDonghua();
         initSM();
         initHandler();
+        getDevice();
+
+        Glide.with(getContext()).asGif().load(R.drawable.huxinpinlv1).into(iv_huxipinlv);
+        iv_huxipinlv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Glide.with(getContext()).asGif().load(R.drawable.huxinpinlv1).into(iv_huxipinlv);
+            }
+        });
     }
 
     @Override
@@ -228,5 +255,58 @@ public class SmJianceFragment extends BaseFragment {
         Notice notice = new Notice();
         notice.type = ConstanceValue.MSG_SHENGMIN_HOME_BACK;
         sendRx(notice);
+    }
+
+
+    private String customerCode = "RSD1389948105";
+    private String ytoken = "fca76f960fe5ecd7447edbcc4ea799b2";
+    private String mac = "149C7656FFB1";
+
+    private void getDevice() {
+        String url = "http://iot.52soft.top/api/getDevice?";
+        String timestamp = System.currentTimeMillis() + "";
+        String jiami = sessionId + customerCode + "_" + timestamp + ytoken;
+        String ltoken = md5(jiami);
+        ltoken = ltoken.toLowerCase();
+        String urlSet = url + "sessionId=" + sessionId + "&timestamp=" + timestamp + "&ltoken=" + ltoken + "&mac=" + mac;
+        OkGo.<Device>get(urlSet)
+                .tag(this)//
+                .execute(new JsonCallback<Device>() {
+                    @Override
+                    public void onSuccess(Response<Device> response) {
+                        deviceModel = response.body();
+                        int online = deviceModel.getData().getOnline();
+
+                        if (online == 1) {
+                            tvvTitlte.setText("在线");
+                        } else {
+                            tvvTitlte.setText("离线");
+                        }
+
+                    }
+                });
+    }
+
+    public static String md5(String string) {
+        if (TextUtils.isEmpty(string)) {
+            return "";
+        }
+        MessageDigest md5 = null;
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+            byte[] bytes = md5.digest(string.getBytes());
+            StringBuilder result = new StringBuilder();
+            for (byte b : bytes) {
+                String temp = Integer.toHexString(b & 0xff);
+                if (temp.length() == 1) {
+                    temp = "0" + temp;
+                }
+                result.append(temp);
+            }
+            return result.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

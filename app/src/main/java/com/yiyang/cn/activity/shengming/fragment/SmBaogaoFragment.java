@@ -102,7 +102,7 @@ public class SmBaogaoFragment extends BaseFragment {
     private void getNet() {
         String timestamp = System.currentTimeMillis() + "";
         String ltoken = UrlUtils.getLtoken(sessionId, timestamp);
-        String date = "20220120";
+        String date = "20220211";
         OkGo.<MacSleepReport>get(UrlUtils.getMacSleepReport)
                 .params("sessionId", sessionId)
                 .params("timestamp", timestamp)
@@ -131,7 +131,7 @@ public class SmBaogaoFragment extends BaseFragment {
 //                            } else if (value == 1 || value == 2) {
 //                                qianshui++;
 //                                Y.e("我处于浅睡状态  " + s + "  到   " + e);
-//                            } else if (value == 3 || value == 4) {
+//                             } else if (value == 3 || value == 4) {
 //                                shenshui++;
 //                                Y.e("我处于深睡状态  " + s + "  到   " + e);
 //                            } else if (value == 5) {

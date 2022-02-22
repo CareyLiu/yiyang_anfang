@@ -46,6 +46,7 @@
                             android:src="@mipmap/back_white" />
 
                         <TextView
+                            android:id="@+id/tvv_titlte"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
@@ -98,7 +99,6 @@
                         android:textColor="@color/white"
                         android:textSize="27pt"
                         android:textStyle="bold" />
-
 
                     <TextView
                         android:id="@+id/tv_time"
@@ -172,10 +172,11 @@
 
 
                     <ImageView
-                        android:layout_width="536pt"
-                        android:layout_height="142pt"
+                        android:id="@+id/iv_huxipinlv"
+                        android:layout_width="550pt"
+                        android:layout_height="150pt"
                         android:layout_gravity="center"
-                        android:src="@mipmap/shengming_jc_xian" />
+                        android:src="@drawable/huxinpinlv1" />
 
 
                     <LinearLayout
@@ -214,6 +215,123 @@
                     </LinearLayout>
                 </FrameLayout>
 
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56pt"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="29pt">
+
+                    <View
+                        android:layout_width="4pt"
+                        android:layout_height="27pt"
+                        android:layout_marginRight="10pt"
+                        android:background="@drawable/bt_login_denglu" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="血压值"
+                        android:textColor="@color/color_1"
+                        android:textSize="29pt" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="29pt"
+                    android:layout_marginBottom="10pt"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="317pt"
+                        android:layout_height="132pt"
+                        android:background="@drawable/shengming_wihte_line"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:padding="19pt">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="42pt"
+                                android:layout_height="42pt"
+                                android:layout_marginRight="10pt"
+                                android:src="@mipmap/shengming_xinlv_icon" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:includeFontPadding="false"
+                                android:text="收缩压"
+                                android:textColor="@color/color_3"
+                                android:textSize="27pt" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_xinlv_max"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="10pt"
+                            android:includeFontPadding="false"
+                            android:text="121mmHg"
+                            android:textColor="@color/color_3"
+                            android:textSize="29pt" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <LinearLayout
+                        android:layout_width="317pt"
+                        android:layout_height="132pt"
+                        android:background="@drawable/shengming_wihte_line"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:padding="19pt">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="42pt"
+                                android:layout_height="42pt"
+                                android:layout_marginRight="10pt"
+                                android:src="@mipmap/shengming_fei_icon" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:includeFontPadding="false"
+                                android:text="舒张压"
+                                android:textColor="@color/color_3"
+                                android:textSize="27pt" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_huxi_max"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="10pt"
+                            android:includeFontPadding="false"
+                            android:text="82mmHg"
+                            android:textColor="@color/color_3"
+                            android:textSize="29pt" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="154pt"
@@ -222,14 +340,12 @@
                     android:background="@drawable/shengming_wihte_line"
                     android:gravity="center_vertical">
 
-
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:paddingLeft="26pt">
-
 
                         <ImageView
                             android:layout_width="77pt"
@@ -261,11 +377,245 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:includeFontPadding="false"
-                            android:text="累计运动次数:10次"
+                            android:text="累计体动次数:10次"
                             android:textColor="@color/color_3"
                             android:textSize="23pt" />
                     </LinearLayout>
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="29pt"
+                    android:layout_marginTop="19pt"
+                    android:background="@color/color_main_yiyang"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="56pt"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="29pt">
+
+                        <View
+                            android:layout_width="4pt"
+                            android:layout_height="27pt"
+                            android:layout_marginRight="10pt"
+                            android:background="@drawable/white_radios_15" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="空气质量（总发挥性有机物，可吸入颗粒）"
+                            android:textColor="@color/white"
+                            android:textSize="29pt" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="240pt"
+                    android:layout_marginHorizontal="29pt"
+                    android:background="@color/color_main_yiyang">
+
+
+                    <LinearLayout
+                        android:layout_width="130pt"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="31pt"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="室内温度"
+                            android:textColor="@color/white"
+                            android:textSize="31pt" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="11pt"
+                            android:includeFontPadding="false"
+                            android:text="20℃"
+                            android:textColor="@color/white"
+                            android:textSize="31pt" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="130pt"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="空气流速"
+                            android:textColor="@color/white"
+                            android:textSize="31pt" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="11pt"
+                            android:includeFontPadding="false"
+                            android:text="0.2m/s"
+                            android:textColor="@color/white"
+                            android:textSize="31pt" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="130pt"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="31pt"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="室内湿度"
+                            android:textColor="@color/white"
+                            android:textSize="31pt" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="11pt"
+                            android:includeFontPadding="false"
+                            android:text="69%"
+                            android:textColor="@color/white"
+                            android:textSize="31pt" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="31pt"
+                        android:layout_marginBottom="35pt"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="二氧化碳浓度"
+                            android:textColor="@color/white"
+                            android:textSize="31pt" />
+
+                        <TextView
+                            android:id="@+id/tv_dianya"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="11pt"
+                            android:includeFontPadding="false"
+                            android:text="0.08mg/m3"
+                            android:textColor="@color/white"
+                            android:textSize="31pt" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginRight="31pt"
+                        android:layout_marginBottom="35pt"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="氨浓度"
+                            android:textColor="@color/white"
+                            android:textSize="31pt" />
+
+                        <TextView
+                            android:id="@+id/tv_jinshuikou_wendu"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="11pt"
+                            android:includeFontPadding="false"
+                            android:text="0.15mg/m3"
+                            android:textColor="@color/white"
+                            android:textSize="31pt" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="35pt"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="甲醛浓度"
+                            android:textColor="@color/white"
+                            android:textSize="31pt" />
+
+                        <TextView
+                            android:id="@+id/tv_chushuikou_wendu"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="11pt"
+                            android:includeFontPadding="false"
+                            android:text="0.04mg/m3"
+                            android:textColor="@color/white"
+                            android:textSize="31pt" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="29pt"
+                    android:background="@color/color_main_yiyang"
+                    android:gravity="center"
+                    android:paddingBottom="19pt"
+                    android:text="室内空气质量：优"
+                    android:textColor="@color/white"
+                    android:textSize="33pt" />
+
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="80pt"
+                    android:layout_marginHorizontal="29pt"
+                    android:layout_marginTop="19pt"
+                    android:visibility="gone"
+                    android:text="生命体征报告" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="80pt"
+                    android:layout_marginHorizontal="29pt"
+                    android:layout_marginTop="19pt"
+                    android:visibility="gone"
+                    android:text="催眠（舒曼波）:开启/关闭" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="30pt" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
